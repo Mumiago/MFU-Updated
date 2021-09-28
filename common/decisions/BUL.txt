@@ -1,0 +1,538 @@
+foreign_politics = {
+
+	BUL_peace_treaty_to_soviets = {
+
+		icon = jap_conquer_china
+		
+		allowed = {	
+			original_tag = BUL
+		}
+		
+		available = {
+			AND = {
+				OR = {
+					AND = {
+						SOV = {
+							surrender_progress < 0.15
+							SOV = { controls_state = 10 }
+							SOV = { controls_state = 88 }								
+						}
+					}							
+					SOV = {
+						surrender_progress < 0.1
+					}
+				}
+				casualties > 50000
+				date > 1942.3.1
+				SOV = { controls_state = 202 } #kiev
+				SOV = { controls_state = 198 } #vinnytisa
+				SOV = { controls_state = 192 } #odessa
+				OR = {
+					AND = {
+						46 = { #Muntenia
+							is_controlled_by = SOV
+						}
+						79 = { #Moldava
+							is_controlled_by = SOV
+						}
+						ROM = {
+							surrender_progress > 0.35
+							has_war_with = SOV
+						}
+					}
+					ROM = {
+						is_puppet_of = SOV
+						surrender_progress < 0.5
+					}
+				}
+				NOT = {
+					OR = {
+						is_puppet_of = GER
+						num_occupied_states > 0
+						108 = { #Morava
+							is_controlled_by = SOV
+						}
+						106 = { #Macedonia
+							is_controlled_by = SOV
+						}
+						107 = { #Serbia
+							is_controlled_by = SOV
+						}						
+					}
+				}
+			}
+		}
+
+		visible = {
+			date > 1942.3.1
+			has_war_with = SOV
+			SOV = {
+				surrender_progress < 0.3
+			}
+			NOT = {
+				is_puppet_of = GER
+			}
+		}
+
+		fire_only_once = yes
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		modifier = {
+			army_speed_factor = 0.5
+			army_defence_factor = -0.5
+			army_attack_factor = -0.5
+			enemy_justify_war_goal_time = 3
+			justify_war_goal_time = 3
+			join_faction_tension = 1000
+		}
+		
+		days_remove = 20
+
+		complete_effect = {
+			GER = { remove_decision = GER_integrate_bulgarian_war_economy }
+			if = {
+				limit = {
+					BUL = { owns_state = 77 }
+				}
+				BUL = {
+					set_state_owner = 77
+				}
+			}
+			if = {
+				limit = {
+					any_country = {
+						OR = {
+							tag = GER
+							is_in_faction_with = GER
+						}
+						controls_state = 81
+					}
+					GER = {
+						has_capitulated = no
+						has_war_with = SOV
+					}					
+				}
+				GER = { set_state_owner = 48 }
+			}
+			if = {
+				limit = {
+					any_country = {
+						OR = {
+							tag = ITA
+							is_in_faction_with = ITA
+						}
+						controls_state = 81
+					}
+					GER = {
+						has_capitulated = yes
+						has_war_with = SOV
+					}					
+				}
+				ITA = { set_state_owner = 48 }
+			}			
+			set_rule = {
+				can_create_factions = no
+				can_join_factions = no
+				can_not_declare_war = yes
+			}
+			leave_faction = yes
+			
+#########################################################################
+####################### TO TELEPORT UNITS ###############################
+#########################################################################
+			
+			every_state = {
+				limit = {
+					is_fully_controlled_by = BUL
+					owner = {
+						tag = BUL
+					}
+				}
+				teleport_armies = {
+					limit = {
+						has_war_with = SOV
+						NOT = {
+							 original_tag = BUL
+						}
+					}
+					to_state = 108
+				}
+			}
+				
+#########################################################################
+####################### TO PEACE OUT NATIONS ############################
+#########################################################################			
+
+			if = {
+				limit = {
+					has_war_with = SOV
+				}
+				SOV = {
+					white_peace = {
+						tag = BUL
+					} 
+				}
+			}
+			if = {
+				limit = {
+					has_war_with = ENG
+				}
+				ENG = {
+					white_peace = {
+						tag = BUL
+					} 
+				}
+			}
+
+#########################################################################
+####################### TO TELEPORT UNITS ###############################
+#########################################################################
+				every_state = {
+					limit = {
+						is_fully_controlled_by = BUL
+						owner = {
+							tag = BUL
+						}
+					}
+					teleport_armies = {
+						limit = {
+							has_war_with = SOV
+							NOT = {
+								 original_tag = BUL
+							}
+						}
+						to_state = 108
+					}
+				}
+
+#########################################################################
+####################### TO PEACE OUT NATIONS ############################
+#########################################################################
+				if = {
+					limit = {
+						has_war_with = ROM
+					}
+					ROM = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}				
+				if = {
+					limit = {
+						has_war_with = MON
+					}
+					MON = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = FRA
+					}
+					FRA = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = USA
+					}
+					USA = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = JAP
+					}
+					JAP = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = MAN
+					}
+					MAN = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = CHI
+					}
+					CHI = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = PRC
+					}
+					PRC = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = SIA
+					}
+					SIA = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = CAN
+					}
+					CAN = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = MEX
+					}
+					MEX = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = PHI
+					}
+					PHI = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = DEN
+					}
+					DEN = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = SWE
+					}
+					SWE = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = INS
+					}
+					INS = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = IRE
+					}
+					IRE = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = IRQ
+					}
+					IRQ = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = PER
+					}
+					PER = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = GRE
+					}
+					GRE = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = HUN
+					}
+					HUN = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = BUL
+					}
+					BUL = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = POR
+					}
+					POR = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = SPR
+					}
+					SPR = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = SAF
+					}
+					SAF = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = AST
+					}
+					AST = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = NZL
+					}
+					NZL = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = BRA
+					}
+					BRA = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = YUG
+					}
+					YUG = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = TAN
+					}
+					TAN = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = POL
+					}
+					POL = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+				if = {
+					limit = {
+						has_war_with = TUR
+					}
+					TUR = {
+						white_peace = {
+							tag = BUL
+						} 
+					}
+				}
+		}
+
+		remove_effect = {
+			set_rule = {
+				can_create_factions = yes
+				can_join_factions = yes
+				can_not_declare_war = no
+			}
+			SOV = {
+				add_to_faction = BUL
+				puppet = BUL
+			}			
+		}
+	}
+}

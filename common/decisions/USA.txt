@@ -1,0 +1,1667 @@
+
+USA_popular_support = {
+	USA_congress_busy = {
+		icon = generic_political_discourse
+		priority = 100
+		allowed = { tag = USA } 
+		available = {
+			hidden_trigger = { always = no }
+		}
+		activation = { 
+			has_country_flag = USA_congress_blocking_focus 
+		}
+ 
+		fire_only_once = no
+		days_mission_timeout = 49
+		cancel_trigger = {
+			NOT = {	
+				has_country_flag = USA_congress_blocking_focus 
+			}
+ 		}
+		timeout_effect = {
+			custom_effect_tooltip = USA_congress_busy_tt
+		}
+	}
+	USA_day_of_infamy = {
+
+		allowed = {
+			tag = USA
+		}
+		icon = generic_civil_support
+		available = {
+			has_war_with = JAP
+		}
+
+		visible = {
+			JAP = {
+				has_war_with = USA 
+			}
+		}
+
+		cost = 25
+
+		ai_will_do = {
+			factor = 5
+		}
+
+		
+		complete_effect = { 
+			add_to_variable = {
+				var = USA_popular_support_var
+				value = 1
+			}
+			add_war_support = 1
+		}
+	}
+
+	USA_small_lobby_effort = {
+		icon = generic_political_discourse
+		available = {
+		}
+		cost = 0
+		ai_will_do = {
+			factor = 10
+		}
+
+		available = {
+			has_completed_focus = USA_the_support_of_congress_and_the_house
+		}
+
+		cost = 25 
+
+		days_remove = 180
+		days_re_enable = 90
+	
+		complete_effect = {
+		}
+
+		remove_effect = {
+		}
+		modifier = {
+			stability_weekly = 0.005
+			consumer_goods_factor = 0.02
+			political_power_gain = -0.25
+		}
+	}
+
+	USA_medium_lobby_effort = {
+		icon = generic_political_discourse
+		
+		available = {
+			has_completed_focus = USA_the_support_of_congress_and_the_house
+			has_country_flag = USA_congress_blocking_focus
+			NOT = {
+				has_country_flag = USA_lobbying_effort_flag
+			}
+		}
+
+		cost = 25
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		days_re_enable = 50
+		days_remove = 25
+
+		complete_effect = {
+			set_country_flag = USA_lobbying_effort_flag
+		}
+
+		remove_effect = {
+			clr_country_flag = USA_lobbying_effort_flag
+			clr_country_flag = USA_congress_blocking_focus
+			custom_effect_tooltip = USA_congress_blocking_2_tt
+		}
+
+		modifier = {
+			political_power_gain = -0.5
+			stability_weekly = 0.01
+		}
+	}
+
+	USA_special_measures = {
+		icon = ger_mefo_bills
+		available = {
+			has_completed_focus = USA_executive_office_of_the_president
+			NOT = {
+				has_country_flag = USA_lobbying_effort_flag
+			}			
+		}
+		cost = 25
+		ai_will_do = {
+		}
+		days_remove = 45
+
+		cost = 10 
+
+		days_re_enable = 180
+
+		complete_effect = {
+			add_stability = 0.05
+			add_political_power = 50 
+			clr_country_flag = USA_congress_blocking_focus
+			custom_effect_tooltip = USA_congress_blocking_2_tt
+		}
+	}
+
+	USA_deficit_financing = {
+		icon = eng_trade_unions_support
+		available = {
+			has_stability > 0.3
+			has_completed_focus = USA_continue_deficit_financing
+		}
+		visible = { 
+			has_government = democratic 
+		}
+		cost = 25
+		days_remove = 90
+		days_re_enable = 275
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				congress_low_support_trigger = yes
+				factor = 0
+			}
+		}
+		modifier = { 
+			consumer_goods_factor = -0.03 
+		}
+		
+		remove_effect = {
+			add_political_power = -25
+			add_days_mission_timeout = {
+				mission = USA_social_security_act_mission
+				days = -25
+			}
+
+		}
+	}
+
+	USA_amend_the_budget = {
+		icon = ger_mefo_bills
+		available = {
+			has_stability > 0.3
+			has_completed_focus = USA_balancing_the_budget 
+		}
+		visible = { 
+			has_government = democratic 
+		}	
+		cost = 25
+		days_remove = 90
+		days_re_enable = 275
+		ai_will_do = {
+			factor = 1
+		}
+		modifier = { 
+			consumer_goods_factor = 0.03 
+		}
+		remove_effect = {
+			add_political_power = 50 
+			add_stability = 0.05 
+			add_days_mission_timeout = {
+				mission = USA_social_security_act_mission
+				days = -25
+			}
+		}
+	}
+
+	USA_increase_WPA_funding = {
+		icon = oppression
+		available = {
+			has_government = democratic
+			has_completed_focus = USA_revive_core_industry
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		days_re_enable = 180
+		days_remove = 90 
+
+		modifier = {
+			consumer_goods_factor = 0.05
+		}
+
+		cost = 25 
+
+		complete_effect = {
+		}
+
+		remove_effect = {
+			add_political_power = 150
+			add_days_mission_timeout = {
+				mission = USA_federal_housing_act_mission
+				days = -25
+			}
+		}
+	}
+
+	USA_rally_new_dealers = {
+		icon = eng_blackshirt_speech
+		available = {
+			has_completed_focus = USA_rally_the_pro_new_dealers
+		}
+		
+		cost = 25
+
+		ai_will_do = {
+			factor = 1
+		}
+		days_re_enable = 180
+		days_remove = 90
+		remove_effect = {
+			set_temp_variable = {
+				var = USA_democratic_support_var_stab
+				value = party_popularity@democratic
+			}
+			multiply_temp_variable = {
+				var = USA_democratic_support_var_stab
+				value = 0.2
+			}
+			add_stability = USA_democratic_support_var_stab
+		}
+	}
+
+	USA_convert_republicans = {
+		icon = eng_trade_unions_demand
+
+		available = {
+			has_completed_focus = USA_appeal_to_sympathetic_republicans
+		}
+		
+		cost = 25
+
+		ai_will_do = {
+			factor = 1
+		}
+		days_re_enable = 180
+		days_remove = 90
+
+		modifier = {
+			stability_factor = -0.1 
+		}
+
+		remove_effect = {
+			set_temp_variable = {
+				var = USA_democratic_support_var_stab
+				value = party_popularity@democratic
+			}
+			multiply_temp_variable = {
+				var = USA_democratic_support_var_stab
+				value = 0.05
+			}
+			add_popularity = {
+				popularity = USA_democratic_support_var_stab
+				ideology = democratic 
+			}
+			add_political_power = 100
+		}
+	}
+
+	USA_fair_labour_standard_act_mission = {
+
+		priority = 10
+
+		icon = eng_puppet_usa
+
+		available = {
+			hidden_trigger = { always = no }
+		}
+
+		days_mission_timeout = 950
+
+		fire_only_once = yes
+
+		activation = {
+		}
+
+		visible = {
+			
+		}
+
+		cancel_if_not_visible = yes
+
+		is_good = yes
+
+		timeout_effect = {
+			USA_great_depression_level_down = yes
+			subtract_from_variable = {
+				var = USA_current_acts
+				value = 1 
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_completed_focus = USA_labour_standards_act
+						}
+					}
+					complete_national_focus = USA_labour_standards_act 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 10
+				add_building_construction = {
+					type = industrial_complex 
+					level = 10
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = industrial_complex 
+					level = 5
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = industrial_complex 
+					level = 5
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = industrial_complex 
+					level = 5
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = industrial_complex 
+					level = 5
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = industrial_complex 
+					level = 5
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = arms_factory 
+					level = 5
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = arms_factory 
+					level = 5
+					instant_build = yes 
+				}
+			}
+		}
+	}
+
+	USA_federal_housing_act_mission = {
+
+		priority = 10
+
+		icon = eng_puppet_usa
+
+		available = {
+			hidden_trigger = { always = no }
+		}
+
+		days_mission_timeout = 1350
+
+		fire_only_once = yes
+
+		activation = {
+		}
+
+		visible = {
+		}
+
+		cancel_if_not_visible = yes
+
+		is_good = yes
+
+		timeout_effect = {
+			USA_great_depression_level_down = yes
+			subtract_from_variable = {
+				var = USA_current_acts
+				value = 1 
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_completed_focus = USA_federal_housing_act
+						}
+					}
+					complete_national_focus = USA_federal_housing_act 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 10
+				add_building_construction = {
+					type = industrial_complex 
+					level = 10
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = industrial_complex 
+					level = 5
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = industrial_complex 
+					level = 5
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = industrial_complex 
+					level = 5
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = industrial_complex 
+					level = 5
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = industrial_complex 
+					level = 5
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = arms_factory 
+					level = 5
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = arms_factory 
+					level = 5
+					instant_build = yes 
+				}
+			}
+		}
+	}
+
+	USA_social_security_act_mission = {
+
+		priority = 10
+
+		icon = eng_puppet_usa
+
+		available = {
+			hidden_trigger = { always = no }
+		}
+
+		days_mission_timeout = 1750
+
+		fire_only_once = yes
+
+		activation = {
+		}
+
+		visible = {
+		}
+
+		cancel_if_not_visible = yes
+
+		is_good = yes
+
+		timeout_effect = {
+			USA_great_depression_level_down = yes
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_completed_focus = USA_social_security_act
+						}
+					}
+					complete_national_focus = USA_social_security_act 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 10
+				add_building_construction = {
+					type = industrial_complex 
+					level = 10
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = industrial_complex 
+					level = 5
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = industrial_complex 
+					level = 5
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = industrial_complex 
+					level = 5
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = industrial_complex 
+					level = 5
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = industrial_complex 
+					level = 5
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = arms_factory 
+					level = 5
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = arms_factory 
+					level = 5
+					instant_build = yes 
+				}
+			}
+		}
+	}
+}
+
+USA_war_preparation = { 
+
+	USA_convoys_for_england = {
+
+		icon = generic_prepare_civil_war
+
+		allowed = {
+			tag = USA
+		}
+
+		available = {
+			ENG = { has_defensive_war = yes }
+			has_equipment = {
+				convoy > 199
+			}
+		}
+
+		cost = 10
+		fire_only_once = yes
+		ai_will_do = {
+			factor = 10
+		}
+
+		modifier = {
+			war_support_weekly = 0.005		
+		}
+
+		days_remove = 30
+
+		visible = {
+		}
+
+		complete_effect = {
+			ROOT = {
+				send_equipment = {
+					target = ENG
+					type = convoy
+					amount = 200
+				}
+			}
+		}
+	}
+
+	USA_emergency_arms_deliveries = {
+
+		icon = generic_prepare_civil_war
+
+		allowed = {
+			tag = USA
+		}
+
+		available = {
+			ENG = { has_defensive_war = yes }
+		}
+
+		cost = 50
+		fire_only_once = yes
+		ai_will_do = {
+			factor = 100
+		}
+
+		modifier = {
+		}
+
+		days_remove = 30
+
+		visible = {
+			has_war = no
+		}
+
+		complete_effect = {
+			ENG = {
+				add_equipment_to_stockpile = { type = infantry_equipment_0 amount = 5000 producer = USA }
+				add_equipment_to_stockpile = { type = artillery_equipment_1 amount = 50 producer = USA }
+				add_equipment_to_stockpile = { type = support_equipment_1 amount = 500 producer = USA }
+				country_event = { id = wtt_britain.30 }
+			}
+		}
+	}
+
+	USA_tank_industry_mobilization = {
+
+		icon = generic_tank
+
+		fire_only_once = no
+
+		days_remove = 100
+		
+		days_re_enable = 90
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		available = {
+			has_completed_focus = USA_detroit_vehicle_arsenal
+			NOT = {
+				has_country_flag = USA_currently_improving_an_industry_flag
+			}
+		}
+	
+		complete_effect = {
+			set_country_flag = USA_currently_improving_an_industry_flag
+		}
+
+		visible = {
+			NOT = {
+				has_idea = USA_armor_industry10
+			}
+		}
+
+		modifier = {
+			civilian_factory_use = 10
+		}
+
+		remove_effect = { 
+			USA_armor_industry_level_up = yes
+			clr_country_flag = USA_currently_improving_an_industry_flag
+		}
+	}
+
+	USA_contacts_in_the_tank_industry_mobilization = {
+
+		icon = generic_tank
+
+		fire_only_once = no
+
+		days_remove = 100
+
+		ai_will_do = {
+			factor = 100
+		}
+		
+		days_re_enable = 90
+
+		cost = 50
+
+		visible = {
+			NOT = {
+				has_idea = USA_armor_industry10
+			}
+		}
+
+		available = {
+			has_completed_focus = USA_detroit_vehicle_arsenal
+			NOT = {
+				has_country_flag = USA_currently_improving_an_industry_flag
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = USA_currently_improving_an_industry_flag
+		}
+
+		modifier = {
+		}
+
+		remove_effect = { 
+			USA_armor_industry_level_up = yes
+			clr_country_flag = USA_currently_improving_an_industry_flag
+		}
+	}
+
+
+	USA_navy_industry_mobilization = {
+
+		icon = generic_naval
+
+		fire_only_once = no
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		days_remove = 100
+		
+		days_re_enable = 90
+
+		visible = {
+			NOT = {
+				has_idea = USA_naval_industry5
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = USA_currently_improving_an_industry_flag
+		}
+
+		available = {
+			has_completed_focus = USA_two_ocean_navy_act
+			NOT = {
+				has_country_flag = USA_currently_improving_an_industry_flag
+			}
+		}
+
+		modifier = {
+			civilian_factory_use = 10
+		}
+
+		remove_effect = { 
+			USA_naval_industry_level_up = yes
+			clr_country_flag = USA_currently_improving_an_industry_flag
+		}
+	}
+
+	USA_contacts_in_the_naval_industry_mobilization = {
+
+		icon = generic_naval
+
+		fire_only_once = no
+
+		days_remove = 100
+		
+		days_re_enable = 90
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		visible = {
+			NOT = {
+				has_idea = USA_naval_industry5
+			}
+		}
+
+		cost = 50 
+	
+		complete_effect = {
+			set_country_flag = USA_currently_improving_an_industry_flag
+		}
+
+		available = {
+			has_completed_focus = USA_two_ocean_navy_act
+			NOT = {
+				has_country_flag = USA_currently_improving_an_industry_flag
+			}
+		}
+
+		modifier = {
+		}
+
+		remove_effect = { 
+			USA_naval_industry_level_up = yes
+			clr_country_flag = USA_currently_improving_an_industry_flag
+		}
+	}
+
+	USA_aircraft_industry_mobilization = {
+
+		icon = generic_intelligence_operation
+
+		fire_only_once = no
+
+		days_remove = 100
+		
+		days_re_enable = 90
+
+		ai_will_do = {
+			factor = 100
+		}
+	
+		complete_effect = {
+			set_country_flag = USA_currently_improving_an_industry_flag
+		}
+
+		visible = {
+			NOT = {
+				has_idea = USA_aircraft_industry10
+			}
+		}
+
+		available = {
+			has_completed_focus = USA_expand_the_airforce
+			NOT = {
+				has_country_flag = USA_currently_improving_an_industry_flag
+			}
+		}
+
+		modifier = {
+			civilian_factory_use = 10
+		}
+
+		remove_effect = { 
+			USA_aircraft_industry_level_up = yes
+			clr_country_flag = USA_currently_improving_an_industry_flag
+		}
+	}
+
+	USA_contacts_in_the_aircraft_industry_mobilization = {
+
+		icon = generic_intelligence_operation
+
+		fire_only_once = no
+
+		days_remove = 100
+		
+		days_re_enable = 90
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		visible = {
+			NOT = {
+				has_idea = USA_aircraft_industry10
+			}
+		}
+
+		cost = 50 
+
+		complete_effect = {
+			set_country_flag = USA_currently_improving_an_industry_flag
+		}
+
+		available = {
+			has_completed_focus = USA_expand_the_airforce
+			NOT = {
+				has_country_flag = USA_currently_improving_an_industry_flag
+			}
+		}
+
+		modifier = {
+		}
+
+		remove_effect = { 
+			USA_aircraft_industry_level_up = yes
+			clr_country_flag = USA_currently_improving_an_industry_flag
+		}
+	}
+
+	USA_infantry_industry_mobilization = {
+
+		icon = generic_prepare_civil_war
+
+		fire_only_once = no
+
+		days_remove = 100
+		
+		days_re_enable = 90
+
+		ai_will_do = {
+			factor = 100
+		}
+	
+		complete_effect = {
+			set_country_flag = USA_currently_improving_an_industry_flag
+		}
+
+		visible = {
+			NOT = {
+				has_idea = USA_infantry_industry10
+			}
+		}
+
+		available = {
+			OR = {
+				has_completed_focus = USA_rock_island_arsenal
+				has_completed_focus = USA_springfield_armory_focus
+			}
+			NOT = {
+				has_country_flag = USA_currently_improving_an_industry_flag
+			}
+		}
+
+		modifier = {
+			civilian_factory_use = 10
+		}
+
+		remove_effect = { 
+			USA_infantry_industry_level_up = yes
+			clr_country_flag = USA_currently_improving_an_industry_flag
+		}
+	}
+
+	USA_contacts_in_the_infantry_industry_mobilization = {
+
+		icon = generic_prepare_civil_war
+
+		fire_only_once = no
+
+		days_remove = 100
+		
+		days_re_enable = 90
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		complete_effect = {
+			set_country_flag = USA_currently_improving_an_industry_flag
+		}
+
+		visible = {
+			NOT = {
+				has_idea = USA_infantry_industry10
+			}
+		}
+
+		cost = 50 
+
+		available = {
+			OR = {
+				has_completed_focus = USA_rock_island_arsenal
+				has_completed_focus = USA_springfield_armory_focus
+			}
+			NOT = {
+				has_country_flag = USA_currently_improving_an_industry_flag
+			}
+		}
+
+		modifier = {
+		}
+
+		remove_effect = { 
+			USA_infantry_industry_level_up = yes
+			clr_country_flag = USA_currently_improving_an_industry_flag
+		}
+	}
+
+	USA_selected_service_act_mission = {
+
+		available = {
+			num_divisions > 35
+			has_army_manpower = { size > 800000 }
+		}
+
+		fire_only_once = yes
+
+		days_remove = 365
+		
+		days_mission_timeout = 365
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		is_good = no
+
+		activation = {
+			has_completed_focus = USA_selective_service_act
+		}
+
+		modifier = {
+		}
+
+		timeout_effect = {
+		}
+
+		complete_effect = { 
+			add_to_variable = {
+				var = USA_popular_support_var
+				value = 0.05
+			}
+			add_stability = 0.1
+			add_war_support = 0.1 
+			custom_effect_tooltip = USA_voter_support_5_tt
+			USA_infantry_industry_level_up = yes
+		}
+	}
+}
+
+foreign_support = {
+	USA_support_the_anti_fascist_war = {
+
+		icon = generic_industry
+
+		allowed = {
+			tag = USA
+		}
+
+		available = {
+			NOT = {
+				has_global_flag = USA_support_the_anti_fascist_war_flag
+			}
+			FROM = {
+				has_war_with = JAP
+			}
+		}
+
+		target_trigger = {
+			FROM = {
+				has_war_with = JAP
+			}
+		}
+
+		visible = {
+			FROM = {
+				has_war_with = JAP
+			}
+		}
+
+		cost = 25
+		ai_will_do = {
+			factor = 50
+			modifier = {
+				factor = 3
+				any_other_country = {
+					has_idea = CHI_soong_mei_ling
+					surrender_progress > 0.2
+					has_defensive_war = yes
+				}
+			}
+
+			modifier = {
+				factor = 0.5
+				has_war_support > 0.6
+			}
+
+			modifier = {
+				factor = 2
+				has_war_with = JAP
+			}
+		}
+
+		fire_only_once = no
+
+		modifier = {
+			civilian_factory_use = 3			
+		}
+
+		days_remove = 180
+
+		complete_effect = {
+			FROM = {
+				add_offsite_building = { type = arms_factory level = 3 }
+				set_global_flag = USA_support_the_anti_fascist_war_flag
+			}
+		}
+
+		remove_effect = {
+		add_political_power = 100
+			add_war_support = 0.05
+			FROM = {
+				add_offsite_building = { type = arms_factory level = -3 }
+				hidden_effect = {
+					clr_global_flag = USA_support_the_anti_fascist_war_flag
+				}
+			}
+		}
+	}
+
+	USA_guns_for_the_anti_fascist_war = {
+
+		icon = generic_prepare_civil_war
+
+		allowed = {
+			tag = USA
+		}
+
+		available = {
+			has_equipment = { infantry_equipment > 999 }
+			FROM = {
+				has_idea = CHI_soong_mei_ling
+				has_war_with = JAP
+			}
+		}
+
+		target_trigger = {
+			FROM = {
+				has_idea = CHI_soong_mei_ling
+				has_war_with = JAP
+			}
+		}
+
+		visible = {
+			FROM = {
+				has_idea = CHI_soong_mei_ling
+				has_war_with = JAP
+			}
+		}
+
+		cost = 25
+		ai_will_do = {
+			factor = 25
+			modifier = {
+				factor = 3
+				FROM = {
+					has_idea = CHI_soong_mei_ling
+					surrender_progress > 0.2
+					has_defensive_war = yes
+				}
+			}
+
+			modifier = {
+				factor = 0.5
+				has_war_support < 0.6
+			}
+
+			modifier = {
+				factor = 2
+				has_war_with = JAP
+			}
+		}
+
+		fire_only_once = no	
+
+		days_re_enable = 180
+
+		complete_effect = {
+		army_experience = 30
+			ROOT = {
+				send_equipment = {
+					target = FROM
+					type = infantry_equipment
+					amount = 1000
+					old_prioritised = yes
+				}
+			}
+		}
+	}
+}
+
+USA_unique_measures = {
+	
+	USA_women_in_the_workforce_1 = {
+
+		icon = generic_industry
+
+		allowed = {
+			always = yes
+		}
+		available = {
+			has_completed_focus = USA_everyone_not_on_the_front_in_the_factories
+		}
+
+		visible = {
+		}
+
+		cost = 100
+	
+		days_remove = -1
+
+		remove_trigger = {
+			has_war = no
+		}
+
+		modifier = {
+			conscription = 0.03
+			stability_factor = 0.1
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+		complete_effect = {
+		}
+	}
+
+	USA_war_bonds_1 = {
+
+		icon = generic_industry
+
+		allowed = {
+			always = yes
+		}
+
+		available = {
+			has_war = yes
+			has_completed_focus = USA_war_bonds_and_rationing
+			NOT = {
+				tag = USA 
+			}
+		}
+		visible = {
+		}
+
+		fire_only_once = no
+
+		days_remove = 180
+
+		cost = 50
+
+		modifier = {
+			consumer_goods_factor = -0.05
+			political_power_gain = -0.25 
+		}
+
+		ai_will_do = {
+			factor = 100
+			modifier = {
+				has_political_power < 150
+				factor = 0 #use as pp dump
+			}
+		}
+
+		remove_effect = {
+
+		}
+
+		complete_effect = {
+		}
+	}
+
+	USA_victory_program_1 = {
+
+		icon = ger_military_buildup
+
+		available = {
+			NOT = {
+				has_country_flag = USA_victory_program_flag
+			}
+			has_completed_focus = USA_victory_program
+		}
+
+		visible = {
+			always = yes
+			NOT = { tag = SOV }			
+		}
+
+		fire_only_once = no
+
+		modifier = {
+			industrial_capacity_factory = 0.2
+		}
+
+		days_remove = 180
+		days_re_enable = 60
+
+		cost = 50
+
+		complete_effect = {
+			set_country_flag = USA_victory_program_flag 
+		}
+
+		remove_effect = {
+			clr_country_flag = USA_victory_program_flag 
+		}
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 1
+				has_stability < 0.4
+			}
+		}
+	}
+
+	USA_victory_program_2 = {
+
+		icon = generic_naval
+
+		available = {
+			NOT = {
+				has_country_flag = USA_victory_program_flag
+			}
+			has_completed_focus = USA_victory_program
+		}
+
+		visible = {
+			always = yes
+			NOT = { tag = SOV }			
+		}
+
+		fire_only_once = no
+
+		modifier = {
+			industrial_capacity_dockyard = 0.3
+		}
+
+		days_remove = 180
+		days_re_enable = 60
+
+		cost = 50
+
+		complete_effect = {
+			set_country_flag = USA_victory_program_flag 
+		}
+
+		remove_effect = {
+			clr_country_flag = USA_victory_program_flag 
+		}
+
+		ai_will_do = {
+			base = 0
+		}
+	}
+
+	USA_victory_program_3 = {
+
+		icon = oppression
+
+		available = {
+			NOT = {
+				has_country_flag = USA_victory_program_flag
+			}
+			has_completed_focus = USA_victory_program
+		}
+
+		visible = {
+			always = yes
+			NOT = { tag = SOV }			
+		}
+
+		fire_only_once = no
+
+		modifier = {
+			production_factory_efficiency_gain_factor = 0.3
+			production_factory_max_efficiency_factor = 0.1 
+		}
+
+		days_remove = 180
+		days_re_enable = 60
+
+		cost = 50
+
+		complete_effect = {
+			set_country_flag = USA_victory_program_flag 
+		}
+
+		remove_effect = {
+			clr_country_flag = USA_victory_program_flag 
+		}
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 1
+				has_stability < 0.4
+			}
+		}
+	}
+
+	USA_victory_program_4 = {
+
+		icon = oppression
+
+		available = {
+			NOT = {
+				has_country_flag = USA_victory_program_flag
+			}
+			has_completed_focus = USA_victory_program
+		}
+
+		visible = {
+			always = yes
+			NOT = { tag = SOV }			
+		}
+
+		fire_only_once = no
+
+		modifier = {
+			stability_weekly = 0.005
+			war_support_weekly = 0.005
+		}
+
+		days_remove = 180
+		days_re_enable = 60
+
+		cost = 50
+
+		complete_effect = {
+			set_country_flag = USA_victory_program_flag 
+		}
+
+		remove_effect = {
+			clr_country_flag = USA_victory_program_flag 
+		}
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 1
+				has_stability < 0.4
+			}
+		}
+	}
+
+	USA_homeland_defense = {
+
+		icon = generic_prepare_civil_war
+
+		allowed = {
+			tag = USA
+		}
+
+		available = {
+			any_state = {
+				is_core_of = USA
+				NOT = {
+					is_controlled_by = USA
+				}
+			}
+			has_civil_war = no
+		}
+
+		cost = 50
+		fire_only_once = yes
+		ai_will_do = {
+			factor = 200
+		}
+
+		visible = {
+			has_war = yes
+		}
+
+		complete_effect = {
+			add_war_support = 0.1
+			add_ideas = USA_homeland_defense
+		}
+	}	
+
+	USA_torch = {
+		icon = generic_operation
+		
+		allowed = {
+			tag = USA
+		}
+
+		available = {
+			has_war_with = GER
+			country_exists = EFR
+			OR = {
+				date > 1942.1.1
+				SOV = {
+					surrender_progress > 0.6
+					has_war_with = GER
+				}
+			}
+		}
+		
+		days_remove = 14
+		
+		ai_will_do = {
+			factor = 100
+		}
+		cost = 25
+		fire_only_once = yes
+		
+		remove_effect = {
+			declare_war_on = {
+			  target = EFR
+			  type = annex_everything
+			}
+			EFR = { remove_ideas = { idea_EFR_neutrality } }
+			GER = { add_to_faction = EFR }
+			news_event = { hours = 6 id = news.457 }
+			if = {
+				limit = {
+					USA = {	is_ai = yes }
+				}
+				load_oob = USA_torch_oob
+			}
+		}
+	}
+}		
+	USA_annex_it = {
+	USA_big = {
+	icon = generic_political_discourse
+
+		allowed = {
+			tag = USA			
+		}
+		visible = {
+		NOT = {		
+		ENG = { controls_state = 126 }
+		}
+		}
+		available = {
+			is_ai = no
+		}
+
+		cost = 0
+
+		fire_only_once = yes
+
+
+		complete_effect = {
+			ENG = {
+				transfer_navy = {
+					target = USA
+				}
+			}
+			USA = { puppet = ENG }
+		}	
+	}
+	}

@@ -1,0 +1,360 @@
+political_actions = {
+	ITA_reconquista = {
+		icon = generic_operation
+		allowed = {
+			tag = ITA
+		}
+		available = {
+			surrender_progress < 0.01	
+			has_idea = SAl_italian_civil_war 
+		}
+		visible = {
+			has_idea = SAl_italian_civil_war 
+		}
+		cost = 50
+		fire_only_once = yes
+		
+		complete_effect = {
+			drop_cosmetic_tag = yes
+			remove_ideas = SAL_mass_mutiny
+			remove_ideas = SAL_partigiani
+			remove_ideas = SAl_italian_civil_war
+			remove_country_leader_trait = defeated_and_subjugated
+		}
+		ai_will_do = {
+			base = 100		
+		}
+	}
+}	
+ITA_declarewar_cathegory = {
+	ITA_declarewar = {
+		icon = generic_operation
+		available = {
+			has_completed_focus = ITA_join_the_axis 
+		}
+		activation = {
+			tag = ITA		
+			country_exists = EFR
+		}
+
+		fire_only_once = yes
+		
+		is_good = no
+		
+		days_mission_timeout = 90
+
+		timeout_effect = {
+			add_stability = -0.1
+			add_war_support = -0.05
+ 			complete_national_focus = ITA_join_the_axis			
+		}
+	}
+	ITA_border_war_with_greece = {
+		icon = generic_operation
+
+		available = {
+			has_completed_focus = ITA_greece_war_goal 
+			has_border_war = no 
+		}
+
+		visible = {
+			YUG = {
+				controls_state = 107
+			}
+			is_ai = yes 
+		}
+
+		ai_will_do = {
+			base = 100 
+		}
+		
+		is_good = no
+
+		complete_effect = {
+			start_border_war = {
+				change_state_after_war = no
+				attacker = {
+					state = 44
+					num_provinces = 4
+				}
+				
+				defender = {
+					state = 185
+					num_provinces = 4
+				}
+			}
+		}
+	}
+
+	ITA_border_war_with_greece2 = {
+		icon = generic_operation
+
+		available = {
+			AND = { 
+				has_completed_focus = ITA_greece_war_goal 
+				is_ai = yes 
+				NOT = {	
+					YUG = {
+						controls_state = 107
+					}
+				}
+			}
+		}
+
+		visible = {
+			is_ai = yes 
+		}
+
+		ai_will_do = {
+			factor = 100 
+		}
+
+		fire_only_once = yes
+		
+		is_good = no
+
+		complete_effect = {
+			cancel_border_war = {
+				dont_fire_events = yes
+				defender = 185
+				attacker = 44
+			}
+			ITA = {
+				declare_war_on = {
+					target = GRE
+					type = annex_everything
+				}
+			} 
+		}
+	}
+}	
+
+ITA_hold_land_category = { 	
+	ITA_hold_libya = {
+	
+		icon = generic_operation
+
+		allowed = {
+			original_tag = ITA
+		}
+
+		#Fail trigger
+		available = {
+			NOT = { controls_state = 451 }
+			NOT = { controls_state = 450 }
+			NOT = { controls_state = 448 }
+			NOT = { controls_state = 449 }
+		}
+
+		days_mission_timeout = 180
+
+		fire_only_once = yes
+
+		is_good = no
+
+		activation = {
+			has_completed_focus = ITA_join_the_axis
+		}
+
+		modifier = {
+		}
+		cancel_trigger = {
+			has_idea = ITA_humiliating_defeat
+ 		}
+		#Success
+		timeout_effect = {
+			add_stability = 0.1
+			add_war_support = 0.1
+			add_political_power = 100 
+			country_event = italy.28
+		}
+		#Fail
+		complete_effect = {
+			add_ideas = ITA_humiliating_defeat	
+			country_event = italy.29
+		}
+	}
+}
+ITA_albania_war_goal_category = { 
+	ITA_albania_war_goal = { 
+		icon = generic_operation
+
+		
+		available = {
+			date > 1939.1.1
+			country_exists = ALB
+		}
+
+		visible = {
+			country_exists = ALB
+		}
+		ai_will_do = {
+			base = 100
+		}
+		cost = 25
+		days_remove = 35
+		fire_only_once = yes	
+		remove_effect = {
+		   	ALB = { country_event = { id = italy.3 } }
+		}
+	}
+}
+ITA_aid_spain = { 
+
+	ITA_guns_for_spain = {
+
+		icon = generic_prepare_civil_war
+
+		
+		available = {
+			has_equipment = { infantry_equipment > 999 }
+		}
+
+		visible = {
+		}
+		ai_will_do = {
+			base = 80
+		}
+		cost = 10
+
+		fire_only_once = no	
+
+		days_re_enable = 180
+
+		complete_effect = {	
+			army_experience = 30	
+			random_country = {
+				limit = {
+					original_tag = SPR 
+					OR = { 
+						has_government = fascism 
+						has_government = neutrality 
+					}
+				}
+				send_equipment = { 
+					type = infantry_equipment
+					target = SPA
+					amount = 1000
+					old_prioritised = yes
+				}	
+			}				
+		}
+	}
+	
+	ITA_franco_factories = {
+
+		icon = generic_industry
+
+		
+		available = {
+		}
+
+		visible = {
+		}
+		ai_will_do = {
+			base = 50
+		}
+
+		cost = 25
+
+		fire_only_once = no
+
+		modifier = {
+			civilian_factory_use = 3			
+		}
+
+		days_remove = 180
+
+		complete_effect = {
+			random_country = {
+				limit = {
+					original_tag = SPR 
+					OR = { 
+						has_government = fascism 
+						has_government = neutrality 
+					}
+				}
+				add_offsite_building = { type = arms_factory level = 5 }
+				set_country_flag = ITA_support_spain_with_factories
+			}
+		}
+
+		remove_effect = {
+			add_political_power = 100
+			add_war_support = 0.05
+				random_country = {
+					limit = {
+						original_tag = SPR 
+						OR = { 
+							has_government = fascism 
+							has_government = neutrality 
+						}
+					}
+					if = {
+						limit = {
+							NOT = { any_other_country = { has_country_flag = ITA_support_spain_with_factories } }
+						}
+					}				
+					add_offsite_building = { type = arms_factory level = -5 }
+				}
+		}
+	}
+	ITA_planes_for_franco = {
+		icon = generic_air
+		
+		available = {
+		}
+
+		visible = {
+		}
+		ai_will_do = {
+			base = 65
+		}
+
+		cost = 5
+
+		fire_only_once = yes
+
+		modifier = {
+			civilian_factory_use = 1			
+		}
+
+		days_remove = 30
+		
+		complete_effect = {
+			air_experience = 40
+			random_country = {
+				limit = { 
+					original_tag = SPR 
+					OR = { 
+						has_government = fascism 
+						has_government = neutrality 
+					}
+				}
+				add_equipment_to_stockpile = { type = fighter_equipment_1934  amount = 200 producer = ITA }				
+			}		
+		}
+	}
+
+	ITA_volunteers = {
+		icon = generic_prepare_civil_war
+		
+		
+		available = {
+		}
+		ai_will_do = {
+			base = 0
+		}
+		visible = {
+		}
+
+		cost = 25
+
+		fire_only_once = yes
+
+		
+		complete_effect = {
+			add_ideas = ITA_Corpo_truppe_volontarie_focus			
+		}
+	}	
+}

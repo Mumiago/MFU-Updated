@@ -1,0 +1,161 @@
+governments_in_exile = {
+
+	request_reinstatement = {
+
+		icon = generic_independence
+
+		days_re_enable = 120 # Prevent event spam
+
+		cost = 10
+
+		available = {
+			all_owned_state = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		visible = {
+			FROM = { is_hosting_exile = ROOT }
+			any_owned_state = {
+				is_controlled_by = ROOT
+			}
+		}
+
+		
+		targets = { host }
+
+		target_trigger = { FROM = { is_hosting_exile = ROOT } }
+		
+		complete_effect = {
+			FROM = {
+				country_event = { id = mtg_exile_government.2 }
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	request_control_of_navy = {
+		
+		icon = generic_naval
+
+		cost = 25
+		fire_only_once = yes
+
+		available = {
+			FROM = {
+				has_legitimacy < 80
+			}
+		}
+
+		visible = {
+			FROM = { is_exiled_in = ROOT }
+		}
+
+		
+		target_array = exiles
+
+		target_trigger = {
+			FROM = {
+				is_exiled_in = ROOT
+				has_navy_size = {
+					size > 0
+				}
+			}
+		}
+
+		complete_effect = {
+			effect_tooltip = {
+				FROM = {
+					transfer_navy = {
+						target = ROOT
+						is_government_in_exile = yes
+					}
+					add_legitimacy = 10
+				}
+			}
+			custom_effect_tooltip = HOL_request_equipment_tt_2
+			FROM = {
+				country_event = { id = mtg_exile_government.3 hours = 6 }
+			}
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+	}
+}
+
+category_exile_forces = {
+
+	weapons_for_the_resistance = {
+
+		icon = generic_ignite_civil_war
+
+		cost = 50
+		
+		available = {
+			hidden_trigger = {
+				FROM = {
+					set_temp_variable = { resistance_equipment_needed = num_owned_states }
+					subtract_from_temp_variable = { resistance_equipment_needed = num_owned_controlled_states }
+				}
+				multiply_temp_variable = { resistance_equipment_needed = 1499 }
+			}
+			has_equipment = { infantry_equipment > resistance_equipment_needed }
+			FROM = {
+				has_legitimacy > 25
+			}
+		}
+
+		visible = {
+			FROM = {
+				has_legitimacy > 15
+				is_exiled_in = ROOT
+			}
+			any_enemy_country = {
+				FROM = {
+					any_owned_state = {
+						is_controlled_by = PREV.PREV
+					}
+				}
+			}
+		}
+
+		
+		target_array = exiles
+
+		target_trigger = {
+			FROM = { is_exiled_in = ROOT }
+		}
+		
+		days_remove = 120
+
+		complete_effect = {
+			hidden_effect = {
+				FROM = {
+					set_temp_variable = { resistance_equipment_needed = num_owned_states }
+					subtract_from_temp_variable = { resistance_equipment_needed = num_owned_controlled_states }
+				}
+				multiply_temp_variable = { resistance_equipment_needed = -1500 }
+			}
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = resistance_equipment_needed
+			}
+			FROM = {
+				add_timed_idea = {
+					idea = idea_weapons_for_the_resistance
+					days = 120
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}
+

@@ -1,0 +1,641 @@
+﻿add_namespace = britain 
+# Tizard mission event for USA
+country_event = {
+	id = britain.1
+	title = britain.1.t
+	desc = britain.1.d
+	picture = GFX_report_event_physics_lab_01
+	
+	is_triggered_only = yes
+	
+	
+	option = {
+		name = britain.1.a	#sounds good
+		ai_chance = { factor = 90 }
+		add_political_power = -10
+		ENG = {
+			country_event = { days = 1 id = britain.2 }
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = tizard_relations
+			}
+		}
+		add_tech_bonus = {
+			name = tizard_mission_focus
+			uses = 1
+			bonus = 1.0
+			category = light_fighter
+		}
+		add_tech_bonus = {
+			name = tizard_mission_focus
+			bonus = 1.0
+			uses = 2
+			category = radar_tech
+		}
+	}
+	
+	option = {
+		name = britain.1.c	#tech_sharing
+		trigger = { has_dlc = "Together for Victory" }
+		ai_chance = { factor = 10 }
+		add_political_power = -10
+		ENG = {
+			country_event = { days = 1 id = britain.21 }
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = tizard_relations
+			}
+		}
+		add_to_tech_sharing_group = tizard_mission
+	}
+}
+# USA helps
+country_event = {
+	id = britain.2
+	title = britain.2.t
+	desc = britain.2.d
+	picture = GFX_report_event_physics_lab_02
+
+	is_triggered_only = yes
+	
+	option = {
+		name = britain.2.a
+		add_tech_bonus = {
+			name = tizard_mission_focus
+			bonus = 1.0
+			category = light_fighter
+		}
+		add_tech_bonus = {
+			name = tizard_mission_focus
+			bonus = 1.0
+			uses = 2
+			category = radar_tech
+		}
+		USA = {
+			add_opinion_modifier = { target = ENG modifier = tizard_relations }
+		}
+	}
+}
+# USA says no
+country_event = {
+	id = britain.3
+	title = britain.3.t
+	desc = britain.3.d
+	picture = GFX_report_event_physics_lab_01
+
+	is_triggered_only = yes
+	
+	option = {
+		name = britain.3.a
+		add_opinion_modifier = { target = USA modifier = tizard_refused }
+	}
+}
+# Burma road china
+country_event = {
+	id = britain.4
+	title = britain.4.t
+	desc = britain.4.d
+	picture = GFX_report_event_burma_road
+
+	is_triggered_only = yes
+	
+	option = {
+		name = britain.4.a
+	}
+}
+
+# Burma road yunnan
+country_event = {
+	id = britain.5
+	title = britain.4.t
+	desc = britain.4.d
+	picture = GFX_report_event_burma_road
+
+	is_triggered_only = yes
+	
+	option = {
+		name = britain.4.a
+	}
+}
+#Time for India to be free
+country_event = {
+	id = britain.6
+	title = britain.6.t
+	desc = britain.6.d
+	picture = GFX_report_event_ghandi_women
+
+	is_triggered_only = yes
+	
+	option = {
+		name = britain.6.a
+		end_puppet = RAJ
+	}
+	option = {
+		name = britain.6.b
+		RAJ = {
+			add_stability = -0.30
+			add_war_support = -0.2
+		}
+	}
+}
+#End trade with Germany event for SWE/NOR
+country_event = {
+	id = britain.7
+	title = britain.7.t
+	desc = britain.7.d
+	picture = GFX_report_event_merchant_ship_01
+
+	is_triggered_only = yes
+
+	option = {
+		name = britain.7.a
+		ai_chance = { factor = 60 }
+		GER = {
+			add_opinion_modifier = { target = ROOT modifier = embargo } 
+			add_opinion_modifier = { target = ROOT modifier = embargo_relation } 
+		}
+	}
+	option = {
+		name = britain.7.b
+		ai_chance = { factor = 40 }
+		ENG = {
+			country_event = britain.8
+		}
+	}
+}
+country_event = {
+	id = britain.8
+	title = britain.8.t
+	desc = britain.8.d
+	picture = GFX_report_event_merchant_ship_01
+
+	is_triggered_only = yes
+	
+	option = {
+		name = britain.8.a
+		ai_chance = { factor = 70 }
+		create_wargoal = {
+				type = take_state
+				target = FROM
+				generator = owned_states
+			}
+		if = {
+			limit = {
+				USA = {
+					NOT = {
+						has_opinion_modifier = unprovoked_aggression
+					}
+				}
+			}
+			USA = {
+				add_opinion_modifier = { target = ROOT modifier = unprovoked_aggression }
+			}
+		}
+	}
+	option = {
+		name = britain.8.b
+		ai_chance = { factor = 30 }
+	}
+}
+# Chamberlain Resigns
+country_event = {
+	id = britain.9
+	title = britain.9.t
+	desc = britain.9.d
+	picture = GFX_report_event_chamberlain
+
+	fire_only_once = yes
+
+	is_triggered_only = yes 
+
+	option = {
+		name = britain.9.a
+		retire_country_leader = yes
+		
+		create_country_leader = {
+			name = "Winston Churchill"
+			desc = "POLITICS_WINSTON_CHURCHILL_DESC"
+			picture = "Portrait_Britain_Winston_Churchill.dds"
+			expire = "1965.1.1"
+			ideology = conservatism
+			traits = {
+				dislikes_germany great_leader
+			}
+		}
+		set_country_flag = chamberlain_resigned
+	}
+}
+
+
+# France wants to join allies
+country_event = {
+	id = britain.13
+	title = britain.13.t
+	desc = britain.13.d
+	picture = GFX_report_event_generic_sign_treaty2
+
+	is_triggered_only = yes
+	
+	option = {
+		name = britain.13.a
+		add_to_faction = FRA
+		FROM = {
+			add_ai_strategy = {
+				type = alliance
+				id = "ENG"
+				value = 200
+			}
+		}
+		FROM = { country_event = { id = france.29 } }
+		hidden_effect = {
+			news_event = { id = news.175 }
+		}
+	}
+	
+}
+# Germany demands Slovenia from Yugoslavia
+country_event = {
+	id = britain.14
+	title = britain.14.t
+	desc = britain.14.d
+	picture = GFX_report_event_hitler_croatia_handshake
+
+	is_triggered_only = yes
+	
+	option = { # Abandon Yugoalvia
+		name = britain.14.a
+		ai_chance = { factor = 90 }
+		FRA = { country_event = { id = france.25 hours = 2 } }
+		YUG = {
+			add_opinion_modifier = { target = ENG modifier = western_betrayal }
+		}		
+	}
+	
+	option = { # Support Yugoslavia
+		name = britain.14.b
+		ai_chance = {
+			factor = 0
+			modifier = {
+				factor = 0
+				is_in_faction_with = GER
+			}
+			modifier = {
+				factor = 0 
+				is_historical_focus_on = yes  # historical mod
+			}
+		}
+		if = {
+			limit = {
+				is_in_faction_with = GER
+				is_faction_leader = yes
+			}
+			remove_from_faction = GER
+		}
+		if = {
+			limit = {
+				is_in_faction_with = GER
+				is_faction_leader = no
+			}
+			GER = { remove_from_faction = ENG }
+		}
+		add_political_power = -200
+		add_opinion_modifier = { target = GER modifier = condemn_aggression }
+		effect_tooltip = {
+			GER = {
+				create_wargoal = {
+					type = take_state_focus
+					target = YUG
+					generator = { 102 }
+				}
+			}
+		}
+		add_to_faction = YUG
+		YUG = {
+			add_ai_strategy = {
+				type = alliance
+				id = "ENG"
+				value = 200
+			}
+		}
+		if = {
+			limit = {
+				FRA = {
+					is_puppet = no
+					NOT = { has_war_with = YUG }
+				}
+			}
+			FRA = { country_event = { id = france.26 hours = 2 } }
+		}
+		YUG = {
+			add_opinion_modifier = { target = ENG modifier = offered_support }
+		}
+	}	
+}
+# France leaves the Allies
+country_event = {
+	id = britain.15
+	title = britain.15.t
+	desc = britain.15.d
+	picture = GFX_report_event_french_british_officers
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = britain.15.a
+		FRA = {
+			add_opinion_modifier = { target = ENG modifier = abandoned_yugoslavia }
+		}
+	}
+}
+# King dies
+country_event = {
+	id = britain.16
+	title = britain.16.t
+	desc = britain.16.d
+	picture = GFX_report_event_europe_funeral
+	
+	is_triggered_only = yes 
+
+	fire_only_once = yes
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = ENG_king_died
+			remove_ideas = george_v
+			add_ideas = ENG_king_edward
+			add_ideas = ENG_king_edward_penalty
+		}		
+	}
+	
+	option = {
+		name = britain.16.a
+		effect_tooltip = {
+			remove_ideas = george_v		
+			add_ideas = ENG_king_edward
+			add_ideas = ENG_king_edward_penalty
+		}
+	}
+}
+# King abdicates
+country_event = {
+	id = britain.17
+	title = britain.17.t
+	desc = britain.17.d
+	picture = GFX_report_event_generic_sign_treaty2
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+
+	immediate = {
+		hidden_effect = {
+			remove_ideas = ENG_king_edward
+			add_ideas = ENG_george_vi		
+		}
+	}
+
+	option = {
+		name = britain.17.a
+		effect_tooltip = {
+			remove_ideas = ENG_king_edward
+			add_ideas = ENG_george_vi		
+		}
+	}
+}
+# Return of the Nazi King
+country_event = {
+	id = britain.18
+	title = britain.18.t
+	desc = britain.18.d
+	picture = GFX_report_event_fascist_gathering
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+	
+	immediate = {
+		hidden_effect = {
+			remove_ideas = ENG_george_vi		
+		}
+	}
+
+	option = {
+		name = britain.18.a
+		effect_tooltip = {
+			remove_ideas = ENG_george_vi	
+		}
+		create_country_leader = {
+			name = "Edward VIII"
+			desc = "POLITICS_EDWARD_EDWARD_DESC"
+			picture = "Portrait_Britain_Edward_VIII.dds"
+			expire = "1965.1.1"
+			ideology = fascism_ideology
+			traits = {
+				inexperienced_imperialist				
+			}
+		}
+	}
+
+	option = {
+		name = britain.18.b	
+		effect_tooltip = {
+			remove_ideas = ENG_george_vi	
+		}
+		add_ideas = ENG_king_edward_fascism
+	}
+}
+
+country_event = {
+	id = britain.21
+	title = britain.21.t
+	desc = britain.21.d
+	picture = GFX_report_event_physics_lab_02
+
+	is_triggered_only = yes
+	
+	option = {
+		name = britain.21.a
+		add_to_tech_sharing_group = tizard_mission
+		USA = {
+			add_opinion_modifier = { target = ENG modifier = tizard_relations }
+		}
+	}
+}
+
+# Stanley Baldwin Resigns
+country_event = {
+	id = britain.22
+	title = britain.22.t
+	desc = britain.22.d
+	picture = GFX_report_event_royal_parade
+ 
+	fire_only_once = yes
+ 
+	is_triggered_only = yes
+
+	option = {
+		name = britain.22.a
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "Neville Chamberlain"
+			desc = "POLITICS_NEVILLE_CHAMBERLAIN_DESC"
+			picture = "Portrait_Britain_Neville_Chamberlain.dds"
+			expire = "1965.1.1"
+			ideology = liberalism
+			traits = {
+			}
+		}
+		set_country_flag = baldwin_resigned
+	  }
+}
+
+country_event = { 
+	id = britain.38 
+	title = britain.38.t 
+	desc = britain.38.d
+	picture = GFX_report_event_generic_rifles
+
+	is_triggered_only = yes
+
+	option = {
+		name = britain.38.a 
+		if = {
+			limit = {
+				has_idea = free_trade 
+			}
+			add_ideas = export_focus
+		}
+		if = {
+			limit = {
+				OR = {
+					has_idea = disarmed_nation 
+					has_idea = volunteer_only
+				}
+			}
+			add_ideas = limited_conscription
+		}
+	}
+}
+country_event = { 
+	id = britain.39 
+	title = britain.39.t 
+	desc = britain.39.d
+	picture = GFX_report_event_french_resistance_02
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = britain.39.a 
+	}
+}
+country_event = { 
+	id = britain.40 
+	title = britain.40.t 
+	desc = britain.40.d
+	picture = GFX_report_event_french_resistance_02
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = britain.40.a 
+	}
+}
+country_event = { 
+	id = britain.41 
+	title = britain.41.t 
+	desc = britain.41.d
+	picture = GFX_report_event_french_resistance_01
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = britain.41.a 
+	}
+}
+## Britain Sea lion defense
+country_event = {
+	id = britain.42
+	title = britain.42.t
+	desc = britain.42.d
+	picture = GFX_report_event_soldiers_in_france
+	
+	fire_only_once = yes
+
+	is_triggered_only = yes
+		
+	option = {
+		name = britain.42.a		
+		add_timed_idea = {
+			idea = fight_them_on_the_shores
+			days = 180
+		}
+			
+		if = {
+			limit = { USA = { NOT = { has_war_with = GER } NOT = { is_in_faction_with = ENG } has_government = democratic } } 
+			USA = { country_event = generic.5 }
+			USA = {
+				add_to_war = { 
+					targeted_alliance = ENG
+					enemy = GER
+				}
+			}	
+		}	
+		if = {
+			limit = {
+				ENG = { controls_state = 100 }
+				ENG = { controls_state = 101 }
+			}
+			USA = { country_event = { id = oak_usa.50 } }
+		}			
+		news_event = { hours = 4 id = news.461 }
+	}			
+}
+
+country_event = { #Applying Economic Pressure to Germany
+	id = britain.43
+	title = britain.43.t 
+	desc = britain.43.d
+	picture = GFX_report_event_generic_sign_treaty1
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = britain.43.a 
+		add_political_power = -150 
+	}
+	option = {
+		name = britain.43.b 
+		add_ideas = ENG_sanctions_against_GER
+	}
+}
+
+country_event = { #Applying more economic pressure to Germany 
+	id = britain.44
+	title = britain.44.t 
+	desc = britain.44.d
+	picture = GFX_report_event_generic_sign_treaty1
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = britain.44.a 
+		add_political_power = -150 
+	}
+	option = {
+		name = britain.44.b 
+		if = {
+			limit = {
+				has_idea = ENG_sanctions_against_GER 
+			}
+			swap_ideas = { 
+				remove_idea = ENG_sanctions_against_GER
+				add_idea = ENG_embargo_against_GER_2
+			}
+		}
+		else = {
+			add_ideas = ENG_sanctions_against_GER
+		}
+	}
+}
+
+### EOF ###

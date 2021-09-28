@@ -1,0 +1,424 @@
+﻿###########################
+# Romanian Events
+###########################
+
+add_namespace = romania
+
+# Soviet Union demands Bessarabia
+country_event = {
+	id = romania.1
+	title = romania.1.t
+	desc = romania.1.d
+	picture = GFX_report_event_generic_read_write
+	
+	is_triggered_only = yes
+	
+	
+	option = { # Accept demands
+		name = romania.1.a
+		SOV = {
+			country_event = { days = 1 id = soviet.4 }
+		}
+		set_country_flag = bessarabia_ceded
+		if = {
+			limit = {
+				has_idea = ROM_preserve_greater_romania
+			}
+			remove_ideas = ROM_preserve_greater_romania
+		}
+		if = {
+			limit = {
+				has_idea = ROM_preserve_greater_romania2 
+			}
+			remove_ideas = ROM_preserve_greater_romania2 
+		}
+		add_ideas = ROM_army_tensions
+	}
+}
+
+# Second Vienna Award - Northern Transylvania
+country_event = {
+	id = romania.2
+	title = romania.2.t
+	desc = romania.2.d
+	picture = GFX_report_event_second_vienna_award_pact
+	
+	is_triggered_only = yes
+	
+	option = { # Accept demands
+		name = romania.2.a
+		ai_chance = {
+			factor = 100 # historical mod
+		}
+		HUN = {
+			country_event = { days = 1 id = hungary.2 }
+		}
+		BUL = {
+			country_event = { days = 14 id = bulgaria.4 }
+		}
+		set_country_flag = second_vienna_accepted_north
+		if = {
+			limit = {
+				has_idea = ROM_preserve_greater_romania
+			}
+			remove_ideas = ROM_preserve_greater_romania
+		}
+		if = {
+			limit = {
+				has_idea = ROM_preserve_greater_romania2 
+			}
+			remove_ideas = ROM_preserve_greater_romania2 
+		}
+	}
+}
+
+# Second Vienna Award - All of Transylvania
+country_event = {
+	id = romania.3
+	title = romania.2.t
+	desc = romania.3.d
+	picture = GFX_report_event_second_vienna_award_pact
+	
+	is_triggered_only = yes
+	
+	option = { # Accept demands
+		name = romania.2.a
+		ai_chance = {
+			factor = 100
+		}
+		HUN = {
+			country_event = { days = 1 id = hungary.3 }
+		}
+		BUL = {
+			country_event = { days = 14 id = bulgaria.4 }
+		}
+		set_country_flag = second_vienna_accepted_all
+		if = {
+			limit = {
+				has_idea = ROM_preserve_greater_romania
+			}
+			remove_ideas = ROM_preserve_greater_romania
+		}
+		if = {
+			limit = {
+				has_idea = ROM_preserve_greater_romania2 
+			}
+			remove_ideas = ROM_preserve_greater_romania2 
+		}
+	}
+}
+
+# Second Vienna Award - No Concessions
+country_event = {
+	id = romania.4
+	title = romania.4.t
+	desc = romania.4.d
+	picture = GFX_report_event_germany_politician_handshake
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = romania.4.a
+	}
+}
+
+# Treaty of Craiova - Bulgaria Demands Territory
+country_event = {
+	id = romania.5
+	title = romania.5.t
+	desc = romania.5.d
+	picture = GFX_report_event_hitler_croatia_handshake
+	
+	is_triggered_only = yes
+	
+	option = { # Accept
+		name = romania.5.a
+		ai_chance = { factor = 90 }
+		effect_tooltip = {
+			BUL = { transfer_state = 77 }
+		}
+		BUL = {
+			country_event = { days = 1 id = bulgaria.1 }
+		}
+	}
+	option = { # Refuse
+		name = romania.5.b
+		ai_chance = { 
+			factor = 10
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			} 
+		}
+		BUL = {
+			country_event = { days = 1 id = bulgaria.2 }
+		}
+	}
+}
+
+country_event = {
+	id = romania.6
+	title = romania.6.t
+	desc = romania.6.d
+	picture = GFX_report_event_europe_funeral
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = romania.6.a
+	}
+}
+
+# Garda de Fier events
+#Hidden dispatch event
+country_event = {
+	id = romania.100
+	
+	is_triggered_only = yes
+
+	hidden = yes
+
+	immediate = {
+		random_list = {
+			20 = { country_event = { id = romania.7 days = 100 random = 30 } } #Iron Guards Gathering
+			20 = { country_event = { id = romania.8 days = 100 random = 30 } } #Harassing Minorities
+			20 = { country_event = { id = romania.9 days = 100 random = 30 } } #Infiltration in the Army
+			20 = { country_event = { id = romania.10 days = 100 random = 30 } } #Political Assassination
+			20 = { country_event = { id = romania.11 days = 100 random = 30 } } #Terror Bombing
+		}				
+	}
+}
+
+country_event = { #Iron Guards Gathering 
+	id = romania.7
+	title = romania.7.t
+	desc = romania.7.desc
+	picture = GFX_report_event_spr_italian_volunteers
+	
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			has_idea = ROM_iron_guard 
+			has_idea = ROM_iron_guard2
+		}
+	}
+
+	option = { 
+		name = romania.7.a
+		add_popularity = {
+			ideology = fascism 
+			popularity = 0.02
+		}
+		add_political_power = -20
+		ai_chance = {
+		}
+		hidden_effect = {
+			country_event = { id = romania.100 }
+		}
+	}
+	option = { 
+		name = romania.7.b
+		add_political_power = -20
+		add_stability = 0.02
+		hidden_effect = {
+			country_event = { id = romania.100 }
+		}
+	}
+}
+country_event = { #Iron Guards Harassing Minorities 
+	id = romania.8
+	title = romania.8.t
+	desc = romania.8.desc
+	picture = GFX_report_event_gathering_protest
+	
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			has_idea = ROM_iron_guard 
+			has_idea = ROM_iron_guard2
+		}
+	}
+
+	option = { 
+		name = romania.8.a
+		add_popularity = {
+			ideology = fascism 
+			popularity = 0.01
+		}
+		add_stability = -0.01
+		ai_chance = {
+		}
+		hidden_effect = {
+			country_event = { id = romania.100 }
+		}
+	}
+	option = { 
+		name = romania.8.b
+		add_political_power = -20
+		add_stability = 0.02
+		add_popularity = {
+			ideology = democratic 
+			popularity = 0.02
+		}
+		hidden_effect = {
+			country_event = { id = romania.100 }
+		}
+	}
+}
+country_event = { #Iron Guards Infiltrating the Army 
+	id = romania.9
+	title = romania.9.t
+	desc = romania.9.desc
+	picture = GFX_report_event_czech_soldiers_01
+	
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			has_idea = ROM_iron_guard 
+			has_idea = ROM_iron_guard2
+		}
+	}
+
+	option = { 
+		name = romania.9.a
+		add_popularity = {
+			ideology = fascism 
+			popularity = 0.02
+		}
+		add_war_support = -0.02
+		ai_chance = {
+		}
+		hidden_effect = {
+			country_event = { id = romania.100 }
+		}
+	}
+	option = { 
+		name = romania.9.b
+		add_political_power = -25
+		add_war_support = 0.02
+		army_experience = 10 
+		add_popularity = {
+			ideology = democratic 
+			popularity = 0.01
+		}
+		hidden_effect = {
+			country_event = { id = romania.100 }
+		}
+	}
+}
+country_event = { #Iron Guards Assassination 
+	id = romania.10
+	title = romania.10.t
+	desc = romania.10.desc
+	picture = GFX_report_event_usa_funeral
+	
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			has_idea = ROM_iron_guard 
+			has_idea = ROM_iron_guard2
+		}
+	}
+
+	option = { 
+		name = romania.10.a
+		add_popularity = {
+			ideology = fascism 
+			popularity = 0.01
+		}
+		add_stability = -0.05
+		ai_chance = {
+		}
+		hidden_effect = {
+			country_event = { id = romania.100 }
+		}
+	}
+	option = { 
+		name = romania.10.b
+		add_popularity = {
+			ideology = fascism 
+			popularity = -0.03
+		}
+		add_stability = 0.05 
+		hidden_effect = {
+			country_event = { id = romania.100 }
+		}
+	}
+}
+
+country_event = { #Terror Bombing 
+	id = romania.11
+	title = romania.11.t
+	desc = romania.11.desc
+	picture = GFX_report_event_ger_civil_war
+	
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			has_idea = ROM_iron_guard 
+			has_idea = ROM_iron_guard2
+		}
+	}
+
+	option = { 
+		name = romania.11.a
+		add_stability = -0.05
+		random_owned_controlled_state = {
+			damage_building = {
+				type = infrastructure 
+				damage = 3 
+			}
+		}
+		ai_chance = {
+		}
+		hidden_effect = {
+			country_event = { id = romania.100 }
+		}
+	}
+	option = { 
+		name = romania.11.b
+		add_political_power = -25
+		random_owned_controlled_state = {
+			damage_building = {
+				type = infrastructure 
+				damage = 3 
+			}
+		}
+		ai_chance = {
+		}
+		hidden_effect = {
+			country_event = { id = romania.100 }
+		}
+	}
+}
+
+country_event = { #Election
+	id = romania.12
+	title = romania.12.t
+	desc = romania.12.desc
+	picture = GFX_report_event_ger_civil_war
+	
+	is_triggered_only = yes
+
+	trigger = {
+	}
+
+	option = { 
+		name = romania.12.a
+		add_stability = -0.05
+		46 = {
+			damage_building = {
+				type = infrastructure 
+				damage = 2 
+			}
+		}
+
+		ai_chance = {
+		}
+	}
+}

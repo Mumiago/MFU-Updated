@@ -1,0 +1,459 @@
+﻿###########################
+# Finland Events
+###########################
+
+add_namespace = finland
+
+# Soviet Ultimatum
+country_event = {
+	id = finland.1
+	title = finland.1.t
+	desc = finland.1.d
+	picture = GFX_report_event_soviet_tanks_snow
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+	
+	option = { # Refuse
+		name = finland.1.b
+		
+		FIN = {
+			add_timed_idea = {
+				idea = neutrality_war
+				days = 960
+			}  
+			add_timed_idea = {
+				idea = FIN_winter_war_defence
+				days = 180
+			}				
+		}
+		SOV = {
+			country_event = { days = 5 id = soviet.13 }
+			effect_tooltip = {
+				declare_war_on = {
+				  target = FIN
+				  type = take_state
+				  generator = { 146 }
+				}
+			}
+		}
+	}
+}
+
+# Request Swedish Assistance?
+country_event = {
+	id = finland.2
+	title = finland.2.t
+	desc = finland.2.d
+	picture = GFX_report_event_soviet_finnish_pact
+	
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = finland.2.a
+		SWE = {
+			country_event = { id = finland.3 }
+		}
+	}
+
+	option = {
+		name = finland.2.b
+	}
+}
+
+# Swedish Support in Winter War
+country_event = {
+	id = finland.3
+	title = finland.3.t
+	desc = finland.3.d
+	picture = GFX_report_event_finnish_letter
+	
+	is_triggered_only = yes
+
+	option = {
+		name = finland.3.a
+
+		ai_chance = {
+			factor = 10 
+			modifier = {
+				factor = 10
+				OR = {
+					has_war = yes
+					has_government = communism
+				}
+			}
+		}
+
+		FIN = {
+			country_event = { id = finland.4 days = 3 }
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = refused_help
+			}
+		}
+	}
+
+	option = {
+		name = finland.3.b
+
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 5							
+				has_government = democratic
+				FIN = {
+				 has_government = democratic
+				}
+			}
+		}
+
+		trigger = {
+			AND = {
+				has_war = no
+				NOT = {
+					has_government = communism
+				}
+			}	
+			has_manpower > 8402
+		}
+		add_manpower = -8402
+		if = {
+			limit = {
+				has_equipment = {
+					infantry_equipment > 500
+				}
+			}
+			send_equipment = {
+				target = FIN
+				type = infantry_equipment
+				amount = 500
+			}
+		}
+		if = {
+			limit = {
+				has_equipment = {
+					artillery_equipment > 250
+				}
+			}
+			send_equipment = {
+				target = FIN
+				type = artillery_equipment
+				amount = 250
+			}
+		}
+		FIN = {
+			country_event = { id = finland.5 days = 3 }
+		}
+	}
+
+	
+}
+
+country_event = {
+	id = finland.4
+	title = finland.4.t
+	desc = finland.4.d
+	picture = GFX_report_event_finnish_soldiers_snow
+	
+	is_triggered_only = yes
+
+	option = {
+		name = finland.4.a
+	}
+}
+
+country_event = {
+	id = finland.5
+	title = finland.5.t
+	desc = finland.5.d
+	picture = GFX_report_event_swedish_soldier
+	
+	is_triggered_only = yes
+
+	option = {
+		name = finland.5.a
+		add_manpower = 8402
+		effect_tooltip = {
+			SWE = {
+				add_manpower = -8402
+				if = {
+					limit = {
+						has_equipment = {
+							infantry_equipment > 500
+						}
+					}
+					send_equipment = {
+						target = FIN
+						type = infantry_equipment
+						amount = 500
+					}
+				}
+				if = {
+					limit = {
+						has_equipment = {
+							artillery_equipment > 250
+						}
+					}
+					send_equipment = {
+						target = FIN
+						type = artillery_equipment
+						amount = 250
+					}
+				}
+			}
+		}
+	}
+}
+
+country_event = {
+	id = finland.6
+	title = finland.6.t
+	desc = finland.6.d
+	picture = GFX_report_event_swedish_soldier
+	
+	is_triggered_only = yes
+
+	option = {
+		name = finland.6.a
+	}
+}
+
+#Surrender when Soviet has taken too much land
+country_event = {
+	id = finland.7
+	title = finland.7.t
+	desc = finland.7.d
+	picture = GFX_report_event_soviet_tanks_snow
+	
+	is_triggered_only = yes
+
+	fire_only_once = yes
+
+	#Surrender and offer territory
+	option = {
+		name = finland.7.a
+		SOV = {
+			country_event = { id = finland.8 }
+			white_peace = FIN
+			transfer_state = 146
+			transfer_state = 147			
+		}
+	}
+
+}
+
+#Soviet response to Finish surrender
+country_event = {
+	id = finland.8
+	title = finland.8.t
+	desc = finland.8.d
+	picture = GFX_report_event_finnish_soldiers_snow
+	
+	is_triggered_only = yes
+
+	#Accept surrender
+	option = {
+		name = finland.8.a
+	}
+
+}
+
+#mannerheim line 
+country_event = {
+	id = finland.11
+	title = finland.11.t 
+	desc = finland.11.d 
+	picture = GFX_news_event_finnish_flag
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = finland.11.a 
+		ai_chance = { factor = 100 }
+		146 = {
+		add_building_construction = {
+					type = bunker
+					level = 3
+					province = 3060
+					instant_build = yes
+				}
+		add_building_construction = {
+					type = bunker
+					level = 3
+					province = 9150
+					instant_build = yes
+				}
+		}
+		
+	}
+		
+	option = {
+		name = finland.11.b 
+		ai_chance = { factor = 0 }
+		146 = {
+		add_building_construction = {
+					type = bunker
+					level = 3
+					province = 9100
+					instant_build = yes
+				}
+		add_building_construction = {
+					type = bunker
+					level = 3
+					province = 9105
+					instant_build = yes
+				}
+		}
+	}
+}
+
+#continuation war starts
+country_event = {
+	id = finland.26
+	title = finland.26.t
+	desc = finland.26.d
+	picture = GFX_report_event_finnish_soldiers_snow
+
+	fire_only_once = yes
+	is_triggered_only = yes
+	option = {
+		name = finland.26.a
+		if = {
+			limit = {
+				NOT = { has_war_with = SOV }
+			}
+			declare_war_on = {
+				target = SOV
+				type = annex_everything
+			}
+		}  	
+		hidden_effect = { news_event = { id = finland.27 } }
+		GER = {
+			country_event = generic.2
+		}
+	}
+}
+news_event = {
+	id = finland.27
+	title = finland.27.t
+	picture = GFX_news_event_soviet_soldiers_ruins
+	desc = finland.27.d
+	is_triggered_only = yes
+	major = yes
+	fire_for_sender = no
+	option = {
+		name = finland.27.a
+	}
+}
+#end of continuation
+country_event = {
+	id = finland.28
+	title = finland.28.t
+	desc = finland.28.d
+	picture = GFX_report_event_soviet_tanks_snow
+	
+	is_triggered_only = yes
+
+	fire_only_once = yes
+
+	#Surrender 
+	option = {
+		name = finland.28.a
+		SOV = {
+			country_event = { id = finland.29 }
+		}
+		effect_tooltip = {
+			SOV = { 
+				white_peace = {
+					tag = FIN 
+					message = FIN_agree_peace2
+				} 
+				transfer_state = 722
+			}
+			FIN = {
+				leave_faction = yes
+				set_rule = {
+					can_join_factions = no
+					can_not_declare_war = yes
+				}				
+				if = {
+					limit = {
+						ENG = { is_faction_leader = yes }
+						has_war_with = ENG
+					}
+					white_peace = {
+						tag = ENG 
+					}
+				}	
+				if = {
+					limit = {
+						USA = { is_faction_leader = yes }
+						has_war_with = USA
+					}
+					white_peace = {
+						tag = USA 
+					}
+				}
+			}
+		}
+	}
+}
+country_event = {
+	id = finland.29
+	title = finland.29.t
+	desc = finland.29.d
+	picture = GFX_report_event_soviet_tanks_snow
+	
+	is_triggered_only = yes
+
+	#Accept surrender
+	option = {
+		name = finland.29.a
+			
+		SOV = {
+			white_peace = {
+				tag = FIN 
+				message = FIN_agree_peace2 
+			}
+			transfer_state = 722
+		}
+		FIN = {
+			leave_faction = yes
+			if = {
+				limit = {
+					ENG = { is_faction_leader = yes }
+					has_war_with = ENG
+				}
+				white_peace = {
+					tag = ENG 
+				}
+			}	
+			if = {
+				limit = {
+					USA = { is_faction_leader = yes }
+					has_war_with = USA
+				}
+				white_peace = {
+					tag = USA 
+				}
+			}
+			add_ideas = neutrality_idea
+		}	 
+		hidden_effect = { news_event = { id = finland.30 } }
+	}
+}
+news_event = {
+	id = finland.30
+	title = finland.30.t
+	picture = GFX_news_event_soviet_soldiers_ruins
+	desc = finland.30.d
+	is_triggered_only = yes
+	major = yes
+	fire_for_sender = no
+	option = {
+		name = finland.30.a
+	}
+}

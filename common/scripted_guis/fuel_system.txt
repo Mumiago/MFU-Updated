@@ -1,0 +1,372 @@
+scripted_gui = {
+	fuel_tool_topbar_win = {
+		context_type = player_context
+
+		window_name = "fuel_tool_topbar_win"
+		parent_window_token = logistics_tab
+		visible = {
+			has_country_flag = fuel_system_enabled
+
+		}
+
+		effects = {
+
+			fuel_value_button_click = {
+				# Coring List Window
+
+				if = {
+					limit = {
+						always = yes
+					}
+					if = {
+						limit = {
+							has_variable = show_fuel_system_window
+						}
+						clear_variable = show_fuel_system_window
+					}
+					else = {
+						set_variable = { show_fuel_system_window = 1 }
+					}
+				}
+
+			}
+		}
+
+		triggers = {
+			fuel_value_button_click_enabled = {
+				has_country_flag = fuel_system_enabled
+			}
+			fuel_value_button_visible = {
+				has_country_flag = fuel_system_enabled
+			}
+		}
+	}
+	how_about_no = {
+		context_type = player_context
+		window_name = "how_about_no"
+
+		triggers = {
+
+			how_about_no_button_click_enabled = {
+				any_country = {
+					is_ai = no
+					any_other_country = {
+						is_ai = no
+					}
+				}
+			}
+			how_about_no_button2_click_enabled = {
+				any_country = {
+					is_ai = no
+					any_other_country = {
+						is_ai = no
+					}
+				}
+			}
+			how_about_no_button3_click_enabled = {
+				any_country = {
+					is_ai = no
+					any_other_country = {
+						is_ai = no
+					}
+				}
+			}
+			how_about_no_button4_click_enabled = {
+				any_country = {
+					is_ai = no
+					any_other_country = {
+						is_ai = no
+					}
+				}
+			}
+			how_about_no_button5_click_enabled = {
+				any_country = {
+					is_ai = no
+					any_other_country = {
+						is_ai = no
+					}
+				}
+			}
+			how_about_no_button6_click_enabled = {
+				any_country = {
+					is_ai = no
+					any_other_country = {
+						is_ai = no
+					}
+				}
+			}
+			how_about_no_button7_click_enabled = {
+				any_country = {
+					is_ai = no
+					any_other_country = {
+						is_ai = no
+					}
+				}
+			}
+			how_about_no_button8_click_enabled = {
+				any_country = {
+					is_ai = no
+					any_other_country = {
+						is_ai = no
+					}
+				}
+			}
+			how_about_no_button9_click_enabled = {
+				any_country = {
+					is_ai = no
+					any_other_country = {
+						is_ai = no
+					}
+				}
+			}
+			how_about_no_button10_click_enabled = {
+				any_country = {
+					is_ai = no
+					any_other_country = {
+						is_ai = no
+					}
+				}
+			}
+			how_about_no_button11_click_enabled = {
+				any_country = {
+					is_ai = no
+					any_other_country = {
+						is_ai = no
+					}
+				}
+			}
+			how_about_no_button12_click_enabled = {
+				any_country = {
+					is_ai = no
+					any_other_country = {
+						is_ai = no
+					}
+				}
+			}
+			how_about_no_button13_click_enabled = {
+				any_country = {
+					is_ai = no
+					any_other_country = {
+						is_ai = no
+					}
+				}
+			}
+			how_about_no_button14_click_enabled = {
+				any_country = {
+					is_ai = no
+					any_other_country = {
+						is_ai = no
+					}
+				}
+			}
+			how_about_no_button15_click_enabled = {
+				any_country = {
+					is_ai = no
+					any_other_country = {
+						is_ai = no
+					}
+				}
+			}
+		}
+
+	}
+	fuel_system_window = {
+		context_type = player_context
+		parent_window_token = logistics_tab
+		window_name = "fuel_system_window"
+
+		visible = {
+			check_variable = { show_fuel_system_window > 0 }
+		}
+
+		effects = {
+			refresh_button_click {
+				if = {
+					limit = {
+						any_country = {
+							OR={AND={NOT= { tag = ROOT }
+									is_in_faction_with = ROOT
+									NOT = { is_in_array = { ROOT.faction_members_array = THIS.id } }
+								}
+								any_of_scopes= { array=ROOT.faction_members_array exists = no }
+							}
+						}
+
+					}
+					clear_array = ROOT.faction_members_array
+					every_country = {
+						limit = {
+							NOT= { tag = ROOT }
+							OR = { is_in_faction_with = ROOT
+								AND={ROOT= { tag=GER} tag = SPR} }
+							NOT = { is_in_array = { ROOT.faction_members_array = THIS.id } }
+
+						}
+						add_to_array = { ROOT.faction_members_array = THIS.id }
+					}
+				}
+				if = {
+					limit = {
+						any_of_scopes={array=ROOT.faction_members_array NOT={is_in_array= { GLOBAL.fuel_countries = THIS.id} }
+						}
+					}
+					for_each_scope_loop = {
+						array = ROOT.faction_members_array
+						if={limit={NOT={is_in_array= { GLOBAL.fuel_countries = THIS.id} } }
+							add_to_array= { GLOBAL.fuel_countries = THIS.id} }
+					}
+				}
+			}
+			close_button_click = {
+				clear_variable = show_fuel_system_window
+			}
+
+			increase_fuel_priority_click = {
+				for_each_loop = {
+					array = ROOT.faction_members_array
+					if={limit{var:v= { tag = PREV} }
+						set_temp_variable = { new_index = i }
+						add_to_temp_variable= { new_index = -1 }
+						if={limit={check_variable =  { new_index >-1} }
+							remove_from_array = {
+								array = ROOT.faction_members_array
+								value = THIS
+							}
+							add_to_array = {
+								array = ROOT.faction_members_array
+								value = THIS
+								index = new_index
+							}
+						}
+						set_temp_variable= { break = 1 }
+					}
+					} }
+
+			decrease_fuel_priority_click = {
+				for_each_loop = {
+					array = ROOT.faction_members_array
+					if={limit{var:v= { tag = PREV} }
+						set_temp_variable = { new_index = i }
+						add_to_temp_variable= { new_index = 1 }
+						if={limit={check_variable =  { new_index <ROOT.faction_members_array^num} }
+							remove_from_array = {
+								array = ROOT.faction_members_array
+								value = THIS
+							}
+							add_to_array = {
+								array = ROOT.faction_members_array
+								value = THIS
+								index = new_index
+							}
+						}
+						set_temp_variable= { break = 1 }
+					}
+					} }
+			decrease_fuel_priority_shift_click = {
+				remove_from_array = {
+					array = ROOT.faction_members_array
+					value = THIS
+				}
+				add_to_array = {
+					array = ROOT.faction_members_array
+					value = THIS
+				}
+			}
+			increase_fuel_priority_shift_click = {
+				remove_from_array = {
+					array = ROOT.faction_members_array
+					value = THIS
+				}
+				add_to_array = {
+					array = ROOT.faction_members_array
+					value = THIS
+					index = 0
+				}
+			}
+			increase_min_fuel_button_click = {
+				add_to_variable= { min_fuel = 0.05 }
+				clamp_variable = {
+					var = min_fuel
+					min = 0.05
+					max = 1
+				}
+			}
+			decrease_min_fuel_button_click = {
+				add_to_variable= { min_fuel = -0.05 }
+				clamp_variable = {
+					var = min_fuel
+					min = 0.05
+					max = 1
+				}
+			}
+			increase_min_fuel_button_shift_click = {
+				add_to_variable= { min_fuel = 0.1 }
+				clamp_variable = {
+					var = min_fuel
+					min = 0.05
+					max = 1
+				}
+			}
+			decrease_min_fuel_button_shift_click = {
+				add_to_variable= { min_fuel = -0.1 }
+				clamp_variable = {
+					var = min_fuel
+					min = 0.05
+					max = 1
+				}
+			}
+			enable_send_fuel_root_click = {
+				if={limit={check_variable =  { send_fuel_enabled >0} }
+					clear_variable = send_fuel_enabled
+					for_each_scope_loop = {
+						array = ROOT.faction_members_array
+						clear_variable = send_fuel_enabled} }
+				else {
+					set_variable= { send_fuel_enabled = 2 }
+					for_each_scope_loop = {
+						array = ROOT.faction_members_array
+						set_variable= { send_fuel_enabled = 2} }
+				}
+			}
+			enable_send_fuel_click = {
+				if={limit={check_variable =  { send_fuel_enabled >0} }
+					clear_variable = send_fuel_enabled
+					else{set_variable= { send_fuel_enabled = 2} }
+				}
+			}
+
+		}
+
+		triggers = {
+			no_faction_members_info_visible = {
+				check_variable = { ROOT.faction_members_array^num < 1 }
+			}
+
+
+		}
+		properties = {
+			fuel_bar = {
+
+				x = fuel_bar_fuel
+			}
+			enable_send_fuel = {
+				frame = send_fuel_enabled
+			}
+			enable_send_fuel_root = {
+				frame = send_fuel_enabled
+			}
+
+
+		}
+
+		dynamic_lists = {
+			fuel_faction_members_gridbox = {
+				array = faction_members_array
+				entry_container = fuel_faction_members_entry
+				change_scope = yes
+			}
+		}
+	}
+
+
+}

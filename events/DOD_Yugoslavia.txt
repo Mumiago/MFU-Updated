@@ -1,0 +1,1017 @@
+﻿###########################
+# Yugoslavian Events
+###########################
+
+add_namespace = DOD_yugoslavia
+
+
+# Yugoslavia joins axis without solving Anti-German military - coup event
+country_event = {
+	id = DOD_yugoslavia.1
+	title = DOD_yugoslavia.1.t
+	desc = DOD_yugoslavia.1.desc
+	picture = GFX_report_event_yugoslavian_king_peter
+	
+	#fire_only_once = yes
+
+	is_triggered_only = yes
+
+	#mean_time_to_happen = { days = 2 }
+	
+	option = { #welp
+		name = DOD_yugoslavia.1.a
+		ai_chance = {
+			factor = 70
+			modifier = {
+				has_war_with = ENG
+				factor = 0
+			}
+		}	
+		retire_country_leader = yes
+		create_country_leader = {
+			name = "Peter II"
+			desc = "POLITICS_PETER_II_DESC"
+			picture = "Portrait_Yugoslavia_Peter_II.dds"
+			expire = "1965.1.1"
+			ideology = despotism
+			traits = {
+				#
+			}
+		}
+		GER = { country_event = DOD_yugoslavia.2 }
+		if = {
+			limit = {
+				is_in_faction_with = GER
+			}
+			GER = { remove_from_faction = YUG }
+		}
+		if = {
+			limit = {
+				is_puppet_of = GER
+			}
+			set_autonomy = {
+				target = YUG
+				autonomy_state = autonomy_free
+			}
+			set_politics = { ruling_party = neutrality elections_allowed = yes }
+			add_popularity = { ideology = neutrality popularity = 0.5 }
+			set_party_name = { ideology = neutrality long_name = YUG_neutrality_party_2 name = YUG_neutrality_party_2 }
+		}
+		if = {
+			limit = {
+				has_war_with = ENG
+			}
+			ENG = {
+				white_peace = {
+					tag = YUG
+				} 
+			}
+		}
+		if = {
+			limit = {
+				has_war_with = FRA
+			}
+			FRA = {
+				white_peace = {
+					tag = YUG
+				} 
+			}
+		}
+		if = {
+			limit = {
+				has_war_with = USA
+			}
+			USA = {
+				white_peace = {
+					tag = YUG
+				} 
+			}
+		}
+		if = {
+			limit = {
+				has_war_with = POL
+			}
+			POL = {
+				white_peace = {
+					tag = YUG
+				} 
+			}
+		}
+	}
+	option = { #resistance to the coup, call on Germans for support
+		name = DOD_yugoslavia.1.b
+		ai_chance = {
+			factor = 30
+		}	
+		GER = { country_event = DOD_yugoslavia.3 }
+		if = {
+			limit = {
+				109 = { is_owned_by = YUG }
+			}
+			set_capital = 109
+			else = {
+				if = {
+					limit = {
+						104 = { is_owned_by = YUG }
+					}
+					set_capital = 104
+				}
+			}
+		}
+		start_civil_war = { ideology = democratic size = 0.6 capital = 107 states = { 108 107 106 105 882 884 885 883 } }
+		random_country = {
+			limit = {
+				original_tag = YUG
+				has_government = democratic
+			}
+			retire_country_leader = yes
+			set_capital = 107
+			create_country_leader = {
+				name = "Peter II"
+				desc = "POLITICS_PETER_II_DESC"
+				picture = "Portrait_Yugoslavia_Peter_II.dds"
+				expire = "1965.1.1"
+				ideology = conservatism
+				traits = {
+					#
+				}
+			}
+		}
+	}
+}
+
+#Yugoslavian coup event - Yugoslavian government resists the coup, Germany comes to the rescue...or not
+country_event = {
+	id = DOD_yugoslavia.3
+	title = DOD_yugoslavia.2.t
+	desc = DOD_yugoslavia.3.desc
+	picture = GFX_report_event_military_planning
+	
+	is_triggered_only = yes
+	
+	option = { #invasion!
+		name = DOD_yugoslavia.3.a
+		ai_chance = {
+			factor = 70
+		}	
+		create_wargoal = {
+			type = annex_everything
+			target = YUG
+		}
+	}
+
+	option = { #rescue
+		name = DOD_yugoslavia.3.b	
+		ai_chance = {
+			factor = 30
+		}
+		add_to_faction = YUG
+	}
+}
+
+
+#Yugoslavia wants to buy planes - event for GER,FRA,ENG,ITA
+country_event = {
+	id = DOD_yugoslavia.20
+	title = DOD_yugoslavia.20.t
+	desc = DOD_yugoslavia.20.desc
+	picture = GFX_report_event_fighters
+	
+	is_triggered_only = yes
+	
+	option = { # send some fighters
+		name = DOD_yugoslavia.20.a
+		ai_chance = {
+			factor = 70
+		}	
+		trigger = {
+			has_equipment = { fighter_equipment > 50 }
+		}
+		send_equipment = {
+			target = YUG
+			type = fighter_equipment
+			amount = 50
+		}
+		add_timed_idea = { idea = YUG_air_payment days = 180 }
+		YUG = {
+			country_event = DOD_yugoslavia.21
+		}
+	}	
+	option = { # send some bombers
+		name = DOD_yugoslavia.20.b
+		ai_chance = {
+			factor = 70
+		}
+		trigger = {
+			has_equipment = { tac_bomber_equipment > 25 }
+		}
+		send_equipment = {
+			target = YUG
+			type = tac_bomber_equipment
+			amount = 25
+		}	
+		add_timed_idea = { idea = YUG_air_payment days = 180 }
+		YUG = {
+			country_event = DOD_yugoslavia.22
+		}
+	}
+
+	option = { # divert some fighters from production
+		name = DOD_yugoslavia.20.d
+		ai_chance = {
+			factor = 70
+		}	
+		trigger = {
+			NOT = { has_equipment = { fighter_equipment > 50 } }
+		}
+		add_timed_idea = { idea = YUG_air_payment days = 180 }
+		add_timed_idea = { idea = YUG_fighter_production_diverted days = 120 }
+		YUG = {
+			country_event = DOD_yugoslavia.23
+		}
+	}
+
+	option = { # divert some bombers from production
+		name = DOD_yugoslavia.20.e
+		ai_chance = {
+			factor = 70
+		}
+		trigger = {
+			NOT = { has_equipment = { tac_bomber_equipment > 25 } }
+		}
+		add_timed_idea = { idea = YUG_air_payment days = 180 }
+		add_timed_idea = { idea = YUG_bomber_production_diverted days = 120 }
+		YUG = {
+			country_event = DOD_yugoslavia.24
+		}
+	}
+	option = { # no
+		name = DOD_yugoslavia.20.c
+		ai_chance = {
+			factor = 30
+		}	
+	}	
+		
+	
+}
+#Yugoslavia wants to buy planes - Major nation sells some fighters
+country_event = {
+	id = DOD_yugoslavia.21
+	title = DOD_yugoslavia.21.t
+	desc = DOD_yugoslavia.21.desc   
+	picture = GFX_report_event_fighters
+	
+	is_triggered_only = yes
+	
+	option = { # cool
+		name = DOD_yugoslavia.21.a
+		ai_chance = {
+			factor = 30
+		}
+		add_opinion_modifier = { target = FROM modifier = YUG_sold_planes }	
+	}	
+		
+	
+}
+
+#Yugoslavia wants to buy planes - Major nation sells some bombers
+country_event = {
+	id = DOD_yugoslavia.22
+	title = DOD_yugoslavia.22.t
+	desc = DOD_yugoslavia.22.desc
+	picture = GFX_report_event_generic_bombers
+	
+	is_triggered_only = yes
+	
+	option = { # cool
+		name = DOD_yugoslavia.21.a
+		ai_chance = {
+			factor = 30
+		}
+		add_opinion_modifier = { target = FROM modifier = YUG_sold_planes }	
+	}	
+		
+	
+}
+#Yugoslavia wants to buy planes - Major nation sells some fighters
+country_event = {
+	id = DOD_yugoslavia.23
+	title = DOD_yugoslavia.21.t
+	desc = DOD_yugoslavia.21.desc   
+	picture = GFX_report_event_fighters
+	
+	is_triggered_only = yes
+	
+	option = { # cool
+		name = DOD_yugoslavia.21.a
+		ai_chance = {
+			factor = 30
+		}
+		if = {
+			limit = {
+				FROM = {
+					tag = GER
+				}
+			}
+			if = {
+				limit = { 
+					GER = { 
+						has_tech = ger_fighter_1934
+						NOT = { has_tech = ger_fighter_1936 }
+					} 
+				}
+				add_equipment_to_stockpile = { type = fighter_equipment_1934 amount = 50 producer = GER } 
+			}
+			if = {
+				limit = { 
+					GER = { 
+						has_tech = ger_fighter_1936 
+						NOT = { has_tech = ger_fighter_1938 }
+					} 
+				}
+				add_equipment_to_stockpile = { type = fighter_equipment_1936 amount = 50 producer = GER } 
+			}
+			if = {
+				limit = { 
+					GER = { 
+						has_tech = ger_fighter_1938 
+						NOT = { has_tech = ger_fighter_1940 }
+					} 
+				}
+				add_equipment_to_stockpile = { type = fighter_equipment_1938 amount = 50 producer = GER } 
+			}
+			if = {
+				limit = { 
+					GER = { 
+						has_tech = ger_fighter_1940 
+					} 
+				}
+				add_equipment_to_stockpile = { type = fighter_equipment_1940 amount = 50 producer = GER } 
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					tag = ITA
+				}
+			}
+			if = {
+				limit = { 
+					ITA = { 
+						has_tech = fighter_1934
+						NOT = { has_tech = fighter_1936 }
+					} 
+				}
+				add_equipment_to_stockpile = { type = fighter_equipment_1934 amount = 50 producer = ITA } 
+			}
+			if = {
+				limit = { 
+					ITA = { 
+						has_tech = fighter_1936 
+						NOT = { has_tech = fighter_1938 }
+					} 
+				}
+				add_equipment_to_stockpile = { type = fighter_equipment_1936 amount = 50 producer = ITA } 
+			}
+			if = {
+				limit = { 
+					ITA = { 
+						has_tech = fighter_1938 
+						NOT = { has_tech = fighter_1940 }
+					} 
+				}
+				add_equipment_to_stockpile = { type = fighter_equipment_1938 amount = 50 producer = ITA } 
+			}
+			if = {
+				limit = { 
+					ITA = { 
+						has_tech = fighter_1940 
+					} 
+				}
+				add_equipment_to_stockpile = { type = fighter_equipment_1940 amount = 50 producer = ITA } 
+			}
+		}
+
+		if = {
+			limit = {
+				FROM = {
+					tag = FRA
+				}
+			}
+			if = {
+				limit = { 
+					FRA = { 
+						has_tech = fighter_1934
+						NOT = { has_tech = fighter_1936 }
+					} 
+				}
+				add_equipment_to_stockpile = { type = fighter_equipment_1934 amount = 50 producer = FRA } 
+			}
+			if = {
+				limit = { 
+					FRA = { 
+						has_tech = fighter_1936 
+						NOT = { has_tech = fighter_1938 }
+					} 
+				}
+				add_equipment_to_stockpile = { type = fighter_equipment_1936 amount = 50 producer = FRA } 
+			}
+			if = {
+				limit = { 
+					FRA = { 
+						has_tech = fighter_1938 
+						NOT = { has_tech = fighter_1940 }
+					} 
+				}
+				add_equipment_to_stockpile = { type = fighter_equipment_1938 amount = 50 producer = FRA } 
+			}
+			if = {
+				limit = { 
+					FRA = { 
+						has_tech = fighter_1940 
+					} 
+				}
+				add_equipment_to_stockpile = { type = fighter_equipment_1940 amount = 50 producer = FRA } 
+			}
+		}
+
+		if = {
+			limit = {
+				FROM = {
+					tag = ENG
+				}
+			}
+			if = {
+				limit = { 
+					ENG = { 
+						has_tech = eng_fighter_1934
+						NOT = { has_tech = eng_fighter_1936 }
+					} 
+				}
+				add_equipment_to_stockpile = { type = fighter_equipment_1934 amount = 50 producer = ENG } 
+			}
+			if = {
+				limit = { 
+					ENG = { 
+						has_tech = eng_fighter_1936 
+						NOT = { has_tech = eng_fighter_1938 }
+					} 
+				}
+				add_equipment_to_stockpile = { type = fighter_equipment_1936 amount = 50 producer = ENG } 
+			}
+			if = {
+				limit = { 
+					ENG = { 
+						has_tech = eng_fighter_1938 
+						NOT = { has_tech = eng_fighter_1940 }
+					} 
+				}
+				add_equipment_to_stockpile = { type = fighter_equipment_1938 amount = 50 producer = ENG } 
+			}
+			if = {
+				limit = { 
+					ENG = { 
+						has_tech = eng_fighter_1940 
+					} 
+				}
+				add_equipment_to_stockpile = { type = fighter_equipment_1940 amount = 50 producer = ENG } 
+			}
+		}
+		add_opinion_modifier = { target = FROM modifier = YUG_sold_planes }	
+	}	
+		
+	
+}
+
+#Yugoslavia wants to buy planes - Major nation sells some bombers
+country_event = {
+	id = DOD_yugoslavia.24
+	title = DOD_yugoslavia.22.t
+	desc = DOD_yugoslavia.22.desc
+	picture = GFX_report_event_generic_bombers
+	
+	is_triggered_only = yes
+	
+	option = { # cool
+		name = DOD_yugoslavia.21.a
+		ai_chance = {
+			factor = 30
+		}
+		if = {
+			limit = {
+				FROM = {
+					tag = GER
+				}
+			}
+			if = {
+				limit = { 
+					GER = { 
+						has_tech = ger_tactical_bomber_1934
+						NOT = { has_tech = ger_tactical_bomber_1936 }
+					} 
+				}
+				add_equipment_to_stockpile = { type = tac_bomber_equipment_1934 amount = 25 producer = GER } 
+			}
+			if = {
+				limit = { 
+					GER = { 
+						has_tech = ger_tactical_bomber_1936
+						NOT = { has_tech = ger_tactical_bomber_1938 }
+					} 
+				}
+				add_equipment_to_stockpile = { type = tac_bomber_equipment_1936 amount = 25 producer = GER } 
+			}
+			
+			
+		}
+		if = {
+			limit = {
+				FROM = {
+					tag = ITA
+				}
+			}
+			if = {
+				limit = { 
+					ITA = { 
+						has_tech = tactical_bomber_1934 
+						NOT = { has_tech = tactical_bomber_1937 }
+					} 
+				}
+				add_equipment_to_stockpile = { type = tac_bomber_equipment_1934 amount = 25 producer = ITA } 
+			}
+			if = {
+				limit = { 
+					ITA = { 
+						has_tech = tactical_bomber_1937 
+						NOT = { has_tech = tactical_bomber_1939 }
+					} 
+				}
+				add_equipment_to_stockpile = { type = tac_bomber_equipment_1937 amount = 25 producer = ITA } 
+			}
+			if = {
+				limit = { 
+					ITA = { 
+						has_tech = tactical_bomber_1939 
+						NOT = { has_tech = tactical_bomber_1941 }
+					} 
+				}
+				add_equipment_to_stockpile = { type = tac_bomber_equipment_1939 amount = 25 producer = ITA } 
+			}
+			if = {
+				limit = { 
+					ITA = { 
+						has_tech = tactical_bomber_1941 
+					} 
+				}
+				add_equipment_to_stockpile = { type = tac_bomber_equipment_1941 amount = 25 producer = ITA } 
+			}
+		}
+
+		if = {
+			limit = {
+				FROM = {
+					tag = FRA
+				}
+			}
+			if = {
+				limit = { 
+					FRA = { 
+						has_tech = tactical_bomber_1934 
+						NOT = { has_tech = tactical_bomber_1937 }
+					} 
+				}
+				add_equipment_to_stockpile = { type = tac_bomber_equipment_1934 amount = 25 producer = FRA } 
+			}
+			if = {
+				limit = { 
+					FRA = { 
+						has_tech = tactical_bomber_1937 
+						NOT = { has_tech = tactical_bomber_1939 }
+					} 
+				}
+				add_equipment_to_stockpile = { type = tac_bomber_equipment_1937 amount = 25 producer = FRA } 
+			}
+			if = {
+				limit = { 
+					FRA = { 
+						has_tech = tactical_bomber_1939 
+						NOT = { has_tech = tactical_bomber_1941 }
+					} 
+				}
+				add_equipment_to_stockpile = { type = tac_bomber_equipment_1939 amount = 25 producer = FRA } 
+			}
+			if = {
+				limit = { 
+					FRA = { 
+						has_tech = tactical_bomber_1941 
+					} 
+				}
+				add_equipment_to_stockpile = { type = tac_bomber_equipment_1941 amount = 25 producer = FRA } 
+			}
+		}
+
+		if = {
+			limit = {
+				FROM = {
+					tag = ENG
+				}
+			}
+			if = {
+				limit = { 
+					ENG = { 
+						has_tech = eng_tactical_bomber_1934
+						NOT = { has_tech = eng_tactical_bomber_1936 }
+					} 
+				}
+				add_equipment_to_stockpile = { type = tac_bomber_equipment_1934 amount = 25 producer = ENG } 
+			}
+			if = {
+				limit = { 
+					ENG = { 
+						has_tech = eng_tactical_bomber_1936
+						NOT = { has_tech = eng_tactical_bomber_1938 }
+					} 
+				}
+				add_equipment_to_stockpile = { type = tac_bomber_equipment_1936 amount = 25 producer = ENG } 
+			}
+			
+			
+		}
+		add_opinion_modifier = { target = FROM modifier = YUG_sold_planes }	
+	}	
+		
+	
+}
+#Yugoslavia pressured by Germany - Anschluss
+country_event = {
+	id = DOD_yugoslavia.30
+	title = DOD_yugoslavia.30.t
+	desc = DOD_yugoslavia.30.desc
+	picture = GFX_report_event_german_speech
+	
+	is_triggered_only = yes
+	
+	option = { # put the squeeze on them
+		name = DOD_yugoslavia.30.a
+		ai_chance = {
+			factor = 0
+		}
+		YUG = { 
+			country_event = DOD_yugoslavia.31 
+			set_country_flag = YUG_GER_pressure_1 #for ai_weights in focus tree
+		}
+		
+	}	
+	option = { # not interested
+		name = DOD_yugoslavia.30.b
+		ai_chance = {
+			factor = 30
+		}
+		
+	}
+		
+	
+}
+
+#Yugoslavia pressured by Germany - First event
+country_event = {
+	id = DOD_yugoslavia.31
+	title = DOD_yugoslavia.31.t
+	desc = DOD_yugoslavia.31.desc
+	picture = GFX_report_event_german_speech
+	
+	is_triggered_only = yes
+		
+	option = { # not that bad yet
+		name = DOD_yugoslavia.31.a
+		ai_chance = {
+			factor = 30
+		}
+		
+	}
+		
+	
+}
+
+#Yugoslavia pressured by Germany - Fate of CZE
+country_event = {
+	id = DOD_yugoslavia.32
+	title = DOD_yugoslavia.30.t
+	desc = DOD_yugoslavia.32.desc
+	picture = GFX_report_event_german_troops
+	
+	is_triggered_only = yes
+	
+	option = { # put the squeeze on them
+		name = DOD_yugoslavia.32.a
+		ai_chance = {
+			factor = 0
+		}
+		YUG = { 
+			country_event = DOD_yugoslavia.33 
+			set_country_flag = YUG_GER_pressure_2 #for ai_weights
+		}
+		
+	}	
+	option = { # not interested
+		name = DOD_yugoslavia.32.b
+		ai_chance = {
+			factor = 20
+		}
+		
+	}
+		
+	
+}
+
+#Yugoslavia pressured by Germany - Second event
+country_event = {
+	id = DOD_yugoslavia.33
+	title = DOD_yugoslavia.31.t
+	desc = DOD_yugoslavia.33.desc
+	picture = GFX_report_event_german_troops
+	
+	is_triggered_only = yes
+		
+	option = { # not that bad
+		name = DOD_yugoslavia.33.a
+		
+	}
+}
+
+#Yugoslavia pressured by Germany - Last Warning - after Fall of France
+country_event = {
+	id = DOD_yugoslavia.34
+	title = DOD_yugoslavia.30.t
+	desc = DOD_yugoslavia.34.desc
+	picture = GFX_report_event_german_troops_paris
+	
+	is_triggered_only = yes
+	
+	option = { # put the squeeze on them
+		name = DOD_yugoslavia.34.a
+		ai_chance = {
+			factor = 0
+		}
+		YUG = { country_event = DOD_yugoslavia.35 }
+		hidden_effect = {
+			country_event = { id = DOD_yugoslavia.36 days = 90 random = 168 }
+		}
+		
+	}	
+	option = { # not interested
+		name = DOD_yugoslavia.34.b
+		ai_chance = {
+			factor = 10
+		}
+		
+	}
+		
+	
+}
+
+#Yugoslavia pressured by Germany - third event
+country_event = {
+	id = DOD_yugoslavia.35
+	title = DOD_yugoslavia.31.t
+	desc = DOD_yugoslavia.35.desc
+	picture = GFX_report_event_german_troops_paris
+	
+	is_triggered_only = yes
+		
+	option = { # not that bad
+		name = DOD_yugoslavia.35.a
+		ai_chance = {
+			factor = 30
+		}
+		
+	}
+		
+	
+}
+
+#Yugoslavia pressured by Germany - War!
+country_event = {
+	id = DOD_yugoslavia.36
+	title = DOD_yugoslavia.36.t
+	desc = DOD_yugoslavia.36.desc
+	picture = GFX_report_event_planning
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+	trigger = {
+		tag = GER
+		YUG = {
+			is_in_faction = no 
+			exists = yes
+			NOT = {
+				focus_progress = { focus = YUG_join_axis progress > 0 } #that would just be mean
+			}
+		}
+	}
+	
+	option = { # put the squeeze on them
+		name = DOD_yugoslavia.36.a
+		ai_chance = {
+			factor = 90
+		}
+		declare_war_on = {
+			target = YUG
+			type = puppet_wargoal_focus
+		}
+		
+	}	
+	option = { # not interested
+		name = DOD_yugoslavia.36.b
+		ai_chance = {
+			factor = 10
+		}
+		
+	}
+		
+	
+}
+
+#Yugoslavia pressured by Britain - Balkan Strategy
+country_event = {
+	id = DOD_yugoslavia.40
+	title = DOD_yugoslavia.30.t
+	desc = DOD_yugoslavia.40.desc
+	picture = GFX_report_event_chamberlain_announce
+	
+	is_triggered_only = yes
+	
+	option = { # put the squeeze on them
+		name = DOD_yugoslavia.40.a
+		ai_chance = {
+			factor = 70
+		}
+		YUG = { country_event = DOD_yugoslavia.41 }
+		
+	}	
+	option = { # not interested
+		name = DOD_yugoslavia.40.b
+		ai_chance = {
+			factor = 30
+		}
+		
+	}
+		
+	
+}
+
+#Yugoslavia pressured by Britain - First event
+country_event = {
+	id = DOD_yugoslavia.41
+	title = DOD_yugoslavia.41.t
+	desc = DOD_yugoslavia.41.desc
+	picture = GFX_report_event_french_british_officers
+	
+	is_triggered_only = yes
+		
+	option = { # not that bad yet
+		name = DOD_yugoslavia.41.a
+		ai_chance = {
+			factor = 30
+		}
+		
+	}	
+}
+
+#Yugoslavia pressured by Britain - Munich
+country_event = {
+	id = DOD_yugoslavia.42
+	title = DOD_yugoslavia.30.t
+	desc = DOD_yugoslavia.42.desc
+	picture = GFX_report_event_french_british_officers
+	
+	is_triggered_only = yes
+	
+	option = { # put the squeeze on them
+		name = DOD_yugoslavia.42.a
+		ai_chance = {
+			factor = 0
+		}
+		YUG = { country_event = DOD_yugoslavia.43 }
+		
+	}	
+	option = { # not interested
+		name = DOD_yugoslavia.42.b
+		ai_chance = {
+			factor = 30
+		}
+		
+	}
+		
+	
+}
+
+#Yugoslavia pressured by Britain - Second event
+country_event = {
+	id = DOD_yugoslavia.43
+	title = DOD_yugoslavia.41.t
+	desc = DOD_yugoslavia.43.desc
+	picture = GFX_report_event_canadian_soldiers
+	
+	is_triggered_only = yes
+		
+	option = { # not that bad yet
+		name = DOD_yugoslavia.43.a
+		ai_chance = {
+			factor = 30
+		}
+		
+	}	
+}
+
+#Yugoslavia pressured by Britain - late 1940, last warning
+country_event = {
+	id = DOD_yugoslavia.44
+	title = DOD_yugoslavia.30.t
+	desc = DOD_yugoslavia.44.desc
+	picture = GFX_report_event_french_british_officers
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ENG
+		has_war_with = GER
+		NOT = { has_war_with = YUG }
+		NOT = { is_in_faction_with = YUG }
+		YUG = { is_in_faction = no }
+		YUG = { NOT = { has_war_with = GER } }
+		YUG = { exists = yes }
+		is_historical_focus_on = no
+	}
+
+	mean_time_to_happen = { days = 4 }
+	
+	option = { # put the squeeze on them
+		name = DOD_yugoslavia.44.a
+		ai_chance = {
+			factor = 0
+		}
+		YUG = { country_event = DOD_yugoslavia.45 }
+		hidden_effect = { country_event = { id = DOD_yugoslavia.46 days = 180 random = 672 } }
+		
+	}	
+	option = { # not interested
+		name = DOD_yugoslavia.44.b
+		ai_chance = {
+			factor = 100
+		}	
+	}
+}
+
+#Yugoslavia pressured by Britain - Third event
+country_event = {
+	id = DOD_yugoslavia.45
+	title = DOD_yugoslavia.41.t
+	desc = DOD_yugoslavia.45.desc
+	picture = GFX_report_event_british_inspect_troops
+	
+	is_triggered_only = yes
+		
+	option = { # not that bad yet
+		name = DOD_yugoslavia.45.a
+		ai_chance = {
+			factor = 30
+		}
+		
+	}	
+}
+
+#Yugoslavia pressured by Britain - war
+country_event = {
+	id = DOD_yugoslavia.46
+	title = DOD_yugoslavia.30.t
+	desc = DOD_yugoslavia.46.desc
+	picture = GFX_report_event_ast_army
+	
+	is_triggered_only = yes
+	fire_only_once = yes 
+	trigger = {
+		YUG = { is_in_faction = no }
+		YUG = { exists = yes }
+		has_war_with = GER
+	}
+	
+	option = { # put the squeeze on them
+		name = DOD_yugoslavia.46.a
+		ai_chance = {
+			factor = 90
+		}
+		declare_war_on = {
+			target = YUG
+			type = puppet_wargoal_focus
+		}
+		
+	}	
+	option = { # not interested
+		name = DOD_yugoslavia.46.b
+		ai_chance = {
+			factor = 10
+		}	
+	}
+}
+

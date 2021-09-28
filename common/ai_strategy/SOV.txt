@@ -1,0 +1,501 @@
+# befriend
+# conquer
+# antagonize
+# build_ship
+# build_army
+# unit_ratio
+# build_building
+# research_tech
+# garrison
+# protect
+# influence
+
+
+SOV_wants_civ = {
+	allowed = {
+		tag = SOV
+	}
+	enable = {
+		tag = SOV
+		has_war = no
+	}
+	abort = {
+		has_completed_focus = SOV_begin_the_3_5_year_plan
+	}
+	ai_strategy = {
+		type = building_target
+		id = industrial_complex
+		value = 100
+	}
+}
+SOV_wants_mils = {
+	allowed = {
+		tag = SOV
+	}
+	enable = {
+		tag = SOV
+		has_completed_focus = SOV_begin_the_3_5_year_plan
+	}
+	abort_when_not_enabled = yes
+	ai_strategy = {
+		type = building_target
+		id = arms_factory
+		value = 100
+	}
+	ai_strategy = {
+		type = building_target
+		id = industrial_complex
+		value = -10
+	}
+}
+SOV_siberia = {
+	allowed = {
+		tag = SOV
+	}
+	enable = {
+		original_tag = SOV
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = factory_build_score_factor
+		target = 653
+		value = 300
+	}
+
+	ai_strategy = {
+		type = factory_build_score_factor
+		target = 572
+		value = 300
+	}
+	ai_strategy = {
+		type = factory_build_score_factor
+		target = 582
+		value = 300
+	}
+
+	ai_strategy = {
+		type = factory_build_score_factor
+		target = 253
+		value = 300
+	}
+	ai_strategy = {
+		type = factory_build_score_factor
+		target = 219
+		value = 300
+	}
+	ai_strategy = {
+		type = factory_build_score_factor
+		target = 398
+		value = 300
+	}
+	ai_strategy = {
+		type = factory_build_score_factor
+		target = 195
+		value = 300
+	}
+	ai_strategy = {
+		type = factory_build_score_factor
+		target = 217
+		value = 300
+	}
+	ai_strategy = {
+		type = factory_build_score_factor
+		target = 651
+		value = 300
+	}
+	ai_strategy = {
+		type = factory_build_score_factor
+		target = 252
+		value = 300
+	}
+	ai_strategy = {
+		type = factory_build_score_factor
+		target = 249
+		value = 300
+	}
+	ai_strategy = {
+		type = factory_build_score_factor
+		target = 256
+		value = 300
+	}
+	ai_strategy = {
+		type = factory_build_score_factor
+		target = 405
+		value = 300
+	}
+}	
+
+claims_on_finland = {
+	allowed = {
+		tag = SOV
+	}
+	enable = {
+		tag = SOV
+		controls_state = 11
+		controls_state = 189
+		controls_state = 12
+		controls_state = 190
+		controls_state = 191 
+		controls_state = 13
+		country_exists = FIN
+	}
+	abort = {
+	OR = {
+		NOT = {
+			country_exists = FIN
+		}
+		FIN = {
+			has_government = ROOT
+			}
+			controls_state = 146 #Karelija
+		}
+	}
+	
+	ai_strategy = {
+		type = antagonize
+		id = "FIN"			
+		value = 200
+	}	
+}
+
+germany_enemy = {
+	allowed = {
+		tag = SOV
+	}
+	enable = {
+		tag = SOV
+		country_exists = GER
+		OR = {
+			date > 1942.1.1
+			has_war_with = GER 
+		}
+	}
+	abort = {
+		NOT = { country_exists = GER }
+	}
+	
+	ai_strategy = {
+		type = antagonize
+		id = "GER"			
+		value = 200
+	}	
+}
+
+spanish_civil_war_SOV = {
+	allowed = {
+		tag = SOV
+	}
+	enable = {
+		original_tag = SOV
+		has_government = communism
+		SPR = { has_civil_war = yes }
+		NOT = { has_dlc = "La Resistance" }							 
+		NOT = { has_global_flag = scw_over }
+	}
+	
+	abort = {	
+		OR = {
+			SPR = { has_civil_war = no }
+			has_global_flag = scw_over
+		}
+	}
+	
+	ai_strategy = {
+		type = befriend
+		id = "D01"			
+		value = 100
+	}	
+}
+
+spanish_civil_war_SOV_resistance = {
+	allowed = {
+		tag = SOV
+	}
+	enable = {
+		original_tag = SOV
+		has_government = communism
+		country_exists = SPD
+		has_dlc = "La Resistance"
+		has_global_flag = spanish_civil_war
+		NOT = { has_global_flag = scw_over }
+	}
+	
+	abort = {	
+		has_global_flag = scw_over
+	}
+	
+	ai_strategy = {
+		type = befriend
+		id = "SPD"			
+		value = 100
+	}	
+	ai_strategy = {
+		type = support
+		id = "SPD"			
+		value = 100
+	}
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "SPD"			
+		value = 100
+	}	
+}
+
+SOV_pp_spending = {
+	allowed = {
+		tag = SOV
+	}
+	enable = {
+		original_tag = SOV
+		has_manpower < 100000
+		has_political_power < 200
+	}
+	abort = {
+		OR = {
+			has_manpower > 100000
+			has_political_power > 200
+			date > 1944.1.1
+		}
+	}
+
+	ai_strategy = { # dont burn PP on admirals if you need manpower laws
+		type = pp_spend_priority
+		id = admiral
+		value = -100
+	}
+}
+
+SOV_play_nice_with_ribbentrop_pact = {
+	allowed = {
+		tag = SOV
+	}
+	enable = {
+		tag = SOV
+	}	
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "POL"
+		value = -3000
+	}	
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "DEN"
+		value = -3000
+	}
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "NOR"
+		value = -3000
+	}
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "FRA"
+		value = -3000
+	}
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "ENG"
+		value = -3000
+	}
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "BEL"
+		value = -3000
+	}
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "LUX"
+		value = -3000
+	}
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "HOL"
+		value = -3000
+	}
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "USA"
+		value = -3000
+	}
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "YUG"
+		value = -3000
+	}
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "GRE"
+		value = -3000
+	}
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "CHI"
+		value = -3000
+	}
+	ai_strategy = {
+		type = send_volunteers_desire
+		id = "PRC"
+		value = -3000
+	}
+}
+
+SOV_naval_role_ratios_historical = {
+	allowed = {
+		tag = SOV
+	}
+	enable = {
+		has_dlc = "Man the Guns"
+		original_tag = SOV
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_capital_bb
+		value = -25
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_capital_bc
+		value = -100
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_carrier
+		value = -5
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_submarine
+		value = 150
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_screen
+		value = 150
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_cruiser_light
+		value = 15
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_cruiser_heavy
+		value = -15
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_mine_sweeper
+		value = 15
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_mine_layer
+		value = 80
+	}
+}
+
+SOV_the_nkvd_is_all_the_intel_we_need = {
+	allowed = {
+		tag = SOV
+	}
+	enable = {
+		tag = SOV
+		has_government = communism
+		has_dlc = "La Resistance"
+		num_of_civilian_factories < 90
+		num_of_civilian_factories > 35
+	}
+	abort = {
+		OR = {
+			num_of_civilian_factories > 90
+		}
+	}
+	ai_strategy = {
+		type = intelligence_agency_usable_factories
+		value = -20
+	}
+}
+
+SOV_dont_upgrade_to_weapons_2_too_early = {
+	allowed = {
+		tag = SOV
+	}
+	enable = {
+		original_tag = SOV
+		OR = {
+			date < "1943.1.1" # stock up on lots of rifles, we got the manpower
+			AND = {
+				date > "1943.8.1"
+				surrender_progress < 0.1 # if we arent losing badly its ok now
+			}
+		}
+	}
+	
+	abort_when_not_enabled = yes
+	
+	ai_strategy = {
+		type = production_upgrade_desire_offset
+		id = infantry_equipment_2
+		value = -100
+	}
+}
+
+SOV_home_land_is_safe = {
+	allowed = {
+		tag = SOV
+	}
+	enable = {
+		original_tag = SOV
+	}
+	
+	ai_strategy = {
+		type = garrison
+		value = -25
+	}
+}
+
+SOV_great_patriotic_war = {
+	allowed = {
+		tag = SOV
+	}
+	enable = {
+		original_tag = SOV
+		date < 1942.6.1
+	}
+
+	abort_when_not_enabled = yes 
+	
+	ai_strategy = {
+		type = front_unit_request
+		tag = GER  
+		value = 100
+	}
+	
+	ai_strategy = {
+		type = front_unit_request
+		tag = FIN 
+		value = 10
+	}
+
+	ai_strategy = {
+		type = front_control
+		tag = GER
+		ordertype = front
+		execution_type = careful
+		manual_attack = no 
+		execute_order = no
+	}
+}
+
+
