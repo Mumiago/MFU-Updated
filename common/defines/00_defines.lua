@@ -1100,7 +1100,7 @@ NAir = {
 	DISRUPTION_AGILITY_FACTOR = 0.0,
 	DISRUPTION_ATTACK_FACTOR = 1.0,
 	DISRUPTION_DETECTION_FACTOR = 1.0,
-	ESCORT_FACTOR = 3,
+	ESCORT_FACTOR = 3.5,
 	ESCORT_SPEED_FACTOR = 1.0,
 	ESCORT_AGILITY_FACTOR = 1.0,
 	ESCORT_ATTACK_FACTOR = 1.0,
@@ -1152,13 +1152,13 @@ NAir = {
 	
 	MISSION_EFFICIENCY_MULT_AT_LACK_OF_FUEL = 0.25, 				-- multiplier for mission efficiency when a base lacks fuel
 																														
-	BOMBING_TARGETING_RANDOM_FACTOR = 0.25,							-- % of picking the wrong target
+	BOMBING_TARGETING_RANDOM_FACTOR = 0.2,							-- % of picking the wrong target
 	BOMBING_PROV_BUILD_PRIO_SCALE = 1.5,							-- Scale of the selected priority for provincial buildings
 	BOMBING_STATE_BUILD_PRIO_SCALE = 1.5,							-- Scale of the selected priority for state buildings
 	BOMBING_INFRA_PRIO_SCALE = 0.7,									-- Scale of the selected priority for infastryctyre
     NAVAL_MINES_PLANTING_SPEED_MULT = 0.025,						-- Value used to overall balance of the speed of planting naval mines
 	NAVAL_MINES_SWEEPING_SPEED_MULT = 0.025,						-- Value used to overall balance of the speed of sweeping naval mines
-	NON_CORE_STRATEGIC_IMPACT = 0.5,                                -- multiplier for strategic impact of non-core bombing	
+	NON_CORE_STRATEGIC_IMPACT = 1,                                -- multiplier for strategic impact of non-core bombing	
 	RECON_LAND_SPOT_CHANCE = 0.02,                     				-- scale factor on spotting lan
 },
 
