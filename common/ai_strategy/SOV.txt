@@ -427,29 +427,29 @@ SOV_the_nkvd_is_all_the_intel_we_need = {
 	}
 }
 
-SOV_dont_upgrade_to_weapons_2_too_early = {
-	allowed = {
-		tag = SOV
-	}
-	enable = {
-		original_tag = SOV
-		OR = {
-			date < "1943.1.1" # stock up on lots of rifles, we got the manpower
-			AND = {
-				date > "1943.8.1"
-				surrender_progress < 0.1 # if we arent losing badly its ok now
-			}
-		}
-	}
-	
-	abort_when_not_enabled = yes
-	
-	ai_strategy = {
-		type = production_upgrade_desire_offset
-		id = infantry_equipment_2
-		value = -100
-	}
-}
+#SOV_dont_upgrade_to_weapons_2_too_early = {
+#	allowed = {
+#		tag = SOV
+#	}
+#	enable = {
+#		original_tag = SOV
+#		OR = {
+#			date < "1943.1.1" # stock up on lots of rifles, we got the manpower
+#			AND = {
+#				date > "1943.8.1"
+#				surrender_progress < 0.1 # if we arent losing badly its ok now
+#			}
+#		}
+#	}
+#	
+#	abort_when_not_enabled = yes
+#	
+#	ai_strategy = {
+#		type = production_upgrade_desire_offset
+#		id = infantry_equipment_2
+#		value = -100
+#	}
+#}
 
 SOV_home_land_is_safe = {
 	allowed = {
@@ -498,4 +498,125 @@ SOV_great_patriotic_war = {
 	}
 }
 
+SOV_altered_ratio = {
 
+	allowed = { 
+		tag = SOV 
+	}
+
+	enable = {
+		date > 1938.6.1
+	}
+	
+	abort={
+		date > 1945.8.1
+	}
+
+	ai_strategy = {
+		type = added_military_to_civilian_factory_ratio
+		value = 70
+	}
+}
+
+SOV_need_civs = {
+
+	allowed = { 
+		tag = SOV 
+	}
+
+	enable = {
+		date < 1938.6.1
+	}
+	
+	abort_when_not_enabled = yes
+	
+	ai_strategy = {
+		type = building_target
+		id = industrial_complex
+		value = 75 #113
+	}
+	ai_strategy = {
+		type = building_target
+		id = arms_factory
+		value = -5000
+	}
+}
+
+SOV_need_mils = {
+
+	allowed = { 
+		tag = SOV 
+	}
+
+	enable = {
+		date > 1938.6.2
+	}
+	
+	abort_when_not_enabled = yes
+	
+	ai_strategy = {
+		type = building_target
+		id = industrial_complex
+		value = -5000
+	}
+	ai_strategy = {
+		type = building_target
+		id = arms_factory
+		value = 2000
+	}
+}
+
+SOV_stalin_line_buffer = {
+	allowed = { 
+		tag = SOV 
+	}
+	enable = {
+		date > 1941.1.1
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = put_unit_buffers
+		ratio = 0.25
+		states = { 
+			12
+			207
+			241
+			193
+			202
+			203
+			226
+			196
+		}
+		subtract_invasions_from_need = no
+		subtract_fronts_from_need = yes
+	}
+}
+
+SOV_far_east_is_safe = {
+	allowed = { 
+		tag = SOV 
+	}
+	enable = {
+		date > 1941.1.1
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = front_unit_request
+		tag = CHI
+		value = -999
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = JAP
+		value = -999
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = MAN
+		value = -999
+	}
+}
