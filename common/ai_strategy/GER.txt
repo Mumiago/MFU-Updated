@@ -12,30 +12,6 @@
 # contain
 # area_priority
 
-war_with_poland = {
-	allowed = {
-		tag = GER
-	}
-	enable = {
-		tag = GER
-		country_exists = POL
-	}
-	abort = {
-		POL = { has_capitulated = yes }
-	}
-	
-	ai_strategy = {
-		type = antagonize
-		id = "POL"
-		value = 200
-	}
-	ai_strategy = {
-		type = prepare_for_war
-		id = "POL"
-		value = 200
-	}
-}
-
 danzig_of_war_preparation = {
 	allowed = {
 		tag = GER
@@ -43,6 +19,7 @@ danzig_of_war_preparation = {
 	enable = {
 		tag = GER
 		country_exists = POL
+		date > 1939.6.1
 	}
 	
 	abort = {
@@ -55,7 +32,16 @@ danzig_of_war_preparation = {
 			owns_state = 85 
 		}
 	}
-	
+	ai_strategy = {
+		type = antagonize
+		id = "POL"
+		value = 200
+	}
+	ai_strategy = {
+		type = prepare_for_war
+		id = "POL"
+		value = 200
+	}
 	ai_strategy = {
 		type = conquer
 		id = "POL"
@@ -506,7 +492,9 @@ war_with_yugoslavia = {
 	}
 	enable = {
 		tag = GER
-		date > 1940.12.1
+		#date > 1940.12.1
+		NOR = { has_capitulated = yes }
+		FRA = { has_capitulated = yes }
 		country_exists = YUG
 	}
 	abort = {
@@ -520,6 +508,41 @@ war_with_yugoslavia = {
 	ai_strategy = {
 		type = antagonize
 		id = "YUG"			
+		value = 200
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = YUG
+		value = 200
+	}
+}
+
+war_with_greece = {
+	allowed = {
+		tag = GER
+	}
+	enable = {
+		tag = GER
+		NOR = { has_capitulated = yes }
+		FRA = { has_capitulated = yes }
+		country_exists = GRE
+	}
+	abort = {
+		NOT = { country_exists = GRE }
+	}
+	ai_strategy = {
+		type = prepare_for_war
+		id = "GRE"
+		value = 100
+	}
+	ai_strategy = {
+		type = antagonize
+		id = "GRE"			
+		value = 200
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = GRE
 		value = 200
 	}
 }
@@ -555,6 +578,17 @@ war_with_soviets = {
 		type = ignore
 		id = "SOV"
 		value = -100
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = SOV
+		value = 300
+	}	
+
+	ai_strategy = {
+		type = area_priority
+		id = europe
+		value = 500
 	}
 }
 
@@ -804,7 +838,7 @@ GER_prepare_to_fuck_the_benelux = {
 	}
 	
 	enable = {
-		date > 1940.3.1 
+		POL = { has_capitulated = yes }
 	}
 
 	abort_when_not_enabled = yes 
@@ -817,12 +851,18 @@ GER_prepare_to_fuck_the_benelux = {
 
 	ai_strategy = {
 		type = front_unit_request
-
-		country_trigger = {
-			OR = { tag = BEL tag = HOL tag = LUX }
-		}
-
+		tag = HOL  
 		value = 200
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = BEL  
+		value = 25
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = LUX  
+		value = 25
 	}
 }
 
@@ -1076,7 +1116,7 @@ GER_defence_of_europe = {
 
 	ai_strategy = {
 		type = put_unit_buffers
-		ratio = 0.25
+		ratio = 0.2
 		states = { 
 			19
 			23
@@ -1142,10 +1182,11 @@ GER_barbarossa = {
 	}
 	
 	enable = {
-		has_war_with = SOV 
+		has_war_with = SOV
 	}
 
 	abort = {
+		date > 1941.11.15
 	}
 
 	ai_strategy = {
@@ -1165,11 +1206,59 @@ GER_soviet_counter_offensive = {
 	}
 	
 	enable = {
-		date > 1941.12.1 
+		date > 1941.11.16
 	}
 
 	abort = {
-		date < 1942.4.1 
+		date > 1942.4.15
+	}
+
+	ai_strategy = {
+		type = front_control
+		tag = SOV 
+		ordertype = front
+		execution_type = careful
+		manual_attack = no 
+		execute_order = no
+	}
+}
+
+GER_fall_blau = {
+	allowed = { 
+		tag = GER 
+	}
+	
+	enable = {
+		has_war_with = SOV
+		date > 1942.6.1
+	}
+
+	abort = {
+		date > 1942.11.1
+	}
+
+	ai_strategy = {
+		type = front_control
+		tag = SOV 
+		ordertype = front
+		execution_type = rush 
+		manual_attack = yes
+		execute_order = yes
+	}
+}
+
+GER_die_ostfront = {
+	allowed = { 
+		tag = GER 
+	}
+	
+	enable = {
+		has_war_with = SOV
+		date > 1942.11.2
+	}
+
+	abort = {
+
 	}
 
 	ai_strategy = {
@@ -1206,7 +1295,7 @@ GER_build_rubber = {
 	}
 
 	enable = {
-		date < 1938.6.1
+		date < 1938.8.1
 	}
 	
 	abort_when_not_enabled = yes
@@ -1216,4 +1305,96 @@ GER_build_rubber = {
 		id = synthetic_rubber_refinery
 		value = 20000
 	}
+}
+
+GER_defend_atlantik_wall = {
+	
+	allowed = {
+		original_tag = GER 
+	}
+	
+	enable = {
+		has_war_with = ENG
+		FRA = { has_capitulated = yes }
+	}
+
+	abort_when_not_enabled = yes 
+
+	ai_strategy = { type = garrison value = -2000 }
+
+	ai_strategy = {
+		type = put_unit_buffers
+		ratio = 0.39
+		states = { 
+			19
+			23
+			30
+			14
+			15
+			29
+			6
+			35
+			7
+			36
+			56
+			59
+			58
+			99
+		}
+		
+		subtract_invasions_from_need = no
+		subtract_fronts_from_need = yes
+	}
+	ai_strategy = {
+		type = put_unit_buffers
+		ratio = 0.02
+		states = { 
+			19
+		}
+		subtract_invasions_from_need = no
+		subtract_fronts_from_need = yes
+	}
+}
+
+GER_defend_heavy_water = {
+	
+	allowed = {
+		original_tag = GER 
+	}
+	
+	enable = {
+		has_war_with = ENG
+		NOR = { has_capitulated = yes }
+	}
+
+	abort_when_not_enabled = yes 
+
+	ai_strategy = {
+		type = put_unit_buffers
+		ratio = 0.08
+		states = { 
+			110
+			142
+			143
+			144
+		}
+		subtract_invasions_from_need = no
+		subtract_fronts_from_need = yes
+	}
+}
+
+spain_ally_ger = {
+	allowed = {
+		tag = GER
+	}
+	enable = {
+		tag = GER
+		country_exists = SPR
+		SPR = { has_government = fascism }
+	}
+	abort = {
+		NOT = { country_exists = SPR }
+	}
+		
+	ai_strategy = { type = send_volunteers_desire id = "SPR" value = 5000 }
 }

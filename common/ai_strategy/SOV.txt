@@ -574,7 +574,9 @@ SOV_stalin_line_buffer = {
 		date > 1941.1.1
 	}
 
-	abort_when_not_enabled = yes
+	abort = {
+		date > 1942.2.1
+	}
 
 	ai_strategy = {
 		type = put_unit_buffers
@@ -600,6 +602,7 @@ SOV_far_east_is_safe = {
 	}
 	enable = {
 		date > 1941.1.1
+		GER = { is_ai = no }
 	}
 
 	abort_when_not_enabled = yes
@@ -618,5 +621,54 @@ SOV_far_east_is_safe = {
 		type = front_unit_request
 		tag = MAN
 		value = -999
+	}
+}
+
+SOV_dont_burn_resources = {
+	allowed = { 
+		tag = SOV 
+	}
+	
+	enable = {
+		has_war_with = GER
+	}
+
+	abort = {	
+		set_temp_variable = { days = global.num_days }
+		modulo_temp_variable = { days = 70 }
+		check_variable = { days < 7 }
+	}
+	#abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = front_control
+		tag = GER 
+		ordertype = front
+		execution_type = careful
+		manual_attack = no 
+		execute_order = no
+	}
+}
+
+SOV_attack = {
+	allowed = { 
+		tag = SOV 
+	}
+	# every 63 days there will be 7 after of fighting
+	enable = {
+		set_temp_variable = { days = global.num_days }
+		modulo_temp_variable = { days = 70 }
+		check_variable = { days < 7 }
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = front_control
+		tag = GER 
+		ordertype = front
+		execution_type = rush 
+		manual_attack = yes
+		execute_order = yes
 	}
 }
