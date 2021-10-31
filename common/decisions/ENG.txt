@@ -2385,7 +2385,7 @@ ENG_budget_decisions = {
 		}
 	}
 	ENG_order_tanks_in_USA = {
-		icon = generic_air
+		icon = generic_tank
 		available = {
 		}
 
@@ -2497,6 +2497,60 @@ ENG_budget_decisions = {
 			}
 		}
 	}
+	ENG_order_heavy_fighters_in_USA = {
+		icon = generic_air
+		available = {
+			
+		}
+		visible = {
+			USA_can_sell_weapons_trigger = yes
+			has_completed_focus = ENG_arms_purchases_in_the_us
+		}
+
+		days_remove = 120
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				has_equipment = {
+					heavy_fighter_equipment < 1
+				}
+				factor = 5
+			}
+			modifier = {
+				has_manpower < 10000 
+				factor = 0 #need to up conscription laws
+			}
+		}
+		modifier = {
+		}
+		custom_cost_text = ENG_200_british_money 
+
+		custom_cost_trigger = {
+			check_variable = {
+    			var = british_money
+   				value = 200
+    			compare = greater_than_or_equals
+			}
+		}
+
+
+		complete_effect = {
+			subtract_from_variable = { 
+				var = british_money 
+				value = 200 
+			}
+		}
+		remove_effect = {
+			USA = {
+				USA_aircraft_industry_level_up = yes 
+			}
+			add_equipment_to_stockpile = {
+				type = heavy_fighter_equipment
+				amount = 350
+			}
+		}
+	}
 	ENG_order_bombers_in_USA = {
 		icon = generic_air
 		available = {
@@ -2559,8 +2613,8 @@ operations = {
 		available = {
 			has_army_manpower = { size > 799999 } 
 			has_deployed_air_force_size = {
-			    size > 999
-			    type = fighter
+				size > 999
+				type = fighter
 			}
 			OR = {
 				has_deployed_air_force_size = {
@@ -2617,6 +2671,29 @@ operations = {
 		complete_effect = {
 			custom_effect_tooltip = ENG_BEF_tt
 			hidden_effect = {
+				if = {
+					limit = {
+						has_tech = eng_heavy_fighter_1938
+						NOT = {
+							has_tech = eng_heavy_fighter_1940		
+						}	
+					}
+					add_equipment_to_stockpile = {
+						type = heavy_fighter_equipment_1938
+							amount = 350
+							producer = ENG
+					}
+				}
+				if = {
+					limit = {
+						has_tech = eng_heavy_fighter_1940
+					}
+					add_equipment_to_stockpile = {
+						type = heavy_fighter_equipment_1940
+							amount = 350
+							producer = ENG
+					}
+				}
 				if = {
 					limit = {
 						has_tech = eng_fighter_1939
