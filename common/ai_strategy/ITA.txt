@@ -132,7 +132,7 @@ greece_chill = {
 	}
 	enable = {
 		tag = ITA
-		date < 1940.9.25		
+		has_war_with = ENG
 		country_exists = GRE
 	}
 	abort = {
@@ -144,17 +144,12 @@ greece_chill = {
 	ai_strategy = {
 		type = antagonize
 		id = "GRE"			
-		value = -200
+		value = 100
 	}		
 	ai_strategy = {
 		type = conquer
 		id = "GRE"
-		value = -200
-	}
-	ai_strategy = {
-		type = ignore
-		id = "GRE"
-		value = 200
+		value = 100
 	}
 	ai_strategy = {
 		type = prepare_for_war
@@ -217,44 +212,6 @@ spain_ally_ita = {
 	ai_strategy = { type = send_volunteers_desire id = "SPR" value = 5000 }
 }
 
-anti_uk_war_goals = {
-	allowed = {
-		tag = ITA
-	}
-	enable = {
-		tag = ITA
-		country_exists = ENG
-		date > 1937.1.1
-	}
-	abort = {
-		NOT = {
-			country_exists = ENG
-		}
-	}
-	
-	ai_strategy = {
-		type = antagonize
-		id = "ENG"			
-		value = 200
-	}
-	ai_strategy = {
-		type = ignore
-		id = "ENG"
-		value = -100
-	}		
-	
-	ai_strategy = {
-		type = area_priority
-		id = africa
-		value = -5000
-	}
-	ai_strategy = {
-		type = area_priority
-		id = suez
-		value = 100
-	}	
-}
-
 germany_ally = {
 	allowed = {
 		tag = ITA
@@ -281,32 +238,106 @@ ITA_hold_africa = {
 	}
 	enable = {
 		tag = ITA
-		OR = {
-			NOT = { country_exists = ETH }
-			ETH = { is_puppet_of = ITA }
-		}
-		date < 1941.1.1
+		ETH = { is_puppet_of = ITA }
 	}
 	abort = {
-		any_owned_state = { is_core_of = ITA NOT = { is_controlled_by = ITA } }
-		date > 1941.1.1
+		OR = {
+			NOT = { has_full_control_of_state = 450 }
+			date > 1943.5.1
+		}
 	}
 	
 	ai_strategy = {
-		type = area_priority
-		id = suez
-		value = 200
-	}
-	ai_strategy = {
 		type = area_priority 
 		id = europe
-		value = -100
+		value = -120
+	}
+
+	ai_strategy = {
+		type = front_unit_request 
+		strategic_region = 214
+		value = 170
+	}
+
+	ai_strategy = {
+		type = front_unit_request 
+		strategic_region = 128
+		value = 170
 	}
 
 	ai_strategy = {
 		type = front_unit_request
-		area = suez
-		value = 60
+		tag = ENG
+		value = 830
+	}
+}
+
+ITA_fortress = {
+	allowed = {
+		tag = ITA
+	}
+	enable = {
+		tag = ITA
+		NOT = { has_full_control_of_state = 450 }
+	}
+
+	abort_when_not_enabled = yes
+	
+	ai_strategy = {
+		type = area_priority 
+		id = europe
+		value = 700
+	}
+
+	ai_strategy = {
+		type = garrison 
+		value = 200 
+	}
+	
+}
+
+ITA_protect_med = {
+	allowed = {
+		tag = ITA
+	}
+	enable = {
+		tag = ITA
+		GRE = { has_capitulated = yes }
+		YUG = { has_capitulated = yes }
+		OR = {
+			NOT = { has_full_control_of_state = 450 }
+			date > 1943.1.1
+		}
+	}
+
+	abort_when_not_enabled = yes
+	
+	ai_strategy = {
+		type = put_unit_buffers
+		ratio = 5000
+		states = { 
+			44
+			185
+			186
+			47
+			731
+			184
+			105
+			182
+			115
+			156
+			117
+			2
+			157
+			162
+			161
+			158
+			160
+			736
+			103
+		}
+		subtract_invasions_from_need = no
+		subtract_fronts_from_need = no
 	}
 }
 
@@ -320,7 +351,7 @@ crush_ethiopia = {
 		ITA = { has_war_with = ETH }
 	}
 	abort = {
-		NOT = { ITA = { has_war_with = ETH } }
+		NOT = { has_war_with = ETH }
 	}
 	
 	ai_strategy = {
@@ -349,6 +380,8 @@ crush_ethiopia = {
 		value = 100
 	}
 }
+
+
 
 ITA_template_design_1 = {
 	allowed = {
