@@ -465,7 +465,7 @@ SOV_home_land_is_safe = {
 	}
 }
 
-SOV_great_patriotic_war = {
+SOV_great_patriotic_war_fin = {
 	allowed = {
 		tag = SOV
 	}
@@ -478,23 +478,8 @@ SOV_great_patriotic_war = {
 	
 	ai_strategy = {
 		type = front_unit_request
-		tag = GER  
-		value = 100
-	}
-	
-	ai_strategy = {
-		type = front_unit_request
 		tag = FIN 
 		value = 10
-	}
-
-	ai_strategy = {
-		type = front_control
-		tag = GER
-		ordertype = front
-		execution_type = careful
-		manual_attack = no 
-		execute_order = no
 	}
 }
 
@@ -575,12 +560,12 @@ SOV_stalin_line_buffer = {
 	}
 
 	abort = {
-		date > 1941.8.15
+		has_war_with = GER
 	}
 
 	ai_strategy = {
 		type = put_unit_buffers
-		ratio = 0.25
+		ratio = 0.7
 		states = { 
 			12
 			207
@@ -623,21 +608,17 @@ SOV_far_east_is_safe = {
 	}
 }
 
-SOV_dont_burn_resources = {
+SOV_operation_barbarossa = {
 	allowed = { 
 		tag = SOV 
 	}
 	
 	enable = {
 		has_war_with = GER
-		date < 1942.11.1
 	}
 
-	abort = {	
-		set_temp_variable = { days = global.num_days }
-		modulo_temp_variable = { days = 70 }
-		check_variable = { days < 7 }
-		date < 1942.11.1
+	abort = {
+		date > 1941.11.10
 	}
 
 	ai_strategy = {
@@ -650,19 +631,18 @@ SOV_dont_burn_resources = {
 	}
 }
 
-SOV_attack = {
+SOV_winter_offensive = {
 	allowed = { 
 		tag = SOV 
 	}
-	# every 63 days there will be 7 after of fighting
+
 	enable = {
-		set_temp_variable = { days = global.num_days }
-		modulo_temp_variable = { days = 70 }
-		check_variable = { days < 7 }
-		date < 1942.11.1
+		date > 1941.11.11
 	}
 
-	abort_when_not_enabled = yes
+	abort = {	
+		date > 1942.4.10
+	}
 
 	ai_strategy = {
 		type = front_control
@@ -674,13 +654,36 @@ SOV_attack = {
 	}
 }
 
+SOV_dont_waste_resources = {
+	allowed = { 
+		tag = SOV 
+	}
+	
+	enable = {
+		date > 1942.4.11
+	}
+
+	abort = {
+		date > 1942.9.11
+	}
+
+	ai_strategy = {
+		type = front_control
+		tag = GER 
+		ordertype = front
+		execution_type = careful
+		manual_attack = no 
+		execute_order = no
+	}
+}
+
 SOV_end_reich = {
 	allowed = { 
 		tag = SOV 
 	}
 
 	enable = {
-		date > 1942.11.2
+		date > 1942.9.12
 	}
 
 	abort = {
@@ -691,7 +694,7 @@ SOV_end_reich = {
 		type = front_control
 		tag = GER 
 		ordertype = front
-		execution_type = rush 
+		execution_type = balanced
 		manual_attack = yes
 		execute_order = yes
 	}
