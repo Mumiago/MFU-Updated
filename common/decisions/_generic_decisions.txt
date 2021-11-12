@@ -1422,129 +1422,52 @@ war_measures = {
 		}
 	}
 
-	war_bonds = {
-
+	war_bonds_cancel = {
 		icon = generic_industry
-
-		allowed = {
-			always = yes
-		}
-
 		available = {
 			has_war = yes
-			OR = {
-				AND = {
-					has_government = democratic
-					has_war_support > 0.79
-				}
-				AND = {
-					has_government = communism
-					has_war_with = GER
-					has_war_support > 0.79
-				}
-				AND = {
-					has_government = fascism
-					OR = {
-						has_war_support > 0.89
-						surrender_progress > 0
-					}
-				}
-				AND = {
-					has_government = neutrality
-					has_war_support > 0.84
-					has_stability > 0.7
-				}
-			}
-			NOT = {
-				tag = USA 
-			}
 		}
 		visible = {
+			has_decision = war_bonds
+		}
+		fire_only_once = no
+		cost = 0
+		complete_effect = {
+			remove_decision = war_bonds
+		}
+	}
+	war_bonds = {
+		icon = generic_industry
+		available = {
 			has_war = yes
 		}
-
-		fire_only_once = no
-
-		days_remove = 180
-
-		cost = GER_war_bonds_var?50
-
-		modifier = {
-			consumer_goods_factor = -0.04
+		visible = {
 		}
-
+		fire_only_once = no
+		days_remove = -1
+		cost = 0
+		modifier = {
+			political_power_gain = -0.5
+			industrial_capacity_dockyard = 0.05
+			industrial_capacity_factory = 0.05
+			war_support_weekly = -0.002
+			stability_weekly = -0.002
+		}
 		ai_will_do = {
 			factor = 1
 			modifier = {
-				has_political_power < 150
-				factor = 0 #use as pp dump
+				has_political_power < 100
+				factor = 0
+			}
+			modifier = {
+				factor = 0
+				original_tag = SOV
+				SOV_save_pp_for_manpower_trouble = yes
 			}
 		}
-
 		remove_effect = {
-
 		}
-
 		complete_effect = {
-			if = {
-				limit = {
-					NOT = {
-						check_variable = {
-							var = GER_war_bonds_var
-							value = 100
-							compare = greater_than_or_equals
-						}
-					}
-				}
-				set_variable = {
-					var = GER_war_bonds_var
-					value = 50
-				}
-			}
-			add_to_variable = {
-				var = GER_war_bonds_var
-				value = 25
-			}
-			if = {
-				limit = {
-					check_variable = {
-						var = GER_war_bonds_var
-						value = 100
-						compare = greater_than_or_equals
-					}
-					NOT = {
-						check_variable = {
-							var = GER_war_bonds_war_support_var
-							value = 5
-							compare = greater_than_or_equals
-						}
-					}
-				}
-				set_variable = {
-					var = GER_war_bonds_war_support_var
-					value = -5
-				}
-				add_war_support = GER_war_bonds_war_support_var
-			}
-			if = {
-				limit = {
-					check_variable = {
-						var = GER_war_bonds_var
-						value = 100
-						compare = greater_than_or_equals
-					}
-					check_variable = {
-						var = GER_war_bonds_war_support_var
-						value = 5
-						compare = greater_than_or_equals
-					}
-				}
-				add_to_variable = {
-					var = GER_war_bonds_war_support_var
-					value = -2.5
-				}
-				add_war_support = GER_war_bonds_war_support_var
-			}
 		}
 	}
 }
