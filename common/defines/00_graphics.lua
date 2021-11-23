@@ -6,6 +6,38 @@ NWiki = {
 },
 
 NMapMode = {
+	RAILWAY_GUN_RANGE_STRIPES_COLOR = { 1.0, 0.5, 0.0, 0.2 },						-- Color of the railway gun range stripes (when hovered)
+	SUPPLY_MAP_MODE_BEST_FLOW_DISPLAY = 12, -- Which supply cap availibility corresponds to best heatmap color
+            SUPPLY_MAP_MODE_STATUS_COLOR = {
+                0.0,   0.9, 0.0, 0.0, 1.0,			-- #E60000 red
+                0.7,   0.98, 0.4, 0.1, 1.0,			-- #FA661A orange
+                1.0,   0.8, 0.64, 0.2, 1.0,			-- #CCA333 mustard
+            },
+            SUPPLY_STATUS_DISPLAY_THRESHOLD = 0.90, -- at what average supply status we move to show status colors instead of flow
+            SUPPLY_HOVERED_STATE_COLOR_INDEX = 0, -- Border color of hovered state. Refers to the colors in BORDER_COLOR_CUSTOM_HIGHLIGHTS.
+            SUPPLY_HOVERED_PROVINCE_COLOR_INDEX = 4, -- Border color of hovered province. Refers to the colors in BORDER_COLOR_CUSTOM_HIGHLIGHTS.
+	SUPPLY_MAP_MODE_REACH_COLOR = {
+		0.0,   0.6, 0.0, 0.4, 1.0, 			-- #990066 dark purple
+		0.02,  0.2, 0.17, 0.52, 1.0, 		-- #332B85 dark purple blue
+		0.12,  0.04, 0.17, 0.60, 1.0,		-- #0A2B99 dark blue
+		0.2,   0.13, 0.36, 0.65, 1.0,		-- #215CA6 blue
+		0.4,   0.11, 0.56, 0.75, 1.0,		-- #1C8FBF light blue
+		0.6,   0.25, 0.71, 0.76, 1.0,		-- #40B5C2 teal
+		0.8,   0.47, 0.8, 0.73, 1.0,		-- #78CCBA light teal
+		1.0,   0.6, 0.82, 0.6, 1.0,			-- #99D199 light green
+            }, -- (last shown when supply flow is >= SUPPLY_MAP_MODE_BEST_FLOW_DISPLAY)
+	GRADIENT_BORDERS_THICKNESS_SUPPLY_COUNTRY_BORDER = 10.0,
+	SUPPLY_MAP_MODE_COUNTRY_BORDER_CAMERA_DISTANCE = 1.0,
+	SUPPLY_MAP_MODE_COUNTRY_BORDER_OUTLINE_CUTOFF = 0.973,
+	RAILWAY_GUN_RANGE_INDICATOR_ROTATION_SPEED = 0.001,								-- How fast the indicator is rotating.
+	RAILWAY_BRIDGE_ENTITY = "bridge_railway_entity",
+	RAILWAY_BRIDGE_LARGE_ENTITY = "bridge_railway_large_entity",											-- Country army view tab pixel offset when clicking on division/navy/air tab or the army officer corp tab
+	RAILWAY_ICON_SHIFT = { 0.0, 0.0, 0.0 },
+	SUPPLY_ICON_SHIFT = { 0.0, 0.0, 0.0 },
+	SUPPLY_SELECTED_NODE_COLOR = { 0.0, 1.0, 1.0, 1.0 },
+	SUPPLY_CAPITAL_COLOR = { 1.0, 0.7, 0.0, 1.0 },
+	SUPPLY_NAVAL_NODE_COLOR = { 0.1, 0.6, 0.8, 1.0},
+	SUPPLY_LAND_NODE_COLOR = { 0.5, 0.8, 0.5, 1.0 },
 	FABRICATE_CLAIM_SELECTED_SECONDARY_COLOR = { 0, 1, 0, 1 },
 	FABRICATE_CLAIM_TARGET_COUNTRY_SECONDARY_COLOR = { 0, 0, 0, 0 },
 	FABRICATE_CLAIM_NON_TARGET_COUNTRY_SECONDARY_COLOR = { 0, 0, 0, 0 },
@@ -542,6 +574,58 @@ NAirGfx = {
 },
 
 NGraphics = {
+            MIN_TRAIN_WAGON_COUNT = 3,
+            MAX_TRAIN_WAGON_COUNT = 6,
+            RAILWAY_MAP_ARROW_THIN_LEVEL_THRESHOLD = 1, -- Railway level 1 uses thin map arrow in supply map mode
+            RAILWAY_MAP_ARROW_MEDIUM_LEVEL_THRESHOLD = 3, -- Railway level 2-3 uses medium map arrow in supply map mode
+            RAILWAY_MAP_ARROW_THICK_LEVEL_THRESHOLD = 5, -- Railway level 4-5 uses thick map arrow in supply map mode
+            SUPPLY_TO_CONSUMERS_MAP_ARROW_TRANSPARENCY = 0.8,
+            TUNNELBANA_TIMETABLE = { 9200, 12000 },			-- Frequency range in milliseconds for regular train service. Adjust this if changing speed to avoid LONGTRAIN
+            TRAIN_MAP_SPEED = 3.0,							-- Trains will move at this relative speed. This has no gameplay implications. Changing this value (originally 4.0) may cause audio effects to lose sync with animation.        
+            NAMES_GROUP_MAX_NAME_LIST_ENTRIES = 25,	-- Max example name entries in ship and railway gun name list in production menu
+            RAILWAY_Y_OFFSET = 0.9,							-- Railways are offset by this amount vertically from the map
+            RAILWAY_BRIDGE_Y_OFFSET = 0.6,					-- Railway bridges are offset by this amount vertically from the map
+            RAILWAY_BRIDGE_WIDTH = 4.0,						-- Railways will have straight segments of this length for regular bridges
+            RAILWAY_BRIDGE_LARGE_WIDTH = 4.5,				-- Railways will have straight segments of this length for large bridges
+            RAILWAY_BRIDGE_GAP_WIDTH = 2.4,					-- Railways will have gaps of this length for regular bridges
+            RAILWAY_BRIDGE_GAP_LARGE_WIDTH = 2.6,			-- Railways will have gaps of this length for large bridges
+            RAILWAY_INTERSECT_DISTANCE_MULT = 3.0,				-- For balancing the collision distance with painted arrows and railways.
+            RAILWAY_CAMERA_CUTOFF = 200.0, -- railways are cut off above this camera height
+            RAILWAY_CAMERA_CUTOFF_SPEED = 3.0, -- railways fade in/out speed
+             TEMPERATURE_MAP_MODE_COLORS = {
+            -35.0, 	0.0, 0.0, 0.5, 1.0,
+            -25.0, 	0.0, 0.0, 1.0, 1.0,
+            -10.0, 	0.0, 0.7, 1.0, 1.0,
+            0.0, 	0.0, 1.0, 0.45, 0.45,
+            15.0,	1.0, 1.0, 0.0, 1.0,
+            25.0,	1.0, 0.65, 0.0, 1.0,
+            30.0,	1.0, 0.0, 0.0, 1.0,
+            35.0,	0.5, 0.0, 0.0, 1.0,
+        },
+         RAILWAY_GUN_ASSIGNMENTS_MAP_MODE_COLORS = {
+            0.0,	1.0, 0.0, 0.0, 1.0,
+            0.25,	1.0, 0.65, 0.0, 1.0,
+            0.75,	1.0, 1.0, 0.0, 1.0,
+            1.0, 	0.0, 1.0, 0.45, 0.45,
+        },
+         SUPPLY_ICON_SWITCH = 200,
+        SUPPLY_ICON_CUTOFF = 900.0,               -- total supply icon cutoff distance for all
+        SUPPLY_ICON_UNUSED_CUTOFF = 400.0,        -- where we stop showing unused nodes
+        SUPPLY_ICON_NUMBERS_CUTOFF = 400.0,       -- where we stop showing numbers on hubs (ignored for selected and problem hubs)
+        SUPPLY_ICON_OK_CUTOFF = 750.0,            -- where we stop showing nodes with no issues, e.g non-red
+        SUPPLY_ICON_DISCONNECTED_CUTOFF = 500.0,  -- where we stop showing disconnected nodes
+        SUPPLY_ICON_END_CUTOFF = 200.0,           -- where we stop showing line end icons
+        RAILWAY_ICON_CUTOFF = 900.0,
+           SUPPLY_CONSUMER_ARROW_HEIGHT_TO_LEN = 0.1,
+        SUPPLY_CONSUMER_ARROW_HEIGHT_MAX = 4.0,
+
+        SUPPLY_UNIT_COUNTER_SHOW_THRESHOLD = 0.75,  -- At what supply threshold will the normal crate be shown on unit counters
+        SUPPLY_UNIT_COUNTER_LOW_THRESHOLD = 0.50,  -- At what supply threshold will the orange crate be shown on unit counters
+        SUPPLY_UNIT_COUNTER_VERY_LOW_THRESHOLD = 0.25,  -- At what supply threshold will the red crate with ! will be shown on unit counters
+        DEFAULT_NUDGE_FLOATING_HARBOR_DIST = 7.0,	-- Default distance of floating harbors from the coast in pixels, for nudger
+        RAILWAY_GUN_RANGE_INDICATOR_DEFAULT_COLOR = { 1.0, 1.0, 1.0, 1.0 },				-- On map circle indicating the railway gun bombardment range.
+        	SUPPLY_TO_CONSUMERS_MAP_ARROW_TRANSPARENCY = 0.8,
+
 	MAX_NUMBER_OF_TEXTURES = 10000, -- increase if you have more than this textures
 	COUNTER_MODE_ALLEGIANCE_OURS = { 0.32, 0.71, 0.39, 1.0 },
 	COUNTER_MODE_ALLEGIANCE_ALLIED = { 0.31, 0.65, 0.94, 1.0 },
@@ -983,6 +1067,11 @@ NGraphics = {
 },
 
 NInterface = {
+	EQUIPMENT_DESIGNER_SHOW_MODULE_FORBIDS_BASE_ROLE_ICON = 0, -- When selecting a module in the tank designer, for each role the module forbids a role icon will be displayed. If this is set to 0 no icon will be displayed if the main tank role is forbidden. If set to 1 the icon will be displayed as normal.
+	ARMY_UNIT_LEADER_ICON_SPRITE_ID = 5,
+	NAVY_UNIT_LEADER_ICON_SPRITE_ID = 3,
+	POLITICAL_LEADER_ICON_SPRITE_ID = 13,
+	PIXEL_OFFSET = -3, 
 	MAX_NO_FACTION_FILTER_BUTTONS = 40,			-- Max number of faction filter buttons that can be generated in diplomacy view.
 	
 	LOGISTICS_PAST_WEEK = 7,					-- Number of days from the past (including current day) we want logistics data for (Max 30 days)
