@@ -1,4 +1,4 @@
-version="1.10.8"
+version="1.11.2"
 replace_path="common/units/names_divisions"
 replace_path="history/countries"
 replace_path="history/states"
@@ -20,5 +20,5 @@ tags={
 }
 picture="thumbnail.png"
 name="MFU-Updated"
-supported_version="1.10.8"
+supported_version="1.11.2"
 remote_file_id="2656535853"
