@@ -30,8 +30,6 @@ NMapMode = {
 	SUPPLY_MAP_MODE_COUNTRY_BORDER_CAMERA_DISTANCE = 1.0,
 	SUPPLY_MAP_MODE_COUNTRY_BORDER_OUTLINE_CUTOFF = 0.973,
 	RAILWAY_GUN_RANGE_INDICATOR_ROTATION_SPEED = 0.001,								-- How fast the indicator is rotating.
-	RAILWAY_BRIDGE_ENTITY = "bridge_railway_entity",
-	RAILWAY_BRIDGE_LARGE_ENTITY = "bridge_railway_large_entity",											-- Country army view tab pixel offset when clicking on division/navy/air tab or the army officer corp tab
 	RAILWAY_ICON_SHIFT = { 0.0, 0.0, 0.0 },
 	SUPPLY_ICON_SHIFT = { 0.0, 0.0, 0.0 },
 	SUPPLY_SELECTED_NODE_COLOR = { 0.0, 1.0, 1.0, 1.0 },
@@ -583,7 +581,9 @@ NGraphics = {
             TUNNELBANA_TIMETABLE = { 9200, 12000 },			-- Frequency range in milliseconds for regular train service. Adjust this if changing speed to avoid LONGTRAIN
             TRAIN_MAP_SPEED = 3.0,							-- Trains will move at this relative speed. This has no gameplay implications. Changing this value (originally 4.0) may cause audio effects to lose sync with animation.        
             NAMES_GROUP_MAX_NAME_LIST_ENTRIES = 25,	-- Max example name entries in ship and railway gun name list in production menu
-            RAILWAY_Y_OFFSET = 0.9,							-- Railways are offset by this amount vertically from the map
+			RAILWAY_BRIDGE_ENTITY = "bridge_railway_entity",
+			RAILWAY_BRIDGE_LARGE_ENTITY = "bridge_railway_large_entity",
+			RAILWAY_Y_OFFSET = 0.9,							-- Railways are offset by this amount vertically from the map
             RAILWAY_BRIDGE_Y_OFFSET = 0.6,					-- Railway bridges are offset by this amount vertically from the map
             RAILWAY_BRIDGE_WIDTH = 4.0,						-- Railways will have straight segments of this length for regular bridges
             RAILWAY_BRIDGE_LARGE_WIDTH = 4.5,				-- Railways will have straight segments of this length for large bridges
@@ -592,7 +592,9 @@ NGraphics = {
             RAILWAY_INTERSECT_DISTANCE_MULT = 3.0,				-- For balancing the collision distance with painted arrows and railways.
             RAILWAY_CAMERA_CUTOFF = 200.0, -- railways are cut off above this camera height
             RAILWAY_CAMERA_CUTOFF_SPEED = 3.0, -- railways fade in/out speed
-             TEMPERATURE_MAP_MODE_COLORS = {
+
+
+			TEMPERATURE_MAP_MODE_COLORS = {
             -35.0, 	0.0, 0.0, 0.5, 1.0,
             -25.0, 	0.0, 0.0, 1.0, 1.0,
             -10.0, 	0.0, 0.7, 1.0, 1.0,
