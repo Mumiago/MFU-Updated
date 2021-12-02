@@ -10,6 +10,7 @@ replace_path="common/decisions"
 replace_path="common/characters"
 replace_path="common/generation"
 replace_path="history/general"
+replace_path="common/localisation"
 tags={
 	"Balance"
 	"Events"
