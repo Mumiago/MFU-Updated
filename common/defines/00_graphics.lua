@@ -572,61 +572,115 @@ NAirGfx = {
 },
 
 NGraphics = {
-            MIN_TRAIN_WAGON_COUNT = 3,
-            MAX_TRAIN_WAGON_COUNT = 6,
-            RAILWAY_MAP_ARROW_THIN_LEVEL_THRESHOLD = 1, -- Railway level 1 uses thin map arrow in supply map mode
-            RAILWAY_MAP_ARROW_MEDIUM_LEVEL_THRESHOLD = 3, -- Railway level 2-3 uses medium map arrow in supply map mode
-            RAILWAY_MAP_ARROW_THICK_LEVEL_THRESHOLD = 5, -- Railway level 4-5 uses thick map arrow in supply map mode
-            SUPPLY_TO_CONSUMERS_MAP_ARROW_TRANSPARENCY = 0.8,
-            TUNNELBANA_TIMETABLE = { 9200, 12000 },			-- Frequency range in milliseconds for regular train service. Adjust this if changing speed to avoid LONGTRAIN
-            TRAIN_MAP_SPEED = 3.0,							-- Trains will move at this relative speed. This has no gameplay implications. Changing this value (originally 4.0) may cause audio effects to lose sync with animation.        
-            NAMES_GROUP_MAX_NAME_LIST_ENTRIES = 25,	-- Max example name entries in ship and railway gun name list in production menu
-			RAILWAY_BRIDGE_ENTITY = "bridge_railway_entity",
-			RAILWAY_BRIDGE_LARGE_ENTITY = "bridge_railway_large_entity",
-			RAILWAY_Y_OFFSET = 0.9,							-- Railways are offset by this amount vertically from the map
-            RAILWAY_BRIDGE_Y_OFFSET = 0.6,					-- Railway bridges are offset by this amount vertically from the map
-            RAILWAY_BRIDGE_WIDTH = 4.0,						-- Railways will have straight segments of this length for regular bridges
-            RAILWAY_BRIDGE_LARGE_WIDTH = 4.5,				-- Railways will have straight segments of this length for large bridges
-            RAILWAY_BRIDGE_GAP_WIDTH = 2.4,					-- Railways will have gaps of this length for regular bridges
-            RAILWAY_BRIDGE_GAP_LARGE_WIDTH = 2.6,			-- Railways will have gaps of this length for large bridges
-            RAILWAY_INTERSECT_DISTANCE_MULT = 3.0,				-- For balancing the collision distance with painted arrows and railways.
-            RAILWAY_CAMERA_CUTOFF = 200.0, -- railways are cut off above this camera height
-            RAILWAY_CAMERA_CUTOFF_SPEED = 3.0, -- railways fade in/out speed
+		
+		RAILWAY_MAP_ARROW_THIN_LEVEL_THRESHOLD = 1, -- Railway level 1 uses thin map arrow in supply map mode
+		RAILWAY_MAP_ARROW_MEDIUM_LEVEL_THRESHOLD = 3, -- Railway level 2-3 uses medium map arrow in supply map mode
+		RAILWAY_MAP_ARROW_THICK_LEVEL_THRESHOLD = 5, -- Railway level 4-5 uses thick map arrow in supply map mode
 
+		RAILWAY_MAP_ARROW_COLOR_DEFAULT = { 1.0, 1.0, 1.0, 1.0 }, -- white, default railway maparrow color
+		RAILWAY_MAP_ARROW_COLOR_CONSTRUCTION = { 1.0, 0.80, 0.0, 1.0 }, -- orange, railways that are currently under construction
+		RAILWAY_MAP_ARROW_COLOR_CONSTRUCTION_VALID = { 0.957, 0.871, 0.51, 1.0 }, -- yellow, in constructionmode, railways that are valid to build
+		RAILWAY_MAP_ARROW_COLOR_CONSTRUCTION_INVALID = { 1.0, 0.0, 0.0, 1.0 }, -- red, in constructionmode, railways that are invalid to build
+		RAILWAY_MAP_ARROW_COLOR_HIGHLIGHTED = { 0.957, 0.871, 0.51, 1.0 }, -- yellow, highlighted railways, e.g when selecting a hub and showing the route back to the capital
+		RAILWAY_MAP_ARROW_COLOR_HIGHLIGHTED_DAMAGED = { 1.0, 1.0, 0.2, 1.0 }, -- color of highlighted railways which were damaged
+		RAILWAY_MAP_ARROW_COLOR_HIGHLIGHTED_ONCOOLDOWN = { 1.0, 0.2, 1.0, 1.0 }, -- color of highlighted railways which are on cooldown (captured recently)
+		RAILWAY_MAP_ARROW_COLOR_HIGHLIGHTED_CONSTRUCTION = { 0.957, 0.871, 0.51, 1.0 }, -- orange, shown for highlighted railways that are under construction
+		RAILWAY_MAP_ARROW_COLOR_HIGHLIGHTED_BOTTLENECK = { 0.902, 0.38, 0.4, 1.0 }, -- red, shown for railways that are the bottleneck when highlighting
+		RAILWAY_MAP_ARROW_COLOR_HIGHLIGHTED_BOTTLENECK_MAXLEVEL = { 0.761, 0.647, 0.812, 1.0 }, -- purple, shown for maxlevel railways that are the bottleneck when highlighting
+		RAILWAY_MAP_ARROW_COLOR_DAMAGED = { 0.8, 0.8, 0.0, 1.0 }, -- color of railways which were damaged and gives penalty to move for railway guns
+		RAILWAY_MAP_ARROW_COLOR_ONCOOLDOWN = { 0.5, 0.5, 0.5, 1.0 }, -- color of railways which are on cooldown (captured recently)
+		MIN_TRAIN_WAGON_COUNT = 3,
+		MAX_TRAIN_WAGON_COUNT = 6,
+		RAILWAY_MAP_ARROW_THIN_LEVEL_THRESHOLD = 1, -- Railway level 1 uses thin map arrow in supply map mode
+		RAILWAY_MAP_ARROW_MEDIUM_LEVEL_THRESHOLD = 3, -- Railway level 2-3 uses medium map arrow in supply map mode
+		RAILWAY_MAP_ARROW_THICK_LEVEL_THRESHOLD = 5, -- Railway level 4-5 uses thick map arrow in supply map mode
+		SUPPLY_TO_CONSUMERS_MAP_ARROW_TRANSPARENCY = 0.8,
+		TUNNELBANA_TIMETABLE = { 9200, 12000 },			-- Frequency range in milliseconds for regular train service. Adjust this if changing speed to avoid LONGTRAIN
+		TRAIN_MAP_SPEED = 3.0,							-- Trains will move at this relative speed. This has no gameplay implications. Changing this value (originally 4.0) may cause audio effects to lose sync with animation.        
+		NAMES_GROUP_MAX_NAME_LIST_ENTRIES = 25,	-- Max example name entries in ship and railway gun name list in production menu
+		RAILWAY_BRIDGE_ENTITY = "bridge_railway_entity",
+		RAILWAY_BRIDGE_LARGE_ENTITY = "bridge_railway_large_entity",
+		RAILWAY_Y_OFFSET = 0.9,							-- Railways are offset by this amount vertically from the map
+		RAILWAY_BRIDGE_Y_OFFSET = 0.6,					-- Railway bridges are offset by this amount vertically from the map
+		RAILWAY_BRIDGE_WIDTH = 4.0,						-- Railways will have straight segments of this length for regular bridges
+		RAILWAY_BRIDGE_LARGE_WIDTH = 4.5,				-- Railways will have straight segments of this length for large bridges
+		RAILWAY_BRIDGE_GAP_WIDTH = 2.4,					-- Railways will have gaps of this length for regular bridges
+		RAILWAY_BRIDGE_GAP_LARGE_WIDTH = 2.6,			-- Railways will have gaps of this length for large bridges
+		RAILWAY_INTERSECT_DISTANCE_MULT = 3.0,				-- For balancing the collision distance with painted arrows and railways.
+		RAILWAY_CAMERA_CUTOFF = 200.0, -- railways are cut off above this camera height
+		RAILWAY_CAMERA_CUTOFF_SPEED = 3.0, -- railways fade in/out speed
 
-			TEMPERATURE_MAP_MODE_COLORS = {
-            -35.0, 	0.0, 0.0, 0.5, 1.0,
-            -25.0, 	0.0, 0.0, 1.0, 1.0,
-            -10.0, 	0.0, 0.7, 1.0, 1.0,
-            0.0, 	0.0, 1.0, 0.45, 0.45,
-            15.0,	1.0, 1.0, 0.0, 1.0,
-            25.0,	1.0, 0.65, 0.0, 1.0,
-            30.0,	1.0, 0.0, 0.0, 1.0,
-            35.0,	0.5, 0.0, 0.0, 1.0,
-        },
-         RAILWAY_GUN_ASSIGNMENTS_MAP_MODE_COLORS = {
-            0.0,	1.0, 0.0, 0.0, 1.0,
-            0.25,	1.0, 0.65, 0.0, 1.0,
-            0.75,	1.0, 1.0, 0.0, 1.0,
-            1.0, 	0.0, 1.0, 0.45, 0.45,
-        },
-         SUPPLY_ICON_SWITCH = 200,
-        SUPPLY_ICON_CUTOFF = 900.0,               -- total supply icon cutoff distance for all
-        SUPPLY_ICON_UNUSED_CUTOFF = 400.0,        -- where we stop showing unused nodes
-        SUPPLY_ICON_NUMBERS_CUTOFF = 400.0,       -- where we stop showing numbers on hubs (ignored for selected and problem hubs)
-        SUPPLY_ICON_OK_CUTOFF = 750.0,            -- where we stop showing nodes with no issues, e.g non-red
-        SUPPLY_ICON_DISCONNECTED_CUTOFF = 500.0,  -- where we stop showing disconnected nodes
-        SUPPLY_ICON_END_CUTOFF = 200.0,           -- where we stop showing line end icons
-        RAILWAY_ICON_CUTOFF = 900.0,
-           SUPPLY_CONSUMER_ARROW_HEIGHT_TO_LEN = 0.1,
-        SUPPLY_CONSUMER_ARROW_HEIGHT_MAX = 4.0,
+		RIVER_SUPPLY_MAP_ARROW_COLOR = { 0.8, 0.8, 1.0, 0.8 },
+	FLOWING_RIVER_SUPPLY_MAP_ARROW_COLOR = { 0.8, 0.8, 1.0, 0.8 },
 
-        SUPPLY_UNIT_COUNTER_SHOW_THRESHOLD = 0.75,  -- At what supply threshold will the normal crate be shown on unit counters
-        SUPPLY_UNIT_COUNTER_LOW_THRESHOLD = 0.50,  -- At what supply threshold will the orange crate be shown on unit counters
-        SUPPLY_UNIT_COUNTER_VERY_LOW_THRESHOLD = 0.25,  -- At what supply threshold will the red crate with ! will be shown on unit counters
-        DEFAULT_NUDGE_FLOATING_HARBOR_DIST = 7.0,	-- Default distance of floating harbors from the coast in pixels, for nudger
-        RAILWAY_GUN_RANGE_INDICATOR_DEFAULT_COLOR = { 1.0, 1.0, 1.0, 1.0 },				-- On map circle indicating the railway gun bombardment range.
-        	SUPPLY_TO_CONSUMERS_MAP_ARROW_TRANSPARENCY = 0.8,
+	SUPPLY_TO_CONSUMERS_MAP_ARROW_COLOR = { 1.0, 1.0, 1.0, 1.0 }, -- Currently overwritte in code...
+	SUPPLY_TO_CONSUMERS_MAP_ARROW_TRANSPARENCY = 0.8,
+
+	-- When holding shift in supply map mode with a node selected, color provinces which are in range of the node
+	NODE_FLOW_IN_CURRENT_RANGE_COLOR = { 0.68235, 0.0039, 0.4941, 0.55 }, -- At current motorization level
+	NODE_FLOW_IN_HALF_RANGE_COLOR = { 0.9686, 0.4078, 0.6314, 0.6 }, -- At Half Motorization, if currently set to less than that
+	NODE_FLOW_IN_FULL_RANGE_COLOR = { 0.9843, 0.7059, 0.7255, 0.4 }, -- At Full Motorization, if currently set to less than that
+
+	RAILWAY_ICON_SHIFT = { 0.0, 0.0, 0.0 },
+	SUPPLY_ICON_SHIFT = { 0.0, 0.0, 0.0 },
+	SUPPLY_ICON_SWITCH = 200,
+	SUPPLY_ICON_CUTOFF = 900.0,               -- total supply icon cutoff distance for all
+	SUPPLY_ICON_UNUSED_CUTOFF = 400.0,        -- where we stop showing unused nodes
+	SUPPLY_ICON_NUMBERS_CUTOFF = 400.0,       -- where we stop showing numbers on hubs (ignored for selected and problem hubs)
+	SUPPLY_ICON_OK_CUTOFF = 750.0,            -- where we stop showing nodes with no issues, e.g non-red
+	SUPPLY_ICON_DISCONNECTED_CUTOFF = 500.0,  -- where we stop showing disconnected nodes
+	SUPPLY_ICON_END_CUTOFF = 200.0,           -- where we stop showing line end icons
+	RAILWAY_ICON_CUTOFF = 900.0,
+	SUPPLY_SELECTED_NODE_COLOR = { 0.0, 1.0, 1.0, 1.0 },
+	SUPPLY_CAPITAL_COLOR = { 1.0, 0.7, 0.0, 1.0 },
+	SUPPLY_NAVAL_NODE_COLOR = { 0.1, 0.6, 0.8, 1.0},
+	SUPPLY_LAND_NODE_COLOR = { 0.5, 0.8, 0.5, 1.0 },
+
+	SUPPLY_CONSUMER_ARROW_HEIGHT_TO_LEN = 0.1,
+	SUPPLY_CONSUMER_ARROW_HEIGHT_MAX = 4.0,
+
+	SUPPLY_UNIT_COUNTER_SHOW_THRESHOLD = 0.75,  -- At what supply threshold will the normal crate be shown on unit counters
+	SUPPLY_UNIT_COUNTER_LOW_THRESHOLD = 0.50,  -- At what supply threshold will the orange crate be shown on unit counters
+	SUPPLY_UNIT_COUNTER_VERY_LOW_THRESHOLD = 0.25,  -- At what supply threshold will the red crate with ! will be shown on unit counters
+
+	COUP_GREEN = { 0.0, 1.0, 0.0, 1.0 },
+	COUP_RED = { 1.0, 0.0, 0.0, 1.0 },
+
+	
+
+		TEMPERATURE_MAP_MODE_COLORS = {
+		-35.0, 	0.0, 0.0, 0.5, 1.0,
+		-25.0, 	0.0, 0.0, 1.0, 1.0,
+		-10.0, 	0.0, 0.7, 1.0, 1.0,
+		0.0, 	0.0, 1.0, 0.45, 0.45,
+		15.0,	1.0, 1.0, 0.0, 1.0,
+		25.0,	1.0, 0.65, 0.0, 1.0,
+		30.0,	1.0, 0.0, 0.0, 1.0,
+		35.0,	0.5, 0.0, 0.0, 1.0,
+	},
+		RAILWAY_GUN_ASSIGNMENTS_MAP_MODE_COLORS = {
+		0.0,	1.0, 0.0, 0.0, 1.0,
+		0.25,	1.0, 0.65, 0.0, 1.0,
+		0.75,	1.0, 1.0, 0.0, 1.0,
+		1.0, 	0.0, 1.0, 0.45, 0.45,
+	},
+		SUPPLY_ICON_SWITCH = 200,
+	SUPPLY_ICON_CUTOFF = 900.0,               -- total supply icon cutoff distance for all
+	SUPPLY_ICON_UNUSED_CUTOFF = 400.0,        -- where we stop showing unused nodes
+	SUPPLY_ICON_NUMBERS_CUTOFF = 400.0,       -- where we stop showing numbers on hubs (ignored for selected and problem hubs)
+	SUPPLY_ICON_OK_CUTOFF = 750.0,            -- where we stop showing nodes with no issues, e.g non-red
+	SUPPLY_ICON_DISCONNECTED_CUTOFF = 500.0,  -- where we stop showing disconnected nodes
+	SUPPLY_ICON_END_CUTOFF = 200.0,           -- where we stop showing line end icons
+	RAILWAY_ICON_CUTOFF = 900.0,
+		SUPPLY_CONSUMER_ARROW_HEIGHT_TO_LEN = 0.1,
+	SUPPLY_CONSUMER_ARROW_HEIGHT_MAX = 4.0,
+
+	SUPPLY_UNIT_COUNTER_SHOW_THRESHOLD = 0.75,  -- At what supply threshold will the normal crate be shown on unit counters
+	SUPPLY_UNIT_COUNTER_LOW_THRESHOLD = 0.50,  -- At what supply threshold will the orange crate be shown on unit counters
+	SUPPLY_UNIT_COUNTER_VERY_LOW_THRESHOLD = 0.25,  -- At what supply threshold will the red crate with ! will be shown on unit counters
+	DEFAULT_NUDGE_FLOATING_HARBOR_DIST = 7.0,	-- Default distance of floating harbors from the coast in pixels, for nudger
+	RAILWAY_GUN_RANGE_INDICATOR_DEFAULT_COLOR = { 1.0, 1.0, 1.0, 1.0 },				-- On map circle indicating the railway gun bombardment range.
+		SUPPLY_TO_CONSUMERS_MAP_ARROW_TRANSPARENCY = 0.8,
 
 	MAX_NUMBER_OF_TEXTURES = 10000, -- increase if you have more than this textures
 	COUNTER_MODE_ALLEGIANCE_OURS = { 0.32, 0.71, 0.39, 1.0 },
