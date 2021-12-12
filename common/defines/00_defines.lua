@@ -577,7 +577,7 @@ NBuildings = {
 	SABOTAGE_FACTORY_DAMAGE = 75.0,		-- How much damage takes a factory building in sabotage when state is occupied. Damage is mult by (1 + resistance strength), i.e. up to 2 x base value.
 	BASE_FACTORY_REPAIR = 0.3,			-- Default repair rate before factories are taken into account
 	BASE_FACTORY_REPAIR_FACTOR = 2.0,	-- Factory speed modifier when repairing.
-	SUPPLY_PORT_LEVEL_THROUGHPUT = 3,   -- supply throughput per level of naval base
+	SUPPLY_PORT_LEVEL_THROUGHPUT = 3.3,   -- supply throughput per level of naval base
 	INFRA_TO_SUPPLY = 2,              -- to mitigate lowered supply by the new modifiers
  	INFRA_TO_SUPPLY_COEFF = 1,
 	MAX_SHARED_SLOTS = 60,				-- Max slots shared by factories
@@ -615,13 +615,13 @@ NMilitary = {
 	STRATEGIC_SPEED_INFRA_MAX = 10.0,               -- Additional speed of strategic redeployment on max-level infrastructure
 	STRATEGIC_SPEED_RAIL_BASE = 15.0,               -- Base speed of strategic redeployment when on railways
 	STRATEGIC_SPEED_RAIL_MAX = 25.0,                -- Additional speed of strategic redeployment on max-level railways
-	COMBAT_SUPPLY_LACK_DEFENDER_ATTACK = -0.50,     -- attack combat penalty for defender if out of supply
+	COMBAT_SUPPLY_LACK_DEFENDER_ATTACK = -0.35,     -- attack combat penalty for defender if out of supply
 
 	COMBAT_SUPPLY_LACK_DEFENDER_DEFEND = -0.15,     -- defend combat penalty for defender if out of supply
 
-	COMBAT_SUPPLY_LACK_ATTACKER_DEFEND = -0.70,     -- defend combat penalty for attacker if out of supply
+	COMBAT_SUPPLY_LACK_ATTACKER_DEFEND = -0.50,     -- defend combat penalty for attacker if out of supply
 
-	COMBAT_SUPPLY_LACK_ATTACKER_ATTACK = -0.20,     -- attack combat penalty for attacker if out of supply
+	COMBAT_SUPPLY_LACK_ATTACKER_ATTACK = -0.15,     -- attack combat penalty for attacker if out of supply
 
 	PLAN_EXECUTE_SUPPLY_CHECK = { 1.0, 0.0, 0.0, 1.0, 0.0 }, -- for each execution mode how careful should we be with supply (1.0 means full required supply available, zero is no limit).
 
@@ -775,8 +775,8 @@ NMilitary = {
 	REINFORCEMENT_REQUEST_MAX_WAITING_DAYS = 14,   -- Every X days the equipment will be sent, regardless if still didn't produced all that has been requested.
 	REINFORCEMENT_REQUEST_DAYS_FREQUENCY = 7,	   -- How many days must pass until we may give another reinforcement request
 	EXPERIENCE_COMBAT_FACTOR = 0.06,
-	ALERT_VERY_LOW_SUPPLY_LEVEL = 0.3,			   -- At which point we show up the low and very low supply level alert. Value is in % of supplies supported vs required.
-	ALERT_LOW_SUPPLY_LEVEL = 0.8,
+	ALERT_VERY_LOW_SUPPLY_LEVEL = 0.2,			   -- At which point we show up the low and very low supply level alert. Value is in % of supplies supported vs required.
+	ALERT_LOW_SUPPLY_LEVEL = 0.5,
 	UNIT_DIGIN_CAP = 3,                           -- how "deep" you can dig you can dig in until hitting max bonus
 	UNIT_DIGIN_SPEED = 1,						   -- how "deep" you can dig a day.
 	PARACHUTE_FAILED_EQUIPMENT_DIV = 50.0,		   -- When the transport plane was shot down, we drop unit with almost NONE equipment
@@ -801,14 +801,14 @@ NMilitary = {
 	SUPPLY_GRACE = 72,		-- troops always carry 3 days of food and supply
 	SUPPLY_GRACE_MAX_REDUCE_PER_HOUR = 2,          -- supply grace is not decreased instantly when it is buffed temporarily and buff is removed
 	MAX_OUT_OF_SUPPLY_DAYS = 30, 				   -- how many days of shitty supply until max penalty achieved
-	OUT_OF_SUPPLY_ATTRITION = 0.3,                 -- max attrition when out of supply
-	OUT_OF_SUPPLY_SPEED = -0.55,                    -- max speed reduction from supply
-	NON_CORE_SUPPLY_SPEED = -0.5,				   -- we are not running on our own VP supply so need to steal stuff along the way
+	OUT_OF_SUPPLY_ATTRITION = 0.25,                 -- max attrition when out of supply
+	OUT_OF_SUPPLY_SPEED = -0.4,                    -- max speed reduction from supply
+	NON_CORE_SUPPLY_SPEED = -0.4,				   -- we are not running on our own VP supply so need to steal stuff along the way
 	NON_CORE_SUPPLY_AIR_SPEED = -0.25,			   -- we are not running on our own VP supply so need to steal stuff along the way, a bit less due to air supply
-	OUT_OF_SUPPLY_MORALE = -0.35,                   -- max org regain reduction from supply
+	OUT_OF_SUPPLY_MORALE = -0.3,                   -- max org regain reduction from supply
 	TRAINING_ATTRITION = 0.0075,		  			   -- amount of extra attrition from being in training
 	TRAINING_MIN_STRENGTH = 0.1,					-- if strength is less than this, the unit will pause training until it's been reinforced
-	AIR_SUPPORT_BASE = 0.17,                        -- base ground bonus to troops when active planes helping them
+	AIR_SUPPORT_BASE = 0.15,                        -- base ground bonus to troops when active planes helping them
 	LOW_SUPPLY = 0.75,							   -- When the supply status of an unit becomes low.
 	UNIT_LEADER_MAX_SKILL_XP_BOOST_FACTOR = 2.0,   -- When a commander is at maximum level, he gains ranks faster.
 	BORDER_WAR_ATTRITION_FACTOR = 0.05,			   -- How much of borderwar balance of power makes it into attrition
@@ -1389,7 +1389,7 @@ NSupply = {
 
 	MIN_DIFF_FOR_AUTO_UPDATING_EXISTING_RAILWAYS = 5, -- while building railways, the system will prefer updating existing railway if new railway is close enough to existing one
 
-	LOCAL_SUPPLY_PER_AIR_MISSION = 1.2, -- each assigned plane gives this much supply at full efficiency
+	LOCAL_SUPPLY_PER_AIR_MISSION = 0.6, -- each assigned plane gives this much supply at full efficiency
 
 	-- reinforcements depends on distance to capital and following defines are used for calculating reinforcement time
 	SUPPLY_PATH_MAX_DISTANCE = 15,	-- max time it can take
