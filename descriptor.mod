@@ -1,4 +1,4 @@
-version="1.11.3"
+version="1.11.4"
 replace_path="common/units/names_divisions"
 replace_path="history/countries"
 replace_path="history/states"
@@ -23,6 +23,5 @@ tags={
 	"Technologies"
 }
 picture="thumbnail.png"
-name="MFU-Updated"
-supported_version="1.11.3"
-remote_file_id="2656535853"
+name="MFU-Github"
+supported_version="1.11.4"

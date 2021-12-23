@@ -1389,7 +1389,7 @@ NSupply = {
 
 	MIN_DIFF_FOR_AUTO_UPDATING_EXISTING_RAILWAYS = 5, -- while building railways, the system will prefer updating existing railway if new railway is close enough to existing one
 
-	LOCAL_SUPPLY_PER_AIR_MISSION = 0.6, -- each assigned plane gives this much supply at full efficiency
+	LOCAL_SUPPLY_PER_AIR_MISSION = 0.3, -- each assigned plane gives this much supply at full efficiency
 
 	-- reinforcements depends on distance to capital and following defines are used for calculating reinforcement time
 	SUPPLY_PATH_MAX_DISTANCE = 15,	-- max time it can take
@@ -1418,7 +1418,7 @@ NRailwayGun = {
 	DISBAND_MANPOWER_LOSS = 0.0,					-- The ration of manpower lost on disbanding railway guns
 	ENCIRCLED_DISBAND_MANPOWER_FACTOR = 0.2,		-- The percentage of manpower returned when an encircled unit is disbanded
 	OUT_OF_SUPPLY_SPEED = -0.8,						-- Max speed reduction from supply for railway guns
-	BASE_CAPTURE_CHANCE = 0.8,						-- The base chance of railway guns being captured during an overrrun. Will be further modified by the equipment capture chance of the capturing unit.
+	BASE_CAPTURE_CHANCE = 1,						-- The base chance of railway guns being captured during an overrrun. Will be further modified by the equipment capture chance of the capturing unit.
 	ANNEX_RATIO = 0.5,								-- How many railway guns will be transferred on annexation
 	HOURS_BETWEEN_REDISTRIBUTION = 24,				-- Number of hours between redistribution of attached railway guns, tracked per army
 	DISTRIBUTION_RAILWAY_GUN_PRESENCE_SCORE = -250,					-- Score for Railway Guns in range from given province when distributing Railway Guns
