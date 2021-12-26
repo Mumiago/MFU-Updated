@@ -1260,6 +1260,7 @@ NInterface = {
 	GARRISON_STRENGTH_TO_SHOW_RED = 0.25,	-- If the garrison strength is lower than that, we color the number of divisions in red.
 	
 	MAX_DECISIONS_IN_DECISION_ALERT_TOOLTIP = 5,				-- Max number of available decisions we show in the alert tooltip
+	SLOW_INTERFACE_THRESHOLD = 5000, -- Show warning "SLOW INTERFACE" in debug when interface refresh takes more that this (in microseconds)
 },
 
 
