@@ -1038,7 +1038,7 @@ NMilitary = {
 	OUT_OF_FUEL_EQUIPMENT_MULT = 0.2,				-- ratio of the stats that you get from equipments that uses fuel and you lack it
 	OUT_OF_FUEL_SPEED_MULT = 0.4,					-- speed mult that armies get when out of fuel
 	OUT_OF_FUEL_TRAINING_XP_GAIN_MULT = 0.0,		-- xp gain mult from training when a unit is out of fuel
-	FUEL_CAPACITY_DEFAULT_HOURS = 576              -- default capacity if not specified
+	FUEL_CAPACITY_DEFAULT_HOURS = 691              -- default capacity if not specified
 },
 
 
