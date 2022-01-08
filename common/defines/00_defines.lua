@@ -686,9 +686,9 @@ NMilitary = {
 	MAX_DIVISION_SUPPORT_WIDTH = 2,			-- Max width of support in division designer.
 	MAX_DIVISION_SUPPORT_HEIGHT = 4,		-- Max height of support in division designer.
 	
-	BASE_DIVISION_BRIGADE_GROUP_COST = 8, 	--Base cost to unlock a regiment slot,
-	BASE_DIVISION_BRIGADE_CHANGE_COST = 4,	--Base cost to change a regiment column.
-	BASE_DIVISION_SUPPORT_SLOT_COST = 6, 	--Base cost to unlock a support slot
+	BASE_DIVISION_BRIGADE_GROUP_COST = 4, 	--Base cost to unlock a regiment slot,
+	BASE_DIVISION_BRIGADE_CHANGE_COST = 2,	--Base cost to change a regiment column.
+	BASE_DIVISION_SUPPORT_SLOT_COST = 3, 	--Base cost to unlock a support slot
 	
 	MAX_ARMY_EXPERIENCE = 999,			--Max army experience a country can store
 	MAX_NAVY_EXPERIENCE = 999,			--Max navy experience a country can store
@@ -766,8 +766,8 @@ NMilitary = {
 	TRAINING_ORG = 0.2,
 	ARMY_EXP_BASE_LEVEL = 2,
 	UNIT_EXP_LEVELS = { 0.1, 0.2, 0.3, 0.4, 0.55, 0.7, 0.9 },		-- Experience needed to progress to the next level Changed vets to 0.55 instead 0.7 ***
-	FIELD_EXPERIENCE_SCALE = 0.002,
-	FIELD_EXPERIENCE_MAX_PER_DAY = 6,				-- Most xp you can gain per day
+	FIELD_EXPERIENCE_SCALE = 0.0015,
+	FIELD_EXPERIENCE_MAX_PER_DAY = 3,				-- Most xp you can gain per day
 	EXPEDITIONARY_FIELD_EXPERIENCE_SCALE = 0.5,		-- reduction factor in Xp from expeditionary forces
 	LEND_LEASE_FIELD_EXPERIENCE_SCALE = 0.005,		-- Experience scale for lend leased equipment used in combat.
 	LEADER_EXPERIENCE_SCALE = 1.0,
