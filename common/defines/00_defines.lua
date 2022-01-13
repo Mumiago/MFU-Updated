@@ -1043,8 +1043,6 @@ NMilitary = {
 
 
 NAir = {
-	PRODUCTION_WAIT_TO_FINISH_IF_EXPENSIVE = 0.05,      -- If produced item is expensive (producing less than one/week), wait to finish item if progress is above this
-	PRODUCTION_WAIT_TO_FINISH_IF_CHEAP = 0.75,          -- If produced item is cheap (producing more than one/week), wait to finish item if progress is above this
 	EXPERIENCE_SCALE_ATTACK_LOGISTICS_NO_TRUCK_CONSUMERS = 0.0001, -- How much country experinence gained by attacking consumers who aren't motorized
 	EXPERIENCE_SCALE_ATTACK_LOGISTICS_NODE_AND_TRAINS = 0.0002,    -- How much country experinence gained by attacking node/trains
 	EXPERIENCE_SCALE_ATTACK_LOGISTICS_TRUCKS = 0.0002,             -- How much country experinence gained by attacking trucks
@@ -2030,6 +2028,8 @@ NAITheatre = {
 	AI_THEATRE_AI_FRONT_MIN_DESIRED_RATIO = 0.18,						-- Fronts are sorted based on priority, we nudge unit demand based on this sorting, the higher the value the more units the most important front gets
 },
 NAI = {
+	PRODUCTION_WAIT_TO_FINISH_IF_EXPENSIVE = 0.05,      -- If produced item is expensive (producing less than one/week), wait to finish item if progress is above this
+	PRODUCTION_WAIT_TO_FINISH_IF_CHEAP = 0.75,          -- If produced item is cheap (producing more than one/week), wait to finish item if progress is above this
 	FAILED_INVASION_AREA_PRIO_FACTOR = 0.5,                 -- for every failed invasion on an area, factor that area's invasion prio with this value
 	FAILED_INVASION_PORT_PRIO_FACTOR = 0.66,                -- for every failed invasion on a target port (province), factor the chance that we try to invade that same port again (relative to other ports)	
 	FAILED_INVASION_AVOID_DURATION = 135,                   -- after a failed invasion, AI will down-prioritize invading the same area again for this number of days
