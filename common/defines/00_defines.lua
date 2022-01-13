@@ -1043,6 +1043,8 @@ NMilitary = {
 
 
 NAir = {
+	PRODUCTION_WAIT_TO_FINISH_IF_EXPENSIVE = 0.05,      -- If produced item is expensive (producing less than one/week), wait to finish item if progress is above this
+	PRODUCTION_WAIT_TO_FINISH_IF_CHEAP = 0.75,          -- If produced item is cheap (producing more than one/week), wait to finish item if progress is above this
 	EXPERIENCE_SCALE_ATTACK_LOGISTICS_NO_TRUCK_CONSUMERS = 0.0001, -- How much country experinence gained by attacking consumers who aren't motorized
 	EXPERIENCE_SCALE_ATTACK_LOGISTICS_NODE_AND_TRAINS = 0.0002,    -- How much country experinence gained by attacking node/trains
 	EXPERIENCE_SCALE_ATTACK_LOGISTICS_TRUCKS = 0.0002,             -- How much country experinence gained by attacking trucks
