@@ -1211,7 +1211,7 @@ NAir = {
 		0.0, -- PARADROP		
 		0.0, -- NAVAL_KAMIKAZE	
         0.0, -- PORT_STRIKE		
-		0.2, -- AIR_SUPPLY		
+		0.0, -- AIR_SUPPLY		
 		0.0, -- TRAINING
 		0.0, -- NAVAL_MINES_PLANTING
 		0.0, -- NAVAL_MINES_SWEEPING		  							  						  
@@ -1219,20 +1219,20 @@ NAir = {
 	},	
  
 	MISSION_FUEL_COSTS = {  -- fuel cost per plane for each mission
-		1.0, -- AIR_SUPERIORITY
-		1.0, -- CAS		
-		0.2, -- INTERCEPTION	
-		1.0, -- STRATEGIC_BOMBER
-		1.0, -- NAVAL_BOMBER	
-		1.0, -- DROP_NUKE		
-		1.0, -- PARADROP		
-		0.75, -- NAVAL_KAMIKAZE	
-		1.2, -- PORT_STRIKE		
-		1.0, -- AIR_SUPPLY		
-		0.8, -- TRAINING
+		1.1, -- AIR_SUPERIORITY
+		1.1, -- CAS		
+		0.3, -- INTERCEPTION	
+		1.1, -- STRATEGIC_BOMBER
+		1.1, -- NAVAL_BOMBER	
+		1.1, -- DROP_NUKE		
+		1.1, -- PARADROP		
+		0.85, -- NAVAL_KAMIKAZE	
+		1.3, -- PORT_STRIKE		
+		1.1, -- AIR_SUPPLY		
+		0.9, -- TRAINING
 		1.0, -- NAVAL_MINES_PLANTING
 		1.0, -- NAVAL_MINES_SWEEPING
-		1.0, -- MISSION_RECON
+		1.1, -- MISSION_RECON
 	},
 	MAX_FUEL_FLOW_MULT = 1.0, -- max fuel flow ratio for planes, which will be multiplied by supply
 	
