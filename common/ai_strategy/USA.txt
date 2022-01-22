@@ -26,6 +26,7 @@ USA_ask_ENG_FRA_for_access_before_war = {
 		value = 1000
 	}
 }
+
 USA_gang_up_GER_with_ENG = {
 	allowed = {
 		tag = USA
@@ -38,12 +39,12 @@ USA_gang_up_GER_with_ENG = {
 	# help fronts in europe & africa
 	ai_strategy = {
 		type = force_defend_ally_borders
-		value = 100
+		value = 150
 		target = europe
 	}
 	ai_strategy = {
 		type = force_defend_ally_borders
-		value = 100
+		value = 80
 		target = africa
 	}
 }
@@ -75,6 +76,35 @@ USA_ENG_sync_invasions_on_europe = {
 		execute_order = no
 	}
 }
+
+USA_ENG_launch_sync_invasions_on_europe = {
+	allowed = {
+		OR = {
+			tag = USA
+			tag = ENG
+		}
+	}
+	
+	# only allow invasion on europe on every third month
+	
+	enable = {
+		set_temp_variable = { days = global.num_days }
+		modulo_temp_variable = { days = 90 }
+		check_variable = { days < 10 }
+	}
+	
+	abort_when_not_enabled = yes
+	
+	ai_strategy = {
+		type = front_control
+
+		area = europe
+		
+		ordertype = invasion
+		execute_order = yes
+	}
+}
+
 USA_unit_buffer_for_africa = {
 	allowed = {
 		tag = USA
@@ -107,34 +137,6 @@ USA_unit_buffer_for_africa = {
 		
 		order_id = 1
 		
-		# north africa
-		states = { 
-			290
-			461
-			459
-			460
-			458
-			665
-			448
-			449
-			450
-			451
-			452
-			447
-		}
-		
-		ratio = 0.25
-		
-		area = africa
-		
-		subtract_invasions_from_need = no
-	}
-	
-	ai_strategy = {
-		type = put_unit_buffers
-		
-		order_id = 1
-		
 		# west africa
 		states = { 
 			699
@@ -144,7 +146,7 @@ USA_unit_buffer_for_africa = {
 			700
 		}
 		
-		ratio = 0.25
+		ratio = 0.1
 		
 		area = africa
 		
@@ -165,7 +167,7 @@ USA_unit_buffer_for_africa = {
 			551
 		}
 		
-		ratio = 0.25
+		ratio = 0.03
 		
 		area = africa
 		
@@ -184,13 +186,14 @@ USA_unit_buffer_for_africa = {
 			719
 		}
 		
-		ratio = 0.25
+		ratio = 0.1
 		
 		area = africa
 		
 		subtract_invasions_from_need = no
 	}
 }
+
 # USA should put some buffer units in africa and ENG to help with invasions
 USA_unit_buffer_for_europe = {
 	allowed = {
@@ -222,7 +225,7 @@ USA_unit_buffer_for_europe = {
 			122 
 		}
 		
-		ratio = 0.3
+		ratio = 0.25
 		
 		area = europe
 		
@@ -273,7 +276,7 @@ USA_unit_buffer_for_europe = {
 			447
 		}
 		
-		ratio = 0.3
+		ratio = 0.15
 		
 		area = europe
 		
@@ -479,6 +482,27 @@ USA_save_the_aussies = {
 	}			
 }
 
+USA_help_ENG = {
+	allowed = {
+		tag = USA
+	}
+	enable = {
+		tag = USA
+		has_war = no
+		ENG = { has_war = yes }
+	}
+	abort = {
+		has_war = yes
+	}
+
+	ai_strategy = { 
+		type = diplo_action_desire 
+		id = "ENG"
+		target = lend_lease 
+		value = 3000
+	}
+}
+
 USA_save_india = { # in the case where japan has beaten china and is moving on india we should step up
 	allowed = {
 		tag = USA
@@ -519,6 +543,13 @@ USA_save_india = { # in the case where japan has beaten china and is moving on i
 		id = "RAJ"			
 		value = 200
 	}
+
+	ai_strategy = { 
+		type = diplo_action_desire 
+		id = "RAJ"
+		target = lend_lease 
+		value = 200
+	}
 }
 
 USA_stop_soviet_from_falling = {
@@ -528,16 +559,7 @@ USA_stop_soviet_from_falling = {
 	enable = {
 		tag = USA
 		has_war = no
-		num_divisions > 85 # we must have some divisions ourselves
 
-		NOT = { has_government = fascism }
-		NOT = { is_in_faction_with = GER }
-		NOT = { has_war_with = SOV }
-		GER = { 
-			has_war_with = SOV 
-			has_war_with = ENG
-			has_government = fascism
-		}
 		SOV = {
 			surrender_progress > 0.05
 			has_capitulated = no
@@ -545,45 +567,20 @@ USA_stop_soviet_from_falling = {
 	}
 
 	abort = {
-		OR = {
-			has_war = yes
-			has_war_with = SOV
-			NOT = { GER = { has_war_with = SOV } }
-			is_in_faction_with = GER
-			has_government = fascism
-			SOV = { has_war = no }
-			SOV = { surrender_progress < 0.01 }
-		}
+		has_war = yes
 	}
 
 	ai_strategy = {
 		type = support
 		id = "SOV"
-		value = 100
+		value = 200
 	}
 
-	ai_strategy = {
-		type = role_ratio
-		id = infantry
-		value = -75
-	}
-
-	ai_strategy = {
-		type = template_prio
-		id = light_armor
-		value = -25
-	}
-
-	ai_strategy = {
-		type = template_prio
-		id = medium_armor
-		value = -25
-	}
-
-	ai_strategy = {
-		type = template_prio
-		id = heavy_armor
-		value = -25
+	ai_strategy = { 
+		type = diplo_action_desire 
+		id = "SOV" 
+		target = lend_lease 
+		value = 2000
 	}
 }
 
@@ -595,13 +592,7 @@ USA_stop_soviet_from_falling_2 = {
 	enable = {
 		tag = USA
 		has_war = yes
-		NOT = { has_government = fascism }
-		NOT = { is_in_faction_with = GER }
-		NOT = { has_war_with = SOV }
-		GER = { 
-			has_war_with = SOV 
-			has_war_with = USA
-		}
+
 		SOV = {
 			surrender_progress > 0.05
 			has_capitulated = no
@@ -609,21 +600,20 @@ USA_stop_soviet_from_falling_2 = {
 	}
 
 	abort = {
-		OR = {
-			has_war = no
-			has_war_with = SOV
-			NOT = { GER = { has_war_with = SOV } }
-			is_in_faction_with = GER
-			has_government = fascism
-			SOV = { has_war = no }
-			SOV = { surrender_progress < 0.01 }
-		}
+		has_war = no
 	}
 
 	ai_strategy = {
 		type = support
 		id = "SOV"
-		value = 100
+		value = 200
+	}
+
+	ai_strategy = { 
+		type = diplo_action_desire 
+		id = "SOV" 
+		target = lend_lease 
+		value = 2000
 	}
 }
 
@@ -770,6 +760,7 @@ USA_convoy_hungry = {
 		value = 35
 	}
 }
+
 GER_is_bad = {
 	allowed = {
 		tag = USA
@@ -797,6 +788,7 @@ GER_is_bad = {
 		value = 100
 	}
 }
+
 USA_naval_role_ratios_historical = {
 	allowed = {
 		tag = USA
@@ -1095,7 +1087,11 @@ USA_think_about_retaliation = {
 		id = east_indies
 		value = 150
 	}
-	
+	ai_strategy = {
+		type = area_priority
+		id = europe
+		value = 130
+	}
 }
 
 USA_buffering_in_pacific = {
@@ -1121,7 +1117,7 @@ USA_buffering_in_pacific = {
 			646 #Saipan
 		}
 
-		ratio = 0.05
+		ratio = 0.07
 
 		area = pacific
 
