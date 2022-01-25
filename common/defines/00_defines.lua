@@ -365,7 +365,7 @@ NCountry = {
 
 	WILL_LEAD_TO_WAR_FOCUS_PERSISTENCE = 60, -- taken focuses that has lead to war will still make ai prep for war for this many days after being taken
 	WILL_LEAD_TO_WAR_DECISION_PERSISTENCE = 30, -- the decision thats lead to war will sitll make ai prep for war for this many days after being taken/cooldown/timeout
-	ARMY_COUNT_DAILY_LERP_FOR_TRAINING_XP = 0.002, -- number of armies that is used in training xp calculates daily lerps to actual number (if real number is lower)
+	ARMY_COUNT_DAILY_LERP_FOR_TRAINING_XP = 0.0015, -- number of armies that is used in training xp calculates daily lerps to actual number (if real number is lower)
 	ARMY_COUNT_DAILY_DECREASE_FOR_TRAINING_XP = -0.1, -- number of armies that is used in training xp calculates daily linearly approaches this number (if real number is lower)
 },
 																						
@@ -515,11 +515,11 @@ NProduction = {
 	LICENSE_EQUIPMENT_SPEED_NOT_FACTION = -0.10,		-- MIC speed modifier for licensed equipment for not being in faction
 	LICENSE_EQUIPMENT_UPGRADE_XP_FACTOR = 2.0,			-- XP cost for upgrading licensed equipment
 	LICENSE_EQUIPMENT_SPEED_NO_LICENSE = -0.50,			-- Penalty for producing non licensed equipment
-	CONVERSION_SPEED_BONUS = 2.0,						-- Modifier to the production speed when converting equipment
-    EQUIPMENT_MODULE_ADD_XP_COST = 2.0,					-- XP cost for adding a new equipment module in an empty slot when creating an equipment variant.
-	EQUIPMENT_MODULE_REPLACE_XP_COST = 2.0,				-- XP cost for replacing one equipment module with an unrelated module when creating an equipment variant.
-	EQUIPMENT_MODULE_CONVERT_XP_COST = 1.0,				-- XP cost for converting one equipment module to a related module when creating an equipment variant.
-	EQUIPMENT_MODULE_REMOVE_XP_COST = 1.0,				-- XP cost for removing an equipment module and leaving the slot empty when creating an equipment variant.
+	CONVERSION_SPEED_BONUS = 2,						-- Modifier to the production speed when converting equipment
+    EQUIPMENT_MODULE_ADD_XP_COST = 0,					-- XP cost for adding a new equipment module in an empty slot when creating an equipment variant.
+	EQUIPMENT_MODULE_REPLACE_XP_COST = 0,				-- XP cost for replacing one equipment module with an unrelated module when creating an equipment variant.
+	EQUIPMENT_MODULE_CONVERT_XP_COST = 0,				-- XP cost for converting one equipment module to a related module when creating an equipment variant.
+	EQUIPMENT_MODULE_REMOVE_XP_COST = 0,				-- XP cost for removing an equipment module and leaving the slot empty when creating an equipment variant.
 	MIN_NAVAL_EQUIPMENT_CONVERSION_IC_COST_FACTOR = 0.2,		-- Minimum fraction of an equipment type's base industry capacity cost to use when converting a naval equipment, such as through ship refitting.
 	MIN_NAVAL_EQUIPMENT_CONVERSION_RESOURCE_COST_FACTOR = 0.2,	-- Minimum fraction of an equipment type's base strategic resource cost to use when converting a naval equipment, such as through ship refitting.
 	SHIP_REFIT_MAX_PROGRESS_TO_CANCEL = 0.2,			-- Maximum refitting progress % that we still allow to cancel wihtout having to scuttle the ship.
@@ -635,7 +635,7 @@ NMilitary = {
 
 	NAVAL_INVASION_PLANNING_BONUS_GAIN = 0.02,		-- Planning Bonus gain per day for naval invasions
 
-	TRAINING_MAX_DAILY_COUNTRY_EXP = 0.08,			-- Maximum army XP gained per day from training
+	TRAINING_MAX_DAILY_COUNTRY_EXP = 0.06,			-- Maximum army XP gained per day from training
 
 	SUPPLY_ORG_MAX_CAP = 0.30,                     -- Max organization is factored by this if completely out of supply
 
@@ -1007,8 +1007,8 @@ NMilitary = {
 	BORDER_WAR_WIN_DAYS_AGAINST_EMPTY_OPPONENTS = 14,		-- border wars will be automatically won if no opponent shows up for this duration
 		
  
-	MAX_RELATIVE_COMBAT_DAMAGE_TO_MODIFY_XP = 4.0,			-- you gain more XP if you are doing more damage relative to enemy, this is the max relative amount to gain following RATe
-	XP_GAIN_FACTOR_FOR_MAX_RELATIVE_COMBAT_DAMAGE = 4.0,	-- XP factor scaling for max relative combat damage
+	MAX_RELATIVE_COMBAT_DAMAGE_TO_MODIFY_XP = 3.0,			-- you gain more XP if you are doing more damage relative to enemy, this is the max relative amount to gain following RATe
+	XP_GAIN_FACTOR_FOR_MAX_RELATIVE_COMBAT_DAMAGE = 3.0,	-- XP factor scaling for max relative combat damage
 	
 	XP_DECAY_RATE_PER_HOUR_IN_COMBAT = 0.03,				-- you get reduced XP as combat drags
 	MIN_XP_RATE_TO_DECAY = 0.1,								-- minimum XP factor for dragged combats
@@ -1038,7 +1038,7 @@ NMilitary = {
 	OUT_OF_FUEL_EQUIPMENT_MULT = 0.2,				-- ratio of the stats that you get from equipments that uses fuel and you lack it
 	OUT_OF_FUEL_SPEED_MULT = 0.4,					-- speed mult that armies get when out of fuel
 	OUT_OF_FUEL_TRAINING_XP_GAIN_MULT = 0.0,		-- xp gain mult from training when a unit is out of fuel
-	FUEL_CAPACITY_DEFAULT_HOURS = 691              -- default capacity if not specified
+	FUEL_CAPACITY_DEFAULT_HOURS = 600              -- default capacity if not specified
 },
 
 
@@ -1171,14 +1171,14 @@ NAir = {
 	AIR_WING_XP_MAX = 1000.0, 											--Per plane XP.
 	AIR_WING_XP_LEVELS = { 100, 200, 300, 400, 550, 700, 900 }, 						--Experience needed to progress to the next level
 	AIR_WING_XP_LOSS_WHEN_KILLED = 300,									--if a plane dies, the game assumes that a pilot with this amount of xp died and recalcs average. 
-	AIR_WING_XP_TRAINING_MAX = 300.0, 									--Max average XP achieved with training.
+	AIR_WING_XP_TRAINING_MAX = 200.0, 									--Max average XP achieved with training.
 	
-	AIR_WING_XP_TRAINING_MISSION_GAIN_DAILY = 5.0, 						--Daily gain when running training exercise mission
+	AIR_WING_XP_TRAINING_MISSION_GAIN_DAILY = 3.0, 						--Daily gain when running training exercise mission
 	AIR_WING_XP_AIR_VS_AIR_COMBAT_GAIN = 0.425, 							--Wings in combat gain extra XP	
 	AIR_WING_XP_GROUND_MISSION_COMPLETED_GAIN = 0.3, 					--Bombers bombing, CAS cassing, NBs nbing, kamikazees kamikazeeing, etc.	
 	AIR_WING_XP_RECON_MISSION_COMPLETED_GAIN = 0.05, 					--recon mission
 
-	AIR_WING_COUNTRY_XP_FROM_TRAINING_FACTOR = 0.0075, 					--Factor on country Air XP gained from wing training
+	AIR_WING_COUNTRY_XP_FROM_TRAINING_FACTOR = 0.005, 					--Factor on country Air XP gained from wing training
 	AIR_WING_XP_TRAINING_MISSION_ACCIDENT_FACTOR = 1.5, 				--Training exercises cause more accidents
 	AIR_WING_XP_LOSS_REDUCTION_OVER_FRIENDLY_TERRITORY_FACTOR = 0.3, 	--Reduction on XP loss over friendly territory
 
@@ -1737,7 +1737,7 @@ NNavy = {
 	ACCIDENTS_CHANCE_BALANCE_FACTOR = 0.04,							-- General chance for naval accidents for balancing the gameplay.
 																	-- The Formula: Min( TRAINING_MAX_DAILY_COUNTRY_EXP * Ratio, TRAINING_DAILY_COUNTRY_EXP_FACTOR * ( TRAINING_DAILY_COUNTRY_EXP_SHIP_RATIO_FACTOR * TrainingShipCount / CountryShipCount 
 																	--              + TRAINING_DAILY_COUNTRY_EXP_MANPOWER_FACTOR * Manpower + TRAINING_DAILY_COUNTRY_EXP_MANPOWER_RATIO_FACTOR * Manpower / CountryShipCount ) ) 
-	TRAINING_EXPERIENCE_FACTOR = 0.3,								-- Amount of exp each ship gain every 24h while training (before modifiers)
+	TRAINING_EXPERIENCE_FACTOR = 0.2,								-- Amount of exp each ship gain every 24h while training (before modifiers)
 	TRAINING_DAILY_COUNTRY_EXP_FACTOR = 0.001,						-- Factor used to scale the Daily Country Navy XP gain
 	TRAINING_DAILY_COUNTRY_EXP_MANPOWER_FACTOR = 0.006,					-- Factor used to scale the sum of the training manpower for the Daily Country Navy XP gain
 	TRAINING_DAILY_COUNTRY_EXP_MANPOWER_RATIO_FACTOR = 0.01,				-- Factor used to scale the sum of the manpower divided by the country's number of ship for the Daily Country Navy XP gain
