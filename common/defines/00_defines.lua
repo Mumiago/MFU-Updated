@@ -1101,9 +1101,9 @@ NAir = {
 	PORT_STRIKES_DELAY_MULTIPLIER = 2,					-- multplies HOURS_DELAY_AFTER_EACH_COMBAT if port strikes																								  
 	CARRIER_HOURS_DELAY_AFTER_EACH_COMBAT = 4,          -- how often carrier planes do battle inside naval combat
 	NAVAL_STRIKE_TARGETTING_TO_AMOUNT = 0.3,			-- Balancing value to convert the naval_strike_targetting equipment stats to chances of how many airplanes managed to do successfull strike.
-	NAVAL_STRIKE_DAMAGE_TO_STR = 1.25,					-- Balancing value to convert damage ( nanaval_strike_attackval_strike_attack * hits ) to Strength reduction.
-	NAVAL_STRIKE_DAMAGE_TO_ORG = 2.5,					-- Balancing value to convert damage ( naval_strike_attack * hits ) to Organisation reduction.
-	NAVAL_STRIKE_CARRIER_MULTIPLIER = 5,              -- damage bonus when planes are in naval combat where their carrier is present (and can thus sortie faster and more effectively)																																													 
+	NAVAL_STRIKE_DAMAGE_TO_STR = 1.0,					-- Balancing value to convert damage ( nanaval_strike_attackval_strike_attack * hits ) to Strength reduction.
+	NAVAL_STRIKE_DAMAGE_TO_ORG = 1.5,					-- Balancing value to convert damage ( naval_strike_attack * hits ) to Organisation reduction.
+	NAVAL_STRIKE_CARRIER_MULTIPLIER = 6,              -- damage bonus when planes are in naval combat where their carrier is present (and can thus sortie faster and more effectively)																																													 
 	NAVAL_STRIKE_AIR_VS_AIR_PASS_CHANCE = 0.9,			-- Balancing value to control
 	FIELD_EXPERIENCE_SCALE = 0.001,
 	FIELD_EXPERIENCE_MAX_PER_DAY = 2,					-- Most xp you can gain per day
@@ -1544,7 +1544,7 @@ NNavy = {
 	NAVAL_TRANSFER_BASE_NAVAL_DIST_MULT = 20,						-- Multiplier for the cost of naval movement ( compared to land movement ) when deciding what ports to use for naval transfer
 	NAVAL_SUPREMACY_CAN_INVADE = 0.5,								-- required naval supremacy to perform invasions on an area
 	CARRIER_STACK_PENALTY = 5,										-- The most efficient is 4 carriers in combat. 5+ brings the penalty to the amount of wings in battle.
-	CARRIER_STACK_PENALTY_EFFECT = 0.1,								-- Each carrier above the optimal amount decreases the amount of airplanes being able to takeoff by such %.
+	CARRIER_STACK_PENALTY_EFFECT = 0.2,								-- Each carrier above the optimal amount decreases the amount of airplanes being able to takeoff by such %.
 	SHORE_BOMBARDMENT_CAP = 0.3,
 	ANTI_AIR_TARGETING = 0.85,                                       -- how good ships are at hitting aircraft
 	MIN_TRACTED_ASSIST_DAMAGE_RATIO = 0.05,							-- How much damage counts as assist damage
@@ -1869,8 +1869,8 @@ NNavy = {
 	LIGHT_GUN_ATTACK_TO_SHORE_BOMBARDMENT							= 0.05, -- light gun attack value is divided by this value * 100 and added to shore bombardment modifier 
 
 	GUN_HIT_PROFILES = { -- hit profiles for guns, if target ih profile is lower the gun will have lower accuracy
-		85.0,	-- big guns
-		150.0,	-- torpedos
+		80.0,	-- big guns
+		145.0,	-- torpedos
 		44.0,	-- small guns
 	},
 	
@@ -1963,8 +1963,8 @@ NNavy = {
 	NAVAL_COMBAT_AIR_SUB_DETECTION_FACTOR = 0.1,						-- A global factor that applies after all others, right before the sub detection contributed by plane is added to the global sub detection of a combatant
 
 	NAVAL_COMBAT_AIR_SUB_TARGET_SCORE = 10,                             -- scoring for target picking for planes inside naval combat, one define per ship typ
-	NAVAL_COMBAT_AIR_CAPITAL_TARGET_SCORE = 225,
-	NAVAL_COMBAT_AIR_CARRIER_TARGET_SCORE = 150,
+	NAVAL_COMBAT_AIR_CAPITAL_TARGET_SCORE = 300,
+	NAVAL_COMBAT_AIR_CARRIER_TARGET_SCORE = 100,
 	NAVAL_COMBAT_AIR_CONVOY_TARGET_SCORE = 1.0,
 	NAVAL_COMBAT_AIR_STRENGTH_TARGET_SCORE = 5,                         -- how much score factor from low health (scales between 0->this number)
 	NAVAL_COMBAT_AIR_LOW_AA_TARGET_SCORE = 25,                           -- how much score factor from low AA guns (scales between 0->this number)
