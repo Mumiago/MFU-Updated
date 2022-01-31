@@ -7093,6 +7093,13 @@ focus_tree = {
 		cost = 5
 		available = { 
 			ENG = { controls_state = 446 }
+			has_completed_focus = ENG_bef_mission
+			OR = {
+				has_tech = eng_1939_medium_tank_chassis
+				has_tech =eng_1940_medium_tank_chassis
+				has_tech =eng_1939_heavy_tank_chassis
+				
+			}
 		}
 		ai_will_do = {
 			factor = 100
@@ -7910,7 +7917,6 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			activate_mission_tooltip = ENG_the_british_expeditionary_force
 			random_owned_controlled_state = {
 				prioritize = { 126 }
 				add_extra_state_shared_building_slots = 2
@@ -8340,7 +8346,6 @@ focus_tree = {
 			factor = 1
 		}	
 		completion_reward = {
-			activate_mission_tooltip = ENG_the_british_expeditionary_force
 			GER = { 
 				add_opinion_modifier = { target = ENG modifier = embargo } 
 				country_event = { id = britain.44 }
@@ -8359,10 +8364,9 @@ focus_tree = {
 			}
 		}
 	}
-	
 	focus = {
-		id = ENG_polish_guarantee
-		icon = GFX_goal_generic_improve_relations
+		id = ENG_bef_mission
+		icon = GFX_goal_CAN_commando
 		prerequisite = { 
 			focus = ENG_peace_time 
 			focus = ENG_embargo_germany
@@ -8379,6 +8383,224 @@ focus_tree = {
 		relative_position_id = ENG_try_to_handle_the_king 
 		x = 0
 		y = 7
+		cost = 1
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			has_army_manpower = { size > 699999 } 
+			has_deployed_air_force_size = {
+				size > 999
+				type = fighter
+			}
+			OR = {
+				has_deployed_air_force_size = {
+				    size > 129
+				    type = cas
+				}
+				has_deployed_air_force_size = {
+				    size > 99
+				    type = strategic_bomber
+				}
+				has_deployed_air_force_size = {
+				    size > 649
+				    type = tactical_bomber	
+				}
+			}	
+			OR = {
+				has_equipment = {
+					medium_tank_chassis > 499
+				}
+				has_equipment = {
+					heavy_tank_chassis > 349
+				}
+			}
+			has_equipment = {
+				special_equipment > 799
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = ENG_BEF_tt
+			hidden_effect = {
+				if = {
+					limit = {
+						has_tech = eng_heavy_fighter_1938
+						NOT = {
+							has_tech = eng_heavy_fighter_1940		
+						}	
+					}
+					add_equipment_to_stockpile = {
+						type = heavy_fighter_equipment_1938
+							amount = 450
+							producer = ENG
+					}
+				}
+				if = {
+					limit = {
+						has_tech = eng_heavy_fighter_1940
+					}
+					add_equipment_to_stockpile = {
+						type = heavy_fighter_equipment_1940
+							amount = 450
+							producer = ENG
+					}
+				}
+				if = {
+					limit = {
+						has_tech = eng_fighter_1939
+						NOT = {
+							has_tech = eng_fighter_1940		
+						}	
+					}
+					add_equipment_to_stockpile = {
+						type = fighter_equipment_1939
+							amount = 700
+							producer = ENG
+					}
+				}
+				if = {
+					limit = {
+						has_tech = eng_fighter_1940
+						NOT = {
+							has_tech = eng_fighter_1939	
+						}
+					}
+					add_equipment_to_stockpile = {
+						type = fighter_equipment_1940
+							amount = 700
+							producer = ENG
+					}	
+				}	
+				if = {
+					limit = {
+						AND = {
+						has_tech = eng_fighter_1940
+						has_tech = eng_fighter_1939	
+						}
+					}
+					add_equipment_to_stockpile = {
+						type = fighter_equipment_1940
+							amount = 700
+							producer = ENG
+					}	
+				}	
+				if = {
+					limit = {
+						has_tech = eng_1939_medium_tank_chassis
+						NOT = {
+							has_tech = eng_1940_medium_tank_chassis
+							has_tech = eng_1939_heavy_tank_chassis
+						}
+					}
+					add_equipment_to_stockpile = {
+							type = medium_tank_chassis_1939
+							amount = 600
+							producer = ENG
+							variant_name = "Valentine Mk.1"
+					}
+				}
+				if = {
+					limit = {
+						has_tech = eng_1939_heavy_tank_chassis
+						NOT = {
+							has_tech = eng_1940_medium_tank_chassis
+							has_tech = eng_1939_medium_tank_chassis
+						}
+					}
+					
+					add_equipment_to_stockpile = {
+						type = heavy_tank_chassis_1939
+						amount = 425
+						producer = ENG
+						variant_name = "Matilda II"
+	
+					}
+				}
+				if = {
+					limit = {
+						has_tech = eng_1939_heavy_tank_chassis
+						has_tech = eng_1939_medium_tank_chassis
+						NOT = {
+							has_tech = eng_1940_medium_tank_chassis
+						}
+					}
+					add_equipment_to_stockpile = {
+						type = heavy_tank_chassis_1939
+							amount = 425
+							producer = ENG
+							variant_name = "Matilda II"
+					}
+					add_equipment_to_stockpile = {
+						type = medium_tank_chassis_1939
+							amount = 600
+							producer = ENG
+							variant_name = "Valentine Mk.1"
+					}
+				}
+				if = {
+					limit = {
+						has_tech = eng_1939_heavy_tank_chassis
+						has_tech = eng_1940_medium_tank_chassis
+					}
+					add_equipment_to_stockpile = {
+						type = heavy_tank_chassis_1939
+							amount = 425
+							producer = ENG
+							variant_name = "Matilda II"
+					}
+					add_equipment_to_stockpile = {
+						type = medium_tank_chassis_1939
+						amount = 600
+						producer = ENG
+						variant_name = "Cruiser Mk.V Crusader"
+					}
+				}
+				if = {
+					limit = {
+						has_tech = eng_1940_medium_tank_chassis
+						NOT = {
+							has_tech = eng_1939_heavy_tank_chassis
+						}
+					}
+					add_equipment_to_stockpile = {
+						type = medium_tank_chassis_1940
+						amount = 600
+						producer = ENG
+						variant_name = "Cruiser Mk.V Crusader"
+					}	
+				}
+				add_equipment_to_stockpile = {
+					type = artillery_equipment
+						amount = 700
+						producer = ENG
+				}
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+						amount = 10000
+						producer = ENG
+				}
+			}	
+		}
+	}
+	
+	focus = {
+		id = ENG_polish_guarantee
+		icon = GFX_goal_generic_improve_relations
+		prerequisite = { 
+			focus = ENG_bef_mission 
+		}
+		bypass = {	
+			OR = {
+				NOT = {
+					country_exists = POL
+				}		
+				POL = { has_defensive_war = yes } 
+			}	
+
+		}
+		relative_position_id = ENG_try_to_handle_the_king 
+		x = 0
+		y = 8
 		cost = 1
 		ai_will_do = {
 			factor = 10
