@@ -799,34 +799,73 @@ SOV_socialism_in_one_country = {
 		}
 
 		remove_effect = {
-			set_country_flag = SOV_winter_war_country_flag
-			hidden_effect = {
-				FIN = {
-					set_technology = { FIN_winter_war = 1 }
-				}				
-			}
-			SOV = {	
-				if = {
-					limit = { 
-						any_army_leader = {
-							has_trait = ita_kwantung_veto
-						} 
-					}
-					every_army_leader = {
-						remove_unit_leader_trait = ita_kwantung_veto
+			if = {
+				limit ={
+					FIN = {
+						is_ai = yes
 					}
 				}
+				SOV = {
+					add_equipment_to_stockpile = {
+						type = infantry_equipment
+							amount = -10000
+							producer = SOV
+					}
+					add_manpower = -100000
+					army_experience = 200
+					if = {
+						limit = { 
+							any_army_leader = {
+								has_trait = ita_kwantung_veto
+							} 
+						}
+						every_army_leader = {
+							remove_unit_leader_trait = ita_kwantung_veto
+						}
+					} 
+				}
+				every_army_leader = {
+					add_unit_leader_trait = sov_kwantung_veto
+				}
+				complete_national_focus = SOV_finnish_wargoal
+				add_state_claim = 146 # Karjala
+				FIN = { country_event = finland.7 }	
 			}
-			every_army_leader = {
-				add_unit_leader_trait = sov_kwantung_veto
-			}		
-			complete_national_focus = SOV_finnish_wargoal
-			add_state_claim = 146 # Karjala
-			FIN = {
-				add_timed_idea = { idea = FIN_winter_war_timed_airforce_bonus days = 200 }
+			if = {
+				limit ={
+					FIN = {
+						is_ai = no
+					}
+				}
+				set_country_flag = SOV_winter_war_country_flag
+				hidden_effect = {
+					FIN = {
+						set_technology = { FIN_winter_war = 1 }
+					}				
+				}
+				SOV = {	
+					if = {
+						limit = { 
+							any_army_leader = {
+								has_trait = ita_kwantung_veto
+							} 
+						}
+						every_army_leader = {
+							remove_unit_leader_trait = ita_kwantung_veto
+						}
+					}
+				}
+				every_army_leader = {
+					add_unit_leader_trait = sov_kwantung_veto
+				}		
+				complete_national_focus = SOV_finnish_wargoal
+				add_state_claim = 146 # Karjala
+				FIN = {
+					add_timed_idea = { idea = FIN_winter_war_timed_airforce_bonus days = 200 }
+				}			
+				SOV = { country_event = soviet.31 }
+				add_named_threat = { threat = 1 name = SOV_finnish_wargoal }
 			}			
-			SOV = { country_event = soviet.31 }
-			add_named_threat = { threat = 1 name = SOV_finnish_wargoal }			
 		}
 		
 		ai_will_do = {
@@ -880,7 +919,7 @@ SOV_socialism_in_one_country = {
 					set_technology = { FIN_winter_war_over = 1 }
 				}				
 			}
-			army_experience = 300
+			army_experience = 100
 			FIN = { country_event = finland.7 }
 		}
 
