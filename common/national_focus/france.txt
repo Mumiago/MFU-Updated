@@ -19,7 +19,7 @@ focus_tree = {
 		icon = GFX_FRA_VIC_rationing
 		available_if_capitulated = no
 		cost = 5
-		x = 0
+		x = 4
 		y = 0
 
 		ai_will_do = {
@@ -1949,7 +1949,7 @@ focus_tree = {
 		id = FRA_protest_anschluss  
 
 		icon = GFX_focus_generic_support_the_left_right
-		x = -15
+		x = -7
 		y = 0
 		cost = 5
 		ai_will_do = {
@@ -4263,7 +4263,7 @@ focus_tree = {
 	focus = {
 		id = FRA_levee
 		icon = GFX_FRA_levee_en_masse
-		x = -8
+		x = -6
 		y = 2
 		prerequisite = { focus = FRA_methodical_battle }
 		relative_position_id = FRA_1936_manual
@@ -4825,7 +4825,7 @@ focus_tree = {
 	focus = {
 		id = FRA_key_war_industries
 		icon = GFX_goal_generic_construct_mil_factory
-		x = 0
+		x = -1
 		y = 2
 		prerequisite = { focus = FRA_continue_rearnament }
 		relative_position_id = FRA_methodical_battle
@@ -4883,9 +4883,9 @@ focus_tree = {
 	focus = {
 		id = FRA_general_mobilization
 		icon = GFX_mobilisation
-		x = 0
-		y = 3
-		prerequisite = { focus = FRA_key_war_industries }
+		x = 1
+		y = 2
+		prerequisite = { focus = FRA_continue_rearnament }
 		relative_position_id = FRA_methodical_battle
 		cost = 5
 		ai_will_do = {
@@ -4935,7 +4935,8 @@ focus_tree = {
 		id = FRA_expand_the_deal
 		icon = GFX_focus_focus_fra_maquis
 		x = 0
-		y = 4
+		y = 3
+		prerequisite = { focus = FRA_key_war_industries }
 		prerequisite = { focus = FRA_general_mobilization }
 		relative_position_id = FRA_methodical_battle
 		cost = 5
@@ -4946,7 +4947,7 @@ focus_tree = {
 			has_completed_focus = FRA_the_deal
 		}	
 		
-		available_if_capitulated = no
+		available_if_capitulated = yes
 		completion_reward = {
 			unlock_decision_tooltip = FRA_purchase_equipment
 			USA = {
@@ -4957,7 +4958,7 @@ focus_tree = {
 	focus = {
 		id = FRA_maison_petain
 		icon = GFX_focus_generic_military_mission
-		x = 5
+		x = 4
 		y = 1
 		prerequisite = { focus = FRA_methodical_battle }
 		relative_position_id = FRA_methodical_battle
@@ -4967,7 +4968,7 @@ focus_tree = {
 			factor = 1
 		}
 		
-		available_if_capitulated = no
+		available_if_capitulated = yes
 		completion_reward = {
 			custom_effect_tooltip = available_military_high_command
 			show_ideas_tooltip = rene_prioux
@@ -4992,24 +4993,53 @@ focus_tree = {
 			factor = 1
 		}
 		
-		available_if_capitulated = no
+		available_if_capitulated = yes
 		completion_reward = {
-			random_owned_controlled_state = {
+			if = {
 				limit = {
-					is_core_of = FRA
-					free_building_slots = {
-						building = arms_factory
-						size > 2
-						include_locked = yes
+					has_capitulated = no 
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_core_of = FRA
+						free_building_slots = {
+							building = arms_factory
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = arms_factory
+						level = 3
+						instant_build = yes
 					}
 				}
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = arms_factory
-					level = 3
-					instant_build = yes
+			}
+			if = {
+				limit = {
+					has_capitulated = yes 
+				}
+				GER = {
+					random_owned_controlled_state = {
+						limit = {
+							is_core_of = FRA
+							free_building_slots = {
+								building = arms_factory
+								size > 2
+								include_locked = yes
+							}
+						}
+						add_extra_state_shared_building_slots = 3
+						add_building_construction = {
+							type = arms_factory
+							level = 3
+							instant_build = yes
+						}
+					}
 				}
 			}
+
 			custom_effect_tooltip = available_designer
 			show_ideas_tooltip = renault_fra2
 
@@ -5027,7 +5057,7 @@ focus_tree = {
 			factor = 1
 		}
 		
-		available_if_capitulated = no
+		available_if_capitulated = yes
 		completion_reward = {
 			add_tech_bonus = {
 				name = FRA_mechanization_effort
@@ -5035,7 +5065,6 @@ focus_tree = {
 				uses = 2
 				category = cat_mechanized_equipment
 			}
-
 		}
 	}
 	focus = {
@@ -5050,24 +5079,50 @@ focus_tree = {
 			factor = 1
 		}
 		
-		available_if_capitulated = no
+		available_if_capitulated = yes
 		completion_reward = {
-			add_equipment_to_stockpile = {
-				type = light_tank_chassis_1936
-				amount = 800
-				producer = FRA
+			if = {
+				limit = {
+					has_capitulated = no 
+				}
+				add_equipment_to_stockpile = {
+					type = light_tank_chassis_1936
+					amount = 800
+					producer = FRA
+				}
+				add_tech_bonus = {
+					name = armor_bonus	
+					bonus = 0.5
+					uses = 1
+					category = cat_light_armor 
+				}
+				add_timed_idea = {
+					idea = FRA_light_tank_conversion
+					days = 180
+				}
 			}
-			add_tech_bonus = {
-				name = armor_bonus	
-				bonus = 0.5
-				uses = 1
-				category = cat_light_armor 
+			if = {
+				limit = {
+					has_capitulated = yes 
+				}
+				GER = {
+					add_equipment_to_stockpile = {
+						type = light_tank_chassis_1936
+						amount = 800
+						producer = FRA
+					}
+					add_tech_bonus = {
+						name = armor_bonus	
+						bonus = 0.5
+						uses = 1
+						category = cat_light_armor 
+					}
+					add_timed_idea = {
+						idea = FRA_light_tank_conversion
+						days = 180
+					}
+				}
 			}
-			add_timed_idea = {
-				idea = FRA_light_tank_conversion
-				days = 180
-			}
-
 		}
 	}
 	focus = {
@@ -5082,22 +5137,43 @@ focus_tree = {
 			factor = 1
 		}
 		
-		available_if_capitulated = no
+		available_if_capitulated = yes
 		completion_reward = {
 			custom_effect_tooltip = FRA_heavy_armor_tt
-			add_equipment_to_stockpile = {
-				type = heavy_tank_chassis_1936
-				amount = 200
-				producer = FRA
+			if = {
+				limit = {
+					has_capitulated = no 
+				}
+				add_equipment_to_stockpile = {
+					type = heavy_tank_chassis_1936
+					amount = 200
+					producer = FRA
+				}
+				add_tech_bonus = {
+					name = armor_bonus	
+					bonus = 0.3
+					uses = 1
+					category = armor 
+				}
 			}
-			add_tech_bonus = {
-				name = armor_bonus	
-				bonus = 0.3
-				uses = 1
-				category = armor 
+			if = {
+				limit = {
+					has_capitulated = yes 
+				}
+				GER = {
+					add_equipment_to_stockpile = {
+						type = heavy_tank_chassis_1936
+						amount = 200
+						producer = FRA
+					}
+					add_tech_bonus = {
+						name = armor_bonus	
+						bonus = 0.3
+						uses = 1
+						category = armor 
+					}
+				}
 			}
-
-
 		}
 	}
 	focus = {
@@ -5113,7 +5189,7 @@ focus_tree = {
 			factor = 1
 		}
 		
-		available_if_capitulated = no
+		available_if_capitulated = yes
 		completion_reward = {
 			army_experience = 50
 			custom_effect_tooltip = FRA_armor_tt
@@ -5170,6 +5246,9 @@ focus_tree = {
 		available = { #pleading_face @joker
 			date > 1938.06.01
 		}	
+		bypass = {
+			has_capitulated = yes 
+		}
 		available_if_capitulated = no
 		completion_reward = {
 			add_tech_bonus = {
@@ -5191,6 +5270,9 @@ focus_tree = {
 		cost = 5
 		ai_will_do = {
 			factor = 1
+		}
+		bypass = {
+			has_capitulated = yes 
 		}
 		available = {
 			AND = {
@@ -5243,7 +5325,7 @@ focus_tree = {
 	focus = {
 		id = FRA_armee_de_metier 
 		icon = GFX_goal_FRA_de_gaulle
-		x = 10
+		x = 8
 		y = 1
 		prerequisite = { focus = FRA_methodical_battle }
 		relative_position_id = FRA_methodical_battle
@@ -5253,7 +5335,7 @@ focus_tree = {
 			factor = 1
 		}
 		
-		available_if_capitulated = no
+		available_if_capitulated = yes
 		completion_reward = {
 			custom_effect_tooltip = available_military_high_command
 			show_ideas_tooltip = charles_degaul
@@ -5272,7 +5354,7 @@ focus_tree = {
 			factor = 1
 		}
 		
-		available_if_capitulated = no
+		available_if_capitulated = yes
 		completion_reward = {
 			add_ideas = FRA_widespread_fiefdoms
 
@@ -5290,40 +5372,82 @@ focus_tree = {
 			factor = 1
 		}
 		
-		available_if_capitulated = no
+		available_if_capitulated = yes
 		completion_reward = {
-			21 = { 
-				remove_building = {
-					type = dockyard
-					level = 6
-				}
-			}
-			random_owned_controlled_state = {
+			if = {
 				limit = {
-					is_core_of = FRA
-					free_building_slots = {
-						building = arms_factory
-						size > 3
-						include_locked = yes
+					has_capitulated = no 
+				}
+				21 = { 
+					remove_building = {
+						type = dockyard
+						level = 6
 					}
 				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes
+				random_owned_controlled_state = {
+					limit = {
+						is_core_of = FRA
+						free_building_slots = {
+							building = arms_factory
+							size > 3
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = arms_factory
+						level = 2
+						instant_build = yes
+					}
+				}
+				272	= {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = arms_factory
+						level = 2
+						instant_build = yes
+					}
+				}
+				add_ideas = FRA_antitank_tank_drive
+			}
+			if = {
+				limit = {
+					has_capitulated = yes 
+				}
+				GER = {
+					21 = { 
+						remove_building = {
+							type = dockyard
+							level = 6
+						}
+					}
+					random_owned_controlled_state = {
+						limit = {
+							is_core_of = FRA
+							free_building_slots = {
+								building = arms_factory
+								size > 3
+								include_locked = yes
+							}
+						}
+						add_extra_state_shared_building_slots = 2
+						add_building_construction = {
+							type = arms_factory
+							level = 2
+							instant_build = yes
+						}
+					}
+					random_owned_controlled_state = {
+						add_extra_state_shared_building_slots = 2
+						add_building_construction = {
+							type = arms_factory
+							level = 2
+							instant_build = yes
+						}
+					}
+					add_ideas = FRA_antitank_tank_drive
 				}
 			}
-			272	= {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes
-				}
-			}
-			add_ideas = FRA_antitank_tank_drive
-
 		}
 	}
 	focus = {
@@ -5338,7 +5462,7 @@ focus_tree = {
 			factor = 1
 		}
 		
-		available_if_capitulated = no
+		available_if_capitulated = yes
 		completion_reward = {
 			add_political_power = -50
 			army_experience = 25
@@ -5366,10 +5490,16 @@ focus_tree = {
 			factor = 1
 		}
 		
-		available_if_capitulated = no
+		available_if_capitulated = yes
 		completion_reward = {
 			FRA = { country_event = { id = france.47 days = 1 } }
 			remove_ideas = FRA_widespread_fiefdoms
+			if = {
+				limit = {
+					has_capitulated = yes 
+				}
+				add_political_power = -200
+			}
 		}
 
 	}
@@ -5390,22 +5520,44 @@ focus_tree = {
 
 		cancel_if_invalid = yes 
 
-		available_if_capitulated = no
+		available_if_capitulated = yes
 		completion_reward = {
 			army_experience = -50 
 			add_ideas = FRA_redefined_armor
-			add_tech_bonus = {
-				bonus = 0.75
-				uses = 2
-				category = tank_upgrade
-		 	}
-		 	add_tech_bonus = {
-				name = armor_bonus	
-				bonus = 0.5
-				uses = 1
-				category = armor 
+			if = {
+				limit = {
+					has_capitulated = no 
+				}
+				add_tech_bonus = {
+					bonus = 0.75
+					uses = 2
+					category = tank_upgrade
+				}
+				add_tech_bonus = {
+					name = armor_bonus	
+					bonus = 0.5
+					uses = 1
+					category = armor 
+				}
 			}
-
+			if = {
+				limit = {
+					has_capitulated = yes 
+				}
+				GER = {
+					add_tech_bonus = {
+						bonus = 0.75
+						uses = 2
+						category = tank_upgrade
+					}
+					add_tech_bonus = {
+						name = armor_bonus	
+						bonus = 0.5
+						uses = 1
+						category = armor 
+					}
+				}
+			}
 		}
 	}
 	focus = {
@@ -5420,7 +5572,7 @@ focus_tree = {
 			factor = 1
 		}
 		
-		available_if_capitulated = no
+		available_if_capitulated = yes
 		completion_reward = {
 			custom_effect_tooltip = FRA_adapt_tempo_tt
 			hidden_effect = {
@@ -5435,7 +5587,7 @@ focus_tree = {
 	focus = {
 		id = FRA_pierre_cot
 		icon = GFX_goal_italy_further_pilots_training
-		x = 42
+		x = 39
 		y = 0
 		#prerequisite = { focus = FRA_redefine_armor }
 		#relative_position_id = FRA_armee_de_metier
@@ -5842,7 +5994,7 @@ focus_tree = {
 		id = FRA_marine_nationale_needs
 		icon = GFX_r56_goal_FRA_darlan_doctrines
 		cost = 2.96
-		x = 52
+		x = 47
 		y = 0
 		completion_reward = {
 				navy_experience = 50
