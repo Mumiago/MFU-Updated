@@ -580,7 +580,7 @@ NBuildings = {
 	SUPPLY_PORT_LEVEL_THROUGHPUT = 3.3,   -- supply throughput per level of naval base
 	INFRA_TO_SUPPLY = 2,              -- to mitigate lowered supply by the new modifiers
  	INFRA_TO_SUPPLY_COEFF = 1,
-	MAX_SHARED_SLOTS = 30,				-- Max slots shared by factories
+	MAX_SHARED_SLOTS = 99,				-- Max slots shared by factories
 	OWNER_CHANGE_EXTRA_SHARED_SLOTS_FACTOR = 0.5, --Scale factor of extra shared slots when state owner change.
 	DESTRUCTION_COOLDOWN_IN_WAR = 120,	-- Number of days cooldown between removal of buildings in war times
  
