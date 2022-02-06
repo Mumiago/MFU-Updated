@@ -5598,6 +5598,9 @@ focus_tree = {
 		icon = GFX_goal_italy_further_pilots_training
 		x = 39
 		y = 0
+		bypass = {
+			has_capitulated = yes 
+		}
 		#prerequisite = { focus = FRA_redefine_armor }
 		#relative_position_id = FRA_armee_de_metier
 		cost = 2.96
@@ -5605,7 +5608,7 @@ focus_tree = {
 			factor = 1
 		}
 		
-		available_if_capitulated = no
+		available_if_capitulated = yes
 		completion_reward = {
 		air_experience = 50
 		add_ideas = some_piere_guy
@@ -5617,6 +5620,9 @@ focus_tree = {
 		icon = GFX_goal_generic_air_doctrine_shine
 		x = 0
 		y = 1
+		bypass = {
+			has_capitulated = yes 
+		}
 		prerequisite = { focus = FRA_pierre_cot }
 		relative_position_id = FRA_pierre_cot
 		cost = 2.96
@@ -5629,7 +5635,7 @@ focus_tree = {
 				has_completed_focus = FRA_strengthen_industrial_monopolies
 			}				
 		}	
-		available_if_capitulated = no
+		available_if_capitulated = yes
 		completion_reward = {
 			swap_ideas = {
 				remove_idea = FRA_bad_airforce
@@ -5708,6 +5714,9 @@ focus_tree = {
 		icon = GFX_goal_generic_build_airforce
 		x = -1
 		y = 2
+		bypass = {
+			has_capitulated = yes 
+		}
 		prerequisite = { focus = FRA_armee_del }
 		relative_position_id = FRA_pierre_cot
 		mutually_exclusive = { focus = FRA_tactical_bombing_focus }
@@ -5722,7 +5731,7 @@ focus_tree = {
 	 		}
 	 	}	
 		
-		available_if_capitulated = no
+		available_if_capitulated = yes
 		completion_reward = {
 			air_experience = 25
 			set_technology = {
@@ -5736,6 +5745,9 @@ focus_tree = {
 		icon = GFX_goal_generic_air_bomber
 		x = 1
 		y = 2
+		bypass = {
+			has_capitulated = yes 
+		}
 		prerequisite = { focus = FRA_armee_del }
 		relative_position_id = FRA_pierre_cot
 		mutually_exclusive = { focus = FRA_battlefield_support }
@@ -5749,7 +5761,7 @@ focus_tree = {
 			   has_tech = air_superiority
 		  	}
 	  	}	
-		available_if_capitulated = no
+		available_if_capitulated = yes
 		completion_reward = {
 			air_experience = 25
 			set_technology = {
@@ -5780,6 +5792,9 @@ focus_tree = {
 		icon = GFX_goal_generic_CAS_shine
 		x = -2
 		y = 3
+		bypass = {
+			has_capitulated = yes 
+		}
 		prerequisite = { focus = FRA_battlefield_support }
 		relative_position_id = FRA_pierre_cot
 		cost = 2.96
@@ -5787,7 +5802,7 @@ focus_tree = {
 			factor = 1
 		}
 		
-		available_if_capitulated = no
+		available_if_capitulated = yes
 		completion_reward = {
 			set_technology = {
 			   CAS_1939 = 1
@@ -5806,6 +5821,9 @@ focus_tree = {
 		icon = GFX_goal_italy_increase_aircraft_production
 		x = 0
 		y = 3
+		bypass = {
+			has_capitulated = yes 
+		}
 		prerequisite = { focus = FRA_battlefield_support  focus = FRA_tactical_bombing_focus }
 		relative_position_id = FRA_pierre_cot
 		cost = 2.96
@@ -5816,7 +5834,7 @@ focus_tree = {
 			has_completed_focus = FRA_policy_firmness
 		}
 		
-		available_if_capitulated = no
+		available_if_capitulated = yes
 		completion_reward = {
 				remove_ideas = FRA_not_as_bad_airforce
 				random_owned_controlled_state = {
@@ -5843,6 +5861,9 @@ focus_tree = {
 		icon = GFX_r56_goal_ENG_bomber
 		x = 2
 		y = 3
+		bypass = {
+			has_capitulated = yes 
+		}
 		prerequisite = { focus = FRA_tactical_bombing_focus }
 		relative_position_id = FRA_pierre_cot
 		cost = 2.96
@@ -5850,7 +5871,7 @@ focus_tree = {
 			factor = 1
 		}
 		
-		available_if_capitulated = no
+		available_if_capitulated = yes
 		completion_reward = {
 			set_technology = {
 			   tactical_bomber_1939 = 1
@@ -5870,6 +5891,9 @@ focus_tree = {
 		icon = GFX_goal_polish_military_aviation_exports
 		x = 0
 		y = 4
+		bypass = {
+			has_capitulated = yes 
+		}
 		prerequisite = { focus = FRA_new_bombers focus = FRA_modern_support_planes }
 		prerequisite = { focus = FRA_engine_manu  }
 		relative_position_id = FRA_pierre_cot
@@ -5884,7 +5908,7 @@ focus_tree = {
 			has_tech = fighter_1938
 		}	
 		
-		available_if_capitulated = no
+		available_if_capitulated = yes
 		completion_reward = {
 		set_technology = {
 			  fighter_1940 = 1
@@ -5931,13 +5955,31 @@ focus_tree = {
 			date > 1939.01.01
 		}	
 		
-		available_if_capitulated = no
+		available_if_capitulated = yes
 		completion_reward = {
-			add_timed_idea = {
-				idea = FRA_the_deal
-				days = 100
+			if = {
+				limit = {
+					has_capitulated = no 
+				}
+				add_timed_idea = {
+					idea = FRA_the_deal
+					days = 100
+				}
+				unlock_decision_category_tooltip = FRA_weapons_purchases_category
 			}
-			unlock_decision_category_tooltip = FRA_weapons_purchases_category
+			if = {
+				limit = {
+					has_capitulated = yes 
+				}
+				add_timed_idea = {
+					idea = FRA_the_deal
+					days = 100
+				}
+				unlock_decision_category_tooltip = FRA_weapons_purchases_category
+				add_political_power = -100
+				custom_effect_tooltip = FRA_remove_political_weight_tt
+				add_to_variable = { var = political_weight value = -50 }
+			}
 		}
 	}
 	focus = {
