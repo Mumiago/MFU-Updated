@@ -83,7 +83,15 @@ focus_tree = {
 				var = USA_production_speed_industrial_complex_factor_var
 				value = 0.2
 			}
-			custom_effect_tooltip = "20% civ speed -30% infra speed"
+			add_to_variable = {
+				var = USA_production_speed_arms_factory_factor_var
+				value = -0.1
+			}
+			add_to_variable = {
+				var = USA_production_speed_infrastructure_factor_var
+				value = -0.3
+			}
+			custom_effect_tooltip = "20% civ speed -30% infra speed -10% mil speed"
 		}
 	}
 	focus = {
@@ -132,7 +140,7 @@ focus_tree = {
 			add_tech_bonus = {
 				category = industry
 				uses = 2
-				bonus = 1.2
+				bonus = 1.25
 				name = USA_45
 			}
 			custom_effect_tooltip = "10% research speed"
@@ -162,6 +170,7 @@ focus_tree = {
 				value = -0.2
 			}
 			add_political_power = 150
+			custom_effect_tooltip = "20% stab -0.2pp cost 20% pp gain"
 		}
 	}
 	focus = {
@@ -175,7 +184,21 @@ focus_tree = {
 			focus = USA_5
 		}
 		completion_reward = {
-
+			add_to_variable = {
+				var = USA_stability_factor_var
+				value = -0.2
+			}
+			add_to_variable = {
+				var = USA_political_power_factor_var
+				value = -0.1
+			}
+			add_to_variable = {
+				var = USA_political_power_cost_var
+				value = 0.1
+			}
+			custom_effect_tooltip = "-20% stab -10% pp gain 0.1pp cost"
+			add_ideas = USA_donald_nelson
+			add_political_power = -100
 		}
 	}
 	focus = {
@@ -186,7 +209,36 @@ focus_tree = {
 		prerequisite = { focus = USA_6 focus = USA_5 }
 		relative_position_id = USA_6
 		completion_reward = {
-
+			if = {
+				limit = {
+					has_completed_focus = USA_5
+				}
+				add_to_variable = {
+					var = USA_consumer_goods_factor_var
+					value = -0.025
+				}
+				add_to_variable = {
+					var = USA_local_resources_factor_var
+					value = 0.15
+				}
+			}
+			if = {
+				limit = {
+					has_completed_focus = USA_6
+				}
+				add_to_variable = {
+					var = USA_consumer_goods_factor_var
+					value = 0.025
+				}
+				add_to_variable = {
+					var = USA_industrial_capacity_factory_var
+					value = 0.05
+				}
+				add_to_variable = {
+					var = USA_industrial_capacity_dockyard_var
+					value = 0.05
+				}
+			}
 		}
 	}
 	focus = {
@@ -197,7 +249,30 @@ focus_tree = {
 		prerequisite = { focus = USA_43 }
 		relative_position_id = USA_6
 		completion_reward = {
-
+			if = {
+				limit = {
+					has_completed_focus = USA_5
+				}
+				add_tech_bonus = {
+					category = industry
+					uses = 2
+					bonus = 0.75
+					name = USA_7
+				}
+			}
+			if = {
+				limit = {
+					has_completed_focus = USA_6
+				}
+				add_to_variable = {
+					var = USA_research_speed_factor_var
+					value = 0.1
+				}
+				add_to_variable = {
+					var = USA_production_speed_arms_factory_factor_var
+					value = 0.1
+				}
+			}
 		}
 	}
 	focus = {
@@ -245,6 +320,23 @@ focus_tree = {
 					level = 10
 				}
 			}
+			every_state = {
+				limit = {
+					OR = {
+						state = 391
+						state = 392
+						state = 394
+						state = 395
+						state = 396
+					}
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = 2
+			}
 			add_to_variable = {
 				var = USA_production_speed_arms_factory_factor_var
 				value = 0.2
@@ -253,7 +345,11 @@ focus_tree = {
 				var = USA_industrial_capacity_factory_var
 				value = 0.1
 			}
-			custom_effect_tooltip = "20 mil speed 10 output"
+			add_to_variable = {
+				var = USA_consumer_goods_factor_var
+				value = 0.025
+			}
+			custom_effect_tooltip = "20 mil speed 10 output 2.5% cgs"
 		}
 	}
 	focus = {
@@ -326,6 +422,23 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
+			every_state = {
+				limit = {
+					OR = {
+						state = 357
+						state = 358
+						state = 359
+						state = 360
+						state = 362
+					}
+				}
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = 2
+			}
 			add_to_variable = {
 				var = USA_production_speed_dockayard_factor_var
 				value = 0.2
@@ -334,30 +447,63 @@ focus_tree = {
 				var = USA_industrial_capacity_dockyard_var
 				value = 0.1
 			}
-			custom_effect_tooltip = "20 dock speed 10 dock output"
+			add_to_variable = {
+				var = USA_consumer_goods_factor_var
+				value = 0.025
+			}
+			custom_effect_tooltip = "20 dock speed 10 dock output 2.5% cgs"
 		}
 	}
 	focus = {
 		id = USA_10
 		cost = 0
+		available = {
+			date > 1939.9.1
+		}
 		x = -1
 		y = 1
 		prerequisite = { focus = USA_8 focus = USA_45 }
 		prerequisite = { focus = USA_9 focus = USA_30 focus = USA_40 }
 		relative_position_id = USA_41
 		completion_reward = {
+			add_to_variable = {
+				var = USA_production_speed_dockayard_factor_var
+				value = 0.1
+			}
+			add_to_variable = {
+				var = USA_industrial_capacity_dockyard_var
+				value = 0.1
+			}
+			add_to_variable = {
+				var = USA_production_speed_arms_factory_factor_var
+				value = 0.1
+			}
+			add_to_variable = {
+				var = USA_industrial_capacity_factory_var
+				value = 0.1
+			}
+			add_to_variable = {
+				var = USA_consumer_goods_factor_var
+				value = -0.05
+			}
 		}
 	}
 	focus = {
 		id = USA_11
+		available = {
+			has_war_with = JAP
+		}
 		cost = 0
-		x = -5
+		x = -3
 		y = 1
 		prerequisite = { focus = USA_7 }
 		prerequisite = { focus = USA_10 }
 		relative_position_id = USA_10
 		completion_reward = {
-
+			add_to_variable = {
+				var = USA_consumer_goods_factor_var
+				value = -0.05
+			}
 		}
 	}
 	focus = {
@@ -379,7 +525,26 @@ focus_tree = {
 		prerequisite = { focus = USA_12 }
 		relative_position_id = USA_12
 		completion_reward = {
-
+			add_to_variable = {
+				var = USA_production_speed_industrial_complex_factor_var
+				value = -0.1
+			}
+			every_state = {
+				limit = {
+					OR = {
+						state = 357
+						state = 358
+						state = 359
+					}
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = 2
+			}
+			custom_effect_tooltip = "-10% civ speed"
 		}
 	}
 	focus = {
