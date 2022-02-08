@@ -892,14 +892,56 @@ focus_tree = {
 
 		}
 	}
+
+	focus = {
+		id = USA_focus_on_asia
+		icon = GFX_focus_usa_focus_on_asia
+		relative_position_id = USA_department_of_war
+		prerequisite = {
+			focus = USA_department_of_war
+		}
+		x = -16
+		y = 1
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 2
+				category = naval_doctrine
+			}
+		}
+	}
+
 	focus = {
 		id = USA_embargo_japan
 		cost = 3
 		available = {
 			date > 1939.1.1
 		}
-		x = 30
-		y = 0
+		relative_position_id = USA_focus_on_asia
+		prerequisite = {
+			focus = USA_focus_on_asia
+		}
+		x = 10
+		y = 1
 		completion_reward = {
 			add_war_support = 0.1
 			add_political_power = 150
@@ -1407,41 +1449,6 @@ focus_tree = {
 			}
 		}
 	}
-	focus = {
-		id = USA_focus_on_asia
-		icon = GFX_focus_usa_focus_on_asia
-		x = 1
-		y = 1
-		prerequisite = { focus = USA_appoint_a_new_chief_of_staff }
-		mutually_exclusive = { focus = USA_focus_on_europe }
-		relative_position_id = USA_appoint_a_new_chief_of_staff
-		cost = 5
-
-		ai_will_do = {
-			factor = 1
-		}
-
-		available = {
-
-		}
-		
-		bypass = {
-
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		completion_reward = {
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 2
-				category = naval_doctrine
-			}
-		}
-	}
 
 	focus = {
 		id = USA_office_of_strategic_services
@@ -1514,7 +1521,7 @@ focus_tree = {
 	focus = {
 		id = USA_war_powers_act
 		icon = GFX_USA_war_powers_act
-		prerequisite = { focus = USA_focus_on_europe focus = USA_focus_on_asia }
+		prerequisite = { focus = USA_focus_on_europe }
 		relative_position_id = USA_appoint_a_new_chief_of_staff
 		x = 0
 		y = 2
@@ -1615,8 +1622,12 @@ focus_tree = {
 		id = USA_support_china
 		icon = GFX_USA_support_china
 		mutually_exclusive = {  }
-		x = 40
-		y = 0
+		prerequisite = {
+			focus = USA_focus_on_asia
+		}
+		relative_position_id = USA_focus_on_asia
+		x = -8
+		y = 1
 		cost = 2
 		ai_will_do = {
 			factor = 100 
@@ -1651,7 +1662,7 @@ focus_tree = {
 		prerequisite = { focus = USA_support_china }
 		mutually_exclusive = { focus = USA_procure_equipment_through_other_means }
 		relative_position_id = USA_support_china
-		x = 1
+		x = 0
 		y = 1
 		cost = 2
 		ai_will_do = {
@@ -1683,7 +1694,7 @@ focus_tree = {
 		prerequisite = { focus = USA_support_china }
 		mutually_exclusive = { focus = USA_provide_monetary_support_for_china }
 		relative_position_id = USA_support_china
-		x = -1
+		x = -2
 		y = 1
 		cost = 2
 		ai_will_do = {
@@ -1712,10 +1723,10 @@ focus_tree = {
 	focus = {
 		id = USA_denounce_japanese_war_crimes
 		icon = GFX_USA_denounce_japanese_war_crimes
-		prerequisite = { focus = USA_provide_monetary_support_for_china focus = USA_procure_equipment_through_other_means }
+		prerequisite = { focus = USA_support_china }
 		relative_position_id = USA_support_china
-		x = 0
-		y = 2
+		x = 2
+		y = 1
 		cost = 5
 		ai_will_do = {
 			factor = 100 
@@ -1738,11 +1749,11 @@ focus_tree = {
 	focus = {
 		id = USA_form_modern_chinese_airforce
 		icon = GFX_USA_form_modern_chinese_airforce
-		mutually_exclusive = { focus = USA_lost_but_not_forgotten }
 		prerequisite = { focus = USA_denounce_japanese_war_crimes }
+		prerequisite = { focus = USA_procure_equipment_through_other_means focus = USA_provide_monetary_support_for_china }
 		relative_position_id = USA_support_china
 		x = -1
-		y = 3
+		y = 2
 		cost = 5
 		ai_will_do = {
 			factor = 100 
@@ -1788,10 +1799,11 @@ focus_tree = {
 	focus = { 
 		id = USA_increase_equipment_shipments
 		icon = GFX_USA_increase_equipment_shipments
-		prerequisite = { focus = USA_form_modern_chinese_airforce }
+		prerequisite = { focus = USA_denounce_japanese_war_crimes }
+		prerequisite = { focus = USA_provide_monetary_support_for_china focus = USA_procure_equipment_through_other_means }
 		relative_position_id = USA_support_china
-		x = -1
-		y = 4
+		x = 1
+		y = 2
 		cost = 2
 		ai_will_do = {
 			factor = 100 
@@ -1819,10 +1831,10 @@ focus_tree = {
 	focus = { 
 		id = USA_X_force
 		icon = GFX_USA_X_force
-		prerequisite = { focus = USA_increase_equipment_shipments }
+		prerequisite = { focus = USA_form_modern_chinese_airforce }
 		relative_position_id = USA_support_china
 		x = -1
-		y = 5
+		y = 3
 		cost = 2
 		ai_will_do = {
 			factor = 100 
@@ -1920,116 +1932,12 @@ focus_tree = {
 
 
 	focus = {
-		id = USA_lost_but_not_forgotten
-		icon = GFX_USA_lost_but_not_forgotten
-		prerequisite = { focus = USA_denounce_japanese_war_crimes }
-		mutually_exclusive = { focus = USA_form_modern_chinese_airforce }
-		relative_position_id = USA_support_china
-		x = 1
-		y = 3
-		cost = 2
-		ai_will_do = {
-			factor = 100 
-		}
-		available_if_capitulated = yes		
-		
-		available = { 
-			OR = {
-				has_country_flag = JAP_victory_over_chinese_the_peeps
-				has_country_flag = JAP_victory_over_chinese_the_bruhs
-			}
-		}
-
-		bypass = {
-		}
-		
-		completion_reward = {
-			CHI = {
-				become_exiled_in = { target = USA legitimacy = 0.1 }	
-			}
-			custom_effect_tooltip = "Subby played China."
-		}
-	}		
-
-	focus = {
-		id = USA_fund_the_guerillas
-		icon = GFX_USA_fund_the_guerillas
-		prerequisite = { focus = USA_lost_but_not_forgotten }
-		relative_position_id = USA_support_china
-		x = 1
-		y = 4
-		cost = 2
-		ai_will_do = {
-			factor = 100 
-		}
-		available_if_capitulated = yes		
-		
-		available = { 
-		}
-
-		bypass = {
-		}
-		
-		completion_reward = {
-			every_state = {
-				limit = {
-					is_core_of = CHI 
-				}
-				add_resistance_target = {
-					amount = 10
-					tooltip = intelligency_agency_resistance_boost_tt
-				}
-			}
-			CHI = {
-				add_ideas = USA_funding_chinese_resistance
-			}
-			army_experience = 50
-		}
-	}		
-
-	focus = {
-		id = USA_organized_resistance
-		icon = GFX_USA_organized_resistance
-		prerequisite = { focus = USA_fund_the_guerillas }
-		relative_position_id = USA_support_china
-		x = 1
-		y = 5
-		cost = 2
-		ai_will_do = {
-			factor = 100 
-		}
-		available_if_capitulated = yes		
-		
-		available = { 
-		}
-
-		bypass = {
-		}
-		
-		completion_reward = {
-			every_state = {
-				limit = {
-					is_core_of = CHI 
-				}
-				add_resistance_target = {
-					amount = 10
-					tooltip = intelligency_agency_resistance_boost_tt
-				}
-			}
-			CHI = {
-				add_legitimacy = 0.1 
-			}
-			army_experience = 50
-		}
-	}		
-
-	focus = {
 		id = USA_procure_the_defeat_of_japan
 		icon = GFX_USA_procure_the_defeat_of_japan
-		prerequisite = { focus = USA_organized_resistance focus = USA_X_force }
+		prerequisite = { focus = USA_increase_equipment_shipments focus = USA_X_force }
 		relative_position_id = USA_support_china
 		x = 0
-		y = 6
+		y = 4
 		cost = 5
 		ai_will_do = {
 			factor = 100 
@@ -2053,9 +1961,9 @@ focus_tree = {
 	focus = {
 		id = USA_enlargen_the_fleet
 		icon = GFX_USA_procure_the_defeat_of_japan
-		prerequisite = { focus = USA_department_of_war }
-		relative_position_id = USA_department_of_war
-		x = -8
+		prerequisite = { focus = USA_focus_on_asia }
+		relative_position_id = USA_focus_on_asia
+		x = 1
 		y = 1
 		cost = 5
 		ai_will_do = {
@@ -2084,12 +1992,12 @@ focus_tree = {
 	focus = {
 		id = USA_cut_funding_to_the_fleet
 		icon = GFX_USA_procure_the_defeat_of_japan
-		prerequisite = { focus = USA_department_of_war }
+		prerequisite = { focus = USA_focus_on_asia }
 		mutually_exclusive = {
 			focus = USA_enlargen_the_fleet
 		}
-		relative_position_id = USA_department_of_war
-		x = -12
+		relative_position_id = USA_focus_on_asia
+		x = -1
 		y = 1
 		cost = 5
 		ai_will_do = {
@@ -2117,9 +2025,9 @@ focus_tree = {
 		prerequisite = {
 			focus = USA_cut_funding_to_the_fleet
 		}
-		x = -14
-		y = 2
-		relative_position_id = USA_department_of_war
+		x = -3
+		y = 1
+		relative_position_id = USA_cut_funding_to_the_fleet
 		cost = 5
 		ai_will_do = {
 			factor = 100 
@@ -2264,9 +2172,9 @@ focus_tree = {
 	focus = {
 		id = USA_adhere_to_mahan 
 		icon = GFX_USA_adhere_to_mahan
-		x = -6
-		y = 2
-		relative_position_id = USA_department_of_war
+		x = 3
+		y = 1
+		relative_position_id = USA_enlargen_the_fleet
 		cost = 5
 		ai_will_do = {
 			factor = 100 
@@ -2388,8 +2296,8 @@ focus_tree = {
 	focus = {
 		id = USA_naval_aviation 
 		icon = GFX_USA_naval_aviation
-		x = -10
-		y = 2
+		x = 1
+		y = 1
 		cost = 5
 		ai_will_do = {
 			factor = 100 
@@ -2398,7 +2306,7 @@ focus_tree = {
 			focus = USA_enlargen_the_fleet
 			focus = USA_cut_funding_to_the_fleet
 		} 
-		relative_position_id = USA_department_of_war
+		relative_position_id = USA_cut_funding_to_the_fleet
 
 		available_if_capitulated = yes	
 
