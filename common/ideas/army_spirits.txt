@@ -306,6 +306,17 @@ ideas = {
 	division_command_spirit = {
 		static_warfare_spirit = {
 			ledger = army
+			visible = {
+				OR = {
+					NOT = {
+						has_idea = USA_the_poor_command_post_spirit_1
+					}
+					NOT = {
+						has_idea = USA_the_poor_command_post_spirit_2
+					}
+				}
+			}
+
 			modifier = {
 				tactic_elastic_defense_preferred_weight_factor = 1
 				tactic_overwhelming_fire_preferred_weight_factor = 1
@@ -323,6 +334,16 @@ ideas = {
 
 		flexible_organization_spirit = {
 			ledger = army
+			visible = {
+				OR = {
+					NOT = {
+						has_idea = USA_the_poor_command_post_spirit_1
+					}
+					NOT = {
+						has_idea = USA_the_poor_command_post_spirit_2
+					}
+				}
+			}
 			modifier = {
 				org_loss_when_moving = -0.15
 				army_speed_factor = 0.05
@@ -335,6 +356,16 @@ ideas = {
 
 		aggressive_reconnaisance_spirit = {
 			ledger = army
+			visible = {
+				OR = {
+					NOT = {
+						has_idea = USA_the_poor_command_post_spirit_1
+					}
+					NOT = {
+						has_idea = USA_the_poor_command_post_spirit_2
+					}
+				}
+			}
 			modifier = {
 				tactic_infantry_charge_preferred_weight_factor = 1
 				intel_from_combat_factor = 0.15
@@ -347,6 +378,16 @@ ideas = {
 
 		reserve_officers_spirit = {
 			ledger = army
+			visible = {
+				OR = {
+					NOT = {
+						has_idea = USA_the_poor_command_post_spirit_1
+					}
+					NOT = {
+						has_idea = USA_the_poor_command_post_spirit_2
+					}
+				}
+			}
 			modifier = {
 				tactic_delay_preferred_weight_factor = 1
 				training_time_army_factor = -0.15
@@ -358,6 +399,16 @@ ideas = {
 
 		victory_or_death_spirit = {
 			ledger = army
+			visible = {
+				OR = {
+					NOT = {
+						has_idea = USA_the_poor_command_post_spirit_1
+					}
+					NOT = {
+						has_idea = USA_the_poor_command_post_spirit_2
+					}
+				}
+			}
 			modifier = {
 				tactic_human_wave_tactics_preferred_weight_factor = 1
 				org_loss_at_low_org_factor = -0.15
@@ -368,7 +419,20 @@ ideas = {
 		}
 
 		maneuver_warfare_spirit = {
-			visible = { has_tech = mobile_warfare }
+			ledger = army
+			visible = {
+				AND = {
+					has_tech = mobile_warfare 
+					OR = {
+						NOT = {
+							has_idea = USA_the_poor_command_post_spirit_1
+						}
+						NOT = {
+							has_idea = USA_the_poor_command_post_spirit_2
+						}
+					}
+				}
+			}
 			modifier = {
 				tactic_unexpected_thrust_preferred_weight_factor = 1
 				army_speed_factor = 0.05
@@ -385,7 +449,19 @@ ideas = {
 
 		smoke_and_fire_spirit = {
 			ledger = army
-			visible = { has_tech = superior_firepower }
+			visible = {
+				AND = {
+					has_tech = superior_firepower 
+					OR = {
+						NOT = {
+							has_idea = USA_the_poor_command_post_spirit_1
+						}
+						NOT = {
+							has_idea = USA_the_poor_command_post_spirit_2
+						}
+					}
+				}
+			}
 			modifier = {
 				tactic_barrage_preferred_weight_factor = 1
 				breakthrough_factor = 0.05
@@ -401,13 +477,27 @@ ideas = {
 
 		logistical_focus_spirit = {
 			ledger = army
-			visible = { has_tech = trench_warfare }
+			visible = {
+				AND = {
+					has_tech = trench_warfare 
+					OR = {
+						NOT = {
+							has_idea = USA_the_poor_command_post_spirit_1
+						}
+						NOT = {
+							has_idea = USA_the_poor_command_post_spirit_2
+						}
+					}
+				}
+			}
+
 			modifier = {
 				tactic_planned_attack_preferred_weight_factor = 1
 				supply_consumption_factor = -0.05
 				air_fuel_consumption_factor = -0.05
 				navy_fuel_consumption_factor = -0.05
 			}
+
 			ai_will_do = {
 				factor = 1.5
 				modifier = {
@@ -419,7 +509,19 @@ ideas = {
 
 		operational_reserve_spirit = {
 			ledger = army
-			visible = { has_tech = mass_assault }
+			visible = { 
+				AND = {
+					has_tech = mass_assault 
+					OR = {
+						NOT = {
+							has_idea = USA_the_poor_command_post_spirit_1
+						}
+						NOT = {
+							has_idea = USA_the_poor_command_post_spirit_2
+						}
+					}
+				}
+			}
 			modifier = {
 				tactic_relentless_assault_preferred_weight_factor = 1
 				army_strength_factor = 0.1
@@ -430,6 +532,70 @@ ideas = {
 					tag = CHI
 					factor = 5
 				}
+			}
+		}
+
+		USA_the_poor_command_post_spirit_1 = {
+			ledger = army 
+
+			visible = {
+				AND = {
+					tag = USA 
+					NOT = {
+						has_idea = USA_the_poor_command_post_spirit_2
+					}
+				}
+			}
+
+			allowed_to_remove = {
+				army_experience > 49
+			}
+
+			on_remove = {
+				army_experience = -50
+			}
+
+			modifier = {	
+				air_doctrine_cost_factor = 0.4
+				land_doctrine_cost_factor = 0.4
+				experience_gain_army_factor = -0.5
+				experience_gain_air_factor = -0.5 
+				training_time_army_factor = 0.5 
+				max_command_power = -75
+				fuel_gain_factor = -0.4
+				supply_consumption_factor = 0.2 
+			}
+		}
+
+		USA_the_poor_command_post_spirit_2 = {
+			ledger = army 
+			
+			visible = {
+				AND = {
+					tag = USA 
+					NOT = {
+						has_idea = USA_the_poor_command_post_spirit_1
+					}
+				}
+			}
+
+			allowed_to_remove = {
+				army_experience > 49
+			}
+
+			on_remove = {
+				army_experience = -50
+			}
+
+			modifier = {	
+				air_doctrine_cost_factor = 0.3
+				land_doctrine_cost_factor = 0.3
+				experience_gain_army_factor = -0.25
+				experience_gain_air_factor = -0.25 
+				training_time_army_factor = 0.25 
+				max_command_power = -50
+				fuel_gain_factor = -0.2
+				supply_consumption_factor = 0.1 
 			}
 		}
 	}
