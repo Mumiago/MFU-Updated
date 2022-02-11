@@ -1106,7 +1106,7 @@ focus_tree = {
 		prerequisite = {
 			focus = USA_department_of_war
 		}
-		x = -16
+		x = -20
 		y = 1
 		cost = 5
 
@@ -1520,7 +1520,7 @@ focus_tree = {
 		icon = GFX_USA_department_of_war
 		prerequisite = {  }
 		mutually_exclusive = {  }
-		x = -15
+		x = -16
 		y = 0
 		cost = 5
 		ai_will_do = {
@@ -1552,7 +1552,7 @@ focus_tree = {
 		icon = GFX_USA_war_plans_division
 		prerequisite = { focus = USA_department_of_war }
 		relative_position_id = USA_department_of_war
-		x = 0
+		x = -4
 		y = 1
 		
 		cost = 5
@@ -1592,6 +1592,7 @@ focus_tree = {
 			OR = {
 				threat > 0.2
 				has_war = yes
+				has_completed_focus = USA_14
 			}			
 		}
 
@@ -1622,41 +1623,6 @@ focus_tree = {
 	}
 
 	focus = {
-		id = USA_focus_on_europe
-		icon = GFX_focus_usa_focus_on_europe
-		x = -1
-		y = 1
-		prerequisite = { focus = USA_appoint_a_new_chief_of_staff }
-		mutually_exclusive = { focus = USA_focus_on_asia }
-		relative_position_id = USA_appoint_a_new_chief_of_staff
-		cost = 5
-
-		ai_will_do = {
-			factor = 1
-		}
-
-		available = {
-			has_government = democratic
-		}
-		
-		bypass = {
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		completion_reward = {		
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 2
-				category = land_doctrine
-			}
-		}
-	}
-
-	focus = {
 		id = USA_office_of_strategic_services
 		icon = GFX_focus_generic_strike_at_democracy1
 		prerequisite = { focus = USA_war_powers_act }
@@ -1664,7 +1630,7 @@ focus_tree = {
 			
 		}
 		x = -1
-		y = 3
+		y = 2
 		relative_position_id = USA_appoint_a_new_chief_of_staff
 		cost = 5
 		ai_will_do = {
@@ -1727,10 +1693,10 @@ focus_tree = {
 	focus = {
 		id = USA_war_powers_act
 		icon = GFX_USA_war_powers_act
-		prerequisite = { focus = USA_focus_on_europe }
+		prerequisite = { focus = USA_appoint_a_new_chief_of_staff }
 		relative_position_id = USA_appoint_a_new_chief_of_staff
 		x = 0
-		y = 2
+		y = 1
 		cost = 5
 		ai_will_do = {
 			factor = 100 
@@ -1741,6 +1707,7 @@ focus_tree = {
 			OR = {
 				has_war_with = GER
 				has_war_with = JAP
+				has_completed_focus = USA_14
 			}
 		}
 
@@ -2804,6 +2771,806 @@ focus_tree = {
 					remove_idea = norfolk_naval_yard
 					add_idea = norfolk_naval_yard2
 				}
+			}
+		}
+	}
+	focus = {
+		id = USA_selective_service_act
+		icon = GFX_USA_selective_service_act
+		prerequisite = { focus = USA_department_of_war }
+		relative_position_id = USA_department_of_war
+		x = 6
+		y = 1
+		cost = 2.9
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			army_experience = 25
+			add_ideas = limited_conscription
+			activate_mission_tooltip = USA_selected_service_act_mission
+			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
+			USA_we_dont_want_to_send_our_boys_away = yes
+
+		}
+	}						
+
+	focus = {
+		id = USA_springfield_armory_focus
+		icon = GFX_USA_springfield_armory_focus
+		prerequisite = { focus = USA_selective_service_act }
+		relative_position_id = USA_selective_service_act
+		x = -2
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+			OR = {
+				date > 1939.1.1
+				has_completed_focus = USA_14
+			}
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			custom_effect_tooltip = available_designer
+			custom_effect_tooltip = USA_springfield_arsenal_available_tt
+			357 = {
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = arms_factory
+					level = 5
+					instant_build = yes 
+				}
+			}
+			if = {
+				limit = {
+					has_completed_focus = USA_14
+				}
+				357 = {
+					add_extra_state_shared_building_slots = 5
+					add_building_construction = {
+						type = arms_factory
+						level = 5
+						instant_build = yes 
+					}
+				}
+			}
+			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
+			USA_we_dont_want_to_send_our_boys_away = yes
+		}
+	}						
+
+	focus = {
+		id = USA_new_service_rifle
+		icon = GFX_USA_new_service_rifle
+		prerequisite = { focus = USA_springfield_armory_focus }
+		relative_position_id = USA_springfield_armory_focus
+		x = 0
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				category = infantry_weapons
+				uses = 2
+				bonus = 0.5
+				ahead_reduction = 1 
+			}		
+		}
+	}						
+
+	focus = {
+		id = USA_well_supplied_and_motivated
+		icon = GFX_USA_well_supplied_and_motivated
+		prerequisite = { focus = USA_springfield_armory_focus }
+		relative_position_id = USA_springfield_armory_focus
+		x = -2
+		y = 2
+		cost = 5
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				category = support_tech
+				uses = 4 
+				bonus = 1
+				name = USA_well_supplied_and_motivated
+			}
+			USA_infantry_industry_level_up = yes 
+		}
+	}						
+
+	focus = {
+		id = USA_new_special_forces_branches
+		icon = GFX_USA_new_special_forces_branches
+		prerequisite = { focus = USA_new_service_rifle }
+		relative_position_id = USA_springfield_armory_focus
+		x = 0
+		y = 2
+		cost = 5
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			custom_effect_tooltip = USA_rangers_tt
+			add_tech_bonus = {
+				name = special_bonus
+				bonus = 1.0
+				uses = 4
+				category = para_tech
+				category = marine_tech
+				category = mountaineers_tech
+				
+			}
+			hidden_effect = {
+				set_technology = { rangers = 1 } 
+			}
+		}
+	}
+
+	focus = {
+		id = USA_detroit_vehicle_arsenal
+		icon = GFX_USA_detroit_vehicle_arsenal
+		prerequisite = { focus = USA_selective_service_act }
+		relative_position_id = USA_selective_service_act
+		x = 0
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = {
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			if = {
+				limit = {
+					has_completed_focus = USA_14
+				}
+				393 = {
+					add_extra_state_shared_building_slots = 4
+					add_building_construction = {
+						type = arms_factory
+						level = 4
+						instant_build = yes 
+					}
+				}
+			}
+			add_tech_bonus = {
+				category = armor
+				uses = 1
+				bonus = 0.5
+				name = USA_detroit_vehicle_arsenal
+			}
+			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
+			USA_we_dont_want_to_send_our_boys_away = yes
+
+		}
+	}	
+
+	focus = {
+		id = USA_quality_and_quantity 
+		icon = GFX_USA_quality_and_quantity
+		prerequisite = { focus = USA_detroit_vehicle_arsenal }
+		relative_position_id = USA_selective_service_act
+		x = 0
+		y = 2
+		cost = 5
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			USA_armor_industry_level_up = yes 
+			add_tech_bonus = {
+				category = tank_upgrade
+				uses = 2 
+				bonus = 0.5
+				name = USA_detroit_vehicle_arsenal
+			}
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = cat_mobile_warfare
+			}
+		}
+	}									
+
+	focus = {
+		id = USA_improve_teething
+		icon = GFX_USA_improve_teething
+		prerequisite = { focus = USA_quality_and_quantity }
+		relative_position_id = USA_quality_and_quantity
+		mutually_exclusive = { focus = USA_improve_armour }
+		x = -1
+		y = 2
+		cost = 5
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			custom_effect_tooltip = available_designer
+			show_ideas_tooltip = army_ordnance_department
+			custom_effect_tooltip = available_designer
+			show_ideas_tooltip = detroit_arsenal
+		}
+	}						
+
+	focus = {
+		id = USA_improve_armour
+		icon = GFX_USA_improve_armour
+		prerequisite = { focus = USA_quality_and_quantity }
+		relative_position_id = USA_quality_and_quantity
+		mutually_exclusive = { focus = USA_improve_teething }
+		x = 1
+		y = 2
+		cost = 5
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			custom_effect_tooltip = available_designer
+			show_ideas_tooltip = chrysler
+			custom_effect_tooltip = available_designer
+			show_ideas_tooltip = steel_car
+		}
+	}						
+
+	focus = {
+		id = USA_rock_island_arsenal
+		icon = GFX_USA_rock_island_arsenal
+		prerequisite = { focus = USA_selective_service_act }
+		relative_position_id = USA_selective_service_act
+		x = 2
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = {
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			custom_effect_tooltip = available_designer
+			custom_effect_tooltip = USA_rock_island_arsenal_available_tt
+			395 = {
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = arms_factory
+					level = 4 
+					instant_build = yes
+				}
+			}
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = cat_superior_firepower
+			}
+			if = {
+				limit = {
+					has_completed_focus = USA_14
+				}
+				add_doctrine_cost_reduction = {
+					name = land_doc_bonus
+					cost_reduction = 0.5
+					uses = 1
+					category = cat_superior_firepower
+				}
+			}
+			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
+			USA_we_dont_want_to_send_our_boys_away = yes
+
+		}
+	}						
+
+	focus = {
+		id = USA_fight_fascist_with_fire
+		icon = GFX_USA_fight_fascist_with_fire
+		prerequisite = { focus = USA_rock_island_arsenal }
+		relative_position_id = USA_rock_island_arsenal
+		x = 0
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				category = artillery
+				uses = 3
+				bonus = 0.5
+			}
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = cat_superior_firepower
+			}
+			if = {
+				limit = {
+					has_completed_focus = USA_14
+				}
+				add_doctrine_cost_reduction = {
+					name = land_doc_bonus
+					cost_reduction = 0.5
+					uses = 1
+					category = cat_superior_firepower
+				}
+			}
+		}
+	}						
+
+	focus = {
+		id = USA_30_second_response_timer
+		icon = GFX_USA_30_second_response_timer
+		prerequisite = { focus = USA_fight_fascist_with_fire }
+		relative_position_id = USA_rock_island_arsenal
+		x = 0
+		y = 2
+		cost = 5
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+			USA = {
+				has_tech = forward_observers
+			}
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			set_technology = { USA_artillery_radio_2 = 1 }
+			custom_effect_tooltip = USA_artillery_radios_2_tech_tt
+		}
+	}
+	focus = {
+		id = USA_airborne_divisions
+		icon = GFX_USA_airborne_divisions
+		x = 2
+		y = 2
+		prerequisite = { focus = USA_rock_island_arsenal }
+		relative_position_id = USA_rock_island_arsenal
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_ideas = USA_paratrooper_school
+			custom_effect_tooltip = USA_paratroopers_tt
+			hidden_effect = {
+				load_oob = USA_paratroopers_divs
+			}
+			add_tech_bonus = {
+				name = support_companies
+				Bonus = 0.5
+				uses = 2
+				category = support_tech
+			}
+		}
+	}					
+
+	focus = {
+		id = USA_expand_the_airforce
+		icon = GFX_USA_expand_the_airforce
+		prerequisite = { focus = USA_department_of_war }
+		relative_position_id = USA_department_of_war
+		x = 0
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				category = air_equipment
+				uses = 2
+				bonus = 0.5
+				name = USA_expand_the_airforce
+			}
+			USA_aircraft_industry_level_up = yes
+
+			add_ideas = harold_mcclelland
+		}
+	}						
+
+	focus = {
+		id = USA_expand_airforce_strength
+		icon = GFX_USA_expand_airforce_strength
+		prerequisite = { focus = USA_expand_the_airforce }
+		relative_position_id = USA_expand_the_airforce
+		x = 1
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			air_experience = 30
+			random_owned_state = {
+				limit = {
+					is_core_of = ROOT
+				}
+				add_extra_state_shared_building_slots = 4 
+				add_building_construction = {
+					type = arms_factory
+					level = 4
+					instant_build = yes 
+				}
+			}
+			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
+			USA_we_dont_want_to_send_our_boys_away = yes
+
+		}
+	}						
+
+	focus = {
+		id = USA_focus_on_new_fighters
+		icon = GFX_USA_focus_on_new_fighters
+		prerequisite = { focus = USA_expand_airforce_strength }
+		relative_position_id = USA_expand_the_airforce
+		x = 1
+		y = 2
+		cost = 5
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			air_experience = 30
+			add_tech_bonus = {
+				category = light_fighter 
+				uses = 1
+				ahead_reduction = 1
+				bonus = 0.5 
+			}
+			custom_effect_tooltip = available_designer
+			show_ideas_tooltip = north_american_aviation 
+		}
+	}						
+
+
+	focus = {
+		id = USA_modernize_training_facilities
+		icon = GFX_USA_modernize_training_facilities
+		prerequisite = { focus = USA_expand_the_airforce }
+		relative_position_id = USA_expand_the_airforce
+		x = -1
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}	
+			air_experience = 50 
+		}
+	}						
+
+	focus = {
+		id = USA_coastal_defence
+		icon = GFX_USA_coastal_defence
+		prerequisite = { focus = USA_modernize_training_facilities }
+		relative_position_id = USA_expand_the_airforce
+		x = -1
+		y = 2
+		cost = 5
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			air_experience = 30
+			add_tech_bonus = {
+				category = heavy_air
+				category = tactical_bomber
+				category = cat_heavy_fighter
+				uses = 1
+				bonus = 0.5
+			}
+			custom_effect_tooltip = available_designer
+			show_ideas_tooltip = boeing 
+		}
+	}		
+
+	focus = {
+		id = USA_begin_heavy_bomber_program
+		icon = GFX_USA_begin_heavy_bomber_program
+		prerequisite = { focus = USA_coastal_defence focus = USA_focus_on_new_fighters }
+		relative_position_id = USA_expand_the_airforce
+		x = 0
+		y = 3
+		cost = 7.16
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			custom_effect_tooltip = USA_level_up_aircraft_twice_tt
+			hidden_effect = {
+				USA_aircraft_industry_level_up = yes 
+				USA_aircraft_industry_level_up = yes 
+			}
+			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
+			USA_we_dont_want_to_send_our_boys_away = yes
+
+		}
+	}			
+
+	focus = {
+		id = USA_a_modern_anaconda_plan
+		icon = GFX_USA_a_modern_anaconda_plan
+		prerequisite = { focus = USA_begin_heavy_bomber_program }
+		relative_position_id = USA_expand_the_airforce
+		x = -1
+		y = 4
+		cost = 7.16
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+			has_war_with = GER 
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+						air_experience = 50		
+			add_tech_bonus = {
+				category = heavy_air
+				bonus = 0.5
+				uses = 1
+				ahead_reduction = 1
+				name = USA_a_modern_anaconda_plan
+			}
+		}
+	}					
+
+
+	focus = {
+		id = USA_coordinate_with_the_british
+		icon = GFX_USA_coordinate_with_the_british
+		prerequisite = { focus = USA_begin_heavy_bomber_program }
+		relative_position_id = USA_expand_the_airforce
+		x = 1
+		y = 4
+		cost = 7.16
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+			has_war_with = GER 
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			add_ideas = combined_bomber_offensive 
+			ENG = {
+				add_ideas = combined_bomber_offensive
+			}
+		}
+	}						
+
+	focus = {
+		id = USA_long_range_escort
+		icon = GFX_USA_long_range_escort
+		prerequisite = { focus = USA_coordinate_with_the_british }
+		prerequisite = { focus = USA_a_modern_anaconda_plan }
+		relative_position_id = USA_expand_the_airforce
+		x = 0
+		y = 5
+		cost = 7.16
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				technology = USA_fighter_1944
+				uses = 1
+				bonus = 0.5
+				ahead_reduction = 0.5
+			}
+		}
+	}		
+
+	focus = {
+		id = USA_focus_on_europe
+		icon = GFX_focus_usa_focus_on_europe
+		x = -26
+		y = 1
+		prerequisite = { focus = USA_department_of_war }
+		relative_position_id = USA_department_of_war
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			has_government = democratic
+		}
+		
+		bypass = {
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {		
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 2
+				category = land_doctrine
 			}
 		}
 	}
