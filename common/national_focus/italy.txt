@@ -245,11 +245,36 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = ITA_roma_class
+		icon = GFX_ITA_roma_class_battleship
+		prerequisite = { focus = ITA_regia_marina }
+		relative_position_id = ITA_regia_marina
+		x = 1
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 10
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+		set_technology = {
+		improved_heavy_battery = 1
+		}
+		 add_tech_bonus = {
+				bonus = 2.0
+				uses = 1
+				category = bb_tech
+		 }
+		}
+	}
+	focus = {
 		id = ITA_modernisation_attempt
 		icon = GFX_goal_generic_build_navy
 		prerequisite = { focus = ITA_regia_marina }
 		relative_position_id = ITA_regia_marina
-		x = 0
+		x = -1
 		y = 1
 		cost = 5
 		ai_will_do = {
@@ -294,7 +319,7 @@ focus_tree = {
 	focus = {
 		id = ITA_modern_cruisers
 		icon = GFX_focus_generic_cruiser2
-		prerequisite = { focus = ITA_modernisation_attempt }
+		prerequisite = { focus = ITA_modernisation_attempt focus = ITA_roma_class }
 		relative_position_id = ITA_regia_marina
 		x = 0
 		y = 2
@@ -334,7 +359,7 @@ focus_tree = {
 		id = ITA_X_Flottiglia_MAS
 		icon = GFX_ITA_x_flotiglia_mas
 		prerequisite = { focus = ITA_modern_cruisers }
-		x = -1
+		x = 0
 		y = 6
 		cost = 5
 		ai_will_do = {
@@ -360,7 +385,7 @@ focus_tree = {
 		id = ITA_Escape_the_cage
 		icon = GFX_ITA_escape_the_cage
 		prerequisite = { focus = ITA_modern_cruisers }
-		x = 1
+		x = 2
 		y = 6
 		cost = 5
 		ai_will_do = {
@@ -386,33 +411,9 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = ITA_roma_class
-		icon = GFX_ITA_roma_class_battleship
-		prerequisite = { focus = ITA_modern_cruisers }
-		x = 3
-		y = 6
-		cost = 5
-		ai_will_do = {
-			factor = 10
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-		set_technology = {
-		improved_heavy_battery = 1
-		}
-		 add_tech_bonus = {
-				bonus = 2.0
-				uses = 1
-				category = bb_tech
-		 }
-		}
-	}
-	focus = {
 		id = ITA_Mare_Nostrum 
 		icon = GFX_ITA_Mare_Nostrum
-		prerequisite = { focus = ITA_roma_class }
+		prerequisite = { focus = ITA_Escape_the_cage }
 		prerequisite = { focus = ITA_X_Flottiglia_MAS }
 		x = 1
 		y = 7
@@ -526,7 +527,6 @@ focus_tree = {
 			OR = {
 				AND = { 
 					has_air_experience > 120
-					has_navy_experience > 65
 				}
 				is_ai = yes
 			}
@@ -536,7 +536,6 @@ focus_tree = {
 
 		completion_reward = {
 			air_experience = -120
-			navy_experience = -65
 			remove_ideas = poor_coordination_between_sea_and_air
 			add_tech_bonus = {
 				bonus = 0.5
@@ -587,15 +586,26 @@ focus_tree = {
 
 		available_if_capitulated = yes
 		bypass = {
-			ITA = { has_tech = fighter_1938 }
+			ITA = {
+				OR = {
+					 has_tech = fighter_1938 
+					 has_tech = heavy_fighter_1938
+				}
+			}
 		}
 
 		completion_reward = {
-		add_tech_bonus = {
+			add_tech_bonus = {
 				name = air_fighter
 				bonus = 0.5
 				uses = 1
 				technology = fighter_1938
+			}
+			add_tech_bonus = {
+				name = air_fighter
+				bonus = 0.5
+				uses = 1
+				technology = heavy_fighter_1938
 			}
 			
 		}
@@ -613,7 +623,14 @@ focus_tree = {
 		}
 
 		available_if_capitulated = yes
-
+		bypass = {
+			ITA = {
+				OR = {
+					 has_tech = fighter_1940
+					 has_tech = heavy_fighter_1940
+				}
+			}
+		}
 
 
 		completion_reward = {
@@ -622,6 +639,12 @@ focus_tree = {
 				bonus = 0.5
 				uses = 1
 				technology = fighter_1940
+			}
+			add_tech_bonus = {
+				name = air_fighter
+				bonus = 0.5
+				uses = 1
+				technology = heavy_fighter_1940
 			}
 		}
 	}
@@ -747,7 +770,14 @@ focus_tree = {
 		}
 
 		available_if_capitulated = yes
-		
+		bypass = {
+			ITA = {
+				OR = {
+					 has_tech = fighter_1942
+					 has_tech = heavy_fighter_1942
+				}
+			}
+		}
 		
 		completion_reward = {
 			add_tech_bonus = {
@@ -755,6 +785,12 @@ focus_tree = {
 				bonus = 0.5
 				uses = 1
 				technology = fighter_1942
+			}
+			add_tech_bonus = {
+				name = air_fighter
+				bonus = 0.5
+				uses = 1
+				technology = heavy_fighter_1942
 			}
 		}
 	}
@@ -1091,17 +1127,65 @@ focus_tree = {
 		available_if_capitulated = no
 
 		available = {
-		  has_tech = ita_1940_medium_tank_chassis
+		  
 		}
 
 		completion_reward = {
+			custom_effect_tooltip = ITA_Divisione_corazzata_unit_tt
 			hidden_effect = {
 			if = {
+			limit = {
+					has_tech = ita_1940_heavy_tank_chassis
+				}	
+				division_template = {
+					name = "Divisione corazzata"
+					division_names_group = ITA_ARM_01
+					priority = 2
+					
+					regiments = {
+						heavy_armor = { x = 0 y = 0 }
+						heavy_armor = { x = 0 y = 1 }
+						heavy_armor = { x = 0 y = 2 }
+						heavy_armor = { x = 0 y = 3 }
+		
+						heavy_armor = { x = 1 y = 0 }
+						heavy_armor = { x = 1 y = 1 }
+						heavy_armor = { x = 1 y = 2 }
+						heavy_armor = { x = 1 y = 3 }
+						
+		
+						motorized = { x = 2 y = 0 }
+						motorized = { x = 2 y = 1 }
+						armored_car = { x = 2 y = 2 }
+
+						motorized = { x = 3 y = 0 }
+						motorized = { x = 3 y = 1 }
+						motorized = { x = 3 y = 2 }
+						motorized = { x = 3 y = 3 }
+					}
+					
+					support = {
+						DIV_HQ = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+						engineer = { x = 0 y = 2 }
+						maintenance_company = { x = 1 y = 0 }
+						logistics_company = { x = 1 y = 1 }
+					}
+				}
+				every_state = {
+		limit = { state = 2 }
+		create_unit = {
+			division = "division_names_group = \"ITA_ARM_01\" division_template = \"Divisione corazzata\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+			owner = ITA
+				}   
+				}	
+		}
+			else_if = {
 				limit = {
 						has_tech = ita_1940_medium_tank_chassis
 					}	
 				division_template = {
-					name = "Divisione Ariete"
+					name = "Divisione corazzata"
 					division_names_group = ITA_ARM_01
 					priority = 2
 					
@@ -1138,21 +1222,19 @@ focus_tree = {
 			 every_state = {
 		limit = { state = 2 }
 		create_unit = {
-			division = "division_names_group = \"ITA_ARM_01\" division_template = \"Divisione Ariete\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+			division = "division_names_group = \"ITA_ARM_01\" division_template = \"Divisione corazzata\" start_experience_factor = 0.5 start_equipment_factor = 1" 
 			owner = ITA
 			   }   
 		create_unit = {
-			division = "division_names_group = \"ITA_ARM_01\" division_template = \"Divisione Ariete\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+			division = "division_names_group = \"ITA_ARM_01\" division_template = \"Divisione corazzata\" start_experience_factor = 0.5 start_equipment_factor = 1" 
 			owner = ITA
 			   }		
 			  }	
 			}
 		else_if = {
-			limit = {
-					has_tech = ita_1941_light_tank_chassis
-				}	
+
 				division_template = {
-					name = "Divisione Ariete"
+					name = "Divisione corazzata"
 					division_names_group = ITA_ARM_01
 					priority = 2
 					
@@ -1189,15 +1271,15 @@ focus_tree = {
 			 every_state = {
 		limit = { state = 2 }
 		create_unit = {
-			division = "division_names_group = \"ITA_ARM_01\" division_template = \"Divisione Ariete\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+			division = "division_names_group = \"ITA_ARM_01\" division_template = \"Divisione corazzata\" start_experience_factor = 0.5 start_equipment_factor = 1" 
 			owner = ITA
 			   }   
 		create_unit = {
-			division = "division_names_group = \"ITA_ARM_01\" division_template = \"Divisione Ariete\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+			division = "division_names_group = \"ITA_ARM_01\" division_template = \"Divisione corazzata\" start_experience_factor = 0.5 start_equipment_factor = 1" 
 			owner = ITA
 			   }
 			   create_unit = {
-			division = "division_names_group = \"ITA_ARM_01\" division_template = \"Divisione Ariete\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+			division = "division_names_group = \"ITA_ARM_01\" division_template = \"Divisione corazzata\" start_experience_factor = 0.5 start_equipment_factor = 1" 
 			owner = ITA
 			   }		
 			  }	
@@ -1349,7 +1431,7 @@ focus_tree = {
 		}
 		
 		available = {
-			has_army_manpower = { size > 1000000 }		  
+				  
 		}
 
 		available_if_capitulated = yes
@@ -1794,7 +1876,7 @@ focus_tree = {
 
 		completion_reward = {
 			add_equipment_to_stockpile = {
-				type = light_tank_chassis_1936
+				type = light_tank_chassis
 				amount = 300
 				producer = ITA
 			}
@@ -1822,17 +1904,60 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		available = {
-			OR = {
-			has_tech = ita_1940_medium_tank_chassis
-			has_tech = ita_1940_heavy_tank_chassis
-			has_tech = ita_1941_light_tank_chassis
-			}
+			
 		}
 
 		completion_reward = {
 			custom_effect_tooltip = ITA_Divisione_corazzata_unit_tt
 			hidden_effect = {
-			if = {
+		if = {
+			limit = {
+					has_tech = ita_1940_heavy_tank_chassis
+				}	
+				division_template = {
+					name = "Divisione corazzata"
+					division_names_group = ITA_ARM_01
+					priority = 2
+					
+					regiments = {
+						heavy_armor = { x = 0 y = 0 }
+						heavy_armor = { x = 0 y = 1 }
+						heavy_armor = { x = 0 y = 2 }
+						heavy_armor = { x = 0 y = 3 }
+		
+						heavy_armor = { x = 1 y = 0 }
+						heavy_armor = { x = 1 y = 1 }
+						heavy_armor = { x = 1 y = 2 }
+						heavy_armor = { x = 1 y = 3 }
+						
+		
+						motorized = { x = 2 y = 0 }
+						motorized = { x = 2 y = 1 }
+						armored_car = { x = 2 y = 2 }
+
+						motorized = { x = 3 y = 0 }
+						motorized = { x = 3 y = 1 }
+						motorized = { x = 3 y = 2 }
+						motorized = { x = 3 y = 3 }
+					}
+					
+					support = {
+						DIV_HQ = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+						engineer = { x = 0 y = 2 }
+						maintenance_company = { x = 1 y = 0 }
+						logistics_company = { x = 1 y = 1 }
+					}
+				}
+				every_state = {
+		limit = { state = 2 }
+		create_unit = {
+			division = "division_names_group = \"ITA_ARM_01\" division_template = \"Divisione corazzata\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+			owner = ITA
+				}   
+				}	
+		}
+			else_if = {
 				limit = {
 						has_tech = ita_1940_medium_tank_chassis
 					}	
@@ -1884,9 +2009,7 @@ focus_tree = {
 			  }	
 			}
 		else_if = {
-			limit = {
-					has_tech = ita_1941_light_tank_chassis
-				}	
+
 				division_template = {
 					name = "Divisione corazzata"
 					division_names_group = ITA_ARM_01
@@ -1936,53 +2059,6 @@ focus_tree = {
 			division = "division_names_group = \"ITA_ARM_01\" division_template = \"Divisione corazzata\" start_experience_factor = 0.5 start_equipment_factor = 1" 
 			owner = ITA
 			   }		
-			  }	
-		}
-		else_if = {
-			limit = {
-					has_tech = ita_1940_heavy_tank_chassis
-				}	
-				division_template = {
-					name = "Divisione corazzata"
-					division_names_group = ITA_ARM_01
-					priority = 2
-					
-					regiments = {
-						heavy_armor = { x = 0 y = 0 }
-						heavy_armor = { x = 0 y = 1 }
-						heavy_armor = { x = 0 y = 2 }
-						heavy_armor = { x = 0 y = 3 }
-		
-						heavy_armor = { x = 1 y = 0 }
-						heavy_armor = { x = 1 y = 1 }
-						heavy_armor = { x = 1 y = 2 }
-						heavy_armor = { x = 1 y = 3 }
-						
-		
-						motorized = { x = 2 y = 0 }
-						motorized = { x = 2 y = 1 }
-						armored_car = { x = 2 y = 2 }
-
-						motorized = { x = 3 y = 0 }
-						motorized = { x = 3 y = 1 }
-						motorized = { x = 3 y = 2 }
-						motorized = { x = 3 y = 3 }
-					}
-					
-					support = {
-						DIV_HQ = { x = 0 y = 0 }
-						recon = { x = 0 y = 1 }
-						engineer = { x = 0 y = 2 }
-						maintenance_company = { x = 1 y = 0 }
-						logistics_company = { x = 1 y = 1 }
-					}
-				}
-			 every_state = {
-		limit = { state = 2 }
-		create_unit = {
-			division = "division_names_group = \"ITA_ARM_01\" division_template = \"Divisione corazzata\" start_experience_factor = 0.5 start_equipment_factor = 1" 
-			owner = ITA
-			   }   
 			  }	
 		}
 		}
@@ -2049,8 +2125,8 @@ focus_tree = {
 		y = 9 
 		cost = 7.145
 		available = { 
-			arms_factory > 70
-			has_army_manpower = { size > 1500000 }			
+			arms_factory > 99
+			has_army_manpower = { size > 1000000 }			
 		}
 	
 		completion_reward = { 
@@ -2111,7 +2187,7 @@ focus_tree = {
 		y = 9
 		cost = 7.145
 		available = {
-			arms_factory > 70
+			arms_factory > 99
 			has_deployed_air_force_size = {
 				size > 499
 				type = naval_bomber
@@ -2155,7 +2231,7 @@ focus_tree = {
 		y = 9 
 		cost = 7.145
 		available = { 
-			dockyard > 79
+			dockyard > 49
 			has_navy_size = {
 				archetype = ship_hull_heavy
 				size > 7
@@ -2168,6 +2244,8 @@ focus_tree = {
 				archetype = ship_hull_light
 				size > 99
 			} 
+			has_tech = improved_ship_hull_heavy
+	
 		}
 	
 		completion_reward = { 
@@ -2184,10 +2262,32 @@ focus_tree = {
 				uses = 2
 				category = naval_equipment
 			}
+		hidden_effect = {
 		if = {
-				limit = {
-					has_dlc = "Man the Guns"
-				}
+
+			limit = {
+				has_dlc = "Man the Guns"
+			}
+
+		create_equipment_variant = {
+			name = "Littorio Class"
+			type = ship_hull_heavy_2
+			name_group = ITA_BB_HISTORICAL
+			parent_version = 0
+			modules = {
+				fixed_ship_battery_slot = ship_heavy_battery_2
+				fixed_ship_anti_air_slot = ship_anti_air_1
+				fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+				fixed_ship_radar_slot = empty
+				fixed_ship_engine_slot = heavy_ship_engine_2
+				fixed_ship_secondaries_slot = ship_secondaries_2
+				fixed_ship_armor_slot = ship_armor_bb_2
+				front_1_custom_slot = ship_heavy_battery_2
+				mid_1_custom_slot = ship_secondaries_2
+				mid_2_custom_slot = ship_airplane_launcher_2
+				rear_1_custom_slot = ship_heavy_battery_2
+			}
+		}
 				add_equipment_production = {
 					equipment = {
 						type = ship_hull_heavy_2
@@ -2228,7 +2328,9 @@ focus_tree = {
 					progress = 0.8
 					amount = 1
 				}
-			}		
+			}
+		}
+		custom_effect_tooltip = "Adds 4 Littorio Class Battleships into production at 80% building progress"		
 			
 		}
 	}
