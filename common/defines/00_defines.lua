@@ -1478,8 +1478,8 @@ NNavy = {
 	COMBAT_TORPEDO_CRITICAL_CHANCE = 0.2,							-- chance for critical hit from torpedo.
 	COMBAT_TORPEDO_CRITICAL_DAMAGE_MULT = 2.0,						-- multiplier to damage when got critical hit from torpedo. (Critical hits are devastating as usualy torpedo_attack are pretty high base values).
 	
-	COMBAT_DAMAGE_TO_STR_FACTOR = 0.24,								-- casting damage value to ship strength multiplier. Use it ot balance the game difficulty.
-	COMBAT_DAMAGE_TO_ORG_FACTOR = 0.4,							-- casting damage value to ship organisation multiplier. Use it to balance the game difficulty.
+	COMBAT_DAMAGE_TO_STR_FACTOR = 0.26,								-- casting damage value to ship strength multiplier. Use it ot balance the game difficulty.
+	COMBAT_DAMAGE_TO_ORG_FACTOR = 0.6,							-- casting damage value to ship organisation multiplier. Use it to balance the game difficulty.
 	
 	NAVY_MAX_XP = 100,
 	COMBAT_ON_THE_WAY_INIT_DISTANCE_BALANCE = 0.25, 					-- Value to balance initial distance to arrive for ships that are "on the way"	
@@ -1692,14 +1692,14 @@ NNavy = {
 	MISSION_SUPREMACY_RATIOS = { -- supremacy multipliers for different mission types
 		0.0, -- HOLD
 		1.1, -- PATROL		
-		0.7, -- STRIKE FORCE 
-		0.4, -- CONVOY RAIDING
-		0.4, -- CONVOY ESCORT
+		0.4, -- STRIKE FORCE 
+		0.5, -- CONVOY RAIDING
+		0.7, -- CONVOY ESCORT
 		0.2, -- MINES PLANTING	
 		0.2, -- MINES SWEEPING	
 		0.0, -- TRAIN
 		0.0, -- RESERVE_FLEET
-		0.9, -- NAVAL_INVASION_SUPPORT
+		0.4, -- NAVAL_INVASION_SUPPORT
 	},
 	
 	SUPREMACY_PER_SHIP_PER_MANPOWER = 0.065,							-- supremacy of a ship is calculated using its IC, manpower and a base define
