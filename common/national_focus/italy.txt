@@ -1220,17 +1220,17 @@ focus_tree = {
 					}
 				}
 			 every_state = {
-		limit = { state = 2 }
-		create_unit = {
-			division = "division_names_group = \"ITA_ARM_01\" division_template = \"Divisione corazzata\" start_experience_factor = 0.5 start_equipment_factor = 1" 
-			owner = ITA
-			   }   
-		create_unit = {
-			division = "division_names_group = \"ITA_ARM_01\" division_template = \"Divisione corazzata\" start_experience_factor = 0.5 start_equipment_factor = 1" 
-			owner = ITA
-			   }		
-			  }	
-			}
+				limit = { state = 2 }
+				create_unit = {
+					division = "division_names_group = \"ITA_ARM_01\" division_template = \"Divisione corazzata\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+					owner = ITA
+			  	}   
+				create_unit = {
+					division = "division_names_group = \"ITA_ARM_01\" division_template = \"Divisione corazzata\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+					owner = ITA
+				}		
+			}	
+		}
 		else_if = {
 
 				division_template = {
@@ -1289,7 +1289,7 @@ focus_tree = {
 	}
 	focus = {
 		id = ITA_afrikakorps
-		icon = GFX_goal_ger_luftwaffe
+		icon = GFX_GER_rommel_time_icon
 		prerequisite = { focus = ITA_bassotto }
 		prerequisite = { focus = ITA_divisione_ariete }
 		x = 12
@@ -1304,8 +1304,9 @@ focus_tree = {
 				ITA = { controls_state= 451}
 				ITA = { controls_state= 450}
 				ITA = { controls_state= 448}
+				ITA = { controls_state= 458}
 			}
-			date>1941.06.22
+			date>1942.01.01
 		}
 		available_if_capitulated = yes
 
@@ -1314,7 +1315,181 @@ focus_tree = {
 				idea = ITA_afrikakorps_idea
 				days = 30
 			}
-			
+			GER = {
+				unlock_decision_tooltip = GER_send_rommel
+			}
+			custom_effect_tooltip = GER_afrikakorps_tt
+			if = {
+				limit = { 
+				GER = { 
+					has_tech = ger_CAS_1935
+					NOT = { has_tech = ger_CAS_1937	}
+				}
+			}
+				add_equipment_to_stockpile = { type = CAS_equipment_1935 amount = 200 producer = GER }   
+			}
+			if = {
+				limit = { 
+				GER = { 
+					has_tech = ger_CAS_1937
+					NOT = { has_tech = ger_CAS_1939	}
+				}
+			}
+				add_equipment_to_stockpile = { type = CAS_equipment_1937 amount = 200 producer = GER }   
+			}
+			if = {
+				limit = { 
+				GER = { 
+					has_tech = ger_CAS_1939
+				}
+			}	
+				add_equipment_to_stockpile = { type = CAS_equipment_1939 amount = 200 producer = GER }   
+			}
+			hidden_effect = {
+				GER = {
+					if = {
+						limit = {
+							NOT = {
+								has_tech = ger_1940_medium_tank_chassis
+							}
+						}
+						set_technology = {
+							ger_1940_medium_tank_chassis = 1
+						}
+					}
+					create_equipment_variant = {
+						name = "Panzer III Ausf.J"
+						type = medium_tank_chassis_1940
+						parent_version = 0
+						modules = {
+						main_armament_slot = tank_high_velocity_cannon
+						turret_type_slot = tank_medium_three_man_tank_turret
+						suspension_type_slot = tank_torsion_bar_suspension
+						armor_type_slot = tank_welded_armor
+						armor_sloping_slot = unsloped_armor
+						engine_type_slot = tank_gasoline_engine
+						radio_slot = tank_radio_2
+						special_type_slot_1 = basket
+						special_type_slot_2 = cupola
+						}
+						upgrades = {
+							tank_nsb_engine_upgrade = 8
+							tank_nsb_armor_upgrade = 6
+						}
+						icon = "gfx/interface/technologies/land/ger/3long.tga"
+				
+					}
+					if = {
+						limit = {
+							NOT = {
+								has_tech = ger_1939_medium_tank_chassis
+							}
+						}
+						set_technology = {
+							ger_1939_medium_tank_chassis = 1
+						}
+					}
+					create_equipment_variant = {
+						name = "Panzer IV Ausf.F2"
+						type = ger_medium_tank_chassis_1939
+						parent_version = 0
+						modules = {
+						main_armament_slot = tank_medium_cannon_2
+						turret_type_slot = tank_medium_three_man_tank_turret
+						suspension_type_slot = tank_bogie_suspension
+						armor_type_slot = tank_welded_armor
+						armor_sloping_slot = unsloped_armor
+						engine_type_slot = tank_gasoline_engine
+						radio_slot = tank_radio_1
+						special_type_slot_1 = basket
+						special_type_slot_2 = extra_ammo_storage
+						special_type_slot_3 = cupola
+						}
+						upgrades = {
+							tank_nsb_engine_upgrade = 5
+							tank_nsb_armor_upgrade = 3
+						}
+						icon = "gfx/interface/technologies/land/ger/4j.tga"
+						
+					}
+				}
+				add_equipment_to_stockpile = { type = medium_tank_chassis_1940 amount = 300 producer = GER variant_name = "Panzer III Ausf.J" }
+				add_equipment_to_stockpile = { type = ger_medium_tank_chassis_1939 amount = 150 producer = GER variant_name = "Panzer IV Ausf.F2" }
+				division_template = {
+					name = "Deutsches Afrikakorps"		
+					division_names_group = ITA_INF_01 
+					regiments = {
+						truck_infantry = { x = 0 y = 0 }
+						truck_infantry = { x = 0 y = 1 }
+						truck_infantry = { x = 0 y = 2 }
+						truck_infantry = { x = 0 y = 3 }
+
+						truck_infantry = { x = 1 y = 0 }
+						truck_infantry = { x = 1 y = 1 }
+						truck_infantry = { x = 1 y = 2 }
+						truck_infantry = { x = 1 y = 3 }
+
+						truck_infantry = { x = 2 y = 0 } 
+
+						artillery_brigade = { x = 3 y = 0 }
+						artillery_brigade = { x = 3 y = 1 }
+						artillery_brigade = { x = 3 y = 2 }
+						
+						artillery_brigade = { x = 3 y = 3 }
+
+						anti_tank_brigade = { x = 4 y = 0 }
+						anti_air = { x = 4 y = 1 }
+					}
+					support = {
+						DIV_HQ = { x = 0 y = 0 }
+						engineer = { x = 0 y = 1 }
+						recon = { x = 0 y = 2 }
+						maintenance_company = { x = 1 y = 0 }
+						logistics_company = { x = 1 y = 1 }
+						field_hospital = { x = 1 y = 2 }
+					}
+				}
+				every_state = {
+					limit = { state = 458 }
+					create_unit = {
+						division = "division_template = \"Deutsches Afrikakorps\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+						owner = ITA
+						}   
+					create_unit = {
+						division = "division_template = \"Deutsches Afrikakorps\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+						owner = ITA
+						}  
+					create_unit = {
+						division = "division_template = \"Deutsches Afrikakorps\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+						owner = ITA
+					} 
+					create_unit = {
+						division = "division_template = \"Deutsches Afrikakorps\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+						owner = ITA
+						}   
+					create_unit = {
+						division = "division_template = \"Deutsches Afrikakorps\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+						owner = ITA
+						}  
+					create_unit = {
+						division = "division_template = \"Deutsches Afrikakorps\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+						owner = ITA
+					}
+					create_unit = {
+						division = "division_template = \"Deutsches Afrikakorps\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+						owner = ITA
+						}   
+					create_unit = {
+						division = "division_template = \"Deutsches Afrikakorps\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+						owner = ITA
+						}  
+					create_unit = {
+						division = "division_template = \"Deutsches Afrikakorps\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+						owner = ITA
+					}	
+				}	
+			}
+		
 		}
 	}
 	
@@ -3365,7 +3540,6 @@ focus_tree = {
 					GRE = { has_capitulated = yes }
 				}
 			}	
-		has_political_power > 200
 		}
 		completion_reward = {
 			add_political_power = -200
