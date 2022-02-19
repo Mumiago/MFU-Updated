@@ -449,8 +449,8 @@ NResistance = {
 	SUPPRESSION_NEEDED_LOWER_CAP = 10.0,	-- if resistance is lower than this value then we always act as though it is at the define for the purpose of suppresion requirements
 	SUPPRESSION_NEEDED_UPPER_CAP = 50.0, -- if resistance is greater than this value then we always act as though it is at the define for the purpose of suppresion requirements
 	
-	GARRISON_MANPOWER_LOST_BY_ATTACK = 0.04, 	-- Ratio of manpower lost by garrison at each attack on garrison (this number will be reduced by the hardness of garrison template)
-	GARRISON_EQUIPMENT_LOST_BY_ATTACK = 0.03, 	-- Ratio of equipment lost by garrison at each attack on garrison (this number will be reduced by the hardness of garrison template)
+	GARRISON_MANPOWER_LOST_BY_ATTACK = 0.05, 	-- Ratio of manpower lost by garrison at each attack on garrison (this number will be reduced by the hardness of garrison template)
+	GARRISON_EQUIPMENT_LOST_BY_ATTACK = 0.04, 	-- Ratio of equipment lost by garrison at each attack on garrison (this number will be reduced by the hardness of garrison template)
 	MAXIMUM_GARRISON_HARDNESS_WHEN_ATTACKED = 0.90,   -- Cap to be sure that garrison will suffer lost in attack, even with a almost 100% hardness
 	
 	FOREIGN_MANPOWER_MIN_THRESHOLD = 5000,		 -- The minimum number of Manpower that AI will accept to give at once, in order to avoid many weird little transfer.
@@ -1738,11 +1738,11 @@ NNavy = {
 																	-- The Formula: Min( TRAINING_MAX_DAILY_COUNTRY_EXP * Ratio, TRAINING_DAILY_COUNTRY_EXP_FACTOR * ( TRAINING_DAILY_COUNTRY_EXP_SHIP_RATIO_FACTOR * TrainingShipCount / CountryShipCount 
 																	--              + TRAINING_DAILY_COUNTRY_EXP_MANPOWER_FACTOR * Manpower + TRAINING_DAILY_COUNTRY_EXP_MANPOWER_RATIO_FACTOR * Manpower / CountryShipCount ) ) 
 	TRAINING_EXPERIENCE_FACTOR = 0.2,								-- Amount of exp each ship gain every 24h while training (before modifiers)
-	TRAINING_DAILY_COUNTRY_EXP_FACTOR = 0.0005,						-- Factor used to scale the Daily Country Navy XP gain
-	TRAINING_DAILY_COUNTRY_EXP_MANPOWER_FACTOR = 0.003,					-- Factor used to scale the sum of the training manpower for the Daily Country Navy XP gain
+	TRAINING_DAILY_COUNTRY_EXP_FACTOR = 0.001,						-- Factor used to scale the Daily Country Navy XP gain
+	TRAINING_DAILY_COUNTRY_EXP_MANPOWER_FACTOR = 0.006,					-- Factor used to scale the sum of the training manpower for the Daily Country Navy XP gain
 	TRAINING_DAILY_COUNTRY_EXP_MANPOWER_RATIO_FACTOR = 0.01,				-- Factor used to scale the sum of the manpower divided by the country's number of ship for the Daily Country Navy XP gain
-	TRAINING_DAILY_COUNTRY_EXP_SHIP_RATIO_FACTOR = 200.0,					-- Factor used to scale the ratio of training ships for the Daily Country Navy XP gain
-	TRAINING_MAX_DAILY_COUNTRY_EXP = 2,							-- Maximum navy XP daily gain
+	TRAINING_DAILY_COUNTRY_EXP_SHIP_RATIO_FACTOR =  300.0,					-- Factor used to scale the ratio of training ships for the Daily Country Navy XP gain
+	TRAINING_MAX_DAILY_COUNTRY_EXP = 3.5,							-- Maximum navy XP daily gain
 	TRAINING_MIN_STRENGTH = 0.1,									-- if strength is less than this, the unit will not contribute to training and cant be damaged by training
 	
 	TRAINING_ORG = 0.2,												-- max organization on traiaing mission
