@@ -1,5 +1,5 @@
-NDefines.NGame.LAG_DAYS_FOR_LOWER_SPEED = 200
-NDefines.NGame.LAG_DAYS_FOR_PAUSE = 140
+NDefines.NGame.LAG_DAYS_FOR_LOWER_SPEED = 250
+NDefines.NGame.LAG_DAYS_FOR_PAUSE = 200
 NDefines.NGame.COMBAT_LOG_MAX_MONTHS = 36
 NDefines.NCountry.EVENT_PROCESS_OFFSET = 40 -- Performance enhancer. --TW/WTT
 NDefines.NGame.GAME_SPEED_SECONDS = { 600.0, 600.0 , 0.17, 0.13, 0.07}
