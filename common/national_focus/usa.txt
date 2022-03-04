@@ -54,7 +54,7 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = USA_3
+		id = USA_open_trade
 		cost = 7.28
 		x = -8
 		y = 1
@@ -63,17 +63,18 @@ focus_tree = {
 		completion_reward = {
 			PAR = { give_resource_rights = { receiver = USA state = 301 } }
 			PAR = { give_resource_rights = { receiver = USA state = 688 } }
+			custom_effect_tooltip = USA_open_trade_tt
 		}
 	}
 	focus = {
-		id = USA_41
+		id = USA_expand_trade
 		cost = 7.28
 		x = 0
 		y = 1
-		prerequisite = { focus = USA_3 }
-		relative_position_id = USA_3
+		prerequisite = { focus = USA_open_trade }
+		relative_position_id = USA_open_trade
 		completion_reward = {
-
+			custom_effect_tooltip = USA_expand_trade_tt
 		}
 	}
 	focus = {
@@ -469,6 +470,10 @@ focus_tree = {
 				mission = USA_social_security_act_mission
 				days = -250
 			}
+			add_to_variable = {
+				var = USA_research_speed_factor_var
+				value = 0.1
+			}
 		}
 	}
 	focus = {
@@ -646,7 +651,7 @@ focus_tree = {
 		y = 1
 		prerequisite = { focus = USA_8 focus = USA_45 }
 		prerequisite = { focus = USA_9 focus = USA_30 focus = USA_40 }
-		relative_position_id = USA_41
+		relative_position_id = USA_expand_trade
 		completion_reward = {
 			add_to_variable = {
 				var = USA_production_speed_dockayard_factor_var
@@ -711,10 +716,6 @@ focus_tree = {
 		prerequisite = { focus = USA_12 }
 		relative_position_id = USA_12
 		completion_reward = {
-			add_to_variable = {
-				var = USA_production_speed_industrial_complex_factor_var
-				value = -0.1
-			}
 			every_state = {
 				limit = {
 					OR = {
@@ -1194,6 +1195,7 @@ focus_tree = {
 				add_building_construction = {
 					type = arms_factory
 					level = 2
+					instant_build = yes
 				}
 				add_extra_state_shared_building_slots = 2
 			}
@@ -1209,38 +1211,658 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = USA_27
+		id = USA_cash_and_carry
 		cost = 5
 		x = -1
 		y = 1
 		prerequisite = { focus = USA_26 focus = USA_13 }
 		relative_position_id = USA_26
+		available = {
+			ENG = {
+				has_war_with = GER
+			}
+		}
 		completion_reward = {
-
+			every_country = {
+				limit = {
+					is_in_faction_with = ENG
+				}
+				add_ideas = USA_cash_and_carry_foreign_idea 
+			}
+			add_ideas = USA_cash_and_carry_idea
+			add_ideas = USA_arsenal_trading_idea
 		}
 	}
 	focus = {
-		id = USA_28
+		id = USA_lend_lease_act
 		cost = 5
 		x = 0
 		y = 1
-		prerequisite = { focus = USA_27 }
-		relative_position_id = USA_27
+		prerequisite = { focus = USA_cash_and_carry }
+		relative_position_id = USA_cash_and_carry
 		completion_reward = {
+			every_country = {
+				limit = {
+					has_idea = USA_cash_and_carry_foreign_idea
+				}
+				swap_ideas = {
+					remove_idea = USA_cash_and_carry_foreign_idea
+					add_idea = USA_lend_lease_foreign 
+				}
+			}
+			swap_ideas = {
+				remove_idea = USA_cash_and_carry_idea
+				add_idea = USA_lend_lease_idea
+			}
 
+			custom_effect_tooltip = USA_will_upgrade_all_one_step_tt
+			
+			hidden_effect = {
+				USA_armor_industry_level_up = yes 
+				USA_aircraft_industry_level_up = yes
+				USA_infantry_industry_level_up = yes 
+				USA_naval_industry_level_up = yes 
+				sound_effect = sp_usa_democracy
+			}
+
+			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
+			USA_we_dont_want_to_send_our_boys_away = yes
 		}
 	}
 	focus = {
-		id = USA_29
-		cost = 5
+		id = USA_day_of_infamy
+		cost = 0
 		x = 0
 		y = 1
-		prerequisite = { focus = USA_28 }
-		relative_position_id = USA_28
+		prerequisite = { focus = USA_lend_lease_act }
+		relative_position_id = USA_lend_lease_act
+		available = {
+			always = no
+		}
+		bypass = {
+			has_war_with = JAP
+		}
 		completion_reward = {
-
+			GER = {
+				declare_war_on = {
+					target = USA
+				}
+			}
+			ENG = {
+				add_to_faction = USA
+			}
+			hidden_effect = {
+				set_rule = { can_join_factions = yes }
+				set_rule = { can_create_factions = yes }
+			}
+			custom_effect_tooltip = USA_join_the_allies_tt
 		}
 	}
+	focus = {
+		id = USA_office_of_scientific_research_and_development
+		icon = GFX_focus_research2
+		x = 0
+		y = 1
+		prerequisite = { focus = USA_day_of_infamy }
+		relative_position_id = USA_day_of_infamy
+		cost = 5 
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_research_slot = 1
+		}
+	}
+
+	focus = {
+		id = USA_magic
+		icon = GFX_goal_generic_radar
+		x = 2
+		y = 1
+		prerequisite = { focus = USA_office_of_scientific_research_and_development }
+		relative_position_id = USA_office_of_scientific_research_and_development
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_ideas = USA_magic
+		}
+	}
+
+	focus = {
+		id = USA_manhattan_project
+		icon = GFX_goal_generic_scientific_exchange
+		x = -2
+		y = 1
+		prerequisite = { focus = USA_office_of_scientific_research_and_development }
+		relative_position_id = USA_office_of_scientific_research_and_development
+		cost = 5 
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+			hidden_effect = {
+				add_ideas = USA_economy_of_plunder_a0
+			}
+			custom_effect_tooltip = USA_wunderwaffe_tt
+			add_tech_bonus = {
+				category = nuclear 
+				uses = 2
+				bonus = 1 
+				name = USA_manhattan_project
+			}
+		}
+	}
+
+	focus = {
+		id = USA_office_of_war_production_management
+		icon = GFX_goal_generic_military_sphere
+		prerequisite = { focus = USA_manhattan_project }
+
+		relative_position_id = USA_manhattan_project
+		x = 0
+		y = 1
+		cost = 7.16
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			custom_effect_tooltip = USA_will_upgrade_all_one_step_tt
+			
+			hidden_effect = {
+				USA_armor_industry_level_up = yes 
+				USA_aircraft_industry_level_up = yes
+				USA_infantry_industry_level_up = yes 
+				USA_naval_industry_level_up = yes 
+			}
+			add_tech_bonus = {
+				category = industry
+				bonus = 1
+				uses = 1
+				name = USA_office_of_production_management
+			}
+		}
+	}										
+
+	focus = {
+		id = USA_war_bonds_and_rationing
+		icon = GFX_goal_generic_construct_civ_factory
+		prerequisite = { focus = USA_office_of_war_production_management }
+
+		relative_position_id = USA_office_of_war_production_management
+		x = -1
+		y = 1
+		cost = 7.16
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = {
+			has_completed_focus = USA_1
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			add_ideas = USA_rationing_and_war_bonds
+		}
+	}		
+
+	focus = {
+		id = USA_increase_in_consumer_goods
+		icon = GFX_goal_generic_consumer_goods
+		prerequisite = { focus = USA_war_bonds_and_rationing }
+
+		relative_position_id = USA_war_bonds_and_rationing
+		x = 0
+		y = 1
+		cost = 7.16
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = industrial_complex 
+					level = 5
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = industrial_complex 
+					level = 5
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = industrial_complex 
+					level = 5
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = USA  
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = industrial_complex 
+					level = 5
+					instant_build = yes 
+				}
+			}
+		}
+	}		
+
+	focus = {
+		id = USA_synthetic_rubber
+		icon = GFX_goal_generic_construction2
+		prerequisite = { focus = USA_office_of_war_production_management }
+
+		relative_position_id = USA_office_of_war_production_management
+		x = 1
+		y = 1
+		cost = 7.16
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				category = synth_resources  
+				uses = 4
+				bonus = 1
+				name = USA_synthetic_rubber
+			}
+		}
+	}		
+
+	focus = {
+		id = USA_emergency_rubber_production
+		icon = GFX_goal_generic_forceful_treaty
+		prerequisite = { focus = USA_synthetic_rubber }
+
+		relative_position_id = USA_synthetic_rubber
+		x = 0
+		y = 1
+		cost = 7.16
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+			
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = synthetic_rubber_refinery
+					level = 1
+					instant_build = yes
+				}
+			}	
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = synthetic_rubber_refinery
+					level = 1
+					instant_build = yes
+				}
+			}	
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = synthetic_rubber_refinery
+					level = 1
+					instant_build = yes
+				}
+			}				
+		}
+	}				
+
+	focus = {
+		id = USA_wartime_industry
+		icon = GFX_goal_generic_construct_mil_factory
+		prerequisite = { focus = USA_magic }
+
+		relative_position_id = USA_magic
+		x = 0
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+			is_in_faction_with = ENG
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			show_ideas_tooltip = USA_wartime_industry_economy
+		}
+	}
+
+	focus = {
+		id = USA_general_motors_focus  
+		icon = GFX_goal_generic_build_tank
+		prerequisite = { focus = USA_wartime_industry }
+
+		relative_position_id = USA_wartime_industry
+		x = -1
+		y = 1
+		cost = 5
+
+		ai_will_do = {
+			factor = 100 
+		}
+
+		available_if_capitulated = yes		
+		
+		available = { 
+			is_in_faction_with = ENG
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			add_to_variable = {
+				var = USA_industrial_capacity_factory_var
+				value = 0.1
+			}
+			custom_effect_tooltip = "10 output"
+		}
+	}
+
+	focus = {
+		id = USA_new_military_hardware  
+		icon = GFX_goal_generic_axis_build_infantry
+		prerequisite = { focus = USA_general_motors_focus }
+
+		relative_position_id = USA_general_motors_focus
+		x = 0
+		y = 1
+		cost = 5
+
+		ai_will_do = {
+			factor = 100 
+		}
+
+		available_if_capitulated = yes		
+		
+		available = { 
+			is_in_faction_with = ENG
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				category = infantry_tech
+				uses = 2
+				bonus = 0.5
+				name = USA_new_military_hardware
+			}
+			add_tech_bonus = {
+				category = armor
+				uses = 1
+				bonus = 0.5
+				name = USA_new_military_hardware
+			}
+			add_tech_bonus = {
+				category = support_tech
+				uses = 1 
+				bonus = 1 
+				name = USA_new_mnilitary_hardware
+			}
+		}
+	}
+
+	focus = {
+		id = USA_victory_program 
+		icon = GFX_goal_generic_air_production
+		prerequisite = { focus = USA_wartime_industry }
+
+		relative_position_id = USA_wartime_industry
+		x = 1
+		y = 1
+		cost = 5
+
+		ai_will_do = {
+			factor = 100 
+		}
+
+		available_if_capitulated = yes		
+		
+		available = { 
+			is_in_faction_with = ENG
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			unlock_decision_tooltip = { decision = USA_victory_program_1 show_effect_tooltip = yes }
+			unlock_decision_tooltip = { decision = USA_victory_program_2 show_effect_tooltip = yes }
+			unlock_decision_tooltip = { decision = USA_victory_program_3 show_effect_tooltip = yes }
+			unlock_decision_tooltip = { decision = USA_victory_program_4 show_effect_tooltip = yes }
+		}
+	}
+
+	focus = {
+		id = USA_everyone_not_on_the_front_in_the_factories
+		icon = GFX_focus_spr_torchbearers_of_tomorrow
+		prerequisite = { focus = USA_victory_program }
+
+		relative_position_id = USA_victory_program
+		x = 0
+		y = 1
+		cost = 5
+
+		ai_will_do = {
+			factor = 100 
+		}
+
+		available_if_capitulated = yes		
+		
+		available = { 
+			is_in_faction_with = ENG
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			unlock_decision_tooltip = { decision = women_in_the_workforce show_effect_tooltip = yes }
+		}
+	}
+
+	focus = {
+		id = USA_the_overnight_conversion 
+		icon = GFX_goal_generic_construct_mil_factory
+		prerequisite = { focus = USA_everyone_not_on_the_front_in_the_factories }
+		prerequisite = { focus = USA_new_military_hardware }
+
+		relative_position_id = USA_victory_program
+		x = -1
+		y = 2
+		cost = 5
+
+		ai_will_do = {
+			factor = 100 
+		}
+
+		available_if_capitulated = yes		
+		
+		available = { 
+			has_completed_focus = USA_14
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 5 
+				limit = {
+					is_fully_controlled_by = ROOT
+					industrial_complex > 4
+				}
+				remove_building = {
+					type = industrial_complex
+					level = 5
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 8
+					instant_build = yes
+				}
+			}
+			
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 5 
+				limit = {
+					is_fully_controlled_by = ROOT
+					industrial_complex > 4
+				}
+				remove_building = {
+					type = industrial_complex
+					level = 5
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 8
+					instant_build = yes
+				}
+			}
+
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 5 
+				limit = {
+					is_fully_controlled_by = ROOT
+					industrial_complex > 4
+				}
+				remove_building = {
+					type = industrial_complex
+					level = 5
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 7
+					instant_build = yes
+				}
+			}
+
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 5 
+				limit = {
+					is_fully_controlled_by = ROOT
+					industrial_complex > 4
+				}
+				remove_building = {
+					type = industrial_complex
+					level = 5
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 7
+					instant_build = yes
+				}
+			}
+		}
+	}	
 
 	focus = {
 		id = USA_focus_on_asia
@@ -1702,15 +2324,15 @@ focus_tree = {
 			AST = {
 				add_equipment_to_stockpile = {
 					type = infantry_equipment
-					amount = 20000
+					amount = 10000
 				}
 				add_equipment_to_stockpile = {
 					type = support_equipment
-					amount = 800
+					amount = 500
 				}
 				add_equipment_to_stockpile = {
-					type = pack_artillery_equipment
-					amount = 400
+					type = special_equipment_1
+					amount = 1000
 				}
 			}
 			add_resource = {
@@ -1741,6 +2363,20 @@ focus_tree = {
 					type = infantry_equipment
 					amount = 30000
 				}
+				add_equipment_to_stockpile = {
+					type = artillery_equipment
+					amount = 500
+				}
+			}
+			add_resource = {
+				type = steel
+				amount = 30
+				state = 426
+			}
+			add_resource = {
+				type = chromium
+				amount = 15
+				state = 429
 			}
 		}
 	}
@@ -1889,7 +2525,8 @@ focus_tree = {
 				threat > 0.2
 				has_war = yes
 				has_completed_focus = USA_14
-			}			
+			}
+			has_army_experience < 100
 		}
 
 		bypass = {
@@ -2005,6 +2642,7 @@ focus_tree = {
 				has_war_with = JAP
 				has_completed_focus = USA_14
 			}
+			has_army_experience < 100
 		}
 
 		bypass = {
@@ -2483,10 +3121,7 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			add_to_variable = {
-				var = USA_production_speed_arms_factory_factor_var
-				value = 0.1
-			}
+			add_political_power = 150
 		}
 	}
 
@@ -2762,6 +3397,29 @@ focus_tree = {
 		}
 		
 		completion_reward = {
+			set_technology = {
+				improved_ship_hull_heavy = 1
+			}	
+			create_equipment_variant = {
+				name = "Iowa Class"
+				type = ship_hull_heavy_3
+				name_group = USA_BB_HISTORICAL
+				parent_version = 0
+				modules = {
+						fixed_ship_battery_slot = ship_heavy_battery_3
+						fixed_ship_anti_air_slot = ship_anti_air_3
+						fixed_ship_fire_control_system_slot = empty
+						fixed_ship_radar_slot = empty
+						fixed_ship_engine_slot = heavy_ship_engine_3
+						fixed_ship_secondaries_slot = ship_secondaries_2
+						fixed_ship_armor_slot = ship_armor_bb_3
+						front_1_custom_slot = ship_heavy_battery_3
+						mid_1_custom_slot = ship_heavy_battery_3
+						mid_2_custom_slot = ship_anti_air_3
+						mid_3_custom_slot = ship_airplane_launcher_2
+						rear_1_custom_slot = ship_heavy_battery_3
+				}
+			}
 		}
 	}				
 
@@ -3151,6 +3809,10 @@ focus_tree = {
 			}
 			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
 			USA_we_dont_want_to_send_our_boys_away = yes
+			add_to_variable = {
+				var = USA_research_speed_factor_var
+				value = 0.05
+			}
 		}
 	}						
 
@@ -3274,10 +3936,10 @@ focus_tree = {
 					has_completed_focus = USA_14
 				}
 				393 = {
-					add_extra_state_shared_building_slots = 4
+					add_extra_state_shared_building_slots = 5
 					add_building_construction = {
 						type = arms_factory
-						level = 4
+						level = 5
 						instant_build = yes 
 					}
 				}
@@ -3290,7 +3952,10 @@ focus_tree = {
 			}
 			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
 			USA_we_dont_want_to_send_our_boys_away = yes
-
+			add_to_variable = {
+				var = USA_research_speed_factor_var
+				value = 0.05
+			}
 		}
 	}	
 
@@ -3409,10 +4074,10 @@ focus_tree = {
 			custom_effect_tooltip = available_designer
 			custom_effect_tooltip = USA_rock_island_arsenal_available_tt
 			395 = {
-				add_extra_state_shared_building_slots = 4
+				add_extra_state_shared_building_slots = 5
 				add_building_construction = {
 					type = arms_factory
-					level = 4 
+					level = 5
 					instant_build = yes
 				}
 			}
@@ -3435,7 +4100,10 @@ focus_tree = {
 			}
 			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
 			USA_we_dont_want_to_send_our_boys_away = yes
-
+			add_to_variable = {
+				var = USA_research_speed_factor_var
+				value = 0.05
+			}
 		}
 	}						
 
@@ -3677,10 +4345,10 @@ focus_tree = {
 			add_doctrine_cost_reduction = {
 				name = land_doc_bonus
 				cost_reduction = 0.5
-				uses = 1
+				uses = 2
 				category = air_doctrine
 			}	
-			air_experience = 50 
+			air_experience = 100
 		}
 	}						
 
@@ -3912,13 +4580,19 @@ focus_tree = {
 		available_if_capitulated = yes		
 		
 		available = { 
-
+			date > 1942.1.1
 		}
 
 		bypass = {
 		}
 		
 		completion_reward = {
+			add_tech_bonus = {
+				technology = usa_jet_fighter_1945
+				uses = 1
+				bonus = 0.5
+				ahead_reduction = 0.5
+			}
 		}
 	}		
 
@@ -3935,14 +4609,19 @@ focus_tree = {
 		}
 		available_if_capitulated = yes		
 		
-		available = { 
-
+		available = {
 		}
 
 		bypass = {
 		}
 		
 		completion_reward = {
+			add_tech_bonus = {
+				technology = usa_CAS_1943
+				uses = 1
+				bonus = 0.5
+				ahead_reduction = 0.5
+			}
 		}
 	}		
 
@@ -3984,7 +4663,7 @@ focus_tree = {
 		id = USA_north_african_campaign
 		x = -4
 		y = 1
-		cost = 1
+		cost = 0
 		relative_position_id = USA_war_powers_act
 		prerequisite = { focus = USA_war_powers_act }
 		available = {
@@ -3992,6 +4671,11 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_ideas = unprepared_for_war
+		}
+		bypass = {
+			USA = {
+				has_war_with = GER
+			}
 		}
 	}
 
@@ -4005,7 +4689,12 @@ focus_tree = {
 		mutually_exclusive = { focus = USA_operation_muskeeter }
 
 		completion_reward = {
-			add_ideas = unprepared_for_war
+			every_state = {
+				limit={OR={state = 456 state = 457 }}
+				add_dynamic_modifier = { modifier = USA_bombardment days = 120 }
+			}
+			custom_effect_tooltip = Allied_bombardment
+			custom_effect_tooltip = "We will level the Axis defenses in Aswan, Eastern Desert."
 		}
 	}
 
@@ -4017,7 +4706,12 @@ focus_tree = {
 		relative_position_id = USA_operation_muskeeter
 		prerequisite = { focus = USA_operation_muskeeter }
 		completion_reward = {
-			add_ideas = unprepared_for_war
+			every_state = {
+				limit={OR={state = 446 state = 453 }}
+				add_dynamic_modifier = { modifier = USA_bombardment days = 120 }
+			}
+			custom_effect_tooltip = Allied_bombardment
+			custom_effect_tooltip = "We will level the Axis defenses in Cairo, Sinai."
 		}
 	}
 
@@ -4026,12 +4720,11 @@ focus_tree = {
 		id = USA_operation_desert_storm
 		x = -2
 		y = 1
-		cost = 2
+		cost = 1
 		prerequisite = { focus = USA_north_african_campaign }
 		mutually_exclusive = { focus = USA_operation_muskeeter }
 		relative_position_id = USA_north_african_campaign
 		available = {
-			has_war_with = GER
 		}
 		completion_reward = {
 			every_state = {
@@ -4046,11 +4739,10 @@ focus_tree = {
 		id = USA_iraqi_freedom
 		x = 0
 		y = 1
-		cost = 2
+		cost = 1
 		prerequisite = { focus = USA_operation_desert_storm }
 		relative_position_id = USA_operation_desert_storm
 		available = {
-			has_war_with = GER
 		}
 		completion_reward = {
 			add_timed_idea = {
@@ -4066,7 +4758,7 @@ focus_tree = {
 		id = USA_torch
 		x = 2
 		y = 1
-		cost = 2
+		cost = 1
 		prerequisite = { focus = USA_north_african_campaign }
 		relative_position_id = USA_north_african_campaign
 		available = {
@@ -4084,6 +4776,10 @@ focus_tree = {
 					type = infrastructure
 					level = 10
 				}
+				set_building_level = {
+					type = air_base
+					level = 40
+				}
 			}
 		}
 	}
@@ -4091,22 +4787,13 @@ focus_tree = {
 		id = USA_kasserine_pass
 		x = 0
 		y = 1
-		cost = 2
+		cost = 1
 		prerequisite = { focus = USA_torch }
 		relative_position_id = USA_torch
 		available = {
-			OR = {
-				USA = {
-					has_full_control_of_state = 459
-					has_full_control_of_state = 461
-					has_full_control_of_state = 462
-				}
-				FRA = {
-					has_full_control_of_state = 459
-					has_full_control_of_state = 461
-					has_full_control_of_state = 462
-				}
-			}
+			461={is_controlled_by_ROOT_or_ally=yes}
+			462={is_controlled_by_ROOT_or_ally=yes}
+			459={is_controlled_by_ROOT_or_ally=yes}
 		}
 		completion_reward = {
 			remove_ideas = unprepared_for_war
@@ -4151,26 +4838,27 @@ focus_tree = {
 		id = USA_victory_in_africa
 		x = 0
 		y = 3
-		cost = 2
+		cost = 0
 		prerequisite = { focus = USA_iraqi_freedom focus = USA_phantom_fury }
 		prerequisite = { focus = USA_kasserine_pass }
 		relative_position_id = USA_north_african_campaign
 		available = {
-			OR = {
-				USA = {
-					has_full_control_of_state = 459
-					has_full_control_of_state = 461
-					has_full_control_of_state = 462
-				}
-				FRA = {
-					has_full_control_of_state = 459
-					has_full_control_of_state = 461
-					has_full_control_of_state = 462
-				}
-			}
+			458={is_controlled_by_ROOT_or_ally=yes}
+			448={is_controlled_by_ROOT_or_ally=yes}
+			450={is_controlled_by_ROOT_or_ally=yes}
+		}
+		bypass = {
+			458={is_controlled_by_ROOT_or_ally=yes}
+			448={is_controlled_by_ROOT_or_ally=yes}
+			450={is_controlled_by_ROOT_or_ally=yes}
 		}
 		completion_reward = {
-
+			every_country = {
+				limit = {
+					is_in_faction_with = ENG
+				}
+				add_stability = 0.1 
+			}
 		}
 	}
 
@@ -4179,10 +4867,18 @@ focus_tree = {
 		id = USA_the_weak_underbelly
 		x = 4
 		y = 1
-		cost = 2
+		cost = 0
 		prerequisite = { focus = USA_war_powers_act }
 		relative_position_id = USA_war_powers_act
 		available = {
+			458={is_controlled_by_ROOT_or_ally=yes}
+			448={is_controlled_by_ROOT_or_ally=yes}
+			450={is_controlled_by_ROOT_or_ally=yes}
+		}
+		bypass = {
+			458={is_controlled_by_ROOT_or_ally=yes}
+			448={is_controlled_by_ROOT_or_ally=yes}
+			450={is_controlled_by_ROOT_or_ally=yes}
 		}
 		completion_reward = {
 
@@ -4191,7 +4887,7 @@ focus_tree = {
 
 	focus = {
 		id = USA_operation_husky
-		cost = 3
+		cost = 1
 		x = 0
 		y = 1
 		prerequisite = { focus = USA_the_weak_underbelly }
@@ -4227,7 +4923,7 @@ focus_tree = {
 	}
 	focus = {
 		id = USA_operation_dragoon 
-		cost = 3
+		cost = 1
 		x = -2
 		y = 1
 		prerequisite = { focus = USA_the_weak_underbelly }
@@ -4241,55 +4937,12 @@ focus_tree = {
 			}
 			custom_effect_tooltip = Allied_bombardment
 			custom_effect_tooltip = "We will level the Axis defenses in Savoy, Provence, Languedoc."
-			add_timed_idea = {
-				idea = operation_avalanche
-				days = 120
-			}
-			custom_effect_tooltip = operation_avalanche_1
-			hidden_effect = {
-				ENG = {
-					add_timed_idea = {
-						idea = operation_avalanche
-						days = 120
-					}
-				}
-				CAN = {
-					add_timed_idea = {
-						idea = operation_avalanche
-						days = 120
-					}
-				}
-				AST = {
-					add_timed_idea = {
-						idea = operation_avalanche
-						days = 120
-					}
-				}
-				RAJ = {
-					add_timed_idea = {
-						idea = operation_avalanche
-						days = 120
-					}
-				}
-				FRA = {
-					add_timed_idea = {
-						idea = operation_avalanche
-						days = 120
-					}
-				}
-				SAF = {
-					add_timed_idea = {
-						idea = operation_avalanche
-						days = 120
-					}
-				}
-			}
 		}
 	}
 
 	focus = {
 		id = USA_operation_jeanne_de_arc
-		cost = 3
+		cost = 1
 		x = 0
 		y = 1
 		prerequisite = { focus = USA_operation_dragoon }
@@ -4298,60 +4951,17 @@ focus_tree = {
 		}
 		completion_reward = {
 			every_state = {
-				limit={OR={state = 21 state = 22 state = 735 }}
+				limit={OR={state = 19 state = 23 }}
 				add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
 			}
 			custom_effect_tooltip = Allied_bombardment
-			custom_effect_tooltip = "We will level the Axis defenses in Savoy, Provence, Languedoc."
-			add_timed_idea = {
-				idea = operation_avalanche
-				days = 120
-			}
-			custom_effect_tooltip = operation_avalanche_1
-			hidden_effect = {
-				ENG = {
-					add_timed_idea = {
-						idea = operation_avalanche
-						days = 120
-					}
-				}
-				CAN = {
-					add_timed_idea = {
-						idea = operation_avalanche
-						days = 120
-					}
-				}
-				AST = {
-					add_timed_idea = {
-						idea = operation_avalanche
-						days = 120
-					}
-				}
-				RAJ = {
-					add_timed_idea = {
-						idea = operation_avalanche
-						days = 120
-					}
-				}
-				FRA = {
-					add_timed_idea = {
-						idea = operation_avalanche
-						days = 120
-					}
-				}
-				SAF = {
-					add_timed_idea = {
-						idea = operation_avalanche
-						days = 120
-					}
-				}
-			}
+			custom_effect_tooltip = "We will level the Axis defenses in Aquitaine, Poitou."
 		}
 	}
 
 	focus = {
 		id = USA_operation_mincemeat 
-		cost = 3
+		cost = 1
 		x = 2
 		y = 1
 		prerequisite = { focus = USA_the_weak_underbelly }
@@ -4360,60 +4970,17 @@ focus_tree = {
 		}
 		completion_reward = {
 			every_state = {
-				limit={OR={state = 21 state = 22 state = 735 }}
+				limit={OR={state = 185 state = 186 state = 47 }}
 				add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
 			}
 			custom_effect_tooltip = Allied_bombardment
-			custom_effect_tooltip = "We will level the Axis defenses in Savoy, Provence, Languedoc."
-			add_timed_idea = {
-				idea = operation_avalanche
-				days = 120
-			}
-			custom_effect_tooltip = operation_avalanche_1
-			hidden_effect = {
-				ENG = {
-					add_timed_idea = {
-						idea = operation_avalanche
-						days = 120
-					}
-				}
-				CAN = {
-					add_timed_idea = {
-						idea = operation_avalanche
-						days = 120
-					}
-				}
-				AST = {
-					add_timed_idea = {
-						idea = operation_avalanche
-						days = 120
-					}
-				}
-				RAJ = {
-					add_timed_idea = {
-						idea = operation_avalanche
-						days = 120
-					}
-				}
-				FRA = {
-					add_timed_idea = {
-						idea = operation_avalanche
-						days = 120
-					}
-				}
-				SAF = {
-					add_timed_idea = {
-						idea = operation_avalanche
-						days = 120
-					}
-				}
-			}
+			custom_effect_tooltip = "We will level the Axis defenses in Peloponnese, Thessaly, Epirus."
 		}
 	}
 
 	focus = {
 		id = USA_impaler
-		cost = 3
+		cost = 1
 		x = 0
 		y = 1
 		prerequisite = { focus = USA_operation_mincemeat }
@@ -4422,60 +4989,17 @@ focus_tree = {
 		}
 		completion_reward = {
 			every_state = {
-				limit={OR={state = 21 state = 22 state = 735 }}
+				limit={OR={state = 731 state = 44 state = 106 state = 184 }}
 				add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
 			}
 			custom_effect_tooltip = Allied_bombardment
-			custom_effect_tooltip = "We will level the Axis defenses in Savoy, Provence, Languedoc."
-			add_timed_idea = {
-				idea = operation_avalanche
-				days = 120
-			}
-			custom_effect_tooltip = operation_avalanche_1
-			hidden_effect = {
-				ENG = {
-					add_timed_idea = {
-						idea = operation_avalanche
-						days = 120
-					}
-				}
-				CAN = {
-					add_timed_idea = {
-						idea = operation_avalanche
-						days = 120
-					}
-				}
-				AST = {
-					add_timed_idea = {
-						idea = operation_avalanche
-						days = 120
-					}
-				}
-				RAJ = {
-					add_timed_idea = {
-						idea = operation_avalanche
-						days = 120
-					}
-				}
-				FRA = {
-					add_timed_idea = {
-						idea = operation_avalanche
-						days = 120
-					}
-				}
-				SAF = {
-					add_timed_idea = {
-						idea = operation_avalanche
-						days = 120
-					}
-				}
-			}
+			custom_effect_tooltip = "We will level the Axis defenses in Albania, Central Macedonia, Macedonia, Thrace."
 		}
 	}
 
 	focus = {
 		id = USA_operation_avalanche
-		cost = 3
+		cost = 1
 		x = 0
 		y = 1
 		prerequisite = { focus = USA_operation_husky }
@@ -4546,7 +5070,7 @@ focus_tree = {
 
 	focus = {
 		id = USA_triumph_in_the_mediterranean
-		cost = 3
+		cost = 0
 		x = 0
 		y = 1
 		prerequisite = { 
@@ -4558,13 +5082,28 @@ focus_tree = {
 		available = {
 			ITA = {
 				NOT = {
-					has_full_control_of_state = 448
-					has_full_control_of_state = 450
-					has_full_control_of_state = 458
+					has_full_control_of_state = 115
+					has_full_control_of_state = 156
+					has_full_control_of_state = 114
+				}
+			}
+		}
+		bypass = {
+			ITA = {
+				NOT = {
+					has_full_control_of_state = 115
+					has_full_control_of_state = 156
+					has_full_control_of_state = 114
 				}
 			}
 		}
 		completion_reward = {
+			every_country = {
+				limit = {
+					is_in_faction_with = ENG
+				}
+				add_stability = 0.1 
+			}
 		}
 	}
 
