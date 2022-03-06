@@ -124,7 +124,7 @@ focus_tree = {
 			add_research_slot = -1
 			every_state = {
 				limit = {
-					infrastructure = 10
+					infrastructure > 9
 					is_core_of = USA
 				}
 				add_building_construction = {
@@ -469,7 +469,7 @@ focus_tree = {
 			}
 			every_state = {
 				limit = {
-					infrastructure = 6
+					infrastructure > 5
 					is_core_of = USA
 				}
 				add_building_construction = {
@@ -1226,7 +1226,7 @@ focus_tree = {
 		completion_reward = {
 			every_state = {
 				limit = {
-					infrastructure = 10
+					infrastructure > 9
 					is_core_of = USA
 				}
 				remove_building = {
@@ -1909,6 +1909,37 @@ focus_tree = {
 			}
 		}
 	}	
+	focus = {
+		id = USA_department_of_war
+		icon = GFX_USA_department_of_war
+		prerequisite = {  }
+		mutually_exclusive = {  }
+		x = -16
+		y = 0
+		cost = 5
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			army_experience = 50
+			custom_effect_tooltip = USA_voter_support_1_tt
+			hidden_effect = {
+				add_to_variable = {
+					var = USA_popular_support_var
+					value = 0.02
+				}
+				add_war_support = 0.07	
+			}				
+		}
+	}
 
 	focus = {
 		id = USA_focus_on_asia
@@ -2498,34 +2529,36 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = USA_department_of_war
-		icon = GFX_USA_department_of_war
-		prerequisite = {  }
-		mutually_exclusive = {  }
-		x = -16
-		y = 0
+		id = USA_focus_on_europe
+		icon = GFX_focus_usa_focus_on_europe
+		x = -10
+		y = 1
+		prerequisite = { focus = USA_department_of_war }
+		relative_position_id = USA_department_of_war
 		cost = 5
+
 		ai_will_do = {
-			factor = 100 
-		}
-		available_if_capitulated = yes		
-		
-		available = { 
+			factor = 1
 		}
 
-		bypass = {
+		available = {
+			has_government = democratic
 		}
 		
-		completion_reward = {
-			army_experience = 50
-			custom_effect_tooltip = USA_voter_support_1_tt
-			hidden_effect = {
-				add_to_variable = {
-					var = USA_popular_support_var
-					value = 0.02
-				}
-				add_war_support = 0.07	
-			}				
+		bypass = {
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {		
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 2
+				category = land_doctrine
+			}
 		}
 	}
 
@@ -3127,7 +3160,7 @@ focus_tree = {
 		}
 
 		mutually_exclusive = {
-			focus = USA_enlargen_the_fleet
+			focus = USA_cut_funding_to_the_fleet
 		}
 
 		available_if_capitulated = yes		
@@ -4309,7 +4342,7 @@ focus_tree = {
 		id = USA_expand_airforce_strength
 		icon = GFX_USA_expand_airforce_strength
 		prerequisite = { focus = USA_expand_the_airforce }
-		mutually_exclusive = { focus = USA_modernize_training_facilities focus = USA_expand_airforce_strength }
+		mutually_exclusive = { focus = USA_modernize_training_facilities}
 		relative_position_id = USA_expand_the_airforce
 		x = -2
 		y = 1
@@ -4380,6 +4413,7 @@ focus_tree = {
 		icon = GFX_USA_modernize_training_facilities
 		prerequisite = { focus = USA_expand_the_airforce }
 		relative_position_id = USA_expand_the_airforce
+		mutually_exclusive = {focus = USA_expand_airforce_strength}
 		x = 2
 		y = 1
 		cost = 5
@@ -4685,40 +4719,6 @@ focus_tree = {
 		}
 	}		
 
-
-	focus = {
-		id = USA_focus_on_europe
-		icon = GFX_focus_usa_focus_on_europe
-		x = -10
-		y = 1
-		prerequisite = { focus = USA_department_of_war }
-		relative_position_id = USA_department_of_war
-		cost = 5
-
-		ai_will_do = {
-			factor = 1
-		}
-
-		available = {
-			has_government = democratic
-		}
-		
-		bypass = {
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		completion_reward = {		
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 2
-				category = land_doctrine
-			}
-		}
-	}
 	focus = {
 		id = USA_north_african_campaign
 		x = -4
@@ -4746,7 +4746,7 @@ focus_tree = {
 		cost = 1
 		relative_position_id = USA_north_african_campaign
 		prerequisite = { focus = USA_north_african_campaign }
-		mutually_exclusive = { focus = USA_operation_muskeeter }
+		mutually_exclusive = { focus = USA_operation_desert_storm }
 
 		completion_reward = {
 			every_state = {
