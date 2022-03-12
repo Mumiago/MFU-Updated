@@ -1904,18 +1904,28 @@ ENG_budget_decisions = {
 			base = 0	
 		}
 	}
-
 	ENG_expand_home_industry = {
 		icon = generic_construction
 
 		available = {
 			tag = ENG
+			NOT = {
+				has_completed_focus = ENG_containment
+			}
 		}
 
 		visible = {
-			NOT = {
-				has_war_with = GER 
+			AND = {
+				NOT = {
+					has_war_with = GER 
+					ENG = {
+						has_completed_focus = ENG_containment
+					}
+				}
 			}
+		}
+		cancel_trigger = {
+			has_completed_focus = ENG_containment
 		}
 
 		custom_cost_trigger = {
@@ -1925,7 +1935,6 @@ ENG_budget_decisions = {
     			compare = greater_than_or_equals
 			}
 		}
-
 
 		custom_cost_text = ENG_200_british_money 
 
@@ -1947,6 +1956,63 @@ ENG_budget_decisions = {
 
 		modifier = {
 			production_speed_industrial_complex_factor = 0.1
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = ENG_expand_home_industry_tt
+			subtract_from_variable = {
+				var = british_money
+				value = 200
+			}
+		}
+	}
+	ENG_military_industry_boost = {
+		icon = generic_construction
+
+		available = {
+			tag = ENG
+			has_completed_focus = ENG_appeasement
+		}
+
+		visible = {
+			AND = {
+				NOT = {
+					has_war_with = GER 
+				}
+				ENG = {
+					has_completed_focus = ENG_containment
+				}
+			}
+		}
+
+		custom_cost_trigger = {
+			check_variable = {
+    			var = british_money
+   				value = 200
+    			compare = greater_than_or_equals
+			}
+		}
+
+		custom_cost_text = ENG_200_british_money 
+
+		days_remove = 120
+		days_re_enable = 120
+
+		fire_only_once = no
+
+		ai_will_do = {
+			factor = 0
+			modifier = {
+				add = 200
+				OR = {
+					has_idea = civilian_economy
+					has_idea = low_economic_mobilisation
+				}
+			}
+		}
+
+		modifier = {
+			production_speed_arms_factory_factor = 0.1
 		}
 		
 		complete_effect = {
