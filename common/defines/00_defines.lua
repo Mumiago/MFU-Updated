@@ -564,7 +564,7 @@ NPolitics = {
 NBuildings = {
 	SUPPLY_ROUTE_RESOURCE_BONUS = 0.2,   -- multiplicative resource bonus for having a railway/naval connection to the capital
 	INFRASTRUCTURE_MUD_EFFECT = -0.8, -- multiplicative effect on mud growth for max infra
-	ANTI_AIR_SUPERIORITY_MULT = 5.0,	-- How much air superiority reduction to the enemy does our AA guns? Normally each building level = -1 reduction. With this multiplier.
+	ANTI_AIR_SUPERIORITY_MULT = 4.0,	-- How much air superiority reduction to the enemy does our AA guns? Normally each building level = -1 reduction. With this multiplier.
 	MAX_BUILDING_LEVELS = 15,			-- Max levels a building can have.
 	AIRBASE_CAPACITY_MULT = 100,		-- Each level of airbase building multiplied by this, gives capacity (max operational value). Value is int. 1 for each airplane.
 	ROCKETSITE_CAPACITY_MULT = 100,		-- Each level of rocketsite building multiplied by this, gives capacity (max operational value). Value is int. 1 for each rocket.
@@ -1174,8 +1174,8 @@ NAir = {
 	AIR_WING_XP_TRAINING_MAX = 200.0, 									--Max average XP achieved with training.
 	
 	AIR_WING_XP_TRAINING_MISSION_GAIN_DAILY = 3.0, 						--Daily gain when running training exercise mission
-	AIR_WING_XP_AIR_VS_AIR_COMBAT_GAIN = 0.425, 							--Wings in combat gain extra XP	
-	AIR_WING_XP_GROUND_MISSION_COMPLETED_GAIN = 0.3, 					--Bombers bombing, CAS cassing, NBs nbing, kamikazees kamikazeeing, etc.	
+	AIR_WING_XP_AIR_VS_AIR_COMBAT_GAIN = 0.2, 							--Wings in combat gain extra XP	
+	AIR_WING_XP_GROUND_MISSION_COMPLETED_GAIN = 0.2, 					--Bombers bombing, CAS cassing, NBs nbing, kamikazees kamikazeeing, etc.	
 	AIR_WING_XP_RECON_MISSION_COMPLETED_GAIN = 0.05, 					--recon mission
 
 	AIR_WING_COUNTRY_XP_FROM_TRAINING_FACTOR = 0.005, 					--Factor on country Air XP gained from wing training
@@ -1739,10 +1739,10 @@ NNavy = {
 																	--              + TRAINING_DAILY_COUNTRY_EXP_MANPOWER_FACTOR * Manpower + TRAINING_DAILY_COUNTRY_EXP_MANPOWER_RATIO_FACTOR * Manpower / CountryShipCount ) ) 
 	TRAINING_EXPERIENCE_FACTOR = 0.18,								-- Amount of exp each ship gain every 24h while training (before modifiers)
 	TRAINING_DAILY_COUNTRY_EXP_FACTOR = 0.001,						-- Factor used to scale the Daily Country Navy XP gain
-	TRAINING_DAILY_COUNTRY_EXP_MANPOWER_FACTOR = 0.006,					-- Factor used to scale the sum of the training manpower for the Daily Country Navy XP gain
+	TRAINING_DAILY_COUNTRY_EXP_MANPOWER_FACTOR = 0.004,					-- Factor used to scale the sum of the training manpower for the Daily Country Navy XP gain
 	TRAINING_DAILY_COUNTRY_EXP_MANPOWER_RATIO_FACTOR = 0.01,				-- Factor used to scale the sum of the manpower divided by the country's number of ship for the Daily Country Navy XP gain
-	TRAINING_DAILY_COUNTRY_EXP_SHIP_RATIO_FACTOR =  300.0,					-- Factor used to scale the ratio of training ships for the Daily Country Navy XP gain
-	TRAINING_MAX_DAILY_COUNTRY_EXP = 3.5,							-- Maximum navy XP daily gain
+	TRAINING_DAILY_COUNTRY_EXP_SHIP_RATIO_FACTOR =  250.0,					-- Factor used to scale the ratio of training ships for the Daily Country Navy XP gain
+	TRAINING_MAX_DAILY_COUNTRY_EXP = 2.7,							-- Maximum navy XP daily gain
 	TRAINING_MIN_STRENGTH = 0.1,									-- if strength is less than this, the unit will not contribute to training and cant be damaged by training
 	
 	TRAINING_ORG = 0.2,												-- max organization on traiaing mission
