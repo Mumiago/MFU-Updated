@@ -1173,7 +1173,7 @@ focus_tree = {
 			556 = {
 				add_extra_state_shared_building_slots = 3
 				add_building_construction = {
-					type = arms_factory
+					type = industrial_complex
 					level = 3
 					instant_build = yes
 				}	
@@ -1450,7 +1450,7 @@ focus_tree = {
 			515 = {
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
-					type = arms_factory
+					type = industrial_complex
 					level = 2
 					instant_build = yes
 				}
@@ -4744,7 +4744,8 @@ focus_tree = {
 			activate_mission_tooltip = FRA_1942_guns_decision
 			custom_effect_tooltip = FRA_gun_mission_tt
 			add_tech_bonus = {
-				category = infantry_weapons 
+				technology = improved_infantry_weapons_2
+				technology = advanced_infantry_weapons
 				uses = 2
 				bonus = 0.5
 				ahead_reduction = 0.5
@@ -5003,8 +5004,8 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = FRA_automobile
-		icon = GFX_goal_generic_automobile
+		id = FRA_redirect_production 
+		icon = GFX_goal_generic_gun_purchase
 		x = -1
 		y = 1
 		prerequisite = { focus = FRA_maison_petain }
@@ -5020,59 +5021,85 @@ focus_tree = {
 				limit = {
 					has_capitulated = no 
 				}
+				21 = { 
+					remove_building = {
+						type = dockyard
+						level = 6
+					}
+				}
 				random_owned_controlled_state = {
 					limit = {
 						is_core_of = FRA
 						free_building_slots = {
 							building = arms_factory
-							size > 2
+							size > 3
 							include_locked = yes
 						}
 					}
-					add_extra_state_shared_building_slots = 3
+					add_extra_state_shared_building_slots = 2
 					add_building_construction = {
 						type = arms_factory
-						level = 3
+						level = 2
 						instant_build = yes
 					}
 				}
+				272	= {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = arms_factory
+						level = 2
+						instant_build = yes
+					}
+				}
+				add_ideas = FRA_antitank_tank_drive
 			}
 			if = {
 				limit = {
 					has_capitulated = yes 
 				}
 				GER = {
+					21 = { 
+						remove_building = {
+							type = dockyard
+							level = 6
+						}
+					}
 					random_owned_controlled_state = {
 						limit = {
 							is_core_of = FRA
 							free_building_slots = {
 								building = arms_factory
-								size > 2
+								size > 0
 								include_locked = yes
 							}
 						}
-						add_extra_state_shared_building_slots = 3
+						add_extra_state_shared_building_slots = 1
 						add_building_construction = {
 							type = arms_factory
-							level = 3
+							level = 1
 							instant_build = yes
 						}
 					}
+					random_owned_controlled_state = {
+						add_extra_state_shared_building_slots = 1
+						add_building_construction = {
+							type = arms_factory
+							level = 1
+							instant_build = yes
+						}
+					}
+					add_ideas = FRA_antitank_tank_drive
 				}
 			}
-
-			custom_effect_tooltip = available_designer
-			show_ideas_tooltip = renault_fra2
-
 		}
 	}
 	focus = {
 		id = FRA_mech_trans
 		icon = GFX_goal_mechanized_offensive
-		x = -1
-		y = 2
-		prerequisite = { focus = FRA_automobile }
-		relative_position_id = FRA_maison_petain
+		x = 0
+		y = 1
+		prerequisite = { focus = FRA_redirect_production }
+		relative_position_id = FRA_redirect_production
 		cost = 5
 		ai_will_do = {
 			factor = 1
@@ -5213,41 +5240,10 @@ focus_tree = {
 		available_if_capitulated = yes
 		completion_reward = {
 			army_experience = 50
-			custom_effect_tooltip = FRA_armor_tt
-			hidden_effect = {
-				division_template = {
-					name = "Divisione Blindée"
-					priority = 2
-	
-					regiments = {
-						motorized = { x = 0 y = 0 }
-						motorized = { x = 0 y = 1 }
-						motorized = { x = 0 y = 2 }
-						motorized = { x = 0 y = 3 }
-		
-						motorized = { x = 1 y = 0 }
-						motorized = { x = 1 y = 1 }
-						motorized = { x = 1 y = 2 }
-		
-						medium_armor = { x = 2 y = 0 }
-						medium_armor = { x = 2 y = 1 }
-						medium_armor = { x = 2 y = 2 }
-						medium_armor = { x = 2 y = 3 }
-						
-						medium_armor = { x = 3 y = 0 }
-						medium_armor = { x = 3 y = 1 }
-						medium_armor = { x = 3 y = 2 }
-						medium_armor = { x = 3 y = 3 }
-					}
-	
-					support = {
-						DIV_HQ = { x = 0 y = 0 }
-						engineer = { x = 0 y = 1 }
-						recon = { x = 0 y = 2 }
-						maintenance_company = { x = 1 y = 0 }
-						logistics_company = { x = 1 y = 1 }
-					}
-				}
+			add_equipment_to_stockpile = {
+				type = medium_tank_chassis_1936
+				amount = 250
+				producer = FRA
 			}
 
 		}
@@ -5278,6 +5274,10 @@ focus_tree = {
 				bonus = 1
 				name = FRA_mobile_fortresses 
 			}
+			swap_ideas = {
+				remove_idea = FRA_antitank_tank_drive
+				add_idea = FRA_antitank_tank_drive3
+			}
 		}
 	}
 	focus = {
@@ -5297,7 +5297,7 @@ focus_tree = {
 		}
 		available = {
 			AND = {
-				date > 1939.01.01
+				date > 1938.06.01
 				FRA = {
 					NOT = {
 						has_idea = FRA_battle_tank
@@ -5312,34 +5312,37 @@ focus_tree = {
 					is_core_of = FRA
 					free_building_slots = {
 						building = arms_factory
-						size > 2
+						size > 0
 						include_locked = yes
 					}
 				}
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = arms_factory
-					level = 2
+					level = 1
 					instant_build = yes
 				}
 			}
 			779 = {
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = arms_factory
-					level = 2
+					level = 1
 					instant_build = yes
 				}
 			}
 			add_tech_bonus = {
-				technology = quality1 
-				technology = quality2 
-				technology = quality3 
+				technology = massed1 
+				technology = massed2 
+				technology = massed3 
 				uses = 1
 				bonus = 1
-				name = FRA_work_smarter_not_harder
+				name = SOV_work_harder_not_smarter
 			}
-			add_ideas = FRA_tank_mass_production
+			swap_ideas = {
+				remove_idea = FRA_antitank_tank_drive
+				add_idea = FRA_antitank_tank_drive2
+			}
 
 		}
 	}
@@ -5382,12 +5385,12 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = FRA_redirect_production 
-		icon = GFX_goal_generic_gun_purchase
+		id = FRA_automobile
+		icon = GFX_goal_generic_automobile
 		x = -1
-		y = 2
+		y = 1
 		prerequisite = { focus = FRA_see_to_daladier }
-		relative_position_id = FRA_armee_de_metier
+		relative_position_id = FRA_see_to_daladier
 		cost = 5
 		ai_will_do = {
 			factor = 1
@@ -5399,76 +5402,50 @@ focus_tree = {
 				limit = {
 					has_capitulated = no 
 				}
-				21 = { 
-					remove_building = {
-						type = dockyard
-						level = 6
-					}
-				}
 				random_owned_controlled_state = {
 					limit = {
 						is_core_of = FRA
 						free_building_slots = {
 							building = arms_factory
-							size > 3
+							size > 2
 							include_locked = yes
 						}
 					}
-					add_extra_state_shared_building_slots = 2
+					add_extra_state_shared_building_slots = 3
 					add_building_construction = {
 						type = arms_factory
-						level = 2
+						level = 3
 						instant_build = yes
 					}
 				}
-				272	= {
-					add_extra_state_shared_building_slots = 2
-					add_building_construction = {
-						type = arms_factory
-						level = 2
-						instant_build = yes
-					}
-				}
-				add_ideas = FRA_antitank_tank_drive
 			}
 			if = {
 				limit = {
 					has_capitulated = yes 
 				}
 				GER = {
-					21 = { 
-						remove_building = {
-							type = dockyard
-							level = 6
-						}
-					}
 					random_owned_controlled_state = {
 						limit = {
 							is_core_of = FRA
 							free_building_slots = {
 								building = arms_factory
-								size > 3
+								size > 2
 								include_locked = yes
 							}
 						}
-						add_extra_state_shared_building_slots = 2
+						add_extra_state_shared_building_slots = 3
 						add_building_construction = {
 							type = arms_factory
-							level = 2
+							level = 3
 							instant_build = yes
 						}
 					}
-					random_owned_controlled_state = {
-						add_extra_state_shared_building_slots = 2
-						add_building_construction = {
-							type = arms_factory
-							level = 2
-							instant_build = yes
-						}
-					}
-					add_ideas = FRA_antitank_tank_drive
 				}
 			}
+
+			custom_effect_tooltip = available_designer
+			show_ideas_tooltip = renault_fra2
+
 		}
 	}
 	focus = {
@@ -5504,7 +5481,7 @@ focus_tree = {
 		x = 0 
 		y = 3
 		prerequisite = { focus = FRA_war_council }
-		prerequisite = { focus = FRA_redirect_production }
+		prerequisite = { focus = FRA_automobile }
 		relative_position_id = FRA_armee_de_metier
 		cost = 5
 		ai_will_do = {
