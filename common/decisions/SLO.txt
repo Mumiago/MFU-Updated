@@ -131,75 +131,77 @@ SLO_border_war_with_hungary_mission = {
 	   }	 
 	 activation = {  
 					
-	date > 1942.01.01
-	   SOV = {
-	 surrender_progress < 0.05
-		} 	
-	GER = { has_war_with = SOV }
+		date > 1942.01.01
+		SOV = {
+		surrender_progress < 0.05
+			} 	
+		GER = { has_war_with = SOV }
+	  
+	 
 	   }			
- days_mission_timeout = 20
+	 days_mission_timeout = 15
 		fire_only_once = yes
 		timeout_effect = {
-   809 = {
-  add_building_construction = {
-	type = bunker
-		  province = 11539
-	level = 3
-  }
-} 
-	news_event = news.491
-	start_civil_war = {
-	ruling_party = ROOT
-   ideology = communism
-   size = 0.0
-	capital = 809
-	states = { 
-		809
+
+		news_event = news.491
+
+	add_dynamic_modifier = { modifier = SLO_civil_war_modifiers }
+	activate_mission = SLO_civil_war_2_decision
+
+}
+}
+SLO_civil_war_2_decision= { 
+  icon = generic_ignite_civil_war
+   allowed = { tag = SLO } 
+	available = {
+		hidden_trigger = { always = no }
+	}	 
+
+				
+	 days_mission_timeout = 10
+     days_re_enable = 1
+	timeout_effect = {
+		custom_effect_tooltip = SLO_modifier_up_tt
+		custom_effect_tooltip = SLO_modifier_down_tt
+			hidden_effect = {
+			if = {
+				limit = {
+					SLO = {
+						divisions_in_state = { size > 4   state = 809 }
+					}
+				}
+				add_to_variable = { var = SLO_factory_output_modifier value = 0.05 }
+				add_to_variable = { var = SLO_constrution_speed_modifier value = 0.05}
+				add_to_variable = { var = SLO_stability_modifier value = 0.05 }
+			
+			}
+			if = {
+				limit = {
+					SLO = {
+						OR = {
+							divisions_in_state = { size < 4   state = 809 }
+						}
+					}
+				}
+				add_to_variable = { var = SLO_factory_output_modifier value = -0.05 }
+				add_to_variable = { var = SLO_constrution_speed_modifier value = -0.05}
+				add_to_variable = { var = SLO_stability_modifier value = -0.05 }
+				
+			}
+			if = {
+				limit = {
+					check_variable = {
+						var = SLO_factory_output_modifier
+						value = 0
+						compare = equals
+					}
+				}
+				remove_dynamic_modifier = { modifier = SLO_civil_war_modifiers }
+				remove_mission = SLO_civil_war_2_decision
+			}
+
+			
+		}
 	}
- hidden_effect = {
-		70 = {
-		create_unit = {
-			division = "name = \"1.Hlinka Guard Emergency Division\" division_template = \"Flying Squads of the Hlinka Guard\" start_experience_factor = 0.7 start_equipment_factor = 1" 
-			owner = ROOT
-		  } 
-		  create_unit = {
-			division = "name = \"2.Hlinka Guard Emergency Division\" division_template = \"Flying Squads of the Hlinka Guard\" start_experience_factor = 0.7 start_equipment_factor = 1" 
-			owner = ROOT
-		  }
-		}   
-		71 = {
-		create_unit = {
-			division = "name = \"1.Hlinka Guard Emergency Division\" division_template = \"Flying Squads of the Hlinka Guard\" start_experience_factor = 0.7 start_equipment_factor = 1" 
-			owner = ROOT
-		  } 
-	   } 
-  }	  
-	hidden_effect = {  
-	every_state = {
-		limit = { state = 809 }
-		create_unit = {
-			division = "name = \"Pugačov\" division_template = \"Partisan Brigade\" start_experience_factor = 0.5 start_equipment_factor = 1" 
-			owner = PREV
-		  } 
-		  create_unit = {
-			division = "name = \"Kriváň\" division_template = \"Partisan Brigade\" start_experience_factor = 0.5 start_equipment_factor = 1" 
-			owner = PREV
-		  } 
-		 create_unit = {
-		   division = "name = \"Jastrib\" division_template = \"Partisan Brigade\" start_experience_factor = 0.5 start_equipment_factor = 1" 
-			owner = PREV
-		  } 
-		  create_unit = {
-			division = "name = \"Borkaňuk\" division_template = \"Partisan Brigade\" start_experience_factor = 0.5 start_equipment_factor = 1" 
-		   owner = PREV
-		  } 
-		   create_unit = {
-			division = "name = \"Bogun\" division_template = \"Partisan Brigade\" start_experience_factor = 0.5 start_equipment_factor = 1" 
-		   owner = PREV
-		  } 
-}
-} 
-}
-}
 }
 }
