@@ -648,7 +648,7 @@ NMilitary = {
 	RELIABILITY_ORG_REGAIN = -0.3,                 -- how much reliability affects org regain
 	RELIABILITY_ORG_MOVING = -1.0,                 -- how much reliability affects org loss on moving
 	RELIABILITY_WEATHER = 3.0,                     -- how much reliability is afffecting weather impact
-	RELIABILTY_RECOVERY = 0.1,                     -- factor affecting how much equipment is returned "from the dead"
+	RELIABILTY_RECOVERY = 0.15,                     -- factor affecting how much equipment is returned "from the dead"
 	LAND_COMBAT_COLLATERAL_FORT_FACTOR = 0.005,		-- Factor to scale collateral damage to forts with.
 	LAND_COMBAT_COLLATERAL_INFRA_FACTOR = 0.0022,	-- Factor to scale collateral damage to infra with.
 	USE_MULTIPLICATIVE_ORG_LOSS_WHEN_MOVING = true, -- whether to apply org_loss_when_moving modifiers additively or multiplicatively (hardcoded multiplicative pre-2021)
@@ -714,8 +714,8 @@ NMilitary = {
 	LAND_COMBAT_COLLATERAL_FACTOR = 0.002,		   -- Factor to scale collateral damage to infra and forts with.
 	LAND_COMBAT_FORT_DAMAGE_CHANCE = 5,		-- chance to get a hit to damage on forts. (out of 100)
 	ATTRITION_DAMAGE_ORG = 0.1,					   -- damage from attrition to Organisation
-	ATTRITION_EQUIPMENT_LOSS_CHANCE = 0.06,		   -- Chance for loosing equipment when suffer attrition. Scaled up the stronger attrition is. Then scaled down by equipment reliability.
-	ATTRITION_EQUIPMENT_PER_TYPE_LOSS_CHANCE = 0.06, -- Chance for loosing equipment when suffer attrition. Scaled up the stronger attrition is. Then scaled down by equipment reliability.
+	ATTRITION_EQUIPMENT_LOSS_CHANCE = 0.08,		   -- Chance for loosing equipment when suffer attrition. Scaled up the stronger attrition is. Then scaled down by equipment reliability.
+	ATTRITION_EQUIPMENT_PER_TYPE_LOSS_CHANCE = 0.08, -- Chance for loosing equipment when suffer attrition. Scaled up the stronger attrition is. Then scaled down by equipment reliability.
 	ATTRITION_WHILE_MOVING_FACTOR = 1,
 	BASE_CHANCE_TO_AVOID_HIT = 90,                 -- Base chance to avoid hit if defences left.
 	CHANCE_TO_AVOID_HIT_AT_NO_DEF = 60,	           -- chance to avoid hit if no defences left.
@@ -726,10 +726,10 @@ NMilitary = {
 	ADDITIONAL_COMBAT_WIDTH = 30,                  -- more opened up by support attack
 	AMPHIBIOUS_INVADE_MOVEMENT_COST = 24.0,        -- total progress cost of movement while amphibious invading
 	LAND_SPEED_MODIFIER = 0.031,                    -- basic speed control
-	RIVER_CROSSING_PENALTY = -0.25,                 -- small river crossing
-	RIVER_CROSSING_PENALTY_LARGE = -0.5,           -- large river crossing
-	RIVER_CROSSING_SPEED_PENALTY = -0.25,          -- small river crossing
-	RIVER_CROSSING_SPEED_PENALTY_LARGE = -0.5,     -- large river crossing
+	RIVER_CROSSING_PENALTY = -0.15,                 -- small river crossing
+	RIVER_CROSSING_PENALTY_LARGE = -0.35,           -- large river crossing
+	RIVER_CROSSING_SPEED_PENALTY = -0.15,          -- small river crossing
+	RIVER_CROSSING_SPEED_PENALTY_LARGE = -0.35,     -- large river crossing
 	RIVER_SMALL_START_INDEX = 0,                   -- color indices for rivers
 	RIVER_SMALL_STOP_INDEX = 6,
 	RIVER_LARGE_STOP_INDEX = 11,
@@ -1543,7 +1543,7 @@ NNavy = {
 	NAVAL_TRANSFER_BASE_NAVAL_DIST_ADD = 100,						-- Extra cost for naval movement ( compared to land movement ) when deciding what ports to use for a naval transfer
 	NAVAL_TRANSFER_BASE_NAVAL_DIST_MULT = 20,						-- Multiplier for the cost of naval movement ( compared to land movement ) when deciding what ports to use for naval transfer
 	NAVAL_SUPREMACY_CAN_INVADE = 0.5,								-- required naval supremacy to perform invasions on an area
-	CARRIER_STACK_PENALTY = 5,										-- The most efficient is 4 carriers in combat. 5+ brings the penalty to the amount of wings in battle.
+	CARRIER_STACK_PENALTY = 6,										-- The most efficient is 4 carriers in combat. 5+ brings the penalty to the amount of wings in battle.
 	CARRIER_STACK_PENALTY_EFFECT = 0.2,								-- Each carrier above the optimal amount decreases the amount of airplanes being able to takeoff by such %.
 	SHORE_BOMBARDMENT_CAP = 0.3,
 	ANTI_AIR_TARGETING = 0.85,                                       -- how good ships are at hitting aircraft
@@ -1633,8 +1633,8 @@ NNavy = {
 	AGGRESSION_MAX_ARMOR_EFFICIENCY = 1.5,              -- armor multiplier has a min and max caps while being factored in aggression
 	
 	AGGRESSION_LIGHT_GUN_EFFICIENCY_ON_LIGHT_SHIPS = 1.0, -- ratio for scoring for different gun types against light ships
-	AGGRESSION_HEAVY_GUN_EFFICIENCY_ON_LIGHT_SHIPS = 0.25,-- ratio for scoring for different gun types against light ships
-	AGGRESSION_TORPEDO_EFFICIENCY_ON_LIGHT_SHIPS = 0.1,   -- ratio for scoring for different gun types against light ships
+	AGGRESSION_HEAVY_GUN_EFFICIENCY_ON_LIGHT_SHIPS = 0.2,-- ratio for scoring for different gun types against light ships
+	AGGRESSION_TORPEDO_EFFICIENCY_ON_LIGHT_SHIPS = 0.0,   -- ratio for scoring for different gun types against light ships
 	
 	AGGRESSION_LIGHT_GUN_EFFICIENCY_ON_HEAVY_SHIPS = 0.08, -- ratio for scoring for different gun types against heavy ships
 	AGGRESSION_HEAVY_GUN_EFFICIENCY_ON_HEAVY_SHIPS = 1.5, -- ratio for scoring for different gun types against heavy ships
@@ -1870,7 +1870,7 @@ NNavy = {
 
 	GUN_HIT_PROFILES = { -- hit profiles for guns, if target ih profile is lower the gun will have lower accuracy
 		80.0,	-- big guns
-		145.0,	-- torpedos
+		140.0,	-- torpedos
 		44.0,	-- small guns
 	},
 	
