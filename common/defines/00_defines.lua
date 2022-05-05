@@ -506,9 +506,9 @@ NProduction = {
 	CAPITULATE_FUEL_RATIO = 0.5, -- How much fuel will be transferred on capitulation																				  
 	INFRA_MAX_CONSTRUCTION_COST_EFFECT = 1, 		-- Building in a state with higher infrastructure will reduce the cost of shared buildings.
 	PRODUCTION_RESOURCE_LACK_PENALTY = -0.0175,			-- Penalty decrease while lack of resource per factory
-	MIN_LICENSE_ACTIVE_DAYS = 30,						-- Min days for license to be active
-	BASE_LICENSE_IC_COST = 1,							-- Base IC cost for lended license
-	LICENSE_IC_COST_YEAR_INCREASE = 1,					-- IC cost equipment for every year of equipment after 1936
+	MIN_LICENSE_ACTIVE_DAYS = 1,						-- Min days for license to be active
+	BASE_LICENSE_IC_COST = 0,							-- Base IC cost for lended license
+	LICENSE_IC_COST_YEAR_INCREASE = 0,					-- IC cost equipment for every year of equipment after 1936
 	LICENSE_EQUIPMENT_BASE_SPEED = -0.25,				-- base MIC speed modifier for licensed equipment
 	LICENSE_EQUIPMENT_TECH_SPEED_PER_YEAR = -0.05,		-- MIC speed modifier for licensed equipment for each year of difference between actual and latest equipment
 	LICENSE_EQUIPMENT_TECH_SPEED_MAX_YEARS = 4,			-- Maximum years for MIC speed modifier
@@ -643,7 +643,7 @@ NMilitary = {
 
 	FIELD_MARSHAL_PREFERRED_TACTIC_WEIGHT_FACTOR = 0.25, -- extra weight multiplier for the field marhsal preferred tactic when doing weighted random
 
-	PREFERRED_TACTIC_CHARACTER_SKILL_LEVEL_REQUIRED = 5, -- Which level a field marhal or general has to be before they can pick their preferred tactic
+	PREFERRED_TACTIC_CHARACTER_SKILL_LEVEL_REQUIRED = 3, -- Which level a field marhal or general has to be before they can pick their preferred tactic
 
 	RELIABILITY_ORG_REGAIN = -0.3,                 -- how much reliability affects org regain
 	RELIABILITY_ORG_MOVING = -1.0,                 -- how much reliability affects org loss on moving
