@@ -645,7 +645,7 @@ NMilitary = {
 
 	PREFERRED_TACTIC_CHARACTER_SKILL_LEVEL_REQUIRED = 3, -- Which level a field marhal or general has to be before they can pick their preferred tactic
 
-	RELIABILITY_ORG_REGAIN = -0.3,                 -- how much reliability affects org regain
+	RELIABILITY_ORG_REGAIN = -0.4,                 -- how much reliability affects org regain
 	RELIABILITY_ORG_MOVING = -1.0,                 -- how much reliability affects org loss on moving
 	RELIABILITY_WEATHER = 3.0,                     -- how much reliability is afffecting weather impact
 	RELIABILTY_RECOVERY = 0.2,                     -- factor affecting how much equipment is returned "from the dead"
