@@ -477,7 +477,7 @@ NProduction = {
 	GENERATED_SHIP_NAMES_PER_LINE_MAX = 5, -- Above this naval lines will stop generating new names for the list																											 
     DEFAULT_MAX_NAV_FACTORIES_PER_LINE = 20,
 	CONVOY_MAX_NAV_FACTORIES_PER_LINE = 50,
-	CAPITAL_SHIP_MAX_NAV_FACTORIES_PER_LINE = 10,																				 
+	CAPITAL_SHIP_MAX_NAV_FACTORIES_PER_LINE = 20,																				 
 	MAX_MIL_FACTORIES_PER_LINE = 300,
 	EFFICIENCY_LOSS_PER_UNUSED_DAY = 1,		-- Daily loss of efficiency for unused factory slots ( efficiency is tracked per factory slot in the production line )
 	MAX_LINE_RESOURCE_PENALTY = 75,		-- Max penalty factor for production lines lacking strategic resources in %.
@@ -645,7 +645,7 @@ NMilitary = {
 
 	PREFERRED_TACTIC_CHARACTER_SKILL_LEVEL_REQUIRED = 3, -- Which level a field marhal or general has to be before they can pick their preferred tactic
 
-	RELIABILITY_ORG_REGAIN = -0.3,                 -- how much reliability affects org regain
+	RELIABILITY_ORG_REGAIN = -0.4,                 -- how much reliability affects org regain
 	RELIABILITY_ORG_MOVING = -1.0,                 -- how much reliability affects org loss on moving
 	RELIABILITY_WEATHER = 3.0,                     -- how much reliability is afffecting weather impact
 	RELIABILTY_RECOVERY = 0.2,                     -- factor affecting how much equipment is returned "from the dead"
