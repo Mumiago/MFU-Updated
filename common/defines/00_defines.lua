@@ -891,7 +891,7 @@ NMilitary = {
 	COMBAT_SUPPLY_LACK_IMPACT = -0.4,				-- combat penalty if out of supply
 	COMBAT_STACKING_START = 7,						-- at what nr of divisions stacking penalty starts
 	COMBAT_STACKING_EXTRA = 4,                      -- extra stacking from directions
-	COMBAT_STACKING_PENALTY = -0.05,                -- how much stackign penalty per division
+	COMBAT_STACKING_PENALTY = -0.1,                -- how much stackign penalty per division
 	COMBAT_OVER_WIDTH_PENALTY = -2.5,					-- over combat width penalty per %.
 	COMBAT_OVER_WIDTH_PENALTY_MAX = -0.4,			-- over combat width max (when you cant join no more).
 	RETREAT_SPEED_FACTOR = 0.25,                    -- speed bonus when retreating
@@ -1182,7 +1182,7 @@ NAir = {
 	AIR_WING_XP_TRAINING_MISSION_ACCIDENT_FACTOR = 1.5, 				--Training exercises cause more accidents
 	AIR_WING_XP_LOSS_REDUCTION_OVER_FRIENDLY_TERRITORY_FACTOR = 0.3, 	--Reduction on XP loss over friendly territory
 
-	DISRUPTION_FACTOR = 5,							-- multiplier on disruption damage to scale its effects on planes
+	DISRUPTION_FACTOR = 4,							-- multiplier on disruption damage to scale its effects on planes
 	DISRUPTION_FACTOR_CARRIER = 5.0,							-- multiplier on disruption damage to scale its effects on carrier vs carrier planes	
 	DISRUPTION_SPEED_FACTOR = 1.0,
 	DISRUPTION_AGILITY_FACTOR = 0.0,
