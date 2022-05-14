@@ -520,8 +520,8 @@ NProduction = {
 	EQUIPMENT_MODULE_REPLACE_XP_COST = 0,				-- XP cost for replacing one equipment module with an unrelated module when creating an equipment variant.
 	EQUIPMENT_MODULE_CONVERT_XP_COST = 0,				-- XP cost for converting one equipment module to a related module when creating an equipment variant.
 	EQUIPMENT_MODULE_REMOVE_XP_COST = 0,				-- XP cost for removing an equipment module and leaving the slot empty when creating an equipment variant.
-	MIN_NAVAL_EQUIPMENT_CONVERSION_IC_COST_FACTOR = 0.2,		-- Minimum fraction of an equipment type's base industry capacity cost to use when converting a naval equipment, such as through ship refitting.
-	MIN_NAVAL_EQUIPMENT_CONVERSION_RESOURCE_COST_FACTOR = 0.2,	-- Minimum fraction of an equipment type's base strategic resource cost to use when converting a naval equipment, such as through ship refitting.
+	MIN_NAVAL_EQUIPMENT_CONVERSION_IC_COST_FACTOR = 0.1,		-- Minimum fraction of an equipment type's base industry capacity cost to use when converting a naval equipment, such as through ship refitting.
+	MIN_NAVAL_EQUIPMENT_CONVERSION_RESOURCE_COST_FACTOR = 0.1,	-- Minimum fraction of an equipment type's base strategic resource cost to use when converting a naval equipment, such as through ship refitting.
 	MIN_LAND_EQUIPMENT_CONVERSION_IC_COST_FACTOR = 0.2,		-- Fraction of the chassis industry cost which is always included in the conversion cost.
 	SHIP_REFIT_MAX_PROGRESS_TO_CANCEL = 0.2,			-- Maximum refitting progress % that we still allow to cancel wihtout having to scuttle the ship.
 	SHIP_REFIT_DAMAGE_TO_PROGRESS_FACTOR = 0.5,			-- When a ship is being damaged (for example port strike) while refitting, the damage is transferred to the production line progress instead. This variable is used to balance it.
@@ -1693,8 +1693,8 @@ NNavy = {
 	
 	MISSION_SUPREMACY_RATIOS = { -- supremacy multipliers for different mission types
 		0.0, -- HOLD
-		1.1, -- PATROL		
-		0.4, -- STRIKE FORCE 
+		1.0, -- PATROL		
+		0.0, -- STRIKE FORCE 
 		0.5, -- CONVOY RAIDING
 		0.7, -- CONVOY ESCORT
 		0.2, -- MINES PLANTING	
@@ -1776,7 +1776,7 @@ NNavy = {
 	INTEL_LEVEL_MEDIUM_STRENGTH_ESTIMATE_HALF_RANGE_PERCENTAGE = 10,					-- Same as above for spotting level "medium"
 	BASE_SPOTTING_SPEED = 0.0,										-- daily base spotting speed
 	BASE_ESCAPE_SPEED = 0.05,										-- daily base escape speed (gained as percentagE)
-	SPEED_TO_ESCAPE_SPEED = 0.304,									-- ratio to converstion from ship speed to escape speed (divided by hundred)
+	SPEED_TO_ESCAPE_SPEED = 0.3,									-- ratio to converstion from ship speed to escape speed (divided by hundred)
 	ESCAPE_SPEED_PER_COMBAT_DAY = 0.01,								-- daily increase in escape speed during combat duration
 	MAX_ESCAPE_SPEED_FROM_COMBAT_DURATION = 0.1,					-- max escape speed that will be gained from combat duration
 	ESCAPE_SPEED_SUB_BASE = -0.2,									-- subs get faster escape speed. gets replaced by hidden version below if hidden
