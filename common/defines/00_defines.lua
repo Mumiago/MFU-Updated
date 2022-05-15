@@ -515,7 +515,7 @@ NProduction = {
 	LICENSE_EQUIPMENT_SPEED_NOT_FACTION = -0.10,		-- MIC speed modifier for licensed equipment for not being in faction
 	LICENSE_EQUIPMENT_UPGRADE_XP_FACTOR = 2.0,			-- XP cost for upgrading licensed equipment
 	LICENSE_EQUIPMENT_SPEED_NO_LICENSE = -0.50,			-- Penalty for producing non licensed equipment
-	CONVERSION_SPEED_BONUS = 0.5,						-- Modifier to the production speed when converting equipment
+	CONVERSION_SPEED_BONUS = 0.0,						-- Modifier to the production speed when converting equipment
     EQUIPMENT_MODULE_ADD_XP_COST = 0,					-- XP cost for adding a new equipment module in an empty slot when creating an equipment variant.
 	EQUIPMENT_MODULE_REPLACE_XP_COST = 0,				-- XP cost for replacing one equipment module with an unrelated module when creating an equipment variant.
 	EQUIPMENT_MODULE_CONVERT_XP_COST = 0,				-- XP cost for converting one equipment module to a related module when creating an equipment variant.
@@ -647,7 +647,7 @@ NMilitary = {
 
 	PREFERRED_TACTIC_CHARACTER_SKILL_LEVEL_REQUIRED = 3, -- Which level a field marhal or general has to be before they can pick their preferred tactic
 
-	RELIABILITY_ORG_REGAIN = -0.4,                 -- how much reliability affects org regain
+	RELIABILITY_ORG_REGAIN = -0.5,                 -- how much reliability affects org regain
 	RELIABILITY_ORG_MOVING = -1.0,                 -- how much reliability affects org loss on moving
 	RELIABILITY_WEATHER = 3.0,                     -- how much reliability is afffecting weather impact
 	RELIABILTY_RECOVERY = 0.2,                     -- factor affecting how much equipment is returned "from the dead"
