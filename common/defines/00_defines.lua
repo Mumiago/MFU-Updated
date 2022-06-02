@@ -797,7 +797,7 @@ NMilitary = {
 	EXILE_EQUIPMENT = 1.0,						   -- Amount of equipment to keep
 	EXILE_ORG = 0.0,							   -- Amount of org to keep
 	EXPERIENCE_LOSS_FACTOR = 0.95,                 -- percentage of experienced solders who die when manpower is removed	Was 1.0 *** 
-	EQUIPMENT_COMBAT_LOSS_FACTOR = 0.5,	 	       -- % of equipment lost to strength ratio in combat, so some % is returned if below 1
+	EQUIPMENT_COMBAT_LOSS_FACTOR = 0.4,	 	       -- % of equipment lost to strength ratio in combat, so some % is returned if below 1
 	SUPPLY_USE_FACTOR_MOVING = 1.4,                -- supply use when moving/fighting vs inactive
 	SUPPLY_USE_FACTOR_INACTIVE = 0.9,
 	SUPPLY_GRACE = 72,		-- troops always carry 3 days of food and supply
@@ -1644,7 +1644,8 @@ NNavy = {
 	
 	AGGRESSION_CONVOY_STRENGTH_FACTOR = 0.2,			  -- convoys in combat gets a penalty to their strength in aggression calculations
 	
-	SUBMARINE_ESCAPE_RATIOS = { -- subs will escape battle in convoy raid if there are enemies that can attack
+	SUBMARINE_ESCAPE_RATIOS = { -- subs will escape battle in convoy raid if th
+	ere are enemies that can attack
 		1000,     -- do not engage
 		15,   -- low
 		3.0,   -- medium
