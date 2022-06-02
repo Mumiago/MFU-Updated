@@ -1644,8 +1644,7 @@ NNavy = {
 	
 	AGGRESSION_CONVOY_STRENGTH_FACTOR = 0.2,			  -- convoys in combat gets a penalty to their strength in aggression calculations
 	
-	SUBMARINE_ESCAPE_RATIOS = { -- subs will escape battle in convoy raid if th
-	ere are enemies that can attack
+	SUBMARINE_ESCAPE_RATIOS = { -- subs will escape battle in convoy raid if there are enemies that can attack
 		1000,     -- do not engage
 		15,   -- low
 		3.0,   -- medium
