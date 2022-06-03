@@ -1588,18 +1588,18 @@ NNavy = {
 		1.0, -- CONVOY ESCORT
 		1.0, -- MINES PLANTING	
 		1.0, -- MINES SWEEPING	
-		0.8, -- TRAIN
+		1.0, -- TRAIN
 		0.0, -- RESERVE_FLEET (consumes fuel HOLD_MISSION_MOVEMENT_COST fuel while moving)
 		1.0, -- NAVAL_INVASION_SUPPORT (does not cost fuel at base, only costs while doing bombardment and escorting units)
 	},
 	
 	HOLD_MISSION_MOVEMENT_COST = 1.0,								-- ships on hold cost this much fuel while moving
 	ON_BASE_FUEL_COST = 0.0,										-- ships that waits at naval bases cost this ratio
-	IN_COMBAT_FUEL_COST = 2.0,										-- ships in combat will get this ratio for fuel cost
-	TRAINING_FUEL_COST_FOR_ESCORT_SHIPS = 0.15,						-- ships that are on training mission but not training (ie they are at max xp and training will cancel at max xp) will consume this ratio of fuel
+	IN_COMBAT_FUEL_COST = 0.1,										-- ships in combat will get this ratio for fuel cost
+	TRAINING_FUEL_COST_FOR_ESCORT_SHIPS = 0.0,						-- ships that are on training mission but not training (ie they are at max xp and training will cancel at max xp) will consume this ratio of fuel
 	
-	MAX_FUEL_FLOW_MULT = 2.0, -- max fuel flow ratio for ships, which will be multiplied by supply
-	FUEL_COST_MULT = 0.01, -- fuel multiplier for all naval missions
+	MAX_FUEL_FLOW_MULT = 10.0, -- max fuel flow ratio for ships, which will be multiplied by supply
+	FUEL_COST_MULT = 0.1, -- fuel multiplier for all naval missions
 	
 	OUT_OF_FUEL_SPEED_FACTOR = -0.5,
 	OUT_OF_FUEL_RANGE_FACTOR = -0.5,
