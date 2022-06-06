@@ -287,30 +287,25 @@ on_actions = {
 							is_ai = yes 
 						}
 					} 
+					add_offsite_building = { type = industrial_complex level = 20 }
+					add_offsite_building = { type = arms_factory level = 30 }
 					add_equipment_to_stockpile = { type = infantry_equipment_0 amount = 10000 producer = GER }
 					add_equipment_to_stockpile = { type = support_equipment_1 amount = 8000 producer = GER }
 					add_equipment_to_stockpile = { type = horse_equipment_0 amount = 4000 producer = GER } 					
 					load_oob = "GER_ai"
 
 					random_owned_controlled_state = {
-						add_extra_state_shared_building_slots = 45
+						add_extra_state_shared_building_slots = 30
 						add_building_construction = {
 							type = arms_factory
-							level = 45
+							level = 30
 						}
 					}
 					random_owned_controlled_state = {
-						add_extra_state_shared_building_slots = 45
-						add_building_construction = {
-							type = arms_factory
-							level = 45
-						}
-					}
-					random_owned_controlled_state = {
-						add_extra_state_shared_building_slots = 45
+						add_extra_state_shared_building_slots = 15
 						add_building_construction = {
 							type = industrial_complex
-							level = 45
+							level = 15
 						}
 					}
 				}
@@ -387,7 +382,6 @@ on_actions = {
 					add_equipment_to_stockpile = { type = horse_equipment_0 amount = 4000 producer = JAP }
 					add_equipment_to_stockpile = { type = motorized_equipment_1 amount = 4000 producer = JAP }
 					add_equipment_to_stockpile = { type = radio_equipment amount = 4000 producer = JAP }
-					load_oob = "JAP_ai"
 				}
 			}
 			JAP = {
@@ -405,12 +399,6 @@ on_actions = {
 					add_equipment_to_stockpile = { type = horse_equipment_0 amount = 3000 producer = JAP }
 					add_equipment_to_stockpile = { type = motorized_equipment_1 amount = 3000 producer = JAP }
 					add_equipment_to_stockpile = { type = radio_equipment amount = 3000 producer = JAP }
-					load_oob = "JAP_ai"
-
-					set_technology = {
-						trench_warfare = 0
-						superior_firepower = 1
-					}
 				}
 			}			
 			CHI = {
@@ -455,16 +443,7 @@ on_actions = {
 					add_equipment_to_stockpile = { type = support_equipment_1 amount = 4000 producer = RAJ }
 					add_equipment_to_stockpile = { type = horse_equipment_0 amount = 5000 producer = RAJ } 
 				}
-			}
-			HUN = {
-				if = { limit = { HUN = { is_ai = yes } } load_oob = "Infantry_ai" }
-			}
-			ROM = {
-				if = { limit = { ROM = { is_ai = yes } } load_oob = "Infantry_ai" }
-			}
-			HOL = {
-				if = { limit = { HOL = { is_ai = yes } } load_oob = "Infantry_ai" }
-			}
+			}		
 			SOV = {
 				516 = { set_state_flag = SOV_gulag_economy_flag }
 				644 = { set_state_flag = SOV_gulag_economy_flag }
@@ -522,24 +501,14 @@ on_actions = {
 					GER = { is_ai = no }
 				}
 
+				SOV = { add_ideas = sov_ai }
+
 				SOV = {
-					add_equipment_to_stockpile = { type = anti_tank_equipment_1 amount = 4000 producer = SOV }
-					add_equipment_to_stockpile = { type = motorized_equipment_1 amount = 4000 producer = SOV }
-					add_equipment_to_stockpile = { type = support_equipment_1 amount = 4000 producer = SOV }
-					653 = {
-						add_extra_state_shared_building_slots = 15
-						add_building_construction = {
-							type = arms_factory
-							level = 15
-						}
-					}
-					572 = {
-						add_extra_state_shared_building_slots = 25
-						add_building_construction = {
-							type = industrial_complex
-							level = 25
-						}
-					}
+					add_equipment_to_stockpile = { type = anti_tank_equipment_1 amount = 1000 producer = SOV }
+					add_equipment_to_stockpile = { type = motorized_equipment_1 amount = 1000 producer = SOV }
+					add_equipment_to_stockpile = { type = support_equipment_1 amount = 1000 producer = SOV }
+					add_offsite_building = { type = industrial_complex level = 5 }
+					add_offsite_building = { type = arms_factory level = 10 }
 				}
 			}
 			
@@ -578,10 +547,6 @@ on_actions = {
 			if = {
 				limit = { GER = { is_ai = yes } }
 				GER = { add_ideas = ger_ai }
-			}
-			if = {
-				limit = { SOV = { is_ai = yes } }
-				SOV = { add_ideas = sov_ai }
 			}
 			if = {
 				limit = { JAP = { is_ai = yes } }
@@ -1045,6 +1010,19 @@ on_actions = {
 					sound_effect = sp_usa_speech_japan_attack
 				}
 			}
+			if = { 
+				limit = {
+					FROM = { tag = POL }
+					ROOT = { tag = GER }
+					GER = { is_ai = yes }
+				}
+				FRA = {
+					add_timed_idea = {
+					idea = FRA_germany_is_ai 
+					days = 250
+			 		}
+			   	}
+			}	
    		}   		
 		effect = {
 			if = {
@@ -2774,6 +2752,9 @@ on_actions = {
 					remove_ideas = French_Malaise }
 					if = { limit = { has_idea = FRA_agricultural_bank }
 					remove_ideas = FRA_agricultural_bank }
+					if = { limit = { is_ai = yes }					
+						load_oob = FRA_ai						
+					}	
 					set_state_controller = 515
 					set_state_controller = 660
 					set_state_controller = 539
@@ -3111,7 +3092,7 @@ on_actions = {
 					transfer_state = 553
 					transfer_state = 728
 					set_capital = { state = 26}
-					add_ideas = neutrality_idea 
+					add_ideas = idea_EFR_neutrality 
 				
 					diplomatic_relation = { country = GER relation = non_aggression_pact }					
 					every_state = {
@@ -3162,6 +3143,39 @@ on_actions = {
 					tag = NOR
 				}
 				ENG = { load_oob = ENG_Norway_Merchant_fleet } 
+			}
+			if = {
+				limit = {
+					original_tag = HOL
+					has_government = democratic
+					HOL = { has_war_with = GER }
+					HOL = { is_in_faction_with = ENG } 
+					ENG = { has_capitulated = no }
+				}
+				HOL = {
+					load_oob = HOL_ai
+					
+				}
+				ENG = {
+					set_autonomy = { target = INS autonomy_state = autonomy_colony }
+				}
+				ENG = {
+					set_autonomy = { target = HOL autonomy_state = autonomy_colony }
+				}
+			}
+		 	if = {
+				limit = {
+					original_tag = BEL
+					BEL = { has_war_with = GER }
+					BEL = { is_in_faction_with = ENG } 
+					ENG = { has_capitulated = no }
+				}
+				ENG = {
+					set_autonomy = { target = BEL autonomy_state = autonomy_colony }
+				}
+				BEL = {
+					load_oob = BEL_ai					
+				}
 			}
 		}
 	}
