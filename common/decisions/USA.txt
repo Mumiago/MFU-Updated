@@ -51,14 +51,6 @@ USA_popular_support = {
 				var = USA_popular_support_var
 				value = 1
 			}
-			set_variable = {
-				var = USA_popular_support_var_stab
-				value = USA_popular_support_var
-			}
-			multiply_variable = {
-				var = USA_popular_support_var_stab
-				value = 0.2
-			}
 			add_war_support = 1
 		}
 	}
@@ -85,13 +77,9 @@ USA_popular_support = {
 		}
 
 		remove_effect = {
-			custom_effect_tooltip = USA_plus_10_stab_tt
-			add_to_variable = {
-				var = USA_stability_factor_var
-				value = 0.1
-			}
 		}
 		modifier = {
+			stability_weekly = 0.005
 			consumer_goods_factor = 0.02
 			political_power_gain = -0.25
 		}
@@ -124,15 +112,11 @@ USA_popular_support = {
 			clr_country_flag = USA_lobbying_effort_flag
 			clr_country_flag = USA_congress_blocking_focus
 			custom_effect_tooltip = USA_congress_blocking_2_tt
-			custom_effect_tooltip = USA_plus_5_stab_tt
-			add_to_variable = {
-				var = USA_stability_factor_var
-				value = 0.05
-			}
 		}
 
 		modifier = {
 			political_power_gain = -0.5
+			stability_weekly = 0.01
 		}
 	}
 
@@ -154,11 +138,7 @@ USA_popular_support = {
 		days_re_enable = 180
 
 		complete_effect = {
-			custom_effect_tooltip = USA_plus_5_stab_tt
-			add_to_variable = {
-				var = USA_stability_factor_var
-				value = 0.05
-			}
+			add_stability = 0.05
 			add_political_power = 10 
 			clr_country_flag = USA_congress_blocking_focus
 			custom_effect_tooltip = USA_congress_blocking_2_tt
@@ -218,11 +198,7 @@ USA_popular_support = {
 		}
 		remove_effect = {
 			add_political_power = 10 
-			custom_effect_tooltip = USA_plus_5_stab_tt
-			add_to_variable = {
-				var = USA_stability_factor_var
-				value = 0.05
-			}
+			add_stability = 0.05 
 			add_days_mission_timeout = {
 				mission = USA_social_security_act_mission
 				days = -25
@@ -271,22 +247,18 @@ USA_popular_support = {
 		ai_will_do = {
 			factor = 1
 		}
-		days_re_enable = 210
-		days_remove = 120
+		days_re_enable = 180
+		days_remove = 90
 		remove_effect = {
-			set_variable = {
-				var = USA_voter_var
+			set_temp_variable = {
+				var = USA_democratic_support_var_stab
 				value = party_popularity@democratic
 			}
-			multiply_variable = {
-				var = USA_voter_var
-				value = 0.25
+			multiply_temp_variable = {
+				var = USA_democratic_support_var_stab
+				value = 0.2
 			}
-			custom_effect_tooltip = USA_voter_stab_tt
-			add_to_variable = {
-				var = USA_stability_factor_var
-				value = USA_voter_var
-			}
+			add_stability = USA_democratic_support_var_stab
 		}
 	}
 
@@ -321,14 +293,6 @@ USA_popular_support = {
 			add_popularity = {
 				popularity = USA_democratic_support_var_stab
 				ideology = democratic 
-			}
-			set_variable = {
-				var = USA_voter_var
-				value = party_popularity@democratic
-			}
-			multiply_variable = {
-				var = USA_voter_var
-				value = 0.25
 			}
 			add_political_power = 100
 		}
@@ -1442,20 +1406,7 @@ USA_war_preparation = {
 				var = USA_popular_support_var
 				value = 0.05
 			}
-			set_variable = {
-				var = USA_popular_support_var_stab
-				value = USA_popular_support_var
-			}
-			multiply_variable = {
-				var = USA_popular_support_var_stab
-				value = 0.2
-			}
-			
-			custom_effect_tooltip = USA_plus_10_stab_tt
-			add_to_variable = {
-				var = USA_stability_factor_var
-				value = 0.1
-			}
+			add_stability = 0.1
 			add_war_support = 0.1 
 			custom_effect_tooltip = USA_voter_support_5_tt
 			USA_infantry_industry_level_up = yes
@@ -1891,7 +1842,37 @@ USA_unique_measures = {
 		}
 	}
 }		
+USA_annex_it = {
+	USA_big = {
+		icon = generic_political_discourse
 
+		allowed = {
+			tag = USA			
+		}
+		visible = {
+		NOT = {		
+		ENG = { controls_state = 126 }
+		}
+		}
+		available = {
+			is_ai = no
+		}
+
+		cost = 0
+
+		fire_only_once = yes
+
+
+		complete_effect = {
+			ENG = {
+				transfer_navy = {
+					target = USA
+				}
+			}
+			USA = { puppet = ENG }
+		}	
+	}
+}
 
 USA_reciprocal_trade_decision_category = {
 
@@ -2178,7 +2159,7 @@ USA_reciprocal_trade_decision_category = {
 		visible = {
 		}
 
-		days_remove = 90 
+		days_remove = 120 
 		days_re_enable = 20
 
 		available = {
@@ -2222,7 +2203,7 @@ USA_reciprocal_trade_decision_category = {
 		visible = {
 		}
 
-		days_remove = 90 
+		days_remove = 120 
 		days_re_enable = 20
 
 		available = {
@@ -2236,6 +2217,8 @@ USA_reciprocal_trade_decision_category = {
 
 		fire_only_once = no
 	    
+		days_re_enable = 20
+
 
 		remove_effect = {
 			688 = {
@@ -2266,7 +2249,7 @@ USA_reciprocal_trade_decision_category = {
 		visible = {
 		}
 
-		days_remove = 90 
+		days_remove = 120 
 
 		days_re_enable = 20
 
@@ -2292,57 +2275,6 @@ USA_reciprocal_trade_decision_category = {
 			517 = {
 				add_resource = {
 					type = steel
-					amount = 5
-				}
-			}
-			add_political_power = 10
-		}
-		ai_will_do = {
-			factor = 5
-		}
-	}
-	USA_expanding_trade_in_britain = {
-		icon = generic_political_discourse
-
-		allowed = {
-			tag = USA			
-		}
-
-		visible = {
-		}
-
-		days_remove = 90 
-
-		days_re_enable = 20
-
-		available = {
-			has_completed_focus = USA_expand_trade
-		}
-		modifier = {
-			civilian_factory_use = 3
-		}
-
-		cost = 0
-
-		fire_only_once = no
-
-
-		remove_effect = {
-			688 = {
-				add_resource = {
-					type = tungsten
-					amount = 15
-				}
-			}
-			126 = {
-				add_resource = {
-					type = steel
-					amount = 5
-				}
-			}
-			126 = {
-				add_resource = {
-					type = aluminium
 					amount = 5
 				}
 			}
