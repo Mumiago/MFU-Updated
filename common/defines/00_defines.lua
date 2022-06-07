@@ -1064,7 +1064,7 @@ NAir = {
 	AIR_WING_ATTACK_LOGISTICS_DIRECT_DISRUPTION_DAMAGE_FACTOR = 0.01, -- Disruption damage to supply throughput done by bombing damage, not dependant on killing trains which also causes diruption.
 
 	AIR_WING_ATTACK_LOGISTICS_TRUCK_MAX_FACTOR = 0.05, -- max trucks we can destroy in one instance of a logistics strike
-	AIR_WING_FLIGHT_SPEED_MULT = 0.2,					-- Global speed multiplier for airplanes (affects fe.transferring to another base)
+	AIR_WING_FLIGHT_SPEED_MULT = 0.02,					-- Global speed multiplier for airplanes (affects fe.transferring to another base)
 	AIR_WING_MAX_STATS_ATTACK = 100,					-- Max stats
 	AIR_WING_MAX_STATS_DEFENCE = 100,
 	AIR_WING_MAX_STATS_AGILITY = 150,
@@ -1151,7 +1151,7 @@ NAir = {
 	ANTI_AIR_PLANE_DAMAGE_CHANCE = 0.1,					-- Anti Air Gun hit chance
 	ANTI_AIR_ATTACK_TO_DAMAGE_REDUCTION_FACTOR = 0.75,	-- Balancing value to convert equipment stat anti_air_attack to the damage reduction modifier apply to incoming air attacks against units with AA.
 	ANTI_AIR_MAXIMUM_DAMAGE_REDUCTION_FACTOR = 0.7,	-- Maximum damage reduction factor applied to incoming air attacks against units with AA.
-	AIR_DEPLOYMENT_DAYS = 0,							-- Days to deploy one air wing
+	AIR_DEPLOYMENT_DAYS = 1,							-- Days to deploy one air wing
 	PORT_STRIKE_ENEMY_SUPERIORITY_LIMIT = 1.1,			-- Min air superiority for performing of naval strike
 	NAVAL_STRIKE_BASE_STR_TO_PLANES_RATIO = 0.03,		-- Max airbombers to do port strike comparing to strength
 	NAVAL_COMBAT_EXTERNAL_PLANES_JOIN_RATIO = 0.03,		-- Max planes that can join a combat comparing to the total strength of the ships
