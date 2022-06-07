@@ -3301,18 +3301,6 @@ focus_tree = {
 			}
 			add_ideas = GER_speer
 
-			every_state = {
-				limit = {
-					is_core_of = SOV
-					OR = {
-						is_controlled_by = ROOT
-						is_controlled_by = ROM
-						is_controlled_by = ITA
-						is_controlled_by = BUL
-						is_controlled_by = HUN 
-					}
-				}
-			}
 		}
 	}
 
@@ -6226,7 +6214,6 @@ focus_tree = {
 			custom_effect_tooltip = SS_mood_tt
 			add_to_variable = { var = wehrmacht_anger value = 2 }
 			subtract_from_variable = { var = SS_anger value = 2 }
-			SS_set_templates = yes
 			SS_resolve_effects_wehrmacht = yes
 			create_corps_commander = {
 				name = "Walter Krüger"
@@ -6529,7 +6516,7 @@ focus_tree = {
 
 	focus = {
 		id = GER_junkers_CAS
-		icon = GFX_GER_junkers_CAS
+		icon = GFX_GER_junker
 		cost = 5.00
 		prerequisite = {
 			focus = GER_udets_strike_force
@@ -6978,7 +6965,7 @@ focus_tree = {
 
 	focus = {
 		id = GER_fritz_x
-		icon = GFX_goal_poland_goal
+		icon = GFX_GER_fritz_x
 		prerequisite = { focus = GER_naval_bomber }
 		relative_position_id = GER_naval_bomber 
 		available = {
@@ -7269,7 +7256,7 @@ focus_tree = {
 
 	focus = {
 		id = GER_prepare_the_kriegsmarine
-		icon = GFX_goal_ger_kriegsmarine
+		icon = GFX_GER_finance_kriegsmarine
 		x = 41
 		y = 0
 		cost = 5
@@ -7356,47 +7343,6 @@ focus_tree = {
 	}
 
 	focus = {
-		id = GER_anti_non_contact_committee
-		prerequisite = { focus = GER_prepare_the_kriegsmarine }
-		icon = GFX_goal_generic_occupy_states_coastal
-		x = 2
-		y = 1
-		relative_position_id = GER_prepare_the_kriegsmarine
-		cost = 2.96
-		ai_will_do = {
-			factor = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			if = {
-				limit = {
-					NOT = {
-						has_idea = GER_naval_expansion_idea
-					}
-				}
-				add_timed_idea = {
-					idea = GER_naval_expansion_idea
-					days = 120
-				}				
-			}			
-			add_tech_bonus = {
-				name = GER_anti_non_contact_committee
-				bonus = 1.0
-				uses = 1
-				category = naval_minelaying
-			}
-			add_tech_bonus = {
-				name = GER_anti_non_contact_committee
-				bonus = 1.0
-				uses = 2
-				category = naval_minesweeping
-			}
-		}
-	}
-
-	focus = {
 		id = GER_panzershiffe
 		prerequisite = { focus = GER_prepare_the_kriegsmarine }
 		icon = GFX_focus_generic_cruiser2
@@ -7441,7 +7387,7 @@ focus_tree = {
 	focus = {
 		id = GER_u_boat_effort
 		prerequisite = { focus = GER_prepare_the_kriegsmarine }
-		icon = GFX_goal_ger_donitz_plan
+		icon = GFX_GER_donitz
 		x = 1
 		y = 2
 		relative_position_id = GER_prepare_the_kriegsmarine
@@ -7551,9 +7497,9 @@ focus_tree = {
 	focus = {
 		id = GER_trade_interdiction
 		prerequisite = { focus = GER_u_boat_effort }
-		icon = GFX_goal_generic_navy_anti_submarine
+		icon = GFX_GER_sub_dev
 		x = 0
-		y = 2
+		y = 1
 		relative_position_id = GER_u_boat_effort
 		cost = 2.89
 		ai_will_do = {
@@ -7565,7 +7511,7 @@ focus_tree = {
 		}
 
 		available_if_capitulated = yes
-
+		
 		completion_reward = {
 			if = {
 				limit = {
@@ -7577,28 +7523,24 @@ focus_tree = {
 					idea = GER_naval_expansion_idea
 					days = 120
 				}				
-			}	
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 4
-				technology = convoy_interdiction_ti
-				technology = unrestricted_submarine_warfare
-				technology = wolfpacks
-				technology = advanced_submarine_warfare
-				technology = combined_operations_raiding
-			}		
-			
+			}			
+			add_tech_bonus = {
+				name = GER_anti_submarine_training_school
+				bonus = 1.0
+				uses = 2
+				category = ss_tech
+			}
+
 		}
 	}
 
 	focus = {
 		id = GER_modular_construction
-		prerequisite = { focus = GER_u_boat_effort }
-		icon = GFX_goal_generic_navy_cruiser
-		x = 1
+		prerequisite = { focus = GER_trade_interdiction }
+		icon = GFX_GER_modular_construction
+		x = 0
 		y = 1
-		relative_position_id = GER_u_boat_effort
+		relative_position_id = GER_trade_interdiction
 		cost = 2.89
 		ai_will_do = {
 			factor = 1
@@ -7661,12 +7603,12 @@ focus_tree = {
 
 	focus = {
 		id = GER_submarine_training_school
-		prerequisite = { focus = GER_modular_construction }
-		icon = GFX_goal_generic_navy_doctrines_tactics
-		x = 0
-		y = 2
+		prerequisite = { focus = GER_u_boat_effort }
+		icon = GFX_goal_ger_donitz_plan
+		x = 2
+		y = 1
 		
-		relative_position_id = GER_modular_construction
+		relative_position_id = GER_u_boat_effort
 		cost = 2.89
 		ai_will_do = {
 			factor = 1
@@ -7685,15 +7627,21 @@ focus_tree = {
 					idea = GER_naval_expansion_idea
 					days = 120
 				}				
-			}			
-			add_tech_bonus = {
-				name = GER_anti_submarine_training_school
-				bonus = 1.0
-				uses = 2
-				category = ss_tech
-			}
-
+			}	
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 4
+				technology = convoy_interdiction_ti
+				technology = unrestricted_submarine_warfare
+				technology = wolfpacks
+				technology = advanced_submarine_warfare
+				technology = combined_operations_raiding
+			}		
+			
 		}
+
+
 	}
 
 	focus = {
@@ -7761,7 +7709,7 @@ focus_tree = {
 	focus = {
 		id = GER_battleship_focus
 		prerequisite = { focus = GER_naval_expansion }
-		icon = GFX_goal_generic_navy_battleship
+		icon = GFX_goal_ger_battleship_dockyards
 		x = 0
 		y = 1
 		relative_position_id = GER_naval_expansion
@@ -7800,7 +7748,7 @@ focus_tree = {
 		id = GER_amphibious_focus
 		prerequisite = { focus = GER_prepare_the_kriegsmarine }
 		icon = GFX_goal_generic_amphibious_assault
-		x = 0
+		x = 2
 		y = 1
 		relative_position_id = GER_prepare_the_kriegsmarine
 		cost = 2.89
@@ -7839,7 +7787,7 @@ focus_tree = {
 
 	focus = {
 		id = GER_surface_raiders 
-		icon = GFX_goal_generic_navy_doctrines_tactics
+		icon = GFX_GER_completed_plan_z
 		prerequisite = { focus = GER_battleship_focus }
 		relative_position_id = GER_naval_expansion 
 		x = 0

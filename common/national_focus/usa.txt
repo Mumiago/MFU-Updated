@@ -64,7 +64,7 @@ focus_tree = {
 	focus = {
 		id = USA_open_trade
 		icon = GFX_USA_prepare_new_deal_legislation
-		cost = 7.28
+		cost = 5
 		x = -8
 		y = 1
 		prerequisite = { focus = USA_1 }
@@ -78,7 +78,7 @@ focus_tree = {
 	focus = {
 		id = USA_expand_trade
 		icon = GFX_Goal_USA_desegregation
-		cost = 7.28
+		cost = 5
 		x = 0
 		y = 1
 		prerequisite = { focus = USA_open_trade }
@@ -232,10 +232,6 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_to_variable = {
-				var = USA_stability_factor_var
-				value = -0.2
-			}
-			add_to_variable = {
 				var = USA_political_power_factor_var
 				value = -0.1
 			}
@@ -244,7 +240,6 @@ focus_tree = {
 				value = 0.1
 			}
 			add_ideas = USA_donald_nelson
-			add_political_power = -100
 			add_days_mission_timeout = {
 				mission = USA_fair_labour_standard_act_mission
 				days = -50
@@ -268,8 +263,18 @@ focus_tree = {
 		completion_reward = {
 			if = {
 				limit = {
+					AND = {
+						NOT = { has_completed_focus = USA_5 }
+						NOT = { has_completed_focus = USA_6 }
+					}
+				}
+				custom_effect_tooltip = USA_43_preview_tt
+			}
+			if = {
+				limit = {
 					has_completed_focus = USA_5
 				}
+				custom_effect_tooltip = USA_43_workers_tt
 				add_to_variable = {
 					var = USA_consumer_goods_factor_var
 					value = -0.025
@@ -291,10 +296,7 @@ focus_tree = {
 				limit = {
 					has_completed_focus = USA_6
 				}
-				add_to_variable = {
-					var = USA_consumer_goods_factor_var
-					value = 0.025
-				}
+				custom_effect_tooltip = USA_43_bbusiness_tt
 				add_to_variable = {
 					var = USA_industrial_capacity_factory_var
 					value = 0.05
@@ -314,7 +316,6 @@ focus_tree = {
 			}
 			
 			remove_ideas = USA_factory_strikes
-			custom_effect_tooltip = USA_43_tt
 		}
 	}
 	focus = {
@@ -326,6 +327,7 @@ focus_tree = {
 		prerequisite = { focus = USA_43 }
 		relative_position_id = USA_6
 		completion_reward = {
+			add_research_slot = 1
 			if = {
 				limit = {
 					has_completed_focus = USA_5
@@ -357,6 +359,7 @@ focus_tree = {
 					var = USA_production_speed_arms_factory_factor_var
 					value = 0.15
 				}
+				custom_effect_tooltip = USA_7_bbusiness_tt
 				add_days_mission_timeout = {
 					mission = USA_fair_labour_standard_act_mission
 					days = -50
@@ -366,10 +369,15 @@ focus_tree = {
 					days = -50
 				}
 			}
-			hidden_effect = {
-				add_research_slot = 1
+			if = {
+				limit = {
+					AND = {
+						NOT = { has_completed_focus = USA_5 }
+						NOT = { has_completed_focus = USA_6 }
+					}
+				}
+				custom_effect_tooltip = USA_7_preview_tt
 			}
-			custom_effect_tooltip = USA_7_tt
 		}
 	}
 	focus = {
@@ -579,6 +587,14 @@ focus_tree = {
 				add_to_variable = {
 					var = USA_popular_support_var
 					value = 0.05
+				}
+				set_variable = {
+					var = USA_popular_support_var_stab
+					value = USA_popular_support_var
+				}
+				multiply_variable = {
+					var = USA_popular_support_var_stab
+					value = 0.2
 				}	
 			}
 			custom_effect_tooltip = USA_voter_support_5_tt
@@ -643,15 +659,11 @@ focus_tree = {
 			}
 			add_to_variable = {
 				var = USA_production_speed_dockayard_factor_var
-				value = 0.2
+				value = 0.1
 			}
 			add_to_variable = {
 				var = USA_industrial_capacity_dockyard_var
 				value = 0.1
-			}
-			add_to_variable = {
-				var = USA_consumer_goods_factor_var
-				value = 0.025
 			}
 			add_days_mission_timeout = {
 				mission = USA_social_security_act_mission
@@ -700,7 +712,10 @@ focus_tree = {
 		id = USA_11
 		icon = GFX_USA_the_giant_wakes
 		available = {
-			has_war_with = JAP
+			OR = {
+				has_war = yes
+				date > 1941.6.1
+			}
 		}
 		cost = 5
 		x = -3
@@ -808,6 +823,14 @@ focus_tree = {
 					var = USA_popular_support_var
 					value = 0.02
 				}
+				set_variable = {
+					var = USA_popular_support_var_stab
+					value = USA_popular_support_var
+				}
+				multiply_variable = {
+					var = USA_popular_support_var_stab
+					value = 0.2
+				}
 			}
 			custom_effect_tooltip = USA_14_tt
 		}
@@ -855,6 +878,14 @@ focus_tree = {
 				add_to_variable = {
 					var = USA_popular_support_var
 					value = 0.02
+				}
+				set_variable = {
+					var = USA_popular_support_var_stab
+					value = USA_popular_support_var
+				}
+				multiply_variable = {
+					var = USA_popular_support_var_stab
+					value = 0.2
 				}
 			}
 			custom_effect_tooltip = USA_15_tt
@@ -939,6 +970,14 @@ focus_tree = {
 					var = USA_popular_support_var
 					value = 0.02
 				}
+				set_variable = {
+					var = USA_popular_support_var_stab
+					value = USA_popular_support_var
+				}
+				multiply_variable = {
+					var = USA_popular_support_var_stab
+					value = 0.2
+				}
 			}
 			custom_effect_tooltip = USA_16_tt
 		}
@@ -989,7 +1028,6 @@ focus_tree = {
 			every_state = {
 				limit = {
 					OR = {
-						state = 360
 						state = 358
 					}
 				}
@@ -1007,6 +1045,14 @@ focus_tree = {
 				add_to_variable = {
 					var = USA_popular_support_var
 					value = 0.02
+				}
+				set_variable = {
+					var = USA_popular_support_var_stab
+					value = USA_popular_support_var
+				}
+				multiply_variable = {
+					var = USA_popular_support_var_stab
+					value = 0.2
 				}
 			}
 			
@@ -1035,6 +1081,14 @@ focus_tree = {
 					var = USA_popular_support_var
 					value = 0.02
 				}
+				set_variable = {
+					var = USA_popular_support_var_stab
+					value = USA_popular_support_var
+				}
+				multiply_variable = {
+					var = USA_popular_support_var_stab
+					value = 0.2
+				}
 			}
 			custom_effect_tooltip = USA_18_tt
 		}
@@ -1054,6 +1108,14 @@ focus_tree = {
 				add_to_variable = {
 					var = USA_popular_support_var
 					value = 0.02
+				}
+				set_variable = {
+					var = USA_popular_support_var_stab
+					value = USA_popular_support_var
+				}
+				multiply_variable = {
+					var = USA_popular_support_var_stab
+					value = 0.2
 				}
 			}
 		}
@@ -1081,6 +1143,14 @@ focus_tree = {
 					var = USA_popular_support_var
 					value = 0.02
 				}
+				set_variable = {
+					var = USA_popular_support_var_stab
+					value = USA_popular_support_var
+				}
+				multiply_variable = {
+					var = USA_popular_support_var_stab
+					value = 0.2
+				}
 			}
 			custom_effect_tooltip = USA_20_tt
 		}
@@ -1104,6 +1174,14 @@ focus_tree = {
 				add_to_variable = {
 					var = USA_popular_support_var
 					value = 0.02
+				}
+				set_variable = {
+					var = USA_popular_support_var_stab
+					value = USA_popular_support_var
+				}
+				multiply_variable = {
+					var = USA_popular_support_var_stab
+					value = 0.2
 				}
 			}
 		}
@@ -1133,6 +1211,14 @@ focus_tree = {
 					var = USA_popular_support_var
 					value = 0.02
 				}
+				set_variable = {
+					var = USA_popular_support_var_stab
+					value = USA_popular_support_var
+				}
+				multiply_variable = {
+					var = USA_popular_support_var_stab
+					value = 0.2
+				}
 			}
 		}
 	}
@@ -1157,12 +1243,12 @@ focus_tree = {
 				value = 0.2
 			}
 			add_to_variable = {
-				var = USA_consumer_goods_factor_var
-				value = 0.025
-			}
-			add_to_variable = {
 				var = USA_production_speed_industrial_complex_factor_var
 				value = -0.2
+			}
+			add_to_variable = {
+				var = USA_consumer_goods_factor_var
+				value = -0.025
 			}
 			add_days_mission_timeout = {
 				mission = USA_federal_housing_act_mission
@@ -1172,6 +1258,14 @@ focus_tree = {
 				add_to_variable = {
 					var = USA_popular_support_var
 					value = 0.05
+				}
+				set_variable = {
+					var = USA_popular_support_var_stab
+					value = USA_popular_support_var
+				}
+				multiply_variable = {
+					var = USA_popular_support_var_stab
+					value = 0.2
 				}	
 			}
 			custom_effect_tooltip = USA_voter_support_5_tt
@@ -1251,6 +1345,10 @@ focus_tree = {
 			add_to_variable = {
 				var = USA_production_speed_arms_factory_factor_var
 				value = 0.1
+			}
+			add_to_variable = {
+				var = USA_production_speed_dockyard_factor_var
+				value = 0.2
 			}
 			add_days_mission_timeout = {
 				mission = USA_fair_labour_standard_act_mission
@@ -1342,6 +1440,7 @@ focus_tree = {
 				remove_idea = USA_cash_and_carry_idea
 				add_idea = USA_lend_lease_idea
 			}
+			custom_effect_tooltip = USA_monthly_0.5_stab_tt
 
 			custom_effect_tooltip = USA_will_upgrade_all_one_step_tt
 			
@@ -1354,32 +1453,27 @@ focus_tree = {
 			}
 
 			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
+			custom_effect_tooltip = USA_minus_stab_tt
 			USA_we_dont_want_to_send_our_boys_away = yes
 		}
 	}
 	focus = {
 		id = USA_day_of_infamy
 		icon = GFX_focus_chi_mission_to_the_us
-		cost = 0
+		cost = 2
 		x = 0
 		y = 1
 		prerequisite = { focus = USA_lend_lease_act }
 		relative_position_id = USA_lend_lease_act
 		available = {
-			always = no
+			date > 1941.1.1
 		}
 		bypass = {
-			has_war_with = JAP
 		}
 		completion_reward = {
 			add_to_variable = {
 				var = USA_consumer_goods_factor_var
-				value = -0.05
-			}
-			GER = {
-				declare_war_on = {
-					target = USA
-				}
+				value = -0.025
 			}
 			ENG = {
 				add_to_faction = USA
@@ -1399,7 +1493,7 @@ focus_tree = {
 		y = 1
 		prerequisite = { focus = USA_day_of_infamy }
 		relative_position_id = USA_day_of_infamy
-		cost = 5 
+		cost = 2.9 
 
 		ai_will_do = {
 			factor = 1
@@ -1429,7 +1523,7 @@ focus_tree = {
 		y = 1
 		prerequisite = { focus = USA_office_of_scientific_research_and_development }
 		relative_position_id = USA_office_of_scientific_research_and_development
-		cost = 5
+		cost = 2.9
 
 		ai_will_do = {
 			factor = 100
@@ -1459,7 +1553,7 @@ focus_tree = {
 		y = 1
 		prerequisite = { focus = USA_office_of_scientific_research_and_development }
 		relative_position_id = USA_office_of_scientific_research_and_development
-		cost = 5 
+		cost = 0 
 
 		ai_will_do = {
 			factor = 1
@@ -1498,7 +1592,7 @@ focus_tree = {
 		relative_position_id = USA_manhattan_project
 		x = 0
 		y = 1
-		cost = 7.16
+		cost = 2.9
 		ai_will_do = {
 			factor = 1
 		}
@@ -1536,7 +1630,7 @@ focus_tree = {
 		relative_position_id = USA_office_of_war_production_management
 		x = -1
 		y = 1
-		cost = 7.16
+		cost = 2.9
 		ai_will_do = {
 			factor = 1 
 		}
@@ -1562,7 +1656,7 @@ focus_tree = {
 		relative_position_id = USA_war_bonds_and_rationing
 		x = 0
 		y = 1
-		cost = 7.16
+		cost = 2.9
 		ai_will_do = {
 			factor = 1
 		}
@@ -1630,7 +1724,7 @@ focus_tree = {
 		relative_position_id = USA_office_of_war_production_management
 		x = 1
 		y = 1
-		cost = 7.16
+		cost = 2.9
 		ai_will_do = {
 			factor = 1
 		}
@@ -1660,7 +1754,7 @@ focus_tree = {
 		relative_position_id = USA_synthetic_rubber
 		x = 0
 		y = 1
-		cost = 7.16
+		cost = 2.9
 		ai_will_do = {
 			factor = 1
 		}
@@ -1709,7 +1803,7 @@ focus_tree = {
 		relative_position_id = USA_magic
 		x = 0
 		y = 1
-		cost = 5
+		cost = 2.9
 		ai_will_do = {
 			factor = 100 
 		}
@@ -1739,7 +1833,7 @@ focus_tree = {
 		relative_position_id = USA_wartime_industry
 		x = -1
 		y = 1
-		cost = 5
+		cost = 2.9
 
 		ai_will_do = {
 			factor = 100 
@@ -1756,8 +1850,8 @@ focus_tree = {
 		
 		completion_reward = {
 			add_to_variable = {
-				var = USA_industrial_capacity_factory_var
-				value = 0.1
+				var = USA_production_factory_max_efficiency_factor_var
+				value = 0.05
 			}
 			custom_effect_tooltip = USA_general_motors_tt
 		}
@@ -1771,7 +1865,7 @@ focus_tree = {
 		relative_position_id = USA_general_motors_focus
 		x = 0
 		y = 1
-		cost = 5
+		cost = 2.9
 
 		ai_will_do = {
 			factor = 100 
@@ -1816,7 +1910,7 @@ focus_tree = {
 		relative_position_id = USA_wartime_industry
 		x = 1
 		y = 1
-		cost = 5
+		cost = 2.9
 
 		ai_will_do = {
 			factor = 100 
@@ -1847,7 +1941,7 @@ focus_tree = {
 		relative_position_id = USA_victory_program
 		x = 0
 		y = 1
-		cost = 5
+		cost = 2.9
 
 		ai_will_do = {
 			factor = 100 
@@ -1876,7 +1970,7 @@ focus_tree = {
 		relative_position_id = USA_victory_program
 		x = -1
 		y = 2
-		cost = 5
+		cost = 2.9
 
 		ai_will_do = {
 			factor = 100 
@@ -1988,6 +2082,14 @@ focus_tree = {
 					var = USA_popular_support_var
 					value = 0.02
 				}
+				set_variable = {
+					var = USA_popular_support_var_stab
+					value = USA_popular_support_var
+				}
+				multiply_variable = {
+					var = USA_popular_support_var_stab
+					value = 0.2
+				}
 				add_war_support = 0.07	
 			}				
 		}
@@ -2002,7 +2104,7 @@ focus_tree = {
 		}
 		x = -40
 		y = 1
-		cost = 5
+		cost = 2.9
 
 		ai_will_do = {
 			factor = 1
@@ -2786,8 +2888,7 @@ focus_tree = {
 		
 		available = { 
 			OR = {
-				has_war_with = GER
-				has_war_with = JAP
+				date > 1941.1.1
 				has_completed_focus = USA_14
 			}
 			has_army_experience < 100
@@ -2800,6 +2901,7 @@ focus_tree = {
 			remove_ideas = USA_the_poor_command_post_2 
 			add_command_power = 100 
 			army_experience = 100
+			add_ideas = USA_europe_first
 		}
 	}
 
@@ -2994,9 +3096,12 @@ focus_tree = {
 
 		bypass = {
 		}
-		
 		completion_reward = {
-			add_stability = 0.1
+			custom_effect_tooltip = USA_plus_10_stab_tt
+			add_to_variable = {
+				var = USA_stability_factor_var
+				value = 0.1
+			}
 			add_political_power = 150
 		}
 	}	
@@ -3243,6 +3348,11 @@ focus_tree = {
 				var = USA_production_speed_dockyard_factor_var
 				value = 0.05
 			}
+			add_to_variable = {
+				var = USA_industrial_capacity_dockyard_var
+				value = 0.05
+			}
+			custom_effect_tooltip = USA_5_dock_speed_tt
 			custom_effect_tooltip = USA_enlarge_tt
 		}
 	}
@@ -3294,24 +3404,11 @@ focus_tree = {
 			focus = USA_naval_aviation
 			focus = USA_adhere_to_mahan
 		}
-		
-		available = { 
-			has_idea = electric_boat_company
-		}
 
 		bypass = {
 		}
 		
 		completion_reward = {
-			if = {
-				limit = {
-					has_idea = electric_boat_company
-				}
-				swap_ideas = {
-					remove_idea = electric_boat_company
-					add_idea = electric_boat_company3
-				}
-			}
 			add_tech_bonus = {
 				name = USA_fleet_submarines
 				bonus = 1.5
@@ -3334,7 +3431,12 @@ focus_tree = {
 				var = USA_production_speed_dockyard_factor_var
 				value = 0.05
 			}
+			add_to_variable = {
+				var = USA_industrial_capacity_dockyard_var
+				value = 0.05
+			}
 			custom_effect_tooltip = USA_5_dock_speed_tt
+			custom_effect_tooltip = USA_enlarge_tt
 		}
 	}					
 
@@ -3509,7 +3611,6 @@ focus_tree = {
 		
 		completion_reward = {
 			navy_experience = 100
-			add_ideas = USA_superior_control
 			add_to_variable = {
 				var = USA_production_speed_dockyard_factor_var
 				value = 0.05
@@ -3529,66 +3630,14 @@ focus_tree = {
 			factor = 100 
 		}
 		available_if_capitulated = yes		
-		
-		available = { 
-			has_idea = brooklyn_naval_yard
-		}
 
 		bypass = {
 		}
 		
 		completion_reward = {
-			navy_experience = 50
-			if = {
-				limit = {
-					NOT = {
-						OR = {
-							has_idea = brooklyn_naval_yard
-							has_idea = electric_boat_company
-							has_idea = norfolk_naval_yard
-							has_idea = newport_news_shipbuilding
-						}
-					}
-					
-				}
-				add_ideas = brooklyn_naval_yard3
-			}
-			if = {
-				limit = {
-					has_idea = electric_boat_company
-				}
-				swap_ideas = {
-					remove_idea = electric_boat_company
-					add_idea = brooklyn_naval_yard3
-				}
-			}
-			if = {
-				limit = {
-					has_idea = norfolk_naval_yard
-				}
-				swap_ideas = {
-					remove_idea = norfolk_naval_yard
-					add_idea = brooklyn_naval_yard3
-				}
-			}
-			if = {
-				limit = {
-					has_idea = newport_news_shipbuilding
-				}
-				swap_ideas = {
-					remove_idea = newport_news_shipbuilding
-					add_idea = brooklyn_naval_yard3
-				}
-			}
-			if = {
-				limit = {
-					has_idea = brooklyn_naval_yard
-				}
-				swap_ideas = {
-					remove_idea = brooklyn_naval_yard
-					add_idea = brooklyn_naval_yard3
-				}
-			}
+			
+			add_ideas = USA_lead_liberty
+
 			add_to_variable = {
 				var = USA_production_speed_dockyard_factor_var
 				value = 0.05
@@ -3693,7 +3742,13 @@ focus_tree = {
 				var = USA_production_speed_dockyard_factor_var
 				value = 0.05
 			}
+			add_to_variable = {
+				var = USA_industrial_capacity_dockyard_var
+				value = 0.05
+			}
+			add_ideas = USA_superior_control
 			custom_effect_tooltip = USA_5_dock_speed_tt
+			custom_effect_tooltip = USA_enlarge_tt
 		}
 	}					
 
@@ -3737,17 +3792,7 @@ focus_tree = {
 		available_if_capitulated = yes		
 		
 		available = { 
-			has_war_with = JAP 
-			if = {
-				limit = {
-					is_ai = no 
-				}
-				has_navy_experience > 50 
-			}
 		}
-
-		cancel_if_invalid = yes 
-
 		bypass = {
 		}
 		
@@ -3778,7 +3823,6 @@ focus_tree = {
 		available_if_capitulated = yes		
 		
 		available = { 
-			has_idea = newport_news_shipbuilding
 		}
 
 		bypass = {
@@ -3838,16 +3882,28 @@ focus_tree = {
 		available_if_capitulated = yes		
 		
 		available = { 
-			OR = {
-				date > 1940.1.1
-				has_completed_focus = USA_14
-			}
 		}
 
 		bypass = {
 		}
 		
 		completion_reward = {
+			custom_effect_tooltip = USA_enlarge2_tt
+			add_to_variable = {
+				var = USA_industrial_capacity_dockyard_var
+				value = 0.1
+			}
+
+			if = {
+				limit = {
+					AND = {
+						NOT = { has_completed_focus = USA_9 }
+						NOT = { has_completed_focus = USA_30 }
+						NOT = { has_completed_focus = USA_40 }
+					}
+				}
+				custom_effect_tooltip = USA_2ocean_preview_tt
+			}
 			if = {
 				limit = {
 					has_completed_focus = USA_40
@@ -3858,42 +3914,26 @@ focus_tree = {
 				limit = {
 					has_completed_focus = USA_9
 				}
-				every_state = {
-					limit = {
-						OR = {
-							state = 391
-						}
-					}
-					add_building_construction = {
-						type = arms_factory
-						level = 5
-						instant_build = yes
-					}
-					add_extra_state_shared_building_slots = 5
+				custom_effect_tooltip = USA_2ocean_arsenal_tt
+				add_to_variable = {
+					var = USA_consumer_goods_factor_var
+					value = -0.01
+				}
+				add_to_variable = {
+					var = USA_industrial_capacity_factory_var
+					value = 0.1
 				}
 			}
-			every_state = {
+			if = {
 				limit = {
-					OR = {
-						state = 378
-						state = 385
-						state = 386
-						state = 359
-						state = 357
-					}
+					has_completed_focus = USA_30
 				}
-				add_building_construction = {
-					type = dockyard
-					level = 2
-					instant_build = yes
+				add_to_variable = {
+					var = USA_research_speed_factor_var
+					value = 0.25
 				}
-				add_extra_state_shared_building_slots = 2
+				add_ideas = USA_research_both_oceans
 			}
-			add_to_variable = {
-				var = USA_production_speed_dockyard_factor_var
-				value = 0.05
-			}
-			custom_effect_tooltip = USA_5_dock_speed_tt
 		}
 	}						
 
@@ -3923,54 +3963,10 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			custom_effect_tooltip = USA_upgrade_naval_manufacturers_tt
-			if = {
-				limit = {
-					has_idea = newport_news_shipbuilding
-				}
-				swap_ideas = {
-					remove_idea = newport_news_shipbuilding
-					add_idea = newport_news_shipbuilding2 
-				}
-			}
-			if = {
-				limit = {
-					has_idea = brooklyn_naval_yard
-				}
-				swap_ideas = {
-					remove_idea = brooklyn_naval_yard
-					add_idea = brooklyn_naval_yard2
-				}
-			}
-			if = {
-				limit = {
-					has_idea = brooklyn_naval_yard3
-				}
-				swap_ideas = {
-					remove_idea = brooklyn_naval_yard3
-					add_idea = brooklyn_naval_yard4
-				}
-			}
-			if = {
-				limit = {
-					has_idea = electric_boat_company
-				}
-				swap_ideas = {
-					remove_idea = electric_boat_company
-					add_idea = electric_boat_company2 
-				}
-			}
-			if = {
-				limit = {
-					has_idea = norfolk_naval_yard
-				}
-				swap_ideas = {
-					remove_idea = norfolk_naval_yard
-					add_idea = norfolk_naval_yard2
-				}
-			}
+			add_ideas = USA_naval_production
 		}
 	}
+
 	focus = {
 		id = USA_selective_service_act
 		icon = GFX_USA_selective_service_act
@@ -3995,6 +3991,7 @@ focus_tree = {
 			add_ideas = limited_conscription
 			activate_mission_tooltip = USA_selected_service_act_mission
 			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
+			custom_effect_tooltip = USA_minus_stab_tt
 			USA_we_dont_want_to_send_our_boys_away = yes
 
 		}
@@ -4048,6 +4045,7 @@ focus_tree = {
 				}
 			}
 			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
+			custom_effect_tooltip = USA_minus_stab_tt
 			USA_we_dont_want_to_send_our_boys_away = yes
 			add_to_variable = {
 				var = USA_research_speed_factor_var
@@ -4192,6 +4190,7 @@ focus_tree = {
 				name = USA_detroit_vehicle_arsenal
 			}
 			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
+			custom_effect_tooltip = USA_minus_stab_tt
 			USA_we_dont_want_to_send_our_boys_away = yes
 			add_to_variable = {
 				var = USA_research_speed_factor_var
@@ -4232,7 +4231,7 @@ focus_tree = {
 				name = land_doc_bonus
 				cost_reduction = 0.5
 				uses = 1
-				category = cat_mobile_warfare
+				category = land_doctrine
 			}
 		}
 	}									
@@ -4327,7 +4326,7 @@ focus_tree = {
 				name = land_doc_bonus
 				cost_reduction = 0.5
 				uses = 1
-				category = cat_superior_firepower
+				category = land_doctrine
 			}
 			if = {
 				limit = {
@@ -4337,10 +4336,11 @@ focus_tree = {
 					name = land_doc_bonus
 					cost_reduction = 0.5
 					uses = 1
-					category = cat_superior_firepower
+					category = land_doctrine
 				}
 			}
 			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
+			custom_effect_tooltip = USA_minus_stab_tt
 			USA_we_dont_want_to_send_our_boys_away = yes
 			add_to_variable = {
 				var = USA_research_speed_factor_var
@@ -4379,7 +4379,7 @@ focus_tree = {
 				name = land_doc_bonus
 				cost_reduction = 0.5
 				uses = 1
-				category = cat_superior_firepower
+				category = land_doctrine
 			}
 			if = {
 				limit = {
@@ -4389,7 +4389,7 @@ focus_tree = {
 					name = land_doc_bonus
 					cost_reduction = 0.5
 					uses = 1
-					category = cat_superior_firepower
+					category = land_doctrine
 				}
 			}
 		}
@@ -4521,6 +4521,7 @@ focus_tree = {
 				}
 			}
 			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
+			custom_effect_tooltip = USA_minus_stab_tt
 			USA_we_dont_want_to_send_our_boys_away = yes
 		}
 	}						
@@ -4586,6 +4587,7 @@ focus_tree = {
 				category = air_doctrine
 			}
 			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
+			custom_effect_tooltip = USA_minus_stab_tt
 			USA_we_dont_want_to_send_our_boys_away = yes	
 		}
 	}						
@@ -4649,6 +4651,7 @@ focus_tree = {
 				USA_aircraft_industry_level_up = yes 
 			}
 			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
+			custom_effect_tooltip = USA_minus_stab_tt
 			USA_we_dont_want_to_send_our_boys_away = yes
 
 		}
@@ -4680,6 +4683,7 @@ focus_tree = {
 				USA_aircraft_industry_level_up = yes 
 			}
 			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
+			custom_effect_tooltip = USA_minus_stab_tt
 			USA_we_dont_want_to_send_our_boys_away = yes
 
 		}
@@ -4805,8 +4809,9 @@ focus_tree = {
 				technology = USA_fighter_1944
 				uses = 1
 				bonus = 0.5
-				ahead_reduction = 0.5
+				ahead_reduction = 0.3
 			}
+			add_ideas = north_american_aviation
 		}
 	}		
 
@@ -4995,6 +5000,10 @@ focus_tree = {
 			custom_effect_tooltip = Allied_bombardment
 			custom_effect_tooltip = "We will level the Axis defenses in Casablanca, Marrakech, Algiers, Constantine, Tlemecen, Gibraltar."
 			custom_effect_tooltip = USA_torch_gibraltar_tt
+			declare_war_on = {
+				target = EFR
+				type = annex_everything
+			}
 		}
 	}
 	focus = {
@@ -5074,6 +5083,11 @@ focus_tree = {
 					is_in_faction_with = ENG
 				}
 				add_stability = 0.1 
+			}
+			custom_effect_tooltip = USA_plus_10_stab_tt
+			add_to_variable = {
+				var = USA_stability_factor_var
+				value = 0.1
 			}
 		}
 	}
@@ -5328,6 +5342,11 @@ focus_tree = {
 					is_in_faction_with = ENG
 				}
 				add_stability = 0.1 
+			}
+			custom_effect_tooltip = USA_plus_10_stab_tt
+			add_to_variable = {
+				var = USA_stability_factor_var
+				value = 0.1
 			}
 		}
 	}

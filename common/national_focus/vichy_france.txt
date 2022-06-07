@@ -631,31 +631,31 @@
 		}
 	}
 #Daimler-Benz
-	focus = {  
-	   id = EFR_daimler_benz
-	   icon = GFX_focus_generic_army_tanks2
-	   relative_position_id = EFR_prepare_production
-		prerequisite = { focus = EFR_prepare_production }
+#	focus = {  
+#	   id = EFR_daimler_benz
+#	   icon = GFX_focus_generic_army_tanks2
+#	   relative_position_id = EFR_prepare_production
+#		prerequisite = { focus = EFR_prepare_production }
 	   # mutually_exclusive = { focus = EFR_motorized_focus }
-		x = 0
-		y = 1
-		cost = 5
-		ai_will_do = {
-		   factor = 50
-		}
-		completion_reward = {
-			custom_effect_tooltip = available_designer
-			show_ideas_tooltip = EFR_daimler_benz
-		}
-	}
+#		x = 0
+#		y = 1
+#		cost = 5
+#		ai_will_do = {
+#		   factor = 50
+#		}
+#		completion_reward = {
+#			custom_effect_tooltip = available_designer
+#			show_ideas_tooltip = EFR_daimler_benz
+#		}
+#	}
 
 #Medium panzer
 	focus = {  
 	   id = EFR_medium_panzer
 	   icon = GFX_GER_achtung_panzer
-	   relative_position_id = EFR_daimler_benz
-	  prerequisite = { focus = EFR_daimler_benz }
-		x = 0
+	   relative_position_id = EFR_light_tank
+	  prerequisite = { focus = EFR_light_tank }
+		x = 1
 		y = 1
 		cost = 5
 		ai_will_do = {
@@ -793,8 +793,8 @@
 	   id = EFR_light_tank
 	   icon = GFX_goal_tank_offensive
 	   relative_position_id = EFR_continue_production
-		prerequisite = { focus = EFR_continue_production }
-		x = 0
+		prerequisite = { focus = EFR_continue_production focus = EFR_prepare_production}
+		x = 1
 		y = 1
 		cost = 5
 		ai_will_do = {
@@ -813,7 +813,7 @@
 	   icon = GFX_focus_generic_tank_production
 	   relative_position_id = EFR_light_tank
 		prerequisite = { focus = EFR_light_tank }
-		x = 0
+		x = -1
 		y = 1
 		cost = 5
 		ai_will_do = {
@@ -2946,6 +2946,12 @@
 						instant_build = yes
 					}		
 				}	
+			}
+			add_tech_bonus = {
+				name = EFR_industry_bopnus
+				bonus = 1
+				uses = 1
+				category = industry
 			}		
 			
 		}
@@ -3210,12 +3216,36 @@
 			name = "Gustav Krukenberg"
 			portrait_path = "gfx/leaders/EFR/FRA_allgood_isnt_an_ss_boo.dds"
 			skill = 4
-			attack_skill = 4
-			defense_skill = 3
+			attack_skill = 3
+			defense_skill = 4
 			planning_skill = 3
 			logistics_skill = 2
 			
 			traits = { career_officer inflexible_strategist skilled_staffer infantry_officer waffen_ss }
+		}
+		
+		create_corps_commander = {
+			name = "Edgar Paul"
+			portrait_path = "gfx/leaders/EFR/EFR_Edgar_Paul.dds"
+			skill = 4
+			attack_skill = 3
+			defense_skill = 3
+			planning_skill = 3
+			logistics_skill = 3
+			
+			traits = { career_officer waffen_ss motorized_leader ranger bearer_of_artillery trait_reckless  }
+		}
+		
+		create_field_marshal = {
+			name = "Jacques  Doriot"
+			portrait_path = "gfx/leaders/EFR/EFR_jacques_doriot_for_efr.dds"
+			skill = 4
+			attack_skill = 3
+			defense_skill = 4
+			planning_skill = 3
+			logistics_skill = 3
+			
+			traits = { career_officer waffen_ss trait_reckless infantry_officer }
 		}
 			
 		}
@@ -4033,7 +4063,10 @@
 		relative_position_id = EFR_secure_the_new_state
 		prerequisite = { focus = EFR_secure_the_new_state }
 		available = {
-			date > 1941.1.1
+			OR = {
+				date > 1941.1.1
+				GER = { has_war_with = USA }
+			}
 		}
 		
 		cost = 1

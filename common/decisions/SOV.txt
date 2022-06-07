@@ -993,6 +993,44 @@ SOV_socialism_in_one_country = {
 		}
 	}
 
+	SOV_soviet_german_trade_agreement = {
+		icon = eng_trade_unions_support
+
+		fire_only_once = yes
+
+		days_remove = 70
+
+		cost = 0 	
+
+		available = {
+			OR = {
+				has_idea = SOV_molotov_ribbentrop_pact
+				has_idea = SOV_molotov_ribbentrop_pact_2
+			} 
+		}
+
+		modifier = {
+		}
+
+		remove_effect = {
+			complete_national_focus = SOV_soviet_german_trade_agreement
+		
+			show_ideas_tooltip = SOV_molotov_ribbentrop_pact_2
+
+
+			add_tech_bonus = {
+				name = SOV_soviet_german_trade_agreement
+				bonus = 1.0 
+				uses = 2 
+				category = industry 
+			}
+		}
+		
+		ai_will_do = {
+			factor = 100		
+		}
+	}
+
 	SOV_soviet_german_technological_agreement = {
 		icon = eng_trade_unions_support
 
@@ -1385,14 +1423,20 @@ SOV_socialism_in_one_country = {
 					limit = { is_controlled_by = ROOT }
 					add_building_construction = {
 						type = bunker
-						level = 7
+						level = 6
 						province = 525
 						instant_build = yes
 					}
 					add_building_construction = {
 						type = bunker
-						level = 7
+						level = 6
 						province = 3494
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = bunker
+						level = 6
+						province = 13297
 						instant_build = yes
 					}
 				}
@@ -1403,7 +1447,7 @@ SOV_socialism_in_one_country = {
 					limit = { is_controlled_by = ROOT }
 					add_building_construction = {
 						type = bunker
-						level = 7
+						level = 6
 						province = 11409
 						instant_build = yes
 					}
@@ -2466,157 +2510,336 @@ SOV_great_patriotic_war = {
 		}
 		
 		complete_effect = {
-		   	add_timed_idea = {	
-		   		idea = SOV_zhukovs_counter_offensive_idea
-		   		days = 30
-		   	}
-			hidden_effect = {
-				news_event = { id = news.494 hours = 6 }
-				sound_effect = sp_sov_ura
-			}	
-			hidden_effect = {	
-				division_template = {
-					name = "Strelkovaya Diviziya (Zhukov)"
-					priority = 2
-	
-					regiments = {
-						infantry = { x = 0 y = 0 }
-						infantry = { x = 0 y = 1 }
-						infantry = { x = 0 y = 2 }
-						infantry = { x = 0 y = 3 }
-						
-						infantry = { x = 1 y = 0 }
-						infantry = { x = 1 y = 1 }
-						infantry = { x = 1 y = 2 }
-						infantry = { x = 1 y = 3 }
-							
-						infantry = { x = 2 y = 0 }
-						infantry = { x = 2 y = 1 }
-						infantry = { x = 2 y = 2 }
-
-						artillery_brigade = { x = 3 y = 0 }		
-						artillery_brigade = { x = 3 y = 1 }
-						artillery_brigade = { x = 3 y = 2 }
-						anti_tank_brigade = { x = 3 y = 3 }
-						
+			if = {
+				limit = {
+					NOT = {
+						OR = {
+							has_tech = large_front_operations
+							has_tech = peoples_army
+						}
 					}
-	
-					support = {
-						DIV_HQ = { x = 0 y = 0 }
-					   	engineer = { x = 0 y = 1 }
-						military_police = { x = 1 y = 0 }
-						logistics_company = { x = 1 y = 1 }
+				}	
+				add_timed_idea = {	
+					idea = SOV_zhukovs_counter_offensive_idea
+					days = 30
+				}
+				hidden_effect = {
+					news_event = { id = news.494 hours = 6 }
+					sound_effect = sp_sov_ura
+				}	
+				hidden_effect = {	
+					division_template = {
+						name = "Strelkovaya Diviziya (Zhukov)"
+						priority = 2
+		
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+								
+							infantry = { x = 2 y = 0 }
+							infantry = { x = 2 y = 1 }
+							infantry = { x = 2 y = 2 }
+
+							artillery_brigade = { x = 3 y = 0 }		
+							artillery_brigade = { x = 3 y = 1 }
+							artillery_brigade = { x = 3 y = 2 }
+							anti_tank_brigade = { x = 3 y = 3 }
+							
+						}
+		
+						support = {
+							DIV_HQ = { x = 0 y = 0 }
+							engineer = { x = 0 y = 1 }
+							military_police = { x = 1 y = 0 }
+							logistics_company = { x = 1 y = 1 }
+						}
+					}
+
+					random_owned_controlled_state = {
+						prioritize = { 252 }
+						create_unit = {
+							division = "name = \"1. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"2. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"3. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"4. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"5. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"6. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"7. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"8. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"9. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"10. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"11. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"12. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"13. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"14. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"15. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"16. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"17. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"18. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"19. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"20. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"21. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"22. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"23. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"24. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}
+
 					}
 				}
+			}
+			else_if = {
+				limit = {
+					OR = {
+						has_tech = large_front_operations
+						has_tech = peoples_army
+					}
+				}	
+				add_timed_idea = {	
+					idea = SOV_zhukovs_counter_offensive_idea
+					days = 30
+				}
+				hidden_effect = {
+					news_event = { id = news.494 hours = 6 }
+					sound_effect = sp_sov_ura
+				}	
+				hidden_effect = {	
+					division_template = {
+						name = "Strelkovaya Diviziya (Zhukov)"
+						priority = 2
+		
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+								
+							infantry = { x = 2 y = 0 }
+							infantry = { x = 2 y = 1 }
+							infantry = { x = 2 y = 2 }
 
-				random_owned_controlled_state = {
-					prioritize = { 252 }
-					create_unit = {
-						division = "name = \"1. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"2. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"3. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"4. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"5. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"6. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"7. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"8. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"9. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"10. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"11. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"12. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"13. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"14. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"15. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"16. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"17. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"18. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"19. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"20. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"21. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"22. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"23. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"24. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
-						owner = SOV
-					}										
+							artillery_brigade = { x = 3 y = 0 }		
+							artillery_brigade = { x = 3 y = 1 }
+							artillery_brigade = { x = 3 y = 2 }
+							anti_tank_brigade = { x = 3 y = 3 }
+							
+						}
+		
+						support = {
+							DIV_HQ = { x = 0 y = 0 }
+							engineer = { x = 0 y = 1 }
+							military_police = { x = 1 y = 0 }
+							logistics_company = { x = 1 y = 1 }
+						}
+					}
+
+					random_owned_controlled_state = {
+						prioritize = { 252 }
+						create_unit = {
+							division = "name = \"1. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"2. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"3. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"4. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"5. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"6. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"7. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"8. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"9. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"10. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"11. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"12. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"13. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"14. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"15. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"16. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"17. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"18. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"19. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"20. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"21. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"22. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"23. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"24. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"20. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"21. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"22. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"23. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"24. Strelkovaya Diviziya (Zhukov)\" division_template = \"Strelkovaya Diviziya (Zhukov)\" start_experience_factor = 1.5 start_equipment_factor = 1" 
+							owner = SOV
+						}
+
+					}
 				}
 			}		
 		}
 
 		ai_will_do = {
 			factor = 100
-			modifier = {
-				surrender_progress > 0.25
-				factor = 100
-			}
 		}
 	}
 
@@ -2691,7 +2914,7 @@ SOV_great_patriotic_war = {
 		}
 
 		ai_will_do = {
-			factor = 0
+			factor = 5
 		}
 	}
 
@@ -2788,8 +3011,8 @@ SOV_great_patriotic_war = {
 		}
 
 		selectable_mission = no
-		days_mission_timeout = 150
-		days_remove = 150
+		days_mission_timeout = 30
+		days_remove = 30
 		is_good = no
 		fire_only_once = no
 
@@ -2890,8 +3113,8 @@ SOV_great_patriotic_war = {
 		}
 
 		selectable_mission = no
-		days_mission_timeout = 100
-		days_remove = 150
+		days_mission_timeout = 30
+		days_remove = 40
 		is_good = no
 		fire_only_once = no
 
@@ -2991,8 +3214,8 @@ SOV_great_patriotic_war = {
 		}
 
 		selectable_mission = no
-		days_mission_timeout = 100
-		days_remove = 150
+		days_mission_timeout = 30
+		days_remove = 40
 		is_good = no
 		fire_only_once = no
 
@@ -3101,7 +3324,15 @@ SOV_great_patriotic_war = {
 				}
 				else_if = {
 					limit = {
-						229 = { check_variable = { var = SOV_garrison_strength value = 2 compare = equals } }
+						AND = {
+							229 = { check_variable = { var = SOV_garrison_strength value = 2 compare = equals } }
+							NOT = {
+								OR = {
+									has_tech = large_front_operations
+									has_tech = peoples_army
+								}
+							}
+						}
 					}
 					random_owned_controlled_state = {
 						limit = {
@@ -3135,7 +3366,15 @@ SOV_great_patriotic_war = {
 				}
 				else_if = {
 					limit = {
-						229 = { check_variable = { var = SOV_garrison_strength value = 3 compare = equals } }
+						AND = {
+							229 = { check_variable = { var = SOV_garrison_strength value = 3 compare = equals } }
+							NOT = {
+								OR = {
+									has_tech = large_front_operations
+									has_tech = peoples_army
+								}
+							}
+						}
 					}
 					random_owned_controlled_state = {
 						limit = {
@@ -3185,7 +3424,15 @@ SOV_great_patriotic_war = {
 				}
 				else_if = {
 					limit = {
-						229 = { check_variable = { var = SOV_garrison_strength value = 4 compare = equals } }
+						AND = {
+							229 = { check_variable = { var = SOV_garrison_strength value = 4 compare = equals } }
+							NOT = {
+								OR = {
+									has_tech = large_front_operations
+									has_tech = peoples_army
+								}
+							}
+						}
 					}
 					random_owned_controlled_state = {
 						limit = {
@@ -3247,6 +3494,198 @@ SOV_great_patriotic_war = {
 							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
 							owner = SOV
 						}	
+					}
+				}
+				else_if = {
+					limit = {
+						AND = {
+							229 = { check_variable = { var = SOV_garrison_strength value = 2 compare = equals } }
+							OR = {
+								has_tech = large_front_operations
+								has_tech = peoples_army
+							}
+						}
+					}
+					random_owned_controlled_state = {
+						limit = {
+							OR = {
+								state = 219
+								state = 195
+								state = 217
+								state = 252
+								state = 249
+							}
+							ROOT = { has_full_control_of_state = PREV } 
+						} 
+						prioritize = { 219 }	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						AND = {
+							229 = { check_variable = { var = SOV_garrison_strength value = 3 compare = equals } }
+							OR = {
+								has_tech = large_front_operations
+								has_tech = peoples_army
+							}
+						}
+					}
+					random_owned_controlled_state = {
+						limit = {
+							OR = {
+								state = 219
+								state = 195
+								state = 217
+								state = 252
+								state = 249
+							}
+							ROOT = { has_full_control_of_state = PREV } 
+						} 
+						prioritize = { 219 }
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						AND = {
+							229 = { check_variable = { var = SOV_garrison_strength value = 4 compare = equals } }
+							OR = {
+								has_tech = large_front_operations
+								has_tech = peoples_army
+							}
+						}
+					}
+					random_owned_controlled_state = {
+						limit = {
+							OR = {
+								state = 219
+								state = 195
+								state = 217
+								state = 252
+								state = 249
+							}
+							ROOT = { has_full_control_of_state = PREV } 
+						} 
+						prioritize = { 219 }
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
 					}
 				}
 
@@ -3257,7 +3696,15 @@ SOV_great_patriotic_war = {
 				}
 				else_if = {
 					limit = {
-						582 = { check_variable = { var = SOV_garrison_strength value = 2 compare = equals } }
+						AND = {
+							582 = { check_variable = { var = SOV_garrison_strength value = 2 compare = equals } }
+							NOT = {
+								OR = {
+									has_tech = large_front_operations
+									has_tech = peoples_army
+								}
+							}
+						}
 					}
 					random_owned_controlled_state = {
 						limit = {
@@ -3291,7 +3738,15 @@ SOV_great_patriotic_war = {
 				}
 				else_if = {
 					limit = {
-						582 = { check_variable = { var = SOV_garrison_strength value = 3 compare = equals } }
+						AND = {
+							582 = { check_variable = { var = SOV_garrison_strength value = 3 compare = equals } }
+							NOT = {
+								OR = {
+									has_tech = large_front_operations
+									has_tech = peoples_army
+								}
+							}
+						}
 					}
 				random_owned_controlled_state = {
 						limit = {
@@ -3341,7 +3796,15 @@ SOV_great_patriotic_war = {
 				}
 				else_if = {
 					limit = {
-						582 = { check_variable = { var = SOV_garrison_strength value = 4 compare = equals } }
+						AND = {
+							582 = { check_variable = { var = SOV_garrison_strength value = 4 compare = equals } }
+							NOT = {
+								OR = {
+									has_tech = large_front_operations
+									has_tech = peoples_army
+								}
+							}
+						}
 					}
 					random_owned_controlled_state = {
 						limit = {
@@ -3402,7 +3865,200 @@ SOV_great_patriotic_war = {
 						create_unit = {
 							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
 							owner = SOV
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						AND = {
+							582 = { check_variable = { var = SOV_garrison_strength value = 2 compare = equals } }
+							OR = {
+								has_tech = large_front_operations
+								has_tech = peoples_army
+							}
+						}
+					}
+					random_owned_controlled_state = {
+						limit = {
+							OR = {
+								state = 219
+								state = 195
+								state = 217
+								state = 252
+								state = 249
+							}
+							ROOT = { has_full_control_of_state = PREV } 
+						} 
+						prioritize = { 219 }
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.7 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_0 = { owner = \"SOV\" } anti_tank_equipment_1 = { owner = \"SOV\" } } " 
+							owner = SOV
 						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.7 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_0 = { owner = \"SOV\" } anti_tank_equipment_1 = { owner = \"SOV\" } } " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.7 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_0 = { owner = \"SOV\" } anti_tank_equipment_1 = { owner = \"SOV\" } } " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.7 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_0 = { owner = \"SOV\" } anti_tank_equipment_1 = { owner = \"SOV\" } } " 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.7 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_0 = { owner = \"SOV\" } anti_tank_equipment_1 = { owner = \"SOV\" } } " 
+							owner = SOV
+						}	
+					}
+				}
+				else_if = {
+					limit = {
+						AND = {
+							582 = { check_variable = { var = SOV_garrison_strength value = 3 compare = equals } }
+							OR = {
+								has_tech = large_front_operations
+								has_tech = peoples_army
+							}
+						}
+					}
+				random_owned_controlled_state = {
+						limit = {
+							OR = {
+								state = 219
+								state = 195
+								state = 217
+								state = 252
+								state = 249
+							}
+							ROOT = { has_full_control_of_state = PREV } 
+						} 
+						prioritize = { 219 }
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.7 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_0 = { owner = \"SOV\" } anti_tank_equipment_1 = { owner = \"SOV\" } } " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.7 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_0 = { owner = \"SOV\" } anti_tank_equipment_1 = { owner = \"SOV\" } } " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.7 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_0 = { owner = \"SOV\" } anti_tank_equipment_1 = { owner = \"SOV\" } } " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.7 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_0 = { owner = \"SOV\" } anti_tank_equipment_1 = { owner = \"SOV\" } } " 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.7 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_0 = { owner = \"SOV\" } anti_tank_equipment_1 = { owner = \"SOV\" } } " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.7 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_0 = { owner = \"SOV\" } anti_tank_equipment_1 = { owner = \"SOV\" } } " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.7 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_0 = { owner = \"SOV\" } anti_tank_equipment_1 = { owner = \"SOV\" } } " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.7 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_0 = { owner = \"SOV\" } anti_tank_equipment_1 = { owner = \"SOV\" } } " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.7 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_0 = { owner = \"SOV\" } anti_tank_equipment_1 = { owner = \"SOV\" } } " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.7 start_equipment_factor = 1 force_equipment_variants = { infantry_equipment_0 = { owner = \"SOV\" } anti_tank_equipment_1 = { owner = \"SOV\" } } " 
+							owner = SOV
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						AND = {
+							582 = { check_variable = { var = SOV_garrison_strength value = 4 compare = equals } }
+							OR = {
+								has_tech = large_front_operations
+								has_tech = peoples_army
+							}
+
+						}
+					}
+					random_owned_controlled_state = {
+						limit = {
+							OR = {
+								state = 219
+								state = 195
+								state = 217
+								state = 252
+								state = 249
+							}
+							ROOT = { has_full_control_of_state = PREV } 
+						} 
+						prioritize = { 219 }
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
 					}
 				}
 			}
@@ -3422,7 +4078,7 @@ SOV_great_patriotic_war = {
 			has_war_with = GER 
 		}
 
-		days_mission_timeout = 150 
+		days_mission_timeout = 140
 
 		fire_only_once = yes
 
@@ -3439,8 +4095,17 @@ SOV_great_patriotic_war = {
 				}
 				else_if = {
 					limit = {
-						571 = { check_variable = { var = SOV_garrison_strength value = 2 compare = equals } }
+						AND = {
+							571 = { check_variable = { var = SOV_garrison_strength value = 2 compare = equals } }
+							NOT = {
+								OR = {
+									has_tech = large_front_operations
+									has_tech = peoples_army
+								}
+							}
+						}
 					}
+					
 					random_owned_controlled_state = {
 						limit = {
 							OR = {
@@ -3473,7 +4138,15 @@ SOV_great_patriotic_war = {
 				}
 				else_if = {
 					limit = {
-						571 = { check_variable = { var = SOV_garrison_strength value = 3 compare = equals } }
+						AND = {
+							571 = { check_variable = { var = SOV_garrison_strength value = 3 compare = equals } }
+							NOT = {
+								OR = {
+									has_tech = large_front_operations
+									has_tech = peoples_army
+								}
+							}
+						}
 					}
 					random_owned_controlled_state = {
 						limit = {
@@ -3523,7 +4196,15 @@ SOV_great_patriotic_war = {
 				}
 				else_if = {
 					limit = {
-						571 = { check_variable = { var = SOV_garrison_strength value = 4 compare = equals } }
+						AND = {
+							571 = { check_variable = { var = SOV_garrison_strength value = 4 compare = equals } }
+							NOT = {
+								OR = {
+									has_tech = large_front_operations
+									has_tech = peoples_army
+								}
+							}
+						}
 					}
 					random_owned_controlled_state = {
 						limit = {
@@ -3573,6 +4254,200 @@ SOV_great_patriotic_war = {
 							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
 							owner = SOV
 						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						AND = {
+							571 = { check_variable = { var = SOV_garrison_strength value = 2 compare = equals } }
+							OR = {
+								has_tech = large_front_operations
+								has_tech = peoples_army
+							}
+						}
+					}
+					
+					random_owned_controlled_state = {
+						limit = {
+							OR = {
+								state = 219
+								state = 195
+								state = 217
+								state = 252
+								state = 249
+							}
+							ROOT = { has_full_control_of_state = PREV } 
+						} 
+						prioritize = { 219 }
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						AND = {
+							571 = { check_variable = { var = SOV_garrison_strength value = 3 compare = equals } }
+							OR = {
+								has_tech = large_front_operations
+								has_tech = peoples_army
+							}
+						}
+					}
+					random_owned_controlled_state = {
+						limit = {
+							OR = {
+								state = 219
+								state = 195
+								state = 217
+								state = 252
+								state = 249
+							}
+							ROOT = { has_full_control_of_state = PREV } 
+						} 
+						prioritize = { 219 }
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						AND = {
+							571 = { check_variable = { var = SOV_garrison_strength value = 4 compare = equals } }
+							OR = {
+								has_tech = large_front_operations
+								has_tech = peoples_army
+							}
+
+						}
+					}
+					random_owned_controlled_state = {
+						limit = {
+							OR = {
+								state = 219
+								state = 195
+								state = 217
+								state = 252
+								state = 249
+							}
+							ROOT = { has_full_control_of_state = PREV } 
+						} 
+						prioritize = { 219 }
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
 						create_unit = {
 							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
 							owner = SOV
@@ -3591,11 +4466,20 @@ SOV_great_patriotic_war = {
 				if = {
 					limit = {
 						405 = { check_variable = { var = SOV_garrison_strength value = 1 compare = equals } }
+						
 					}
 				}
 				else_if = {
 					limit = {
-						405 = { check_variable = { var = SOV_garrison_strength value = 2 compare = equals } }
+						AND = {
+							405 = { check_variable = { var = SOV_garrison_strength value = 2 compare = equals } }
+							NOT = {
+								OR = {
+									has_tech = large_front_operations
+									has_tech = peoples_army
+								}
+							}
+						}
 					}
 					random_owned_controlled_state = {
 						limit = {
@@ -3629,57 +4513,15 @@ SOV_great_patriotic_war = {
 				}
 				else_if = {
 					limit = {
-						405 = { check_variable = { var = SOV_garrison_strength value = 3 compare = equals } }
-					}
-					random_owned_controlled_state = {
-						limit = {
-							OR = {
-								state = 219
-								state = 195
-								state = 217
-								state = 252
-								state = 249
+						AND = {
+							405 = { check_variable = { var = SOV_garrison_strength value = 3 compare = equals } }
+							NOT = {
+								OR = {
+									has_tech = large_front_operations
+									has_tech = peoples_army
+								}
 							}
-							ROOT = { has_full_control_of_state = PREV } 
-						} 
-						prioritize = { 219 }
-						create_unit = {
-							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
-							owner = SOV
-						}	
-						create_unit = {
-							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
-							owner = SOV
-						}	
-						create_unit = {
-							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
-							owner = SOV
-						}				
-						create_unit = {
-							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
-							owner = SOV
 						}
-						create_unit = {
-							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
-							owner = SOV
-						}	
-						create_unit = {
-							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
-							owner = SOV
-						}	
-						create_unit = {
-							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
-							owner = SOV
-						}				
-						create_unit = {
-							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
-							owner = SOV
-						}
-					}
-				}
-				else_if = {
-					limit = {
-						405 = { check_variable = { var = SOV_garrison_strength value = 4 compare = equals } }
 					}
 					random_owned_controlled_state = {
 						limit = {
@@ -3725,10 +4567,260 @@ SOV_great_patriotic_war = {
 							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
 							owner = SOV
 						}
+					}
+				}
+				else_if = {
+					limit = {
+						AND = {
+							405 = { check_variable = { var = SOV_garrison_strength value = 4 compare = equals } }
+							NOT = {
+								OR = {
+									has_tech = large_front_operations
+									has_tech = peoples_army
+								}
+							}
+						}
+					}
+					random_owned_controlled_state = {
+						limit = {
+							OR = {
+								state = 219
+								state = 195
+								state = 217
+								state = 252
+								state = 249
+							}
+							ROOT = { has_full_control_of_state = PREV } 
+						} 
+						prioritize = { 219 }
 						create_unit = {
 							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
 							owner = SOV
 						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						AND = {
+							405 = { check_variable = { var = SOV_garrison_strength value = 2 compare = equals } }
+							OR = {
+								has_tech = large_front_operations
+								has_tech = peoples_army
+							}
+						}
+					}
+					random_owned_controlled_state = {
+						limit = {
+							OR = {
+								state = 219
+								state = 195
+								state = 217
+								state = 252
+								state = 249
+							}
+							ROOT = { has_full_control_of_state = PREV } 
+						} 
+						prioritize = { 219 }
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						AND = {
+							405 = { check_variable = { var = SOV_garrison_strength value = 3 compare = equals } }
+							OR = {
+								has_tech = large_front_operations
+								has_tech = peoples_army
+							}
+						}
+					}
+					random_owned_controlled_state = {
+						limit = {
+							OR = {
+								state = 219
+								state = 195
+								state = 217
+								state = 252
+								state = 249
+							}
+							ROOT = { has_full_control_of_state = PREV } 
+						} 
+						prioritize = { 219 }
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						AND = {
+							405 = { check_variable = { var = SOV_garrison_strength value = 4 compare = equals } }
+							OR = {
+								has_tech = large_front_operations
+								has_tech = peoples_army
+							}
+						}
+					}
+					random_owned_controlled_state = {
+						limit = {
+							OR = {
+								state = 219
+								state = 195
+								state = 217
+								state = 252
+								state = 249
+							}
+							ROOT = { has_full_control_of_state = PREV } 
+						} 
+						prioritize = { 219 }
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
+							owner = SOV
+						}
 						create_unit = {
 							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1 " 
 							owner = SOV
@@ -3751,7 +4843,16 @@ SOV_great_patriotic_war = {
 				}
 				else_if = {
 					limit = {
-						408 = { check_variable = { var = SOV_garrison_strength value = 2 compare = equals } }
+		
+						AND = {
+							408 = { check_variable = { var = SOV_garrison_strength value = 2 compare = equals } }
+							NOT = {
+								OR = {
+									has_tech = large_front_operations
+									has_tech = peoples_army
+								}
+							}
+						}
 					}
 					random_owned_controlled_state = {
 						limit = {
@@ -3785,7 +4886,15 @@ SOV_great_patriotic_war = {
 				}
 				else_if = {
 					limit = {
-						408 = { check_variable = { var = SOV_garrison_strength value = 3 compare = equals } }
+						AND = {
+							408 = { check_variable = { var = SOV_garrison_strength value = 3 compare = equals } }
+							NOT = {
+								OR = {
+									has_tech = large_front_operations
+									has_tech = peoples_army
+								}
+							}
+						}
 					}
 					random_owned_controlled_state = {
 						limit = {
@@ -3835,7 +4944,15 @@ SOV_great_patriotic_war = {
 				}
 				else_if = {
 					limit = {
-						408 = { check_variable = { var = SOV_garrison_strength value = 4 compare = equals } }
+						AND = {
+							408 = { check_variable = { var = SOV_garrison_strength value = 4 compare = equals } }
+							NOT = {
+								OR = {
+									has_tech = large_front_operations
+									has_tech = peoples_army
+								}
+							}
+						}
 					}
 					random_owned_controlled_state = {
 						limit = {
@@ -3885,6 +5002,200 @@ SOV_great_patriotic_war = {
 							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
 							owner = SOV
 						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+					}
+				}
+				else_if = {
+					limit = {
+		
+						AND = {
+							408 = { check_variable = { var = SOV_garrison_strength value = 2 compare = equals } }
+							OR = {
+								has_tech = large_front_operations
+								has_tech = peoples_army
+							}
+						}
+					}
+					random_owned_controlled_state = {
+						limit = {
+							OR = {
+								state = 219
+								state = 195
+								state = 217
+								state = 252
+								state = 249
+							}
+							ROOT = { has_full_control_of_state = PREV } 
+						} 
+						prioritize = { 219 }
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						AND = {
+							408 = { check_variable = { var = SOV_garrison_strength value = 3 compare = equals } }
+							OR = {
+								has_tech = large_front_operations
+								has_tech = peoples_army
+							}
+						}
+					}
+					random_owned_controlled_state = {
+						limit = {
+							OR = {
+								state = 219
+								state = 195
+								state = 217
+								state = 252
+								state = 249
+							}
+							ROOT = { has_full_control_of_state = PREV } 
+						} 
+						prioritize = { 219 }
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						AND = {
+							408 = { check_variable = { var = SOV_garrison_strength value = 4 compare = equals } }
+							OR = {
+								has_tech = large_front_operations
+								has_tech = peoples_army
+							}
+						
+						}
+					}
+					random_owned_controlled_state = {
+						limit = {
+							OR = {
+								state = 219
+								state = 195
+								state = 217
+								state = 252
+								state = 249
+							}
+							ROOT = { has_full_control_of_state = PREV } 
+						} 
+						prioritize = { 219 }
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
+							owner = SOV
+						}
 						create_unit = {
 							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 1.0 start_equipment_factor = 1 " 
 							owner = SOV
@@ -4436,16 +5747,123 @@ SOV_great_patriotic_war = {
 
 		#Success
 		timeout_effect = {
-			add_stability = 0.2
-			add_war_support = 0.2
-			add_political_power = 200 
 			country_event = soviet.125
+	
 		}
 		#Fail
 		complete_effect = {
-			add_stability = -0.3
-			add_war_support = -0.3
-			add_political_power = -300 		
+			hidden_effect = {
+				random_owned_controlled_state = {
+					limit = {
+						state = 252
+					} 	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+				}
+			}
+			custom_effect_tooltip = "Spawns 24 	Strelkovaya Diviziya - Reinforcements divisions in Gorki"
 			country_event = soviet.126
 		}
 	}
@@ -4476,16 +5894,123 @@ SOV_great_patriotic_war = {
 
 		#Success
 		timeout_effect = {
-			add_stability = 0.2
-			add_war_support = 0.2
-			add_political_power = 200 
+		
 			country_event = soviet.123
 		}
 		#Fail
 		complete_effect = {
-			add_stability = -0.3
-			add_war_support = -0.3
-			add_political_power = -300 		
+			hidden_effect = {
+				random_owned_controlled_state = {
+					limit = {
+						state = 252
+					} 	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+				}
+			}
+			custom_effect_tooltip = "Spawns 24 	Strelkovaya Diviziya - Reinforcements divisions in Gorki"	
 			country_event = soviet.124
 		}
 	}
@@ -4516,16 +6041,123 @@ SOV_great_patriotic_war = {
 
 		#Success
 		timeout_effect = {
-			add_stability = 0.2
-			add_war_support = 0.2
-			add_political_power = 200 
+			
 			country_event = soviet.121
 		}
 		#Fail
 		complete_effect = {
-			add_stability = -0.3
-			add_war_support = -0.3
-			add_political_power = -300 		
+			hidden_effect = {
+				random_owned_controlled_state = {
+					limit = {
+						state = 252
+					} 	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}	
+					create_unit = {
+						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+						owner = SOV
+					}
+				}
+			}
+			custom_effect_tooltip = "Spawns 24 	Strelkovaya Diviziya - Reinforcements divisions in Gorki"			
 			country_event = soviet.122
 		}
 	}
@@ -4829,85 +6461,176 @@ SOV_great_patriotic_war = {
 		   		idea = winter_offensive
 		   		days = 100
 		   	}
-			hidden_effect = {
-				random_owned_controlled_state = {
-					limit = {
-						OR = {
-							state = 219
-							state = 195
-							state = 217
-							state = 252
-							state = 249
-						}
-						ROOT = { has_full_control_of_state = PREV } 
-					} 
-					prioritize = { 219 }	
-					create_unit = {
-						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
-						owner = SOV
-					}				
-					create_unit = {
-						division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
-						owner = SOV
-					}	
-					create_unit = {
-						division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
-						owner = SOV
-					}				
-					create_unit = {
-						division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
-						owner = SOV
+			sound_effect = sp_sov_stalin
+			every_country = {
+				set_variable = { var = super_event value = 13 }	 
+			}
+			sound_effect = se_winter_counter_offensive
+			if = {
+				limit = {
+					any_state = {
+						has_state_flag = GER_war_zone_flag
 					}
-					create_unit = {
-						division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
-						owner = SOV
-					}				
-					create_unit = {
-						division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
-						owner = SOV
-					}
-					create_unit = {
-						division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
-						owner = SOV
-					}				
-					create_unit = {
-						division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
-						owner = SOV
-					}
-					create_unit = {
-						division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
-						owner = SOV
-					}				
-					create_unit = {
-						division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
-						owner = SOV
-					}
-
 				}
-				sound_effect = sp_sov_stalin
-				every_country = {
-					set_variable = { var = super_event value = 13 }	 
-				}
-				sound_effect = se_winter_counter_offensive
-				if = {
-					limit = {
-						any_state = {
-							has_state_flag = GER_war_zone_flag
-						}
-					}
-					remove_dynamic_modifier = { modifier = GER_war_zone_modifier }
-				}
- 				
+				remove_dynamic_modifier = { modifier = GER_war_zone_modifier }
 			}
 			set_country_flag = SOVwintercounteroffense	
+			if = {
+				limit = {
+					NOT = {
+						OR = {
+							has_tech = large_front_operations
+							has_tech = peoples_army
+						}
+					}
+				}
+
+				hidden_effect = {
+					random_owned_controlled_state = {
+						limit = {
+							OR = {
+								state = 219
+								state = 195
+								state = 217
+								state = 252
+								state = 249
+							}
+							ROOT = { has_full_control_of_state = PREV } 
+						} 
+						prioritize = { 219 }	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
+							owner = SOV
+						}
+
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					OR = {
+						has_tech = large_front_operations
+						has_tech = peoples_army
+					}
+				}
+
+				hidden_effect = {
+					random_owned_controlled_state = {
+						limit = {
+							OR = {
+								state = 219
+								state = 195
+								state = 217
+								state = 252
+								state = 249
+							}
+							ROOT = { has_full_control_of_state = PREV } 
+						} 
+						prioritize = { 219 }	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"Strelkovaya Diviziya\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.6 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"NKVD Division\" division_template = \"NKVD Division\" start_experience_factor = 0.1 start_equipment_factor = 1" 
+							owner = SOV
+						}
+
+					}
+				}
+			}
 		}
 	}
 		
@@ -5305,7 +7028,10 @@ SOV_global_revolution = {
 		remove_effect = {
 			add_political_power = 100
 			add_war_support = 0.05
-			PRC = {
+			random_country = {
+				limit = {
+					Tag = PRC
+				}
 				add_offsite_building = { type = arms_factory level = -3 }
 			}
 		}
@@ -5469,7 +7195,7 @@ SOV_5_year_plan_decisions = {
 				}
 				add_resource = {
 					type = oil
-					amount = 6
+					amount = 9
 				}
 				add_extra_state_shared_building_slots = 1 
 				add_building_construction = {
