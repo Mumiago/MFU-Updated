@@ -3662,28 +3662,30 @@ focus_tree = {
 				idea = SOV_tank_bureaus 
 				days = 180 
 			}
-			
-			add_equipment_to_stockpile = { type = light_tank_chassis_1936 amount = 450 producer = SOV }
-			add_equipment_to_stockpile = { type = armored_cars_equipment_2 amount = 750 producer = SOV }
-			if = {
-				limit = {
-					has_tech = sov_1939_medium_tank_chassis 
-				}
-				add_equipment_to_stockpile = { type = medium_tank_chassis_1939 amount = 500 producer = SOV }
-			}
-			if = {
-				limit = {
-					has_tech = sov_1940_heavy_tank_chassis 
-				}
-				add_equipment_to_stockpile = { type = heavy_tank_chassis_1940 amount = 400 producer = SOV }
-			}
-
 			add_tech_bonus = {
 				name = SOV_armored_cavalry
 				bonus = 0.75
 				uses = 1
 				category = armor
 			}
+			
+			add_equipment_to_stockpile = { type = light_tank_chassis_1936 amount = 450 producer = SOV }
+			add_equipment_to_stockpile = { type = armored_cars_equipment_2 amount = 750 producer = SOV }
+			hidden_effect = {
+			    if = {
+				    limit = {
+					    has_tech = sov_1939_medium_tank_chassis 
+				    }
+				    add_equipment_to_stockpile = { type = medium_tank_chassis_1939 amount = 500 producer = SOV }
+			    }
+			    if = {
+				    limit = {
+					     has_tech = sov_1940_heavy_tank_chassis 
+				    }
+				    add_equipment_to_stockpile = { type = heavy_tank_chassis_1940 amount = 400 producer = SOV }
+			    }
+            }
+			custom_effect_tooltip = SOV_bureau_tt
 		}
 	}
 
@@ -3969,8 +3971,8 @@ focus_tree = {
 	}
 
 	focus = {
-		id = SOV_modernize_cavalry_tactics
-		icon = GFX_SOV_mass_mechanization
+		id = SOV_rolling_fortress
+		icon = GFX_SOV_KV5
 		search_filters = { FOCUS_FILTER_WAR_SUPPORT }
 		cost = 5
 		prerequisite = {
@@ -3979,7 +3981,7 @@ focus_tree = {
 
 		cancel_if_invalid = yes
 
-		x = 2
+		x = 0
 		y = 1
 		ai_will_do = {
 			factor = 1.5
@@ -3988,14 +3990,18 @@ focus_tree = {
 				has_war = yes
 			}
 		}
+		available = {
+			has_tech = assembly_line_production
+			has_tech = sov_1940_heavy_tank_chassis
+		}
 		relative_position_id = SOV_armored_cavalry
 		completion_reward = {
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = land_doctrine
+			hidden_effect = {
+				set_technology = {
+					sov_1941_super_heavy_tank_chassis = 1
+				}
 			}
+			custom_effect_tooltip = SOV_KV5_tt
 		}
 	}
 
@@ -4010,7 +4016,7 @@ focus_tree = {
 
 		cancel_if_invalid = yes
 
-		x = 0
+		x = 2
 		y = 1
 		ai_will_do = {
 			factor = 1.5
