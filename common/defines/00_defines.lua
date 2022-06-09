@@ -1107,7 +1107,7 @@ NAir = {
 	NAVAL_STRIKE_DAMAGE_TO_ORG = 1,					-- Balancing value to convert damage ( naval_strike_attack * hits ) to Organisation reduction.
 	NAVAL_STRIKE_CARRIER_MULTIPLIER = 6,              -- damage bonus when planes are in naval combat where their carrier is present (and can thus sortie faster and more effectively)																																													 
 	NAVAL_STRIKE_AIR_VS_AIR_PASS_CHANCE = 0.9,			-- Balancing value to control
-	FIELD_EXPERIENCE_SCALE = 0.001,
+	FIELD_EXPERIENCE_SCALE = 0.00075,
 	FIELD_EXPERIENCE_MAX_PER_DAY = 2,					-- Most xp you can gain per day
 	CLOSE_AIR_SUPPORT_EXPERIENCE_SCALE = 0.00025,			-- How much the experinence gained by CAS is scaled
 	PARADROP_EXPERIENCE_SCALE = 0.03,					-- How much the experinence gained by paradropping is scaled
@@ -1148,7 +1148,7 @@ NAir = {
 	NAVAL_RECON_DETECTION_BALANCE_FACTOR = 0.7,			-- Value used to scale the surface_visibility stats to balance the gameplay, so 100% detection chance still won't spam spotting.
 	LEND_LEASED_EQUIPMENT_EXPERIENCE_GAIN = 0.5,		-- Value used for equipment
 	ANTI_AIR_PLANE_DAMAGE_FACTOR = 0.4,					-- Anti Air Gun Damage factor
-	ANTI_AIR_PLANE_DAMAGE_CHANCE = 0.4,					-- Anti Air Gun hit chance
+	ANTI_AIR_PLANE_DAMAGE_CHANCE = 0.5,					-- Anti Air Gun hit chance
 	ANTI_AIR_ATTACK_TO_DAMAGE_REDUCTION_FACTOR = 0.75,	-- Balancing value to convert equipment stat anti_air_attack to the damage reduction modifier apply to incoming air attacks against units with AA.
 	ANTI_AIR_MAXIMUM_DAMAGE_REDUCTION_FACTOR = 0.7,	-- Maximum damage reduction factor applied to incoming air attacks against units with AA.
 	AIR_DEPLOYMENT_DAYS = 0,							-- Days to deploy one air wing
@@ -1172,12 +1172,12 @@ NAir = {
 
 	AIR_WING_XP_MAX = 1000.0, 											--Per plane XP.
 	AIR_WING_XP_LEVELS = { 100, 200, 300, 400, 550, 700, 900 }, 						--Experience needed to progress to the next level
-	AIR_WING_XP_LOSS_WHEN_KILLED = 250,									--if a plane dies, the game assumes that a pilot with this amount of xp died and recalcs average. 
+	AIR_WING_XP_LOSS_WHEN_KILLED = 100,									--if a plane dies, the game assumes that a pilot with this amount of xp died and recalcs average. 
 	AIR_WING_XP_TRAINING_MAX = 200.0, 									--Max average XP achieved with training.
 	
 	AIR_WING_XP_TRAINING_MISSION_GAIN_DAILY = 3.0, 						--Daily gain when running training exercise mission
-	AIR_WING_XP_AIR_VS_AIR_COMBAT_GAIN = 0.12, 							--Wings in combat gain extra XP	
-	AIR_WING_XP_GROUND_MISSION_COMPLETED_GAIN = 0.12, 					--Bombers bombing, CAS cassing, NBs nbing, kamikazees kamikazeeing, etc.	
+	AIR_WING_XP_AIR_VS_AIR_COMBAT_GAIN = 0.14, 							--Wings in combat gain extra XP	
+	AIR_WING_XP_GROUND_MISSION_COMPLETED_GAIN = 0.14, 					--Bombers bombing, CAS cassing, NBs nbing, kamikazees kamikazeeing, etc.	
 	AIR_WING_XP_RECON_MISSION_COMPLETED_GAIN = 0.05, 					--recon mission
 
 	AIR_WING_COUNTRY_XP_FROM_TRAINING_FACTOR = 0.005, 					--Factor on country Air XP gained from wing training
