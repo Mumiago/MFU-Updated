@@ -645,7 +645,7 @@ NMilitary = {
 
 	FIELD_MARSHAL_PREFERRED_TACTIC_WEIGHT_FACTOR = 0.25, -- extra weight multiplier for the field marhsal preferred tactic when doing weighted random
 
-	PREFERRED_TACTIC_CHARACTER_SKILL_LEVEL_REQUIRED = 3, -- Which level a field marhal or general has to be before they can pick their preferred tactic
+	PREFERRED_TACTIC_CHARACTER_SKILL_LEVEL_REQUIRED = 4, -- Which level a field marhal or general has to be before they can pick their preferred tactic
 
 	RELIABILITY_ORG_REGAIN = -0.5,                 -- how much reliability affects org regain
 	RELIABILITY_ORG_MOVING = -1.0,                 -- how much reliability affects org loss on moving
@@ -1176,8 +1176,8 @@ NAir = {
 	AIR_WING_XP_TRAINING_MAX = 200.0, 									--Max average XP achieved with training.
 	
 	AIR_WING_XP_TRAINING_MISSION_GAIN_DAILY = 3.0, 						--Daily gain when running training exercise mission
-	AIR_WING_XP_AIR_VS_AIR_COMBAT_GAIN = 0.14, 							--Wings in combat gain extra XP	
-	AIR_WING_XP_GROUND_MISSION_COMPLETED_GAIN = 0.14, 					--Bombers bombing, CAS cassing, NBs nbing, kamikazees kamikazeeing, etc.	
+	AIR_WING_XP_AIR_VS_AIR_COMBAT_GAIN = 0.2, 							--Wings in combat gain extra XP	
+	AIR_WING_XP_GROUND_MISSION_COMPLETED_GAIN = 0.2, 					--Bombers bombing, CAS cassing, NBs nbing, kamikazees kamikazeeing, etc.	
 	AIR_WING_XP_RECON_MISSION_COMPLETED_GAIN = 0.05, 					--recon mission
 
 	AIR_WING_COUNTRY_XP_FROM_TRAINING_FACTOR = 0.005, 					--Factor on country Air XP gained from wing training
@@ -2003,9 +2003,9 @@ NCharacter = {
 	COUNTRY_LEADER_BASE_EXPIRE_YEAR_LENGTH = 5, -- When creating a dynamic country leader if an expire date is not set it will have 5 years as a base expiration date
 	COUNTRY_LEADER_BASE_RANDOM_MAX_YEAR_LENGTH = 15, -- Max random value added to COUNTRY_LEADER_BASE_EXPIRE_YEAR_LENGTH
 
-	SPECIALIST_ADVISOR_MIN_RANK = 2,
-	EXPERT_ADVISOR_MIN_RANK = 4,
-	GENIUS_ADVISOR_MIN_RANK = 6,
+	SPECIALIST_ADVISOR_MIN_RANK = 3,
+	EXPERT_ADVISOR_MIN_RANK = 5,
+	GENIUS_ADVISOR_MIN_RANK = 7,
 },
 NAITheatre = {
 	AI_THEATRE_GENERATION_HOME_THEATRE_DEPTH_RESTRICTION = 2,			-- The home theatre is generated based off a initial depth restriction
