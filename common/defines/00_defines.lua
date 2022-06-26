@@ -1170,7 +1170,7 @@ NAir = {
 	EFFICIENCY_REGION_CHANGE_DAILY_GAIN_FIGHTER = 0.888,			-- How much efficiency to regain per day. Gain applied hourly.
 	EFFICIENCY_REGION_CHANGE_DAILY_GAIN_STRATEGIC_BOMBER = 0.036,	-- How much efficiency to regain per day. Gain applied hourly.
 
-	AIR_WING_XP_MAX = 1000.0, 											--Per plane XP.
+	AIR_WING_XP_MAX = 800.0, 											--Per plane XP.
 	AIR_WING_XP_LEVELS = { 100, 200, 300, 400, 550, 700, 900 }, 						--Experience needed to progress to the next level
 	AIR_WING_XP_LOSS_WHEN_KILLED = 100,									--if a plane dies, the game assumes that a pilot with this amount of xp died and recalcs average. 
 	AIR_WING_XP_TRAINING_MAX = 200.0, 									--Max average XP achieved with training.
