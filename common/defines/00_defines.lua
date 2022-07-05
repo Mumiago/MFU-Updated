@@ -1339,8 +1339,8 @@ NSupply = {
 	SUPPLY_BASE_MULT = 0.2,							-- multiplier on supply base values
 	SUPPLY_DISRUPTION_DAILY_RECOVERY = 1.5,		-- every day nodes recover this much of their accumulated disruption.
 
-	RAILWAY_CONVERSION_COOLDOWN = 10, -- railways will be put on cooldown when they are captured by enemy and will not be usable during the cooldown
-	RAILWAY_CONVERSION_COOLDOWN_CORE = 5,
+	RAILWAY_CONVERSION_COOLDOWN = 5, -- railways will be put on cooldown when they are captured by enemy and will not be usable during the cooldown
+	RAILWAY_CONVERSION_COOLDOWN_CORE = 3,
 	RAILWAY_CONVERSION_COOLDOWN_CIVILWAR = 0,
 
 	DEFAULT_STARTING_TRUCK_RATIO = 1.5, -- countries get this ratio of starting truck in their buffers compared to their need
