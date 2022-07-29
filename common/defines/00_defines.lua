@@ -520,11 +520,11 @@ NProduction = {
 	EQUIPMENT_MODULE_REPLACE_XP_COST = 0,				-- XP cost for replacing one equipment module with an unrelated module when creating an equipment variant.
 	EQUIPMENT_MODULE_CONVERT_XP_COST = 0,				-- XP cost for converting one equipment module to a related module when creating an equipment variant.
 	EQUIPMENT_MODULE_REMOVE_XP_COST = 0,				-- XP cost for removing an equipment module and leaving the slot empty when creating an equipment variant.
-	MIN_NAVAL_EQUIPMENT_CONVERSION_IC_COST_FACTOR = 0.1,		-- Minimum fraction of an equipment type's base industry capacity cost to use when converting a naval equipment, such as through ship refitting.
-	MIN_NAVAL_EQUIPMENT_CONVERSION_RESOURCE_COST_FACTOR = 0.1,	-- Minimum fraction of an equipment type's base strategic resource cost to use when converting a naval equipment, such as through ship refitting.
+	MIN_NAVAL_EQUIPMENT_CONVERSION_IC_COST_FACTOR = 0.08,		-- Minimum fraction of an equipment type's base industry capacity cost to use when converting a naval equipment, such as through ship refitting.
+	MIN_NAVAL_EQUIPMENT_CONVERSION_RESOURCE_COST_FACTOR = 0.08,	-- Minimum fraction of an equipment type's base strategic resource cost to use when converting a naval equipment, such as through ship refitting.
 	MIN_LAND_EQUIPMENT_CONVERSION_IC_COST_FACTOR = 1,		-- Fraction of the chassis industry cost which is always included in the conversion cost.
-	SHIP_REFIT_MAX_PROGRESS_TO_CANCEL = 0.2,			-- Maximum refitting progress % that we still allow to cancel wihtout having to scuttle the ship.
-	SHIP_REFIT_DAMAGE_TO_PROGRESS_FACTOR = 0.5,			-- When a ship is being damaged (for example port strike) while refitting, the damage is transferred to the production line progress instead. This variable is used to balance it.
+	SHIP_REFIT_MAX_PROGRESS_TO_CANCEL = 0.8,			-- Maximum refitting progress % that we still allow to cancel wihtout having to scuttle the ship.
+	SHIP_REFIT_DAMAGE_TO_PROGRESS_FACTOR = 0.1,			-- When a ship is being damaged (for example port strike) while refitting, the damage is transferred to the production line progress instead. This variable is used to balance it.
 	MIN_LAND_EQUIPMENT_CONVERSION_RESOURCE_COST_FACTOR = 1,		-- Minimum fraction of a land equipment's strategic resource cost that any conversion will cost.
 },
 
@@ -571,7 +571,7 @@ NBuildings = {
 	AIRBASE_CAPACITY_MULT = 100,		-- Each level of airbase building multiplied by this, gives capacity (max operational value). Value is int. 1 for each airplane.
 	ROCKETSITE_CAPACITY_MULT = 100,		-- Each level of rocketsite building multiplied by this, gives capacity (max operational value). Value is int. 1 for each rocket.
 	NAVALBASE_CAPACITY_MULT = 15.0,		-- Each level of navalbase building multiplied by this, gives max capacity. Value is float. Each ship takes port_capacity_usage space.
-	NAVALBASE_REPAIR_MULT = 0.1,		-- Each level of navalbase building repairs X strength. The value is spread on all ships needed reparation. Fe Navalbase lvl 5 x 0.5 str repair = 2.5 str repaired over 10 ships, so each ship repair hourly 0.25 str.
+	NAVALBASE_REPAIR_MULT = 0.3,		-- Each level of navalbase building repairs X strength. The value is spread on all ships needed reparation. Fe Navalbase lvl 5 x 0.5 str repair = 2.5 str repaired over 10 ships, so each ship repair hourly 0.25 str.
 	RADAR_RANGE_BASE = 15,				-- Radar range base, first level radar will be this + min, best radar will be this + max
 	RADAR_RANGE_MIN = 15,				-- Radar range (from state center to province center) in measure of map pixels. Exluding techs.
 	RADAR_RANGE_MAX = 150,				-- Range is interpolated between building levels 1-15.
@@ -1103,8 +1103,8 @@ NAir = {
 	PORT_STRIKES_DELAY_MULTIPLIER = 3,					-- multplies HOURS_DELAY_AFTER_EACH_COMBAT if port strikes																								  
 	CARRIER_HOURS_DELAY_AFTER_EACH_COMBAT = 6,          -- how often carrier planes do battle inside naval combat
 	NAVAL_STRIKE_TARGETTING_TO_AMOUNT = 0.3,			-- Balancing value to convert the naval_strike_targetting equipment stats to chances of how many airplanes managed to do successfull strike.
-	NAVAL_STRIKE_DAMAGE_TO_STR = 2,					-- Balancing value to convert damage ( nanaval_strike_attackval_strike_attack * hits ) to Strength reduction.
-	NAVAL_STRIKE_DAMAGE_TO_ORG = 1,					-- Balancing value to convert damage ( naval_strike_attack * hits ) to Organisation reduction.
+	NAVAL_STRIKE_DAMAGE_TO_STR = 2.2,					-- Balancing value to convert damage ( nanaval_strike_attackval_strike_attack * hits ) to Strength reduction.
+	NAVAL_STRIKE_DAMAGE_TO_ORG = 1.1,					-- Balancing value to convert damage ( naval_strike_attack * hits ) to Organisation reduction.
 	NAVAL_STRIKE_CARRIER_MULTIPLIER = 6,              -- damage bonus when planes are in naval combat where their carrier is present (and can thus sortie faster and more effectively)																																													 
 	NAVAL_STRIKE_AIR_VS_AIR_PASS_CHANCE = 0.9,			-- Balancing value to control
 	FIELD_EXPERIENCE_SCALE = 0.00075,
@@ -1545,8 +1545,8 @@ NNavy = {
 	NAVAL_TRANSFER_BASE_NAVAL_DIST_ADD = 100,						-- Extra cost for naval movement ( compared to land movement ) when deciding what ports to use for a naval transfer
 	NAVAL_TRANSFER_BASE_NAVAL_DIST_MULT = 20,						-- Multiplier for the cost of naval movement ( compared to land movement ) when deciding what ports to use for naval transfer
 	NAVAL_SUPREMACY_CAN_INVADE = 0.5,								-- required naval supremacy to perform invasions on an area
-	CARRIER_STACK_PENALTY = 6,										-- The most efficient is 4 carriers in combat. 5+ brings the penalty to the amount of wings in battle.
-	CARRIER_STACK_PENALTY_EFFECT = 0.2,								-- Each carrier above the optimal amount decreases the amount of airplanes being able to takeoff by such %.
+	CARRIER_STACK_PENALTY = 10,										-- The most efficient is 4 carriers in combat. 5+ brings the penalty to the amount of wings in battle.
+	CARRIER_STACK_PENALTY_EFFECT = 0.3,								-- Each carrier above the optimal amount decreases the amount of airplanes being able to takeoff by such %.
 	SHORE_BOMBARDMENT_CAP = 0.3,
 	ANTI_AIR_TARGETING = 0.8,                                       -- how good ships are at hitting aircraft
 	MIN_TRACTED_ASSIST_DAMAGE_RATIO = 0.05,							-- How much damage counts as assist damage
@@ -1563,7 +1563,7 @@ NNavy = {
 	XP_GAIN_FACTOR = 1.0,	   			   							-- xp gain factor for navy
 
 	NAVAL_TRANSFER_DAMAGE_REDUCTION = 0.25,							-- its hard to specifically balance 1-tick naval strikes vs unit transports so here is a factor for it
-	CARRIER_ONLY_COMBAT_ACTIVATE_TIME = 0,							-- hours from start of combat when carriers get to fight
+	CARRIER_ONLY_COMBAT_ACTIVATE_TIME = 6,							-- hours from start of combat when carriers get to fight
 	CAPITAL_ONLY_COMBAT_ACTIVATE_TIME = 0,                          -- hours from start of combat when only carriers, capitals and subs get to attack
 	ALL_SHIPS_ACTIVATE_TIME = 0,                                    -- hours where all get to attack
 	
