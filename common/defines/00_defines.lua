@@ -520,11 +520,11 @@ NProduction = {
 	EQUIPMENT_MODULE_REPLACE_XP_COST = 0,				-- XP cost for replacing one equipment module with an unrelated module when creating an equipment variant.
 	EQUIPMENT_MODULE_CONVERT_XP_COST = 0,				-- XP cost for converting one equipment module to a related module when creating an equipment variant.
 	EQUIPMENT_MODULE_REMOVE_XP_COST = 0,				-- XP cost for removing an equipment module and leaving the slot empty when creating an equipment variant.
-	MIN_NAVAL_EQUIPMENT_CONVERSION_IC_COST_FACTOR = 0.1,		-- Minimum fraction of an equipment type's base industry capacity cost to use when converting a naval equipment, such as through ship refitting.
-	MIN_NAVAL_EQUIPMENT_CONVERSION_RESOURCE_COST_FACTOR = 0.1,	-- Minimum fraction of an equipment type's base strategic resource cost to use when converting a naval equipment, such as through ship refitting.
+	MIN_NAVAL_EQUIPMENT_CONVERSION_IC_COST_FACTOR = 0.08,		-- Minimum fraction of an equipment type's base industry capacity cost to use when converting a naval equipment, such as through ship refitting.
+	MIN_NAVAL_EQUIPMENT_CONVERSION_RESOURCE_COST_FACTOR = 0.08,	-- Minimum fraction of an equipment type's base strategic resource cost to use when converting a naval equipment, such as through ship refitting.
 	MIN_LAND_EQUIPMENT_CONVERSION_IC_COST_FACTOR = 1,		-- Fraction of the chassis industry cost which is always included in the conversion cost.
-	SHIP_REFIT_MAX_PROGRESS_TO_CANCEL = 0.2,			-- Maximum refitting progress % that we still allow to cancel wihtout having to scuttle the ship.
-	SHIP_REFIT_DAMAGE_TO_PROGRESS_FACTOR = 0.5,			-- When a ship is being damaged (for example port strike) while refitting, the damage is transferred to the production line progress instead. This variable is used to balance it.
+	SHIP_REFIT_MAX_PROGRESS_TO_CANCEL = 0.8,			-- Maximum refitting progress % that we still allow to cancel wihtout having to scuttle the ship.
+	SHIP_REFIT_DAMAGE_TO_PROGRESS_FACTOR = 0.1,			-- When a ship is being damaged (for example port strike) while refitting, the damage is transferred to the production line progress instead. This variable is used to balance it.
 	MIN_LAND_EQUIPMENT_CONVERSION_RESOURCE_COST_FACTOR = 1,		-- Minimum fraction of a land equipment's strategic resource cost that any conversion will cost.
 },
 
@@ -571,7 +571,7 @@ NBuildings = {
 	AIRBASE_CAPACITY_MULT = 100,		-- Each level of airbase building multiplied by this, gives capacity (max operational value). Value is int. 1 for each airplane.
 	ROCKETSITE_CAPACITY_MULT = 100,		-- Each level of rocketsite building multiplied by this, gives capacity (max operational value). Value is int. 1 for each rocket.
 	NAVALBASE_CAPACITY_MULT = 15.0,		-- Each level of navalbase building multiplied by this, gives max capacity. Value is float. Each ship takes port_capacity_usage space.
-	NAVALBASE_REPAIR_MULT = 0.1,		-- Each level of navalbase building repairs X strength. The value is spread on all ships needed reparation. Fe Navalbase lvl 5 x 0.5 str repair = 2.5 str repaired over 10 ships, so each ship repair hourly 0.25 str.
+	NAVALBASE_REPAIR_MULT = 0.3,		-- Each level of navalbase building repairs X strength. The value is spread on all ships needed reparation. Fe Navalbase lvl 5 x 0.5 str repair = 2.5 str repaired over 10 ships, so each ship repair hourly 0.25 str.
 	RADAR_RANGE_BASE = 15,				-- Radar range base, first level radar will be this + min, best radar will be this + max
 	RADAR_RANGE_MIN = 15,				-- Radar range (from state center to province center) in measure of map pixels. Exluding techs.
 	RADAR_RANGE_MAX = 150,				-- Range is interpolated between building levels 1-15.
@@ -749,8 +749,8 @@ NMilitary = {
 	ENEMY_AIR_SUPERIORITY_DEFENSE_STEEPNESS = 75, -- how quickly defense approaches the max impact diminishing returns curve
 	ENEMY_AIR_SUPERIORITY_SPEED_IMPACT = -0.2,     -- effect on speed due to enemy air superiority
 
-	ANTI_AIR_TARGETTING_TO_CHANCE = 0.06,			-- Balancing value to determine the chance of ground AA hitting an attacking airplane, affecting both the effective average damage done by AA to airplanes, and the reduction of damage done by airplanes due to AA support
-	ANTI_AIR_ATTACK_TO_AMOUNT = 0.004,				-- Balancing value to convert equipment stat anti_air_attack to the random % value of airplanes being hit.																																																																
+	ANTI_AIR_TARGETTING_TO_CHANCE = 0.05,			-- Balancing value to determine the chance of ground AA hitting an attacking airplane, affecting both the effective average damage done by AA to airplanes, and the reduction of damage done by airplanes due to AA support
+	ANTI_AIR_ATTACK_TO_AMOUNT = 0.003,				-- Balancing value to convert equipment stat anti_air_attack to the random % value of airplanes being hit.																																																																
 
 	ENCIRCLED_PENALTY = -0.3,                      -- penalty when completely encircled
 	WARSCORE_WINNER_FACTOR = 1,						-- Warscore effect on winners
@@ -884,7 +884,7 @@ NMilitary = {
 	PLAN_BLITZ_OPTIMISM = 0.2,						-- Additional combat balance value in favor of blitzing side when considering targets (not a combat bonus, just offsets planning)
 	
 	FLANKED_PROVINCES_COUNT = 3,					-- Attacker has to attack from that many provinces for the attack to be considered as flanking
-	NUKE_MIN_DAMAGE_PERCENT = 0.1,					-- Minimum damage from nukes as a percentage of current strength/organisation
+	NUKE_MIN_DAMAGE_PERCENT = 0.9,					-- Minimum damage from nukes as a percentage of current strength/organisation
 	NUKE_MAX_DAMAGE_PERCENT = 0.9,					-- Minimum damage from nukes as a percentage of current strength/organisation
 	EQUIPMENT_REPLACEMENT_RATIO = 0.1,				-- Equipment min ratio after blocking the equipment type
 	NUKE_DELAY_HOURS = 12,							-- How many hours does it take for the nuclear drop to happen
@@ -1088,7 +1088,7 @@ NAir = {
 	AIR_REGION_SUPERIORITY_PIXEL_SCALE = 0.04,           -- air superiority scale = superiority/(pixels*this)
 	COMBAT_SUP_VS_SUP_ATTACK_CHANCE_SPEED_DIFF = 0.25, 	-- How much diff in speed between aircrafts affects the chance of who attacks first in superiority vs superiority.( Naval air combat only )
 	COMBAT_MULTIPLANE_CAP = 1.5,						-- How many planes can shoot at each plane on other side ( if there are 100 planes we are atttacking COMBAT_MULTIPLANE_CAP * 100 of our planes can shoot )
-	COMBAT_DAMAGE_SCALE = 0.04,							-- Higher value = more shot down planes
+	COMBAT_DAMAGE_SCALE = 0.06,							-- Higher value = more shot down planes
 	COMBAT_DAMAGE_SCALE_CARRIER = 5,                    -- same as above but used inside naval combat for carrier battles																								   
 	DETECT_CHANCE_FROM_OCCUPATION = 0.15, 				-- How much the controlled provinces in area affects the air detection base value.
 	DETECT_CHANCE_FROM_RADARS = 0.6, 					-- How much the radars in area affects detection chance.
@@ -1103,8 +1103,8 @@ NAir = {
 	PORT_STRIKES_DELAY_MULTIPLIER = 3,					-- multplies HOURS_DELAY_AFTER_EACH_COMBAT if port strikes																								  
 	CARRIER_HOURS_DELAY_AFTER_EACH_COMBAT = 6,          -- how often carrier planes do battle inside naval combat
 	NAVAL_STRIKE_TARGETTING_TO_AMOUNT = 0.3,			-- Balancing value to convert the naval_strike_targetting equipment stats to chances of how many airplanes managed to do successfull strike.
-	NAVAL_STRIKE_DAMAGE_TO_STR = 2,					-- Balancing value to convert damage ( nanaval_strike_attackval_strike_attack * hits ) to Strength reduction.
-	NAVAL_STRIKE_DAMAGE_TO_ORG = 1,					-- Balancing value to convert damage ( naval_strike_attack * hits ) to Organisation reduction.
+	NAVAL_STRIKE_DAMAGE_TO_STR = 2.2,					-- Balancing value to convert damage ( nanaval_strike_attackval_strike_attack * hits ) to Strength reduction.
+	NAVAL_STRIKE_DAMAGE_TO_ORG = 1.1,					-- Balancing value to convert damage ( naval_strike_attack * hits ) to Organisation reduction.
 	NAVAL_STRIKE_CARRIER_MULTIPLIER = 6,              -- damage bonus when planes are in naval combat where their carrier is present (and can thus sortie faster and more effectively)																																													 
 	NAVAL_STRIKE_AIR_VS_AIR_PASS_CHANCE = 0.9,			-- Balancing value to control
 	FIELD_EXPERIENCE_SCALE = 0.00075,
@@ -1131,7 +1131,7 @@ NAir = {
 	BASE_STRATEGIC_BOMBING_HIT_SHIP_DAMAGE_FACTOR = 50,
 	BASE_STRATEGIC_BOMBING_HIT_PLANE_CHANCE = 0.5,		-- Chance to hit a plane in airbase when it is bombed.
 	BASE_STRATEGIC_BOMBING_HIT_PLANE_DAMAGE_FACTOR = 0.2,
-	STRATEGIC_BOMBER_NUKE_AIR_SUPERIORITY = 0.75,		-- How much air superiority is needed for a tactical bomber to be able to nuke a province
+	STRATEGIC_BOMBER_NUKE_AIR_SUPERIORITY = 0.6,		-- How much air superiority is needed for a tactical bomber to be able to nuke a province
 	AGGRESSION_THRESHOLD = { 0.0, 0.25, 0.5 },			-- Threshold levels for mission aggressivity for air
  
 	ACE_WING_SIZE =	200,								-- size of wing ace bonuses are set up for. if lower more bonus, if higher less bonus
@@ -1148,7 +1148,7 @@ NAir = {
 	NAVAL_RECON_DETECTION_BALANCE_FACTOR = 0.7,			-- Value used to scale the surface_visibility stats to balance the gameplay, so 100% detection chance still won't spam spotting.
 	LEND_LEASED_EQUIPMENT_EXPERIENCE_GAIN = 0.5,		-- Value used for equipment
 	ANTI_AIR_PLANE_DAMAGE_FACTOR = 0.3,					-- Anti Air Gun Damage factor
-	ANTI_AIR_PLANE_DAMAGE_CHANCE = 0.4,					-- Anti Air Gun hit chance
+	ANTI_AIR_PLANE_DAMAGE_CHANCE = 0.35,					-- Anti Air Gun hit chance
 	ANTI_AIR_ATTACK_TO_DAMAGE_REDUCTION_FACTOR = 0.75,	-- Balancing value to convert equipment stat anti_air_attack to the damage reduction modifier apply to incoming air attacks against units with AA.
 	ANTI_AIR_MAXIMUM_DAMAGE_REDUCTION_FACTOR = 0.7,	-- Maximum damage reduction factor applied to incoming air attacks against units with AA.
 	AIR_DEPLOYMENT_DAYS = 0,							-- Days to deploy one air wing
@@ -1415,7 +1415,7 @@ NSupply = {
 },
 NRailwayGun = {
 	RAILWAY_GUN_RANGE = 30,							-- The range of railway guns in pixels
-	ATTACK_TO_FORTS_MODIFIER_FACTOR = 1.333,		-- Forts modifier is calculated by multiplying railway gun attack value with this and dividing by 100
+	ATTACK_TO_FORTS_MODIFIER_FACTOR = 0.8,		-- Forts modifier is calculated by multiplying railway gun attack value with this and dividing by 100
 	ATTACK_TO_ENTRENCHMENT_MODIFIER_FACTOR = 0.8,		-- Entrenchment modifier is calculated by multiplying railway gun attack value with this and dividing by 100
 	ATTACK_TO_BOMBARDMENT_MODIFIER_FACTOR = 0.4,	-- Bombardment modifier is calculated by multiplying railway gun attack value with this and dividing by 100
 	DAILY_MANPOWER_GAIN_RATIO = 0.05,				-- Railway Guns will be able to gain this ratio of their max manpower daily
@@ -1494,7 +1494,7 @@ NNavy = {
 	COMBAT_BASE_CRITICAL_CHANCE = 0.05,								-- Base chance for receiving a critical chance. It get's scaled down with ship reliability.
 	COMBAT_CRITICAL_DAMAGE_MULT = 5.0,								-- Multiplier for the critical damage. Scaled down with the ship reliability.
 	COMBAT_ARMOR_PIERCING_CRITICAL_BONUS = 2.0,						-- Bonus to critical chance when shooter armor piercing is higher then target armor.
-	COMBAT_ARMOR_PIERCING_DAMAGE_REDUCTION = -0.85,					-- All damage reduction % when target armor is >= then shooter armor piercing.
+	COMBAT_ARMOR_PIERCING_DAMAGE_REDUCTION = -0.9,					-- All damage reduction % when target armor is >= then shooter armor piercing.
 	REPAIR_AND_RETURN_PRIO_LOW = 0.2,								-- % of total Strength. When below, navy will go to home base to repair.
 	REPAIR_AND_RETURN_PRIO_MEDIUM = 0.5,							-- % of total Strength. When below, navy will go to home base to repair.
 	REPAIR_AND_RETURN_PRIO_HIGH = 0.9,								-- % of total Strength. When below, navy will go to home base to repair.
@@ -1545,8 +1545,8 @@ NNavy = {
 	NAVAL_TRANSFER_BASE_NAVAL_DIST_ADD = 100,						-- Extra cost for naval movement ( compared to land movement ) when deciding what ports to use for a naval transfer
 	NAVAL_TRANSFER_BASE_NAVAL_DIST_MULT = 20,						-- Multiplier for the cost of naval movement ( compared to land movement ) when deciding what ports to use for naval transfer
 	NAVAL_SUPREMACY_CAN_INVADE = 0.5,								-- required naval supremacy to perform invasions on an area
-	CARRIER_STACK_PENALTY = 6,										-- The most efficient is 4 carriers in combat. 5+ brings the penalty to the amount of wings in battle.
-	CARRIER_STACK_PENALTY_EFFECT = 0.2,								-- Each carrier above the optimal amount decreases the amount of airplanes being able to takeoff by such %.
+	CARRIER_STACK_PENALTY = 10,										-- The most efficient is 4 carriers in combat. 5+ brings the penalty to the amount of wings in battle.
+	CARRIER_STACK_PENALTY_EFFECT = 0.3,								-- Each carrier above the optimal amount decreases the amount of airplanes being able to takeoff by such %.
 	SHORE_BOMBARDMENT_CAP = 0.3,
 	ANTI_AIR_TARGETING = 0.8,                                       -- how good ships are at hitting aircraft
 	MIN_TRACTED_ASSIST_DAMAGE_RATIO = 0.05,							-- How much damage counts as assist damage
@@ -1563,7 +1563,7 @@ NNavy = {
 	XP_GAIN_FACTOR = 1.0,	   			   							-- xp gain factor for navy
 
 	NAVAL_TRANSFER_DAMAGE_REDUCTION = 0.25,							-- its hard to specifically balance 1-tick naval strikes vs unit transports so here is a factor for it
-	CARRIER_ONLY_COMBAT_ACTIVATE_TIME = 0,							-- hours from start of combat when carriers get to fight
+	CARRIER_ONLY_COMBAT_ACTIVATE_TIME = 6,							-- hours from start of combat when carriers get to fight
 	CAPITAL_ONLY_COMBAT_ACTIVATE_TIME = 0,                          -- hours from start of combat when only carriers, capitals and subs get to attack
 	ALL_SHIPS_ACTIVATE_TIME = 0,                                    -- hours where all get to attack
 	
@@ -1636,7 +1636,7 @@ NNavy = {
 	
 	AGGRESSION_LIGHT_GUN_EFFICIENCY_ON_LIGHT_SHIPS = 1, -- ratio for scoring for different gun types against light ships
 	AGGRESSION_HEAVY_GUN_EFFICIENCY_ON_LIGHT_SHIPS = 0.2,-- ratio for scoring for different gun types against light ships
-	AGGRESSION_TORPEDO_EFFICIENCY_ON_LIGHT_SHIPS = 0.1,   -- ratio for scoring for different gun types against light ships
+	AGGRESSION_TORPEDO_EFFICIENCY_ON_LIGHT_SHIPS = 0.15,   -- ratio for scoring for different gun types against light ships
 	
 	AGGRESSION_LIGHT_GUN_EFFICIENCY_ON_HEAVY_SHIPS = 0.1, -- ratio for scoring for different gun types against heavy ships
 	AGGRESSION_HEAVY_GUN_EFFICIENCY_ON_HEAVY_SHIPS = 2, -- ratio for scoring for different gun types against heavy ships
@@ -1965,9 +1965,9 @@ NNavy = {
 	NAVAL_COMBAT_AIR_SUB_DETECTION_FACTOR = 0.1,						-- A global factor that applies after all others, right before the sub detection contributed by plane is added to the global sub detection of a combatant
 
 	NAVAL_COMBAT_AIR_SUB_TARGET_SCORE = 10,                             -- scoring for target picking for planes inside naval combat, one define per ship typ
-	NAVAL_COMBAT_AIR_CAPITAL_TARGET_SCORE = 300,
+	NAVAL_COMBAT_AIR_CAPITAL_TARGET_SCORE = 500,
 	NAVAL_COMBAT_AIR_CARRIER_TARGET_SCORE = 100,
-	NAVAL_COMBAT_AIR_CONVOY_TARGET_SCORE = 1.0,
+	NAVAL_COMBAT_AIR_CONVOY_TARGET_SCORE = 1,
 	NAVAL_COMBAT_AIR_STRENGTH_TARGET_SCORE = 5,                         -- how much score factor from low health (scales between 0->this number)
 	NAVAL_COMBAT_AIR_LOW_AA_TARGET_SCORE = 25,                           -- how much score factor from low AA guns (scales between 0->this number)
 },

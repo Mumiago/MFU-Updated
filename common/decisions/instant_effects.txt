@@ -118,6 +118,53 @@ PAR_instant_effect_decisions = {
 			set_global_flag = GDU_Battle_Of_France_Missions_Activated
 		}
 	}
+	PAR_italy_lost_africa = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 5000			
+		}
+		available = {
+			ITA = {
+				NOT = { 
+					controls_state = 451 
+					controls_state = 450 
+					controls_state = 448
+					controls_state = 449 
+				}
+			}
+			AND = {
+				ITA = {
+					NOT = {
+						controls_state = 458
+					}
+				}
+				EFR = {
+					NOT = {
+						controls_state = 458
+					}
+				}
+			}
+			OR = {
+				ENG = { controls_state = 271 }
+				any_other_country = {
+				is_in_faction_with = ENG
+				controls_state = 271
+				}
+			}
+		}	
+		fire_only_once = yes
+
+		complete_effect = {
+			ITA = {
+				if = { limit = { has_idea = impero_di_argilla }
+				remove_ideas = impero_di_argilla }
+				if = { limit = { has_idea = impero_di_argilla_2 }
+				remove_ideas = impero_di_argilla_2 }
+				if = { limit = { has_idea = impero_di_argilla_3 }
+				remove_ideas = impero_di_argilla_3 }
+			}
+		}	
+	}
 	PAR_nomohan_or_whatever = {
 		allowed = { tag = PAR }
 		ai_will_do = {
@@ -131,6 +178,64 @@ PAR_instant_effect_decisions = {
 		complete_effect = {
 			JAP = {
 				complete_national_focus = JAP_nomonhan_incident	
+			}
+		}	
+	}
+	PAR_nuke_supereventtrigger = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 5000			
+		}
+		available = {
+			OR = {
+				USA = {
+					OR = {
+						has_idea = USA_economy_of_plunder_50
+						has_idea = USA_heisenberg_device_completed
+					}
+				}
+				GER = {
+					OR = {
+						has_idea = GER_economy_of_plunder_50
+						has_idea = GER_heisenberg_device_completed
+					}
+				}
+			}
+		}
+		fire_only_once = yes
+
+		complete_effect = {
+			hidden_effect = {
+				every_country = {
+					set_variable = { var = super_event value = 15 }
+				}
+				sound_effect = se_nuclear_siren
+			}
+		}	
+	}
+	PAR_usa_focus_dec = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 5000			
+		}
+		available = {
+			USA = {
+				NOT = {
+					controls_state = 327
+				}
+			}
+			USA = {
+				NOT = {
+					has_completed_focus = USA_abandon_philippines
+					has_completed_focus = USA_defend_philippines
+				}
+			}
+		}
+		fire_only_once = yes
+
+		complete_effect = {
+			USA = {
+				complete_national_focus = USA_abandon_philippines	
 			}
 		}	
 	}
