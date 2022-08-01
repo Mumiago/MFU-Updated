@@ -1,0 +1,2279 @@
+scripted_gui = {
+	show_insults_expanded_diplo_action_window = {
+		context_type = selected_country_context
+		
+		window_name = "show_insults_expanded_diplo_action_window"
+		parent_window_token = selected_country_view_diplomacy
+		
+		visible = {
+			NOT = { tag = ROOT }
+			ROOT = {
+				is_ai = no
+				NOT = { has_variable = show_insults_expanded_diplo_actions }
+			}
+		}
+		
+		effects = {
+			open_button_click = {
+				ROOT = { set_variable = { show_insults_expanded_diplo_actions = 1 } }
+			}
+		}
+	}
+	
+	insults_expanded_diplo_action_window = {
+		context_type = selected_country_context
+		
+		window_name = "insults_expanded_diplo_action_window"
+		parent_window_token = selected_country_view_diplomacy
+		
+		visible = {
+			NOT = { tag = ROOT }
+			ROOT = {
+				OR = {
+					has_variable = show_insults_expanded_diplo_actions
+					is_ai = yes
+				}
+			}
+		}
+		
+		effects = {
+			send_insult_diplo_action_button_click = {
+				ROOT = {
+					set_variable = { selected_country_to_insult = PREV.id }
+					randomize_insult_button_effect = yes
+				}
+			}
+			send_insult_diplo_action_selected_button_click = {
+				# No Effect
+			}
+			close_button_click = {
+				ROOT = { clear_variable = show_insults_expanded_diplo_actions }
+			}
+		}
+		
+		triggers = {
+			send_insult_diplo_action_button_visible = {
+				ROOT = {
+					NOT = { check_variable = { selected_country_to_insult = PREV.id } }
+				}
+			}
+			send_insult_diplo_action_button_click_enabled = {
+				OR = {
+					NOT = { has_global_flag = starting_player_voting_for_stability_and_wt_influencing }
+					has_global_flag = starting_player_voting_for_stability_and_wt_influencing_finished
+				}
+				OR = {
+					NOT = { has_country_flag = recently_insulted_by_@ROOT }
+					has_country_flag = {
+						flag = recently_insulted_by_@ROOT
+						days > 2
+					}
+				}
+				ROOT = {
+					NOT = { check_variable = { last_insult_sent_this_amount_of_days_ago > 0 } }
+				}
+			}
+			send_insult_diplo_action_selected_button_visible = {
+				ROOT = {
+					check_variable = { selected_country_to_insult = PREV.id }
+				}
+			}
+		}
+		
+		ai_enabled = {
+			always = yes
+		}
+		
+		ai_test_interval = 4380
+		ai_test_variance = 0.1
+		
+		ai_check = {
+			is_subject = no
+			has_war = no
+			NOT = { has_idea = neutrality_idea }
+			any_neighbor_country = {
+				is_subject = no
+				NOT = { is_in_faction_with = ROOT }
+				NOT = { has_war_with = ROOT }
+				OR = {
+					NOT = { has_country_flag = recently_insulted_by_@ROOT }
+					has_country_flag = {
+						flag = recently_insulted_by_@ROOT
+						days > 2
+					}
+				}
+				OR = {
+					AND = {
+						NOT = { has_government = ROOT }
+						NOT = { has_government = neutrality }
+						NOT = { has_wargoal_against = ROOT }
+					}
+					is_justifying_wargoal_against = ROOT
+				}
+				ROOT = {
+					has_opinion = {
+						target = PREV
+						value < -20
+					}
+					OR = {
+						NOT = { has_government = neutrality }
+						AND = {
+							has_country_flag = recently_insulted_by_@PREV
+							has_country_flag = {
+								flag = recently_insulted_by_@PREV
+								days < 2
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		ai_test_scopes = test_neighbouring_countries
+		
+		ai_check_scope = {
+			is_subject = no
+			NOT = { is_in_faction_with = ROOT }
+			NOT = { has_war_with = ROOT }
+			OR = {
+				NOT = { has_country_flag = recently_insulted_by_@ROOT }
+				has_country_flag = {
+					flag = recently_insulted_by_@ROOT
+					days > 2
+				}
+			}
+			OR = {
+				AND = {
+					NOT = { has_government = ROOT }
+					NOT = { has_government = neutrality }
+					NOT = { has_wargoal_against = ROOT }
+				}
+				is_justifying_wargoal_against = ROOT
+			}
+			ROOT = {
+				has_opinion = {
+					target = PREV
+					value < -20
+				}
+				OR = {
+					NOT = { has_government = neutrality }
+					AND = {
+						has_country_flag = recently_insulted_by_@PREV
+						has_country_flag = {
+							flag = recently_insulted_by_@PREV
+							days < 2
+						}
+					}
+				}
+			}
+		}
+		
+		ai_weights = {
+			send_insult_diplo_action_button_click = {
+				ai_will_do = {
+					factor = 1
+				}
+			}
+			send_insult_diplo_action_selected_button_click = {
+				ai_will_do = {
+					factor = 0
+				}
+			}
+			close_button_click = {
+				ai_will_do = {
+					factor = 0
+				}
+			}
+		}
+	}
+	
+	insults_expanded_popup_sender = {
+		context_type = player_context
+		
+		window_name = "insults_expanded_popup_sender"
+		
+		visible = {
+			has_variable = selected_country_to_insult
+		}
+		
+		effects = {
+			cancel_button_click = {
+				clear_variable = selected_country_to_insult
+				clear_generated_insults_cache = yes
+				if = {
+					limit = {
+						NOT = { has_country_flag = has_sent_a_randomized_insult }
+						has_country_flag = randomized_insult
+					}
+					clr_country_flag = randomized_insult
+				}
+				if = {
+					limit = {
+						NOT = { has_country_flag = has_sent_a_written_insult }
+						has_country_flag = written_insult
+					}
+					clr_country_flag = written_insult
+				}
+			}
+			send_button_click = {
+				set_variable = { last_insult_sent_this_amount_of_days_ago = 5 }
+				var:selected_country_to_insult = {
+					send_insult_effect = yes
+					if = {
+						limit = {
+							is_in_array = { insulters = ROOT.id }
+						}
+						remove_from_array = { insulters = ROOT.id }
+					}
+					add_to_array = { insulters = ROOT.id }
+					if = {
+						limit = {
+							has_country_flag = recently_insulted_by_@ROOT
+						}
+						clr_country_flag = recently_insulted_by_@ROOT
+					}
+					else_if = {
+						limit = {
+							ROOT = {
+								NOT = { has_country_flag = custom_achievement_insulted_back }
+								has_country_flag = recently_insulted_by_@PREV
+							}
+						}
+						ROOT = {
+							set_country_flag = custom_achievement_insulted_back	# custom achievement
+						}
+					}
+					set_country_flag = recently_insulted_by_@ROOT
+					if = {
+						limit = {
+							ROOT = { check_variable = { show_write_insult_menu < 1 } }
+						}
+						set_variable = { type_of_received_insult_@ROOT = ROOT.chosen_type_of_insult }
+					}
+					else_if = {
+						limit = {
+							always = yes
+						}
+						if = {
+							limit = {
+								has_variable = type_of_received_insult_@ROOT
+							}
+							clear_variable = type_of_received_insult_@ROOT
+						}
+						for_each_loop = {
+							array = ROOT.written_type_of_insult_array
+							add_to_array = { received_written_type_of_insult_array_@ROOT = v }
+						}
+					}
+				}
+				clear_variable = selected_country_to_insult
+				clear_generated_insults_cache = yes
+				
+				if = {
+					limit = {
+						NOT = { has_country_flag = has_sent_a_randomized_insult }
+						has_country_flag = randomized_insult
+					}
+					set_country_flag = has_sent_a_randomized_insult	# custom achievement
+				}
+				if = {
+					limit = {
+						NOT = { has_country_flag = has_sent_navy_seals_insult }
+						check_variable = { chosen_type_of_insult = 100 }
+					}
+					set_country_flag = has_sent_navy_seals_insult	# custom achievement
+				}
+				if = {
+					limit = {
+						NOT = { has_country_flag = has_sent_a_written_insult }
+						has_country_flag = written_insult
+					}
+					set_country_flag = has_sent_a_written_insult	# custom achievement
+				}
+			}
+			randomize_insult_button_click = {
+				clear_variable = show_insuls_list_window
+				clear_array = valid_insults_list_array
+				if = {
+					limit = {
+						NOT = { has_country_flag = has_sent_a_randomized_insult }
+						NOT = { has_country_flag = randomized_insult }
+					}
+					set_country_flag = randomized_insult
+				}
+				var:selected_country_to_insult = {
+					ROOT = {
+						randomize_insult_button_effect = yes
+					}
+				}
+			}
+			randomize_insult_button_right_click = {
+				set_temp_variable = { show = 1 }
+				subtract_from_temp_variable = { show = show_insuls_list_window }
+				set_variable = { show_insuls_list_window = show }
+				if = {
+					limit = {
+						check_variable = { show_insuls_list_window > 0 }
+					}
+					var:selected_country_to_insult = {
+						ROOT = {
+							add_to_array = { valid_insults_list_array = 0 }
+							add_to_array = { valid_insults_list_array = 1 }
+							add_to_array = { valid_insults_list_array = 2 }
+							add_to_array = { valid_insults_list_array = 3 }
+							add_to_array = { valid_insults_list_array = 4 }
+							if = {
+								limit = {
+									OR = {
+										original_tag = GER
+										original_tag = SOV
+									}
+									PREV = {
+										original_tag = POL
+									}
+								}
+								add_to_array = { valid_insults_list_array = 5 }
+							}
+							if = {
+								limit = {
+									NOT = { original_tag = FRA }
+									PREV = {
+										NOT = { original_tag = FRA }
+									}
+								}
+								add_to_array = { valid_insults_list_array = 6 }
+							}
+							add_to_array = { valid_insults_list_array = 7 }
+							if = {
+								limit = {
+									original_tag = GER
+								}
+								add_to_array = { valid_insults_list_array = 8 }
+							}
+							if = {
+								limit = {
+									PREV = {
+										original_tag = ITA
+									}
+								}
+								add_to_array = { valid_insults_list_array = 9 }
+							}
+							if = {
+								limit = {
+									ic_ratio = {
+										tag = PREV
+										ratio > 1
+									}
+								}
+								add_to_array = { valid_insults_list_array = 10 }
+							}
+							if = {
+								limit = {
+									PREV = {
+										original_tag = GRE
+									}
+								}
+								add_to_array = { valid_insults_list_array = 11 }
+							}
+							if = {
+								limit = {
+									original_tag = GER
+									PREV = {
+										original_tag = FRA
+									}
+								}
+								add_to_array = { valid_insults_list_array = 12 }
+							}
+							if = {
+								limit = {
+									original_tag = SOV
+									has_government = communism
+									PREV = {
+										original_tag = GER
+										has_government = fascism
+									}
+								}
+								add_to_array = { valid_insults_list_array = 13 }
+							}
+							if = {
+								limit = {
+									PREV = {
+										original_tag = ENG
+										has_country_leader = {
+											name = "Neville Chamberlain"
+											ruling_only = yes
+										}
+									}
+								}
+								add_to_array = { valid_insults_list_array = 14 }
+							}
+							if = {
+								limit = {
+									has_government = communism
+									PREV = {
+										NOT = { has_government = communism }
+									}
+								}
+								add_to_array = { valid_insults_list_array = 15 }
+							}
+							if = {
+								limit = {
+									NOT = { original_tag = GRE }
+									PREV = {
+										original_tag = ITA
+									}
+								}
+								add_to_array = { valid_insults_list_array = 16 }
+							}
+							if = {
+								limit = {
+									original_tag = GRE
+									PREV = {
+										original_tag = ITA
+									}
+								}
+								add_to_array = { valid_insults_list_array = 17 }
+							}
+							if = {
+								limit = {
+									original_tag = GER
+									PREV = {
+										any_owned_state = {
+											is_on_continent = africa
+										}
+									}
+								}
+								add_to_array = { valid_insults_list_array = 18 }
+							}
+							if = {
+								limit = {
+									is_ai = no
+									PREV = {
+										is_ai = no
+									}
+								}
+								add_to_array = { valid_insults_list_array = 19 }
+							}
+							if = {
+								limit = {
+									is_ai = no
+									PREV = {
+										is_ai = no
+										original_tag = GER
+									}
+								}
+								add_to_array = { valid_insults_list_array = 20 }
+							}
+							if = {
+								limit = {
+									original_tag = SOV
+									has_government = communism
+									PREV = {
+										original_tag = GER
+										has_government = fascism
+									}
+								}
+								add_to_array = { valid_insults_list_array = 21 }
+							}
+							if = {
+								limit = {
+									is_ai = no
+									PREV = {
+										is_ai = no
+									}
+								}
+								add_to_array = { valid_insults_list_array = 22 }
+							}
+							if = {
+								limit = {
+									is_ai = no
+									PREV = {
+										is_ai = no
+										original_tag = GER
+									}
+								}
+								add_to_array = { valid_insults_list_array = 23 }
+							}
+							if = {
+								limit = {
+									original_tag = JAP
+									PREV = {
+										original_tag = USA
+									}
+								}
+								add_to_array = { valid_insults_list_array = 24 }
+							}
+							if = {
+								limit = {
+									PREV = {
+										has_government = neutrality
+									}
+								}
+								add_to_array = { valid_insults_list_array = 25 }
+							}
+							if = {
+								limit = {
+									original_tag = ETH
+									PREV = {
+										original_tag = ITA
+									}
+								}
+								add_to_array = { valid_insults_list_array = 26 }
+							}
+							if = {
+								limit = {
+									PREV = {
+										original_tag = RAJ
+									}
+								}
+								add_to_array = { valid_insults_list_array = 27 }
+							}
+							if = {
+								limit = {
+									original_tag = GER
+									PREV = {
+										original_tag = FRA
+									}
+								}
+								add_to_array = { valid_insults_list_array = 28 }
+							}
+							if = {
+								limit = {
+									original_tag = GER
+									PREV = {
+										original_tag = ITA
+									}
+								}
+								add_to_array = { valid_insults_list_array = 29 }
+							}
+							if = {
+								limit = {
+									original_tag = ITA
+									has_government = fascism
+									PREV = {
+										has_government = fascism
+									}
+								}
+								add_to_array = { valid_insults_list_array = 30 }
+							}
+							if = {
+								limit = {
+									PREV = {
+										original_tag = FRA
+									}
+								}
+								add_to_array = { valid_insults_list_array = 31 }
+							}
+							if = {
+								limit = {
+									original_tag = USA
+									PREV = {
+										original_tag = SOV
+									}
+								}
+								add_to_array = { valid_insults_list_array = 32 }
+							}
+							add_to_array = { valid_insults_list_array = 33 }
+							add_to_array = { valid_insults_list_array = 34 }
+							if = {
+								limit = {
+									PREV = {
+										original_tag = FRA
+									}
+								}
+								add_to_array = { valid_insults_list_array = 35 }
+							}
+							if = {
+								limit = {
+									PREV = {
+										original_tag = GER
+										has_government = fascism
+									}
+								}
+								add_to_array = { valid_insults_list_array = 36 }
+							}
+							if = {
+								limit = {
+									PREV = {
+										original_tag = JAP
+										has_government = fascism
+									}
+								}
+								add_to_array = { valid_insults_list_array = 37 }
+							}
+							if = {
+								limit = {
+									PREV = {
+										original_tag = GER
+										has_government = neutrality
+									}
+								}
+								add_to_array = { valid_insults_list_array = 38 }
+							}
+							if = {
+								limit = {
+									NOT = { has_government = neutrality }
+									PREV = {
+										has_government = neutrality
+									}
+								}
+								add_to_array = { valid_insults_list_array = 39 }
+							}
+							if = {
+								limit = {
+									NOT = { has_government = communism }
+									PREV = {
+										has_government = communism
+									}
+								}
+								add_to_array = { valid_insults_list_array = 40 }
+							}
+							if = {
+								limit = {
+									NOT = { has_government = democratic }
+									PREV = {
+										has_government = democratic
+									}
+								}
+								add_to_array = { valid_insults_list_array = 41 }
+							}
+							if = {
+								limit = {
+									NOT = { has_government = fascism }
+									PREV = {
+										has_government = fascism
+									}
+								}
+								add_to_array = { valid_insults_list_array = 42 }
+							}
+							if = {
+								limit = {
+									is_ai = no
+									PREV = {
+										is_ai = no
+									}
+								}
+								add_to_array = { valid_insults_list_array = 43 }
+							}
+							if = {
+								limit = {
+									is_ai = no
+									PREV = {
+										is_ai = no
+									}
+								}
+								add_to_array = { valid_insults_list_array = 44 }
+							}
+							if = {
+								limit = {
+									PREV = {
+										has_army_manpower = { size > 2999999 }
+									}
+								}
+								add_to_array = { valid_insults_list_array = 45 }
+							}
+							if = {
+								limit = {
+									has_government = communism
+								}
+								add_to_array = { valid_insults_list_array = 46 }
+							}
+							if = {
+								limit = {
+									original_tag = ENG
+									PREV = {
+										original_tag = GER
+									}
+								}
+								add_to_array = { valid_insults_list_array = 47 }
+							}
+							if = {
+								limit = {
+									original_tag = GER
+									PREV = {
+										original_tag = ENG
+									}
+								}
+								add_to_array = { valid_insults_list_array = 48 }
+							}
+							if = {
+								limit = {
+									is_subject_of = PREV
+									PREV = {
+										original_tag = ENG
+									}
+								}
+								add_to_array = { valid_insults_list_array = 49 }
+							}
+							if = {
+								limit = {
+									original_tag = GER
+									PREV = {
+										original_tag = BEL
+									}
+								}
+								add_to_array = { valid_insults_list_array = 50 }
+							}
+							if = {
+								limit = {
+									original_tag = HOL
+									PREV = {
+										original_tag = BEL
+									}
+								}
+								add_to_array = { valid_insults_list_array = 51 }
+							}
+							if = {
+								limit = {
+									original_tag = FRA
+									PREV = {
+										original_tag = SPA
+									}
+								}
+								add_to_array = { valid_insults_list_array = 52 }
+							}
+							if = {
+								limit = {
+									original_tag = USA
+									PREV = {
+										original_tag = GER
+									}
+								}
+								add_to_array = { valid_insults_list_array = 53 }
+							}
+							if = {
+								limit = {
+									original_tag = GER
+									PREV = {
+										OR = {
+											original_tag = ROM
+											original_tag = POL
+											original_tag = SOV
+											original_tag = EST
+											original_tag = LAT
+											original_tag = LIT
+											original_tag = BUL
+											original_tag = UKR
+											original_tag = BLR
+											original_tag = CZE
+										}
+									}
+								}
+								add_to_array = { valid_insults_list_array = 54 }
+							}
+							if = {
+								limit = {
+									original_tag = GER
+									has_government = fascism
+								}
+								add_to_array = { valid_insults_list_array = 55 }
+							}
+							if = {
+								limit = {
+									OR = {
+										original_tag = GER
+										original_tag = SOV
+									}
+									PREV = {
+										original_tag = POL
+									}
+								}
+								add_to_array = { valid_insults_list_array = 56 }
+							}
+							if = {
+								limit = {
+									original_tag = GER
+									PREV = {
+										original_tag = AUS
+									}
+								}
+								add_to_array = { valid_insults_list_array = 57 }
+							}
+							if = {
+								limit = {
+									original_tag = CAN
+									PREV = {
+										original_tag = USA
+									}
+								}
+								add_to_array = { valid_insults_list_array = 58 }
+							}
+							if = {
+								limit = {
+									original_tag = POL
+									PREV = {
+										original_tag = AUS
+									}
+								}
+								add_to_array = { valid_insults_list_array = 59 }
+							}
+							if = {
+								limit = {
+									OR = {
+										original_tag = USA
+										original_tag = ENG
+									}
+									PREV = {
+										original_tag = GER
+									}
+								}
+								add_to_array = { valid_insults_list_array = 60 }
+							}
+							if = {
+								limit = {
+									original_tag = FIN
+								}
+								add_to_array = { valid_insults_list_array = 61 }
+							}
+							if = {
+								limit = {
+									original_tag = USA
+									PREV = {
+										original_tag = MEX
+									}
+								}
+								add_to_array = { valid_insults_list_array = 62 }
+							}
+							if = {
+								limit = {
+									original_tag = PRC
+									PREV = {
+										original_tag = JAP
+										has_government = fascism
+									}
+								}
+								add_to_array = { valid_insults_list_array = 63 }
+							}
+							if = {
+								limit = {
+									original_tag = ITA
+									PREV = {
+										original_tag = POL
+									}
+								}
+								add_to_array = { valid_insults_list_array = 64 }
+							}
+							if = {
+								limit = {
+									PREV = {
+										original_tag = JAP
+									}
+								}
+								add_to_array = { valid_insults_list_array = 65 }
+							}
+							if = {
+								limit = {
+									original_tag = SER
+									PREV = {
+										original_tag = TUR
+									}
+								}
+								add_to_array = { valid_insults_list_array = 66 }
+							}
+							if = {
+								limit = {
+									original_tag = GER
+									has_government = fascism
+									PREV = {
+										OR = {
+											original_tag = POL
+											original_tag = BEL
+											original_tag = HOL
+											original_tag = FRA
+										}
+									}
+								}
+								add_to_array = { valid_insults_list_array = 67 }
+							}
+							if = {
+								limit = {
+									original_tag = ENG
+									PREV = {
+										original_tag = GER
+										has_government = fascism
+									}
+								}
+								add_to_array = { valid_insults_list_array = 68 }
+							}
+							if = {
+								limit = {
+									original_tag = SOV
+									PREV = {
+										original_tag = GER
+									}
+								}
+								add_to_array = { valid_insults_list_array = 69 }
+							}
+							if = {
+								limit = {
+									original_tag = ENG
+									NOT = { has_government = democratic }
+									PREV = {
+										original_tag = USA
+										has_government = democratic
+									}
+								}
+								add_to_array = { valid_insults_list_array = 70 }
+							}
+							if = {
+								limit = {
+									original_tag = FRA
+									PREV = {
+										original_tag = GER
+									}
+								}
+								add_to_array = { valid_insults_list_array = 71 }
+							}
+							if = {
+								limit = {
+									original_tag = SOV
+									has_country_leader = {
+										name = "Joseph Stalin"
+										ruling_only = yes
+									}
+									PREV = {
+										original_tag = GER
+										has_country_leader = {
+											name = "Adolf Hitler"
+											ruling_only = yes
+										}
+									}
+								}
+								add_to_array = { valid_insults_list_array = 72 }
+							}
+							if = {
+								limit = {
+									original_tag = FIN
+									PREV = {
+										original_tag = SOV
+									}
+								}
+								add_to_array = { valid_insults_list_array = 73 }
+							}
+							if = {
+								limit = {
+									original_tag = SOV
+									PREV = {
+										original_tag = GER
+									}
+								}
+								add_to_array = { valid_insults_list_array = 74 }
+							}
+							if = {
+								limit = {
+									PREV = {
+										original_tag = AST
+									}
+								}
+								add_to_array = { valid_insults_list_array = 75 }
+							}
+							if = {
+								limit = {
+									original_tag = SWE
+									PREV = {
+										original_tag = DEN
+									}
+								}
+								add_to_array = { valid_insults_list_array = 76 }
+							}
+							if = {
+								limit = {
+									OR = {
+										original_tag = CHI
+										original_tag = GXC
+										original_tag = XSM
+										original_tag = SHX
+										original_tag = YUN
+									}
+									PREV = {
+										original_tag = PRC
+									}
+								}
+								add_to_array = { valid_insults_list_array = 78 }
+							}
+							if = {
+								limit = {
+									OR = {
+										original_tag = CHI
+										original_tag = GXC
+										original_tag = XSM
+										original_tag = SHX
+										original_tag = YUN
+									}
+									PREV = {
+										original_tag = PRC
+									}
+								}
+								add_to_array = { valid_insults_list_array = 79 }
+							}
+							if = {
+								limit = {
+									OR = {
+										original_tag = CHI
+										original_tag = GXC
+										original_tag = XSM
+										original_tag = SHX
+										original_tag = YUN
+									}
+									PREV = {
+										original_tag = PRC
+									}
+								}
+								add_to_array = { valid_insults_list_array = 80 }
+							}
+							if = {
+								limit = {
+									OR = {
+										original_tag = CHI
+										original_tag = GXC
+										original_tag = XSM
+										original_tag = SHX
+										original_tag = YUN
+									}
+									PREV = {
+										original_tag = JAP
+										has_government = fascism
+									}
+								}
+								add_to_array = { valid_insults_list_array = 81 }
+							}
+							if = {
+								limit = {
+									OR = {
+										original_tag = CHI
+										original_tag = GXC
+										original_tag = XSM
+										original_tag = SHX
+										original_tag = YUN
+									}
+									PREV = {
+										original_tag = JAP
+										has_government = fascism
+									}
+								}
+								add_to_array = { valid_insults_list_array = 82 }
+							}
+							if = {
+								limit = {
+									OR = {
+										original_tag = CHI
+										original_tag = GXC
+										original_tag = XSM
+										original_tag = SHX
+										original_tag = YUN
+									}
+									PREV = {
+										original_tag = JAP
+										has_government = fascism
+									}
+								}
+								add_to_array = { valid_insults_list_array = 83 }
+							}
+							if = {
+								limit = {
+									original_tag = TUR
+									PREV = {
+										original_tag = GRE
+									}
+								}
+								add_to_array = { valid_insults_list_array = 84 }
+							}
+							if = {
+								limit = {
+									original_tag = HUN
+									PREV = {
+										original_tag = ROM
+									}
+								}
+								add_to_array = { valid_insults_list_array = 85 }
+							}
+							if = {
+								limit = {
+									original_tag = USA
+									PREV = {
+										original_tag = CAN
+									}
+								}
+								add_to_array = { valid_insults_list_array = 86 }
+							}
+							if = {
+								limit = {
+									original_tag = USA
+									PREV = {
+										original_tag = CAN
+									}
+								}
+								add_to_array = { valid_insults_list_array = 87 }
+							}
+							if = {
+								limit = {
+									original_tag = USA
+									PREV = {
+										original_tag = CAN
+									}
+								}
+								add_to_array = { valid_insults_list_array = 88 }
+							}
+							if = {
+								limit = {
+									original_tag = AST
+								}
+								add_to_array = { valid_insults_list_array = 89 }
+							}
+							if = {
+								limit = {
+									PREV = {
+										original_tag = SWI 
+									}
+								}
+								add_to_array = { valid_insults_list_array = 90 }
+							}
+							if = {
+								limit = {
+									PREV = {
+										original_tag = SWI 
+									}
+								}
+								add_to_array = { valid_insults_list_array = 91 }
+							}
+							if = {
+								limit = {
+									PREV = {
+										original_tag = SWI 
+									}
+								}
+								add_to_array = { valid_insults_list_array = 92 }
+							}
+							if = {
+								limit = {
+									original_tag = JAP
+								}
+								add_to_array = { valid_insults_list_array = 93 }
+							}
+							if = {
+								limit = {
+									original_tag = FRA
+									PREV = {
+										original_tag = GER
+										has_government = neutrality
+									}
+								}
+								add_to_array = { valid_insults_list_array = 94 }
+							}
+							if = {
+								limit = {
+									PREV = {
+										original_tag = USA
+									}
+								}
+								add_to_array = { valid_insults_list_array = 95 }
+							}
+							if = {
+								limit = {
+									original_tag = JAP
+								}
+								add_to_array = { valid_insults_list_array = 96 }
+							}
+							if = {
+								limit = {
+									PREV = {
+										original_tag = ITA
+									}
+								}
+								add_to_array = { valid_insults_list_array = 97 }
+							}
+							if = {
+								limit = {
+									original_tag = USA
+								}
+								add_to_array = { valid_insults_list_array = 98 }
+							}
+							if = {
+								limit = {
+									original_tag = ITA
+									PREV = {
+										original_tag = SOV
+										has_government = fascism
+									}
+								}
+								add_to_array = { valid_insults_list_array = 99 }
+							}
+							add_to_array = { valid_insults_list_array = 100 }
+							if = {
+								limit = {
+									original_tag = POL
+									PREV = {
+										original_tag = CZE
+									}
+								}
+								add_to_array = { valid_insults_list_array = 101 }
+							}
+							if = {
+								limit = {
+									original_tag = POL
+									PREV = {
+										original_tag = CZE
+									}
+								}
+								add_to_array = { valid_insults_list_array = 102 }
+							}
+							if = {
+								limit = {
+									original_tag = POL
+									PREV = {
+										original_tag = CZE
+									}
+								}
+								add_to_array = { valid_insults_list_array = 103 }
+							}
+							if = {
+								limit = {
+									original_tag = POL
+									PREV = {
+										original_tag = CZE
+									}
+								}
+								add_to_array = { valid_insults_list_array = 104 }
+							}
+							if = {
+								limit = {
+									original_tag = POL
+									PREV = {
+										original_tag = GER
+										has_government = fascism
+									}
+								}
+								add_to_array = { valid_insults_list_array = 105 }
+							}
+							if = {
+								limit = {
+									original_tag = POL
+									PREV = {
+										original_tag = GER
+									}
+								}
+								add_to_array = { valid_insults_list_array = 106 }
+							}
+							if = {
+								limit = {
+									original_tag = POL
+									PREV = {
+										original_tag = GER
+									}
+								}
+								add_to_array = { valid_insults_list_array = 107 }
+							}
+							if = {
+								limit = {
+									original_tag = POL
+									PREV = {
+										original_tag = GER
+									}
+								}
+								add_to_array = { valid_insults_list_array = 108 }
+							}
+							if = {
+								limit = {
+									original_tag = POL
+									PREV = {
+										original_tag = FRA
+									}
+								}
+								add_to_array = { valid_insults_list_array = 109 }
+							}
+							if = {
+								limit = {
+									original_tag = POL
+									PREV = {
+										original_tag = LIT
+									}
+								}
+								add_to_array = { valid_insults_list_array = 110 }
+							}
+							if = {
+								limit = {
+									original_tag = POL
+									PREV = {
+										original_tag = LIT
+									}
+								}
+								add_to_array = { valid_insults_list_array = 111 }
+							}
+							if = {
+								limit = {
+									original_tag = POL
+									PREV = {
+										original_tag = LIT
+									}
+								}
+								add_to_array = { valid_insults_list_array = 112 }
+							}
+							if = {
+								limit = {
+									original_tag = POL
+									PREV = {
+										original_tag = SWE
+									}
+								}
+								add_to_array = { valid_insults_list_array = 113 }
+							}
+							if = {
+								limit = {
+									original_tag = POL
+									PREV = {
+										original_tag = SWE
+									}
+								}
+								add_to_array = { valid_insults_list_array = 114 }
+							}
+							if = {
+								limit = {
+									original_tag = POL
+									PREV = {
+										original_tag = SWE
+									}
+								}
+								add_to_array = { valid_insults_list_array = 115 }
+							}
+							if = {
+								limit = {
+									original_tag = POL
+								}
+								add_to_array = { valid_insults_list_array = 116 }
+							}
+							if = {
+								limit = {
+									original_tag = POL
+									PREV = {
+										original_tag = ENG
+									}
+								}
+								add_to_array = { valid_insults_list_array = 117 }
+							}
+							if = {
+								limit = {
+									original_tag = POL
+									PREV = {
+										original_tag = ENG
+									}
+								}
+								add_to_array = { valid_insults_list_array = 118 }
+							}
+							if = {
+								limit = {
+									PREV = {
+										original_tag = ENG
+									}
+								}
+								add_to_array = { valid_insults_list_array = 119 }
+							}
+							if = {
+								limit = {
+									original_tag = ENG
+									has_country_leader = {
+										name = "Winston Churchill"
+										ruling_only = yes
+									}
+								}
+								add_to_array = { valid_insults_list_array = 120 }
+							}
+							if = {
+								limit = {
+									original_tag = ENG
+									has_country_leader = {
+										name = "Winston Churchill"
+										ruling_only = yes
+									}
+									PREV = {
+										original_tag = FRA
+										has_country_leader = {
+											name = "Charles de Gaulle"
+											ruling_only = yes
+										}
+									}
+								}
+								add_to_array = { valid_insults_list_array = 121 }
+							}
+							if = {
+								limit = {
+									original_tag = USA
+									has_government = democratic
+									PREV = {
+										NOT = { has_government = democratic }
+									}
+								}
+								add_to_array = { valid_insults_list_array = 122 }
+							}
+							if = {
+								limit = {
+									PREV = {
+										original_tag = SOV
+										has_government = communism
+									}
+								}
+								add_to_array = { valid_insults_list_array = 123 }
+							}
+							if = {
+								limit = {
+									original_tag = ENG
+									PREV = {
+										original_tag = ITA
+									}
+								}
+								add_to_array = { valid_insults_list_array = 124 }
+							}
+							if = {
+								limit = {
+									PREV = {
+										original_tag = PRC
+									}
+								}
+								add_to_array = { valid_insults_list_array = 125 }
+							}
+							add_to_array = { valid_insults_list_array = 126 }
+							if = {
+								limit = {
+									original_tag = CHI
+								}
+								add_to_array = { valid_insults_list_array = 127 }
+							}
+							if = {
+								limit = {
+									original_tag = CHI
+									PREV = {
+										capital_scope = {
+											OR = {
+												is_on_continent = europe
+												is_on_continent = north_america
+												is_on_continent = australia
+											}
+										}
+									}
+								}
+								add_to_array = { valid_insults_list_array = 128 }
+							}
+							if = {
+								limit = {
+									original_tag = JAP
+									PREV = {
+										capital_scope = {
+											OR = {
+												is_on_continent = europe
+												is_on_continent = north_america
+												is_on_continent = australia
+											}
+										}
+									}
+								}
+								add_to_array = { valid_insults_list_array = 129 }
+							}
+							if = {
+								limit = {
+									original_tag = KOR
+									PREV = {
+										capital_scope = {
+											OR = {
+												is_on_continent = europe
+												is_on_continent = north_america
+												is_on_continent = australia
+											}
+										}
+									}
+								}
+								add_to_array = { valid_insults_list_array = 130 }
+							}
+							if = {
+								limit = {
+									original_tag = POL
+									PREV = {
+										original_tag = SOV
+										has_government = communism
+									}
+								}
+								add_to_array = { valid_insults_list_array = 131 }
+							}
+							if = {
+								limit = {
+									original_tag = POL
+									PREV = {
+										original_tag = SOV
+									}
+								}
+								add_to_array = { valid_insults_list_array = 132 }
+							}
+							if = {
+								limit = {
+									original_tag = POL
+									PREV = {
+										original_tag = SOV
+										NOT = { has_government = fascism }
+									}
+								}
+								add_to_array = { valid_insults_list_array = 133 }
+							}
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						always = yes
+					}
+					clear_array = valid_insults_list_array
+				}
+			}
+			# Stuff for Writing Insults
+			write_insult_button_click = {
+				set_temp_variable = { show = 1 }
+				subtract_from_temp_variable = { show = show_write_insult_menu }
+				set_variable = { show_write_insult_menu = show }
+				if = {
+					limit = {
+						check_variable = { show_write_insult_menu > 0 }
+					}
+					clear_variable = chosen_type_of_insult
+					clear_variable = show_insuls_list_window
+					clear_array = valid_insults_list_array
+					if = {
+						limit = {
+							NOT = { has_country_flag = has_sent_a_randomized_insult }
+							has_country_flag = randomized_insult
+						}
+						clr_country_flag = randomized_insult
+					}
+					if = {
+						limit = {
+							NOT = { has_country_flag = has_sent_a_written_insult }
+							NOT = { has_country_flag = written_insult }
+						}
+						set_country_flag = written_insult
+					}
+				}
+				else_if = {
+					limit = {
+						always = yes
+					}
+					set_variable = { chosen_type_of_insult = last_randomized_insults^0 }
+					clear_array = written_type_of_insult_array
+					clear_variable = show_save_insuls_window
+					var:selected_country_to_insult = {
+						ROOT = {
+							randomize_insult_button_effect = yes
+						}
+					}
+					if = {
+						limit = {
+							NOT = { has_country_flag = has_sent_a_randomized_insult }
+							NOT = { has_country_flag = randomized_insult }
+						}
+						set_country_flag = randomized_insult
+					}
+					if = {
+						limit = {
+							NOT = { has_country_flag = has_sent_a_written_insult }
+							has_country_flag = written_insult
+						}
+						clr_country_flag = written_insult
+					}
+				}
+			}
+			write_insult_button_right_click = {
+				clear_array = written_type_of_insult_array
+			}
+			save_insult_button_click = {
+				set_temp_variable = { show = 1 }
+				subtract_from_temp_variable = { show = show_save_insuls_window }
+				set_variable = { show_save_insuls_window = show }
+				if = {
+					limit = {
+						check_variable = { saved_written_insults_array^num < 1 }
+					}
+					add_to_array = { array = saved_written_insults_array value = 0 index = 0 }
+				}
+			}
+			button_0_click = {
+				add_to_array = { written_type_of_insult_array = -10 }
+			}
+			button_1_click = {
+				add_to_array = { written_type_of_insult_array = -9 }
+			}
+			button_2_click = {
+				add_to_array = { written_type_of_insult_array = -8 }
+			}
+			button_3_click = {
+				add_to_array = { written_type_of_insult_array = -7 }
+			}
+			button_4_click = {
+				add_to_array = { written_type_of_insult_array = -6 }
+			}
+			button_5_click = {
+				add_to_array = { written_type_of_insult_array = -5 }
+			}
+			button_6_click = {
+				add_to_array = { written_type_of_insult_array = -4 }
+			}
+			button_7_click = {
+				add_to_array = { written_type_of_insult_array = -3 }
+			}
+			button_8_click = {
+				add_to_array = { written_type_of_insult_array = -2 }
+			}
+			button_9_click = {
+				add_to_array = { written_type_of_insult_array = -1 }
+			}
+			button_a_click = {
+				add_to_array = { written_type_of_insult_array = 1 }
+			}
+			button_a_capital_click = {
+				add_to_array = { written_type_of_insult_array = 1.5 }
+			}
+			button_b_click = {
+				add_to_array = { written_type_of_insult_array = 2 }
+			}
+			button_b_capital_click = {
+				add_to_array = { written_type_of_insult_array = 2.5 }
+			}
+			button_c_click = {
+				add_to_array = { written_type_of_insult_array = 3 }
+			}
+			button_c_capital_click = {
+				add_to_array = { written_type_of_insult_array = 3.5 }
+			}
+			button_d_click = {
+				add_to_array = { written_type_of_insult_array = 4 }
+			}
+			button_d_capital_click = {
+				add_to_array = { written_type_of_insult_array = 4.5 }
+			}
+			button_e_click = {
+				add_to_array = { written_type_of_insult_array = 5 }
+			}
+			button_e_capital_click = {
+				add_to_array = { written_type_of_insult_array = 5.5 }
+			}
+			button_f_click = {
+				add_to_array = { written_type_of_insult_array = 6 }
+			}
+			button_f_capital_click = {
+				add_to_array = { written_type_of_insult_array = 6.5 }
+			}
+			button_g_click = {
+				add_to_array = { written_type_of_insult_array = 7 }
+			}
+			button_g_capital_click = {
+				add_to_array = { written_type_of_insult_array = 7.5 }
+			}
+			button_h_click = {
+				add_to_array = { written_type_of_insult_array = 8 }
+			}
+			button_h_capital_click = {
+				add_to_array = { written_type_of_insult_array = 8.5 }
+			}
+			button_i_click = {
+				add_to_array = { written_type_of_insult_array = 9 }
+			}
+			button_i_capital_click = {
+				add_to_array = { written_type_of_insult_array = 9.5 }
+			}
+			button_j_click = {
+				add_to_array = { written_type_of_insult_array = 10 }
+			}
+			button_j_capital_click = {
+				add_to_array = { written_type_of_insult_array = 10.5 }
+			}
+			button_k_click = {
+				add_to_array = { written_type_of_insult_array = 11 }
+			}
+			button_k_capital_click = {
+				add_to_array = { written_type_of_insult_array = 11.5 }
+			}
+			button_l_click = {
+				add_to_array = { written_type_of_insult_array = 12 }
+			}
+			button_l_capital_click = {
+				add_to_array = { written_type_of_insult_array = 12.5 }
+			}
+			button_m_click = {
+				add_to_array = { written_type_of_insult_array = 13 }
+			}
+			button_m_capital_click = {
+				add_to_array = { written_type_of_insult_array = 13.5 }
+			}
+			button_n_click = {
+				add_to_array = { written_type_of_insult_array = 14 }
+			}
+			button_n_capital_click = {
+				add_to_array = { written_type_of_insult_array = 14.5 }
+			}
+			button_o_click = {
+				add_to_array = { written_type_of_insult_array = 15 }
+			}
+			button_o_capital_click = {
+				add_to_array = { written_type_of_insult_array = 15.5 }
+			}
+			button_p_click = {
+				add_to_array = { written_type_of_insult_array = 16 }
+			}
+			button_p_capital_click = {
+				add_to_array = { written_type_of_insult_array = 16.5 }
+			}
+			button_q_click = {
+				add_to_array = { written_type_of_insult_array = 17 }
+			}
+			button_q_capital_click = {
+				add_to_array = { written_type_of_insult_array = 17.5 }
+			}
+			button_r_click = {
+				add_to_array = { written_type_of_insult_array = 18 }
+			}
+			button_r_capital_click = {
+				add_to_array = { written_type_of_insult_array = 18.5 }
+			}
+			button_s_click = {
+				add_to_array = { written_type_of_insult_array = 19 }
+			}
+			button_s_capital_click = {
+				add_to_array = { written_type_of_insult_array = 19.5 }
+			}
+			button_t_click = {
+				add_to_array = { written_type_of_insult_array = 20 }
+			}
+			button_t_capital_click = {
+				add_to_array = { written_type_of_insult_array = 20.5 }
+			}
+			button_u_click = {
+				add_to_array = { written_type_of_insult_array = 21 }
+			}
+			button_u_capital_click = {
+				add_to_array = { written_type_of_insult_array = 21.5 }
+			}
+			button_v_click = {
+				add_to_array = { written_type_of_insult_array = 22 }
+			}
+			button_v_capital_click = {
+				add_to_array = { written_type_of_insult_array = 22.5 }
+			}
+			button_w_click = {
+				add_to_array = { written_type_of_insult_array = 23 }
+			}
+			button_w_capital_click = {
+				add_to_array = { written_type_of_insult_array = 23.5 }
+			}
+			button_x_click = {
+				add_to_array = { written_type_of_insult_array = 24 }
+			}
+			button_x_capital_click = {
+				add_to_array = { written_type_of_insult_array = 24.5 }
+			}
+			button_y_click = {
+				add_to_array = { written_type_of_insult_array = 25 }
+			}
+			button_y_capital_click = {
+				add_to_array = { written_type_of_insult_array = 25.5 }
+			}
+			button_z_click = {
+				add_to_array = { written_type_of_insult_array = 26 }
+			}
+			button_z_capital_click = {
+				add_to_array = { written_type_of_insult_array = 26.5 }
+			}
+			button_minus_click = {
+				add_to_array = { written_type_of_insult_array = 27 }
+			}
+			button_space_click = {
+				add_to_array = { written_type_of_insult_array = 28 }
+			}
+			button_comma_click = {
+				add_to_array = { written_type_of_insult_array = 29 }
+			}
+			button_questionmark_click = {
+				add_to_array = { written_type_of_insult_array = 30 }
+			}
+			button_apostrophe_click = {
+				add_to_array = { written_type_of_insult_array = 31 }
+			}
+			button_dot_click = {
+				add_to_array = { written_type_of_insult_array = 32 }
+			}
+			button_quotationmark_click = {
+				add_to_array = { written_type_of_insult_array = 33 }
+			}
+			button_exclamationmark_click = {
+				add_to_array = { written_type_of_insult_array = 34 }
+			}
+			button_bracketopen_click = {
+				add_to_array = { written_type_of_insult_array = 35 }
+			}
+			button_bracketclose_click = {
+				add_to_array = { written_type_of_insult_array = 36 }
+			}
+			button_delete_click = {
+				set_temp_variable = { temp = written_type_of_insult_array^num }
+				subtract_from_temp_variable = { temp = 1 }
+				remove_from_array = { array = written_type_of_insult_array index = temp }
+			}
+		}
+		
+		triggers = {
+			send_button_click_enabled = {
+				custom_trigger_tooltip = {
+					tooltip = ROOT_COULD_INSULT_TARGET_NORMALLY_TOO
+					is_subject = no
+					NOT = { check_variable = { last_insult_sent_this_amount_of_days_ago > 0 } }
+					var:selected_country_to_insult = {
+						NOT = { is_in_faction_with = ROOT }
+						NOT = { has_war_with = ROOT }
+						OR = {
+							NOT = { has_country_flag = recently_insulted_by_@ROOT }
+							has_country_flag = {
+								flag = recently_insulted_by_@ROOT
+								days > 2
+							}
+						}
+					}
+					OR = {
+						AND = {
+							check_variable = { show_write_insult_menu < 1 }
+							has_variable = chosen_type_of_insult
+						}
+						AND = {
+							check_variable = { show_write_insult_menu > 0 }
+							check_variable = { written_type_of_insult_array^num > 2 }
+						}
+					}
+				}
+			}
+			randomize_insult_button_click_enabled = {
+				NOT = { has_country_flag = currently_randomizing_insult }
+				check_variable = { show_write_insult_menu < 1 }
+			}
+			write_insult_button_right_click_enabled = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			# Stuff for Writing Insults
+			save_insult_button_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_0_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_1_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_2_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_3_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_4_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_5_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_6_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_7_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_8_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_9_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_a_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_a_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_b_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_b_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_c_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_c_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_d_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_d_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_e_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_e_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_f_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_f_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_g_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_g_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_h_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_h_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_i_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_i_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_j_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_j_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_k_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_k_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_l_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_l_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_m_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_m_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_n_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_n_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_o_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_o_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_p_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_p_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_q_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_q_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_r_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_r_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_s_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_s_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_t_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_t_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_u_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_u_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_v_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_v_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_w_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_w_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_x_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_x_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_y_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_y_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_z_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_z_capital_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_minus_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_space_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_comma_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_questionmark_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_apostrophe_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_dot_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_quotationmark_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_exclamationmark_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_bracketopen_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_bracketclose_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+			}
+			button_delete_visible = {
+				check_variable = { show_write_insult_menu > 0 }
+				check_variable = { written_type_of_insult_array^num > 0 }
+			}
+		}
+		
+		dynamic_lists = {
+			insult_entry_gridbox = {
+				array = written_type_of_insult_array
+				entry_container = insult_entry_gridbox_entry
+			}
+		}
+		
+		ai_enabled = {
+			always = yes
+		}
+		
+		ai_test_interval = 24
+		ai_test_variance = 0.2
+		
+		ai_check = {
+			always = yes
+		}
+		
+		ai_weights = {
+			send_button_click = {
+				ai_will_do = {
+					factor = 1
+					modifier = {
+						var:selected_country_to_insult = {
+							OR = {
+								is_in_faction_with = ROOT
+								has_war_with = ROOT
+								AND = {
+									has_country_flag = recently_insulted_by_@ROOT
+									NOT = {
+										has_country_flag = {
+											flag = recently_insulted_by_@ROOT
+											days > 2
+										}
+									}
+								}
+							}
+						}
+						factor = 0
+					}
+				}
+			}
+			cancel_button_click = {
+				ai_will_do = {
+					factor = 0
+					modifier = {
+						var:selected_country_to_insult = {
+							OR = {
+								is_in_faction_with = ROOT
+								has_war_with = ROOT
+								AND = {
+									has_country_flag = recently_insulted_by_@ROOT
+									NOT = {
+										has_country_flag = {
+											flag = recently_insulted_by_@ROOT
+											days > 2
+										}
+									}
+								}
+							}
+						}
+						add = 100
+					}
+				}
+			}
+			randomize_insult_button_click = {
+				ai_will_do = {
+					factor = 0
+				}
+			}
+			write_insult_button_click = {
+				ai_will_do = {
+					factor = 0
+				}
+			}
+		}
+	}
+	
+	insults_expanded_insults_list_window = {
+		context_type = player_context
+		
+		window_name = "insults_expanded_insults_list_window"
+		parent_window_name = "insults_expanded_popup_sender"
+		
+		visible = {
+			check_variable = { show_insuls_list_window > 0 }
+		}
+		
+		effects = {
+			use_insult_button_click = {
+				set_variable = { chosen_type_of_insult = v }
+				clear_variable = show_insuls_list_window
+				clear_array = valid_insults_list_array
+				if = {
+					limit = {
+						NOT = { has_country_flag = has_sent_a_randomized_insult }
+						has_country_flag = randomized_insult
+					}
+					clr_country_flag = randomized_insult
+				}
+			}
+		}
+		
+		dynamic_lists = {
+			insults_list_gridbox = {
+				array = valid_insults_list_array
+				entry_container = insults_list_entry
+			}
+		}
+	}
+	
+	insults_expanded_popup_receiver = {
+		context_type = player_context
+		
+		window_name = "insults_expanded_popup_receiver"
+		
+		visible = {
+			ROOT = {
+				NOT = { check_variable = { insulters^0 = 0 } }
+			}
+		}
+		
+		effects = {
+			insult_back_button_click = {
+				ROOT = {
+					set_variable = { selected_country_to_insult = PREV.id }
+					clear_variable = type_of_received_insult_@PREV
+					clear_array = received_written_type_of_insult_array_@PREV
+					remove_from_array = { insulters = PREV.id }
+					randomize_insult_button_effect = yes
+				}
+			}
+			ok_button_click = {
+				ROOT = {
+					clear_variable = type_of_received_insult_@PREV
+					clear_array = received_written_type_of_insult_array_@PREV
+					remove_from_array = { insulters = PREV.id }
+				}
+			}
+		}
+		
+		triggers = {
+			insult_back_button_click_enabled = {
+				custom_trigger_tooltip = {
+					tooltip = ROOT_COULD_INSULT_TARGET_NORMALLY_TOO
+					OR = {
+						NOT = { has_global_flag = starting_player_voting_for_stability_and_wt_influencing }
+						has_global_flag = starting_player_voting_for_stability_and_wt_influencing_finished
+					}
+					NOT = { is_in_faction_with = ROOT }
+					NOT = { has_war_with = ROOT }
+					OR = {
+						NOT = { has_country_flag = recently_insulted_by_@ROOT }
+						has_country_flag = {
+							flag = recently_insulted_by_@ROOT
+							days > 2
+						}
+					}
+					ROOT = {
+						NOT = { check_variable = { last_insult_sent_this_amount_of_days_ago > 0 } }
+					}
+				}
+			}
+		}
+		
+		dynamic_lists = {
+			insults_expanded_popup_receiver_gridbox = {
+				array = insulters
+				entry_container = insults_expanded_popup_receiver_entry
+				change_scope = yes
+				
+				ai_weights = {
+					insult_back_button_click = {
+						ai_will_do = {
+							factor = 0
+						}
+					}
+					ok_button_click = {
+						ai_will_do = {
+							factor = 1
+						}
+					}
+				}
+			}
+			insult_entry_gridbox = {
+				array = ROOT.received_written_type_of_insult_array_@THIS
+				entry_container = insult_entry_gridbox_entry
+			}
+		}
+		
+		ai_enabled = {
+			always = yes
+		}
+		
+		ai_test_interval = 24
+		ai_test_variance = 0.2
+		
+		ai_check = {
+			always = yes
+		}
+	}
+}

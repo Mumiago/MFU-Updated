@@ -1,0 +1,143 @@
+randomize_insult_button_effect = {
+	set_country_flag = currently_randomizing_insult
+	set_variable = { chosen_type_of_insult = random }
+	multiply_variable = { chosen_type_of_insult = 200 }
+	round_variable = chosen_type_of_insult
+	
+	while_loop_effect = {
+		limit = {
+			OR = {
+				is_in_array = { last_randomized_insults = chosen_type_of_insult }
+				PREV = { NOT = { randomized_insult_result_is_valid = yes } }
+			}
+		}
+		break = break_temp
+		set_variable = { chosen_type_of_insult = random }
+		multiply_variable = { chosen_type_of_insult = 200 }
+		round_variable = chosen_type_of_insult
+		add_to_temp_variable = { temp = 1 }
+		add_to_array = { array = last_randomized_insults value = chosen_type_of_insult index = 0 }
+		if = {
+			limit = {
+				check_variable = { temp > 699 }
+			}
+			set_temp_variable = { break_temp = 1 }
+			set_temp_variable = { random_valid_insult = random }
+			if = {
+				limit = {
+					OR = {
+						check_variable = { random_valid_insult > 0.9 }
+						check_variable = { last_randomized_insults^0 = 34 }
+					}
+					NOT = { check_variable = { last_randomized_insults^0 = 0 } }
+				}
+				set_variable = { chosen_type_of_insult = 0 }
+			}
+			else_if = {
+				limit = {
+					OR = {
+						check_variable = { random_valid_insult > 0.8 }
+						check_variable = { last_randomized_insults^0 < 1 }
+					}
+					NOT = { check_variable = { last_randomized_insults^0 = 1 } }
+				}
+				set_variable = { chosen_type_of_insult = 1 }
+			}
+			else_if = {
+				limit = {
+					OR = {
+						check_variable = { random_valid_insult > 0.7 }
+						check_variable = { last_randomized_insults^0 < 2 }
+					}
+					NOT = { check_variable = { last_randomized_insults^0 = 2 } }
+				}
+				set_variable = { chosen_type_of_insult = 2 }
+			}
+			else_if = {
+				limit = {
+					OR = {
+						check_variable = { random_valid_insult > 0.6 }
+						check_variable = { last_randomized_insults^0 < 3 }
+					}
+					NOT = { check_variable = { last_randomized_insults^0 = 3 } }
+				}
+				set_variable = { chosen_type_of_insult = 3 }
+			}
+			else_if = {
+				limit = {
+					OR = {
+						check_variable = { random_valid_insult > 0.5 }
+						check_variable = { last_randomized_insults^0 < 4 }
+					}
+					NOT = { check_variable = { last_randomized_insults^0 = 4 } }
+				}
+				set_variable = { chosen_type_of_insult = 4 }
+			}
+			else_if = {
+				limit = {
+					OR = {
+						check_variable = { random_valid_insult > 0.4 }
+						check_variable = { last_randomized_insults^0 < 7 }
+					}
+					NOT = { check_variable = { last_randomized_insults^0 = 7 } }
+				}
+				set_variable = { chosen_type_of_insult = 7 }
+			}
+			else_if = {
+				limit = {
+					OR = {
+						check_variable = { random_valid_insult > 0.3 }
+						check_variable = { last_randomized_insults^0 < 33 }
+					}
+					NOT = { check_variable = { last_randomized_insults^0 = 33 } }
+				}
+				set_variable = { chosen_type_of_insult = 33 }
+			}
+			else_if = {
+				limit = {
+					OR = {
+						check_variable = { random_valid_insult > 0.2 }
+						check_variable = { last_randomized_insults^0 < 34 }
+					}
+					NOT = { check_variable = { last_randomized_insults^0 = 34 } }
+				}
+				set_variable = { chosen_type_of_insult = 34 }
+			}
+			else_if = {
+				limit = {
+					OR = {
+						check_variable = { random_valid_insult > 0.1 }
+						check_variable = { last_randomized_insults^0 < 100 }
+					}
+					NOT = { check_variable = { last_randomized_insults^0 = 100 } }
+				}
+				set_variable = { chosen_type_of_insult = 100 }
+			}
+			else_if = {
+				limit = {
+					NOT = { check_variable = { last_randomized_insults^0 = 126 } }
+				}
+				set_variable = { chosen_type_of_insult = 126 }
+			}
+		}
+	}
+	if = {
+		limit = {
+			any_of = {
+				array = last_randomized_insults
+				index > 20
+			}
+		}
+		resize_array = { last_randomized_insults = 20 }
+	}
+	clr_country_flag = currently_randomizing_insult
+}
+
+clear_generated_insults_cache = {
+	clear_array = last_randomized_insults
+	clear_array = written_type_of_insult_array
+	clear_array = valid_insults_list_array
+	clear_variable = show_write_insult_menu
+	clear_variable = show_save_insuls_window
+	clear_variable = show_insuls_list_window
+}
