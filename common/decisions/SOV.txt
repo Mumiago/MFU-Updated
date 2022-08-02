@@ -815,7 +815,7 @@ SOV_socialism_in_one_country = {
 					add_doctrine_cost_reduction = {
 						name = land_doc_bonus
 						cost_reduction = 0.5
-						uses = 3
+						uses = 2
 						category = land_doctrine
 					}
 					if = {
@@ -851,8 +851,8 @@ SOV_socialism_in_one_country = {
 				SOV = {
 					add_doctrine_cost_reduction = {
 						name = land_doc_bonus
-						cost_reduction = 0.5
-						uses = 2
+						cost_reduction = 0.25
+						uses = 3
 						category = land_doctrine
 					}
 					if = {
@@ -2274,6 +2274,44 @@ SOV_great_patriotic_war = {
 			country_event = soviet.135
 		}
 	}
+	SOV_titov_partisans = {
+        icon = generic_civil_support
+        
+		allowed = {
+			tag = SOV
+		}
+		available = {
+
+		}
+		visible = {
+			has_war_with = GER
+		}
+		
+		cost = 25
+		
+		modifier = {
+			civilian_factory_use = 5			
+		}
+
+		days_remove = 30
+		
+		days_re_enable = 180
+		
+		ai_will_do = {
+			factor = 10
+		}
+		remove_effect = {
+			random_state = {
+				prioritize = { 105 }
+				limit = {
+					is_core_of = YUG
+					resistance < 50
+				}
+				add_resistance = 10
+			}
+		    GER = { country_event = { id = britain.46 } }	
+		}	
+	}
 
 	SOV_dummy_decision = {
 
@@ -3131,8 +3169,8 @@ SOV_great_patriotic_war = {
 		}
 
 		selectable_mission = no
-		days_mission_timeout = 30
-		days_remove = 30
+		days_mission_timeout = 80
+		days_remove = 80
 		is_good = no
 		fire_only_once = no
 
@@ -3161,10 +3199,21 @@ SOV_great_patriotic_war = {
 			}
 			
 			add_equipment_to_stockpile = {
-				type = artillery_equipment_1
-					amount = 1250
+				type = artillery_equipment_2
+					amount = 600
 					producer = USA
 			}
+			add_equipment_to_stockpile = {
+				type = field_gun_equipment_2
+					amount = 200
+					producer = USA
+			}
+			add_equipment_to_stockpile = {
+				type = rocket_artillery_equipment_1
+					amount = 200
+					producer = SOV
+			}
+			
 			if = {
 				limit = {
 					has_completed_focus = SOV_expand_air_corps_tactical_school
@@ -3233,8 +3282,8 @@ SOV_great_patriotic_war = {
 		}
 
 		selectable_mission = no
-		days_mission_timeout = 30
-		days_remove = 40
+		days_mission_timeout = 80
+		days_remove = 80
 		is_good = no
 		fire_only_once = no
 
@@ -3263,9 +3312,19 @@ SOV_great_patriotic_war = {
 			}
 			
 			add_equipment_to_stockpile = {
-				type = artillery_equipment_1
-					amount = 2000
+				type = artillery_equipment_2
+					amount = 800
 					producer = USA
+			}
+			add_equipment_to_stockpile = {
+				type = field_gun_equipment_2
+					amount = 400
+					producer = USA
+			}
+			add_equipment_to_stockpile = {
+				type = rocket_artillery_equipment_1
+					amount = 300
+					producer = SOV
 			}
 			if = {
 				limit = {
@@ -3326,16 +3385,22 @@ SOV_great_patriotic_war = {
 			PER = { has_capitulated = no }
 		}
 		cancel_trigger = {
-			PER = { has_capitulated = yes }	
+			SOV = {
+				NOT = {
+					controls_state = 266
+				}
+			}
 		}
 		activation = {
 			has_completed_focus = SOV_persian_lend_lease
-			PER = { has_capitulated = no }
+			SOV = {
+				controls_state = 266
+			}
 		}
 
 		selectable_mission = no
-		days_mission_timeout = 30
-		days_remove = 40
+		days_mission_timeout = 80
+		days_remove = 80
 		is_good = no
 		fire_only_once = no
 
@@ -3364,9 +3429,19 @@ SOV_great_patriotic_war = {
 			}
 			
 			add_equipment_to_stockpile = {
-				type = artillery_equipment_1
-					amount = 2000
+				type = artillery_equipment_2
+					amount = 800
 					producer = USA
+			}
+			add_equipment_to_stockpile = {
+				type = field_gun_equipment_2
+					amount = 400
+					producer = USA
+			}
+			add_equipment_to_stockpile = {
+				type = rocket_artillery_equipment_1
+					amount = 300
+					producer = SOV
 			}	
 			if = {
 				limit = {
@@ -5135,6 +5210,14 @@ SOV_great_patriotic_war = {
 			fire_only_once = yes
 		
 		complete_effect = { 
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = SOV_drive_out_the_fascists
+					}
+				}
+				complete_national_focus = SOV_drive_out_the_fascists
+			}
 		   	add_timed_idea = {	
 		   		idea = winter_offensive
 		   		days = 70
