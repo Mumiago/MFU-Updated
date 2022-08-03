@@ -33,6 +33,7 @@ PAR_instant_effect_decisions = {
 						name = "Einsatzgruppen"
 						is_locked = no
 						priority = 0  
+						template_counter = 82
 						regiments = {
 							infantry = { x = 0 y = 0 }
 							infantry = { x = 0 y = 1 }
@@ -81,6 +82,9 @@ PAR_instant_effect_decisions = {
 					}
 				}
 				transfer_state_to = SOV
+				teleport_armies = {
+					to_state_array = owned_controlled_states
+				}
 				create_unit = {
 					division = "name = \"Titov's Partisans\" division_template = \"Strelkovaya Diviziya - Reinforcements\" start_experience_factor = 0.5 start_equipment_factor = 1" 
 					owner = SOV
@@ -293,6 +297,37 @@ PAR_instant_effect_decisions = {
 			set_global_flag = GDU_Battle_Of_France_Missions_Activated
 		}
 	}
+	PAR_italy_reconquered_africa = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 5000			
+		}
+		available = {
+			date > 1939.1.1
+			ITA = {
+				OR = {
+					NOT = {
+						has_idea = impero_di_argilla
+						has_idea = impero_di_argilla_2
+						has_idea = impero_di_argilla_3
+					}
+				}
+				OR = {
+					controls_state = 451 
+					controls_state = 450 
+					controls_state = 448
+					controls_state = 449 
+				}
+			}
+		}	
+		fire_only_once = no
+
+		complete_effect = {
+			ITA = {
+				add_ideas = impero_di_argilla_3
+			}
+		}	
+	}
 	PAR_italy_lost_africa = {
 		allowed = { tag = PAR }
 		ai_will_do = {
@@ -300,6 +335,11 @@ PAR_instant_effect_decisions = {
 		}
 		available = {
 			ITA = {
+				OR = {
+					has_idea = impero_di_argilla
+					has_idea = impero_di_argilla_2
+					has_idea = impero_di_argilla_3
+				}
 				NOT = { 
 					controls_state = 451 
 					controls_state = 450 
@@ -327,7 +367,7 @@ PAR_instant_effect_decisions = {
 				}
 			}
 		}	
-		fire_only_once = yes
+		fire_only_once = no
 
 		complete_effect = {
 			ITA = {
