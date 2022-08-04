@@ -749,8 +749,8 @@ NMilitary = {
 	ENEMY_AIR_SUPERIORITY_DEFENSE_STEEPNESS = 75, -- how quickly defense approaches the max impact diminishing returns curve
 	ENEMY_AIR_SUPERIORITY_SPEED_IMPACT = -0.2,     -- effect on speed due to enemy air superiority
 
-	ANTI_AIR_TARGETTING_TO_CHANCE = 0.03,			-- Balancing value to determine the chance of ground AA hitting an attacking airplane, affecting both the effective average damage done by AA to airplanes, and the reduction of damage done by airplanes due to AA support
-	ANTI_AIR_ATTACK_TO_AMOUNT = 0.003,				-- Balancing value to convert equipment stat anti_air_attack to the random % value of airplanes being hit.																																																																
+	ANTI_AIR_TARGETTING_TO_CHANCE = 0.01,			-- Balancing value to determine the chance of ground AA hitting an attacking airplane, affecting both the effective average damage done by AA to airplanes, and the reduction of damage done by airplanes due to AA support
+	ANTI_AIR_ATTACK_TO_AMOUNT = 0.002,				-- Balancing value to convert equipment stat anti_air_attack to the random % value of airplanes being hit.																																																																
 
 	ENCIRCLED_PENALTY = -0.3,                      -- penalty when completely encircled
 	WARSCORE_WINNER_FACTOR = 1,						-- Warscore effect on winners
@@ -810,7 +810,7 @@ NMilitary = {
 	OUT_OF_SUPPLY_MORALE = -0.3,                   -- max org regain reduction from supply
 	TRAINING_ATTRITION = 0.0075,		  			   -- amount of extra attrition from being in training
 	TRAINING_MIN_STRENGTH = 0.1,					-- if strength is less than this, the unit will pause training until it's been reinforced
-	AIR_SUPPORT_BASE = 0.2,                        -- base ground bonus to troops when active planes helping them
+	AIR_SUPPORT_BASE = 0.15,                        -- base ground bonus to troops when active planes helping them
 	LOW_SUPPLY = 0.70,							   -- When the supply status of an unit becomes low.
 	UNIT_LEADER_MAX_SKILL_XP_BOOST_FACTOR = 2.0,   -- When a commander is at maximum level, he gains ranks faster.
 	BORDER_WAR_ATTRITION_FACTOR = 0.05,			   -- How much of borderwar balance of power makes it into attrition
