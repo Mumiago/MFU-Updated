@@ -1,0 +1,126 @@
+on_actions = {
+    on_startup = {
+        effect = {
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = script_china_war
+						option = DEFAULT
+					}
+				}
+				CHI = {
+					add_ideas = neutrality_idea
+					add_ideas = developing_country
+					add_ideas = no_spies_idea
+                    remove_ideas = german_advisors
+                    remove_ideas = CHI_incompentent
+					remove_ideas = CHI_nine_power_treaty
+					remove_ideas = CHI_army_corruption_1
+					remove_ideas = CHI_ineffective_bureaucracy
+					remove_ideas = CHI_hyper_inflation_1
+					remove_ideas = CHI_unprofessional_army_1
+					remove_ideas = CHI_chinese_unity_1
+
+					delete_unit_template_and_units = { division_template = "Sanjiao Jun" }
+					delete_unit_template_and_units = { division_template = "Juntuán" }
+					delete_unit_template_and_units = { division_template = "Motorized Corps" }
+					delete_unit_template_and_units = { division_template = "Reorganized Division" }
+					delete_unit_template_and_units = { division_template = "Qibing Jun" }
+
+					annex_country = { target = PRC transfer_troops = no } 
+				}
+				every_state = {
+					limit = {
+						is_owned_by = CHI 
+						arms_factory > 0						
+					}
+					remove_building = { type = arms_factory level = 20 }
+				}
+				every_state = {
+					limit = {
+						is_owned_by = CHI 
+						industrial_complex > 0						
+					}
+					remove_building = { type = industrial_complex level = 20 }
+				}
+			}
+            CHI = {
+                if = {
+                    limit = { 
+                        JAP = { 
+                            is_ai = no
+                        }
+                        CHI = {
+                            is_ai = yes
+                        }
+                    }
+
+                    add_equipment_to_stockpile = { type = motorized_equipment_1 amount = 500 producer = USA } 
+                    add_equipment_to_stockpile = { type = infantry_equipment_0 amount = 10000 producer = CHI }
+                }
+            }		
+        }
+    }
+    on_state_control_changed = { 
+        effect = { 
+            if = { #Chinese resistance in states Japan occupies  
+                limit = {
+                    FROM.FROM = { is_core_of = CHI }
+                }
+                if = { #If CHI is new controller, remove state modifier
+                    limit = {
+                        ROOT = { tag = CHI }
+                        FROM.FROM = { has_dynamic_modifier = { modifier = CHI_invaders_must_die } }
+                    }
+                    FROM.FROM = { remove_dynamic_modifier = { modifier = CHI_invaders_must_die } }
+                }
+                else_if = { #If CHI lost the state, add state modifier
+                    limit = {
+                        FROM = { tag = CHI }
+                        ROOT = { has_war_with = CHI }
+                    }
+                    FROM.FROM = { 
+                        add_dynamic_modifier = { modifier = CHI_invaders_must_die } 
+                    }
+                }
+            }
+        }
+        effect = {
+            if = { #If CHI lost a state they get buffed :muscle:# 
+                limit = {
+                    FROM = { tag = CHI }
+                    ROOT = { has_war_with = CHI }
+                }
+                add_to_variable = { CHI_army_defence_factor_var = 0.05 }
+                add_to_variable = { CHI_cas_damage_reduction_var = 0.05 }
+                add_to_variable = { CHI_dig_in_speed_factor_var = 0.05 }
+                add_to_variable = { CHI_max_dig_in_factor_var = 0.05 }
+                add_to_variable = { CHI_pocket_penalty_var = -0.05 }
+            }
+        }
+        effect = {
+            if = { #If CHI lost a state Japan gets factories
+                limit = {
+                    FROM = { tag = CHI }
+                    ROOT = { has_war_with = CHI }
+                    NOT = {
+                        FROM.FROM = {
+                            has_state_flag = CHI_riches_of_china_flag
+                        }
+                    }
+                }
+                FROM.FROM = { 
+                    add_building_construction = {
+                        type = industrial_complex
+                        level = 2
+                        instant_build = yes 
+                    }
+                    set_state_flag = CHI_riches_of_china_flag
+                }
+
+            }
+
+        }
+
+    }
+}	
