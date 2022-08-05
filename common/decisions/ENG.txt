@@ -1929,6 +1929,86 @@ ENG_budget_decisions = {
 		}
 	}
 
+	ENG_support_china_2 = {
+
+		name = CHI_expand_the_burma_road
+
+		icon = generic_industry
+
+		allowed = {
+			tag = ENG			
+		}
+
+		visible = {
+			has_game_rule = {
+				rule = script_china_war
+				option = DEFAULT 
+			}
+		}
+
+		available = {
+			date > 1938.1.1
+		}
+
+		visible = {
+			country_exists = CHI 
+		}
+
+		custom_cost_trigger = {
+			check_variable = {
+    			var = british_money
+   				value = 100
+    			compare = greater_than_or_equals
+			}
+		}
+
+		custom_cost_text = ENG_10_british_money 
+
+		ai_will_do = {
+			factor = 60
+		}
+
+		fire_only_once = no
+
+		modifier = {
+			civilian_factory_use = 3		
+		}
+
+		days_remove = 180
+
+		complete_effect = {
+			random_country = {
+				limit = {
+					Tag = CHI
+				}
+				add_offsite_building = { type = arms_factory level = 3 }
+				set_country_flag = ENG_support_china_with_factories
+			}
+			subtract_from_variable = {
+				var = british_money
+				value = 100
+			}
+		}
+
+		remove_effect = {
+		   add_political_power = 100
+			add_war_support = 0.05
+			CHI = {
+				if = {
+					limit = {
+						NOT = { any_other_country = { has_country_flag = ENG_support_china_with_factories } }
+					}
+				}
+				add_offsite_building = { type = arms_factory level = -3 }
+				add_equipment_to_stockpile = { type = infantry_equipment_1 amount = 1000 producer = ENG }
+				add_equipment_to_stockpile = { type = support_equipment_1 amount = 200 producer = ENG }
+				add_equipment_to_stockpile = { type = artillery_equipment_1 amount = 100 producer = ENG }
+				add_equipment_to_stockpile = { type = fighter_equipment_1936 amount = 50 producer = ENG }
+			}	
+		}
+	}
+
+
     CHI_expand_the_burma_road = {
 		icon = generic_construction
 	
@@ -1947,9 +2027,19 @@ ENG_budget_decisions = {
 
 		custom_cost_text = ENG_10_british_money 
 
+		visible = {
+			has_game_rule = {
+				rule = script_china_war
+				option = HISTORICAL 
+			}
+		}
 
 		available = { 
             has_completed_focus = uk_burma_focus
+			has_game_rule = {
+				rule = script_china_war
+				option = HISTORICAL 
+			}
 			JAP = { has_war = yes }
 			
 			288 = {
@@ -2110,6 +2200,13 @@ ENG_budget_decisions = {
 			tag = ENG			
 		}
 
+		visible = {
+			has_game_rule = {
+				rule = script_china_war
+				option = HISTORICAL 
+			}
+		}
+
 		available = {
 			any_other_country = {
 				CHI = { 
@@ -2131,8 +2228,8 @@ ENG_budget_decisions = {
 			}
 		}
 
-
 		custom_cost_text = ENG_10_british_money 
+
 		ai_will_do = {
 			factor = 60
 		}
@@ -2242,6 +2339,7 @@ ENG_budget_decisions = {
 			}
 		}
 	}
+
 	ENG_order_artillery_in_USA = {
 		icon = ger_military_buildup
 		available = {
@@ -2313,6 +2411,7 @@ ENG_budget_decisions = {
 
 		}
 	}
+
 	ENG_order_tanks_in_USA = {
 		icon = generic_tank
 		available = {
