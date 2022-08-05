@@ -651,7 +651,6 @@ focus_tree = {
 
 		available = {
 			date > 1937.3.1
-			has_war = yes
 		}
 
 		bypass = {
@@ -734,10 +733,26 @@ focus_tree = {
 				}
 				add_ideas = closed_economy
 			}
-			MAN = {
-				remove_ideas = jap_kwantung_army
-			}	
-			remove_ideas = jap_kwantung_army_2
+			if = {
+				limit = {
+					MAN = {
+						has_idea = jap_kwantung_army
+					}
+				}
+				MAN = {
+					remove_ideas = jap_kwantung_army
+				}
+			}
+			if = {
+				limit = {
+					JAP = {
+						has_idea = jap_kwantung_army_2
+					}
+				}
+				JAP = {
+					remove_ideas = jap_kwantung_army_2
+				}
+			}
 			add_tech_bonus = {
 				category = industry 
 				name = JAP_outline_of_the_new_economic_order
@@ -2643,7 +2658,12 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			army_experience = 40
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine
+			}
 		}
 	}
 
@@ -2884,8 +2904,13 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			army_experience = 25
-			army_experience = 50		
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine
+			}
+					
 		}
 	}
 
@@ -3362,32 +3387,10 @@ focus_tree = {
 		available = {
 			is_puppet = no 
 			NOT = { has_war_with = CHI }
-			date > 1937.3.1
+			date > 1937.6.1
 		}
 		bypass = {
-			OR = {
-				AND = {
-					608 = {
-						NOT = {
-							is_controlled_by = CHI
-							is_controlled_by = PRC
-						}
-					}
-					597 = {
-						NOT = {
-							is_controlled_by = CHI
-							is_controlled_by = PRC
-						}
-					}
-					614 = {
-						NOT = {
-							is_controlled_by = CHI
-							is_controlled_by = PRC
-						}
-					}
-				}
-				has_war_with = CHI
-			}
+			has_war_with = CHI
 		}
 
 		will_lead_to_war_with = CHI
@@ -3405,95 +3408,118 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = "When we go to war with China, we will get a big production buff as long as we are at war with them, when the war stops the production buff will dissapear"
-			MAN = {
-				add_ideas = jap_kwantung_army
-			}
-			swap_ideas = {
-				remove_idea = jap_kwantung_army
-				add_idea = jap_kwantung_army_2
-			}
-			hidden_effect = {
-				every_state = {
-					limit = {
-						OR = {
-						state = 608
-						state = 621
-						state = 746
-						state = 622
-						state = 614
-						state = 607
-						state = 608
-						state = 597
-						state = 743
-						state = 606
-						state = 613
-						state = 749
-						state = 596
-						state = 595
-						state = 593
-						state = 592
-						state = 594
-						state = 599
-						state = 325
-						state = 747
-						state = 601
-						state = 604
-						state = 750
-						state = 605
-						state = 620
-						state = 602
-						state = 751
-						state = 752
-						state = 753
-						state = 603
-						state = 600
-						state = 748
-						state = 744
-						state = 598
-						}
-					}
-				add_province_modifier = {
-					static_modifiers = { china_speed }
-					province = {
-						all_provinces = yes
-					}
-				}
-			}
-			play_song = "Battoutai"
-			sound_effect = jap_banzai
-		}
-			add_timed_idea = { idea = JAP_start_of_the_war days = 365 }
-					CHI = {
-					add_to_faction = PRC
-				}
-			if = {
-				CHI = {
-					country_event = china.100
-				}	
-				PRC = {
-					country_event = china.104
-				}	
-			}
-			if = {
-				CHI = {
-					country_event = china.1
-				}
-				PRC = {
-					country_event = china.104
-				}
-						
-			}	
-			add_named_threat = { threat = 1 name = JAP_intervene_in_china }
 			if = {
 				limit = {
-					JAP = {
-						is_ai = no
+					has_game_rule = {
+						rule = script_china_war
+						option = DEFAULT  
 					}
 				}
-				add_ideas = JAP_intervene_in_china_3
+
+				hidden_effect = {
+					activate_mission = JAP_intervention_in_china_mission
+					set_country_flag = JAP_china_step_up_war_effort_1_flag
+				}
+
+				custom_effect_tooltip = JAP_china_war_explanation_1
+				unlock_decision_category_tooltip = JAP_intervene_in_china_decision
 			}
-			unlock_decision_tooltip = JAP_china_step_up_war_effort
+			else_if = {
+				limit = {
+					has_game_rule = {
+						rule = script_china_war
+						option = HISTORICAL 
+					}
+				}
+				custom_effect_tooltip = "When we go to war with China, we will get a big production buff as long as we are at war with them, when the war stops the production buff will dissapear"
+				MAN = {
+					add_ideas = jap_kwantung_army
+				}
+				swap_ideas = {
+					remove_idea = jap_kwantung_army
+					add_idea = jap_kwantung_army_2
+				}
+				hidden_effect = {
+					every_state = {
+						limit = {
+							OR = {
+							state = 608
+							state = 621
+							state = 746
+							state = 622
+							state = 614
+							state = 607
+							state = 608
+							state = 597
+							state = 743
+							state = 606
+							state = 613
+							state = 749
+							state = 596
+							state = 595
+							state = 593
+							state = 592
+							state = 594
+							state = 599
+							state = 325
+							state = 747
+							state = 601
+							state = 604
+							state = 750
+							state = 605
+							state = 620
+							state = 602
+							state = 751
+							state = 752
+							state = 753
+							state = 603
+							state = 600
+							state = 748
+							state = 744
+							state = 598
+							}
+						}
+					add_province_modifier = {
+						static_modifiers = { china_speed }
+						province = {
+							all_provinces = yes
+						}
+					}
+				}
+				play_song = "Battoutai"
+				sound_effect = jap_banzai
+				}
+				add_timed_idea = { idea = JAP_start_of_the_war days = 365 }
+				CHI = {
+					add_to_faction = PRC
+				}
+				if = {
+					CHI = {
+						country_event = china.100
+					}	
+					PRC = {
+						country_event = china.104
+					}	
+				}
+				if = {
+					CHI = {
+						country_event = china.1
+					}
+					PRC = {
+						country_event = china.104
+					}
+							
+				}	
+				add_named_threat = { threat = 1 name = JAP_intervene_in_china }
+				if = {
+					limit = {
+						JAP = {
+							is_ai = no
+						}
+					}
+					add_ideas = JAP_intervene_in_china_3
+				}
+			}
 		}
 	}
 	focus = {
@@ -5513,7 +5539,7 @@ focus_tree = {
 				uses = 1
 				category = bb_tech	
 			}
-			navy_experience = 250
+			navy_experience = 50
 			random_owned_controlled_state = {
 				limit = {
 					ROOT = { has_full_control_of_state = PREV }
@@ -5725,6 +5751,7 @@ focus_tree = {
 		}	
 
 		completion_reward = {
+			navy_experience = 200
 			custom_effect_tooltip = JAP_lose_overextension_tt
 			hidden_effect = {
 				JAP_lose_overextension = yes 
