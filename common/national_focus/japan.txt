@@ -899,10 +899,10 @@ focus_tree = {
 						include_locked = yes
 					}					
 				}
-				add_extra_state_shared_building_slots = 6
+				add_extra_state_shared_building_slots = 10
 				add_building_construction = {
 					type = industrial_complex
-					level = 6
+					level = 10
 					instant_build = yes
 				}
 				set_state_flag = JAP_zaibatsus_factories
@@ -2217,43 +2217,7 @@ focus_tree = {
 		}
 	}
 
-	focus = {
-		id = JAP_divine_mandate
-		icon = GFX_focus_man_claim_the_mandate_of_heaven
-		prerequisite = { focus = JAP_japanese_settlement }
-		x = 0
-		y = 1
-		relative_position_id = JAP_japanese_settlement
-
-		cost = 5
-
-		ai_will_do = {
-			factor = 1
-		}
-
-		available = {
-		
-
-		}
-
-		bypass = {
-
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-
-		completion_reward = {
-			MAN = {
-				add_state_core = 621
-				add_state_core = 615
-				add_state_core = 622
-				add_state_core = 746
-			}
-		}
-	}
+	
 
 
 	focus = {
@@ -3579,33 +3543,94 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = JAP_reignite_war
-		icon = GFX_focus_chi_one_china_policy
-
+		id = JAP_develop_chinese_aluminium
+		icon = GFX_focus_generic_aluminum
 		prerequisite = { focus = JAP_nomonhan_incident }
-		cost = 3
 		x = -1
-		y = 2 
+		y = 1
+		relative_position_id = JAP_nomonhan_incident
 
-		relative_position_id = JAP_intervene_in_china
+		cost = 2.88
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+			has_full_control_of_state = 608
+			has_full_control_of_state = 613
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+
+		completion_reward = {
+			608 = {
+				add_resource = {
+					type = aluminium
+					amount = 20
+				}
+			}
+			613 = {
+				add_resource = {
+					type = aluminium
+					amount = 20
+				}
+			}
+		}
+	}	
+
+	focus = {
+		id = JAP_develop_chinese_steel
+		icon = GFX_GER_the_steel_most_flow
+		prerequisite = { focus = JAP_nomonhan_incident }
+		x = 1
+		y = 1
+		relative_position_id = JAP_nomonhan_incident
+
+		cost = 2.88
+
+		ai_will_do = {
+			factor = 4
+		}
 
 		available = {
 
 		}
 
-		ai_will_do = {
-			factor = 100			
-		}
-		
 		bypass = {
-			OR = {
-				CHI = { has_capitulated = yes }
-			}
+
 		}
-		
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
 		completion_reward = {
-			add_equipment_to_stockpile = { type = infantry_equipment_0 amount = 5000 producer = JAP } 
-			add_equipment_to_stockpile = { type = support_equipment_1 amount = 1000 producer = JAP }
+			599 = {
+				add_resource = {
+					type = steel
+					amount = 12
+				}
+			}
+			606 = {
+				add_resource = {
+					type = steel
+					amount = 15
+				}
+			}
+			592 = {
+				add_resource = {
+					type = steel
+					amount = 12
+				}
+			}			
 		}
 	}
 
@@ -3614,11 +3639,11 @@ focus_tree = {
 	focus = {
 		id = JAP_the_occupation_of_china
 		icon = GFX_goal_generic_seperation
-		prerequisite = { focus = JAP_reignite_war }
-		prerequisite = { focus = JAP_non_aggression_pact_with_the_soviet_union }
-		x = 1
+		prerequisite = { focus = JAP_develop_chinese_steel }
+		prerequisite = { focus = JAP_develop_chinese_aluminium }
+		x = -1
 		y = 1
-		relative_position_id = JAP_reignite_war
+		relative_position_id = JAP_develop_chinese_steel
 
 		cost = 5
 
@@ -3671,85 +3696,43 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			if = {
-				random_owned_controlled_state = {
-					limit = {
-						is_coastal = no
-						is_core_of = CHI
-						NOT = {
-							is_controlled_by = MAN
-						}
-					}
-					remove_building = {
-						type = industrial_complex
-						level = 3
-					}
-				}
-				random_owned_controlled_state = {
-					limit = {
-						is_core_of = CHI
-						NOT = {
-							is_controlled_by = MAN
-						}
-						free_building_slots = {
-							building = arms_factory
-							size > 2
-							include_locked = yes
-						}
-						is_coastal = yes
-					}
-					add_extra_state_shared_building_slots = 3
-					add_building_construction = {
-						type = arms_factory
-						level = 3
-						instant_build = yes
-					}
-				}				
-			}
-			if = {
-				random_owned_controlled_state = {
-					limit = {
-						is_coastal = no
-						is_core_of = CHI
-						NOT = {
-							is_controlled_by = MAN
-						}
-					}
-					remove_building = {
-						type = industrial_complex
-						level = 3
-					}
-				}
-				random_owned_controlled_state = {
-					limit = {
-						is_core_of = CHI
-						NOT = {
-							is_controlled_by = MAN
-						}
-						free_building_slots = {
-							building = industrial_complex
-							size > 2
-							include_locked = yes
-						}
-						is_coastal = yes
-					}
-					add_extra_state_shared_building_slots = 3
-					add_building_construction = {
-						type = industrial_complex
-						level = 3
-						instant_build = yes
-					}
-				}				
+			custom_effect_tooltip = "We will plan offensives in the following states:"
+			every_state = {
+				limit={OR={state = 593 state = 595 state = 325 state = 747 }}
+				add_dynamic_modifier = { modifier = JAP_ichi_go days = 210 }
+			}		
+
+			593 = {
+				add_compliance = 10
+			}				
+			595 = {
+				add_compliance = 10
+			}			
+			614 = {
+				add_compliance = 10
+			}								
+			743 = {
+				add_compliance = 10
+			}	
+			621 = {
+				add_compliance = 10
+			}	
+			615 = {
+				add_compliance = 10
+			}	
+			597 = {
+				add_compliance = 10
 			}
 		}
-	}			
+	}
+				
 
 	focus = {
 		id = JAP_safeguard_northern_china
 		icon = GFX_goal_generic_position_armies
 		prerequisite = { focus = JAP_the_occupation_of_china }
 		mutually_exclusive = {  focus = JAP_japan_conquerors_all focus = JAP_secure_the_coastlines }
-		x = -4
+		x = -5
 		y = 1
 		relative_position_id = JAP_the_occupation_of_china
 
@@ -3773,167 +3756,43 @@ focus_tree = {
 
 
 		completion_reward = {
-			add_equipment_to_stockpile = { type = infantry_equipment_1 amount = 10000 producer = JAP }
-			if = {
-				limit = {
-					743 = {
-						OR = {
-							is_controlled_by = JAP
-							is_controlled_by = MAN
-						}
-					}
-				}
-				743 = {
-					add_compliance = 50
-				}				
-			}
-			if = {
-				limit = {
-					608 = {
-						OR = {
-							is_controlled_by = JAP
-							is_controlled_by = MAN
-						}
-					}
-				}
-				608 = {
-					add_compliance = 50
-				}				
-			}
-			if = {
-				limit = {
-					614 = {
-						OR = {
-							is_controlled_by = JAP
-							is_controlled_by = MAN
-						}
-					}
-				}
-				614 = {
-					add_compliance = 50
-				}				
-			}
-			if = {
-				limit = {
-					597 = {
-						OR = {
-							is_controlled_by = JAP
-							is_controlled_by = MAN
-						}
-					}
-				}
-				597 = {
-					add_compliance = 50
-				}				
-			}
-			if = {
-				limit = {
-					743 = {
-						OR = {
-							is_controlled_by = JAP
-							is_controlled_by = MAN
-						}
-					}
-				}
-				743 = {
-					add_compliance = 50
-				}				
-			}
-			custom_effect_tooltip = "We will prepare a defence force of 10 divisions to defend our teritorial gains in China, this will also give us 50 compliance in all northern chinese states"
-				hidden_effect = {	
-					division_template = {
-						name = "Chinese Defense Force "
-						priority = 2
-		
-							regiments = {
-								volkssturm_infantry = { x = 0 y = 0 }
-								volkssturm_infantry = { x = 0 y = 1 }
-								volkssturm_infantry = { x = 0 y = 2 }
-								
-								volkssturm_infantry = { x = 1 y = 0 }
-								volkssturm_infantry = { x = 1 y = 1 }
-								volkssturm_infantry = { x = 1 y = 2 }
-								
-								volkssturm_infantry = { x = 2 y = 0 }
-								volkssturm_infantry = { x = 2 y = 1 }
-								volkssturm_infantry = { x = 2 y = 2 }		
-								volkssturm_infantry = { x = 2 y = 3 }
-								volkssturm_infantry = { x = 3 y = 0 }
-								pack_artillery_brigade = { x = 3 y = 1 }
-								pack_artillery_brigade = { x = 3 y = 2 }
-								pack_artillery_brigade = { x = 3 y = 3 }
-								pack_artillery_brigade = { x = 4 y = 0 }		
-							}
-							support = {
-								DIV_HQ = {
-									x = 0
-									y = 3
-								}
-								recon = { x = 0 y = 1 }
-								anti_air_company = { x = 0 y = 2 }
-								field_hospital = { x = 1 y = 0 }
-								pack_artillery = { x = 1 y = 1 }
-								engineer = { x = 1 y = 2 }
-							}	
-						}
-	
-					random_owned_controlled_state = {
-						prioritize = { 609 }
-						create_unit = {
-							division = "name = \"1st Chinese Defense Force\" division_template = \"Chinese Defense Force \" start_experience_factor = 0.2 start_equipment_factor = 1" 
-							owner = JAP
-						}
-						create_unit = {
-							division = "name = \"2nd Chinese  Defense Force\" division_template = \"Chinese Defense Force \" start_experience_factor = 0.2 start_equipment_factor = 1" 
-							owner = JAP
-						}	
-						create_unit = {
-							division = "name = \"3rd Chinese Defense Force\" division_template = \"Chinese Defense Force \" start_experience_factor = 0.2 start_equipment_factor = 1" 
-							owner = JAP
-						}	
-						create_unit = {
-							division = "name = \"4th Chinese Defense Force\" division_template = \"Chinese Defense Force \" start_experience_factor = 0.2 start_equipment_factor = 1" 
-							owner = JAP
-						}	
-						create_unit = {
-							division = "name = \"5th Chinese Defense Force\" division_template = \"Chinese Defense Force \" start_experience_factor = 0.2 start_equipment_factor = 1" 
-							owner = JAP
-						}	
-						create_unit = {
-							division = "name = \"6th Chinese Defense Force\" division_template = \"Chinese Defense Force \" start_experience_factor = 0.2 start_equipment_factor = 1" 
-							owner = JAP
-						}	
-						create_unit = {
-							division = "name = \"7th Chinese Defense Force\" division_template = \"Chinese Defense Force \" start_experience_factor = 0.2 start_equipment_factor = 1" 
-							owner = JAP
-						}	
-						create_unit = {
-							division = "name = \"8th Chinese Defense Force\" division_template = \"Chinese Defense Force\" start_experience_factor = 0.2 start_equipment_factor = 1" 
-							owner = JAP
-						}	
-						create_unit = {
-							division = "name = \"9th Chinese Defense Force\" division_template = \"Chinese Defense Force \" start_experience_factor = 0.2 start_equipment_factor = 1" 
-							owner = JAP
-						}	
-						create_unit = {
-							division = "name = \"10th Chinese Defense Force\" division_template = \"Chinese Defense Force \" start_experience_factor = 0.2 start_equipment_factor = 1" 
-							owner = JAP
-						}
-						create_unit = {
-							division = "name = \"11th Chinese Defense Force\" division_template = \"Chinese Defense Force \" start_experience_factor = 0.2 start_equipment_factor = 1" 
-							owner = JAP
-						}			
+			custom_effect_tooltip = "We will plan offensives in the following states:"
+			every_state = {
+				limit={OR={state = 746 state = 622 state = 744 }}
+				add_dynamic_modifier = { modifier = JAP_ichi_go days = 210 }
+			}		
+
+			607 = {
+				add_compliance = 10
+			}				
+			608 = {
+				add_compliance = 10
+			}			
+			614 = {
+				add_compliance = 10
+			}								
+			743 = {
+				add_compliance = 10
+			}	
+			621 = {
+				add_compliance = 10
+			}	
+			615 = {
+				add_compliance = 10
+			}	
+			597 = {
+				add_compliance = 10
+			}	
+			
+					
 		}
 	}
-}
-}
-	
 	focus = {
 		id = JAP_japan_conquerors_all
 		icon = GFX_focus_CZE_german_puppet
 		prerequisite = { focus = JAP_the_occupation_of_china }
 		mutually_exclusive = {  focus = JAP_safeguard_northern_china focus = JAP_secure_the_coastlines }
-		x = 4
+		x = 5
 		y = 1
 		relative_position_id = JAP_the_occupation_of_china
 
@@ -3982,7 +3841,7 @@ focus_tree = {
 		id = JAP_move_the_interior_outwards
 		icon = GFX_goal_generic_construct_civilian
 		prerequisite = { focus = JAP_safeguard_northern_china focus = JAP_secure_the_coastlines  }
-		x = -4
+		x = -5
 		y = 2
 		relative_position_id = JAP_the_occupation_of_china
 
@@ -4006,32 +3865,33 @@ focus_tree = {
 
 
 		completion_reward = {
-			605 = {
-				remove_building = {
-					type = arms_factory
-					level = 4
-				}
-				remove_building = {
-					type = industrial_complex
-					level = 4
-				}
-			}
-			597 = {
-				add_extra_state_shared_building_slots = 4
+			608 = {
+				add_resistance = 3
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = arms_factory
-					level = 4
+					level = 2
+					instant_build = yes
+				}
+			}
+			621 = {
+				add_resistance = 3
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
 					instant_build = yes
 				}				
 			}
-			613 = {
-				add_extra_state_shared_building_slots = 4
+			615 = {
+				add_resistance = 3
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = arms_factory
-					level = 4
+					level = 2
 					instant_build = yes
 				}				
-			}			
+			}		
 		}
 	}
 
@@ -4050,7 +3910,11 @@ focus_tree = {
 		}
 
 		available = {
-		
+			JAP = {
+				has_full_control_of_state = 746
+				has_full_control_of_state = 622
+				has_full_control_of_state = 744
+			}
 		}
 
 		bypass = {
@@ -4063,15 +3927,16 @@ focus_tree = {
 
 
 		completion_reward = {
-			every_state = {
-				limit = {
-					AND = {
-						is_core_of = CHI
-						is_controlled_by = ROOT
-					}
-				}
-				add_compliance = 20
-			}		
+			746 = {
+				add_compliance = 40
+			}
+			622 = {
+				add_compliance = 40
+			}
+			744 = {
+				add_compliance = 40
+			}
+					
 		}
 	}
 	### Minor Branch Left
@@ -4103,7 +3968,7 @@ focus_tree = {
 
 
 		completion_reward = {
-			614 = {
+			746 = {
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
@@ -4111,7 +3976,15 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
-			613 = {
+			622 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+			744 = {
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
@@ -4124,7 +3997,7 @@ focus_tree = {
 	
 	focus = {
 		id = JAP_develop_bejing
-		icon = GFX_GER_private_military_industrial_complex 
+		icon = GFX_focus_spr_crush_the_revolution 
 		prerequisite = { focus = JAP_develop_the_coastlines }
 		x = -1
 		y = 3
@@ -4150,16 +4023,20 @@ focus_tree = {
 
 
 		completion_reward = {
-			608 = {
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = industrial_complex
-					level = 3
-					instant_build = yes
+			every_state = {
+				limit = {
+					is_core_of = CHI
+					is_controlled_by = JAP
 				}
+				add_resistance_target = {
+					amount = -5
+				}
+				add_compliance = 5
+				
 			}
 		}
 	}
+	
 	
 	### Minor Branch Right
 	focus = {
@@ -4189,39 +4066,32 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			random_owned_controlled_state = {
-				limit = {
-					is_core_of = CHI
-					is_owned_by = JAP
-					free_building_slots = {
-						building = industrial_complex
-						size > 1
-						include_locked = yes
-					}						
-				}
+			614 = {
+				add_resistance = 3
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
-					type = industrial_complex
+					type = arms_factory
 					level = 2
 					instant_build = yes
-				}
-			}
-			random_owned_controlled_state = {
-				limit = {
-					is_core_of = CHI
-					is_owned_by = JAP
-					free_building_slots = {
-						building = industrial_complex
-						size > 1
-						include_locked = yes
-					}						
-				}
+				}				
+			}	
+			607 = {
+				add_resistance = 3
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
-					type = industrial_complex
+					type = arms_factory
 					level = 2
 					instant_build = yes
-				}
+				}				
+			}	
+			597 = {
+				add_resistance = 3
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}				
 			}			
 		}
 	}
@@ -4253,62 +4123,39 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			598 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
+			hidden_effect = {
+				build_railway = {
+					level = 3
+					build_only_on_allied = yes
+					controller_priority = {
+						base = 1
+					
+						modifier = {
+							tag = JAP
+							add = 2
+						}
+					}
+					fallback = no
+					start_state = 608
+					target_state = 622
 				}
+				build_railway = {
+					level = 3
+					build_only_on_allied = yes
+					controller_priority = {
+						base = 1
+					
+						modifier = {
+							tag = JAP
+							add = 2
+						}
+					}
+					fallback = no
+					start_state = 608
+					target_state = 613
+				}	
 			}
-			597 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			613 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			596 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			605 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}	
-			594 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			592 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			593 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}			
+			custom_effect_tooltip = "Builds lvl 3 railway from Beijing to Shaanxi and Shanghai"		
 		}
 	}
 
@@ -4389,6 +4236,10 @@ focus_tree = {
 		}
 
 		available = {
+			JAP = {
+				has_full_control_of_state = 593
+				has_full_control_of_state = 595
+			}
 		
 		}
 
@@ -4402,125 +4253,52 @@ focus_tree = {
 
 
 		completion_reward = {
-			add_equipment_to_stockpile = { type = infantry_equipment_1 amount = 5000 producer = JAP }
-			if = {
-				limit = {
-					743 = {
-						OR = {
-							is_controlled_by = JAP
-							is_controlled_by = MAN
-						}
-					}
-				}
-				743 = {
-					add_compliance = 20
-				}				
-			}
-			if = {
-				limit = {
-					608 = {
-						OR = {
-							is_controlled_by = JAP
-							is_controlled_by = MAN
-						}
-					}
-				}
-				608 = {
-					add_compliance = 20
-				}				
-			}
-			if = {
-				limit = {
-					614 = {
-						OR = {
-							is_controlled_by = JAP
-							is_controlled_by = MAN
-						}
-					}
-				}
-				614 = {
-					add_compliance = 20
-				}				
-			}
-			if = {
-				limit = {
-					597 = {
-						OR = {
-							is_controlled_by = JAP
-							is_controlled_by = MAN
-						}
-					}
-				}
-				597 = {
-					add_compliance = 20
-				}				
-			}
-			if = {
-				limit = {
-					743 = {
-						OR = {
-							is_controlled_by = JAP
-							is_controlled_by = MAN
-						}
-					}
-				}
-				743 = {
-					add_compliance = 20
-				}				
-			}
-			
-	}
-}
-	
-	focus = {
-		id = JAP_develop_chinese_aluminium
-		icon = GFX_focus_generic_aluminum
-		prerequisite = { focus = JAP_fortify_coastlines }
-		x = -1
-		y = 1
-		relative_position_id = JAP_fortify_coastlines
-
-		cost = 2.88
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			has_full_control_of_state = 608
-			has_full_control_of_state = 613
-		}
-
-		bypass = {
-
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-
-		completion_reward = {
-			608 = {
-				add_resource = {
-					type = aluminium
-					amount = 20
-				}
-			}
+			598 = {
+				add_compliance = 20
+			}				
 			613 = {
-				add_resource = {
-					type = aluminium
-					amount = 20
-				}
+				add_compliance = 20
+			}			
+			596	 = {
+				add_compliance = 20
+			}								
+			592 = {
+				add_compliance = 20
+			}	
+			594 = {
+				add_compliance = 20
 			}
+			591 = {
+				add_compliance = 20
+			}	
+			every_state = {
+				limit = {
+					OR = {
+						state = 598
+						state  = 613
+						state  = 596
+						state  = 592
+						state  = 594
+						state  = 591
+					}
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = {
+						all_provinces = yes
+						limit_to_coastal = yes
+					}
+					level = 3
+					instant_build = yes
+				}
+			}	
 		}
-	}	
-
+	}
 	focus = {
-		id = JAP_develop_chinese_steel
-		icon = GFX_GER_the_steel_most_flow
-		prerequisite = { focus = JAP_fortify_coastlines }
-		x = 1
+		id = JAP_fortify_new_coastlines
+		icon = GFX_focus_generic_coastal_fort
+		prerequisite = { focus = JAP_fortify_coastlines  }
+		x = 0
 		y = 1
 		relative_position_id = JAP_fortify_coastlines
 
@@ -4531,7 +4309,7 @@ focus_tree = {
 		}
 
 		available = {
-
+		
 		}
 
 		bypass = {
@@ -4542,35 +4320,58 @@ focus_tree = {
 		continue_if_invalid = no
 		available_if_capitulated = no
 
+
 		completion_reward = {
-			599 = {
-				add_resource = {
-					type = steel
-					amount = 12
-				}
-			}
-			593 = {
-				add_resource = {
-					type = steel
-					amount = 15
-				}
-			}
-			592 = {
-				add_resource = {
-					type = steel
-					amount = 12
-				}
+			598 = {
+				add_compliance = 20
+			}				
+			613 = {
+				add_compliance = 20
 			}			
+			596	 = {
+				add_compliance = 20
+			}								
+			592 = {
+				add_compliance = 20
+			}	
+			594 = {
+				add_compliance = 20
+			}
+			591 = {
+				add_compliance = 20
+			}	
+			every_state = {
+				limit = {
+					OR = {
+						state = 598
+						state  = 613
+						state  = 596
+						state  = 592
+						state  = 594
+						state  = 591
+					}
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = {
+						all_provinces = yes
+						limit_to_coastal = yes
+					}
+					level = 3
+					instant_build = yes
+				}
+			}	
 		}
 	}
+
 
 	focus = {
 		id = JAP_hold_china
 		icon = GFX_goal_generic_political_pressure
-		prerequisite = { focus = JAP_develop_chinese_aluminium focus = JAP_develop_chinese_steel }
+		prerequisite = { focus = JAP_fortify_new_coastlines }
 		x = 0
-		y = 2
-		relative_position_id = JAP_fortify_coastlines
+		y = 1
+		relative_position_id = JAP_fortify_new_coastlines
 
 		cost = 2.88
 
@@ -4643,7 +4444,7 @@ focus_tree = {
 		id = JAP_the_spoils_of_china
 		icon = GFX_goal_generic_extraction_gold
 		prerequisite = { focus = JAP_japan_conquerors_all focus = JAP_secure_the_coastlines }
-		x = 4
+		x = 5
 		y = 2
 		relative_position_id = JAP_the_occupation_of_china
 
@@ -5152,44 +4953,6 @@ focus_tree = {
 			}		
 		}
 	}	
-	
-
-	focus = {
-		id = JAP_non_aggression_pact_with_the_soviet_union
-		icon = GFX_goal_generic_dangerous_deal
-		prerequisite = { focus = JAP_nomonhan_incident }
-		x = 1
-		y = 2
-		relative_position_id = JAP_intervene_in_china
-
-		cost = 3
-
-		ai_will_do = {
-			factor = 50
-		}
-
-		available = {
-
-		}
-
-		bypass = {
-			OR = {
-				has_non_aggression_pact_with = SOV
-				has_war_with = SOV
-			}
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-
-		completion_reward = {
-			add_political_power = 75
-			SOV = { country_event = { id = wtt_japan.11 } }
-		}
-	}
-
 	focus = {
 		id = JAP_sign_tripartite_pact
 		icon = GFX_goal_anschluss
