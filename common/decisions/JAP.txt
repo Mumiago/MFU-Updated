@@ -10,7 +10,7 @@ JAP_pacific_war_explanation_category = {
 			tag = JAP			
 		}
 
-		available = {
+		activation = {
 			286 = { is_owned_by = JAP }
 			670 = { is_owned_by = JAP }
 			671 = { is_owned_by = JAP }
@@ -19,37 +19,38 @@ JAP_pacific_war_explanation_category = {
 			country_exists = SIA			
 		}
 		
-		visible = {
-			NOT = {
-				OR = {
-					has_country_flag = JAP_alliance_with_siam_done
-					has_war_with = SIA
-					has_full_control_of_state = 289
-					has_full_control_of_state = 724				
-					SIA = {
-						is_in_faction_with = JAP
-					}
-				}
-			}
-		}
-		
 		fire_only_once = yes
 		
 		ai_will_do = {
 			factor = 100
 		}
 		
+		selectable_mission = no
 		days_remove = 35
-		
-		complete_effect = {
-			hidden_effect = {
-				JAP = {
-					set_country_flag = { flag = JAP_operation_T_done value = 1 } 
-				} 
-			}
+		days_mission_timeout = 35
+
+		cancel_trigger = {
+			289 = { is_owned_by = JAP }
 		}
 		
+		complete_effect = {
+			JAP = {
+				set_country_flag = { flag = JAP_operation_T_done value = 1 } 
+			} 
+			annex_country = { target = SIA }
+			every_state = {
+				limit = {
+					is_core_of = SIA 
+				}
+				set_compliance = 90
+				set_resistance = 0 
+			}
+		}		
+		
 		remove_effect = {
+			JAP = {
+				set_country_flag = { flag = JAP_operation_T_done value = 1 } 
+			} 
 			annex_country = { target = SIA }
 			every_state = {
 				limit = {
@@ -69,7 +70,7 @@ JAP_pacific_war_explanation_category = {
 			tag = JAP			
 		}
 
-		available = {
+		activation = {
 			country_exists = EFR
 			NOT = {
 				OR = {
@@ -82,24 +83,30 @@ JAP_pacific_war_explanation_category = {
 				}
 			}		
 		}
-		
-		visible = {
-			NOT = {
-				OR = {
-					has_war_with = USA
-					has_war_with = EFR
-				}
-			}
+
+		cancel_trigger = {
+			286 = { is_owned_by = JAP }
 		}
 		
+		selectable_mission = no
 		days_remove = 35
+		days_mission_timeout = 35
 		
 		fire_only_once = yes
 		
 		ai_will_do = {
 			factor = 100
 		}
-		
+		complete_effect = {
+			EFR = { country_event = { days = 3 id = france.1 } }
+			JAP = {
+				add_opinion_modifier = { target = EFR modifier = efr_indochina_diplo }
+			}
+			EFR = {
+				add_opinion_modifier = { target = JAP modifier = jap_indochina_diplo }
+			}
+		}		
+
 		remove_effect = {
 			EFR = { country_event = { days = 3 id = france.1 } }
 			JAP = {
@@ -651,6 +658,55 @@ JAP_pacific_war_explanation_category = {
 			}			
 		}
 	}
+
+	JAP_pacific_war_dec = {
+		icon = generic_decision
+		name = USA_pacific_war_dec 
+		fire_only_once = no
+		allowed = {
+			original_tag = JAP
+		}
+		available = {
+			always = no 
+		}
+		visible = {
+			original_tag = JAP
+		}
+		complete_effect = {
+			show_ideas_tooltip = JAP_island_hopping1
+			show_ideas_tooltip = JAP_island_hopping2
+			show_ideas_tooltip = JAP_island_hopping3
+			show_ideas_tooltip = JAP_island_hopping4
+			show_ideas_tooltip = JAP_island_hopping5
+			show_ideas_tooltip = JAP_island_hopping6
+			show_ideas_tooltip = JAP_island_hopping7
+			show_ideas_tooltip = JAP_island_hopping8
+		}
+	}
+	JAP_pacific_war_2_dec = {
+		icon = generic_decision
+		name = USA_pacific_war_2_dec
+		fire_only_once = no
+		allowed = {
+			original_tag = JAP
+		}
+		available = {
+			always = no 
+		}
+		visible = {
+			original_tag = JAP
+		}
+		complete_effect = {
+			show_ideas_tooltip = JAP_island_hopping9
+			show_ideas_tooltip = JAP_island_hopping10
+			show_ideas_tooltip = JAP_island_hopping11
+			show_ideas_tooltip = JAP_island_hopping12
+			show_ideas_tooltip = JAP_island_hopping13
+			show_ideas_tooltip = JAP_island_hopping14
+			show_ideas_tooltip = JAP_island_hopping15
+		}
+	}
+
 }
 
 JAP_intervene_in_china_decision = {
@@ -2426,6 +2482,8 @@ JAP_intervene_in_china_decision = {
 
 		visible = {
 		}
+
+		fire_only_once = yes 
 
 		days_remove = 80
 
