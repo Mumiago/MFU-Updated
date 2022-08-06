@@ -1992,351 +1992,6 @@ ENG_budget_decisions = {
 		}
 	}
 
-	ENG_support_china_2 = {
-
-		name = CHI_expand_the_burma_road
-
-		icon = generic_industry
-
-		allowed = {
-			tag = ENG			
-		}
-
-		visible = {
-			has_game_rule = {
-				rule = script_china_war
-				option = DEFAULT 
-			}
-		}
-
-		available = {
-			date > 1938.1.1
-		}
-
-		visible = {
-			country_exists = CHI 
-		}
-
-		custom_cost_trigger = {
-			check_variable = {
-    			var = british_money
-   				value = 100
-    			compare = greater_than_or_equals
-			}
-		}
-
-		custom_cost_text = ENG_10_british_money 
-
-		ai_will_do = {
-			factor = 60
-		}
-
-		fire_only_once = no
-
-		modifier = {
-			civilian_factory_use = 3		
-		}
-
-		days_remove = 180
-
-		complete_effect = {
-			random_country = {
-				limit = {
-					Tag = CHI
-				}
-				add_offsite_building = { type = arms_factory level = 3 }
-				set_country_flag = ENG_support_china_with_factories
-			}
-			subtract_from_variable = {
-				var = british_money
-				value = 100
-			}
-		}
-
-		remove_effect = {
-		   add_political_power = 100
-			add_war_support = 0.05
-			CHI = {
-				if = {
-					limit = {
-						NOT = { any_other_country = { has_country_flag = ENG_support_china_with_factories } }
-					}
-				}
-				add_offsite_building = { type = arms_factory level = -3 }
-				add_equipment_to_stockpile = { type = infantry_equipment_1 amount = 1000 producer = ENG }
-				add_equipment_to_stockpile = { type = support_equipment_1 amount = 200 producer = ENG }
-				add_equipment_to_stockpile = { type = artillery_equipment_1 amount = 100 producer = ENG }
-				add_equipment_to_stockpile = { type = fighter_equipment_1936 amount = 50 producer = ENG }
-			}	
-		}
-	}
-
-
-    CHI_expand_the_burma_road = {
-		icon = generic_construction
-	
-		allowed = {
-			original_tag = ENG
-		}
-
-		custom_cost_trigger = {
-			check_variable = {
-    			var = british_money
-   				value = 100
-    			compare = greater_than_or_equals
-			}
-		}
-
-
-		custom_cost_text = ENG_10_british_money 
-
-		visible = {
-			has_game_rule = {
-				rule = script_china_war
-				option = HISTORICAL 
-			}
-		}
-
-		available = { 
-            has_completed_focus = uk_burma_focus
-			has_game_rule = {
-				rule = script_china_war
-				option = HISTORICAL 
-			}
-			JAP = { has_war = yes }
-			
-			288 = {
-				CONTROLLER = {
-					NOT = {
-						has_war_with = ROOT
-					}
-				}
-			}
-			640 = {
-				CONTROLLER = {
-					NOT = {
-						has_war_with = ROOT
-					}
-				}
-			}
-			325 = {
-				CONTROLLER = {
-					NOT = {
-						has_war_with = ROOT
-					}
-				}
-			}
-			747 = {
-				CONTROLLER = {
-					NOT = {
-						has_war_with = ROOT
-					}
-				}
-			}
-
-			any_state = {
-				OR = {
-					state = 288
-					state = 640
-					state = 325
-					state = 747
-				}
-			}
-		}
-		visible = {
-			NOT = { has_global_flag = CHI_burma_3 }
-			OR = {
-				has_focus_tree = china_nationalist_focus
-				has_focus_tree = china_communist_focus 
-				has_focus_tree = british_focus
-			}
-			OR = {
-				AND = {
-					OR = {
-						controls_state = 325
-						325 = {
-							CONTROLLER = {
-								OR = {
-									is_subject_of = ROOT
-									is_in_faction_with = ROOT
-								}
-							}
-						}
-					}
-				}
-				AND = {
-					controls_state = 288
-					controls_state = 640
-				}
-				AND = {
-					288 = { CONTROLLER = { is_in_faction_with = ROOT } }
-					640 = { CONTROLLER = { is_in_faction_with = ROOT } }
-				}
-			}
-		}
-
-		visible = {
-			country_exists = CHI 
-		}
-
-		days_re_enable = 360
-
-		ai_will_do = {
-			factor = 160
-		}
-
-		days_remove = 60
-		
-		modifier = {
-			civilian_factory_use = 2
-		}
-
-		complete_effect = {		    
-			if = {
-				limit = {
-					AND = {
-						has_war = no
-						has_war_support < 0.6
-					}
-				}
-				add_war_support = 0.1
-				subtract_from_variable = {
-					var = british_money
-					value = 100
-				}
-			}
-		}
-
-		remove_effect = {
-		    CHI = {
-				add_offsite_building = { type = arms_factory level = 3 }
-			}
-			288 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			640 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			325 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			if = {
-				limit = {
-					has_global_flag = CHI_burma_2
-				}
-				set_global_flag = CHI_burma_3
-			}
-			if = {
-				limit = {
-					NOT = { has_global_flag = CHI_burma_2} # 
-				}
-				set_global_flag = CHI_burma_2
-			}
-			
-			random_country = {
-				limit = { check_variable = { CHI_burma_road > 0 } }
-				add_to_variable = { var = CHI_burma_road value = 1 }
-
-				#Country that had the burma road open
-				add_offsite_building = { type = arms_factory level = 1 }
-			}
-		}
-	}
-	
-	ENG_support_china_with_factories = {
-
-		icon = generic_industry
-
-		allowed = {
-			tag = ENG			
-		}
-
-		visible = {
-			has_game_rule = {
-				rule = script_china_war
-				option = HISTORICAL 
-			}
-		}
-
-		available = {
-			any_other_country = {
-				CHI = { 
-					has_war_with = JAP
-				}
-			}
-			num_of_civilian_factories_available_for_projects > 2
-		}
-
-		visible = {
-			country_exists = CHI 
-		}
-
-		custom_cost_trigger = {
-			check_variable = {
-    			var = british_money
-   				value = 100
-    			compare = greater_than_or_equals
-			}
-		}
-
-		custom_cost_text = ENG_10_british_money 
-
-		ai_will_do = {
-			factor = 60
-		}
-
-		fire_only_once = no
-
-		modifier = {
-			civilian_factory_use = 3		
-		}
-
-		days_remove = 180
-
-		complete_effect = {
-			random_country = {
-				limit = {
-					Tag = CHI
-				}
-				add_offsite_building = { type = arms_factory level = 3 }
-				set_country_flag = ENG_support_china_with_factories
-			}
-			subtract_from_variable = {
-				var = british_money
-				value = 100
-			}
-		}
-
-		remove_effect = {
-		   add_political_power = 100
-			add_war_support = 0.05
-			CHI = {
-				if = {
-					limit = {
-						NOT = { any_other_country = { has_country_flag = ENG_support_china_with_factories } }
-					}
-				}
-				add_offsite_building = { type = arms_factory level = -3 }
-				add_equipment_to_stockpile = { type = infantry_equipment_1 amount = 1000 producer = ENG }
-				add_equipment_to_stockpile = { type = support_equipment_1 amount = 200 producer = ENG }
-				add_equipment_to_stockpile = { type = artillery_equipment_1 amount = 100 producer = ENG }
-				add_equipment_to_stockpile = { type = fighter_equipment_1936 amount = 50 producer = ENG }
-			}	
-		}
-	}
-
 	ENG_order_weapons_in_USA = {
 		icon = generic_prepare_civil_war
 		available = {
@@ -2588,6 +2243,7 @@ ENG_budget_decisions = {
 			}
 		}
 	}
+
 	ENG_order_heavy_fighters_in_USA = {
 		icon = generic_air
 		available = {
@@ -2642,6 +2298,7 @@ ENG_budget_decisions = {
 			}
 		}
 	}
+
 	ENG_order_bombers_in_USA = {
 		icon = generic_air
 		available = {
@@ -2956,6 +2613,7 @@ operations = {
 			}		
 		}	
 	}
+	
 	ENG_operation_exporter = {
         icon = generic_civil_support
  		fire_only_once = yes
@@ -3151,6 +2809,7 @@ operations = {
 			PER = { give_resource_rights = { receiver = ENG state = 413 } }
 			PER = { give_resource_rights = { receiver = ENG state = 412 } }
 			PER = { give_resource_rights = { receiver = ENG state = 411 } }
+			
 			SOV = {
 				transfer_state = 420
 				transfer_state = 419
