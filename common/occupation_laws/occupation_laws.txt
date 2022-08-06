@@ -64,7 +64,9 @@
 
 no_garrison = {
 	icon = 1
-	default_law = yes
+	
+	
+
 	sound_effect = "Martial_Law_Interface_No_Garrison"
 	
 	state_modifier = {
@@ -153,6 +155,12 @@ autonomous_occupation2 = {
 foreign_civilian_oversight = {
 	icon = 3
 	sound_effect = "Martial_Law_Interface_Foreign_Cvilian_Oversight"
+
+	default_law = yes
+
+	visible = {
+	}
+
 	
 	state_modifier = {
 		resistance_target 				= -0.10
@@ -458,6 +466,50 @@ brutally_oppressive_occupation = {
 		resistance_damage_to_garrison 	= 1.0
 		local_resources 				= 0.1
 		resistance_decay 				= 1.0
+	}
+	
+	ai_will_do = {
+		base = 0
+		
+		modifier = {		
+			check_variable = { resistance_target_without_law > 0.94 }
+			
+			set_temp_variable = { resistance_limit = 40 }
+			set_temp_variable = { requirement_limit = 2.0 }
+			if = {
+				limit = { occupation_law = brutally_oppressive_occupation }
+				set_temp_variable = { resistance_limit = 35 }
+				set_temp_variable = { requirement_limit = 1.8 }
+			}
+			check_variable = { garrison_min_support_ratio > requirement_limit }
+			resistance > resistance_limit
+			
+			add = 1000
+		}
+	}
+}
+
+kempeitai_occupation = {
+	icon = 10
+	sound_effect = "Martial_Law_Interface_Brutally_Oppressive_Occupation_Unique_FAS"
+	
+	visible = {
+		OR = {
+			tag = JAP 
+			tag = MAN 
+		}
+	}
+	
+	state_modifier = {		
+		resistance_target 				= -0.5
+		compliance_gain 				= 0.005
+		required_garrison_factor 		= 1
+		resistance_damage_to_garrison 	= 0.5 
+		local_resources 				= 0.45
+		local_factories                 = 0.3
+		resistance_decay 				= 0.1
+		enemy_operative_detection_chance_over_occupied_tag = 1 # offset detection chance by +1%
+		enemy_intel_network_gain_factor_over_occupied_tag = -0.85 # -25% scaled by the number of occupied states and the ratio of the network covering those occupied states
 	}
 	
 	ai_will_do = {
