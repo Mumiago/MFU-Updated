@@ -2511,6 +2511,62 @@ JAP_intervene_in_china_decision = {
 						level = 40  
 					}
 
+					add_equipment_to_stockpile = {
+						type = infantry_equipment_1
+						amount = 20000
+						producer = JAP
+					}
+					
+					add_equipment_to_stockpile = {
+						type = support_equipment_1
+						amount = 4500
+						producer = JAP
+					}
+					add_equipment_to_stockpile = {
+						type = motorized_equipment_1
+						amount = 1000
+						producer = JAP
+					}
+
+					add_equipment_to_stockpile = {
+						type = special_equipment_1
+						amount = 400
+						producer = JAP
+					}
+
+					add_equipment_to_stockpile = {
+						type = artillery_equipment_1
+						amount = 2000
+						producer = JAP
+					}
+
+					add_equipment_to_stockpile = {
+						type = anti_tank_equipment_1
+						amount = 500
+						producer = JAP
+					}
+					add_equipment_to_stockpile = {
+						type = anti_air_equipment_1
+						amount = 500
+						producer = GER
+					}
+					add_equipment_to_stockpile = {
+						type = light_tank_chassis_1934
+						amount = 450
+						producer = GER 
+						variant_name = "Panzer I Ausf.A"
+					}
+					add_equipment_to_stockpile = {
+						type = horse_equipment_0
+							amount = 30000
+							producer = GER
+					}
+					add_equipment_to_stockpile = {
+						type = radio_equipment_1
+						amount = 2000
+						producer = GER
+					}
+
 					add_equipment_to_stockpile = { type = fighter_equipment_1938 amount = 1500 producer = USA }
 					add_equipment_to_stockpile = { type = CAS_equipment_1937 amount = 600 producer = USA }			
 
@@ -2613,11 +2669,83 @@ JAP_intervene_in_china_decision = {
 						}
 					}
 
+					create_equipment_variant = {
+						name = "BT-7"
+						type = light_tank_chassis_1936
+						parent_version = 0
+						modules = {
+							main_armament_slot = tank_small_cannon_2
+							turret_type_slot = tank_light_two_man_tank_turret
+							suspension_type_slot = tank_christie_suspension
+							armor_type_slot = tank_welded_armor
+							armor_sloping_slot = unsloped_armor
+							engine_type_slot = tank_gasoline_engine
+							radio_slot = tank_radio_1
+						}
+						upgrades = {
+							tank_nsb_engine_upgrade = 8
+							tank_nsb_armor_upgrade = 2
+						}
+						icon = "gfx/interface/technologies/land/sov/bt7.tga"
+					}
+
+					division_template = {
+						division_names_group = CHI_ARM_01
+						name = "200th Division"
+						priority = 2
+		
+						regiments = {
+							motorized = { x = 0 y = 0 }
+							motorized = { x = 0 y = 1 }
+							motorized = { x = 0 y = 2 }
+
+							motorized = { x = 1 y = 0 }
+							motorized = { x = 1 y = 1 }
+							motorized = { x = 1 y = 2 }
+							
+							light_armor = { x = 2 y = 0 }
+							light_armor = { x = 2 y = 1 }
+							light_armor = { x = 2 y = 2 }
+
+							light_armor = { x = 3 y = 0 }
+							light_armor = { x = 3 y = 1 }
+							light_armor = { x = 3 y = 2 }
+							light_armor = { x = 3 y = 3 }
+							
+							light_armor = { x = 4 y = 0 }
+							light_armor = { x = 4 y = 1 }
+						}
+		
+						support = {
+							DIV_HQ = { x = 0 y = 0 }
+							engineer = { x = 0 y = 1 }
+							mot_recon = { x = 1 y = 0 }
+							anti_air_company = { x = 1 y = 1 }
+						}
+					}
+		
+					every_controlled_state = {
+						limit = { 
+							state = 605	
+						}
+						set_temp_variable = { num_tanks_to_create = GLOBAL.SOV_china_tank_spawn_ins }
+						
+						for_loop_effect = {
+							end = num_tanks_to_create
+							
+							create_unit = {
+								division = "division_template = \"200th Division\" start_experience_factor = 0.2 start_equipment_factor = 1"
+								owner = CHI
+							}
+						}
+					}		
+
 					every_controlled_state = {
 						limit = { 
 							state = 605	
 						}
 						set_temp_variable = { num_units_to_create = 120 }
+						add_to_variable = { num_units_to_create = GLOBAL.US_china_spawn_in_boost }
 						for_loop_effect = {
 							end = num_units_to_create
 							
