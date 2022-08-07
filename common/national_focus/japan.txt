@@ -3729,7 +3729,7 @@ focus_tree = {
 		icon = GFX_goal_generic_position_armies
 		prerequisite = { focus = JAP_the_occupation_of_china }
 		mutually_exclusive = {  focus = JAP_japan_conquerors_all focus = JAP_secure_the_coastlines }
-		x = -5
+		x = -4
 		y = 1
 		relative_position_id = JAP_the_occupation_of_china
 
@@ -3788,7 +3788,7 @@ focus_tree = {
 		icon = GFX_focus_CZE_german_puppet
 		prerequisite = { focus = JAP_the_occupation_of_china }
 		mutually_exclusive = {  focus = JAP_safeguard_northern_china focus = JAP_secure_the_coastlines }
-		x = 5
+		x = 4
 		y = 1
 		relative_position_id = JAP_the_occupation_of_china
 
@@ -3812,22 +3812,17 @@ focus_tree = {
 
 
 		completion_reward = {
-			add_timed_idea = { idea = JAP_plunder days = 180 }
-			if = {
+			every_state = {
 				limit = {
-					NOT = { has_tech = tech_military_police2 }
+					is_core_of = CHI 
+					is_controlled_by = JAP
 				}
-				set_technology = {
-					tech_military_police2 = 1
-				}
+				add_compliance = 10
 			}
-			if = {
-				limit = {
-					NOT = { has_tech = tech_military_police3 }
-				}
-				set_technology = {
-					tech_military_police3 = 1
-				}
+			custom_effect_tooltip = "We will plan offensives in all neighboring Chinese states:"
+			every_state = {
+				limit={OR={state = 746 state = 622 state = 744 state = 620 state = 600 state = 595 state = 593 state = 599 state = 622 }}
+				add_dynamic_modifier = { modifier = JAP_ichi_go_2 days = 210 }
 			}			
 		}
 	}
@@ -3837,7 +3832,7 @@ focus_tree = {
 		id = JAP_move_the_interior_outwards
 		icon = GFX_goal_generic_construct_civilian
 		prerequisite = { focus = JAP_safeguard_northern_china }
-		x = -5
+		x = -4
 		y = 2
 		relative_position_id = JAP_the_occupation_of_china
 
@@ -4191,10 +4186,8 @@ focus_tree = {
 	focus = {
 		id = JAP_recruitment_efforts
 		icon = GFX_goal_JAP_defence
-		prerequisite = { focus = JAP_new_roads_and_telegraph_lines focus = JAP_develop_bejing}
-		prerequisite = { focus = JAP_permanent_garrison focus = JAP_war_infrastructure_focus }
-
-		x = 3
+		prerequisite = { focus = JAP_new_roads_and_telegraph_lines focus = JAP_develop_bejing focus = JAP_permanent_garrison focus = JAP_war_infrastructure_focus}
+		x = 2
 		y = 4
 		relative_position_id = JAP_move_the_interior_outwards
 
@@ -4205,6 +4198,16 @@ focus_tree = {
 		}
 
 		available = {
+			OR = {
+				AND = {
+					has_completed_focus = JAP_develop_bejing
+					has_completed_focus = JAP_new_roads_and_telegraph_lines
+				}
+				AND = {
+					has_completed_focus = JAP_permanent_garrison
+					has_completed_focus = JAP_war_infrastructure_focus
+				}
+			}
 			has_war_with = CHI
 			OR = {
 				AND = {
@@ -4285,6 +4288,17 @@ focus_tree = {
 				transfer_state_to = JAP
 			}
 			white_peace = CHI
+			remove_ideas = JAP_no_grinding
+			if = {
+				limit = {
+					MAN = {
+						has_idea = JAP_no_grinding
+					}
+				}
+				MAN = {
+					remove_ideas = JAP_no_grinding
+				}
+			}
 		}
 	}
 
@@ -4388,10 +4402,10 @@ focus_tree = {
 
 		completion_reward = {
 			593 = {
-				add_compliance = 20
+				add_compliance = 30
 			}				
 			595 = {
-				add_compliance = 20
+				add_compliance = 30
 			}			
 			every_state = {
 				limit = {
@@ -4660,8 +4674,8 @@ focus_tree = {
 	focus = {
 		id = JAP_the_spoils_of_china
 		icon = GFX_goal_generic_extraction_gold
-		prerequisite = { focus = JAP_japan_conquerors_all focus = JAP_secure_the_coastlines }
-		x = 5
+		prerequisite = { focus = JAP_japan_conquerors_all}
+		x = 4
 		y = 2
 		relative_position_id = JAP_the_occupation_of_china
 
@@ -4685,42 +4699,53 @@ focus_tree = {
 
 
 		completion_reward = {
-			if = {
-				random_owned_controlled_state = {
-					limit = {
-						is_core_of = CHI
-						NOT = {
-							is_controlled_by = MAN
-						}
+			custom_effect_tooltip = JAP_spoils_tt 
+			every_state = {
+				limit = {
+					NOT = {	
+						state = 608
+						state = 614
+						state = 621
+						state = 615
+						state = 607
+						state = 597
+						state = 743
+						state = 598
+						state = 606
+						state = 613
+						state = 749
+						state = 596
+						state = 592
+						state = 594
+						state = 591
+						state = 609	
+						state = 611
+						state = 612
+						state = 610
+						state = 715
+						state = 714
+						state = 761
+						state = 717
+						state = 328
+						state = 716
+						state = 745
+						state = 524
 					}
-					remove_building = {
-						type = industrial_complex
-						level = 3
-					}
+					is_core_of = CHI 
+					is_controlled_by = JAP 
 				}
-				random_owned_controlled_state = {
-					limit = {
-						ROOT = { has_full_control_of_state = PREV }
-						is_core_of = ROOT
-						free_building_slots = {
-							building = arms_factory
-							size > 2
-							include_locked = yes
-						}						
-					}
-					add_extra_state_shared_building_slots = 3
-					add_building_construction = {
-						type = arms_factory
-						level = 3
-						instant_build = yes
-					}
-				}				
+				add_compliance = 10
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}	
 			}
 		}
 	}
-
 	focus = {
-		id = JAP_pacify_the_country_side
+		id = JAP_continue_the_attack
 		icon = GFX_focus_spr_crush_the_revolution
 		prerequisite = { focus = JAP_the_spoils_of_china  }
 		x = 0
@@ -4734,6 +4759,14 @@ focus_tree = {
 		}
 
 		available = {
+			JAP = {
+				controls_state = 744
+				controls_state = 620
+				controls_state = 600
+				controls_state = 595
+				controls_state = 599
+				controls_state = 593
+			}
 		
 		}
 
@@ -4747,28 +4780,141 @@ focus_tree = {
 
 
 		completion_reward = {
+			custom_effect_tooltip = "We will plan offensives in all remaining Chinese states and build up railways to the current frontlines."
 			every_state = {
-				limit = {
-					is_core_of = CHI 
-					is_controlled_by = JAP
+				limit={OR={state = 605 state = 750 state = 602 state = 603 state = 325 state = 748 state = 605 state = 599 state = 622 }}
+				add_dynamic_modifier = { modifier = JAP_ichi_go_2 days = 210 }
+			}
+			hidden_effect = {
+				build_railway = {
+					level = 3
+					build_only_on_allied = yes
+					controller_priority = {
+						base = 1
+					
+						modifier = {
+							tag = JAP
+							add = 2
+						}
+					}
+					fallback = no
+					start_state = 745
+					target_state = 744
 				}
-				add_resistance_target = {
-					amount = -15
-				}				
+				build_railway = {
+					level = 3
+					build_only_on_allied = yes
+					controller_priority = {
+						base = 1
+					
+						modifier = {
+							tag = JAP
+							add = 2
+						}
+					}
+					fallback = no
+					start_state = 615
+					target_state = 622
+				}
+				build_railway = {
+					level = 3
+					build_only_on_allied = yes
+					controller_priority = {
+						base = 1
+					
+						modifier = {
+							tag = JAP
+							add = 2
+						}
+					}
+					fallback = no
+					start_state = 745
+					target_state = 620
+				}
+				build_railway = {
+					level = 3
+					build_only_on_allied = yes
+					controller_priority = {
+						base = 1
+					
+						modifier = {
+							tag = JAP
+							add = 2
+						}
+					}
+					fallback = no
+					start_state = 745
+					target_state = 600
+				}
+				build_railway = {
+					level = 3
+					build_only_on_allied = yes
+					controller_priority = {
+						base = 1
+					
+						modifier = {
+							tag = JAP
+							add = 2
+						}
+					}
+					fallback = no
+					start_state = 592
+					target_state = 599
+				}
+				build_railway = {
+					level = 3
+					build_only_on_allied = yes
+					controller_priority = {
+						base = 1
+					
+						modifier = {
+							tag = JAP
+							add = 2
+						}
+					}
+					fallback = no
+					start_state = 592
+					target_state = 593
+				}
+				build_railway = {
+					level = 3
+					build_only_on_allied = yes
+					controller_priority = {
+						base = 1
+					
+						modifier = {
+							tag = JAP
+							add = 2
+						}
+					}
+					fallback = no
+					start_state = 592
+					target_state = 594
+				}
+				599 = {
+					add_building_construction = {
+						type = supply_node
+						level = 1
+						instant_build = yes
+						province = 1023
+					}
+				}
 			}
 		}
 
 	}
+
+
 	
 	
 	### MINOR BRANCH LEFT SIDE
 	focus = {
 		id = JAP_mobile_labor_force
 		icon = GFX_SOV_nkvd_deportation
-		prerequisite = { focus = JAP_pacify_the_country_side }
+		prerequisite = { focus = JAP_continue_the_attack }
 		x = -1
-		y = 2
-		relative_position_id = JAP_the_spoils_of_china
+		y = 1
+		relative_position_id = JAP_continue_the_attack
 
 		cost = 2.88
 
@@ -4777,6 +4923,12 @@ focus_tree = {
 		}
 
 		available = {
+			JAP = {
+				controls_state = 620
+				controls_state = 600
+				controls_state = 593
+				controls_state = 744		
+			}
 		
 		}
 
@@ -4790,66 +4942,64 @@ focus_tree = {
 
 
 		completion_reward = {
-			if = {
-				random_owned_controlled_state = {
-					limit = {
-						is_core_of = CHI
-						NOT = {
-							is_controlled_by = MAN
-						}
-					}
-					remove_building = {
-						type = industrial_complex
-						level = 3
-					}
+			620 = {
+				remove_building = {
+					type = industrial_complex
+					level = 4
 				}
-				random_owned_controlled_state = {
-					limit = {
-						ROOT = { has_full_control_of_state = PREV }
-						is_core_of = ROOT
-						free_building_slots = {
-							building = arms_factory
-							size > 2
-							include_locked = yes
-						}						
-					}
-					add_extra_state_shared_building_slots = 3
-					add_building_construction = {
-						type = arms_factory
-						level = 3
-						instant_build = yes
-					}
+				add_resistance = 10
+			}	
+			600 = {
+				remove_building = {
+					type = industrial_complex
+					level = 4
+				}
+				add_resistance = 10
+			}
+			593 = {
+				remove_building = {
+					type = industrial_complex
+					level = 4
+				}
+				add_resistance = 10
+			}
+			744 = {
+				remove_building = {
+					type = industrial_complex
+					level = 4
+				}
+				add_resistance = 10
+			}
+			805 = {
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = arms_factory
+					level = 4
+					instant_build = yes
 				}				
 			}
-			if = {
-				random_owned_controlled_state = {
-					limit = {
-						is_core_of = CHI
-						NOT = {
-							is_controlled_by = MAN
-						}
-					}
-					remove_building = {
-						type = industrial_complex
-						level = 3
-					}
-				}
-				random_owned_controlled_state = {
-					limit = {
-						ROOT = { has_full_control_of_state = PREV }
-						is_core_of = ROOT
-						free_building_slots = {
-							building = arms_factory
-							size > 2
-							include_locked = yes
-						}						
-					}
-					add_extra_state_shared_building_slots = 3
-					add_building_construction = {
-						type = arms_factory
-						level = 3
-						instant_build = yes
-					}
+			533 = {
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = arms_factory
+					level = 4
+					instant_build = yes
+				}				
+			}
+			531 = {
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = arms_factory
+					level = 4
+					instant_build = yes
+				}				
+			}
+			528 = {
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = arms_factory
+					level = 4
+					instant_build = yes
 				}				
 			}			
 		}
@@ -4870,6 +5020,14 @@ focus_tree = {
 		}
 
 		available = {
+			JAP = {
+				controls_state = 605
+				controls_state = 750
+				controls_state = 602
+				controls_state = 603
+				controls_state = 748
+						
+			}
 		
 		}
 
@@ -4883,260 +5041,96 @@ focus_tree = {
 
 
 		completion_reward = {
-			613 = {
+			605 = {
 				remove_building = {
-					type = industrial_complex
-					level = 2
-				}
-			}	
-			608 = {
-				remove_building = {
-					type = industrial_complex
-					level = 2
-				}
-			}
-			620 = {
-				remove_building = {
-					type = arms_factory
-					level = 2
-				}
-			}
-			805 = {
-				add_extra_state_shared_building_slots = 4
-				add_building_construction = {
 					type = industrial_complex
 					level = 4
-					instant_build = yes
 				}
+				add_resistance = 10
+			}	
+			750 = {
+				remove_building = {
+					type = industrial_complex
+					level = 4
+				}
+				add_resistance = 10
+			}
+			602 = {
+				remove_building = {
+					type = industrial_complex
+					level = 4
+				}
+				add_resistance = 10
+			}
+			603 = {
+				remove_building = {
+					type = industrial_complex
+					level = 4
+				}
+				add_resistance = 10
+			}
+			748 = {
+				remove_building = {
+					type = industrial_complex
+					level = 4
+				}
+				add_resistance = 10
+			}
+			282 = {
+				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
 					type = arms_factory
-					level = 2
+					level = 4
 					instant_build = yes
 				}				
 			}
-			533 = {
+			804 = {
 				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
-					type = industrial_complex
-					level = 2
+					type = arms_factory
+					level = 4
 					instant_build = yes
-				}
+				}				
+			}
+			802 = {
+				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
 					type = arms_factory
-					level = 2
+					level = 4
+					instant_build = yes
+				}				
+			}
+			803 = {
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = arms_factory
+					level = 4
+					instant_build = yes
+				}				
+			}
+			529 = {
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = arms_factory
+					level = 4
 					instant_build = yes
 				}				
 			}
 
 		}
 	}
+
 	
 	### MINOR RIGHT SIDE	
 	focus = {
 		id = JAP_reeducation_centers
 		icon = GFX_focus_generic_treaty
-		prerequisite = { focus = JAP_pacify_the_country_side }
+		prerequisite = { focus = JAP_continue_the_attack }
 		x = 1
-		y = 2
-		relative_position_id = JAP_the_spoils_of_china
+		y = 1
+		relative_position_id = JAP_continue_the_attack
 
 		cost = 2.88
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-		
-		}
-
-		bypass = {
-
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-
-		completion_reward = {
-			swap_ideas = {
-				add_idea = state_shintoism_2
-				remove_idea = state_shintoism
-			}
-		}	
-	}
-
-	focus = {
-		id = JAP_fortify_urban_centers
-		icon = GFX_goal_generic_fortify_city
-		prerequisite = { focus = JAP_reeducation_centers }
-		x = 1
-		y = 3
-		relative_position_id = JAP_the_spoils_of_china
-
-		cost = 2.88
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-		
-		}
-
-		bypass = {
-
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-
-		completion_reward = {
-			if = {
-				limit = { controls_state = 591 }
-				594 = {
-					set_building_level = {
-						type = bunker
-						level = 3
-						province = {
-							id = 7137
-							level < 6
-						}
-					}
-				}
-			}
-			if = {
-				limit = { controls_state = 592 }
-				325 = {
-					set_building_level = {
-						type = bunker
-						level = 3
-						province = {
-							id = 1319
-							level < 6
-						}
-					}
-				}
-			}
-			if = {
-				limit = { controls_state = 593 }
-				605 = {
-					set_building_level = {
-						type = bunker
-						level = 3
-						
-						province = {
-							id = 6999
-							level < 6
-						}
-					}
-				}
-			}
-			if = {
-				limit = { controls_state = 595 }
-				620 = {
-					set_building_level = {
-						type = bunker
-						level = 3
-						
-						province = {
-							id = 4619
-							level < 6
-						}
-					}
-				}
-			}
-			if = {
-				limit = { controls_state = 596 }
-				613 = {
-					set_building_level = {
-						type = bunker
-						level = 3
-						
-						province = {
-							id = 11913
-							level < 6
-						}
-					}
-				}
-			}	
-
-		}
-	}
-	
-	### CONNECTOR
-	focus = {
-		id = JAP_plunder_the_major_cities
-		icon = GFX_goal_polish_wartime_industry
-		prerequisite = { focus = JAP_fortify_urban_centers }
-		prerequisite = { focus = JAP_relocate_industry_to_japan }
-
-		x = 0
-		y = 4
-		relative_position_id = JAP_the_spoils_of_china
-
-		cost = 2.88
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			has_war_with = CHI
-			CHI = {
-				owns_state = 605
-				owns_state = 748
-				owns_state = 603
-				owns_state = 599
-				owns_state = 325
-				owns_state = 747
-				owns_state = 751
-				owns_state = 753
-				owns_state = 752
-				owns_state = 601
-				owns_state = 754
-				owns_state = 604
-				owns_state = 755
-				owns_state = 756
-				owns_state = 760
-				owns_state = 759
-				owns_state = 287
-				owns_state = 619
-				owns_state = 617
-				owns_state = 618
-
-			}
-		}
-
-		bypass = {
-
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-
-		completion_reward = {
-			add_ideas = JAP_break_the_stalemate
-			add_fuel = 200000			
-		}
-	}	
-	
-######### CONNECT CENTER/LEFT/RIGHT SIDE AND END
-
-	focus = {
-		id = JAP_integrate_china
-		icon = GFX_goal_generic_forceful_treaty
-
-		x = 0
-		y = 7
-		relative_position_id = JAP_the_occupation_of_china
-
-		cost = 10
 
 		ai_will_do = {
 			factor = 4
@@ -5158,15 +5152,176 @@ focus_tree = {
 		completion_reward = {
 			every_state = {
 				limit = {
-					AND = {
-						is_core_of = CHI
-						is_controlled_by = ROOT
+					is_core_of = CHI
+					is_controlled_by = JAP
+				}
+				add_resistance = 10
+			}
+			swap_ideas = {
+				add_idea = state_shintoism_2
+				remove_idea = state_shintoism
+			}
+		}	
+	}
+
+	focus = {
+		id = JAP_pacify_the_country_side
+		icon = GFX_focus_spr_crush_the_revolution
+		prerequisite = { focus = JAP_reeducation_centers }
+	
+		x = 0
+		y = 1
+		relative_position_id = JAP_reeducation_centers
+
+		cost = 2.88
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+		
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+
+		completion_reward = {
+			custom_effect_tooltip = JAP_resistance_tt
+			every_state = {
+				limit = {
+					NOT = {	
+						state = 608
+						state = 614
+						state = 621
+						state = 615
+						state = 607
+						state = 597
+						state = 743
+						state = 598
+						state = 606
+						state = 613
+						state = 749
+						state = 596
+						state = 592
+						state = 594
+						state = 591
+						state = 609	
+						state = 611
+						state = 612
+						state = 610
+						state = 715
+						state = 714
+						state = 761
+						state = 717
+						state = 328
+						state = 716
+						state = 745
+						state = 524
+					}
+					is_core_of = CHI 
+					is_fully_controlled_by = JAP 
+				}
+				add_resistance_target = {
+					amount = -15
+				}				
+			}
+		}
+
+	}
+	
+	### CONNECTOR
+	focus = {
+		id = JAP_plunder_the_major_cities
+		icon = GFX_goal_polish_wartime_industry
+		prerequisite = { focus = JAP_pacify_the_country_side }
+		prerequisite = { focus = JAP_relocate_industry_to_japan }
+
+		x = 0
+		y = 4
+		relative_position_id = JAP_the_spoils_of_china
+
+		cost = 2.88
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+			JAP = {
+				controls_state = 605
+				controls_state = 750
+				controls_state = 748
+				controls_state = 751
+				controls_state = 747
+			}
+		}
+
+		bypass = {
+
+		}
+
+		completion_reward = {
+			add_timed_idea = { idea = JAP_plunder days = 180 }
+			custom_effect_tooltip = "Any states that have been FULLY occupied by Japan, will be transferred to Japan when this focus is selected and Japan will be at peace with China. This is your last chance to grab territory."
+			every_state = {
+				limit = {
+					NOT = {	
+						state = 608
+						state = 614
+						state = 621
+						state = 615
+						state = 607
+						state = 597
+						state = 743
+						state = 598
+						state = 606
+						state = 613
+						state = 749
+						state = 596
+						state = 592
+						state = 594
+						state = 591
+						state = 609	
+						state = 611
+						state = 612
+						state = 610
+						state = 715
+						state = 714
+						state = 761
+						state = 717
+						state = 328
+						state = 716
+						state = 745
+						state = 524
+					}
+					is_core_of = CHI 
+					is_fully_controlled_by = JAP 
+				}
+				transfer_state_to = JAP
+			}
+			white_peace = CHI
+			remove_ideas = JAP_no_grinding
+			if = {
+				limit = {
+					MAN = {
+						has_idea = JAP_no_grinding
 					}
 				}
-				add_compliance = 15
-			}		
+				MAN = {
+					remove_ideas = JAP_no_grinding
+				}
+			}			
 		}
 	}	
+	
+######### CONNECT CENTER/LEFT/RIGHT SIDE AND END
 	focus = {
 		id = JAP_sign_tripartite_pact
 		icon = GFX_goal_anschluss
