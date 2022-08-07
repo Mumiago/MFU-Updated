@@ -18,12 +18,339 @@ focus_tree = {
 		icon = missing
 		x = 25
 		y = 0
-		cost = 2.9
+		cost = 5
 		completion_reward = {
-			add_political_power = 75
+			add_political_power = 50
 			add_war_support = 0.05
 		}
 	}
+	focus = {
+        id = shadow_scheme_focus
+        prerequisite = { focus = ENG_shadow_over_europe }
+        available = {
+            threat > 0.05
+        }
+
+        continue_if_invalid = yes
+        available_if_capitulated = yes
+
+        icon = GFX_goal_generic_construct_mil_factory
+        x = 4
+        y = 1
+        relative_position_id = ENG_shadow_over_europe
+        cost = 2
+        ai_will_do = {
+            factor = 1
+        }
+        completion_reward = {
+            add_to_variable = { var = british_money value = -100 }
+            custom_effect_tooltip = british_money_100_tt
+            custom_effect_tooltip = shadow_scheme_focus_tt
+            add_ideas = ENG_wartime_industry_focus
+            unlock_decision_tooltip = ENG_expand_shadow_scheme
+            hidden_effect = {
+                ENG = {
+                    random_owned_controlled_state = {
+                        limit = {
+                            is_in_home_area = yes
+                            free_building_slots = {
+                                building = arms_factory
+                                size > 1
+                                include_locked = yes
+                            }
+                            NOT = { has_state_flag = shadow_scheme_2AF }
+                        }
+                        set_state_flag = shadow_scheme_2AF
+                    }
+                }
+            }
+        }
+    }
+	focus = {
+        id = air_defense_focus
+        prerequisite = { focus = ENG_shadow_over_europe }
+        available = {
+            if = {
+				limit = {
+					OR = {
+						threat > 0.05
+						has_war = yes
+					}
+				}
+            }
+		}	
+        icon = GFX_goal_generic_construct_military
+        x = -4
+        y = 1
+        relative_position_id = ENG_shadow_over_europe
+        cost = 2
+        ai_will_do = {
+            factor = 1
+        } 
+
+		completion_reward = {
+			123 = {
+				set_building_level = {
+					type = anti_air_building
+					level = 4
+					instant_build = yes
+				}
+			}
+			125 = {
+				set_building_level = {
+					type = anti_air_building
+					level = 4
+					instant_build = yes
+				}
+			}
+			127 = {
+				set_building_level = {
+					type = anti_air_building
+					level = 4
+					instant_build = yes
+				}
+			}
+			128 = {
+				set_building_level = {
+					type = anti_air_building
+					level = 4
+					instant_build = yes
+				}
+			}
+			129 = {
+				set_building_level = {
+					type = anti_air_building
+					level = 4
+					instant_build = yes
+				}
+			}
+			338 = {
+				set_building_level = {
+					type = anti_air_building
+					level = 4
+					instant_build = yes
+				}
+			}
+			810 = {
+				set_building_level = {
+					type = anti_air_building
+					level = 4
+					instant_build = yes
+				}
+			}
+			811 = {
+				set_building_level = {
+					type = anti_air_building
+					level = 4
+					instant_build = yes
+				}
+			}
+			122 = {
+				set_building_level = {
+					type = anti_air_building
+					level = 4
+					instant_build = yes
+				}
+			}
+			132 = {
+				set_building_level = {
+					type = anti_air_building
+					level = 4
+					instant_build = yes
+				}
+			}
+			130 = {
+				set_building_level = {
+					type = anti_air_building
+					level = 4
+					instant_build = yes
+				}
+			}
+			131 = {
+				set_building_level = {
+					type = anti_air_building
+					level = 4
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
+        id = crypto_bomb_focus
+        icon = GFX_focus_generic_cryptologic_bomb
+		prerequisite = {
+			focus = ENG_shadow_over_europe
+		}
+		relative_position_id = ENG_shadow_over_europe
+        x = -6
+        y = 1
+        cost = 2
+        ai_will_do = {
+            factor = 1
+        }
+
+        completion_reward = {
+            add_to_variable = { var = british_money value = -50 }
+            custom_effect_tooltip = british_money_50_tt
+            add_ideas = ENG_bletchley_park 
+        }
+    }
+	focus = {
+        id = radar_focus
+        prerequisite = { focus = crypto_bomb_focus }
+		prerequisite = { focus = air_defense_focus }
+        icon = GFX_goal_generic_radar
+        x = 1
+        y = 1
+        relative_position_id = crypto_bomb_focus
+        cost = 2
+        ai_will_do = {
+            factor = 1
+        }
+
+        completion_reward = {
+            add_to_variable = { var = british_money value = -50 }
+            custom_effect_tooltip = british_money_50_tt
+            if = { 
+                limit = { 
+                    check_variable = { var = focus_power value = 0 compare = less_than_or_equals }
+                }
+                air_experience = 25
+                add_tech_bonus = {
+                    name = radar_focus
+                    bonus = 1.0
+                    uses = 3
+                    category = radar_tech
+                }
+                123 = {
+                    set_building_level = {
+                        type = radar_station
+                        level = 2
+                        instant_build = yes
+                    }
+                }
+                125 = {
+                    set_building_level = {
+                        type = radar_station
+                        level = 2
+                        instant_build = yes
+                    }
+                }
+                127 = {
+                    set_building_level = {
+                        type = radar_station
+                        level = 2
+                        instant_build = yes
+                    }
+                }
+            }
+        }
+    }
+	focus = {
+        id = tizard_mission_focus
+        prerequisite = { focus = crypto_bomb_focus }
+        prerequisite = { focus = radar_focus }
+        icon = GFX_goal_generic_scientific_exchange
+        x = 0
+        y = 1
+        relative_position_id = radar_focus
+        cost = 2
+        ai_will_do = {
+            factor = 1
+        }
+		available = {
+			has_war = yes
+		}
+        completion_reward = {
+			add_tech_bonus = {
+				name = tizard_mission_focus
+				bonus = 1.0
+				uses = 2
+				category = radar_tech
+			}
+			add_tech_bonus = {
+				name = tizard_mission_focus
+				bonus = 1.0
+				uses = 1
+				category = light_fighter
+			}
+        }
+    }
+	focus = {
+        id = uk_extra_tech_slot
+        text = extra_tech_slot
+        icon = GFX_focus_research
+        prerequisite = { focus = shadow_scheme_focus }
+        x = 0
+        y = 1
+        relative_position_id = shadow_scheme_focus
+        available = {
+
+        }
+
+        cost = 5
+
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_to_variable = { var = british_money value = -50 }
+            custom_effect_tooltip = british_money_50_tt
+            add_research_slot = 1
+        }
+    }
+	focus = {
+        id = ENG_secure_the_imperial_shipping_routes
+        prerequisite = { focus = ENG_shadow_over_europe }
+        icon = GFX_focus_generic_cruiser2
+        x = 16
+        y = 1
+
+        relative_position_id = ENG_shadow_over_europe
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+
+        completion_reward = {
+            add_to_variable = { var = british_money value = -25 }
+            custom_effect_tooltip = british_money_25_tt
+
+            if = { 
+                limit = { 
+                    check_variable = { var = focus_power value = 0 compare = less_than_or_equals }
+                }
+                add_tech_bonus = {
+                    name = ENG_secure_the_imperial_shipping_routes
+                    bonus = 1.0
+                    uses = 2
+                    category = cl_tech
+                }
+                add_ideas = ENG_secure_the_imperial_shipping_routes
+                custom_effect_tooltip = ENG_focus_boost_tt
+                effect_tooltip = {
+                    add_tech_bonus = {
+                        name = ENG_secure_the_imperial_shipping_routes
+                        bonus = 2.0
+                        uses = 2
+                        category = cl_tech
+                    }
+                    add_ideas = ENG_secure_the_imperial_shipping_routes
+                }
+            }
+            if = { 
+                limit = { 
+                    check_variable = { var = focus_power value = 1 compare = greater_than_or_equals }
+                }
+                add_tech_bonus = {
+                    name = ENG_secure_the_imperial_shipping_routes
+                    bonus = 2.0
+                    uses = 2
+                    category = cl_tech
+                }
+                add_ideas = ENG_secure_the_imperial_shipping_routes
+            }
+        }
+    }
 	focus = {
 		id = ENG_a_new_king
 		icon = missing
@@ -31,9 +358,13 @@ focus_tree = {
 		relative_position_id = ENG_shadow_over_europe
 		x = 0
 		y = 1
-		cost = 2.9
+		cost = 7.2
 		completion_reward = {
-			country_event = britain.47
+			country_event = britain.16
+
+			hidden_effect = {
+				remove_ideas = george_v
+			}
 		}
 	}
 	focus = {
@@ -46,6 +377,11 @@ focus_tree = {
 		relative_position_id = ENG_a_new_king
 		x = 1
 		y = 1
+		cost = 5
+
+		completion_reward = {
+			add_ideas = ENG_king_edward_expensive_wife
+		}
 	}
 	focus = {
 		id = ENG_king_george
@@ -57,13 +393,18 @@ focus_tree = {
 		relative_position_id = ENG_a_new_king
 		x = -1
 		y = 1
+		cost = 5
+
+		completion_reward = {
+			add_ideas = ENG_george_vi
+		}
 	}
 	focus = {
 		id = ENG_new_government
 		icon = missing
 		prerequisite = { focus = ENG_king_edward focus = ENG_king_george }
 		relative_position_id = ENG_a_new_king
-		cost = 2.9
+		cost = 5
 		x = 0
 		y = 2
 		completion_reward = {
@@ -80,6 +421,22 @@ focus_tree = {
 		relative_position_id = ENG_new_government
 		x = 4
 		y = 1
+		cost = 5
+
+		completion_reward = {
+			custom_effect_tooltip = ENG_containment_tt
+			
+			if = {
+				limit = {
+					NOT = {
+						has_idea = low_economic_mobilisation
+					}
+				}
+			}
+			add_ideas = low_economic_mobilisation
+
+			add_to_variable = { ENG_war_support_factor_var = 0.45 }
+		}
 	}
 	focus = {
 		id = ENG_11
@@ -88,6 +445,37 @@ focus_tree = {
 		relative_position_id = ENG_containment
 		x = 0
 		y = 1
+		cost = 5
+
+		completion_reward = {
+			
+			custom_effect_tooltip = ENG_containment_upgrade_2_tt
+
+			add_to_variable = {
+				ENG_production_speed_arms_factory_factor_var = 0.05
+			}
+			add_to_variable = {
+				ENG_production_speed_industrial_complex_factor_var = -0.075
+			}
+			add_to_variable = {
+				ENG_political_power_factor_var = -0.1
+			}
+
+			swap_ideas = {
+				remove_idea = ENG_king_edward
+				add_idea = ENG_king_edward_penalty
+			}
+			
+			add_political_power = 100
+
+			add_tech_bonus = {
+				name = ENG_industry_1
+				technology = advanced_machine_tools
+
+				bonus = 1
+				ahead_reduction = 0.3
+			}
+		}
 	}
 	focus = {
 		id = ENG_12
@@ -96,6 +484,58 @@ focus_tree = {
 		relative_position_id = ENG_11
 		x = 0
 		y = 1
+		cost = 5
+
+		completion_reward = {
+			
+			custom_effect_tooltip = ENG_containment_upgrade_tt
+			custom_effect_tooltip = ENG_stability_upgrade_tt
+
+			add_to_variable = {
+				ENG_production_speed_arms_factory_factor_var = 0.05
+			}
+			add_to_variable = {
+				ENG_production_speed_industrial_complex_factor_var = -0.075
+			}
+			add_to_variable = {
+				ENG_stability_factor_var = 0.15
+			}
+
+			random_owned_state = {
+				limit = {
+					AND = {
+						is_core_of = ENG  
+						industrial_complex > 0
+					}
+				}
+				remove_building = {
+					type = industrial_complex
+					level = 1
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = ENG  
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory 
+					level = 2
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = ENG  
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory 
+					level = 2
+					instant_build = yes 
+				}
+			}
+		}
 	}
 	focus = {
 		id = ENG_13
@@ -104,6 +544,54 @@ focus_tree = {
 		relative_position_id = ENG_12
 		x = 0
 		y = 1
+		cost = 5
+
+		completion_reward = {
+			
+			custom_effect_tooltip = ENG_containment_upgrade_tt
+
+			add_to_variable = {
+				ENG_production_speed_arms_factory_factor_var = 0.05
+			}
+			add_to_variable = {
+				ENG_production_speed_industrial_complex_factor_var = -0.075
+			}
+
+			random_owned_state = {
+				limit = {
+					AND = {
+						is_core_of = ENG  
+						industrial_complex > 0
+					}
+				}
+				remove_building = {
+					type = industrial_complex
+					level = 1
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = ENG  
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory 
+					level = 2
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = ENG  
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory 
+					level = 2
+					instant_build = yes 
+				}
+			}
+		}
 	}
 	focus = {
 		id = ENG_14
@@ -112,6 +600,40 @@ focus_tree = {
 		relative_position_id = ENG_13
 		x = 0
 		y = 1
+		cost = 5
+
+		completion_reward = {
+			
+			custom_effect_tooltip = ENG_containment_upgrade_3_tt
+
+			add_to_variable = {
+				ENG_production_speed_arms_factory_factor_var = 0.05
+			}
+			add_to_variable = {
+				ENG_production_speed_industrial_complex_factor_var = -0.075
+			}
+
+			if = {
+				limit = {
+					NOT = { has_idea = partial_economic_mobilisation }
+				}
+
+				add_ideas = partial_economic_mobilisation
+			}
+
+			random_owned_state = {
+				limit = {
+					AND = {
+						is_core_of = ENG  
+						industrial_complex > 1
+					}
+				}
+				remove_building = {
+					type = industrial_complex
+					level = 2
+				}
+			}
+		}
 	}
 	focus = {
 		id = ENG_15
@@ -120,6 +642,19 @@ focus_tree = {
 		relative_position_id = ENG_11
 		x = 2
 		y = 1
+		cost = 2.9
+
+		completion_reward = {
+			
+			custom_effect_tooltip = ENG_political_downgrade_tt
+
+			add_political_power = 250
+			
+			add_timed_idea = {
+				idea = ENG_colonial_elite
+				days = 365
+			}
+		}
 	}
 	focus = {
 		id = ENG_16
@@ -128,6 +663,33 @@ focus_tree = {
 		relative_position_id = ENG_15
 		x = 0
 		y = 1
+		cost = 2.9
+
+		completion_reward = {
+			132 = {
+				add_resource = {
+					type = aluminium
+					amount = 30
+					state = THIS
+				}
+				add_resource = {
+					type = steel
+					amount = 10
+					state = THIS
+				}
+				add_resource = {
+					type = tungsten
+					amount = 10
+					state = THIS
+				}
+			}
+
+			custom_effect_tooltip = ENG_output_upgrade_tt
+
+			add_to_variable = {
+				ENG_industrial_capacity_factory_var = 0.10
+			}
+		}
 	}
 	focus = {
 		id = ENG_appeasement
@@ -139,6 +701,19 @@ focus_tree = {
 		relative_position_id = ENG_new_government
 		x = -4
 		y = 1
+		cost = 5
+
+		completion_reward = {
+			
+			custom_effect_tooltip = ENG_appeasement_tt
+
+			add_to_variable = {
+				ENG_political_power_factor_var = 0.1
+			}
+			add_to_variable = {
+				ENG_political_power_cost_var = -0.1
+			}
+		}
 	}
 	focus = {
 		id = ENG_17
@@ -147,6 +722,59 @@ focus_tree = {
 		relative_position_id = ENG_appeasement
 		x = 0
 		y = 1
+		cost = 5
+
+		completion_reward = {
+
+			custom_effect_tooltip = ENG_appeasment_change_2_tt
+
+			126 = {
+				set_building_level = {
+					type = infrastructure
+					level = 10
+				}
+			}
+			125 = {
+				set_building_level = {
+					type = infrastructure
+					level = 10
+				}
+			}
+			127 = {
+				set_building_level = {
+					type = infrastructure
+					level = 10
+				}
+			}
+			338 = {
+				set_building_level = {
+					type = infrastructure
+					level = 10
+				}
+			}
+			811 = {
+				set_building_level = {
+					type = infrastructure
+					level = 10
+				}
+			}
+			123 = {
+				set_building_level = {
+					type = infrastructure
+					level = 9
+				}
+			}
+			810 = {
+				set_building_level = {
+					type = infrastructure
+					level = 9
+				}
+			}
+
+			add_to_variable = {
+				ENG_political_power_factor_var = 0.1
+			}
+		}
 	}
 	focus = {
 		id = ENG_18
@@ -155,6 +783,35 @@ focus_tree = {
 		relative_position_id = ENG_17
 		x = 0
 		y = 1
+		cost = 5
+
+		completion_reward = {
+			
+			custom_effect_tooltip = ENG_appeasement_upgrade_tt
+		
+			random_owned_state = {
+				limit = {
+						is_core_of = ENG  
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex 
+					level = 2
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = ENG  
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex 
+					level = 2
+					instant_build = yes 
+				}
+			}
+		}
 	}
 	focus = {
 		id = ENG_19
@@ -163,6 +820,48 @@ focus_tree = {
 		relative_position_id = ENG_18
 		x = 0
 		y = 1
+		cost = 5
+
+		completion_reward = {
+			
+			custom_effect_tooltip = ENG_appeasment_change_tt
+
+			add_to_variable = {
+				ENG_stability_factor_var = 0.1
+			}
+			add_to_variable = {
+				ENG_political_power_factor_var = 0.1
+			}
+			add_to_variable = {
+				ENG_production_speed_arms_factory_factor_var = -0.05
+			}
+			add_to_variable = {
+				ENG_production_speed_industrial_complex_factor_var = 0.05
+			}
+
+			random_owned_state = {
+				limit = {
+						is_core_of = ENG  
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex 
+					level = 2
+					instant_build = yes 
+				}
+			}
+			random_owned_state = {
+				limit = {
+					is_core_of = ENG  
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex 
+					level = 2
+					instant_build = yes 
+				}
+			}
+		}
 	}
 	focus = {
 		id = ENG_20
@@ -171,6 +870,21 @@ focus_tree = {
 		relative_position_id = ENG_19
 		x = 0
 		y = 1
+		cost = 5
+
+		completion_reward = {
+			
+			custom_effect_tooltip = ENG_appeasement_upgrade_tt
+
+			add_timed_idea = {
+				idea = ENG_implement_price_control
+				days = 365
+			}
+
+			add_ideas = {
+				ENG_head_start
+			}
+		}
 	}
 	focus = {
 		id = ENG_21
@@ -179,6 +893,16 @@ focus_tree = {
 		relative_position_id = ENG_17
 		x = -2
 		y = 1
+		cost = 2.9
+
+		completion_reward = {
+			
+			custom_effect_tooltip = ENG_appeasment_civs_speed
+
+			add_to_variable = {
+				ENG_production_speed_industrial_complex_factor_var = 0.1
+			}
+		}
 	}
 	focus = {
 		id = ENG_22
@@ -187,14 +911,30 @@ focus_tree = {
 		relative_position_id = ENG_21
 		x = 0
 		y = 1
+		cost = 2.9
+
+		completion_reward = {
+			
+			add_tech_bonus = {
+				name = ENG_industry_appeasment
+				bonus = 1
+				uses = 2
+				category = industry
+			}	
+		}
 	}
 	focus = {
 		id = ENG_23
 		icon = missing
 		prerequisite = { focus = ENG_43 focus = ENG_42 }
-		relative_position_id = ENG_39
+		relative_position_id = ENG_adjust_budget
 		x = 0
 		y = 3
+		cost = 2.9
+
+		completion_reward = {
+			
+		}
 	}
 	focus = {
 		id = ENG_24
@@ -203,6 +943,29 @@ focus_tree = {
 		relative_position_id = ENG_23
 		x = 0
 		y = 1
+		cost = 5
+
+		available = {
+			date > 1939.1.1
+		}
+
+		completion_reward = {
+			
+			if = {
+				limit = {
+					has_completed_focus = ENG_containment
+				}
+
+				# Modify shadow scheme factories gain by +10 mils
+			}
+			else_if = {
+				limit = {
+					has_completed_focus = ENG_appeasement
+				}
+
+				# Something else
+			}
+		}
 	}
 	focus = {
 		id = ENG_25
@@ -219,9 +982,14 @@ focus_tree = {
 		relative_position_id = ENG_shadow_over_europe
 		x = 10
 		y = 1
+		cost = 2.9
+
+		completion_reward = {
+			add_ideas = ENG_british_officers
+		}
 	}
 	focus = {
-		id = ENG_cut_colonial_expenses
+		id = ENG_increase_colonial_expenses
 		icon = missing
 		mutually_exclusive = {
 			focus = ENG_steady_as_she_goes
@@ -230,22 +998,35 @@ focus_tree = {
 		relative_position_id = ENG_our_sword_and_shield
 		x = 1
 		y = 1
+		cost = 2.9
+
+		completion_reward = {
+			add_ideas = william_ormsby_gore
+		}
 	}
 	focus = {
 		id = ENG_steady_as_she_goes
 		icon = missing
 		mutually_exclusive = {
-			focus = ENG_cut_colonial_expenses
+			focus = ENG_increase_colonial_expenses
 		}
 		prerequisite = { focus = ENG_our_sword_and_shield }
 		relative_position_id = ENG_our_sword_and_shield
 		x = -1
 		y = 1
+		cost = 2.9
+
+		completion_reward = {
+			add_timed_idea = {
+				idea = ENG_steady_as_she_goes_idea
+				days = 365
+			}
+		}
 	}
 	focus = {
 		id = ENG_conference
 		icon = missing
-		prerequisite = { focus = ENG_cut_colonial_expenses focus = ENG_steady_as_she_goes }
+		prerequisite = { focus = ENG_increase_colonial_expenses focus = ENG_steady_as_she_goes }
 		relative_position_id = ENG_our_sword_and_shield
 		x = 0
 		y = 2
@@ -282,18 +1063,12 @@ focus_tree = {
 					limit = {
 						is_core_of = CAN  
 					}
-					add_extra_state_shared_building_slots = 4
+					add_extra_state_shared_building_slots = 9
 					add_building_construction = {
 						type = industrial_complex 
 						level = 4
 						instant_build = yes 
 					}
-				}
-				random_owned_state = {
-					limit = {
-						is_core_of = CAN  
-					}
-					add_extra_state_shared_building_slots = 5
 					add_building_construction = {
 						type = dockyard 
 						level = 5
@@ -346,18 +1121,12 @@ focus_tree = {
 					limit = {
 						is_core_of = SAF  
 					}
-					add_extra_state_shared_building_slots = 4
+					add_extra_state_shared_building_slots = 9
 					add_building_construction = {
 						type = industrial_complex 
 						level = 4
 						instant_build = yes 
 					}
-				}
-				random_owned_state = {
-					limit = {
-						is_core_of = SAF  
-					}
-					add_extra_state_shared_building_slots = 5
 					add_building_construction = {
 						type = dockyard 
 						level = 5
@@ -409,18 +1178,12 @@ focus_tree = {
 					limit = {
 						is_core_of = RAJ  
 					}
-					add_extra_state_shared_building_slots = 4
+					add_extra_state_shared_building_slots = 9
 					add_building_construction = {
 						type = industrial_complex 
 						level = 4
 						instant_build = yes 
 					}
-				}
-				random_owned_state = {
-					limit = {
-						is_core_of = RAJ  
-					}
-					add_extra_state_shared_building_slots = 5
 					add_building_construction = {
 						type = dockyard 
 						level = 5
@@ -473,18 +1236,12 @@ focus_tree = {
 					limit = {
 						is_core_of = AST  
 					}
-					add_extra_state_shared_building_slots = 4
+					add_extra_state_shared_building_slots = 9
 					add_building_construction = {
 						type = industrial_complex 
 						level = 4
 						instant_build = yes 
 					}
-				}
-				random_owned_state = {
-					limit = {
-						is_core_of = AST  
-					}
-					add_extra_state_shared_building_slots = 5
 					add_building_construction = {
 						type = dockyard 
 						level = 5
@@ -567,28 +1324,68 @@ focus_tree = {
 		y = 1
 	}
 	focus = {
-		id = ENG_39
+		id = ENG_adjust_budget
 		icon = missing
 		prerequisite = { focus = ENG_appeasement focus = ENG_containment }
 		relative_position_id = ENG_new_government
 		x = 0
 		y = 2
+		cost = 2.9
+
+		available = {
+			if = {
+				limit = {
+					OR = {
+						has_completed_focus = ENG_containment
+						date > 1938.1.1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			
+		}
 	}
 	focus = {
 		id = ENG_40
 		icon = missing
-		prerequisite = { focus = ENG_39 }
-		relative_position_id = ENG_39
+		prerequisite = { focus = ENG_adjust_budget }
+		relative_position_id = ENG_adjust_budget
+		mutually_exclusive = {
+			focus = ENG_41
+		}
+		available = {
+			has_completed_focus = ENG_containment
+		}
 		x = 1
 		y = 1
+		cost = 2.9
+
+		completion_reward = {
+			
+
+		}
 	}
 	focus = {
 		id = ENG_41
 		icon = missing
-		prerequisite = { focus = ENG_39 }
-		relative_position_id = ENG_39
+		prerequisite = { focus = ENG_adjust_budget }
+		relative_position_id = ENG_adjust_budget
+		mutually_exclusive = {
+			focus = ENG_40
+		}
+		available = {
+			has_completed_focus = ENG_appeasement
+		}
 		x = -1
 		y = 1
+		cost = 2.9
+
+		completion_reward = {
+			
+			
+		}
 	}
 	focus = {
 		id = ENG_42
@@ -597,6 +1394,11 @@ focus_tree = {
 		relative_position_id = ENG_40
 		x = 0
 		y = 1
+		cost = 2.9
+
+		completion_reward = {
+			
+		}
 	}
 	focus = {
 		id = ENG_43
@@ -605,5 +1407,11 @@ focus_tree = {
 		relative_position_id = ENG_41
 		x = 0
 		y = 1
+
+		cost = 2.9
+
+		completion_reward = {
+			
+		}
 	}
 }
