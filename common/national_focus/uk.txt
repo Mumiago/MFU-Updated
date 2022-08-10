@@ -35,7 +35,7 @@ focus_tree = {
         available_if_capitulated = yes
 
         icon = GFX_goal_generic_construct_mil_factory
-        x = 4
+        x = -5
         y = 1
         relative_position_id = ENG_shadow_over_europe
         cost = 2
@@ -68,7 +68,7 @@ focus_tree = {
     }
 	focus = {
         id = air_defense_focus
-        prerequisite = { focus = ENG_shadow_over_europe }
+        prerequisite = { focus = ENG_bomber_command focus = ENG_fighter_command }
         available = {
             if = {
 				limit = {
@@ -80,9 +80,9 @@ focus_tree = {
             }
 		}	
         icon = GFX_goal_generic_construct_military
-        x = -4
-        y = 1
-        relative_position_id = ENG_shadow_over_europe
+        x = 0
+        y = 3
+        relative_position_id = ENG_air_rearmament
         cost = 2
         ai_will_do = {
             factor = 1
@@ -179,9 +179,9 @@ focus_tree = {
         id = crypto_bomb_focus
         icon = GFX_focus_generic_cryptologic_bomb
 		prerequisite = {
-			focus = ENG_shadow_over_europe
+			focus = ENG_25
 		}
-		relative_position_id = ENG_shadow_over_europe
+		relative_position_id = ENG_25
         x = -6
         y = 1
         cost = 2
@@ -197,12 +197,11 @@ focus_tree = {
     }
 	focus = {
         id = radar_focus
-        prerequisite = { focus = crypto_bomb_focus }
 		prerequisite = { focus = air_defense_focus }
         icon = GFX_goal_generic_radar
-        x = 1
+        x = 0
         y = 1
-        relative_position_id = crypto_bomb_focus
+        relative_position_id = air_defense_focus
         cost = 2
         ai_will_do = {
             factor = 1
@@ -248,7 +247,6 @@ focus_tree = {
     }
 	focus = {
         id = tizard_mission_focus
-        prerequisite = { focus = crypto_bomb_focus }
         prerequisite = { focus = radar_focus }
         icon = GFX_goal_generic_scientific_exchange
         x = 0
@@ -1907,6 +1905,9 @@ focus_tree = {
 		x = -1
 		y = 1
 		cost = 2.9
+		completion_reward = {
+			custom_effect_tooltip = ENG_rearmament_tt
+		}
 	}
 	focus = {
 		id = ENG_churchill
@@ -1920,27 +1921,6 @@ focus_tree = {
 		prerequisite = { focus = ENG_start_rearmament }
 		relative_position_id = ENG_start_rearmament
 		x = 1
-		y = 1
-		cost = 2.9
-	}
-	focus = {
-		id = ENG_long_term
-		icon = missing
-		prerequisite = { focus = ENG_thomas_inskip }
-		relative_position_id = ENG_thomas_inskip
-		x = 0
-		y = 1
-		cost = 2.9
-		completion_reward = {
-			custom_effect_tooltip = ENG_rearmament_tt
-		}
-	}
-	focus = {
-		id = ENG_short_term
-		icon = missing
-		prerequisite = { focus = ENG_churchill }
-		relative_position_id = ENG_churchill
-		x = 0
 		y = 1
 		cost = 2.9
 		completion_reward = {
@@ -2040,17 +2020,16 @@ focus_tree = {
 	}
 	focus = {
 		id = general_rearmament_focus
-		prerequisite = { focus = ENG_long_term focus = ENG_short_term }
+		prerequisite = { focus = ENG_thomas_inskip focus = ENG_churchill}
 		available = {
-			threat > 0.1
 		}
 
 		continue_if_invalid = yes
 
 		icon = GFX_focus_generic_the_giant_wakes
-		x = 1
-		y = 1
-		relative_position_id = ENG_long_term
+		x = 0
+		y = 2
+		relative_position_id = ENG_start_rearmament
 		cost = 5
 		ai_will_do = {
 			factor = 1
@@ -2085,6 +2064,9 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			add_ideas = {
+				ENG_raf_expansion
+			}
 			air_experience = 80
 			add_doctrine_cost_reduction = {
 				name = land_doc_bonus
@@ -2267,7 +2249,6 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_ideas = british_fighter_discount
 			add_tech_bonus = {
 					name = fighter_command_focus
 					bonus = 0.5
@@ -2494,7 +2475,7 @@ focus_tree = {
 		}
 	}
 
-	focus = {
+	focus = { 
 		id = ENG_royal_ordinance_factories
 		prerequisite = { focus = general_rearmament_focus }
 		relative_position_id = general_rearmament_focus
@@ -2716,7 +2697,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = ENG_the_queen_of_the_desert
+		id = ENG_the_queen_of_the_desert 
 		prerequisite = { focus = ENG_tank_focus }
 		relative_position_id = ENG_tank_focus
 		icon = GFX_ENG_the_queen_of_the_desert
@@ -2734,11 +2715,18 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_tech_bonus = {				
-				bonus = 0.75
-				uses = 1
-				category = cat_heavy_armor
-			}						
+			custom_effect_tooltip = ENG_tank_spawn_in
+			if = {
+				limit = {
+					OR = {
+						has_tech = eng_1939_medium_tank_chassis
+						has_tech = eng_1940_medium_tank_chassis
+					}
+				}	
+				hidden_effect = {
+					load_oob = ENG_7_armoured_div
+				}
+			}					
 			army_experience = 40
 		}
 	}		
