@@ -1353,6 +1353,7 @@ focus_tree = {
 			add_to_variable = {
 				ENG_production_speed_industrial_complex_factor_var = 0.1
 			}
+			add_research_slot = 1
 		}
 	}
 	focus = {
@@ -2168,21 +2169,21 @@ focus_tree = {
                 123 = {
                     set_building_level = {
                         type = radar_station
-                        level = 2
+                        level = 4
                         instant_build = yes
                     }
                 }
                 125 = {
                     set_building_level = {
                         type = radar_station
-                        level = 2
+                        level = 4
                         instant_build = yes
                     }
                 }
                 127 = {
                     set_building_level = {
                         type = radar_station
-                        level = 2
+                        level = 4
                         instant_build = yes
                 	}
             }
@@ -2208,13 +2209,6 @@ focus_tree = {
 
 		completion_reward = {
 			add_ideas = arthur_harris
-			add_tech_bonus = {
-				name = fighter_command_focus
-				bonus = 0.5
-				uses = 1
-				category = light_fighter
-				category = cat_heavy_fighter
-			}
 			air_experience = 100		
 		}
 	}
@@ -2224,7 +2218,7 @@ focus_tree = {
 	 	prerequisite = { focus = shadow_scheme_focus  }
 		relative_position_id = shadow_scheme_focus 
 		mutually_exclusive = {
-			focus = ENG_bomber_command
+			focus = ENG_bomber_will_get_through
 		}
 		x = 2
 		y = 1
@@ -2245,10 +2239,10 @@ focus_tree = {
 				category = air_doctrine
 			}
 			add_tech_bonus = {
-				name = coastal_command_focus
-				bonus = 0.75
+				name = fighter_command_focus
+				bonus = 0.5
 				uses = 1
-				category = naval_bomber
+				category = light_fighter
 			}
 		}
 	}
@@ -2257,9 +2251,6 @@ focus_tree = {
 		icon = GFX_goal_generic_air_fighter2
 	 	prerequisite = { focus = ENG_prioritize_home_defence }
 		relative_position_id = ENG_prioritize_home_defence
-		mutually_exclusive = {
-			focus = ENG_bomber_command
-		}
 		x = 0
 		y = 1
 		cost = 5
@@ -2272,11 +2263,11 @@ focus_tree = {
 
 		completion_reward = {	
 			air_experience = 60	
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
+			add_tech_bonus = {
+				name = fighter_command_focus
+				bonus = 0.75
 				uses = 2
-				category = air_doctrine
+				category = naval_bomber
 			}
 		}
 	}
@@ -2304,8 +2295,13 @@ focus_tree = {
 					bonus = 0.5
 					uses = 1
 					category = light_fighter
-					category = cat_heavy_fighter
-				}
+			}
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 2
+				category = air_doctrine
+			}
 		}
 	}
 
@@ -2398,8 +2394,22 @@ focus_tree = {
 			add_tech_bonus = {
 				name = bomber_command_focus
 				bonus = 0.75
-				uses = 1
-				category = air_equipment
+				uses = 2
+				category = tactical_bomber
+			}
+			custom_effect_tooltip = ENG_plane_tt
+			if = {
+				limit = { 
+					has_tech = eng_CAS_1937
+					NOT = { has_tech = eng_CAS_1939	}
+				}
+				add_equipment_to_stockpile = { type = CAS_equipment_1937 amount = 400 producer = ENG }   
+			}
+			if = {
+				limit = { 
+					has_tech = eng_CAS_1939
+				}
+				add_equipment_to_stockpile = { type = CAS_equipment_1939 amount = 400 producer = ENG }   
 			}
 		}
 	}
@@ -2429,19 +2439,6 @@ focus_tree = {
 				uses = 1
 				category = cas_bomber
 			}
-			if = {
-				limit = { 
-					has_tech = eng_CAS_1937
-					NOT = { has_tech = eng_CAS_1939	}
-				}
-				add_equipment_to_stockpile = { type = CAS_equipment_1937 amount = 400 producer = ENG }   
-			}
-			if = {
-				limit = { 
-					has_tech = eng_CAS_1939
-				}
-				add_equipment_to_stockpile = { type = CAS_equipment_1939 amount = 400 producer = ENG }   
-			}
 		}
 	}
 	focus = {
@@ -2464,7 +2461,12 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-
+			add_tech_bonus = {
+				name = ENG_wooden_wonder
+				bonus = 0.75
+				uses = 1
+				category = heavy_air
+			}
 		}
 	}
 	focus = {
@@ -2561,79 +2563,13 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_to_variable = { var = british_money value = -100 }
-			custom_effect_tooltip = british_money_100_tt
-			if = { 
-				limit = { 
-					check_variable = { var = focus_power value = 0 compare = less_than_or_equals }
-				}
-				add_doctrine_cost_reduction = {
-					name = land_doc_bonus
-					cost_reduction = 0.5
-					uses = 1
-					category = land_doctrine
-				}
-				random_owned_controlled_state = {
-					limit = {
-						is_in_home_area = yes
-						free_building_slots = {
-							building = arms_factory
-							size > 1
-							include_locked = yes
-						}
-					}
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = {
-						type = arms_factory
-						level = 1
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = infrastructure
-						level = 1
-						instant_build = yes
-					}
-
-				}
-				random_owned_controlled_state = {
-					limit = {
-						is_in_home_area = yes
-						free_building_slots = {
-							building = arms_factory
-							size > 1
-							include_locked = yes
-						}
-					}
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = {
-						type = arms_factory
-						level = 1
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = infrastructure
-						level = 1
-						instant_build = yes
-					}
-
-				}
-				custom_effect_tooltip = ENG_focus_boost_tt
-				effect_tooltip = {
 					add_doctrine_cost_reduction = {
 						name = land_doc_bonus
 						cost_reduction = 0.5
 						uses = 1
 						category = land_doctrine
 					}
-					random_owned_controlled_state = {
-						limit = {
-							is_in_home_area = yes
-							free_building_slots = {
-								building = arms_factory
-								size > 2
-								include_locked = yes
-							}
-						}
+					133 = {
 						add_extra_state_shared_building_slots = 2
 						add_building_construction = {
 							type = arms_factory
@@ -2647,15 +2583,7 @@ focus_tree = {
 						}
 
 					}
-					random_owned_controlled_state = {
-						limit = {
-							is_in_home_area = yes
-							free_building_slots = {
-								building = arms_factory
-								size > 2
-								include_locked = yes
-							}
-						}
+					121 = {
 						add_extra_state_shared_building_slots = 2
 						add_building_construction = {
 							type = arms_factory
@@ -2666,70 +2594,10 @@ focus_tree = {
 							type = infrastructure
 							level = 1
 							instant_build = yes
-						}
-
 					}
 				}
-
 			}
-			if = {
-				limit = { 
-					check_variable = { var = focus_power value = 1 compare = greater_than_or_equals }
-				}
-				subtract_from_variable = { var = focus_power value = 1 }
-				add_doctrine_cost_reduction = {
-					name = land_doc_bonus
-					cost_reduction = 0.5
-					uses = 1
-					category = land_doctrine
-				}
-				random_owned_controlled_state = {
-					limit = {
-						is_in_home_area = yes
-						free_building_slots = {
-							building = arms_factory
-							size > 2
-							include_locked = yes
-						}
-					}
-					add_extra_state_shared_building_slots = 2
-					add_building_construction = {
-						type = arms_factory
-						level = 2
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = infrastructure
-						level = 1
-						instant_build = yes
-					}
-
-				}
-				random_owned_controlled_state = {
-					limit = {
-						is_in_home_area = yes
-						free_building_slots = {
-							building = arms_factory
-							size > 2
-							include_locked = yes
-						}
-					}
-					add_extra_state_shared_building_slots = 2
-					add_building_construction = {
-						type = arms_factory
-						level = 2
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = infrastructure
-						level = 1
-						instant_build = yes
-					}
-
-				}
-			}	
 		}
-	}
 
 	focus = {
 		id = ENG_motorized_focus
@@ -2750,80 +2618,11 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_to_variable = { var = british_money value = -100 }
-			custom_effect_tooltip = british_money_100_tt
-			add_doctrine_cost_reduction = {
+				add_doctrine_cost_reduction = {
 				name = land_doc_bonus
 				cost_reduction = 0.5
 				uses = 1
 				category = land_doctrine
-			}
-			if = { 
-				limit = { 
-					check_variable = { var = focus_power value = 0 compare = less_than_or_equals }
-				}
-				custom_effect_tooltip = ENG_mot_focus_tooltip
-
-				hidden_effect = {
-					load_oob = "ENG_Motorized"
-				}
-				add_tech_bonus = {				
-					bonus = 0.5
-					uses = 1 
-					technology = eng_mechanised_infantry1
-				}
-				army_experience = 25			
-				ENG = {
-					add_equipment_to_stockpile = { type = motorized_equipment_1 amount = 1500	producer = ENG }
-				}
-				custom_effect_tooltip = ENG_focus_boost_tt
-				effect_tooltip = {
-					custom_effect_tooltip = ENG_mot_focus_tooltip
-					add_doctrine_cost_reduction = {
-						name = land_doc_bonus
-						cost_reduction = 0.5
-						uses = 1
-						category = land_doctrine
-					}
-					hidden_effect = {
-						load_oob = "ENG_Motorized"
-					}
-					add_tech_bonus = {				
-						bonus = 0.75
-						uses = 1 
-						technology = eng_mechanised_infantry1
-					}
-					army_experience = 50
-					if = {
-						limit = {
-							OR = {
-								has_idea = rsaf_enfield
-								has_idea = RollsRoyce
-								has_idea = royal_arsenal
-							}
-						}
-						add_political_power = 100
-						set_country_flag = ENG_motorized_focus_pp
-					}
-					else = {
-						add_ideas = RollsRoyce
-					}					
-					ENG = {
-						add_equipment_to_stockpile = { type = motorized_equipment_1 amount = 2500	producer = ENG }
-					}
-				}
-			}
-			if = { 
-				limit = { 
-					check_variable = { var = focus_power value = 1 compare = greater_than_or_equals }
-				}
-				subtract_from_variable = { var = focus_power value = 1 }
-				custom_effect_tooltip = ENG_mot_focus_tooltip
-				add_doctrine_cost_reduction = {
-					name = land_doc_bonus
-					cost_reduction = 0.5
-					uses = 1
-					category = land_doctrine
 				}
 				hidden_effect = {
 					load_oob = "ENG_Motorized"
@@ -2833,22 +2632,10 @@ focus_tree = {
 					uses = 1 
 					technology = eng_mechanised_infantry1
 				}
-				army_experience = 50			
-				if = {
-					limit = {
-						NOT = {
-							OR = {
-								has_idea = rsaf_enfield
-								has_idea = royal_arsenal
-							}
-						}
-					}
-					add_ideas = RollsRoyce
-				}					
+				army_experience = 50							
 				ENG = {
 					add_equipment_to_stockpile = { type = motorized_equipment_1 amount = 2500	producer = ENG }
 				}
-			}
 		}
 	}
 	focus = {
@@ -2933,7 +2720,6 @@ focus_tree = {
 				bonus = 1
 				uses = 2 
 				category = cat_heavy_armor
-				category = cat_medium_armor
 			}	
 		}
 	}
@@ -3037,7 +2823,14 @@ focus_tree = {
 				bonus = 0.5
 				uses = 2
 				category = cat_anti_tank
-			}		
+			}
+			add_tech_bonus = {
+				name = ENG_anti_tank_guns
+				bonus = 1
+				ahead_reduction = 1
+				uses = 1
+				technology = antitank6_1
+			}
 		}
 	}
 	
@@ -3116,8 +2909,7 @@ focus_tree = {
 			}
 			add_tech_bonus = {
 				bonus = 1
-				uses = 2 
-				category = cat_heavy_armor
+				uses = 1 
 				category = cat_medium_armor
 			}
 			army_experience = 40	
@@ -3180,6 +2972,11 @@ focus_tree = {
 
 		completion_reward = {
 			army_experience = 25
+			add_tech_bonus = {
+				bonus = 1
+				uses = 2 
+				category = infantry_weapons
+			}
 			swap_ideas = { 
 				remove_idea = ENG_wartime_industry_focus
 				add_idea = british_arms_discount
