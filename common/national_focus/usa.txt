@@ -4745,8 +4745,7 @@ focus_tree = {
 			}
 		}
 	}					
-
-	focus = {
+	focus = { # The Chief in Charge
 		id = USA_expand_the_airforce
 		icon = GFX_USA_expand_the_airforce
 		prerequisite = { focus = USA_focus_on_europe focus = USA_focus_on_asia }
@@ -4760,6 +4759,7 @@ focus_tree = {
 		available_if_capitulated = yes		
 		
 		available = { 
+			has_country_flag = USA_the_death_of_westover
 		}
 
 		bypass = {
@@ -4779,12 +4779,11 @@ focus_tree = {
 		}
 	}						
 
-	focus = {
+	focus = { #Quantity
 		id = USA_expand_airforce_strength
-
 		icon = GFX_USA_expand_airforce_strength
 		prerequisite = { focus = USA_expand_the_airforce }
-		mutually_exclusive = { focus = USA_modernize_training_facilities}
+		mutually_exclusive = { focus = USA_modernize_aircraft}
 		relative_position_id = USA_expand_the_airforce
 		x = -2
 		y = 1
@@ -4813,44 +4812,14 @@ focus_tree = {
 				}
 			}
 			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
+			custom_effect_tooltip = USA_minus_stab_tt
 			USA_we_dont_want_to_send_our_boys_away = yes
 		}
 	}						
 
-	focus = {
-		id = USA_focus_on_new_fighters
+	focus = { #Research 
+		id = USA_modernize_aircraft
 		icon = GFX_USA_focus_on_new_fighters
-		prerequisite = { focus = USA_expand_airforce_strength }
-		relative_position_id = USA_expand_airforce_strength
-		x = -1
-		y = 1	
-		cost = 5
-		ai_will_do = {
-			factor = 100 
-		}
-		available_if_capitulated = yes		
-		
-		available = { 
-		}
-
-		bypass = {
-		}
-		
-		completion_reward = {
-			air_experience = 30
-			add_tech_bonus = {
-				category = light_fighter 
-				uses = 1
-				ahead_reduction = 1
-				bonus = 0.5 
-			}
-		}
-	}						
-
-
-	focus = {
-		id = USA_modernize_training_facilities
-        icon = GFX_USA_modernize_training_facilities
 		prerequisite = { focus = USA_expand_the_airforce }
 		relative_position_id = USA_expand_the_airforce
 		mutually_exclusive = {focus = USA_expand_airforce_strength}
@@ -4867,26 +4836,30 @@ focus_tree = {
 
 		bypass = {
 		}
-		
+				
 		completion_reward = {
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 2
-				category = air_doctrine
+			air_experience = 30
+			add_tech_bonus = {
+				category = heavy_air
+				category = tactical_bomber
+				category = cat_heavy_fighter
+				uses = 1
+				bonus = 0.5
 			}
 			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
-			USA_we_dont_want_to_send_our_boys_away = yes	
+			custom_effect_tooltip = USA_minus_stab_tt
+			USA_we_dont_want_to_send_our_boys_away = yes
 		}
 	}						
 
-	focus = {
-		id = USA_coastal_defence
-		icon = GFX_USA_coastal_defence
-		prerequisite = { focus = USA_modernize_training_facilities }
-		relative_position_id = USA_modernize_training_facilities
-		x = 1
-		y = 1
+	focus = { #US ARMY AIRFORCE HIST 
+		id = USA_centralize_the_airforce
+		icon = GFX_USA_focus_on_new_fighters
+		prerequisite = { focus = USA_expand_airforce_strength }
+		mutually_exclusive = { focus = USA_autonomous_airforce }
+		relative_position_id = USA_expand_airforce_strength
+		x = 3
+		y = 1	
 		cost = 5
 		ai_will_do = {
 			factor = 100 
@@ -4900,25 +4873,86 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			air_experience = 30
-			add_tech_bonus = {
-				category = heavy_air
-				category = tactical_bomber
-				category = cat_heavy_fighter
-				uses = 1
-				bonus = 0.5
-			}
-			custom_effect_tooltip = available_designer
-			show_ideas_tooltip = boeing 
-		}
-	}		
+			add_ideas = USA_centralized_airforce_idea
 
-	focus = {
+			add_doctrine_cost_reduction = {
+				name = GER_air_innovation
+				cost_reduction = 0.5
+				uses = 2
+				category = air_doctrine
+			}	
+		}
+	}						
+
+	focus = { #THE U.S AIR FORCE
+		id = USA_autonomous_airforce
+		icon = GFX_USA_focus_on_new_fighters
+		prerequisite = { focus = USA_expand_airforce_strength }
+		mutually_exclusive = { focus = USA_centralize_the_airforce }
+		relative_position_id = USA_expand_airforce_strength
+		x = 1
+		y = 1	
+		cost = 5
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			add_ideas = USA_centralized_airforce_idea
+
+			add_doctrine_cost_reduction = {
+				name = GER_air_innovation
+				cost_reduction = 0.5
+				uses = 2
+				category = air_doctrine
+			}	
+		}
+	}						
+
+	focus = { #Expand Pilot Program
+		id = USA_expand_airforce_programs 
+		icon = GFX_USA_coastal_defence
+		prerequisite = { focus = USA_expand_airforce_strength }
+		relative_position_id = USA_expand_airforce_strength
+		x = -1
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+		}
+
+		bypass = {
+		}
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 2
+				category = air_doctrine
+			}
+			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
+			custom_effect_tooltip = USA_minus_stab_tt
+			USA_we_dont_want_to_send_our_boys_away = yes	
+		}
+	}			
+
+	focus = { #B-29
 		id = USA_begin_heavy_bomber_program
 		icon = GFX_USA_begin_heavy_bomber_program
-		prerequisite = { focus = USA_modernize_training_facilities focus = USA_expand_airforce_strength }
+		prerequisite = { focus = USA_modernize_aircraft focus = USA_expand_airforce_strength }
 		relative_position_id = USA_expand_the_airforce
-		x = 0
+		x = 3
 		y = 2
 		cost = 7.16
 		ai_will_do = {
@@ -4931,58 +4965,32 @@ focus_tree = {
 
 		bypass = {
 		}
-		
 		completion_reward = {
-			custom_effect_tooltip = USA_level_up_aircraft_twice_tt
-			hidden_effect = {
-				USA_aircraft_industry_level_up = yes 
-				USA_aircraft_industry_level_up = yes 
+			air_experience = 50		
+			add_tech_bonus = {
+				category = heavy_air
+				bonus = 0.5
+				uses = 1
+				ahead_reduction = 1
+				name = USA_a_modern_anaconda_plan
 			}
+			custom_effect_tooltip = available_designer
+			show_ideas_tooltip = boeing 
 			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
+			custom_effect_tooltip = USA_minus_stab_tt
 			USA_we_dont_want_to_send_our_boys_away = yes
-
 		}
 	}			
-
-	focus = {
-		id = USA_create_the_army_airforce
-		icon = GFX_USA_birth_of_the_airforce
-		prerequisite = { focus = USA_begin_heavy_bomber_program }
-		relative_position_id = USA_begin_heavy_bomber_program
-		x = 0
-		y = 1
-		cost = 7.16
-		ai_will_do = {
-			factor = 100 
-		}
-		available_if_capitulated = yes		
 		
-		available = { 
-		}
-
-		bypass = {
-		}
-		
-		completion_reward = {
-			custom_effect_tooltip = USA_level_up_aircraft_twice_tt
-			hidden_effect = {
-				USA_aircraft_industry_level_up = yes 
-				USA_aircraft_industry_level_up = yes 
-			}
-			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
-			USA_we_dont_want_to_send_our_boys_away = yes
-
-		}
-	}			
-
 
 	focus = {
 		id = USA_a_modern_anaconda_plan
 		icon = GFX_USA_a_modern_anaconda_plan
+		prerequisite = { focus = USA_centralize_the_airforce }
 		prerequisite = { focus = USA_begin_heavy_bomber_program }
-		relative_position_id = USA_expand_the_airforce
-		x = -2
-		y = 3
+		relative_position_id = USA_centralize_the_airforce
+		x = 1
+		y = 1
 		cost = 7.16
 		ai_will_do = {
 			factor = 100 
@@ -4996,17 +5004,19 @@ focus_tree = {
 		bypass = {
 		}
 		
+
 		completion_reward = {
-			air_experience = 50		
-			add_tech_bonus = {
-				category = heavy_air
-				bonus = 0.5
-				uses = 1
-				ahead_reduction = 1
-				name = USA_a_modern_anaconda_plan
+			custom_effect_tooltip = USA_level_up_aircraft_twice_tt
+			hidden_effect = {
+				USA_aircraft_industry_level_up = yes 
+				USA_aircraft_industry_level_up = yes 
 			}
+			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
+			custom_effect_tooltip = USA_minus_stab_tt
+			USA_we_dont_want_to_send_our_boys_away = yes
+
 		}
-	}					
+	}		
 
 	focus = {
 		id = USA_coordinate_with_the_british
@@ -5040,11 +5050,12 @@ focus_tree = {
 	}						
 
 	focus = {
-		id = USA_coordinate_with_the_british_2
-		icon = GFX_USA_coordinate_with_the_british
-		prerequisite = { focus = USA_coordinate_with_the_british }
-		relative_position_id = USA_coordinate_with_the_british
-		x = 0
+		id = USA_swarm_the_skies
+		icon = GFX_USA_airforce
+		prerequisite = { focus = USA_autonomous_airforce }
+		prerequisite = { focus = USA_expand_airforce_programs }
+		relative_position_id = USA_autonomous_airforce
+		x = -1
 		y = 1
 		cost = 7.16
 		ai_will_do = {
@@ -5053,32 +5064,69 @@ focus_tree = {
 		available_if_capitulated = yes		
 		
 		available = { 
-			date > 1943.1.1
 		}
 
 		bypass = {
 		}
 		
 		completion_reward = {
-			swap_ideas = {
-				remove_idea = combined_bomber_offensive 
-				add_idea = combined_bomber_offensive2
+			custom_effect_tooltip = USA_level_up_aircraft_twice_tt
+			hidden_effect = {
+				USA_aircraft_industry_level_up = yes 
+				USA_aircraft_industry_level_up = yes 
 			}
-			ENG = {
-				swap_ideas = {
-					remove_idea = combined_bomber_offensive 
-					add_idea = combined_bomber_offensive2
-				}
+			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
+			custom_effect_tooltip = USA_minus_stab_tt
+			USA_we_dont_want_to_send_our_boys_away = yes
+
+		}
+	}			
+
+
+
+	focus = {
+		id = USA_armored_column_cover
+		icon = GFX_USA_airforce
+		prerequisite = { focus = USA_swarm_the_skies }
+		relative_position_id = USA_autonomous_airforce
+		x = -1
+		y = 2
+		cost = 7.16
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				ahead_reduction = 1
+				category = tactical_bomber
+			}	
+			add_tech_bonus = {
+				category = cas_bomber
+				uses = 1
+				bonus = 0.5
+				ahead_reduction = 0.5
+				name = GER_fuck_names 
 			}
 		}
-	}						
-
+	}
+		}
+	}		
 	focus = {
 		id = USA_long_range_escort
 		icon = GFX_USA_long_range_escort
-		prerequisite = { focus = USA_begin_heavy_bomber_program }
-		relative_position_id = USA_begin_heavy_bomber_program
-		x = 2
+		prerequisite = { focus = USA_autonomous_airforce focus = USA_centralize_the_airforce }
+		relative_position_id = USA_autonomous_airforce
+		x = 1
 		y = 1
 		cost = 7.16
 		ai_will_do = {
@@ -5101,15 +5149,56 @@ focus_tree = {
 				ahead_reduction = 0.3
 			}
 			add_ideas = north_american_aviation
+			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
+			custom_effect_tooltip = USA_minus_stab_tt
+			USA_we_dont_want_to_send_our_boys_away = yes
+		}
+	}	
+	focus = {
+		id = USA_whittles_turbojet
+		icon = GFX_USA_airforce
+		prerequisite = { focus = USA_long_range_escort }
+		relative_position_id = USA_long_range_escort
+		x = 0
+		y = 1
+		cost = 7.16
+		ai_will_do = {
+			factor = 100 
+		}
+		available_if_capitulated = yes		
+		
+		available = { 
+		}
+
+		bypass = {
+		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				name = secret_bonus
+				bonus = 1.5
+				uses = 1
+				technology = jet_engines
+			}
+			add_tech_bonus = {
+				name = secret_bonus
+				ahead_reduction = 2
+				uses = 1
+				category = rocketry
+			}
+			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
+			custom_effect_tooltip = USA_minus_stab_tt
+			USA_we_dont_want_to_send_our_boys_away = yes
 		}
 	}		
 
 	focus = {
-		id = USA_swarm_the_skies
-		icon = GFX_USA_a_shooting_star
-		prerequisite = { focus = USA_long_range_escort }
-		relative_position_id = USA_long_range_escort
-		x = 1
+		id = USA_a_shooting_star
+		icon = GFX_USA_airforce
+		prerequisite = { focus = USA_whittles_turbojet }
+		prerequisite = { focus = USA_armored_column_cover focus = USA_coordinate_with_the_british }
+		relative_position_id = USA_whittles_turbojet
+		x = 0
 		y = 1
 		cost = 7.16
 		ai_will_do = {
@@ -5128,37 +5217,8 @@ focus_tree = {
 			add_tech_bonus = {
 				technology = usa_jet_fighter_1945
 				uses = 1
-				bonus = 0.5
-				ahead_reduction = 0.5
-			}
-		}
-	}		
-
-	focus = {
-		id = USA_no_stone_left_unturned
-		icon = GFX_USA_form_the_eight_army_airforce
-		prerequisite = { focus = USA_long_range_escort }
-		relative_position_id = USA_long_range_escort
-		x = -1
-		y = 1
-		cost = 7.16
-		ai_will_do = {
-			factor = 100 
-		}
-		available_if_capitulated = yes		
-		
-		available = {
-		}
-
-		bypass = {
-		}
-		
-		completion_reward = {
-			add_tech_bonus = {
-				technology = usa_CAS_1943
-				uses = 1
-				bonus = 0.5
-				ahead_reduction = 0.5
+				bonus = 1
+				ahead_reduction = 1
 			}
 		}
 	}		
