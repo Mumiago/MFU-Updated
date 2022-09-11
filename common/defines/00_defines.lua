@@ -214,7 +214,7 @@ NCountry = {
 	MIN_COUP_SUCCESS_STABILITY = 0.8,				-- Max stability when coup will happen
 	WAR_SUPPORT_OFFNSIVE_WAR = -0.1,				-- Impact of being in offensive war
 	WAR_SUPPORT_DEFENSIVE_WAR = 0.2,				-- Impact of being in defensive war
-	WAR_SUPPORT_TENSION_IMPACT = 0.1,				-- Total impact of world tension
+	WAR_SUPPORT_TENSION_IMPACT = 0.15,				-- Total impact of world tension
 	MIN_STABILITY = 0.0,
 	MAX_STABILITY = 1.0,
 	MIN_WAR_SUPPORT = 0.0,
@@ -263,8 +263,8 @@ NCountry = {
 	MIN_SURRENDER_LIMIT = 0.1,						-- Minimum non-forced surrender limit. valid 0-1 
 	BASE_MOBILIZATION_SPEED = 0.03,				-- Base speed of manpower mobilization  #in 1/1000 of 1 %
  																					
-	INTERCEPTION_WAR_SUPPORT_SCALE = 0.00002,		-- Scaling of interceptions to war support impact
-    INTERCEPTION_BOMBING_WAR_SUPPORT_IMPACT = 0.2,	-- Max impact of interceptions on the war support
+	INTERCEPTION_WAR_SUPPORT_SCALE = 0.00000,		-- Scaling of interceptions to war support impact
+    INTERCEPTION_BOMBING_WAR_SUPPORT_IMPACT = 0.0,	-- Max impact of interceptions on the war support
 	BOMBING_WAR_SUPPORT_PENALTY_SCALE = -0.0001, 			-- Scaling of bomber damage to war support impact, will be added weekly as a war support penalty
 	MAX_BOMBING_WEEKLY_WAR_SUPPORT_PENALTY = -0.01,			-- Max penalty that will gained per week from bomber's damage
 	BOMBING_WEEKLY_WAR_SUPPORT_PENALTY_DECAY = 0.001,		-- Weekly decay of bomber damage war support penalty
@@ -305,8 +305,8 @@ NCountry = {
 	STARTING_COMMAND_POWER = 50,					-- starting command power for every country
 	BASE_MAX_COMMAND_POWER = 100.0,					-- base value for maximum command power
 	BASE_COMMAND_POWER_GAIN = 0.4,				-- base value for daily command power gain
-	AIR_VOLUNTEER_PLANES_LIMIT = 0.2,				-- Ratio for volunteer planes available for sending in relation to sender air force
-	AIR_VOLUNTEER_BASES_CAPACITY_LIMIT = 0.1,		-- Ratio for volunteer planes available for sending in relation to receiver air base capacity
+	AIR_VOLUNTEER_PLANES_LIMIT = 0.0,				-- Ratio for volunteer planes available for sending in relation to sender air force
+	AIR_VOLUNTEER_BASES_CAPACITY_LIMIT = 0.0,		-- Ratio for volunteer planes available for sending in relation to receiver air base capacity
 	ATTACHE_XP_SHARE = 0.1,							-- Country received xp from attaches
 	SPECIAL_FORCES_CAP_BASE = 0.00,					-- Max ammount of special forces battalions is total number of non-special forces battalions multiplied by this and modified by a country modifier
 	SPECIAL_FORCES_CAP_MIN = 8000,					-- You can have a minimum of this many special forces battalions, regardless of the number of non-special forces battalions you have, this can also be modified by a country modifier
@@ -1287,7 +1287,7 @@ NSupply = {
 	RIVER_RAILWAY_LEVEL = 2,
 
 	-- defines that are used for supply reach for floating harbors
-	FLOATING_HARBOR_INITIAL_SUPPLY_FLOW = 2.6,
+	FLOATING_HARBOR_INITIAL_SUPPLY_FLOW = 3,
 	FLOATING_HARBOR_STARTING_PENALTY_PER_PROVINCE = 0.8,
 	FLOATING_HARBOR_ADDED_PENALTY_PER_PROVINCE = 0.8,
 
