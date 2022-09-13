@@ -365,7 +365,24 @@ JAP_pacific_war_explanation_category = {
 				}
 				date > 1941.11.23
 			}
-			date > 1941.1.1		
+			if = {
+				limit = {
+					JAP = {	is_ai = yes }
+				}
+				date > 1941.11.23
+			}
+			if = {
+				limit = {
+					JAP = {
+						is_ai = no
+						has_completed_focus = JAP_zaibatsus_dominance
+					}
+				}
+				date > 1941.6.1
+			}
+			else_if = {
+				date > 1941.1.1
+			}	
 		}
 		
 		visible = {
@@ -446,7 +463,7 @@ JAP_pacific_war_explanation_category = {
 				}
 				add_timed_idea = {
 					idea = JAP_tora_tora_tora_idea
-					days = 180	
+					days = 120	
 				}
 			}			
 			else_if = {
@@ -2284,20 +2301,19 @@ JAP_interservice_rivalry = {
 			NOT = {
 				has_country_flag = JAP_war_conferences_cd
 			}
-			NOT = {
-				has_country_flag = JAP_steel_for_ships
-			}
 		}
 		visible = {
-			NOT = {
-				has_country_flag = JAP_steel_for_ships
-			}
+		
 		}
-		cost = 50
-		fire_only_once = yes
+		cost = 40
+		fire_only_once = no
 		days_remove = -1
 		ai_will_do = {
 			factor = 5
+		}
+		modifier = {
+			industrial_capacity_dockyard = -0.1
+			industrial_capacity_factory = 0.1
 		}
 		complete_effect = {
 			hidden_effect = {
@@ -2305,18 +2321,32 @@ JAP_interservice_rivalry = {
 			}
 			random_owned_state = {
 				limit = {
+					dockyard > 1 
+				}
+				remove_building = {
+					type = dockyard
+					level = 2
+				}
+			}
+			random_owned_state = {
+				limit = {
+					dockyard > 1 
+				}
+				remove_building = {
+					type = dockyard
+					level = 2
+				}
+			}
+			
+			random_owned_state = {
+				limit = {
 					is_controlled_by = ROOT
 					is_core_of = ROOT
-					free_building_slots = {
-						building = arms_factory
-						size > 1
-						include_locked = yes
-					}
 				}
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
 					type = arms_factory
-					level = 2
+					level = 4
 					instant_build = yes
 				}
 			}
@@ -2324,29 +2354,19 @@ JAP_interservice_rivalry = {
 				limit = {
 					is_controlled_by = ROOT
 					is_core_of = ROOT
-					free_building_slots = {
-						building = arms_factory
-						size > 1
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 2
+				}	
+				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
 					type = arms_factory
-					level = 2
+					level = 4
 					instant_build = yes
 				}
 			}
-			set_country_flag = { flag = JAP_war_conferences_cd value = 1 days = 180 }
+			set_country_flag = { flag = JAP_war_conferences_cd value = 1 days = 120 }
 			JAP_interservice_rivalry_towards_army = yes
 			set_country_flag = JAP_steel_for_guns
 
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = land_doctrine
-			}
+			
 		}
 	}
 	JAP_steel_for_ships = {
@@ -2357,36 +2377,49 @@ JAP_interservice_rivalry = {
 			NOT = {
 				has_country_flag = JAP_war_conferences_cd
 			}
-			NOT = {
-				has_country_flag = JAP_steel_for_guns
-			}
+			
 		}
 		visible = {
-			NOT = {
-				has_country_flag = JAP_steel_for_guns
-			}
+			
 		}
-		cost = 50
-		fire_only_once = yes
+		cost = 40
+		fire_only_once = no
 		days_remove = -1
 		ai_will_do = {
 			factor = 0
 		}
+		modifier = {
+			industrial_capacity_dockyard = 0.1
+			industrial_capacity_factory = -0.1
+		}
 		complete_effect = {
+			random_owned_state = {
+				limit = {
+					arms_factory > 1 
+				}
+				remove_building = {
+					type = arms_factory
+					level = 2
+				}
+			}
+			random_owned_state = {
+				limit = {
+					arms_factory > 1 
+				}
+				remove_building = {
+					type = arms_factory
+					level = 1
+				}
+			}
 			random_owned_state = {
 				limit = {
 					is_controlled_by = ROOT
 					is_core_of = ROOT
-					free_building_slots = {
-						building = dockyard
-						size > 1
-						include_locked = yes
-					}
 				}
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
 					type = dockyard
-					level = 2
+					level = 4
 					instant_build = yes
 				}
 			}
@@ -2394,32 +2427,22 @@ JAP_interservice_rivalry = {
 				limit = {
 					is_controlled_by = ROOT
 					is_core_of = ROOT
-					free_building_slots = {
-						building = dockyard
-						size > 1
-						include_locked = yes
-					}
 				}
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
 					type = dockyard
-					level = 2
+					level = 4
 					instant_build = yes
 				}
 			}
 			hidden_effect = {
 				activate_mission = JAP_rivalry_timing
 			}
-			set_country_flag = { flag = JAP_war_conferences_cd value = 1 days = 180 }
+			set_country_flag = { flag = JAP_war_conferences_cd value = 1 days = 120 }
 			JAP_interservice_rivalry_towards_navy = yes
 			set_country_flag = JAP_steel_for_ships
 
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = naval_doctrine
-			}
+			
 		}
 	}
 
@@ -2431,36 +2454,76 @@ JAP_interservice_rivalry = {
 			NOT = {
 				has_country_flag = JAP_war_conferences_cd
 			}
-			NOT = {
-				has_country_flag = JAP_prioritize_naval_aircraft_construction
+			has_navy_size = {
+				size > 2
+				archetype = ship_hull_heavy	
 			}
+							
 		}
 		visible = {
 			NOT = {
-				has_country_flag = JAP_prioritize_naval_aircraft_construction
+				has_war_with = USA
 			}
+			NOT = {
+				has_country_flag = JAP_ship_destroy3_flag
+			}
+			
 		}
-		cost = 50
-		fire_only_once = yes
+		cost = 40
+		fire_only_once = no
 		days_remove = -1
 		ai_will_do = {
 			factor = 5
 		}
+		modifier = {
+			industrial_capacity_dockyard = -0.1
+			industrial_capacity_factory = 0.1
+		}
 		complete_effect = {
+			destroy_ships = {
+				type = ship_hull_heavy_1
+				count = 3
+			}
+			random_owned_state = {
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = arms_factory
+					level = 3
+					instant_build = yes
+				}
+			}
+			random_owned_state = {
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = arms_factory
+					level = 3
+					instant_build = yes
+				}
+			}
 			hidden_effect = {
 				activate_mission = JAP_rivalry_timing
 			}
-			set_country_flag = { flag = JAP_war_conferences_cd value = 1 days = 180 }
-			add_ideas = JAP_prioritize_army_aircraft_construction
+			set_country_flag = { flag = JAP_war_conferences_cd value = 1 days = 120 }
 			JAP_interservice_rivalry_towards_army = yes
-			set_country_flag = JAP_prioritize_army_aircraft_construction
-
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = air_doctrine
+			if = {
+				limit = {
+					has_country_flag = JAP_ship_destroy2_flag
+				}
+				clr_state_flag = JAP_ship_destroy2_flag
+				set_country_flag = JAP_ship_destroy3_flag
 			}
+			else_if = {
+				limit = {
+					has_country_flag = JAP_ship_destroy1_flag
+				}
+				clr_state_flag = JAP_ship_destroy1_flag
+				set_country_flag = JAP_ship_destroy2_flag
+			}
+			else_if = {
+				set_country_flag = JAP_ship_destroy1_flag
+			}
+			
+	
 		}
 	}
 	JAP_prioritize_naval_aircraft_construction = {
@@ -2471,36 +2534,43 @@ JAP_interservice_rivalry = {
 			NOT = {
 				has_country_flag = JAP_war_conferences_cd
 			}
-			NOT = {
-				has_country_flag = JAP_prioritize_army_aircraft_construction
-			}
+			
 		}
 		visible = {
 			NOT = {
-				has_country_flag = JAP_prioritize_army_aircraft_construction
+				has_war_with = USA
 			}
+			NOT = {
+				has_country_flag = JAP_ship_destroy3_flag
+			}
+			
 		}
-		cost = 50
+		cost = 40
 		fire_only_once = yes
 		days_remove = -1
 		ai_will_do = {
 			factor = 0
 		}
+		modifier = {
+			refit_speed = 0.2
+			industrial_capacity_dockyard = 0.1
+			industrial_capacity_factory = -0.1
+		}
 		complete_effect = {
+			random_owned_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
 			hidden_effect = {
 				activate_mission = JAP_rivalry_timing
 			}
-			set_country_flag = { flag = JAP_war_conferences_cd value = 1 days = 180 }
-			add_ideas = JAP_prioritize_naval_aircraft_construction
+			set_country_flag = { flag = JAP_war_conferences_cd value = 1 days = 120 }
 			JAP_interservice_rivalry_towards_navy = yes
-			set_country_flag = JAP_prioritize_naval_aircraft_construction
-
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = naval_doctrine
-			}
+		
 		}
 	}
 
@@ -2512,36 +2582,37 @@ JAP_interservice_rivalry = {
 			NOT = {
 				has_country_flag = JAP_war_conferences_cd
 			}
-			NOT = {
-				has_country_flag = JAP_draft_exemptions
-			}
+		
 		}
 		visible = {
-			NOT = {
-				has_country_flag = JAP_draft_exemptions
-			}
+			
 		}
-		cost = 50
+		cost = 40
 		fire_only_once = yes
 		days_remove = -1
 		ai_will_do = {
 			factor = 0
 		}
-
+		modifier = {
+			industrial_capacity_dockyard = -0.1
+			industrial_capacity_factory = 0.1
+		}
+		
 		complete_effect = {
+			add_manpower = 50000
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine
+			}
 			hidden_effect = {
 				activate_mission = JAP_rivalry_timing
 			}
-			set_country_flag = { flag = JAP_war_conferences_cd value = 1 days = 180 }
+			set_country_flag = { flag = JAP_war_conferences_cd value = 1 days = 120 }
 			JAP_interservice_rivalry_towards_army = yes
-			set_country_flag = JAP_everybody_serves
+	
 
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.3
-				uses = 2
-				category = land_doctrine
-			}
 		}
 	}
 	JAP_draft_exemptions = {
@@ -2552,39 +2623,35 @@ JAP_interservice_rivalry = {
 			NOT = {
 				has_country_flag = JAP_war_conferences_cd
 			}
-			NOT = {
-				has_country_flag = JAP_everybody_serves
-			}
 		}
 		visible = {
-			NOT = {
-				has_country_flag = JAP_everybody_serves
-			}
+			
 		}
-		cost = 50
+		cost = 40
 		days_remove = -1
 		fire_only_once = yes
 		ai_will_do = {
 			factor = 6
 		}
 		modifier = {
-			industrial_capacity_factory = 0.05
-			industrial_capacity_dockyard = 0.05
+			industrial_capacity_dockyard = 0.1
+			industrial_capacity_factory = -0.1
 		}
+		
 		complete_effect = {
+			add_doctrine_cost_reduction = {
+				name = naval_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = naval_doctrine
+			}
 			hidden_effect = {
 				activate_mission = JAP_rivalry_timing
 			}
-			set_country_flag = { flag = JAP_war_conferences_cd value = 1 days = 180 }
+			set_country_flag = { flag = JAP_war_conferences_cd value = 1 days = 120 }
 			JAP_interservice_rivalry_towards_navy = yes
-			set_country_flag = JAP_draft_exemptions
 
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = land_doctrine
-			}
+			
 		}
 	}
 
@@ -2596,38 +2663,45 @@ JAP_interservice_rivalry = {
 			NOT = {
 				has_country_flag = JAP_war_conferences_cd
 			}
-			NOT = {
-				has_country_flag = JAP_special_air_landing_force
-			}
+			
 		}
 		visible = {
 			NOT = {
-				has_country_flag = JAP_special_air_landing_force
+				has_country_flag = JAP_special_air_landing_Force_flag
 			}
+			
 		}
-		cost = 50
+		cost = 40
 		fire_only_once = yes
 		days_remove = -1
 		ai_will_do = {
 			factor = 0
 		}
 		modifier = {
-			amphibious_invasion_defence = 0.1
+			industrial_capacity_dockyard = -0.1
+			industrial_capacity_factory = 0.1
 		}
 		complete_effect = {
+			add_tech_bonus = {
+				name = special_bonus
+				bonus = 1
+				uses = 2
+				category = para_tech
+				category = mountaineers_tech
+				category = light_inf_tech	
+			}
+			custom_effect_tooltip = JAP_invasion_debuff_tt
 			hidden_effect = {
 				activate_mission = JAP_rivalry_timing
+				set_technology = {
+					JAP_invasion_debuff = 1
+				}
 			}
-			set_country_flag = { flag = JAP_war_conferences_cd value = 1 days = 180 }
-			set_country_flag = JAP_raiding_regiments
+			set_country_flag = { flag = JAP_war_conferences_cd value = 1 days = 120 }
 			JAP_interservice_rivalry_towards_army = yes
+			set_country_flag = JAP_special_air_landing_Force_flag
 
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = naval_doctrine
-			}
+			
 		}
 	}
 	JAP_special_air_landing_force = {
@@ -2638,41 +2712,217 @@ JAP_interservice_rivalry = {
 			NOT = {
 				has_country_flag = JAP_war_conferences_cd
 			}
-			NOT = {
-				has_country_flag = JAP_raiding_regiments
-			}
+			
 		}
+
 		visible = {
 			NOT = {
-				has_country_flag = JAP_raiding_regiments
+				has_country_flag = JAP_special_air_landing_Force_flag
 			}
+			
 		}
-		cost = 50
+		cost = 40
 		fire_only_once = yes
 		days_remove = -1
 		ai_will_do = {
 			factor = 5
 		}
 		modifier = {
-			special_forces_attack_factor = 0.05 
-			special_forces_defence_factor = 0.05
+			industrial_capacity_dockyard = 0.1
+			industrial_capacity_factory = -0.1
 		}
 		complete_effect = {
+			add_tech_bonus = {
+				name = special_bonus
+				bonus = 1
+				uses = 2
+				category = para_tech
+				category = marine_tech	
+			}
+			custom_effect_tooltip = JAP_invasion_bonus_tt
+			hidden_effect = {
+				activate_mission = JAP_rivalry_timing
+				set_technology = {
+					JAP_invasion_bonus = 1
+				}
+			}
+			set_country_flag = { flag = JAP_war_conferences_cd value = 1 days = 120 }
+			set_country_flag = JAP_special_air_landing_force
+			JAP_interservice_rivalry_towards_navy = yes
+			set_country_flag = JAP_special_air_landing_Force_flag
+		}
+	}
+	
+	JAP_ija_air= {
+
+		icon = generic_tank
+
+		available = {
+			NOT = {
+				has_country_flag = JAP_war_conferences_cd
+			}
+			
+		}
+
+		visible = {
+			NOT = {
+				has_country_flag = JAP_ijna_air_flag
+			}
+			
+		}
+		cost = 40
+		fire_only_once = yes
+		days_remove = -1
+		ai_will_do = {
+			factor = 5
+		}
+		modifier = {
+			industrial_capacity_dockyard = -0.1
+			industrial_capacity_factory = 0.1
+		}
+		complete_effect = {
+			custom_effect_tooltip = JAP_ija_air_tt
+			hidden_effect = {
+				activate_mission = JAP_rivalry_timing
+				set_technology = {
+					JAP_ija_air_tech = 1
+				}
+			}
+			set_country_flag = { flag = JAP_war_conferences_cd value = 1 days = 120 }
+			JAP_interservice_rivalry_towards_army = yes
+			set_country_flag = JAP_ijna_air_flag
+		}
+	}
+	JAP_ijn_air = {
+
+		icon = generic_naval
+
+		available = {
+			NOT = {
+				has_country_flag = JAP_war_conferences_cd
+			}
+			
+		}
+		visible = {
+			NOT = {
+				has_country_flag = JAP_ijna_air_flag
+			}
+			
+		}
+		cost = 40
+		fire_only_once = yes
+		days_remove = -1
+		ai_will_do = {
+			factor = 0
+		}
+		modifier = {
+			industrial_capacity_dockyard = 0.1
+			industrial_capacity_factory = -0.1
+		}
+		complete_effect = {
+			custom_effect_tooltip = JAP_ijn_air_tt
+			hidden_effect = {
+				activate_mission = JAP_rivalry_timing
+				set_technology = {
+					JAP_ijn_air_tech = 1
+				}
+			}
+			set_country_flag = { flag = JAP_war_conferences_cd value = 1 days = 120 }
+			JAP_interservice_rivalry_towards_navy = yes
+			set_country_flag = JAP_ijna_air_flag
+
+			
+		}
+	}
+	
+	JAP_ija_generals = {
+
+		icon = generic_tank
+
+		available = {
+			NOT = {
+				has_country_flag = JAP_war_conferences_cd
+			}
+			
+		}
+		visible = {
+			NOT = {
+				has_country_flag = JAP_ijn_admirals_flag
+			}
+			
+		}
+		cost = 40
+		fire_only_once = yes
+		days_remove = -1
+		ai_will_do = {
+			factor = 0
+		}
+		modifier = {
+			industrial_capacity_dockyard = -0.1
+			industrial_capacity_factory = 0.1
+		}
+		complete_effect = {
+			every_army_leader = {
+				add_attack = 1
+				add_planning = 1
+			}
+			every_navy_leader = {
+				add_attack = -1
+			}
 			hidden_effect = {
 				activate_mission = JAP_rivalry_timing
 			}
-			set_country_flag = { flag = JAP_war_conferences_cd value = 1 days = 180 }
-			set_country_flag = JAP_special_air_landing_force
-			JAP_interservice_rivalry_towards_navy = yes
+			set_country_flag = { flag = JAP_war_conferences_cd value = 1 days = 120 }
+			JAP_interservice_rivalry_towards_army = yes
+			set_country_flag = JAP_ijn_admirals_flag
 
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = naval_doctrine
-			}
+			
 		}
 	}
+	JAP_ijn_admirals= {
+
+		icon = generic_naval
+
+		available = {
+			NOT = {
+				has_country_flag = JAP_war_conferences_cd
+			}
+			
+		}
+
+		visible = {
+			NOT = {
+				has_country_flag = JAP_ijn_admirals_flag
+			}
+			
+		}
+		cost = 40
+		fire_only_once = yes
+		days_remove = -1
+		ai_will_do = {
+			factor = 5
+		}
+		modifier = {
+			industrial_capacity_dockyard = 0.1
+			industrial_capacity_factory = -0.1
+		}
+		complete_effect = {
+			every_navy_leader = {
+				add_attack = 1
+				add_defense = 1
+			}
+			every_army_leader = {
+				add_attack = -1
+			}
+			hidden_effect = {
+				activate_mission = JAP_rivalry_timing
+			}
+			set_country_flag = { flag = JAP_war_conferences_cd value = 1 days = 120 }
+			JAP_interservice_rivalry_towards_navy = yes
+			set_country_flag = JAP_ijn_admirals_flag
+		}
+	}
+	
 
 	JAP_favor_army = {
 
@@ -2682,65 +2932,54 @@ JAP_interservice_rivalry = {
 			NOT = {
 				has_country_flag = JAP_war_conferences_cd
 			}
-			AND = {
-				OR = { 
-					has_country_flag = JAP_raiding_regiments 
-					has_country_flag = JAP_special_air_landing_force
-				}
-				OR = { 
-					has_country_flag = JAP_everybody_serves
-					has_country_flag = JAP_draft_exemptions
-				}
-				OR = { 
-					has_country_flag = JAP_prioritize_naval_aircraft_construction
-					has_country_flag = JAP_prioritize_army_aircraft_construction
-				}
-				OR = { 
-					has_country_flag = JAP_steel_for_guns
-					has_country_flag = JAP_steel_for_ships
-				}
-			}
-			
+			date > 1939.1.1
 		}
 		visible = {
-			AND = {
-				OR = { 
-					has_country_flag = JAP_raiding_regiments 
-					has_country_flag = JAP_special_air_landing_force
-				}
-				OR = { 
-					has_country_flag = JAP_everybody_serves
-					has_country_flag = JAP_draft_exemptions
-				}
-				OR = { 
-					has_country_flag = JAP_prioritize_naval_aircraft_construction
-					has_country_flag = JAP_prioritize_army_aircraft_construction
-				}
-				OR = { 
-					has_country_flag = JAP_steel_for_guns
-					has_country_flag = JAP_steel_for_ships
-				}
-			}
+			
 		}
-		cost = 50
+		cost = 40
 		fire_only_once = yes
 		ai_will_do = {
 			factor = 1
 		}
+		modifier = {
+			industrial_capacity_factory = 0.2
+		}
 		
 		complete_effect = {
+			every_state = {
+				limit = {
+					OR = {	
+						state = 608
+						state = 614
+						state = 621
+						state = 615
+						state = 607
+						state = 597
+						state = 743
+						state = 598
+						state = 606
+						state = 613
+						state = 749
+						state = 596
+						state = 592
+						state = 594
+						state = 591
+
+					}
+				}
+				add_resistance_target = {
+					amount = 5
+				}			
+				add_resistance = 10
+			}
 			hidden_effect = {
 				activate_mission = JAP_rivalry_timing
 			}
-			set_country_flag = { flag = JAP_war_conferences_cd value = 1 days = 180 }
+			set_country_flag = { flag = JAP_war_conferences_cd value = 1 days = 120 }
 			JAP_interservice_rivalry_towards_army = yes
 
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = land_doctrine
-			}
+			
 		}
 	}
 	JAP_favor_navy = {
@@ -2751,66 +2990,57 @@ JAP_interservice_rivalry = {
 			NOT = {
 				has_country_flag = JAP_war_conferences_cd
 			}
-			AND = {
-				OR = { 
-					has_country_flag = JAP_raiding_regiments 
-					has_country_flag = JAP_special_air_landing_force
-				}
-				OR = { 
-					has_country_flag = JAP_everybody_serves
-					has_country_flag = JAP_draft_exemptions
-				}
-				OR = { 
-					has_country_flag = JAP_prioritize_naval_aircraft_construction
-					has_country_flag = JAP_prioritize_army_aircraft_construction
-				}
-				OR = { 
-					has_country_flag = JAP_steel_for_guns
-					has_country_flag = JAP_steel_for_ships
-				}
-			}
+			date > 1939.1.1
+			
 			
 		}
 		visible = {
-			AND = {
-				OR = { 
-					has_country_flag = JAP_raiding_regiments 
-					has_country_flag = JAP_special_air_landing_force
-				}
-				OR = { 
-					has_country_flag = JAP_everybody_serves
-					has_country_flag = JAP_draft_exemptions
-				}
-				OR = { 
-					has_country_flag = JAP_prioritize_naval_aircraft_construction
-					has_country_flag = JAP_prioritize_army_aircraft_construction
-				}
-				OR = { 
-					has_country_flag = JAP_steel_for_guns
-					has_country_flag = JAP_steel_for_ships
-				}
-			}
+			
 		}
-		cost = 50
+		cost = 40
 		fire_only_once = yes
 		ai_will_do = {
 			factor = 1
 		}
+		modifier = {
+			industrial_capacity_dockyard = 0.2
+		}
 		
 		complete_effect = {
+			every_state = {
+				limit = {
+					OR = {	
+						state = 608
+						state = 614
+						state = 621
+						state = 615
+						state = 607
+						state = 597
+						state = 743
+						state = 598
+						state = 606
+						state = 613
+						state = 749
+						state = 596
+						state = 592
+						state = 594
+						state = 591
+
+					}
+				}
+				add_resistance_target = {
+					amount = 5
+				}			
+				add_resistance = 10
+			}
 			hidden_effect = {
 				activate_mission = JAP_rivalry_timing
 			}
 
-			set_country_flag = { flag = JAP_war_conferences_cd value = 1 days = 180 }
+			set_country_flag = { flag = JAP_war_conferences_cd value = 1 days = 120 }
 			JAP_interservice_rivalry_towards_navy = yes
 
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = naval_doctrine
-			}
+			
 		}
 	}
 	JAP_rivalry_timing = {
@@ -2822,8 +3052,8 @@ JAP_interservice_rivalry = {
 		}
 		is_good = no
 		fire_only_once = no
- 		days_mission_timeout = 179
-		days_remove = 179
+ 		days_mission_timeout = 119
+		days_remove = 119
 
 		activation = {
 			has_country_flag = JAP_war_conferences_cd
