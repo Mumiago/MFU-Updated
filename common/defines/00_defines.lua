@@ -214,7 +214,7 @@ NCountry = {
 	MIN_COUP_SUCCESS_STABILITY = 0.8,				-- Max stability when coup will happen
 	WAR_SUPPORT_OFFNSIVE_WAR = -0.1,				-- Impact of being in offensive war
 	WAR_SUPPORT_DEFENSIVE_WAR = 0.2,				-- Impact of being in defensive war
-	WAR_SUPPORT_TENSION_IMPACT = 0.15,				-- Total impact of world tension
+	WAR_SUPPORT_TENSION_IMPACT = 0.225,				-- Total impact of world tension
 	MIN_STABILITY = 0.0,
 	MAX_STABILITY = 1.0,
 	MIN_WAR_SUPPORT = 0.0,
@@ -1184,7 +1184,7 @@ NAir = {
 	AIR_WING_XP_TRAINING_MISSION_ACCIDENT_FACTOR = 1.5, 				--Training exercises cause more accidents
 	AIR_WING_XP_LOSS_REDUCTION_OVER_FRIENDLY_TERRITORY_FACTOR = 0.3, 	--Reduction on XP loss over friendly territory
 
-	DISRUPTION_FACTOR = 3.5,							-- multiplier on disruption damage to scale its effects on planes
+	DISRUPTION_FACTOR = 4,							-- multiplier on disruption damage to scale its effects on planes
 	DISRUPTION_FACTOR_CARRIER = 4.5,							-- multiplier on disruption damage to scale its effects on carrier vs carrier planes	
 	DISRUPTION_SPEED_FACTOR = 1.0,
 	DISRUPTION_AGILITY_FACTOR = 0.0,
