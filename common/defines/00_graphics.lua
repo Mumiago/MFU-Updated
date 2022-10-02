@@ -6,6 +6,13 @@ NWiki = {
 },
 
 NMapMode = {
+	--BLOOD ALONE*/
+	PEACE_CONFERENCE_CONTESTED_SECONDARY_COLOR = { 1, 0, 0, 0.25 },
+	PEACE_CONFERENCE_CHANGE_TARGET_TAG_SECONDARY_COLOR =  { 0, 0.8, 0.5, 0.25 },
+	PEACE_CONFERENCE_DIFFERENT_STACKABLE_SECONDARY_COLOR =  { 1, 1, 0, 0.25 },
+	PEACE_HOVERED_STATE_COLOR_INDEX = 3 , -- Border color of hovered state in Peace conference. Refers to the colors in BORDER_COLOR_CUSTOM_HIGHLIGHTS.
+	PEACE_CLAIMED_STATE_COLOR_INDEX = 2 , -- Border color of claimed states in Peace conference. Refers to the colors in BORDER_COLOR_CUSTOM_HIGHLIGHTS.
+
 	RAILWAY_GUN_RANGE_STRIPES_COLOR = { 1.0, 0.5, 0.0, 0.2 },						-- Color of the railway gun range stripes (when hovered)
 	SUPPLY_MAP_MODE_BEST_FLOW_DISPLAY = 12, -- Which supply cap availibility corresponds to best heatmap color
             SUPPLY_MAP_MODE_STATUS_COLOR = {
@@ -572,6 +579,17 @@ NAirGfx = {
 },
 
 NGraphics = {
+	    --BLOOD ALONE */ 
+		DRAW_COUNTRY_NAMES_CUTOFF = 260,                    -- Cutoff for drawing country names on the map
+		PEACE_CONFERENCE_MAP_ICON_DISTANCE_CUTOFF = 500,
+		SUN_SPECULAR_INTENSITY 	= 1.0;
+		GRADIENT_BORDERS_THICKNESS_PEACE_CONFERENCE_A = 3.0, -- transparency at 0 up until A
+		GRADIENT_BORDERS_THICKNESS_PEACE_CONFERENCE_B = 6.0, -- increasing transparency up to 100% when at B
+		GRADIENT_BORDERS_OUTLINE_CUTOFF_PEACE_CONFERENCE = 0.973,
+		GRADIENT_BORDERS_CAMERA_DISTANCE_OVERRIDE_PEACE_CONFERENCE = 1.0,
+		GRADIENT_BORDERS_ACTIVATE_FOR_PEACE_CONFERENCE = false,
+
+
 		
 		RAILWAY_MAP_ARROW_THIN_LEVEL_THRESHOLD = 1, -- Railway level 1 uses thin map arrow in supply map mode
 		RAILWAY_MAP_ARROW_MEDIUM_LEVEL_THRESHOLD = 3, -- Railway level 2-3 uses medium map arrow in supply map mode
@@ -1352,6 +1370,10 @@ NSound = {
 
 	VOICE_OVER_CATEGORY  = "Voices",
 	VOICE_OVER_COOL_DOWN = 2.8, -- Wait for this many seconds before playing another vo
+},
+NFriendGUI = {
+	OFFLINE_COLOR = { 0.7, 0.7, 0.7, 1.0}, -- Text color of offline state
+	ONLINE_COLOR = { 0.56, 0.85, 0.56, 1.0 }, -- Text color of online state
 },
 
 }
