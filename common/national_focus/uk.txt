@@ -710,6 +710,9 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = ENG_appeasement
 		}
+		available = {
+			has_completed_focus = ENG_king_edward
+		}
 		prerequisite = { focus = ENG_new_government }
 		relative_position_id = ENG_new_government
 		x = 3
@@ -990,6 +993,9 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = ENG_containment
 		}
+		available = {
+			has_completed_focus = ENG_king_george
+		}
 		prerequisite = { focus = ENG_new_government }
 		relative_position_id = ENG_new_government
 		x = -3
@@ -1253,10 +1259,10 @@ focus_tree = {
 		cost = 2
 		available = {
 			OR = {
-				FRA = {
+				NOR = {
 					has_capitulated = yes
 				}
-				date > 1940.1.1
+				date > 1939.10.1
 			}
 		}
 		bypass = {
@@ -2203,10 +2209,10 @@ focus_tree = {
     }
 	focus = {
 		id = ENG_fighter_command
-		prerequisite = { focus = shadow_scheme_focus }
-		relative_position_id = shadow_scheme_focus 
+		prerequisite = { focus = ENG_new_generation_fighters }
+		relative_position_id = ENG_new_generation_fighters 
 		icon = GFX_tactics
-		x = 4
+		x = 0
 		y = 1
 		cost = 5
 		ai_will_do = {
@@ -2225,7 +2231,7 @@ focus_tree = {
 		    add_doctrine_cost_reduction = {
 			    name = land_doc_bonus
 		        cost_reduction = 0.5
-			     uses = 1
+			     uses = 3
 			     category = air_doctrine
 		    }
 		}
@@ -2318,10 +2324,10 @@ focus_tree = {
 
 	focus = {
 		id = ENG_new_generation_fighters
-		prerequisite = { focus = ENG_fighter_command }
-		relative_position_id = ENG_fighter_command
+		prerequisite = { focus = shadow_scheme_focus }
+		relative_position_id = shadow_scheme_focus
 		icon = GFX_modernize
-		x = 0
+		x = 4
 		y = 1
 		cost = 5
 		ai_will_do = {
@@ -2350,9 +2356,9 @@ focus_tree = {
 
 	focus = {
 		id = ENG_jet_focus
-		prerequisite = { focus = ENG_new_generation_fighters }
+		prerequisite = { focus = ENG_fighter_command }
 		prerequisite = { focus = ENG_modernize_air_armaments }
-		relative_position_id = ENG_new_generation_fighters
+		relative_position_id = ENG_fighter_command
 		icon = GFX_goal_generic_build_airforce
 		x = -1
 		y = 1
@@ -2637,6 +2643,11 @@ focus_tree = {
 				bonus = 1
 				uses = 2 
 				category = infantry_weapons
+			}
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 3
+				category = tank_upgrade
 			}
 			swap_ideas = { 
 				remove_idea = ENG_wartime_industry_focus
@@ -3585,6 +3596,16 @@ focus_tree = {
 		prerequisite = { focus = ENG_churchill_war_minsistry }
 		prerequisite = {  focus = ENG_fight_on_the_beaches }
 		relative_position_id = ENG_blood_toil_tears_sweat
+		available = {
+			GER = {
+				has_war_with = FRA
+			}
+		}
+		bypass = {
+			FRA = {
+				has_capitulated = yes
+			}
+		}
         x = 4
         y = 2
         cost = 2.9
@@ -3593,7 +3614,13 @@ focus_tree = {
         }
 
         completion_reward = {
-			custom_effect_tooltip = "Will unlock a new ability called Our Finest Hour."
+			custom_effect_tooltip = "Will unlock a new ability called Our Finest Hour. However it is only available for 45 days until Richard O'Connor gets captured!"
+			hidden_effect = {
+				add_timed_idea = {
+					idea = ENG_compass
+					days = 45
+				}
+			}
         }
 	}
 	focus = {
@@ -3601,6 +3628,13 @@ focus_tree = {
         icon = GFX_focus_AST_rats_tobruk
 		prerequisite = {
 			focus = ENG_battle_of_med
+		}
+		available = {
+			ENG = {
+				NOT = {
+					has_full_control_of_state = 452
+				}
+			}
 		}
 		relative_position_id = ENG_battle_of_med
         x = -1
@@ -3642,7 +3676,7 @@ focus_tree = {
 			add_doctrine_cost_reduction = {
 				name = land_doc_bonus
 				cost_reduction = 0.5
-				uses = 2
+				uses = 3
 				category = land_doctrine
 			}
 			add_tech_bonus = {
@@ -3744,6 +3778,7 @@ focus_tree = {
         }
 
         completion_reward = {
+			custom_effect_tooltip = "Will unlock operations to sabotage German industry and infrastructure in occupied Europe."
         }
 	}
 	focus = {
