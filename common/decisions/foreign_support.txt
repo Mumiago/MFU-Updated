@@ -1,0 +1,283 @@
+foreign_support = {	
+
+    ##################################################################################################################################################
+    ################################################################### ALLIES STUFF FOR CHI & SCW ###################################################
+    ##################################################################################################################################################
+
+	guns_for_china = {
+
+		icon = generic_prepare_civil_war
+
+		allowed = {
+		}
+
+		available = {
+			has_equipment = { infantry_equipment > 2999 }
+			country_exists = CHI 
+            JAP = {
+                has_completed_focus = JAP_intervene_in_china
+            }
+		}
+
+		visible = {
+            has_country_flag = CHI_can_support_china_with_guns
+			country_exists = CHI 
+            JAP = {
+                has_completed_focus = JAP_intervene_in_china
+            }
+            date < 1938.8.1 
+		}
+
+		cost = 25
+
+		ai_will_do = {
+			factor = 25
+		}
+
+		fire_only_once = no	
+
+		days_re_enable = 180
+
+		complete_effect = {
+            army_experience = 25
+
+            custom_effect_tooltip = USA_spawn_in_china_1
+			
+			add_to_variable = {
+				var = global.china_spawn_in_boost
+				value = 1
+			}
+
+            if = {
+                limit = {
+                    check_variable = {
+                        var = global.CHI_chi_weapon_clicks
+                        value = 0 
+                        compare = less_than_or_equals
+                        
+                    }
+                }
+                set_variable = { global.CHI_chi_weapon_clicks = 1 }
+            }
+            else_if = {
+                limit = {
+                    check_variable = {
+                        var = global.CHI_chi_weapon_clicks
+                        value = 0 
+                        compare = greater_than_or_equals
+                    }
+                }
+                add_to_variable = { global.CHI_chi_weapon_clicks = 1 }
+            }
+
+			ROOT = {
+				send_equipment = {
+					target = CHI 
+					type = infantry_equipment
+					amount = 3000
+					old_prioritised = yes
+				}
+			}
+		}
+	}
+
+	support_china_with_factories = {
+
+		icon = generic_industry
+
+		allowed = {
+		}
+
+		available = {
+            num_of_civilian_factories_available_for_projects > 2 
+            JAP = {
+                has_completed_focus = JAP_intervene_in_china
+            }
+		}
+
+		visible = {
+            has_country_flag = CHI_can_support_china_with_guns
+            JAP = {
+                has_completed_focus = JAP_intervene_in_china
+            }
+           date < 1938.8.1 
+		}
+
+		cost = 25
+
+		ai_will_do = {
+			factor = 50
+		}
+
+		fire_only_once = no
+
+		modifier = {
+			civilian_factory_use = 3			
+		}
+
+		days_remove = 180
+
+		complete_effect = {
+			random_country = {
+				limit = {
+					Tag = CHI 
+				}
+				add_offsite_building = { type = arms_factory level = 3 }
+				set_country_flag = SOV_support_china_with_factories
+			}
+
+            if = {
+                limit = {
+                    check_variable = {
+                        var = GLOBAL.CHI_chi_arms_clicks
+                        value = 0 
+                        compare = less_than_or_equals
+                        
+                    }
+                }
+                set_variable = { GLOBAL.CHI_chi_arms_clicks = 1 }
+            }
+            else_if = {
+                limit = {
+                    check_variable = {
+                        var = GLOBAL.CHI_chi_weapon_clicks
+                        value = 0 
+                        compare = greater_than_or_equals
+                    }
+                }
+                add_to_variable = { GLOBAL.CHI_chi_arms_clicks = 1 }
+            }
+
+		}
+
+		remove_effect = {
+			add_political_power = 100
+			add_war_support = 0.05
+
+            custom_effect_tooltip = USA_spawn_in_china_1
+
+			add_to_variable = {
+				var = global.china_spawn_in_boost
+				value = 1
+			}
+
+			random_country = {
+				limit = {
+					Tag = CHI 
+				}
+				add_offsite_building = { type = arms_factory level = -3 }
+			}
+		}
+	}
+	
+	guns_for_spain = {
+
+		icon = generic_prepare_civil_war
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			has_equipment = { infantry_equipment > 1999 }
+			SPR = { has_civil_war = yes }
+		}
+
+		visible = {
+			SPR = { has_civil_war = yes }
+		}
+
+		cost = 10
+		ai_will_do = {
+			factor = 50
+		}
+		
+		fire_only_once = no	
+
+		days_re_enable = 180
+
+		complete_effect = {		
+			army_experience = 20
+			random_country = {
+				limit = {
+					original_tag = SPR 
+					OR = { 
+						has_government = democratic 
+						has_government = communism 
+					}
+				}
+				send_equipment = { 
+					type = infantry_equipment
+					target = SPD
+					amount = 2000
+					old_prioritised = yes
+				}	
+			}			
+		}
+	}
+
+	support_spain_with_factories = {
+
+		icon = generic_industry
+
+		allowed = {
+			original_tag = SOV
+		}
+
+		available = {
+			SPR = { has_civil_war = yes }
+			num_of_civilian_factories_available_for_projects > 3			
+		}
+
+		visible = {
+			SPR = { has_civil_war = yes }
+		}
+
+		ai_will_do = {
+			factor = 50
+		}
+		cost = 25
+
+		fire_only_once = no
+
+		modifier = {
+			civilian_factory_use = 3			
+		}
+
+		days_remove = 180
+
+		complete_effect = {
+			random_country = {
+				limit = {
+					original_tag = SPR 
+					OR = { 
+						has_government = democratic 
+						has_government = communism 
+					}
+				}
+				add_offsite_building = { type = arms_factory level = 5 }
+				set_country_flag = SOV_support_spain_with_factories
+			}
+		}
+
+		remove_effect = {
+			add_political_power = 100
+			add_war_support = 0.05
+			random_country = {
+				limit = {
+					original_tag = SPR 
+					OR = { 
+						has_government = democratic 
+						has_government = communism 
+					}
+				}
+                if = {
+                    limit = {
+                        NOT = { any_other_country = { has_country_flag = SOV_support_spain_with_factories } }
+                    }
+                }
+				add_offsite_building = { type = arms_factory level = -5 }
+			}
+		}
+	}
+}

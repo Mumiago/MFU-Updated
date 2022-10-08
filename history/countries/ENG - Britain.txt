@@ -1,6 +1,7 @@
 ﻿capital = 126
 starting_train_buffer = 2
 set_oob = "ENG_1936"
+set_country_flag = ENG_subs1_flag
 if = {
 	limit = {
 		has_dlc = "Man the Guns"
@@ -10,11 +11,48 @@ if = {
 		set_naval_oob = "ENG_1936_Naval_Legacy"
 	}
 }
+add_equipment_to_stockpile = {
+	type = heavy_anti_air_equipment
+	amount = 25
+	producer = ENG
+}
+add_equipment_to_stockpile = {
+	type = infantry_equipment
+	amount = 10000
+	producer = ENG
+}
+add_equipment_to_stockpile = {
+	type = horse_equipment
+	amount = 5000
+	producer = ENG
+}
+add_equipment_to_stockpile = {
+	type = artillery_equipment
+	amount = 800
+	producer = ENG
+}
+add_equipment_to_stockpile = {
+	type = special_equipment
+	amount = 800
+	producer = ENG
+}
 set_research_slots = 5
 set_country_flag = fuel_system_enabled
 set_stability = 0.45
-set_war_support = 0.20
+set_war_support = 0
 
+set_variable = { ENG_political_power_factor_var = -0.2 }
+set_variable = { ENG_political_power_cost_var = 0.1 }
+
+set_variable = { ENG_industrial_capacity_factory_var = -0.1 }
+
+set_variable = { ENG_stability_factor_var = -0.4 }
+set_variable = { ENG_war_support_factor_var = -0.2 }
+
+
+set_variable = { ENG_production_speed_industrial_complex_factor_var = 0 }
+set_variable = { ENG_production_speed_arms_factory_factor_var = 0 }
+set_variable = { ENG_production_speed_dockyard_factor_var = 0 }
 
 set_variable = {
 	var = min_fuel
@@ -34,7 +72,6 @@ recruit_character = ENG_oswald_mosley
 recruit_character = ENG_harry_pollitt
 recruit_character = ENG_clement_attlee
 recruit_character = ENG_alan_brooke
-recruit_character = ENG_bernard_montgomery
 recruit_character = ENG_claude_auchinleck
 recruit_character = ENG_neil_ritchie
 recruit_character = ENG_alan_cunningham
@@ -109,6 +146,7 @@ set_technology = { #player
 	basic_train = 1
 	################# infantry #############
 	infantry_weapons = 1 
+	tech_mountaineers = 1
     support_weapons	= 1
 	fuel_refining = 1
 	fuel_silos = 1
@@ -117,6 +155,7 @@ set_technology = { #player
 	infantry_weapons1 = 1
 	support_weapons = 1
 	marines = 1	
+	tech_mountaineers = 1
 	radio = 1
 	special_equipment = 1
 	tech_dig_1 = 1
@@ -132,12 +171,22 @@ set_technology = { #player
 	
 	################ artillery ################
 	artillery1 = 1 
+	artillery2 = 1
+	artillery3 = 1
+	field_gun = 1
+	field_gun2_1 = 1
+	field_gun2_2 = 1
+	field_gun2_2 = 1
+	field_gun3 = 1
 	gw_pack_artillery = 1
+	pack_artillery_m_1 = 1
+	pack_artillery1 = 1
 	heavy_artillery1 = 1
+	heavy_antiair = 1
+	heavy_antiair_1 = 1
+	heavy_antiair_2 = 1
 	interwar_antiair = 1
 	interwar_antitank = 1
-	heavy_antiair = 1
-
 	################ airunits ##############
 	eng_fighter_1934 = 1
 	eng_cv_fighter_1934 = 1
@@ -157,6 +206,32 @@ set_technology = { #player
 	basic_machine_tools = 1
 	starting_industry = 1
 }
+    create_equipment_variant = {
+		name = "QF 4.5-inch howitzer Mk.IP"
+		type = artillery_equipment_1
+		parent_version = 0
+		upgrades = {
+			light_artillery_carriage_upgrade = 1
+		}
+		icon = "gfx/interface/technologies/land/artillery/4.5how_mod.dds"
+	}
+    create_equipment_variant = {
+		name = "BL 6-inch 26 cwt howitzer Mk.IP"
+		type = heavy_artillery_equipment_1
+		parent_version = 0
+		upgrades = {
+			heavy_artillery_carriage_upgrade = 1
+		}
+		icon = "gfx/interface/technologies/land/artillery/6inchmodernized.dds"
+	}
+    create_equipment_variant = {
+		name = "QF 3-inch 20 cwt Mk.IV"
+		type = heavy_anti_air_equipment_2
+		parent_version = 0
+		upgrades = {
+			heavy_aa_carriage_upgrade = 1
+		}
+	}
 	############ armor ############
 	if = {
 		limit = {
@@ -284,7 +359,7 @@ if = {
 	}
 	set_technology = {
 
-		
+		basic_ship_hull_heavy = 1
 		early_ship_hull_light = 1
 		basic_ship_hull_light = 1
 		early_ship_hull_submarine = 1
@@ -317,12 +392,17 @@ add_ideas = {
 	stiff_upper_lip
 	ENG_the_war_to_end_all_wars
 	george_v
-	ENG_economy
 	ENG_commonwealth_trading_idea
 	ENG_the_empire_strong
 	GER_aatlantic_wall_4
-	ENG_fuck_uks_navy
+	USA_no_refs
+	ENG_subs_1
 }
+
+add_dynamic_modifier = {
+	modifier = ENG_prosperity_of_the_empire
+}
+
 set_convoys = 1200
 
 set_politics = {
@@ -436,7 +516,7 @@ if = {
 
 	create_operative_leader = {
 		name = "Christopher Lee"
-		picture = Portrait_Britain_Christopher_Lee.dds
+		portrait_path = "gfx/leaders/ENG/portrait_christopher_lee.dds"
 		traits = { operative_commando }
 		bypass_recruitment = no
 		available_to_spy_master = yes
@@ -765,10 +845,10 @@ if = {
 			fixed_ship_engine_slot = heavy_ship_engine_2
 			fixed_ship_secondaries_slot = ship_secondaries_1
 			fixed_ship_armor_slot = ship_armor_bc_1
-			front_1_custom_slot = ship_anti_air_1
+			front_1_custom_slot = ship_heavy_battery_1
 			mid_1_custom_slot = ship_airplane_launcher_1
-			mid_2_custom_slot = ship_secondaries_1
-			rear_1_custom_slot = empty
+			mid_2_custom_slot = ship_anti_air_1
+			rear_1_custom_slot = ship_heavy_battery_1
 		}
 	}	
 	# Battleships #
@@ -785,9 +865,9 @@ if = {
 			fixed_ship_engine_slot = heavy_ship_engine_1
 			fixed_ship_secondaries_slot = ship_secondaries_1
 			fixed_ship_armor_slot = ship_armor_bb_1
-			front_1_custom_slot = empty
+			front_1_custom_slot = ship_heavy_battery_1
 			mid_1_custom_slot = ship_airplane_launcher_1
-			mid_2_custom_slot = ship_secondaries_1
+			mid_2_custom_slot = ship_anti_air_1
 			rear_1_custom_slot = ship_heavy_battery_1
 		}
 	}

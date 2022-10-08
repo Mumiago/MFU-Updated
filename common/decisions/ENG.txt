@@ -1,4 +1,45 @@
+
+ENG_africa_explanation = {
+	ENG_africa_explanation_dec = {
+		icon = generic_decision
+		fire_only_once = no
+		allowed = {
+			original_tag = ENG
+		}
+		visible = {
+			original_tag = ENG
+		}
+		complete_effect = {
+			country_event = { id = britain.45 }
+		}
+	}
+}
 operations = {
+	ENG_ai_navy = {
+		fire_only_once = yes
+		icon = generic_operation
+		allowed = {
+			tag = ENG
+		}
+		available = {
+			has_war_with = GER
+		}
+		ai_will_do = {
+			factor = 0
+
+			modifier = {
+				add = 100
+				IRE = { is_ai = yes }
+			}
+		}
+		complete_effect = {
+			IRE = {
+				transfer_navy = {
+					target = ENG
+				}
+			}
+		}
+	}
 	ENG_saf_resources = {
 		fire_only_once = yes
 		icon = generic_operation
@@ -15,7 +56,12 @@ operations = {
 			}	
 		}
 		ai_will_do = {
-			factor = -100
+			factor = 0
+
+			modifier = {
+				add = 100
+				SAF = { is_ai = yes }
+			}
 		}
 		complete_effect = {
 			SAF = {
@@ -32,81 +78,145 @@ operations = {
 			}
 		}
 	}
-	ENG_annex_saf = {
-        
-		fire_only_once = yes
-		icon = generic_operation
-
-		allowed = {
-			tag =  ENG
-		}
-
-		visible = {
-			SAF = {
-				is_ai = yes	
-			}	
-		}
-		available = {
-			SAF = {
-				is_ai = yes	
-			}	
-		}
-		ai_will_do = {
-			factor = -100
-		}
-		complete_effect = {
-			annex_country = {
-    			target = SAF
-   			 	transfer_troops = yes
-			}
-			every_state = {
-				limit = {
-					is_core_of = SAF
-					
-				}
-				set_compliance = 90
-			}
-		}
-	}
-	ENG_annex_ast = {
-        
-		fire_only_once = yes
-		icon = generic_operation
-
-		allowed = {
-			tag =  ENG
-		}
-
-		visible = {
-			AST = {
-				is_ai = yes	
-			}	
-		}
-		available = {
-			AST = {
-				is_ai = yes	
-			}	
-		}
-		ai_will_do = {
-			factor = -100
-		}
-		complete_effect = {
-			annex_country = {
-    			target = AST
-   			 	transfer_troops = yes
-			}
-			every_state = {
-				limit = {
-					is_core_of = AST
-					
-				}
-				set_compliance = 90
-			}
-		}
-	}
 }
 ENG_budget_decisions = {
+	ENG_naval_war_games = {
+		icon = generic_prepare_civil_war
 
+		available = {
+		}
+		custom_cost_trigger = {
+			check_variable = {
+    			var = british_money
+   				value = 200
+    			compare = greater_than_or_equals
+			}
+		}
+		custom_cost_text = ENG_200_british_money 
+		cost = 0 
+		days_re_enable = 90
+		ai_will_do = {
+			base = 1
+		}
+		fire_only_once = no
+		
+		complete_effect = {
+			custom_effect_tooltip = ENG_naval_games_tt
+			navy_experience = 75
+		}
+	}
+	ENG_british_commonwealth_air_training_plan = {
+		icon = generic_prepare_civil_war
+
+		available = {
+			has_completed_focus = ENG_our_sword_and_shield
+		}
+		custom_cost_trigger = {
+			check_variable = {
+    			var = british_money
+   				value = 200
+    			compare = greater_than_or_equals
+			}
+		}
+		custom_cost_text = ENG_200_british_money 
+		cost = 0 
+
+		ai_will_do = {
+			base = 1
+		}
+		fire_only_once = yes
+		
+		complete_effect = {
+			add_ideas = ENG_british_commonwealth_air_training_plan
+			air_experience = 50
+		}
+	}
+	ENG_long_term_rearmament = {
+		icon = generic_prepare_civil_war
+
+		available = {
+			AND = {
+				tag = ENG
+				has_completed_focus = ENG_thomas_inskip
+				date > 1937.10.1
+			}
+		}
+		custom_cost_trigger = {
+			check_variable = {
+    			var = british_money
+   				value = 200
+    			compare = greater_than_or_equals
+			}
+		}
+		custom_cost_text = ENG_200_british_money 
+		cost = 0 
+
+		ai_will_do = {
+			base = 1
+		}
+		fire_only_once = yes
+		
+		complete_effect = {
+			subtract_from_variable = {
+				var = british_money
+				value = 200
+			}
+			add_timed_idea = {
+				idea = ENG_long_term_rearmament
+				days = 600
+			}
+		}
+	}
+	ENG_short_term_rearmament = {
+		icon = generic_prepare_civil_war
+
+		available = {
+			AND = {
+				tag = ENG
+				has_completed_focus = ENG_churchill
+				date > 1937.10.1
+			}
+		}
+		custom_cost_trigger = {
+			check_variable = {
+    			var = british_money
+   				value = 200
+    			compare = greater_than_or_equals
+			}
+		}
+		custom_cost_text = ENG_200_british_money 
+		cost = 0 
+
+		ai_will_do = {
+			base = 1
+		}
+		fire_only_once = yes
+
+		complete_effect = {
+			subtract_from_variable = {
+				var = british_money
+				value = 200
+			}
+			every_state = {
+				limit = {
+					OR = {
+						state = 126
+						state = 811
+						state = 127
+						state = 338
+						state = 125
+						state = 123
+					}
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = 2
+			}
+		}
+	}
 	ENG_collect_budget = {
 
 		icon = eng_install_government
@@ -156,7 +266,7 @@ ENG_budget_decisions = {
 				limit = {
 					has_idea = sir_john_simon
 				}
-				add_to_variable = { var = british_money value = 400 }
+				add_to_variable = { var = british_money value = 300 }
 			}
 
 			if = {
@@ -257,7 +367,7 @@ ENG_budget_decisions = {
 				}
 				multiply_variable = {
 					var = budget_expenditure_1
-					value = 1
+					value = 0.8
 				}
 			}
 			else_if = {
@@ -266,7 +376,7 @@ ENG_budget_decisions = {
 				}
 				multiply_variable = {
 					var = budget_expenditure_1
-					value = 1.1
+					value = 0.9
 				}
 			}
 			else_if = {
@@ -275,7 +385,7 @@ ENG_budget_decisions = {
 				}
 				multiply_variable = {
 					var = budget_expenditure_1
-					value = 1.2
+					value = 1
 				}
 			}	
 			else_if = {
@@ -284,7 +394,7 @@ ENG_budget_decisions = {
 				}
 				multiply_variable = {
 					var = budget_expenditure_1
-					value = 2.5
+					value = 1.5
 				}
 			}
 
@@ -303,7 +413,7 @@ ENG_budget_decisions = {
 				}
 				multiply_variable = {
 					var = budget_expenditure_2
-					value = 0.9
+					value = 0.4
 				}
 			}
 			else_if = {
@@ -312,7 +422,7 @@ ENG_budget_decisions = {
 				}
 				multiply_variable = {
 					var = budget_expenditure_2
-					value = 1.0
+					value = 0.45
 				}
 			}
 			else_if = {
@@ -321,7 +431,7 @@ ENG_budget_decisions = {
 				}
 				multiply_variable = {
 					var = budget_expenditure_2
-					value = 1.1
+					value = 0.5
 				}
 			}	
 			else_if = {
@@ -330,7 +440,7 @@ ENG_budget_decisions = {
 				}
 				multiply_variable = {
 					var = budget_expenditure_2
-					value = 1.15
+					value = 0.75
 				}
 			}
 
@@ -361,6 +471,7 @@ ENG_budget_decisions = {
 
 		visible = {
 		}
+		priority = 100
 
 		days_re_enable = 5
 
@@ -375,7 +486,7 @@ ENG_budget_decisions = {
 		}
 		
 		complete_effect = {
-			add_stability = -0.05	
+			add_stability = -0.025
 			add_to_variable = {
 				var = british_money
 				value = 400
@@ -391,137 +502,113 @@ ENG_budget_decisions = {
 			custom_effect_tooltip = ENG_secure_a_loan_tt
 		}
 	}
-
-	ENG_pay_back_a_loan = {
-
-		icon = generic_break_treaty
-
-		available = {
-			check_variable = {
-    			var = british_interest
-   				value = 1
-    			compare = greater_than_or_equals
-			}
-		}
-
-		visible = {
-		}
-
-		custom_cost_trigger = {
-			check_variable = {
-    			var = british_money
-   				value = 200
-    			compare = greater_than_or_equals
-			}
-		}
-
-
-		custom_cost_text = ENG_200_british_money 
-
-
-		ai_will_do = {
-			factor = 0
-		}
-		
-		complete_effect = {
-
-			custom_effect_tooltip = ENG_pay_back_a_loan_tt	
-
-			subtract_from_variable = {
-				var = british_money
-				value = 200
-			}
-			subtract_from_variable = {
-				var = british_loans
-				value = 200 
-			}
-			subtract_from_variable = {
-				var = british_interest
-				value = 10
-			}
-			if = {
-				limit = {
-					check_variable = {
-						var = british_interest
-						value = 0
-						compare = less_than_or_equals
-					}	
-				}
-				set_variable = { var = british_interest value = 0 }			
-			}
-		}
-	}
-
 	ENG_unfavourable_trades_in_the_commonwealth = {
 
-		icon = eng_trade_unions_demand
+        icon = eng_trade_unions_demand
 
-		available = {
-			has_completed_focus = uk_commonwealth_focus
-		}
+        available = {
+            has_completed_focus = ENG_steady_as_she_goes
+        }
 
-		visible = {
-		}
+        visible = {
+        }
 
-		days_remove = 180
-		days_re_enable = 365  
+        days_remove = 365
+        days_re_enable = 180
 
-		custom_cost_trigger = {
-			check_variable = {
-    			var = british_money
-   				value = 400
-    			compare = greater_than_or_equals
+        custom_cost_trigger = {
+            check_variable = {
+                var = british_money
+                   value = 400
+                compare = greater_than_or_equals
+            }
+            check_variable = {
+                var = british_interest
+                   value = 0
+                compare = greater_than_or_equals
+            }
+        }
+
+        custom_cost_trigger = {
+            check_variable = {
+                var = british_money
+                   value = 400
+                compare = greater_than_or_equals
+            }
+        }
+
+        custom_cost_text = ENG_400_british_money
+
+        ai_will_do = {
+            factor = 0
+        }
+
+        complete_effect = {
+            subtract_from_variable = { var = british_money value = 400 }
+			add_ideas = ENG_exploit_colonies
+        }
+        remove_effect = {
+            remove_ideas = ENG_exploit_colonies
+        }
+    }
+	ENG_reconcile_ireland = {
+
+        icon = eng_trade_unions_demand
+
+        available = {
+            has_completed_focus = ENG_increase_colonial_expenses
+        }
+
+        visible = {
+        }
+
+        days_remove = 10
+
+		fire_only_once = yes
+        custom_cost_trigger = {
+            check_variable = {
+                var = british_money
+                   value = 400
+                compare = greater_than_or_equals
+            }
+            check_variable = {
+                var = british_interest
+                   value = 0
+                compare = greater_than_or_equals
+            }
+        }
+
+        custom_cost_trigger = {
+            check_variable = {
+                var = british_money
+                   value = 400
+                compare = greater_than_or_equals
+            }
+        }
+
+        custom_cost_text = ENG_400_british_money
+
+        ai_will_do = {
+            factor = 0
+        }
+
+        complete_effect = {
+            subtract_from_variable = { var = british_money value = 400 }
+        }
+        remove_effect = {
+			give_resource_rights = {
+				receiver = ENG
+				state = 113
 			}
-			check_variable = {
-    			var = british_interest
-   				value = 0
-    			compare = greater_than_or_equals
-			}
-		}
-
-		custom_cost_trigger = {
-			check_variable = {
-    			var = british_money
-   				value = 400
-    			compare = greater_than_or_equals
-			}
-		}
-
-		custom_cost_text = ENG_400_british_money
-
-		ai_will_do = {
-			factor = 0
-		}
-		
-		complete_effect = {
-			subtract_from_variable = { var = british_money value = 400 }
-			every_country = {
-				limit = {
-					is_subject_of = ENG
-				}
-				add_ideas = commonwealth_mobilisation
-				add_autonomy_ratio = {
-					value = 0.1
-					localization = ENG_unfavourable_trades_in_the_commonwealth
-				}
-			}
-		}
-		remove_effect = {
-			every_country = {
-				limit = {
-					has_idea = commonwealth_mobilisation
-				}
-				remove_ideas = commonwealth_mobilisation
-			}
-		}
-	}
+        }
+    }
 
 	ENG_decrease_length_of_shifts = {
 
 		icon = generic_independence
 
 		available = {
-			has_stability > 0.5
+			has_completed_focus = ENG_adjust_budget
 		}
 
 		visible = {
@@ -534,17 +621,14 @@ ENG_budget_decisions = {
 
 
 		modifier = {
-			stability_factor = -0.15
+			stability_factor = -0.10
 		}
 
 		days_remove = 90
-		days_re_enable = 180
+		days_re_enable = 90
 
 		custom_cost_trigger = {
 			always = yes
-		}
-
-		custom_cost_trigger = {
 		}
 
 		custom_cost_text = ENG_200_british_money_2
@@ -565,46 +649,6 @@ ENG_budget_decisions = {
 			}			
 		}
 	}	
-
-	ENG_increase_focus_funding = {
-
-		icon = hol_attract_foreign_investors
-
-		available = {
-			tag = ENG
-		}
-
-		visible = {
-		}
-
-		custom_cost_trigger = {
-			check_variable = {
-    			var = british_money
-   				value = 200
-    			compare = greater_than_or_equals
-			}
-		}
-
-		custom_cost_text = ENG_200_british_money 
-
-		days_re_enable = 90 
-
-		ai_will_do = {
-			factor = 40
-		}
-		
-		complete_effect = {
-			add_to_variable = {
-				var = focus_power
-				value = 1
-			}
-			subtract_from_variable = {
-				var = british_money
-				value = 200
-			}
-			custom_effect_tooltip = ENG_additional_funding_tt
-		}
-	}
 
 	ENG_expand_shadow_scheme = {
 		icon = generic_political_discourse
@@ -670,10 +714,9 @@ ENG_budget_decisions = {
 
 		available = {
 			tag = ENG
-			has_completed_focus = ENG_home_defence
 		}
 
-		days_remove = 180
+		days_remove = 365
 
 		visible = {
 		}
@@ -681,28 +724,29 @@ ENG_budget_decisions = {
 		custom_cost_trigger = {
 			check_variable = {
     			var = british_money
-   				value = 200
+   				value = 400
     			compare = greater_than_or_equals
 			}
 		}
 
 
 
-		custom_cost_text = ENG_200_british_money 
+		custom_cost_text = ENG_400_british_money 
 
 		days_re_enable = 180 
 
 		fire_only_once = no
 		
 		modifier = {
-			production_speed_bunker_factor = 0.35
-			production_speed_coastal_bunker_factor = 0.35
-			production_speed_anti_air_building_factor = 0.35
-			production_speed_radar_station_factor = 0.35
+			production_speed_bunker_factor = 0.25
+			production_speed_coastal_bunker_factor = 0.25
+			production_speed_anti_air_building_factor = 0.25
+			production_speed_radar_station_factor = 0.25
 			production_speed_infrastructure_factor = 0.25 
 			production_speed_naval_base_factor = 0.25 
 			production_speed_rail_way_factor = 0.25
 			production_speed_supply_node_factor = 0.25
+			production_speed_air_base_factor = 0.25
 		}
 
 		ai_will_do = {
@@ -713,7 +757,7 @@ ENG_budget_decisions = {
 			custom_effect_tooltip = ENG_invest_in_home_defence_tt
 			subtract_from_variable = {
 				var = british_money
-				value = 200
+				value = 400
 			}
 		}
 	}
@@ -723,21 +767,21 @@ ENG_budget_decisions = {
 
 		available = {
 			tag = ENG
-			OR = {
-				CZE = {
-					NOT = {
-		    			has_government = democratic
-		    		}
-		    	}
-		    	NOT = {
-    				country_exists = CZE	
-    			}
-    		}		
 		}
 		days_remove = 60
 		fire_only_once = yes
 
 		visible = {
+		}
+		available = {
+			OR = {
+				GER = {
+					controls_state = 70
+				}
+				SLO = {
+					controls_state = 70
+				}
+			}
 		}
 
 		custom_cost_trigger = {
@@ -887,9 +931,6 @@ ENG_budget_decisions = {
 
 		available = {
 			tag = ENG
-			#NOT = {
-    			#country_exists = CZE
-    		#}	
 		}
 		days_remove = 60
 		fire_only_once = yes
@@ -1051,9 +1092,6 @@ ENG_budget_decisions = {
 
 		available = {
 			tag = ENG
-			#NOT = {
-    			#country_exists = CZE
-    		#}	
 		}
 		days_remove = 60
 		fire_only_once = yes
@@ -1216,9 +1254,6 @@ ENG_budget_decisions = {
 
 		available = {
 			tag = ENG
-			#NOT = {
-    			#country_exists = CZE
-    		#}	
 		}
 		days_remove = 60
 		fire_only_once = yes
@@ -1374,845 +1409,331 @@ ENG_budget_decisions = {
                 }
 			}
 		}
-	}			
-
-	ENG_procure_armaments_contract = {
-		icon = generic_prepare_civil_war
-
-		available = {
-			tag = ENG
-		}
-
-
-		visible = {
-			NOT = {
-				has_war_with = GER 
-			}
-		}
-		
-		custom_cost_trigger = {
-			check_variable = {
-    			var = british_money
-   				value = 200
-    			compare = greater_than_or_equals
-			}
-		}
-
-
-
-		custom_cost_text = ENG_200_british_money
-		
-		days_remove = 300
-
-		fire_only_once = no
-
-		ai_will_do = {
-			factor = 80
-		}
-
-		modifier = {
-		}
-		
-		remove_effect = {
-			add_offsite_building = { type = arms_factory level = 3 }
-		}
-		
-		complete_effect = {
-			subtract_from_variable = {
-				var = british_money
-				value = 200
-			}
-		}
-	}
-
-	ENG_loans_to_shipyards = {
-		icon = generic_prepare_civil_war
-
-		available = {
-			tag = ENG
-			has_completed_focus = ENG_major_loans_to_shipyards
-		}
-
-		visible = {
-			NOT = {
-				has_war_with = GER 
-			}
-		}
-		
-		custom_cost_trigger = {
-			check_variable = {
-    			var = british_money
-   				value = 200
-    			compare = greater_than_or_equals
-			}
-		}
-
-
-		custom_cost_text = ENG_200_british_money 
-		
-		days_remove = 180
-		days_re_enable = 180 
-
-		fire_only_once = no
-
-		ai_will_do = {
-			factor = 0
-		}
-
-		modifier = {
-			industrial_capacity_dockyard = 0.1
-			production_speed_dockyard_factor = 0.15
-		 	consumer_goods_factor = 0.01
-		}
-
-		remove_effect = {
-			random_owned_controlled_state = {
-				limit = {
-					is_coastal = yes
-					free_building_slots = {
-						building = dockyard
-						size > 0
-						include_locked = yes
-					}
-					is_core_of = USA
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = dockyard
-					level = 1
-					instant_build = yes
-				}
-				set_state_flag = ENG_naval_rearmament_focus_1dockyard
-			}
-			subtract_from_variable = {
-				var = british_money
-				value = 200
-			}
-		}
-		
-		complete_effect = {
-			custom_effect_tooltip = ENG_loans_to_shipyards_tt
-		}
-	}
-
-	ENG_illustrious_decision_1 = {
-		icon = generic_prepare_civil_war
-
-		available = {
-			has_completed_focus = uk_carrier_focus 
-			check_variable = { var = carrier_focus_1 value = 1 compare = greater_than_or_equals } 
-		}
-
-		visible = {
-			has_completed_focus = uk_carrier_focus 
-			check_variable = { var = carrier_focus_1 value = 1 compare = greater_than_or_equals } 
-		}
-
-		custom_cost_trigger = {
-			check_variable = {
-    			var = british_money
-   				value = 200
-    			compare = greater_than_or_equals
-			}
-		}
-
-
-		custom_cost_text = ENG_200_british_money 
-
-		complete_effect = {
-			custom_effect_tooltip = UK_carrier_focus_1_tt
-			clear_variable = carrier_focus_1
-			hidden_effect = {
-				add_equipment_production = {
-					equipment = {
-						type = ship_hull_carrier_1
-						creator = "ENG" 
-						version_name = "Illustrious Class"
-					}
-					name = "Illustrious" 
-					requested_factories = 5
-					progress = 0.6
-					amount = 1
-				}
-				add_equipment_production = {
-					equipment = {
-						type = ship_hull_carrier_1
-						creator = "ENG" 
-						version_name = "Illustrious Class"
-					}
-					name = "Formidable" 
-					requested_factories = 5
-					progress = 0.5
-					amount = 1
-				}
-			}
-			subtract_from_variable = {
-				var = british_money
-				value = 100
-			}
-		}
-		ai_will_do = {
-			base = 10	
-		}	
-	}
-
-	ENG_illustrious_decision_2 = {
-		icon = generic_prepare_civil_war
-
-		available = {
-			tag = ENG
-			has_completed_focus = uk_carrier_focus 
-			check_variable = { var = carrier_focus_2 value = 1 compare = greater_than_or_equals }
-		}
-
-		visible = {
-			tag = ENG
-			has_completed_focus = uk_carrier_focus 
-			check_variable = { var = carrier_focus_2 value = 1 compare = greater_than_or_equals }
-		}
-
-		custom_cost_trigger = {
-			check_variable = {
-    			var = british_money
-   				value = 200
-    			compare = greater_than_or_equals
-			}
-		}
-
-		custom_cost_text = ENG_200_british_money 
-
-		complete_effect = {
-			custom_effect_tooltip = UK_carrier_focus_1_tt
-			clear_variable = carrier_focus_2 
-			hidden_effect = {
-				add_equipment_production = {
-					equipment = {
-						type = ship_hull_carrier_1
-						creator = "ENG" 
-						version_name = "Illustrious Class"
-					}
-					name = "Illustrious" 
-					requested_factories = 5
-					progress = 0.6
-					amount = 1
-				}
-				add_equipment_production = {
-					equipment = {
-						type = ship_hull_carrier_1
-						creator = "ENG" 
-						version_name = "Illustrious Class"
-					}
-					name = "Formidable" 
-					requested_factories = 5
-					progress = 0.55
-					amount = 1
-				}
-				add_equipment_production = {
-					equipment = {
-						type = ship_hull_carrier_1
-						creator = "ENG" 
-						version_name = "Illustrious Class"
-					}
-					name = "Victorious" 
-					requested_factories = 5
-					progress = 0.5
-					amount = 1
-				}
-				add_equipment_production = {
-					equipment = {
-						type = ship_hull_carrier_1
-						creator = "ENG" 
-						version_name = "Indomitable Class"
-					}
-					name = "Indomitable" 
-					requested_factories = 5
-					progress = 0.5
-					amount = 1
-				}
-			}
-			custom_effect_tooltip = UK_carrier_focus_2_tt
-			subtract_from_variable = {
-				var = british_money
-				value = 200
-			}
-		}	
-		ai_will_do = {
-			base = 10	
-		}	
-	}
-
-	ENG_george_v_decision_1 = {
-		icon = generic_prepare_civil_war
-
-		available = {
-			tag = ENG
-		}
-
-		available = {
-			tag = ENG
-			has_completed_focus = uk_battleship_focus 
-			check_variable = { var = battleship_focus_1 value = 1 compare = greater_than_or_equals }
-		}
-
-		visible = {
-			tag = ENG
-			has_completed_focus = uk_battleship_focus 
-			check_variable = { var = battleship_focus_1 value = 1 compare = greater_than_or_equals }
-		}
-
-		custom_cost_trigger = {
-			check_variable = {
-    			var = british_money
-   				value = 100
-    			compare = greater_than_or_equals
-			}
-		}
-
-
-		custom_cost_text = ENG_200_british_money 
-
-
-		complete_effect = {
-			create_equipment_variant = {
-				name = "King George V-Class"
-				type = ship_hull_heavy_2
-				name_group = ENG_BB_HISTORICAL
-				parent_version = 0
-				modules = {
-					fixed_ship_battery_slot = ship_heavy_battery_2
-					fixed_ship_anti_air_slot = ship_anti_air_2
-					fixed_ship_fire_control_system_slot = ship_fire_control_system_2
-					fixed_ship_radar_slot = ship_radar_2
-					fixed_ship_engine_slot = heavy_ship_engine_2
-					fixed_ship_secondaries_slot = ship_secondaries_2
-					fixed_ship_armor_slot = ship_armor_bb_2
-					front_1_custom_slot = ship_heavy_battery_2
-					mid_1_custom_slot = ship_secondaries_2
-					mid_2_custom_slot = ship_secondaries_2
-					rear_1_custom_slot = ship_heavy_battery_2
-				}
-			}
-			custom_effect_tooltip = UK_bb_focus_1_tt
-			clear_variable = battleship_focus_1
-			hidden_effect = {
-				add_equipment_production = {
-					equipment = {
-						type = ship_hull_heavy_2
-						creator = "ENG" 
-						version_name = "King George V-Class"
-					}
-					name = "King George V" 
-					requested_factories = 5
-					progress = 0.4
-					amount = 1
-				}
-				add_equipment_production = {
-					equipment = {
-						type = ship_hull_heavy_2
-						creator = "ENG" 
-						version_name = "King George V-Class"
-					}
-					name = "Prince of Wales" 
-					requested_factories = 5
-					progress = 0.3
-					amount = 1
-				}
-				add_equipment_production = {
-					equipment = {
-						type = ship_hull_heavy_2
-						creator = "ENG" 
-						version_name = "King George V-Class"
-					}
-					name = "Duke of York" 
-					requested_factories = 5
-					progress = 0.3
-					amount = 1
-				}
-			}
-			subtract_from_variable = {
-				var = british_money
-				value = 100
-			}
-		}	
-
-		ai_will_do = {
-			base = 10	
-		}	
-	}
-
-	ENG_george_v_decision_2 = {
-		icon = generic_prepare_civil_war
-
-		available = {
-			tag = ENG
-			has_completed_focus = uk_battleship_focus 
-			check_variable = { var = battleship_focus_2 value = 1 compare = greater_than_or_equals }
-		}
-
-		visible = {
-			tag = ENG
-			has_completed_focus = uk_battleship_focus 
-			check_variable = { var = battleship_focus_2 value = 1 compare = greater_than_or_equals }
-		}
-
-		custom_cost_trigger = {
-			check_variable = {
-    			var = british_money
-   				value = 200
-    			compare = greater_than_or_equals
-			}
-		}
-
-		custom_cost_text = ENG_200_british_money 
-
-		complete_effect = {
-			create_equipment_variant = {
-				name = "King George V-Class"
-				type = ship_hull_heavy_2
-				name_group = ENG_BB_HISTORICAL
-				parent_version = 0
-				modules = {
-					fixed_ship_battery_slot = ship_heavy_battery_2
-					fixed_ship_anti_air_slot = ship_anti_air_2
-					fixed_ship_fire_control_system_slot = ship_fire_control_system_2
-					fixed_ship_radar_slot = ship_radar_2
-					fixed_ship_engine_slot = heavy_ship_engine_2
-					fixed_ship_secondaries_slot = ship_secondaries_2
-					fixed_ship_armor_slot = ship_armor_bb_2
-					front_1_custom_slot = ship_heavy_battery_2
-					mid_1_custom_slot = ship_secondaries_2
-					mid_2_custom_slot = ship_secondaries_2
-					rear_1_custom_slot = ship_heavy_battery_2
-				}
-			}
-			custom_effect_tooltip = UK_bb_focus_2_tt
-			clear_variable = battleship_focus_2 
-			hidden_effect = {
-				add_equipment_production = {
-					equipment = {
-						type = ship_hull_heavy_2
-						creator = "ENG" 
-						version_name = "King George V-Class"
-					}
-					name = "King George V" 
-					requested_factories = 5
-					progress = 0.4
-					amount = 1
-				}
-				add_equipment_production = {
-					equipment = {
-						type = ship_hull_heavy_2
-						creator = "ENG" 
-						version_name = "King George V-Class"
-					}
-					name = "Prince of Wales" 
-					requested_factories = 5
-					progress = 0.3
-					amount = 1
-				}
-				add_equipment_production = {
-					equipment = {
-						type = ship_hull_heavy_2
-						creator = "ENG" 
-						version_name = "King George V-Class"
-					}
-					name = "Duke of York" 
-					requested_factories = 5
-					progress = 0.3
-					amount = 1
-				}
-				add_equipment_production = {
-					equipment = {
-						type = ship_hull_heavy_2
-						creator = "ENG" 
-						version_name = "King George V-Class"
-					}
-					name = "Anson" 
-					requested_factories = 5
-					progress = 0.3
-					amount = 1
-				}
-				add_equipment_production = {
-					equipment = {
-						type = ship_hull_heavy_2
-						creator = "ENG" 
-						version_name = "King George V-Class"
-					}
-					name = "Howe" 
-					requested_factories = 5
-					progress = 0.3
-					amount = 1
-				}
-			}
-			custom_effect_tooltip = UK_bb_focus_2_tt
-			subtract_from_variable = {
-				var = british_money
-				value = 200
-			}
-		}
-
-		ai_will_do = {
-			base = 10	
-		}
-	}
-
-	ENG_length_of_shifts = {
-
-		icon = oppression
-
-		available = {
-		}
-
-		visible = {
-		}
-
-		fire_only_once = no
-
-		modifier = {
-			production_factory_efficiency_gain_factor = 0.2
-			industrial_capacity_factory = 0.1
-			industrial_capacity_dockyard = 0.1
-			consumer_goods_factor = 0.02
-		}
-
-		days_remove = 120
-		days_re_enable = 120
-
-		custom_cost_trigger = {
-			check_variable = {
-    			var = british_money
-   				value = 200
-    			compare = greater_than_or_equals
-			}
-		}
-
-
-		custom_cost_text = ENG_200_british_money 
-
-		complete_effect = {
-			custom_effect_tooltip = increase_length_of_shifts_money_tt
-			subtract_from_variable = {
-				var = british_money
-				value = 200
-			}
-		}
-
-		ai_will_do = {
-			base = 0	
-		}
-	}
-	ENG_expand_home_industry = {
+	}	
+	ENG_dev_can = {
 		icon = generic_construction
 
 		available = {
 			tag = ENG
-			NOT = {
-				has_completed_focus = ENG_containment
-			}
+			has_completed_focus = ENG_conference
 		}
 
+		days_remove = 365
+
 		visible = {
-			AND = {
-				NOT = {
-					has_war_with = GER 
-					ENG = {
-						has_completed_focus = ENG_containment
-					}
-				}
-			}
-		}
-		cancel_trigger = {
-			has_completed_focus = ENG_containment
 		}
 
 		custom_cost_trigger = {
 			check_variable = {
     			var = british_money
-   				value = 200
+   				value = 400
     			compare = greater_than_or_equals
 			}
 		}
 
-		custom_cost_text = ENG_200_british_money 
 
-		days_remove = 120
-		days_re_enable = 120
 
-		fire_only_once = no
+		custom_cost_text = ENG_400_british_money 
 
+		fire_only_once = yes
+		
 		ai_will_do = {
 			factor = 0
-			modifier = {
-				add = 200
-				OR = {
-					has_idea = civilian_economy
-					has_idea = low_economic_mobilisation
-				}
-			}
-		}
-
-		modifier = {
-			production_speed_industrial_complex_factor = 0.2
 		}
 		
 		complete_effect = {
-			custom_effect_tooltip = ENG_expand_home_industry_tt
-			subtract_from_variable = {
-				var = british_money
-				value = 200
+			custom_effect_tooltip = ENG_development_explanation
+
+			CAN = {
+				random_owned_state = {
+					limit = {
+						is_core_of = CAN  
+					}
+					add_extra_state_shared_building_slots = 9
+					add_building_construction = {
+						type = industrial_complex 
+						level = 4
+						instant_build = yes 
+					}
+					add_building_construction = {
+						type = dockyard 
+						level = 5
+						instant_build = yes 
+					}
+				}
+			}
+
+			if = {
+				limit = {
+					date < 1937.1.1
+				}
+				
+				CAN = {
+					add_political_power = 100
+				}
+			}
+			else_if = {
+				limit = {
+					date < 1938.1.1
+				}
+				CAN = {
+					add_political_power = 200
+				}
+			}
+			else_if = {
+				limit = {
+					date < 1939.1.1
+				}
+				CAN = {
+					add_political_power = 300
+				}
 			}
 		}
 	}
-	ENG_military_industry_boost = {
+	ENG_dev_saf = {
 		icon = generic_construction
 
 		available = {
 			tag = ENG
+			has_completed_focus = ENG_conference
 		}
 
+		days_remove = 365
+
 		visible = {
-			AND = {
-				NOT = {
-					has_war_with = GER 
-				}
-				ENG = {
-					has_completed_focus = ENG_containment
-				}
-			}
 		}
 
 		custom_cost_trigger = {
 			check_variable = {
     			var = british_money
-   				value = 200
+   				value = 400
     			compare = greater_than_or_equals
 			}
 		}
 
-		custom_cost_text = ENG_200_british_money 
 
-		days_remove = 120
-		days_re_enable = 120
 
-		fire_only_once = no
+		custom_cost_text = ENG_400_british_money 
 
+		fire_only_once = yes
+		
 		ai_will_do = {
 			factor = 0
-			modifier = {
-				add = 200
-				OR = {
-					has_idea = civilian_economy
-					has_idea = low_economic_mobilisation
-				}
-			}
-		}
-
-		modifier = {
-			production_speed_arms_factory_factor = 0.25
 		}
 		
 		complete_effect = {
-			custom_effect_tooltip = ENG_expand_home_industry_tt
-			subtract_from_variable = {
-				var = british_money
-				value = 200
+			custom_effect_tooltip = ENG_development_explanation
+
+			SAF = {
+				random_owned_state = {
+					limit = {
+						is_core_of = SAF  
+					}
+					add_extra_state_shared_building_slots = 9
+					add_building_construction = {
+						type = industrial_complex 
+						level = 4
+						instant_build = yes 
+					}
+					add_building_construction = {
+						type = dockyard 
+						level = 5
+						instant_build = yes 
+					}
+				}
+			}
+
+			if = {
+				limit = {
+					date < 1937.1.1
+				}
+				
+				SAF = {
+					add_political_power = 100
+				}
+			}
+			else_if = {
+				limit = {
+					date < 1938.1.1
+				}
+				SAF = {
+					add_political_power = 200
+				}
+			}
+			else_if = {
+				limit = {
+					date < 1939.1.1
+				}
+				SAF = {
+					add_political_power = 300
+				}
 			}
 		}
 	}
-
-    CHI_expand_the_burma_road = {
+	ENG_dev_raj = {
 		icon = generic_construction
-	
-		allowed = {
-			original_tag = ENG
+
+		available = {
+			tag = ENG
+			has_completed_focus = ENG_conference
+		}
+
+		days_remove = 365
+
+		visible = {
 		}
 
 		custom_cost_trigger = {
 			check_variable = {
     			var = british_money
-   				value = 100
+   				value = 400
     			compare = greater_than_or_equals
 			}
 		}
 
 
-		custom_cost_text = ENG_10_british_money 
 
+		custom_cost_text = ENG_400_british_money 
 
-		available = { 
-            has_completed_focus = uk_burma_focus
-			JAP = { has_war = yes }
-			
-			288 = {
-				CONTROLLER = {
-					NOT = {
-						has_war_with = ROOT
-					}
-				}
-			}
-			640 = {
-				CONTROLLER = {
-					NOT = {
-						has_war_with = ROOT
-					}
-				}
-			}
-			325 = {
-				CONTROLLER = {
-					NOT = {
-						has_war_with = ROOT
-					}
-				}
-			}
-			747 = {
-				CONTROLLER = {
-					NOT = {
-						has_war_with = ROOT
-					}
-				}
-			}
-
-			any_state = {
-				OR = {
-					state = 288
-					state = 640
-					state = 325
-					state = 747
-				}
-				CONTROLLER = {
-					OR = {
-						has_completed_focus = CHI_burma_road
-						AND = {
-							is_in_faction_with = ROOT
-							has_completed_focus = CHI_burma_road
-						}
-						if = {
-							limit = {
-								is_subject = yes
-							}
-							OVERLORD = {
-								OR = {
-									has_completed_focus = CHI_burma_road
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		visible = {
-			NOT = { has_global_flag = CHI_burma_3 }
-			OR = {
-				has_focus_tree = china_nationalist_focus
-				has_focus_tree = china_communist_focus 
-				has_focus_tree = british_focus
-			}
-			OR = {
-				AND = {
-					OR = {
-						controls_state = 325
-						325 = {
-							CONTROLLER = {
-								OR = {
-									is_subject_of = ROOT
-									is_in_faction_with = ROOT
-								}
-							}
-						}
-					}
-				}
-				AND = {
-					controls_state = 288
-					controls_state = 640
-				}
-				AND = {
-					288 = { CONTROLLER = { is_in_faction_with = ROOT } }
-					640 = { CONTROLLER = { is_in_faction_with = ROOT } }
-				}
-			}
-		}
-
-		visible = {
-			country_exists = CHI 
-		}
-
-		days_re_enable = 360
-
-		ai_will_do = {
-			factor = 160
-		}
-
-		days_remove = 60
+		fire_only_once = yes
 		
-		modifier = {
-			civilian_factory_use = 2
+		ai_will_do = {
+			factor = 0
 		}
+		
+		complete_effect = {
+			custom_effect_tooltip = ENG_development_explanation
 
-		complete_effect = {		    
-			if = {
-				limit = {
-					AND = {
-						has_war = no
-						has_war_support < 0.6
+			RAJ = {
+				random_owned_state = {
+					limit = {
+						is_core_of = RAJ  
+					}
+					add_extra_state_shared_building_slots = 9
+					add_building_construction = {
+						type = industrial_complex 
+						level = 4
+						instant_build = yes 
+					}
+					add_building_construction = {
+						type = dockyard 
+						level = 5
+						instant_build = yes 
 					}
 				}
-				add_war_support = 0.1
-				subtract_from_variable = {
-					var = british_money
-					value = 100
-				}
 			}
-		}
 
-		remove_effect = {
-		    CHI = {
-				add_offsite_building = { type = arms_factory level = 3 }
-			}
-			288 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			640 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			325 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
 			if = {
 				limit = {
-					has_global_flag = CHI_burma_2
+					date < 1937.1.1
 				}
-				set_global_flag = CHI_burma_3
+				
+				RAJ = {
+					add_political_power = 100
+				}
 			}
-			if = {
+			else_if = {
 				limit = {
-					NOT = { has_global_flag = CHI_burma_2} # 
+					date < 1938.1.1
 				}
-				set_global_flag = CHI_burma_2
+				RAJ = {
+					add_political_power = 200
+				}
 			}
-			
-			random_country = {
-				limit = { check_variable = { CHI_burma_road > 0 } }
-				add_to_variable = { var = CHI_burma_road value = 1 }
-
-				#Country that had the burma road open
-				add_offsite_building = { type = arms_factory level = 1 }
+			else_if = {
+				limit = {
+					date < 1939.1.1
+				}
+				RAJ = {
+					add_political_power = 300
+				}
 			}
 		}
 	}
-	
-	ENG_support_china_with_factories = {
+	ENG_dev_ast = {
+		icon = generic_construction
+
+		available = {
+			tag = ENG
+			has_completed_focus = ENG_conference
+		}
+
+		days_remove = 365
+
+		visible = {
+		}
+
+		custom_cost_trigger = {
+			check_variable = {
+    			var = british_money
+   				value = 400
+    			compare = greater_than_or_equals
+			}
+		}
+
+
+
+		custom_cost_text = ENG_400_british_money 
+
+		fire_only_once = yes
+		
+		ai_will_do = {
+			factor = 0
+		}
+		
+		complete_effect = {
+			custom_effect_tooltip = ENG_development_explanation
+
+			AST = {
+				random_owned_state = {
+					limit = {
+						is_core_of = AST  
+					}
+					add_extra_state_shared_building_slots = 9
+					add_building_construction = {
+						type = industrial_complex 
+						level = 4
+						instant_build = yes 
+					}
+					add_building_construction = {
+						type = dockyard 
+						level = 5
+						instant_build = yes 
+					}
+				}
+			}
+
+			if = {
+				limit = {
+					date < 1937.1.1
+				}
+				
+				AST = {
+					add_political_power = 100
+				}
+			}
+			else_if = {
+				limit = {
+					date < 1938.1.1
+				}
+				AST = {
+					add_political_power = 200
+				}
+			}
+			else_if = {
+				limit = {
+					date < 1939.1.1
+				}
+				AST = {
+					add_political_power = 300
+				}
+			}
+		}
+	}		
+
+	ENG_support_china = {
+
+		name = CHI_expand_the_burma_road
 
 		icon = generic_industry
 
@@ -2220,13 +1741,14 @@ ENG_budget_decisions = {
 			tag = ENG			
 		}
 
+		visible = {
+
+		}
+
 		available = {
-			any_other_country = {
-				CHI = { 
-					has_war_with = JAP
-				}
+			JAP = {
+				has_completed_focus = JAP_intervene_in_china
 			}
-			num_of_civilian_factories_available_for_projects > 2
 		}
 
 		visible = {
@@ -2241,8 +1763,8 @@ ENG_budget_decisions = {
 			}
 		}
 
-
 		custom_cost_text = ENG_10_british_money 
+
 		ai_will_do = {
 			factor = 60
 		}
@@ -2260,7 +1782,7 @@ ENG_budget_decisions = {
 				limit = {
 					Tag = CHI
 				}
-				add_offsite_building = { type = arms_factory level = 3 }
+				add_offsite_building = { type = arms_factory level = 5 }
 				set_country_flag = ENG_support_china_with_factories
 			}
 			subtract_from_variable = {
@@ -2270,34 +1792,59 @@ ENG_budget_decisions = {
 		}
 
 		remove_effect = {
-		   add_political_power = 100
-			add_war_support = 0.05
 			CHI = {
 				if = {
 					limit = {
 						NOT = { any_other_country = { has_country_flag = ENG_support_china_with_factories } }
 					}
 				}
-				add_offsite_building = { type = arms_factory level = -3 }
+				add_offsite_building = { type = arms_factory level = -5 }
 				add_equipment_to_stockpile = { type = infantry_equipment_1 amount = 1000 producer = ENG }
 				add_equipment_to_stockpile = { type = support_equipment_1 amount = 200 producer = ENG }
 				add_equipment_to_stockpile = { type = artillery_equipment_1 amount = 100 producer = ENG }
 				add_equipment_to_stockpile = { type = fighter_equipment_1936 amount = 50 producer = ENG }
-			}	
+			}
+			custom_effect_tooltip = USA_spawn_in_china_1
+			
+			add_to_variable = {
+				var = global.china_spawn_in_boost
+				value = 1
+			}
+
+            if = {
+                limit = {
+                    check_variable = {
+                        var = global.CHI_chi_weapon_clicks
+                        value = 0 
+                        compare = less_than_or_equals
+                        
+                    }
+                }
+                set_variable = { global.CHI_chi_weapon_clicks = 1 }
+            }
+            else_if = {
+                limit = {
+                    check_variable = {
+                        var = global.CHI_chi_weapon_clicks
+                        value = 0 
+                        compare = greater_than_or_equals
+                    }
+                }
+                add_to_variable = { global.CHI_chi_weapon_clicks = 1 }
+            }	
 		}
 	}
+	
 
 	ENG_order_weapons_in_USA = {
 		icon = generic_prepare_civil_war
 		available = {
-			
-		}
-		visible = {
-			USA_can_sell_weapons_trigger = yes
 			has_completed_focus = ENG_arms_purchases_in_the_us
 		}
+		visible = {
+		}
 		
-		days_remove = 120
+		days_remove = 90
 		ai_will_do = {
 			factor = 10
 			modifier = {
@@ -2337,31 +1884,30 @@ ENG_budget_decisions = {
 			}
 			add_equipment_to_stockpile = {
 				type = support_equipment
-				amount = 600
+				amount = 500
 				producer = USA
 			}
 			add_equipment_to_stockpile = {
 				type = radio_equipment
-				amount = 600
+				amount = 500
 				producer = USA
 			}
 			add_equipment_to_stockpile = {
 				type = motorized_equipment
-				amount = 400
+				amount = 500
 				producer = USA
 			}
 		}
 	}
+
 	ENG_order_artillery_in_USA = {
 		icon = ger_military_buildup
 		available = {
-			
-		}
-		visible = {
-			USA_can_sell_weapons_trigger = yes
 			has_completed_focus = ENG_arms_purchases_in_the_us
 		}
-		days_remove = 120
+		visible = {
+		}
+		days_remove = 90
 
 		ai_will_do = {
 			factor = 5
@@ -2398,12 +1944,12 @@ ENG_budget_decisions = {
 			add_equipment_to_stockpile = {
 				type = artillery_equipment
 				producer = USA
-				amount = 800
+				amount = 600
 			}
 			add_equipment_to_stockpile = {
 				type = heavy_artillery_equipment
 				producer = USA
-				amount = 350
+				amount = 300
 			}
 			add_equipment_to_stockpile = {
 				type = anti_tank_equipment
@@ -2417,20 +1963,20 @@ ENG_budget_decisions = {
 			}
 			add_equipment_to_stockpile = {
 				type = motorized_equipment
-				amount = 300
+				amount = 400
 				producer = USA
 			}
 
 		}
 	}
+
 	ENG_order_tanks_in_USA = {
 		icon = generic_tank
 		available = {
+			has_completed_focus = ENG_arms_purchases_in_the_us
 		}
 
 		visible = {
-			USA_can_sell_weapons_trigger = yes
-			has_completed_focus = ENG_arms_purchases_in_the_us
 		}
 
 		days_remove = 120
@@ -2472,12 +2018,12 @@ ENG_budget_decisions = {
 			add_equipment_to_stockpile = {
 				type = medium_tank_chassis
 				producer = ENG 
-				amount = 400
+				amount = 300
 			}
 			add_equipment_to_stockpile = {
 				type = heavy_tank_chassis
 				producer = ENG 
-				amount = 250
+				amount = 200
 			}
 		}
 	}
@@ -2485,20 +2031,18 @@ ENG_budget_decisions = {
 	ENG_order_fighters_in_USA = {
 		icon = generic_air
 		available = {
-			
-		}
-		visible = {
-			USA_can_sell_weapons_trigger = yes
 			has_completed_focus = ENG_arms_purchases_in_the_us
 		}
+		visible = {
+		}
 
-		days_remove = 120
+		days_remove = 90
 
 		ai_will_do = {
 			factor = 1
 			modifier = {
 				has_equipment = {
-					fighter_equipment < 1
+					small_plane_airframe < 1
 				}
 				factor = 5
 			}
@@ -2531,19 +2075,19 @@ ENG_budget_decisions = {
 				USA_aircraft_industry_level_up = yes 
 			}
 			add_equipment_to_stockpile = {
-				type = fighter_equipment
-				amount = 700
+				type = small_plane_airframe
+				amount = 500
 			}
 		}
 	}
+
 	ENG_order_heavy_fighters_in_USA = {
 		icon = generic_air
 		available = {
 			
 		}
 		visible = {
-			USA_can_sell_weapons_trigger = yes
-			has_completed_focus = ENG_arms_purchases_in_the_us
+			always = no
 		}
 
 		days_remove = 120
@@ -2552,7 +2096,7 @@ ENG_budget_decisions = {
 			factor = 1
 			modifier = {
 				has_equipment = {
-					heavy_fighter_equipment < 1
+					medium_plane_fighter_airframe < 1
 				}
 				factor = 5
 			}
@@ -2585,26 +2129,27 @@ ENG_budget_decisions = {
 				USA_aircraft_industry_level_up = yes 
 			}
 			add_equipment_to_stockpile = {
-				type = heavy_fighter_equipment
-				amount = 500
+				type = medium_plane_fighter_airframe
+				amount = 300
 			}
 		}
 	}
+
 	ENG_order_bombers_in_USA = {
 		icon = generic_air
 		available = {
-		}
-		visible = {
-			USA_can_sell_weapons_trigger = yes
 			has_completed_focus = ENG_arms_purchases_in_the_us
 		}
-		days_remove = 90
+		visible = {
+
+		}
+		days_remove = 120
 		cost = 100
 		ai_will_do = {
 			factor = 1
 			modifier = {
 				has_equipment = {
-					tac_bomber_equipment < 1
+					medium_plane_airframe < 1
 				}
 				factor = 5
 			}
@@ -2635,14 +2180,50 @@ ENG_budget_decisions = {
 				USA_aircraft_industry_level_up = yes			
 			}
 			add_equipment_to_stockpile = {
-				type = tac_bomber_equipment
-				amount = 350
+				type = medium_plane_airframe
+				amount = 150
 			}
 		}
 	}
 }
 
 operations = {
+	titov_partisans = {
+        icon = generic_civil_support
+        
+		allowed = {
+			tag = ENG
+		}
+		available = {
+			has_completed_focus = ENG_special_military_operations
+		}
+		
+		cost = 25
+		
+		modifier = {
+			civilian_factory_use = 10			
+		}
+
+		days_remove = 30
+		
+		days_re_enable = 180
+		
+		ai_will_do = {
+			factor = 10
+		}
+		remove_effect = {
+			random_state = {
+				prioritize = { 105 }
+				limit = {
+					is_core_of = YUG
+					resistance < 50
+				}
+				add_resistance = 15
+			}
+		    GER = { country_event = { id = britain.46 } }	
+		}	
+	}
+
 	french_partisans_normandy = {
         icon = generic_civil_support
         
@@ -2650,7 +2231,7 @@ operations = {
 			tag = ENG
 		}
 		available = {
-			FRA = { has_capitulated = yes }
+			has_completed_focus = ENG_special_military_operations
 		}
 		
 		cost = 25
@@ -2674,7 +2255,7 @@ operations = {
 				}
 				damage_building = {
 				  type = air_base
-				  damage = 3
+				  damage = 2
 				}
 			}
 			15 = {
@@ -2684,7 +2265,7 @@ operations = {
 				}
 				damage_building = {
 				  type = air_base
-				  damage = 3
+				  damage = 2
 				}
 			}
 			30 = {
@@ -2694,7 +2275,7 @@ operations = {
 				}
 				damage_building = {
 				  type = air_base
-				  damage = 3
+				  damage = 2
 				}
 			}
 		    GER = { country_event = { id = britain.39 } }	
@@ -2708,7 +2289,7 @@ operations = {
 			tag = ENG
 		}
 		available = {
-			FRA = { has_capitulated = yes }
+			has_completed_focus = ENG_special_military_operations
 		}
 		
 		cost = 25
@@ -2732,7 +2313,7 @@ operations = {
 				}
 				damage_building = {
 				  type = air_base
-				  damage = 3
+				  damage = 2
 				}
 			}
 			29 = {
@@ -2742,7 +2323,7 @@ operations = {
 				}
 				damage_building = {
 				  type = air_base
-				  damage = 3
+				  damage = 2
 				}
 			}
 			18 = {
@@ -2752,7 +2333,7 @@ operations = {
 				}
 				damage_building = {
 				  type = air_base
-				  damage = 3
+				  damage = 2
 				}
 			}
 		    GER = { country_event = { id = britain.40 } }	
@@ -2766,7 +2347,7 @@ operations = {
 			tag = ENG
 		}
 		available = {
-			FRA = { has_capitulated = yes }
+			has_completed_focus = ENG_special_military_operations
 		}
 		
 		cost = 50
@@ -2790,7 +2371,7 @@ operations = {
 				}
 				damage_building = {
 				  type = air_base
-				  damage = 3
+				  damage = 2
 				}
 				damage_building = {
 				  type = arms_factory
@@ -2808,7 +2389,7 @@ operations = {
 				}
 				damage_building = {
 				  type = air_base
-				  damage = 3
+				  damage = 2
 				}
 			}
 			24 = {
@@ -2818,7 +2399,7 @@ operations = {
 				}
 				damage_building = {
 				  type = air_base
-				  damage = 3
+				  damage = 2
 				}
 			}
 		    GER = { country_event = { id = britain.41 } }	
@@ -2846,80 +2427,36 @@ operations = {
 		cost = 0
 		
 		modifier = {
-			civilian_factory_use = 25			
 		}
 
 		days_remove = 45
 		
 		
 		ai_will_do = {
-			factor = 50
+			factor = 0
+			modifier = {
+				add = 100
+				date > 1941.4.1 # irl british invasion
+
+				has_full_control_of_state = 453 # Sinai
+				has_full_control_of_state = 446 # Cairo
+				has_full_control_of_state = 457 # Eastern Desert
+			}
 		}
 		remove_effect = {
-			656 = {
-				add_building_construction = {
-					type = infrastructure
-					instant_build = yes
-					level = 2
-				}
-				add_building_construction = {
-					type = naval_base
-					instant_build = yes
-					level = 3
-					province = 8085
-				}
-				add_building_construction = {
-					type = air_base
-					level = 5
-					instant_build = yes 
-				}			
-			}
-			454 = {
-				add_building_construction = {
-					type = infrastructure
-					instant_build = yes
-					level = 2
-				}
-				add_building_construction = {
-					type = naval_base
-					instant_build = yes
-					level = 3
-					province = 4206
-				}
-				add_building_construction = {
-					type = air_base
-					level = 2
-					instant_build = yes 
-				}				
-			}
-			455 = {
-				add_building_construction = {
-					type = infrastructure
-					instant_build = yes
-					level = 2
-				}
-				add_building_construction = {
-					type = bunker
-					level = 2
-					instant_build = yes
-					province = 4440
-				}				
-			}
-			453 = {
-				add_building_construction = {
-					type = infrastructure
-					instant_build = yes
-					level = 2
-				}				
-			}
-			create_wargoal = {
-				type = take_state_focus
+			declare_war_on = {
 				target = IRQ
-				generator = { 291 }
-				expire = 0
-			}			
+				type = annex_everything
+			}
+			IRQ = { 
+				add_to_war = { 
+					targeted_alliance = GER
+					enemy = ENG
+				}
+			}
 		}	
 	}
+	
 	ENG_operation_exporter = {
         icon = generic_civil_support
  		fire_only_once = yes
@@ -2965,6 +2502,123 @@ operations = {
 					targeted_alliance = GER
 					enemy = ENG
 				}
+			}
+			if = {
+				limit = {
+					EFR = {
+						has_idea = neutrality_idea
+					}
+				}
+				EFR = {
+					remove_ideas = neutrality_idea
+				}
+			}
+			hidden_effect = {
+				
+				RAJ = { 
+					add_to_war = { 
+						targeted_alliance = ENG
+						enemy = EFR
+					}
+				}
+				if = {
+					limit = {
+						USA = {
+							has_war_with = GER
+						}
+					}
+					USA = { 
+						add_to_war = { 
+							targeted_alliance = ENG
+							enemy = EFR
+						}
+					}
+				}	
+				AST = { 
+					add_to_war = { 
+						targeted_alliance = ENG
+						enemy = EFR
+					}
+				}
+				CAN = { 
+					add_to_war = { 
+						targeted_alliance = ENG
+						enemy = EFR
+					}
+				}
+				if = {
+					limit = {
+						country_exists = NZL
+					}
+					NZL = { 
+						add_to_war = { 
+							targeted_alliance = ENG
+							enemy = EFR
+						}
+					}
+				}	
+				if = {
+					limit = {
+						MEX = {
+							is_in_faction_with = ENG
+						}	
+					}
+					MEX = { 
+						add_to_war = { 
+							targeted_alliance = ENG
+							enemy = EFR
+						}
+					}
+				}
+				if = {
+					limit = {
+						BRA = {
+							is_in_faction_with = ENG
+						}	
+					}
+					BRA = { 
+						add_to_war = { 
+							targeted_alliance = BRA
+							enemy = EFR
+						}
+					}
+				}
+				if = {
+					limit = {
+						country_exists = SAF
+					}
+					SAF = { 
+						add_to_war = { 
+							targeted_alliance = ENG
+							enemy = EFR
+						}
+					}
+				}
+				if = {
+					limit = {
+						IRE = {
+							is_in_faction_with = ENG
+						}	
+					}
+					IRE = { 
+						add_to_war = { 
+							targeted_alliance = ENG
+							enemy = EFR
+						}
+					}
+				}
+				if = {
+					limit = {
+						country_exists = FRA
+					}
+					FRA = { 
+						add_to_war = { 
+							targeted_alliance = ENG
+							enemy = EFR
+						}
+					}
+				}
+
 			}	
 		}	
 	}
@@ -2992,12 +2646,33 @@ operations = {
 		
 		
 		ai_will_do = {
-			factor = 100
+			factor = 0
+			modifier = {
+				add = 1000
+				has_full_control_of_state = 453 # Sinai
+				has_full_control_of_state = 446 # Cairo
+				has_full_control_of_state = 457 # Eastern Desert
+				IRQ = { has_capitulated = yes }
+			}
+			modifier = {
+				add = 1000
+				has_full_control_of_state = 453 # Sinai
+				has_full_control_of_state = 454 # Palestine
+				has_full_control_of_state = 455 # Jordan
+				OR = {
+					date > 1941.10.15
+					USA = { has_war_with = GER }
+				}
+				NOT = { IRQ = { has_full_control_of_state = 675 } } # Al Hajara
+				NOT = { IRQ = { has_full_control_of_state = 291 } } # Baghdad
+				NOT = { IRQ = { has_full_control_of_state = 676 } } # Mosul
+			}
 		}
 		remove_effect = {
 			PER = { give_resource_rights = { receiver = ENG state = 413 } }
 			PER = { give_resource_rights = { receiver = ENG state = 412 } }
 			PER = { give_resource_rights = { receiver = ENG state = 411 } }
+			
 			SOV = {
 				transfer_state = 420
 				transfer_state = 419

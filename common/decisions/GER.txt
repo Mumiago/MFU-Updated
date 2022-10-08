@@ -1,6 +1,93 @@
 #Category only allowed for GER
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GER_surrender_category = {
+	GER_der_kreig_ist_verlorer = {
+
+		priority = 10
+
+		icon = eng_puppet_usa
+
+		available = {
+			hidden_trigger = { always = no }
+		}
+
+		days_mission_timeout = 7
+
+		fire_only_once = yes
+
+		activation = {
+			surrender_progress > 0.79
+		}
+
+		visible = {
+			
+		}
+
+		cancel_if_not_visible = yes
+
+		is_good = no
+
+		timeout_effect = {
+			country_event = germany.701
+		}
+	}
+}
 GER_operation_barbarossa_category = {
+	GER_operation_rosselsprung = {
+
+		priority = 10
+
+		icon = generic_scorched_earth
+
+		available = {
+			date > 1944.1.1
+		}
+
+		fire_only_once = yes
+
+
+		visible = {
+			has_war_with = SOV
+			
+		}
+
+		complete_effect = {
+			add_timed_idea = {
+				idea = GER_operation_rosselsprung_idea
+				days = 30
+			}
+			every_state = {
+				limit = {
+					is_core_of = YUG
+					is_controlled_by = SOV
+				}
+				remove_province_modifier = {
+					static_modifiers = { titov_modding }
+					province = {
+						all_provinces = yes
+					}
+				}
+			}
+		}
+	}
 	GER_steiner_counter_attack_decision = {
 	
 		allowed = {
@@ -8,21 +95,20 @@ GER_operation_barbarossa_category = {
 		}
 
 		visible = {
-			has_war_with = SOV
-			AND = { date > 1942.03.01 }
 			SOV = {
-				surrender_progress < 0.3
-			}			
+				surrender_progress < 0.15
+			}
+			date > 1942.1.1
+				
+					
 		}
 
 		available = {
-			has_completed_focus = GER_SS_armed_branch
+			has_completed_focus = GER_Schutzstaffel_focus
 			has_war_with = SOV
 			SOV = {
 				surrender_progress < 0.05
 			}
-
-			
 			 #soviet advance check
 			
 			#### West of Berlin ####
@@ -91,7 +177,8 @@ GER_operation_barbarossa_category = {
 					is_in_faction_with = SOV
 					controls_state = 90
 				}				
-			}			
+			}
+					
 		}
 
 		icon = generic_scorched_earth
@@ -105,9 +192,19 @@ GER_operation_barbarossa_category = {
 		fire_only_once = yes
 
 		complete_effect = {
-			add_timed_idea = {
-				idea = GER_steiners_counter_attack
-				days = 30
+			custom_effect_tooltip = "STEINER GAINS THE BONUS!"
+			GER = {
+				add_timed_idea = {
+					idea = GER_steiners_counter_attack_2
+					days = 30
+				}
+				
+				every_army_leader = {
+					limit = {
+						has_id = 35
+					}
+					add_unit_leader_trait = steiners_attack
+				}
 			}
 			BUL = {
 				add_timed_idea = {
@@ -181,7 +278,6 @@ GER_operation_barbarossa_category = {
 			country_event = germany.563
 		}
 	}
-
 	GER_barb_planning = { #barba
 
 		icon = ger_reichskommissariats
@@ -210,7 +306,6 @@ GER_operation_barbarossa_category = {
 			country_event = { id = germany.558 days = 1 } 
 		}
 	}
-
 	GER_ussr_war_goal = { #barba
 
 		icon = ger_reichskommissariats
@@ -248,6 +343,41 @@ GER_operation_barbarossa_category = {
 
 		complete_effect = {
 			hidden_effect = {
+				division_template = {
+					name = "Einsatzgruppen"
+					is_locked = yes
+					priority = 0  
+					template_counter = 82
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						
+						infantry = { x = 1 y = 0 }
+						infantry = { x = 1 y = 1 }
+						infantry = { x = 1 y = 2 }
+							
+						infantry = { x = 2 y = 0 }
+						infantry = { x = 2 y = 1 }
+						infantry = { x = 2 y = 2 }						
+
+						infantry = { x = 3 y = 0 }	
+						artillery_brigade = { x = 3 y = 1 }
+						artillery_brigade = { x = 3 y = 2 }		
+						artillery_brigade = { x = 3 y = 3 }
+
+						artillery_brigade = { x = 4 y = 0 }
+						anti_air = { x = 4 y = 1 }
+					}
+
+					support = {
+						DIV_HQ = { x = 0 y = 0 }
+						engineer = { x = 0 y = 1 }
+						military_police = { x = 1 y = 0 }
+						recon = { x = 1 y = 1 }
+						anti_tank = { x = 1 y = 2 }
+					}
+				}
 				complete_national_focus = GER_ussr_war_goal
 				every_state = {
 					limit = {
@@ -353,7 +483,7 @@ GER_operation_barbarossa_category = {
 				GER = {
 					add_timed_idea = {
 						idea = GER_short_barbarossa_I
-						days = 80
+						days = 60
 					}
 				}
 				GER = {	
@@ -364,13 +494,13 @@ GER_operation_barbarossa_category = {
 				GER = {	
 					add_timed_idea = {
 						idea = GER_short_barbarossa_II
-						days = 135
+						days = 115
 					}
 				}
 				BUL = {
 					add_timed_idea = {
 						idea = GER_short_barbarossa_I
-						days = 80
+						days = 60
 					}
 				}
 				BUL = {	
@@ -381,13 +511,13 @@ GER_operation_barbarossa_category = {
 				BUL = {	
 					add_timed_idea = {
 						idea = GER_short_barbarossa_II
-						days = 135
+						days = 115
 					}
 				}
 				ROM = {
 					add_timed_idea = {
 						idea = GER_short_barbarossa_I
-						days = 80
+						days = 60
 					}
 				}
 				ROM = {	
@@ -398,13 +528,13 @@ GER_operation_barbarossa_category = {
 				ROM = {	
 					add_timed_idea = {
 						idea = GER_short_barbarossa_II
-						days = 135
+						days = 115
 					}
 				}
 				HUN = {
 					add_timed_idea = {
 						idea = GER_short_barbarossa_I
-						days = 80
+						days = 60
 					}
 				}
 				HUN = {	
@@ -415,30 +545,14 @@ GER_operation_barbarossa_category = {
 				HUN = {	
 					add_timed_idea = {
 						idea = GER_short_barbarossa_II
-						days = 135
+						days = 115
 					}
 				}
-				EFR = {
-					add_timed_idea = {
-						idea = GER_short_barbarossa_I
-						days = 80
-					}
-				}
-				EFR = {	
-					every_army_leader = {
-						add_unit_leader_trait = barbarossa_river
-					}
-				}	
-				EFR = {	
-					add_timed_idea = {
-						idea = GER_short_barbarossa_II
-						days = 135
-					}
-				}
+				
 				SLO = {
 					add_timed_idea = {
 						idea = GER_short_barbarossa_I
-						days = 80
+						days = 60
 					}
 				}
 				SLO = {	
@@ -449,13 +563,13 @@ GER_operation_barbarossa_category = {
 				SLO = {	
 					add_timed_idea = {
 						idea = GER_short_barbarossa_II
-						days = 135
+						days = 115
 					}
 				}
 				SPR = {
 					add_timed_idea = {
 						idea = GER_short_barbarossa_I
-						days = 80
+						days = 60
 					}
 				}
 				SPR = {	
@@ -466,7 +580,7 @@ GER_operation_barbarossa_category = {
 				SPR = {	
 					add_timed_idea = {
 						idea = GER_short_barbarossa_II
-						days = 135
+						days = 115
 					}
 				}	
 			}
@@ -543,23 +657,7 @@ GER_operation_barbarossa_category = {
 						days = 180
 					}
 				}
-				EFR = {
-					add_timed_idea = {
-						idea = Barbarossa_I
-						days = 110
-					}
-				}
-				EFR = {	
-					every_army_leader = {
-						add_unit_leader_trait = barbarossa_river
-					}
-				}	
-				EFR = {	
-					add_timed_idea = {
-						idea = Barbarossa_II
-						days = 180
-					}
-				}
+				
 				SLO = {
 					add_timed_idea = {
 						idea = Barbarossa_I
@@ -668,23 +766,7 @@ GER_operation_barbarossa_category = {
 						days = 210
 					}
 				}
-				EFR = {
-					add_timed_idea = {
-						idea = GER_longer_barb_I
-						days = 140
-					}
-				}
-				EFR = {	
-					every_army_leader = {
-						add_unit_leader_trait = barbarossa_river
-					}
-				}	
-				EFR = {	
-					add_timed_idea = {
-						idea = GER_longer_barb_II
-						days = 210
-					}
-				}
+				
 				SLO = {
 					add_timed_idea = {
 						idea = GER_longer_barb_I
@@ -724,15 +806,6 @@ GER_operation_barbarossa_category = {
 				add_timed_idea = { idea = SOV_surprise_strike days = 120 }
 				add_ideas = Disorganized_Red_Army_1
 				country_event = { id = soviet.46 days = 2 } 
-			}
-			if = {
-				limit = {
-					GER = { is_ai = yes }
-					SOV = { is_ai = no }
-				}
-				SOV = {
-					add_ideas = { SOV_surprise_strike_extra_for_ai }
-				}	
 			}
 			hidden_effect = {	
 				every_other_country = { 
@@ -984,7 +1057,6 @@ GER_operation_barbarossa_category = {
 			factor = 10
 		}
 	}
-
 	GER_prepare_to_invade_the_ussr = {
 		icon = ger_reichskommissariats
 		fire_only_once = yes
@@ -1006,7 +1078,7 @@ GER_operation_barbarossa_category = {
 		}
 
 		available = {	
-			num_of_civilian_factories_available_for_projects > 9
+			num_of_civilian_factories_available_for_projects > 19
 			has_tech = construction3				
 			OR = {
 				GER = { controls_state = 73 }
@@ -1034,7 +1106,7 @@ GER_operation_barbarossa_category = {
 		days_remove = 120
 
 		modifier = {
-			civilian_factory_use = 10
+			civilian_factory_use = 20
 		}
 
 		ai_will_do = {
@@ -1084,9 +1156,9 @@ GER_operation_barbarossa_category = {
 						instant_build = yes
 						
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = air_base
-						level = 6
+						level = 8
 						instant_build = yes
 						
 					}
@@ -1103,9 +1175,9 @@ GER_operation_barbarossa_category = {
 						instant_build = yes
 						
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = air_base
-						level = 6
+						level = 8
 						instant_build = yes
 						
 					}
@@ -1122,9 +1194,9 @@ GER_operation_barbarossa_category = {
 						instant_build = yes
 						
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = air_base
-						level = 6
+						level = 8
 						instant_build = yes
 						
 					}
@@ -1141,9 +1213,9 @@ GER_operation_barbarossa_category = {
 						instant_build = yes
 						
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = air_base
-						level = 6
+						level = 8
 						instant_build = yes
 						
 					}
@@ -1160,9 +1232,9 @@ GER_operation_barbarossa_category = {
 						instant_build = yes
 						
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = air_base
-						level = 6
+						level = 8
 						instant_build = yes
 						
 					}
@@ -1179,9 +1251,9 @@ GER_operation_barbarossa_category = {
 						instant_build = yes
 						
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = air_base
-						level = 6
+						level = 8
 						instant_build = yes
 						
 					}
@@ -1198,9 +1270,9 @@ GER_operation_barbarossa_category = {
 						instant_build = yes
 						
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = air_base
-						level = 6
+						level = 8
 						instant_build = yes
 						
 					}
@@ -1217,9 +1289,9 @@ GER_operation_barbarossa_category = {
 						instant_build = yes
 						
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = air_base
-						level = 6
+						level = 8
 						instant_build = yes
 						
 					}
@@ -1236,9 +1308,9 @@ GER_operation_barbarossa_category = {
 						instant_build = yes
 						
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = air_base
-						level = 6
+						level = 8
 						instant_build = yes
 						
 					}
@@ -1255,9 +1327,9 @@ GER_operation_barbarossa_category = {
 						instant_build = yes
 						
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = air_base
-						level = 6
+						level = 8
 						instant_build = yes
 						
 					}
@@ -1658,7 +1730,6 @@ GER_operation_barbarossa_category = {
 			}
 		}
 	}
-
 	summer_offensive_I_decision = { 
 	
 		allowed = {
@@ -1667,27 +1738,12 @@ GER_operation_barbarossa_category = {
 
 		visible = {
 			has_war_with = SOV
-			AND = { date > 1942.05.01 date < 1942.08.01 }
+			AND = { date > 1942.01.01 date < 1942.08.01 }
 		}
 
 		available = {
 			has_war_with = SOV
-			OR = {
-				AND = {
-					ITA = { controls_state = 2 }
-					ITA = { controls_state = 448 }
-					ITA = { controls_state = 449 }
-					ITA = { controls_state = 450 }	
-				}
-				OR = {
-					RAJ = {
-						has_capitulated = yes
-					}
-					JAP = { controls_state = 631 }
-					JAP = { controls_state = 629 }
-					JAP = { controls_state = 523 }
-				}
-			}
+			AND = { date > 1942.06.01 date < 1942.08.01 }
 		}
 
 		icon = generic_scorched_earth
@@ -1698,48 +1754,34 @@ GER_operation_barbarossa_category = {
 			factor = 100
 		}	
 
+		days_remove = 120
+
 		fire_only_once = yes
-	
+
+		remove_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = SOV_war_zone_flag
+				}
+				add_dynamic_modifier = { modifier = SOV_war_zone_modifier }
+			}
+		}
+
 		complete_effect = { 
-			add_timed_idea = {
-				idea = GER_Blau_I
-				days = 120
-			}
-			BUL = {
-				add_timed_idea = {
-					idea = Blau_I
-					days = 120
-				}	
-			}
-			ROM = {
-				add_timed_idea = {
-					idea = Blau_I
-					days = 120
+
+			every_country = {
+				limit = {
+					OR = {
+						tag = GER
+						tag = BUL
+						tag = ROM
+						tag = HUN
+						tag = EFR
+						tag = SLO
+						tag = SPR
+					}
 				}
-			}	
-			HUN = {	
-				add_timed_idea = {
-					idea = Blau_I
-					days = 120
-				}
-			}	
-			EFR = {	
-				add_timed_idea = {
-					idea = Blau_I
-					days = 120
-				}
-			}
-			SLO = {	
-				add_timed_idea = {
-					idea = Blau_I
-					days = 120
-				}
-			}	
-			SPR = {	
-				add_timed_idea = {
-					idea = Blau_I
-					days = 120
-				}
+				fall_blau_get_summer_offensive = yes 
 			}
 
 			hidden_effect = {
@@ -1755,7 +1797,6 @@ GER_operation_barbarossa_category = {
 			set_country_flag = GERsummeroffensive1
 	 	}
 	}
-	
 	summer_offensive_II_decision = { 
 	
 		allowed = {
@@ -1764,12 +1805,6 @@ GER_operation_barbarossa_category = {
 
 		available = {
 			has_war_with = SOV
-			
-			AND = { date > 1943.05.01 date < 1943.08.01 }
-			NOT = { has_idea = Blau_I }
-
-			# german advance check
-			SOV = { controls_state = 219 } # controls moscow 	
 		}
 
 		visible = {
@@ -1785,49 +1820,35 @@ GER_operation_barbarossa_category = {
 			factor = 100
 		}	
 
+		days_remove = 120
+
 		fire_only_once = yes
 		
+		remove_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = SOV_war_zone_flag
+				}
+				add_dynamic_modifier = { modifier = SOV_war_zone_modifier }
+			}
+		}
+
 		complete_effect = { 	
-			add_timed_idea = {
-				idea = GER_Blau_I
-				days = 120
+			every_country = {
+				limit = {
+					OR = {
+						tag = GER
+						tag = BUL
+						tag = ROM
+						tag = HUN
+						tag = EFR
+						tag = SLO
+						tag = SPR
+					}
+				}
+				fall_blau_get_summer_offensive = yes 
 			}
-			BUL = {
-				add_timed_idea = {
-					idea = Blau_I
-					days = 120
-				}	
-			}
-			ROM = {
-				add_timed_idea = {
-					idea = Blau_I
-					days = 120
-				}
-			}	
-			HUN = {	
-				add_timed_idea = {
-					idea = Blau_I
-					days = 120
-				}
-			}	
-			EFR = {	
-				add_timed_idea = {
-					idea = Blau_I
-					days = 120
-				}
-			}
-			SLO = {	
-				add_timed_idea = {
-					idea = Blau_I
-					days = 120
-				}
-			}	
-			SPR = {	
-				add_timed_idea = {
-					idea = Blau_I
-					days = 120
-				}
-			}
+
 			hidden_effect = {
 				 sound_effect = sp_ger_georges_song_2
 				 every_state = {
@@ -1842,21 +1863,14 @@ GER_operation_barbarossa_category = {
 			set_country_flag = GERsummeroffensive2
 		}
 	}
-	
 	summer_offensive_III_decision = { 
 	
 		allowed = {
 		   tag = GER
 		}
+
 		available = {
 			has_war_with = SOV
-			
-			AND = { date > 1944.05.01 date < 1944.08.01 } 
-			NOT = { has_idea = Blau_I }
-			
-			has_country_flag = GERsummeroffensive2
-			# german advance check
-			SOV = { controls_state = 219 } # controls moscow 	
 		}
 
 		visible = {
@@ -1870,49 +1884,36 @@ GER_operation_barbarossa_category = {
 		ai_will_do = {
 			factor = 100
 		}	
+
+		days_remove = 120
+
 		fire_only_once = yes
 	
-		complete_effect = { 
-			add_timed_idea = {
-				idea = GER_Blau_I
-				days = 120
+		remove_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = SOV_war_zone_flag
+				}
+				add_dynamic_modifier = { modifier = SOV_war_zone_modifier }
 			}
-			BUL = {
-				add_timed_idea = {
-					idea = Blau_I
-					days = 120
-				}	
+		}
+
+		complete_effect = { 	
+			every_country = {
+				limit = {
+					OR = {
+						tag = GER
+						tag = BUL
+						tag = ROM
+						tag = HUN
+						tag = EFR
+						tag = SLO
+						tag = SPR
+					}
+				}
+				fall_blau_get_summer_offensive = yes 
 			}
-			ROM = {
-				add_timed_idea = {
-					idea = Blau_I
-					days = 120
-				}
-			}	
-			HUN = {	
-				add_timed_idea = {
-					idea = Blau_I
-					days = 120
-				}
-			}	
-			EFR = {	
-				add_timed_idea = {
-					idea = Blau_I
-					days = 120
-				}
-			}
-			SLO = {	
-				add_timed_idea = {
-					idea = Blau_I
-					days = 120
-				}
-			}	
-			SPR = {	
-				add_timed_idea = {
-					idea = Blau_I
-					days = 120
-				}
-			}
+
 			hidden_effect = {
 				 sound_effect = sp_ger_georges_song_3
 				 every_state = {
@@ -1926,7 +1927,6 @@ GER_operation_barbarossa_category = {
 			set_country_flag = GERsummeroffensive3
 		}
 	}
-	
 	summer_offensive_IV_decision = { 
 	
 		allowed = {
@@ -1935,13 +1935,6 @@ GER_operation_barbarossa_category = {
 
 		available = {
 			has_war_with = SOV
-			
-			AND = { date > 1945.05.01 date < 1945.08.01 } 
-			NOT = { has_idea = Blau_I }
-			
-			has_country_flag = GERsummeroffensive3
-			# german advance check
-			SOV = { controls_state = 219 } # controls moscow 	
 		}
 
 		visible = {
@@ -1949,55 +1942,43 @@ GER_operation_barbarossa_category = {
 			AND = { date > 1945.03.01 date < 1945.08.01 } 
 		}
 
+
 		icon = generic_scorched_earth
 
 		cost = 0
 		ai_will_do = {
 			factor = 100
 		}	
+
+		days_remove = 120
+
 		fire_only_once = yes
 	
-		complete_effect = { 		
-			add_timed_idea = {
-				idea = GER_Blau_I
-				days = 120
+		remove_effect = {
+			every_state = {
+				limit = {
+					has_state_flag = SOV_war_zone_flag
+				}
+				add_dynamic_modifier = { modifier = SOV_war_zone_modifier }
 			}
-			BUL = {
-				add_timed_idea = {
-					idea = Blau_I
-					days = 120
-				}	
+		}
+
+		complete_effect = { 	
+			every_country = {
+				limit = {
+					OR = {
+						tag = GER
+						tag = BUL
+						tag = ROM
+						tag = HUN
+						tag = EFR
+						tag = SLO
+						tag = SPR
+					}
+				}
+				fall_blau_get_summer_offensive = yes 
 			}
-			ROM = {
-				add_timed_idea = {
-					idea = Blau_I
-					days = 120
-				}
-			}	
-			HUN = {	
-				add_timed_idea = {
-					idea = Blau_I
-					days = 120
-				}
-			}	
-			EFR = {	
-				add_timed_idea = {
-					idea = Blau_I
-					days = 120
-				}
-			}
-			SLO = {	
-				add_timed_idea = {
-					idea = Blau_I
-					days = 120
-				}
-			}	
-			SPR = {	
-				add_timed_idea = {
-					idea = Blau_I
-					days = 120
-				}
-			}
+			
 			hidden_effect = {
 				every_state = {
 					limit = {
@@ -2306,6 +2287,54 @@ economy_decisions = {
 				remove_idea = GER_rationing
 				add_idea = GER_rationing_expanded
 			}
+			71 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = fuel_silo
+					level = 2
+					instant_build = yes
+				}
+			}
+			808 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = fuel_silo
+					level = 2
+					instant_build = yes
+				}
+			}
+			79 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = fuel_silo
+					level = 2
+					instant_build = yes
+				}
+			}
+			212 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = fuel_silo
+					level = 2
+					instant_build = yes
+				}
+			}
+			165 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = fuel_silo
+					level = 2
+					instant_build = yes
+				}
+			}
+			20 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = fuel_silo
+					level = 2
+					instant_build = yes
+				}
+			}
 		}
 
 		ai_will_do = {
@@ -2588,9 +2617,8 @@ special_projects = {
 		   tag = GER
 		}
 		available = {
-			has_tech = construction4
-			num_of_civilian_factories_available_for_projects > 34
-			country_exists = EFR
+			date > 1941.1.1
+			num_of_civilian_factories_available_for_projects > 30
 			OR = {
 					GER = { controls_state = 6 }
 					any_other_country = {
@@ -2639,10 +2667,10 @@ special_projects = {
 			factor = 5
 		}
 
-		days_remove = 250
+		days_remove = 180
 
 		modifier = {
-			civilian_factory_use = 35
+			civilian_factory_use = 30
 		}
 
 		remove_effect = {
@@ -2651,485 +2679,608 @@ special_projects = {
 			hidden_effect = {
 				news_event = { id = news.490 }
 				19 = {
-					add_building_construction = {
+					set_building_level = {
 						type = anti_air_building
 						level = 3
 						instant_build = yes 
 					}				
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 9737
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 11565
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 6621
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 6777
 						level = 6
 					}					
 				}
 				23 = {
-					add_building_construction = {
+					set_building_level = {
 						type = anti_air_building
 						level = 3
 						instant_build = yes 
 					}				
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 6657
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 9597
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 11600
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 9710
 						level = 6
 					}	
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 743
 						level = 6
 					}					
 				}
 				30 = {
-					add_building_construction = {
+					set_building_level = {
 						type = anti_air_building
 						level = 3
 						instant_build = yes 
 					}				
-					add_building_construction = {	
+					set_building_level = {	
 						type = coastal_bunker
 						province = 11465
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 11616
 						level = 6
 					}
 				}
 				14 = {
-					add_building_construction = {
+					set_building_level = {
 						type = anti_air_building
 						level = 3
 						instant_build = yes 
 					}				
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 9510
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 6536
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 542
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 3552
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 6572
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 9525
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 11508
 						level = 6
 					}
 				}
 				15 = {
-					add_building_construction = {
+					set_building_level = {
 						type = anti_air_building
 						level = 3
 						instant_build = yes 
 					}				
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 9550
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 6449
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 3579
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 11535
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 6599
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 9434
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 485
 						level = 6
 					}
 				}
 				29 = {
-					add_building_construction = {
+					set_building_level = {
 						type = anti_air_building
 						level = 3
 						instant_build = yes 
 					}				
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 11420
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 9500
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 11548
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 575
 						level = 6
 					}
 				}
 				6 = {
-					add_building_construction = {
+					set_building_level = {
 						type = anti_air_building
 						level = 3
 						instant_build = yes 
 					}				
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 6446
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 6560
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 6598
 						level = 6
 					}					
 				}
 				7 = {
-					add_building_construction = {
+					set_building_level = {
 						type = anti_air_building
 						level = 3
 						instant_build = yes 
 					}				
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 480
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 9431
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 9498
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 3211
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 68
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 3314
 						level = 6
 					}
 				}
 				36 = {
-					add_building_construction = {
+					set_building_level = {
 						type = anti_air_building
 						level = 3
 						instant_build = yes 
 					}				
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 6336
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 9335
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 11318
 						level = 6
 					}
 				}
 				56 = {
-					add_building_construction = {
+					set_building_level = {
 						type = anti_air_building
 						level = 3
 						instant_build = yes 
 					}				
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 11360
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 241
 						level = 6
 					}
 				}
 				59 = {
-					add_building_construction = {
+					set_building_level = {
 						type = anti_air_building
 						level = 3
 						instant_build = yes 
 					}				
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 374
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 6349
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 3326
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 6325
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 9347
 						level = 6
 					}					
 				}
 				58 = {
-					add_building_construction = {
+					set_building_level = {
 						type = anti_air_building
 						level = 3
 						instant_build = yes 
 					}				
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 3368
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 3231
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 11366
 						level = 6
 					}
 				}
 				99 = {
-					add_building_construction = {
+					set_building_level = {
 						type = anti_air_building
 						level = 3
 						instant_build = yes 
 					}				
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 332
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 399
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 3206
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 316
 						level = 6
 					}
 				}
 				142 = {
-					add_building_construction = {
+					set_building_level = {
 						type = anti_air_building
 						level = 3
 						instant_build = yes 
 					}				
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 9296
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 11367
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 6176
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 53
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 122
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 199
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 3090
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 188
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 137
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 3192
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 65
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 6145
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 3114
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 3188
 						level = 6
 					}					
 				}
 				144 = {
-					add_building_construction = {
+					set_building_level = {
 						type = anti_air_building
 						level = 3
 						instant_build = yes 
 					}				
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 192
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = bunker
 						province = 9116
 						level = 6
 					}
-					add_building_construction = {
+					set_building_level = {
 						type = bunker
 						province = 11050
 						level = 6
 					}					
 				}
 				143 = {
-					add_building_construction = {
+					set_building_level = {
 						type = anti_air_building
 						level = 3
 						instant_build = yes 
 					}				
-					add_building_construction = {
+					set_building_level = {
 						type = coastal_bunker
 						province = 3022
 						level = 6
 					}
+				}
+				785 = {
+					set_building_level = {
+						type = anti_air_building
+						level = 3
+						instant_build = yes 
+					}
 				}				
+				35 = {
+					set_building_level = {
+						type = anti_air_building
+						level = 3
+						instant_build = yes 
+					}
+				}
+				24 = {
+					set_building_level = {
+						type = anti_air_building
+						level = 3
+						instant_build = yes 
+					}
+				}
+				34 = {
+					set_building_level = {
+						type = anti_air_building
+						level = 3
+						instant_build = yes 
+					}
+				}
+				110 = {
+					set_building_level = {
+						type = anti_air_building
+						level = 3
+						instant_build = yes 
+					}
+				}
 			}
 		}
 	}
+
+	GER_deploy_american_welcome_party = {
+		icon = GFX_decision_deploy
+		ai_will_do = { factor = 10 }
+		cost = 0
+
+		visible = {
+		}
+
+		available = {
+			date > 1941.1.1
+			OR = {
+					GER = { controls_state = 6 }
+					any_other_country = {
+					is_in_faction_with = GER
+					controls_state = 6
+				}
+			}
+			OR = {
+					GER = { controls_state = 7 }
+					any_other_country = {
+					is_in_faction_with = GER
+					controls_state = 7
+				}
+			}
+			OR = {
+					GER = { controls_state = 36 }
+					any_other_country = {
+					is_in_faction_with = GER
+					controls_state = 36
+				}
+			}
+			OR = {
+					GER = { controls_state = 99 }
+					any_other_country = {
+					is_in_faction_with = GER
+					controls_state = 99
+				}
+			}
+			OR = {
+					GER = { controls_state = 59 }
+					any_other_country = {
+					is_in_faction_with = GER
+					controls_state = 59
+				}
+			}
+			OR = {
+					GER = { controls_state = 56 }
+					any_other_country = {
+					is_in_faction_with = GER
+					controls_state = 56
+				}
+			}
+		}
+
+		allowed = {
+			original_tag = GER		
+		}
+
+		fire_only_once = yes
+
+		complete_effect = {
+			hidden_effect = {
+				GER = {
+					country_event = { id = germany.700 days = 1 }
+				}
+			}
+			custom_effect_tooltip = "Spawns 150 Garrison Divisions"
+			if = { limit = { is_ai = no }
+				add_manpower = -1000000
+			}
+			ROOT = {
+				add_equipment_to_stockpile = {
+					amount = 400
+					type = train_equipment_3
+				}
+			}
+		}
+
+		days_remove = 180
+
+		modifier = {
+			industrial_capacity_factory = -0.15
+		}
+
+
+	}
+
 	GER_flak_towers = {
 
 		icon = generic_construction
@@ -3152,7 +3303,7 @@ special_projects = {
 			has_war = yes
 		}
 
-		days_remove = 270
+		days_remove = 200
 
 		modifier = {
 			civilian_factory_use = 8
@@ -3328,6 +3479,9 @@ operations = {
 		remove_effect = {
 			custom_effect_tooltip = GER_afrikakorps_tt
 			add_ideas = GER_afrika_campaign
+			ITA = {
+				add_ideas = GER_afrika_campaign
+			}
 			hidden_effect = {
 				GER = {
 					country_event = germany.233
@@ -3513,6 +3667,44 @@ GER_case_anton_category = {
 }
 
 foreign_politics = {
+	GER_operation_green = {
+		
+		icon = ger_reichskommissariats
+
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = GER
+		}
+
+		available = {
+			controls_state = 119
+			ENG = {
+				has_capitulated = yes
+			}
+		}
+
+		visible = {
+			has_war = yes
+		}
+
+		complete_effect = {
+			declare_war_on = {
+				target = IRE
+				type = annex_everything
+			}
+			IRE = { 
+				add_to_war = { 
+					targeted_alliance = ENG
+					enemy = GER
+				}
+			}
+		}	
+
+		ai_will_do = {
+			factor = 1
+		}
+	}
 	GER_form_greater_german_reich = {
 
 		icon = generic_form_nation
@@ -4262,6 +4454,7 @@ foreign_politics = {
 			custom_effect_tooltip = GER_danzig_info_tt
 			hidden_effect = {
 				GER = {
+					country_event = { id = germany.320 days = 7 }
 					swap_ideas = {
 						remove_idea = general_staff0
 						add_idea = general_staff1
@@ -4293,24 +4486,8 @@ foreign_politics = {
 					custom_effect_tooltip = needs_approval
 				}
 			}
-			if = {
-				limit = {
-					date < 1939.9.1
-				}
-				add_timed_idea = {
-					idea = GER_blitzkrieg
-					days = 190	
-				}
-			}			
-			else_if = {
-				limit = {
-					date > 1939.8.30
-				}			
-				add_timed_idea = {
-					idea = GER_blitzkrieg
-					days = 220
-				}
-			}			
+			
+								
 		}
 	}
 
@@ -4469,7 +4646,8 @@ foreign_politics = {
 		}
 
 		complete_effect = {
-
+			custom_effect_tooltip = GER_Around_maginot_tt
+			add_ideas = GER_blitzkrieg
 			hidden_effect = {
 				complete_national_focus = GER_around_maginot
 				if = {
@@ -4626,40 +4804,30 @@ foreign_politics = {
 			has_war = yes
 			GER = {
 				country_exists = PER
+			}		
+			OR = {
+				GER = {
+					controls_state = 455
+				}
+				any_other_country = {
+					is_in_faction_with = GER
+					controls_state = 455
+				}
 			}
-			PER = {
-				is_puppet = no 
-			}
-			any_other_country = {
-				is_in_faction_with = GER
-				controls_state = 291
-			}
-			any_other_country = {
-				is_in_faction_with = GER
-				controls_state = 676
-			}			
 		}
 		
-		visible = {
-			PER = {
-				has_war = no 
-			}		
-			is_puppet = no
-			has_war = yes
-			any_other_country = {
-				is_in_faction_with = GER
-				controls_state = 450
-			}
-			any_other_country = {
-				is_in_faction_with = GER
-				controls_state = 448
-			}					
+		visible = {	
+			has_war = yes			
 		}		
 
 		complete_effect = {
 			PER = { give_resource_rights = { receiver = GER state = 413 } }
 			PER = { give_resource_rights = { receiver = GER state = 412 } }
 			PER = { give_resource_rights = { receiver = GER state = 411 } }
+		}
+
+		ai_will_do = {
+			factor = 500
 		}
 	}
 
@@ -4674,36 +4842,37 @@ foreign_politics = {
 		available = {
 			is_puppet = no 
 			has_war = yes
-			AND = {
-				IRQ = {
-					is_in_faction_with = GER
-					controls_state = 291
-					controls_state = 676
-				}					
+			IRQ = {
+				NOT = {
+					is_in_faction_with = ENG
+				}
+			
+				has_capitulated = no
+				
 			}	
+			OR = {
+				GER = {
+					controls_state = 455
+				}
+				any_other_country = {
+					is_in_faction_with = GER
+					controls_state = 455
+				}
+			}				
 		}
 
 		visible = {
 			is_puppet = no
-			has_war = yes
-			IRQ = {
-				is_in_faction_with = GER
-				controls_state = 291
-				controls_state = 676
-			}			
-			any_other_country = {
-				is_in_faction_with = GER
-				controls_state = 450
-			}
-			any_other_country = {
-				is_in_faction_with = GER
-				controls_state = 448
-			}					
+			has_war = yes							
 		}
 
 		complete_effect = {
 			IRQ = { give_resource_rights = { receiver = GER state = 291 } }
 			IRQ = { give_resource_rights = { receiver = GER state = 676 } } 
+		}
+
+		ai_will_do = {
+			factor = 500
 		}
 	}
 
@@ -4770,35 +4939,27 @@ foreign_politics = {
 				BUL = {
 					is_in_faction_with = ROOT
 					is_free_or_subject_of_root = yes
+					has_full_control_of_state = 48
+					has_full_control_of_state = 806
+					has_full_control_of_state = 212
+					has_full_control_of_state = 211
 				}
 			}
 			FRA = { has_capitulated = yes }
 			has_war = yes
+
 		}
 
 		ai_will_do = {
 			factor = 0
 
 			modifier = {
-				add = 10
+				add = 100
 				BUL = { is_ai = yes }
 			}
 		}
 
 		complete_effect = {
-			puppet = BUL
-			if = {
-				limit = {
-					NOT = {
-						has_dlc = "Death or Dishonor"
-					}	 
-					BUL = {
-						is_in_faction_with = GER
-					}
-					is_subject = no	
-				}
-				puppet = BUL
-			}
 			if = {
 				limit = {
 					has_dlc = "Death or Dishonor" 
@@ -4932,6 +5093,17 @@ foreign_politics = {
 		}
 
 		available = {
+			HUN = {
+				has_full_control_of_state = 155
+				has_full_control_of_state = 808
+				has_full_control_of_state = 43
+				has_full_control_of_state = 807
+				has_full_control_of_state = 154	
+			}
+			ROM = {
+				has_full_control_of_state = 46
+				has_full_control_of_state = 79
+			}
 			OR = {
 				HUN = {
 					is_in_faction_with = ROOT
@@ -4972,6 +5144,11 @@ foreign_politics = {
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = fuel_silo
 					level = 2
 					instant_build = yes
 				}
@@ -5284,16 +5461,16 @@ GER_endsieg_category = {
 
 		visible = {
 			has_war_with = SOV
-			AND = { date > 1942.03.01 }
-			SOV = {
-				surrender_progress < 0.5
-			}			
+			date > 1942.03.01			
 		}
 
 		available = {
 			has_war_with = SOV
-			SOV = {
-				surrender_progress < 0.35
+			OR = {
+				SOV = {
+					surrender_progress < 0.35
+				}
+				date > 1943.1.1
 			}
 			# allied advance check
 			any_other_country = {
@@ -5535,29 +5712,30 @@ GER_endsieg_category = {
 
 	GER_volksturm_decision = {
 		icon = generic_scorched_earth
-
-		cost = 25
 		
 		fire_only_once = no
+		is_good = yes
 
 		available = {
-			controls_state = 64 
-			has_manpower > 100000
+			SOV = {
+				has_capitulated = yes
+			}
+		
 		}
-
 		visible = {
 			has_completed_focus = GER_volksturm
 		}
+		activation = {
+			has_completed_focus = GER_volksturm
+		}
 
-		days_remove = 20
+		days_mission_timeout = 35
 
-		days_re_enable = 40
+		days_re_enable = 2
 
-		remove_effect = {
-			add_manpower = -100000
-			random_owned_controlled_state = {
+		timeout_effect = { 
+			random_core_state = {
 				limit = { ROOT = { has_full_control_of_state = PREV } }
-				prioritize = { 64 }
 				create_unit = {
 					division = "name = \"\" division_template = \"Volksturm Division\" start_experience_factor = 0.0 start_equipment_factor = 1" 
 					owner = GER
@@ -6057,41 +6235,27 @@ GER_military_buildup = {
 				AND = {
 					has_navy_size = {
 						archetype = ship_hull_heavy
-						size > 8
+						size > 7
 					}
 					has_navy_size = {
 						archetype = ship_hull_carrier
-						size > 2
+						size > 1
 					}
 				}
 				has_navy_size = {
 					archetype = ship_hull_heavy
-					size > 11
+					size > 9
 				}	
 			}	
 			OR = {
-				AND = { 
-					has_navy_size = {
-						archetype = ship_hull_cruiser
-						size > 19
-					}
-					has_navy_size = {
-						archetype = ship_hull_light
-						size > 49
-					}
-				}
 				has_navy_size = {
 					archetype = ship_hull_cruiser
 					size > 29
 				}
 				AND = { 
 					has_navy_size = {
-						archetype = ship_hull_cruiser
-						size > 9
-					}
-					has_navy_size = {
 						archetype = ship_hull_light
-						size > 99
+						size > 19
 					}
 				}
 			}
@@ -6136,8 +6300,8 @@ GER_military_buildup = {
 					version_name = "Bismarck Class"
 				}
 				name = "Class-H" 
-				requested_factories = 5
-				progress = 0.55
+				requested_factories = 20
+				progress = 0.9
 				amount = 1
 			}
 			add_equipment_production = {
@@ -6147,30 +6311,8 @@ GER_military_buildup = {
 					version_name = "Bismarck Class"
 				}
 				name = "Class-H" 
-				requested_factories = 5
-				progress = 0.55
-				amount = 1
-			}
-			add_equipment_production = {
-				equipment = {
-					type = ship_hull_heavy_3
-					creator = "GER" 
-					version_name = "Bismarck Class"
-				}
-				name = "Class-H" 
-				requested_factories = 5
-				progress = 0.55
-				amount = 1
-			}
-			add_equipment_production = {
-				equipment = {
-					type = ship_hull_heavy_3
-					creator = "GER" 
-					version_name = "Bismarck Class"
-				}
-				name = "Class-H" 
-				requested_factories = 5
-				progress = 0.55
+				requested_factories = 20
+				progress = 0.90
 				amount = 1
 			}
 			add_war_support = 0.05
@@ -6193,7 +6335,6 @@ GER_military_buildup = {
 		}
 
 		modifier = {
-			civilian_factory_use = 5 
 			industrial_capacity_dockyard = 0.1
 		}
 
@@ -6248,8 +6389,8 @@ GER_military_buildup = {
 					version_name = "Bismarck Class"
 				}
 				name = "Bismarck" 
-				requested_factories = 5
-				progress = 0.55
+				requested_factories = 20
+				progress = 0.75
 				amount = 1
 			}
 			add_equipment_production = {
@@ -6259,8 +6400,8 @@ GER_military_buildup = {
 					version_name = "Bismarck Class"
 				}
 				name = "Tirpitz" 
-				requested_factories = 5
-				progress = 0.45
+				requested_factories = 20
+				progress = 0.75
 				amount = 1
 			}
 			add_equipment_production = {
@@ -6270,8 +6411,8 @@ GER_military_buildup = {
 					version_name = "Graf Zeppelin Class"
 				}
 				name = "Graf Zeppelin" 
-				requested_factories = 5
-				progress = 0.45
+				requested_factories = 20
+				progress = 0.50
 				amount = 1
 			}
 		}	
@@ -6281,16 +6422,15 @@ GER_military_buildup = {
 		icon = generic_construction
 
 		available = {
-			arms_factory > 149
 			synthetic_refinery > 9
 			synthetic_rubber_refinery > 9
 
 			has_deployed_air_force_size = {
-				size > 1999
+				size > 1899
 				type = fighter
 			}
 			has_deployed_air_force_size = {
-				size > 899
+				size > 799
 				type = cas
 			}
 			has_deployed_air_force_size = {
@@ -6338,16 +6478,16 @@ GER_military_buildup = {
 		icon = generic_construction
 
 		available = {
-			industrial_complex > 119
+
 			synthetic_refinery > 9
 			synthetic_rubber_refinery > 9
 
 			has_deployed_air_force_size = {
-				size > 1999
+				size > 1899
 				type = fighter
 			}
 			has_deployed_air_force_size = {
-				size > 599
+				size > 549
 				type = cas
 			}
 		}
@@ -6426,7 +6566,6 @@ GER_military_buildup = {
 	}	
 }
 
-
 GER_economy_of_plunder_category = {
 	GER_economy_of_plunder_debug1111111111111 = {
 		icon = ger_reichskommissariats
@@ -6442,13 +6581,19 @@ GER_economy_of_plunder_category = {
 		}
 		
 		complete_effect = {
-			set_variable = {
-				var = GER_num_arbeitseinsatz
-				value = 5
-			}
-			divide_variable = {
-				var = GER_guest_worker_var
-				value = 100
+			every_country = {
+				limit = {
+					OR = {
+						tag = GER
+						tag = BUL
+						tag = ROM
+						tag = HUN
+						tag = EFR
+						tag = SLO
+						tag = SPR
+					}
+				}
+				fall_blau_get_summer_offensive = yes 
 			}
 		}		
 	}

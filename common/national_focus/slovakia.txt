@@ -578,7 +578,7 @@
 		ai_will_do = {
 		   factor = 60 }
 		completion_reward = {
-			army_experience = 30
+			army_experience = 100
 			add_doctrine_cost_reduction = {
 				name = land_doc_bonus
 				cost_reduction = 0.5
@@ -743,6 +743,21 @@
 	 add_equipment_to_stockpile = { type = radio_equipment amount = 400 producer = GER }
   }
 }
+#Slovak airforce
+  focus = {  
+	  id = SLO_slovak_airforce
+	  icon = GFX_SLO_air_force
+	  relative_position_id = SLO_mobilize_slovak_army
+	  prerequisite = { focus = SLO_mobilize_slovak_army }
+	   x = -17
+		y = 1
+		cost = 5
+		ai_will_do = {
+		   factor = 16 }
+		completion_reward = {
+		air_experience = 50
+	 } 
+  }
 #Prepare production for medium tank
   focus = {  
 	   id = SLO_prepare_production
@@ -750,12 +765,18 @@
 	   relative_position_id = SLO_tank_focus
 		prerequisite = { focus = SLO_motorized_focus focus = SLO_tank_focus focus = SLO_dispersed_support focus = SLO_integrated_support focus = SLO_assault focus = SLO_infiltration focus = SLO_deep_battle focus = SLO_mass_mobilization}
 	   mutually_exclusive = { focus = SLO_continue_production focus = SLO_spawn_mot focus = SLO_special_forces focus = SLO_infantry_focus }
-		x = 1
+		x = -1
 		y = 1
 		cost = 5
 		ai_will_do = {
 		   factor = 50 }
 	  completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine 
+			}
 	  add_equipment_to_stockpile = { type = infantry_equipment amount = 500 producer = GER }
 	  random_owned_controlled_state = {
 			prioritize = { 809 }
@@ -790,9 +811,9 @@
   focus = {  
 	   id = SLO_medium_panzer
 	   icon = GFX_GER_achtung_panzer
-	   relative_position_id = SLO_light_tank
-	  prerequisite = { focus = SLO_light_tank}
-		x = 1
+	   relative_position_id = SLO_prepare_production
+	  prerequisite = { focus = SLO_prepare_production }
+		x = 0
 		y = 1
 		cost = 5
 		ai_will_do = {
@@ -808,7 +829,6 @@
 		category = armor
 	  }
 	  custom_effect_tooltip = SLO_medium_tt
-	  show_ideas_tooltip = SLO_ckd	
 	  hidden_effect = {
    division_template = {
 		  name = "Medium Tank Division"
@@ -896,12 +916,18 @@
 	   relative_position_id = SLO_tank_focus
 	  prerequisite = { focus = SLO_motorized_focus focus = SLO_tank_focus focus = SLO_dispersed_support focus = SLO_integrated_support focus = SLO_assault focus = SLO_infiltration focus = SLO_deep_battle focus = SLO_mass_mobilization}
 		mutually_exclusive = { focus = SLO_prepare_production focus = SLO_spawn_mot focus = SLO_special_forces focus = SLO_infantry_focus }
-		x = -1
+		x = 1
 		y = 1
 		cost = 5
 		ai_will_do = {
 		   factor = 50 }
 		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine 
+			}
 	 add_equipment_to_stockpile = { type = infantry_equipment amount = 500 producer = GER }
 		 random_owned_controlled_state = {
 			prioritize = { 809 }
@@ -914,45 +940,13 @@
 		} 
 	   }
   }
-   #Light tank
-	focus = {  
-		id = SLO_light_tank
-		icon = GFX_focus_CZE_military_research_institute_shine
-		relative_position_id = SLO_continue_production
-		prerequisite = { focus = SLO_continue_production focus = SLO_prepare_production}
-		x = 1
-		y = 1
-		cost = 5
-		ai_will_do = {
-		   factor = 50 }
-		completion_reward = {
-		custom_effect_tooltip = available_designer
-	  show_ideas_tooltip = SLO_ckd
-
-	   }
-  }
-  #Slovak airforce
-  focus = {  
-	  id = SLO_slovak_airforce
-	  icon = GFX_SLO_air_force
-	  relative_position_id = SLO_mobilize_slovak_army
-	  prerequisite = { focus = SLO_mobilize_slovak_army }
-	   x = -17
-		y = 1
-		cost = 5
-		ai_will_do = {
-		   factor = 16 }
-		completion_reward = {
-		air_experience = 50
-	 } 
-  }
   #Modernize Light tanks
 	focus = {  
 	   id = SLO_light_tank_modernization
 	   icon = GFX_focus_generic_tank_production
-	   relative_position_id = SLO_light_tank
-		prerequisite = { focus = SLO_light_tank }
-		x = -1
+	   relative_position_id = SLO_continue_production
+		prerequisite = { focus = SLO_continue_production }
+		x = 0
 		y = 1
 		cost = 5
 		ai_will_do = {
@@ -1010,12 +1004,30 @@
   } 
 }
 }
+   #Light tank
+	focus = {  
+		id = SLO_light_tank
+		icon = GFX_focus_CZE_military_research_institute_shine
+		relative_position_id = SLO_light_tank_modernization
+		prerequisite = { focus = SLO_light_tank_modernization }
+		x = 0
+		y = 1
+		cost = 5
+		ai_will_do = {
+		   factor = 50 }
+		completion_reward = {
+		custom_effect_tooltip = available_designer
+	  show_ideas_tooltip = SLO_ckd
+
+	   }
+  }
+  
 #German assistance
 	focus = {  
 	   id = SLO_german_assistance
 	   icon = GFX_GER_endless_offensives
-	   relative_position_id = SLO_light_tank_modernization
-		prerequisite = { focus = SLO_light_tank_modernization focus = SLO_medium_panzer }
+	   relative_position_id = SLO_medium_panzer
+		prerequisite = { focus = SLO_medium_panzer }
 		x = 0
 		y = 1
 		cost = 5
@@ -1038,10 +1050,10 @@
 	focus = {  
 	   id = SLO_tiger_tank
 	   icon = GFX_GER_mobile_fortresses
-	   relative_position_id = SLO_light_tank_modernization
-	  prerequisite = { focus = SLO_light_tank_modernization focus = SLO_medium_panzer }
-		x = 2
-		y = 1
+	   relative_position_id = SLO_tank_focus
+	  prerequisite = { focus = SLO_german_assistance focus = SLO_light_tank }
+		x = 0
+		y = 4
 		cost = 5
 		ai_will_do = {
 		   factor = 100 }
@@ -1051,6 +1063,7 @@
 	   SLO = { has_tech = slo_1942_heavy_tank_chassis }
 	   EFR = { has_tech = ger_1942_heavy_tank_chassis }
 	   SPR = { has_tech = ger_1942_heavy_tank_chassis }
+	   date > 1941.6.1
 	 }  
 	}	
 		completion_reward = {
@@ -1288,7 +1301,7 @@
 	show_ideas_tooltip = SLO_rudolf_pilfousek
 	add_ideas = SLO_moto_mech_idea
 		add_tech_bonus = {		
-		bonus = 0.5
+		bonus = 1
 		uses = 1 
 		technology = slo_nsb_mechanised_infantry2 
 	  } 
@@ -1558,15 +1571,12 @@
 		ai_will_do = {
 		   factor = 12 }
 		completion_reward = {  
-		set_technology =  {
-		pack_artillery2 = 1
-		} 
 		 add_equipment_to_stockpile = { type = pack_artillery_equipment amount = 800 producer = GER }
-	   add_tech_bonus = {
-		bonus = 1
-		uses = 1
-		technology = pack_artillery3
-	  }
+	 		 add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = artillery
+			}
 	 }
 }  
  #Expand airborne centre
@@ -1779,11 +1789,10 @@
 		   factor = 100 }
 		completion_reward = { 
 		set_technology = {
-		artillery2 = 1
 		antiair1 = 1
-		antiair2 = 1
+		antiair3 = 1
 		antitank2 = 1
-		antitank1 = 1
+		antitank4 = 1
 		}
 	  add_equipment_to_stockpile = { type = artillery_equipment amount = 800 producer = GER }
 	  add_equipment_to_stockpile = { type = heavy_artillery_equipment amount = 300 producer = GER }
@@ -1947,7 +1956,7 @@
 	   id = SLO_soviet_war
 	   icon = GFX_SLO_destroy_bolshevism
 	   relative_position_id = SLO_commando
-	   prerequisite = { focus = SLO_commando focus = SLO_tiger_tank focus = SLO_security_divisions focus = SLO_german_assistance focus = SLO_improved_mechanization } 
+	   prerequisite = { focus = SLO_commando focus = SLO_tiger_tank focus = SLO_security_divisions focus = SLO_improved_mechanization } 
 	   available = {
 			has_war_with = SOV
 		}

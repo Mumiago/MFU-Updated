@@ -1,3 +1,555 @@
+FRA_colonial_rule = {
+	FRA_Colonial_exploit_production_efficiency_cap = {
+		icon = generic_industry
+		available = { 
+			NOT =  {
+			 has_country_flag = FRA_colonial_rule_flag			
+			}
+			NOT = {
+				check_variable = {
+					FRA_colonial_temp1 > 1
+				}
+			}
+		 } 
+		visible = {
+			NOT = {
+				check_variable = {
+					FRA_colonial_temp1 > 1
+				}
+			}
+		}    
+
+		cost = 25
+		days_remove = 90
+		days_re_enable = 275
+		complete_effect = {
+			set_country_flag = { flag = FRA_colonial_rule_flag value = 1 days = 365 }
+		   }
+		remove_effect = {
+			custom_effect_tooltip = french_empire_idea_tooltip
+			custom_effect_tooltip = FRA_cd
+			add_to_variable = { FRA_colonial_rule_production_factory_max_efficiency_modifier = +0.02 tooltip = production_factory_max_efficiency_tooltip }
+			add_to_variable = { FRA_colonial_rule_stability_factor_modifier = -0.06 tooltip = stability_factor_tooltip }
+			add_to_variable = { FRA_colonial_rule_compliance_growth_modifier = -0.50 tooltip = compliance_growth_tooltip }
+			add_to_variable = { FRA_colonial_rule_production_factory_efficiency_gain_factor_modifier = -0.07 tooltip = production_factory_efficiency_gain_factor_tooltip } 
+			add_to_variable = { FRA_colonial_temp1 = +1 }
+		}
+	}
+	FRA_Colonial_exploit_factory_production_output = {
+		icon = generic_industry
+		available = { 
+			NOT =  {
+			 has_country_flag = FRA_colonial_rule_flag
+			}
+			NOT = {
+				check_variable = {
+					FRA_colonial_temp2 > 2
+				}
+			}
+		 } 
+		visible = { NOT = {
+				check_variable = {
+					FRA_colonial_temp2 > 1
+				}
+			} }
+		cost = 25
+		days_remove = 90
+		days_re_enable = 275
+		complete_effect = {
+			set_country_flag = { flag = FRA_colonial_rule_flag value = 1 days = 365 }
+		   }
+		remove_effect = {
+			custom_effect_tooltip = french_empire_idea_tooltip
+			custom_effect_tooltip = FRA_cd
+			add_to_variable = { FRA_colonial_rule_industrial_capacity_factory_modifier = +0.06 tooltip = industrial_capacity_factory_tooltip }
+			add_to_variable = { FRA_colonial_rule_stability_factor_modifier = -0.025 tooltip = stability_factor_tooltip }
+			add_to_variable = { FRA_colonial_rule_compliance_growth_modifier = -0.50 tooltip = compliance_growth_tooltip }
+			add_to_variable = { FRA_colonial_temp2 = +1 }
+		}
+
+	}
+	FRA_Colonial_exploit_production_factory_efficiency_gain_factor = {
+		icon = generic_industry
+		available = { 
+			NOT =  {
+			 has_country_flag = FRA_colonial_rule_flag
+			}
+		 } 
+		visible = { original_tag = FRA }
+		cost = 25
+		days_remove = 90
+		days_re_enable = 275
+		complete_effect = {
+			set_country_flag = { flag = FRA_colonial_rule_flag value = 1 days = 365 }
+		   }
+		remove_effect = {
+			custom_effect_tooltip = french_empire_idea_tooltip
+			custom_effect_tooltip = FRA_cd
+			add_to_variable = { FRA_colonial_rule_production_factory_efficiency_gain_factor_modifier = +0.05 tooltip = production_factory_efficiency_gain_factor_tooltip }
+			add_to_variable = { FRA_colonial_rule_stability_factor_modifier = -0.025 tooltip = stability_factor_tooltip }
+			add_to_variable = { FRA_colonial_rule_compliance_growth_modifier = -0.50 tooltip = compliance_growth_tooltip }
+		}
+	}
+	FRA_Colonial_rule_local_resources_factor = {
+		icon = generic_operation
+		available = { 
+			NOT =  {
+			 has_country_flag = FRA_colonial_rule_flag
+			}
+		 } 
+		visible = { original_tag = FRA}
+		cost = 25
+		days_remove = 90
+		days_re_enable = 275
+		complete_effect = {
+			set_country_flag = { flag = FRA_colonial_rule_flag value = 1 days = 365 }
+		   }
+		remove_effect = {
+			custom_effect_tooltip = french_empire_idea_tooltip
+			custom_effect_tooltip = FRA_cd
+			add_to_variable = { FRA_colonial_rule_local_resources_factor_modifier = +0.1 tooltip = local_resources_factor_tooltip }
+			add_to_variable = { FRA_colonial_rule_stability_factor_modifier = -0.025 tooltip = stability_factor_tooltip }
+			add_to_variable = { FRA_colonial_rule_compliance_growth_modifier = -0.50 tooltip = compliance_growth_tooltip }
+		}
+	}
+	FRA_Colonial_compliance_gain = {
+		available { original_tag = FRA }
+		visible = { original_tag = FRA }
+		days_remove = 90
+		days_re_enable = 275
+        custom_cost_trigger = {
+			has_equipment = { infantry_equipment > 4999 }
+			has_equipment = { support_equipment > 399 }
+			has_equipment = { motorized_equipment > 199 }
+		}
+		complete_effect = { 
+			custom_effect_tooltip = french_empire_idea_tooltip
+			custom_effect_tooltip = FRA_cd
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = -5000
+			}
+			add_equipment_to_stockpile = {
+				type = support_equipment
+				amount = -400
+			}
+			add_equipment_to_stockpile = {
+				type = motorized_equipment
+				amount = -200
+			}
+		}
+		remove_effect = {
+			
+			add_to_variable = { FRA_colonial_rule_compliance_growth_modifier = +0.50 tooltip = compliance_growth_tooltip }
+			
+		}
+	}
+    FRA_Resource_spawnin = {
+		available = { ROOT = { has_completed_focus = FRA_free_france }
+		        num_of_civilian_factories_available_for_projects > 3
+                   }
+		visible = { ROOT = { has_completed_focus = FRA_free_france }
+				   }
+		days_remove = 120 
+		fire_only_once = yes
+		custom_cost_trigger = {
+			has_equipment =  { infantry_equipment > 6999 }
+			has_equipment = { support_equipment > 399 }
+			has_equipment = { motorized_equipment > 199 }
+			has_equipment = { radio_equipment > 149 }
+		}
+		modifier = {
+			civilian_factory_use = 3
+		}
+		complete_effect = { 
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = -7000
+			}
+			add_equipment_to_stockpile = {
+				type = support_equipment
+				amount = -400
+			}
+			add_equipment_to_stockpile = {
+				type = motorized_equipment
+				amount = -200
+			}
+			add_equipment_to_stockpile = {
+				type = radio_equipment
+				amount = -150
+				}
+		}
+		remove_effect = { 
+			add_resource = {
+				type = steel
+				amount = 25
+				state = 539 
+			}
+			add_resource = {
+				type = tungsten
+				amount = 15
+				state = 539
+			}
+			add_resource = {
+				type = aluminium 
+				amount = 15
+				state = 539
+			}
+		}
+	}
+	FRA_colonial_rule_decision_powerup = {
+		available = { 
+			NOT = {
+				has_country_flag = FRA_colonial_rule_decision_powerup_flag
+			}
+			num_of_civilian_factories_available_for_projects > 3
+		}
+		visible = {
+			NOT =  {
+				has_country_flag = FRA_colonial_rule_decision_powerup_flag
+			}
+		}
+		days_remove = 1
+		custom_cost_trigger = {
+			has_equipment = { infantry_equipment > 5499 }
+			has_equipment = { support_equipment > 399 }
+			has_equipment = { motorized_equipment > 299 }
+			has_equipment = { radio_equipment > 199 }
+		}
+		complete_effect = {
+			custom_effect_tooltip = FRA_colonial_rule_powerup_tooltip
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = -5500
+			}
+			add_equipment_to_stockpile = {
+				type = support_equipment
+				amount = -400
+			}
+			add_equipment_to_stockpile = {
+				type = motorized_equipment
+				amount = -300
+			}
+			add_equipment_to_stockpile = {
+				type = radio_equipment
+				amount = -200
+		    }
+		}
+		remove_effect = {
+			set_country_flag = { flag = FRA_colonial_rule_decision_powerup_flag value = 1 }
+		}
+	}
+	FRA_colonial_rule_decision_strategic_region_mali = {
+		available = { 
+			num_of_civilian_factories_available_for_projects > 2
+			NOT = {
+            has_country_flag = FRA_colonial_rule_strategic_region_mali_flag
+		    } 
+	    }
+		visible = { NOT = {
+            has_country_flag = FRA_colonial_rule_strategic_region_mali_flag
+		    }
+		}
+       days_remove = 180
+	   days_re_enable = 185
+	   complete_effect = {
+		custom_effect_tooltip = FRA_colonial_rule_strategic_region_development_tooltip
+	   }
+	   modifier = {
+		civilian_factory_use = 3
+	    }
+	   remove_effect = {
+			if = {
+				limit = {
+					check_variable = {
+						var = FRA_colonial_rule_decision_strategic_region_mali_counter
+						value = 2
+						compare = greater_than_or_equals
+					}
+					has_country_flag = FRA_colonial_rule_decision_powerup_flag
+				}
+				556 = {
+			     add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes 
+				  }
+				 add_building_construction = {
+				    type = industrial_complex
+				    level = 1
+				    instant_build = yes
+				   }
+				 add_extra_state_shared_building_slots = 2
+				}
+				set_country_flag = { flag = FRA_colonial_rule_strategic_region_mali_flag value = 1 }
+				set_country_flag = { flag = FRA_colonial_rule_decision_powerup_flag value = 0 }
+			}
+			else_if = {
+				limit = { 
+					check_variable = {
+						var = FRA_colonial_rule_decision_strategic_region_mali_counter
+						value = 2
+						compare = greater_than_or_equals
+					}
+				}
+				556 = {
+			     add_extra_state_shared_building_slots = 2
+				 add_building_construction = {
+				    type = industrial_complex
+				    level = 1
+				    instant_build = yes
+				   }
+				}
+				set_country_flag = { flag = FRA_colonial_rule_strategic_region_mali_flag value = 1 }
+			}
+			else_if = {
+				limit = {
+					has_country_flag = FRA_colonial_rule_decision_powerup_flag
+				}
+				556 = {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+						instant_build = yes
+					}
+				}
+				set_country_flag = { flag = FRA_colonial_rule_decision_powerup_flag value = 0 }
+				add_to_variable = { FRA_colonial_rule_decision_strategic_region_mali_counter = +1 }
+			}
+			else = {
+				556 = {
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+						instant_build = yes 
+					}
+				}
+				add_to_variable = { FRA_colonial_rule_decision_strategic_region_mali_counter = +1 }
+			}
+		}
+	}
+	FRA_colonial_rule_decision_strategic_region_madagascar = {
+		available = { 
+			num_of_civilian_factories_available_for_projects > 2
+			NOT = {
+            has_country_flag = FRA_colonial_rule_strategic_region_madagascar_flag
+		    } 
+	    }
+		visible = { NOT = {
+            has_country_flag = FRA_colonial_rule_strategic_region_madagascar_flag
+		    }
+		}
+       days_remove = 180
+	   days_re_enable = 185
+	   modifier = {
+		civilian_factory_use = 3
+	    }
+	   complete_effect = {
+		custom_effect_tooltip = FRA_colonial_rule_strategic_region_development_tooltip
+	   }
+	   remove_effect = {
+			if = {
+				limit = {
+					check_variable = {
+						var = FRA_colonial_rule_decision_strategic_region_madagascar_counter
+						value = 2
+						compare = greater_than_or_equals
+					}
+					has_country_flag = FRA_colonial_rule_decision_powerup_flag
+				}
+				543 = {
+			     add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes 
+				  }
+				 add_building_construction = {
+				    type = industrial_complex
+				    level = 1
+				    instant_build = yes
+				   }
+				 add_extra_state_shared_building_slots = 2
+				}
+				set_country_flag = { flag = FRA_colonial_rule_strategic_region_madagascar_flag value = 1 }
+				set_country_flag = { flag = FRA_colonial_rule_decision_powerup_flag value = 0 }
+			}
+			else_if = {
+				limit = { 
+					check_variable = {
+						var = FRA_colonial_rule_decision_strategic_region_madagascar_counter
+						value = 2
+						compare = greater_than_or_equals
+					}
+				}
+				543 = {
+			     add_extra_state_shared_building_slots = 1
+				 add_building_construction = {
+				    type = industrial_complex
+				    level = 1
+				    instant_build = yes
+				   }
+				}
+				set_country_flag = { flag = FRA_colonial_rule_strategic_region_madagascar_flag value = 1 }
+			}
+			else_if = {
+				limit = {
+					has_country_flag = FRA_colonial_rule_decision_powerup_flag
+				}
+				543 = {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+						instant_build = yes
+					}
+				}
+				set_country_flag = { flag = FRA_colonial_rule_decision_powerup_flag value = 0 }
+				add_to_variable = { FRA_colonial_rule_decision_strategic_region_madagascar_counter = +1 }
+			}
+			else = {
+				543 = {
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+						instant_build = yes 
+					}
+				}
+				add_to_variable = { FRA_colonial_rule_decision_strategic_region_madagascar_counter = +1 }
+			}
+		}
+	}
+	FRA_colonial_rule_decision_strategic_region_caledonia = {
+		available = { 
+			num_of_civilian_factories_available_for_projects > 2
+			NOT = {
+            has_country_flag = FRA_colonial_rule_strategic_region_caledonia_flag
+		    } 
+	    }
+		visible = { NOT = {
+            has_country_flag = FRA_colonial_rule_strategic_region_caledonia_flag
+		    }
+		}
+       days_remove = 180
+	   days_re_enable = 185
+	   modifier = {
+		civilian_factory_use = 3
+	    }
+	   complete_effect = {
+		custom_effect_tooltip = FRA_colonial_rule_strategic_region_development_tooltip
+	   }
+	   remove_effect = {
+			if = {
+				limit = {
+					check_variable = {
+						var = FRA_colonial_rule_decision_strategic_region_caledonia_counter
+						value = 2
+						compare = greater_than_or_equals
+					}
+					has_country_flag = FRA_colonial_rule_decision_powerup_flag
+				}
+				635 = {
+			     add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes 
+				  }
+				 add_building_construction = {
+				    type = industrial_complex
+				    level = 2
+				    instant_build = yes
+				   }
+				 add_extra_state_shared_building_slots = 2
+				}
+				set_country_flag = { flag = FRA_colonial_rule_strategic_region_caledonia_flag value = 1 }
+				set_country_flag = { flag = FRA_colonial_rule_decision_powerup_flag value = 0 }
+			}
+			else_if = {
+				limit = { 
+					check_variable = {
+						var = FRA_colonial_rule_decision_strategic_region_caledonia_counter
+						value = 2
+						compare = greater_than_or_equals
+					}
+				}
+				635 = {
+			     add_extra_state_shared_building_slots = 2
+				 add_building_construction = {
+				    type = industrial_complex
+				    level = 1
+				    instant_build = yes
+				   }
+				}
+				set_country_flag = { flag = FRA_colonial_rule_strategic_region_caledonia_flag value = 1 }
+			}
+			else_if = {
+				limit = {
+					has_country_flag = FRA_colonial_rule_decision_powerup_flag
+				}
+				635 = {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
+				}
+				set_country_flag = { flag = FRA_colonial_rule_decision_powerup_flag value = 0 }
+				add_to_variable = { FRA_colonial_rule_decision_strategic_region_caledonia_counter = +1 }
+			}
+			else = {
+				635 = {
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+						instant_build = yes 
+					}
+					add_extra_state_shared_building_slots = 1
+				}
+				add_to_variable = { FRA_colonial_rule_decision_strategic_region_caledonia_counter = +1 }
+			}
+		}
+	}
+	FRA_colonial_rule_decision_research_speed_factor = {
+		available = { NOT = {
+              check_variable = {
+                var = FRA_colonial_temp3
+				value = 3
+                compare = greater_than_or_equals
+			    }
+		    }
+		  num_of_civilian_factories_available_for_projects > 2
+		} 
+		visible = { NOT = {
+				check_variable = {
+					FRA_colonial_temp1 > 2
+				}
+			} }
+		days_remove = 90
+		days_re_enable = 90
+		modifier = {
+			civilian_factory_use = 3
+		}
+	    complete_effect = {
+		custom_effect_tooltip = FRA_colonial_rule_strategic_region_research_speed_factor_tooltip
+	   }
+		remove_effect = {
+			if = {
+				limit = {
+					has_country_flag = FRA_colonial_rule_decision_powerup_flag
+				}
+				add_to_variable = { FRA_colonial_rule_research_speed_factor = +0.04 tooltip = research_speed_tooltip }
+				add_to_variable = { FRA_colonial_rule_stability_factor_modifier = +0.025 tooltip = stability_factor_tooltip }
+				add_to_variable = { FRA_colonial_temp3 = +1 }
+				set_country_flag = { flag = FRA_colonial_rule_decision_powerup_flag value = 0 }
+			}
+			else = {
+				add_to_variable = { FRA_colonial_rule_research_speed_factor = +0.025 tooltip = research_speed_tooltip }
+				add_to_variable = { FRA_colonial_temp3 = +1 }
+			}
+		}
+	}
+}
 FRA_weapons_purchases_category = {
 	FRA_purchase_planes = {
 		icon = generic_prepare_civil_war
@@ -13,7 +565,7 @@ FRA_weapons_purchases_category = {
 		days_re_enable = 70
 		remove_effect = {
 			add_equipment_to_stockpile = {
-				type = fighter_equipment
+				type = small_plane_airframe
 				amount = 150
 				producer = FRA
 			}
@@ -22,7 +574,7 @@ FRA_weapons_purchases_category = {
 					has_completed_focus = FRA_new_bombers
 				}	
 				add_equipment_to_stockpile = {
-					type = tac_bomber_equipment
+					type = medium_plane_airframe
 					amount = 100
 					producer = FRA
 				}
@@ -32,7 +584,7 @@ FRA_weapons_purchases_category = {
 					has_completed_focus = FRA_modern_support_planes
 				}
 				add_equipment_to_stockpile = {
-					type = CAS_equipment
+					type = small_plane_cas_airframe
 					amount = 100
 					producer = ENG
 				}
@@ -162,7 +714,7 @@ economy_decisions = {
 				}
 				add_building_construction = {
 					type = arms_factory
-					level = 2
+					level = 4
 					instant_build = yes
 				}
 			}
@@ -198,7 +750,7 @@ economy_decisions = {
 				}
 				add_building_construction = {
 					type = arms_factory
-					level = 2
+					level = 4
 					instant_build = yes
 				}
 			}
@@ -235,7 +787,7 @@ economy_decisions = {
 				}
 				add_building_construction = {
 					type = arms_factory
-					level = 2
+					level = 4
 					instant_build = yes
 				}
 			}
@@ -271,7 +823,7 @@ economy_decisions = {
 				}
 				add_building_construction = {
 					type = arms_factory
-					level = 2
+					level = 4
 					instant_build = yes
 				}
 			}
@@ -307,7 +859,7 @@ economy_decisions = {
 				}
 				add_building_construction = {
 					type = arms_factory
-					level = 2
+					level = 4
 					instant_build = yes
 				}
 			}
@@ -519,7 +1071,7 @@ FRA_political_weight = {
 		}
 		remove_effect = {
 			add_equipment_to_stockpile = {
-				type = fighter_equipment
+				type = small_plane_airframe
 				amount = 150
 				producer = FRA
 			}
@@ -533,7 +1085,7 @@ FRA_political_weight = {
 					}
 				}
 				add_equipment_to_stockpile = {
-					type = CAS_equipment
+					type = small_plane_cas_airframe
 					amount = 75
 					producer = FRA
 				}	
@@ -548,7 +1100,7 @@ FRA_political_weight = {
 					}		
 				}
 				add_equipment_to_stockpile = {
-					type = tac_bomber_equipment
+					type = medium_plane_airframe
 					amount = 50
 					producer = FRA
 				}	
@@ -563,12 +1115,12 @@ FRA_political_weight = {
 					}
 				}
 				add_equipment_to_stockpile = {
-					type = CAS_equipment
+					type = small_plane_cas_airframe
 					amount = 75
 					producer = FRA
 				}
 				add_equipment_to_stockpile = {
-					type = tac_bomber_equipment
+					type = medium_plane_airframe
 					amount = 50
 					producer = FRA
 				}	
@@ -671,10 +1223,9 @@ FRA_instable_gouvernment = {
 		timeout_effect = {
 			custom_effect_tooltip = FRA_collapse_happens_tt
 			set_country_flag = mumiago_mission_timed_out
-			add_to_variable = { var = FRA_collapsing_government_political_power_gain_modifier value = -0.25 }
-			add_to_variable = { var = FRA_collapsing_government_stability_factor_modifier value = -0.1 }
-			add_to_variable = { var = FRA_industry_consumer_goods_modifier value = 0.05 }
-
+			add_to_variable = { FRA_collapsing_government_political_power_gain_modifier = -0.25 }
+			add_to_variable = { FRA_collapsing_government_stability_factor_modifier = -0.1 }
+			add_to_variable = { FRA_industry_consumer_goods_modifier = 0.05 }
 		}
 	}	
 	
