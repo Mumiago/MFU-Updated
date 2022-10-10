@@ -1442,36 +1442,36 @@ NSupply = {
 
 	--defines to calculate the capitals supply. This will be also used for max supply of other nodes depending on how well they are connected to capital. Using the formula:
 	--CapitalSupply = CAPITAL_SUPPLY_BASE + (NumberOfCivilianFactories * CAPITAL_SUPPLY_CIVILIAN_FACTORIES) + (NumberOfMilitaryFactories * CAPITAL_SUPPLY_MILITARY_FACTORIES) + (NumberOfDockyards * CAPITAL_SUPPLY_DOCKYARDS)
-	CAPITAL_SUPPLY_BASE = 7.0, -- base supply for capital
-	CAPITAL_SUPPLY_CIVILIAN_FACTORIES = 0.6, -- supply from one civilian factory
-	CAPITAL_SUPPLY_MILITARY_FACTORIES = 0.9, -- supply from one military factory
-	CAPITAL_SUPPLY_DOCKYARDS = 0.8, --supply from one naval factory
+	CAPITAL_SUPPLY_BASE = 30, -- base supply for capital
+	CAPITAL_SUPPLY_CIVILIAN_FACTORIES = 1, -- supply from one civilian factory
+	CAPITAL_SUPPLY_MILITARY_FACTORIES = 1, -- supply from one military factory
+	CAPITAL_SUPPLY_DOCKYARDS = 1, --supply from one naval factory
 
 	-- defines that are used for supply reach for capital
 	-- supply flow will start from INITIAL_SUPPLY_FLOW and will be reduced by a penalty on each province it travels (which depends on how far we are from our origin, terrain etc)
 	-- a supply reach >= 1.0 considered "perfect" and will be able to fully support units on that particular province (assuming you are not over capacity)
-	CAPITAL_INITIAL_SUPPLY_FLOW = 7.0, -- starting supply from
+	CAPITAL_INITIAL_SUPPLY_FLOW = 10, -- starting supply from
 	CAPITAL_STARTING_PENALTY_PER_PROVINCE = 0.5, -- starting penalty that will be added as supply moves away from its origin (modified by stuff like terrain)
-	CAPITAL_ADDED_PENALTY_PER_PROVINCE = 1.2, -- added penalty as we move away from origin
+	CAPITAL_ADDED_PENALTY_PER_PROVINCE = 1, -- added penalty as we move away from origin
 
 	-- defines that are used for supply reach for built nodes
-	NODE_INITIAL_SUPPLY_FLOW = 3.5,
-	NODE_STARTING_PENALTY_PER_PROVINCE = 0.50,
-	NODE_ADDED_PENALTY_PER_PROVINCE = 0.70,
+	NODE_INITIAL_SUPPLY_FLOW = 6,
+	NODE_STARTING_PENALTY_PER_PROVINCE = 0.2,
+	NODE_ADDED_PENALTY_PER_PROVINCE = 1.2,
 
 	-- defines that are used for supply reach for dockyards
-	NAVAL_BASE_INITIAL_SUPPLY_FLOW = 3.5,
-	NAVAL_BASE_STARTING_PENALTY_PER_PROVINCE = 0.8,
-	NAVAL_BASE_ADDED_PENALTY_PER_PROVINCE = 1.0,
+	NAVAL_BASE_INITIAL_SUPPLY_FLOW = 6,
+	NAVAL_BASE_STARTING_PENALTY_PER_PROVINCE = 0.3,
+	NAVAL_BASE_ADDED_PENALTY_PER_PROVINCE = 2,
 
 	-- Node Flow (i.e. province caps) increase by this amount per railway level of the node's bottleneck
-	NODE_FLOW_BONUS_PER_RAIL_LEVEL = 0.36,
+	NODE_FLOW_BONUS_PER_RAIL_LEVEL = 0.4,
 
 	-- rivers will transfer in between nodes as if they were this level
 	RIVER_RAILWAY_LEVEL = 2,
 
 	-- defines that are used for supply reach for floating harbors
-	FLOATING_HARBOR_INITIAL_SUPPLY_FLOW = 3,
+	FLOATING_HARBOR_INITIAL_SUPPLY_FLOW = 2,
 	FLOATING_HARBOR_STARTING_PENALTY_PER_PROVINCE = 0.8,
 	FLOATING_HARBOR_ADDED_PENALTY_PER_PROVINCE = 0.8,
 
@@ -1490,22 +1490,22 @@ NSupply = {
 	SUPPLY_FLOW_PENALTY_CROSSING_RIVERS = 0.15, -- crossing rivers introduces additional penalty
 
 	 -- node flow terrain falloff is scaled by logistics curve based on distance(d) (scalar / (1+e^(-k(d-midpoint))))
-	SUPPLY_FLOW_DIST_LOGISTICS_FALLOFF_K = 1.25, -- How steep the curve is
+	SUPPLY_FLOW_DIST_LOGISTICS_FALLOFF_K = 1.5, -- How steep the curve is
 	SUPPLY_FLOW_DIST_LOGISTICS_FALLOFF_MIDPOINT = 2.3, -- sigmoid inflection point
 	SUPPLY_FLOW_DIST_LOGISTICS_FALLOFF_SCALAR = 0.7, -- Max Penalty adjustment due to distance
 	SUPPLY_FLOW_DIST_LOGISTICS_FALLOFF_MIN_PENALTY_SCALE = 0.25, -- Logistics curve never reduces penalty facor below this limit
 
 	-- The range bonus added to a fully motorized hub. This supply is added on top of the XXX_INITIAL_SUPPLY_FLOW defined above.
-	SUPPLY_HUB_FULL_MOTORIZATION_BONUS = 2.6,
+	SUPPLY_HUB_FULL_MOTORIZATION_BONUS = 10,
 	-- How many trucks does it cost to fully motorize a hub
-	SUPPLY_HUB_FULL_MOTORIZATION_TRUCK_COST = 50.0,
+	SUPPLY_HUB_FULL_MOTORIZATION_TRUCK_COST = 70.0,
 	-- For each additional level of motorization on a hub (i.e. contry with set motoriazation) reduce max bonus for next level by this amount
-	SUPPLY_HUB_MOTORIZATION_MARGINAL_EFFECT_DECAY = 1.6,
+	SUPPLY_HUB_MOTORIZATION_MARGINAL_EFFECT_DECAY = 1.2,
 
 
 	-- used for calculating "flow" for railways.
 	RAILWAY_BASE_FLOW = 12.0, 		-- how much base flow railway gives when a node connected to its capital/a naval node by a railway
-	RAILWAY_FLOW_PER_LEVEL = 14.0, 	-- how much additional flow a railway level gives
+	RAILWAY_FLOW_PER_LEVEL = 16.0, 	-- how much additional flow a railway level gives
 	RAILWAY_FLOW_PENALTY_PER_DAMAGED = 4.0, -- penalty to flow per damaged railway
 	RAILWAY_MIN_FLOW = 8.0, 		-- minimum railway flow can be reduced to
 
@@ -1527,11 +1527,11 @@ NSupply = {
 	RAILWAY_CONVERSION_COOLDOWN_CORE = 3,
 	RAILWAY_CONVERSION_COOLDOWN_CIVILWAR = 0,
 
-	DEFAULT_STARTING_TRUCK_RATIO = 1.5, -- countries get this ratio of starting truck in their buffers compared to their need
+	DEFAULT_STARTING_TRUCK_RATIO = 1, -- countries get this ratio of starting truck in their buffers compared to their need
 	DEFAULT_STARTING_TRAIN_RATIO = 1, -- countries get this ratio of starting trains in their buffers compared to their need
 
 	SUPPLY_POINTS_PER_TRAIN = 1.1,  -- old default 1.25 -- Amount of supply that can fit in a train. (Trains distribute supply from capital to a supply node.)
-	NUM_RAILWAYS_TRAIN_FACTOR = 0.03, -- the train usage is scaled by railway distance between the supply node and the capital multiplied by this factor
+	NUM_RAILWAYS_TRAIN_FACTOR = 0.04, -- the train usage is scaled by railway distance between the supply node and the capital multiplied by this factor
 
 	BASE_SUPPLY_MULT_FOR_TRUCK_DEFAULT_BUFFER = 1.0,  -- initial value for wanted buffers over potential truck usage
 	BASE_SUPPLY_MULT_FOR_TRUCK_MIN_BUFFER = 0.0, -- min and max values for buffer ratio
@@ -1571,9 +1571,9 @@ NSupply = {
 	ARMY_MAX_SUPPLY_RATIO_GAIN_PER_HOUR = 0.15,
 
 	MIN_SURRENDER_LIMIT_TO_MOVE_SUPPLY_CAPITAL = 0.1, -- country needs to be above thos surrender ratio to be able to move its capital
-	COOLDOWN_DAYS_AFTER_MOVING_SUPPLY_CAPITAL = 30, -- cooldown for moving supply again after last move
-	DAYS_TO_START_GIVING_SUPPLY_AFTER_MOVING_SUPPLY_CAPITAL = 5,  -- the country will start gaining supply after this many days moving its capital
-	DAYS_TO_START_GIVING_FULL_SUPPLY_AFTER_MOVING_SUPPLY_CAPITAL =  14, -- the country will reach max supply after this many days moving its capital
+	COOLDOWN_DAYS_AFTER_MOVING_SUPPLY_CAPITAL = 20, -- cooldown for moving supply again after last move
+	DAYS_TO_START_GIVING_SUPPLY_AFTER_MOVING_SUPPLY_CAPITAL = 3,  -- the country will start gaining supply after this many days moving its capital
+	DAYS_TO_START_GIVING_FULL_SUPPLY_AFTER_MOVING_SUPPLY_CAPITAL =  12, -- the country will reach max supply after this many days moving its capital
 
 	MIN_DIFF_FOR_AUTO_UPDATING_EXISTING_RAILWAYS = 5, -- while building railways, the system will prefer updating existing railway if new railway is close enough to existing one
 
