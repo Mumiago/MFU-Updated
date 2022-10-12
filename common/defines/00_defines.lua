@@ -1496,7 +1496,7 @@ NSupply = {
 	SUPPLY_FLOW_DIST_LOGISTICS_FALLOFF_MIN_PENALTY_SCALE = 0.25, -- Logistics curve never reduces penalty facor below this limit
 
 	-- The range bonus added to a fully motorized hub. This supply is added on top of the XXX_INITIAL_SUPPLY_FLOW defined above.
-	SUPPLY_HUB_FULL_MOTORIZATION_BONUS = 10,
+	SUPPLY_HUB_FULL_MOTORIZATION_BONUS = 8,
 	-- How many trucks does it cost to fully motorize a hub
 	SUPPLY_HUB_FULL_MOTORIZATION_TRUCK_COST = 70.0,
 	-- For each additional level of motorization on a hub (i.e. contry with set motoriazation) reduce max bonus for next level by this amount
@@ -1504,15 +1504,15 @@ NSupply = {
 
 
 	-- used for calculating "flow" for railways.
-	RAILWAY_BASE_FLOW = 12.0, 		-- how much base flow railway gives when a node connected to its capital/a naval node by a railway
-	RAILWAY_FLOW_PER_LEVEL = 16.0, 	-- how much additional flow a railway level gives
+	RAILWAY_BASE_FLOW = 6, 		-- how much base flow railway gives when a node connected to its capital/a naval node by a railway
+	RAILWAY_FLOW_PER_LEVEL = 12.0, 	-- how much additional flow a railway level gives
 	RAILWAY_FLOW_PENALTY_PER_DAMAGED = 4.0, -- penalty to flow per damaged railway
 	RAILWAY_MIN_FLOW = 8.0, 		-- minimum railway flow can be reduced to
 
 	-- used for calculating "flow" from a naval node to another naval node when it is connected via a convoy route
 	-- NAVAL_BASE_MAX_SUPPLY_FLOW_FACTOR = 0.9, -- flow of the parent node is factored to this ratio (so at most it can transfer parent naval node flow * this define)
-	NAVAL_BASE_FLOW = 12.0, -- max output/input of a naval node is limited by this base value + additional ratio for each level
-	NAVAL_FLOW_PER_LEVEL = 14.0, -- max output/input of a naval node is limited by previous base value + this define per its level
+	NAVAL_BASE_FLOW = 6, -- max output/input of a naval node is limited by this base value + additional ratio for each level
+	NAVAL_FLOW_PER_LEVEL = 12.0, -- max output/input of a naval node is limited by previous base value + this define per its level
 
 	SUPPLY_NODE_MIN_SUPPLY_THRESHOLD = 1.0, -- if supply of a node is below this value it will be set to 0 -- Currently unused?
 
