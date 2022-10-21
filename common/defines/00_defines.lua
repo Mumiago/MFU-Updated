@@ -232,7 +232,9 @@ NDiplomacy = {
 },
 
 NCountry = {
-	--NEW SHIT */
+	--NEW SHIT */´
+	GIE_CAPITULATION_LEGITIMACY_WARSCORE_FACTOR = 0.5,      -- Multiplies war contribution percent with this factor for part of starting legitimacy. (0.5 would mean a 50 % war contribution gives 25 more legitimacy)
+	GIE_CAPITULATION_LEGITIMACY_WARLENGTH_FACTOR = 1.0,     -- Multiplies war length (nr of weeks) with this factor for part of starting legitimacy. (1.0 would mean a war length of 30 weeks gives 30 more legitimacy)
 	STATE_VALUE_BASE = 10.0,                        -- Base value of a state (value is used to determine costs in e.g. peace conferences)
 	STATE_VALUE_MANPOWER_FACTOR = 0.1,              -- State cost increases with this for every 10k population (so 3.1M becomes 310 and then multiplied by this)
 	AIR_VOLUNTEER_PLANES_RATIO = 0.5,				-- Ratio for volunteer planes available for sending in relation to sender air force
@@ -781,7 +783,7 @@ NMilitary = {
 
 	NAVAL_INVASION_PLANNING_BONUS_MALUS = -1,		-- Malus in percentage for the planning bonus gain for naval invasions
 
-	NAVAL_INVASION_PLANNING_BONUS_GAIN = 0.02,		-- Planning Bonus gain per day for naval invasions
+	NAVAL_INVASION_PLANNING_BONUS_GAIN = 0.04,		-- Planning Bonus gain per day for naval invasions
 
 	TRAINING_MAX_DAILY_COUNTRY_EXP = 0.06,			-- Maximum army XP gained per day from training
 
@@ -968,9 +970,9 @@ NMilitary = {
 	ORG_LOSS_FACTOR_ON_CONQUER = 0.2,              -- percentage of (max) org loss on takign enemy province
 	LOW_ORG_FOR_ATTACK = 0.5,                      -- at what org % we start affecting speed when doign hostile moves. scales down ZERO_ORG_MOVEMENT_MODIFIER
 
-	PLANNING_DECAY = 0.02,
+	PLANNING_DECAY = 0.015,
 	PLAYER_ORDER_PLANNING_DECAY = 0.02,				-- Amount of planning lost due to player manual order
-	PLANNING_GAIN = 0.02,
+	PLANNING_GAIN = 0.015,
 	PLANNING_MAX = 0.15,                           	-- can get more from techs
 	CIVILWAR_ORGANIZATION_FACTOR = 0.3,			  	-- Multiplier of org for both sides when civilwar.
 	LAND_COMBAT_ATTACKER_WINNING = 0.65,		  	-- Above this means attacker is winning
@@ -1954,9 +1956,9 @@ NNavy = {
 		0.4, -- NAVAL_INVASION_SUPPORT
 	},
 	
-	SUPREMACY_PER_SHIP_PER_MANPOWER = 0.12,							-- supremacy of a ship is calculated using its IC, manpower and a base define
-	SUPREMACY_PER_SHIP_PER_IC = 0.012,
-	SUPREMACY_PER_SHIP_BASE = 40.0,
+	SUPREMACY_PER_SHIP_PER_MANPOWER = 0.2,							-- supremacy of a ship is calculated using its IC, manpower and a base define
+	SUPREMACY_PER_SHIP_PER_IC = 0.02,
+	SUPREMACY_PER_SHIP_BASE = 35.0,
 
 	NAVAL_MINES_IN_REGION_MAX = 250.0,								-- Max number of mines that can be layed by the ships. The value should be hidden from the user, as we present % so it's an abstract value that should be used for balancing.
 	NAVAL_MINES_PLANTING_SPEED_MULT = 0.01,						-- Value used to overall balance of the speed of planting naval mines
@@ -2007,14 +2009,14 @@ NNavy = {
 	BASE_SPOTTING_FROM_DECRYPTION = 10,								-- base spotting percentage that comes from decryption, can go negative (enemy decryption is subtracted)
 
 	MIN_HOURS_TO_SHUFFLE_NEWLY_ASSIGNED_PATROLS = 7 * 24,			-- if a fleet has less patrol than it needs to cover all of it areas, it will shuffle the patrols around. it will wait this much hour before shuffling a task force to new area
-	SPOTTING_ENEMY_SPOTTING_MULTIPLIER_FOR_RUNNING_AWAY = 0.5,		-- enemy spotting is multiplied by this value to simulate running away
+	SPOTTING_ENEMY_SPOTTING_MULTIPLIER_FOR_RUNNING_AWAY = 0.3,		-- enemy spotting is multiplied by this value to simulate running away
 	SPOTTING_MULTIPLIER_FOR_SURFACE = 1.0,							-- task force surface spotting value is multiplied by this and added to spotting percentage every hour
 	SPOTTING_MULTIPLIER_FOR_SUB = 1.5,								-- task force sub spotting value is multiplied by this and added to spotting percentage every hour
-	SPOTTING_SPEED_MULT_FOR_RUNNING_AWAY = 0.6,						-- task forces that does not want to engage will reduce enemy spotting rate every hour by speed diff mult this ratio
+	SPOTTING_SPEED_MULT_FOR_RUNNING_AWAY = 0.4,						-- task forces that does not want to engage will reduce enemy spotting rate every hour by speed diff mult this ratio
 	SPOTTING_SPEED_MULT_FOR_CATCHING_UP = 0.2,						-- speed diff bonus rate that is added to spotting every hour
 	SPOTTING_MISSION_DETECTION_THRESHOLD_LOW = 10.0,					-- value between 0 and 100 above which to show very coarse information about the spotted task force
 	SPOTTING_MISSION_DETECTION_THRESHOLD_MEDIUM = 70.0,					-- value between 0 and 100 above which to show coarse information about the spotted task force. Note: accurate information are shown when spotting reach 100.
-	NAVY_VISIBILITY_BONUS_ON_RETURN_FOR_REPAIR = 0.1,				-- Multiplier for the surface/sub visiblity when the heavily damaged fleet is returning to the home base for reparation. 1.0 = no bonus. 0.0 = invisible.
+	NAVY_VISIBILITY_BONUS_ON_RETURN_FOR_REPAIR = 0.05,				-- Multiplier for the surface/sub visiblity when the heavily damaged fleet is returning to the home base for reparation. 1.0 = no bonus. 0.0 = invisible.
 	VISIBILITY_MULTIPLIER_FOR_SPOTTING = 0.1,						-- multiplier for visibility stat
 	INTEL_LEVEL_LOW_HALF_RANGE_PERCENTAGE = 10,							-- Integer representing the maximum offset of the displayed value to the original, in percentage (divided by 100 in code). For spotting level "low".
 	INTEL_LEVEL_MEDIUM_HALF_RANGE_PERCENTAGE = 5,							-- Same as above but for the spotting level "medium"
@@ -2072,17 +2074,17 @@ NNavy = {
 	RELATIVE_SURFACE_DETECTION_TO_POSITIONING_FACTOR				= 0.1,	-- multiples the surface detection difference between two sides. the side with higher detection will get a bonus of this value
 	MAX_POSITIONING_BONUS_FROM_SURFACE_DETECTION					= 0.1,  -- will clamp the bonus that you get from detection
 	
-	HIGHER_SHIP_RATIO_POSITIONING_PENALTY_FACTOR					= 0.4, -- if one side has more ships than the other, that side will get this penalty for each +100% ship ratio it has
-	MAX_POSITIONING_PENALTY_FROM_HIGHER_SHIP_RATIO					= 0.8,  -- maximum penalty to get from larger fleets
+	HIGHER_SHIP_RATIO_POSITIONING_PENALTY_FACTOR					= 0.5, -- if one side has more ships than the other, that side will get this penalty for each +100% ship ratio it has
+	MAX_POSITIONING_PENALTY_FROM_HIGHER_SHIP_RATIO					= 0.99,  -- maximum penalty to get from larger fleets
 
 	HIGHER_CARRIER_RATIO_POSITIONING_PENALTY_FACTOR					= 0.2;  -- penalty if other side has stronger carrier air force 
 	MAX_CARRIER_RATIO_POSITIONING_PENALTY_FACTOR 					= 0.4;  -- max penalty from stronger carrier air force
 	
 	POSITIONING_PENALTY_FOR_SHIPS_JOINED_COMBAT_AFTER_IT_STARTS		= 0.4, -- each ship that joins the combat will have this penalty to be added into positioning
-	MAX_POSITIONING_PENALTY_FOR_NEWLY_JOINED_SHIPS 					= 0.0,  -- the accumulated penalty from new ships will be clamped to this value
-	POSITIONING_PENALTY_HOURLY_DECAY_FOR_NEWLY_JOINED_SHIPS			= 1.0,-- the accumulated penalty from new ships will decay hourly by this value
+	MAX_POSITIONING_PENALTY_FOR_NEWLY_JOINED_SHIPS 					= 0.1,  -- the accumulated penalty from new ships will be clamped to this value
+	POSITIONING_PENALTY_HOURLY_DECAY_FOR_NEWLY_JOINED_SHIPS			= 0.5,-- the accumulated penalty from new ships will decay hourly by this value
 	
-	DAMAGE_PENALTY_ON_MINIMUM_POSITIONING 							= 0.8,	-- damage penalty at 0% positioning
+	DAMAGE_PENALTY_ON_MINIMUM_POSITIONING 							= 0.99,	-- damage penalty at 0% positioning
 	SCREENING_EFFICIENCY_PENALTY_ON_MINIMUM_POSITIONING				= 0.2,  -- screening efficiency (screen to capital ratio) at 0% positioning
 	AA_EFFICIENCY_PENALTY_ON_MINIMUM_POSITIONING					= 0.4,  -- AA penalty at 0% positioning
 	SUBMARINE_REVEAL_ON_MINIMUM_POSITIONING                         = 2,  -- submarine reveal change on 0% positioning 
