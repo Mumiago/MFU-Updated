@@ -798,7 +798,7 @@ NMilitary = {
 	RELIABILITY_ORG_REGAIN = -0.5,                 -- how much reliability affects org regain
 	RELIABILITY_ORG_MOVING = -1.0,                 -- how much reliability affects org loss on moving
 	RELIABILITY_WEATHER = 3.0,                     -- how much reliability is afffecting weather impact
-	RELIABILTY_RECOVERY = 0.25,                     -- factor affecting how much equipment is returned "from the dead"
+	RELIABILTY_RECOVERY = 0.2,                     -- factor affecting how much equipment is returned "from the dead"
 	LAND_COMBAT_COLLATERAL_FORT_FACTOR = 0.005,		-- Factor to scale collateral damage to forts with.
 	LAND_COMBAT_COLLATERAL_INFRA_FACTOR = 0.0022,	-- Factor to scale collateral damage to infra with.
 	USE_MULTIPLICATIVE_ORG_LOSS_WHEN_MOVING = true, -- whether to apply org_loss_when_moving modifiers additively or multiplicatively (hardcoded multiplicative pre-2021)
@@ -1462,8 +1462,8 @@ NSupply = {
 	NODE_ADDED_PENALTY_PER_PROVINCE = 1.2,
 
 	-- defines that are used for supply reach for dockyards
-	NAVAL_BASE_INITIAL_SUPPLY_FLOW = 2,
-	NAVAL_BASE_STARTING_PENALTY_PER_PROVINCE = 0.7,
+	NAVAL_BASE_INITIAL_SUPPLY_FLOW = 1.5,
+	NAVAL_BASE_STARTING_PENALTY_PER_PROVINCE = 1,
 	NAVAL_BASE_ADDED_PENALTY_PER_PROVINCE = 2,
 
 	-- Node Flow (i.e. province caps) increase by this amount per railway level of the node's bottleneck
@@ -1563,7 +1563,7 @@ NSupply = {
 	CAPITAL_NODE_BASE_SUPPLY_ADD = 0,
 	BUILT_NODE_BASE_SUPPLY_ADD = 0.6,
 	LOCAL_NODE_BASE_SUPPLY_ADD = 0.5,
-	NAVAL_NODE_BASE_SUPPLY_ADD = 0.3,
+	NAVAL_NODE_BASE_SUPPLY_ADD = 0.2,
 	-- ~end
 
 	-- armies slowly gains and buffers supply above >100% up to their supply grace if they have efficent supply flow
