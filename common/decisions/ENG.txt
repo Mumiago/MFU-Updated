@@ -509,51 +509,65 @@ ENG_budget_decisions = {
 
         icon = eng_trade_unions_demand
 
-        available = {
-            has_completed_focus = ENG_steady_as_she_goes
-        }
+       available = {
 
-        visible = {
-        }
+		}
 
-        days_remove = 365
-        days_re_enable = 180
+		visible = {
+		}
 
-        custom_cost_trigger = {
-            check_variable = {
-                var = british_money
-                   value = 400
-                compare = greater_than_or_equals
-            }
-            check_variable = {
-                var = british_interest
-                   value = 0
-                compare = greater_than_or_equals
-            }
-        }
+		days_remove = 180
+		days_re_enable = 365  
 
-        custom_cost_trigger = {
-            check_variable = {
-                var = british_money
-                   value = 400
-                compare = greater_than_or_equals
-            }
-        }
+		custom_cost_trigger = {
+			check_variable = {
+    			var = british_money
+   				value = 400
+    			compare = greater_than_or_equals
+			}
+			check_variable = {
+    			var = british_interest
+   				value = 0
+    			compare = greater_than_or_equals
+			}
+		}
 
-        custom_cost_text = ENG_400_british_money
+		custom_cost_trigger = {
+			check_variable = {
+    			var = british_money
+   				value = 400
+    			compare = greater_than_or_equals
+			}
+		}
 
-        ai_will_do = {
-            factor = 0
-        }
+		custom_cost_text = ENG_400_british_money
 
-        complete_effect = {
-            subtract_from_variable = { var = british_money value = 400 }
-			add_ideas = ENG_exploit_colonies
-        }
-        remove_effect = {
-            remove_ideas = ENG_exploit_colonies
-        }
-    }
+		ai_will_do = {
+			factor = 0
+		}
+		
+		complete_effect = {
+			subtract_from_variable = { var = british_money value = 400 }
+			every_country = {
+				limit = {
+					is_subject_of = ENG
+				}
+				add_ideas = commonwealth_mobilisation
+				add_autonomy_ratio = {
+					value = 0.1
+					localization = ENG_unfavourable_trades_in_the_commonwealth
+				}
+			}
+		}
+		remove_effect = {
+			every_country = {
+				limit = {
+					has_idea = commonwealth_mobilisation
+				}
+				remove_ideas = commonwealth_mobilisation
+			}
+		}
+	}
 	ENG_reconcile_ireland = {
 
         icon = eng_trade_unions_demand

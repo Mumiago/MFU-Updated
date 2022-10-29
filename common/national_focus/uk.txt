@@ -213,7 +213,16 @@ focus_tree = {
 
 		available_if_capitulated = yes
 		completion_reward = {
-			add_ideas = ENG_expand_the_repair_yards
+			custom_effect_tooltip = ENG_expand_repair_yards_tt
+			add_to_variable = {
+				ENG_refit_ic_cost_var = -0.1
+			}
+			add_to_variable = {
+				ENG_refit_speed_var = 0.1
+			}
+			add_to_variable = {
+				ENG_repair_speed_factor_var = 0.1
+			}
 		}
 	}
 	focus = {
@@ -1236,7 +1245,7 @@ focus_tree = {
 					has_completed_focus = ENG_appeasement
 				}
 				add_to_variable = {
-					ENG_consumer_goods_factor_var = -0.05
+					ENG_consumer_goods_factor_var = -0.04
 				}
 			}
 			if = {
@@ -1244,7 +1253,7 @@ focus_tree = {
 					has_completed_focus = ENG_containment
 				}
 				add_to_variable = {
-					ENG_production_factory_max_efficiency_factor_var = 0.05
+					ENG_production_factory_max_efficiency_factor_var = 0.03
 				}
 			}
 		}
@@ -1419,7 +1428,17 @@ focus_tree = {
 		cost = 5
 
 		completion_reward = {
-			add_ideas = ENG_british_officers
+			custom_effect_tooltip = ENG_our_sword_and_shield_tt
+			custom_effect_tooltip = ENG_our_sword_and_shield_tt2
+			add_to_variable = {
+				ENG_research_speed_factor_var = 0.1
+			}
+			add_to_variable = {
+				ENG_training_time_army_factor_var = -0.1
+			}
+			add_to_variable = {
+				ENG_conscription_var = 0.01
+			}
 		}
 	}
 	focus = {
@@ -1467,14 +1486,22 @@ focus_tree = {
 
 		completion_reward = {
 			every_country = {
-				limit = {
-					OR = { 
-						is_in_faction_with = ENG
+				limit = { 
+					is_in_faction_with = ENG
+					NOT = {
 						tag = ENG
 					}
+					
 				}
 
 				add_ideas = ENG_prepare_for_the_inevitable_idea
+			}
+			custom_effect_tooltip = ENG_conference_tt
+			add_to_variable = {
+				ENG_production_speed_arms_factory_factor_var = 0.05
+			}
+			add_to_variable = {
+				ENG_industrial_capacity_factory_var = 0.05
 			}
 			unlock_decision_tooltip = ENG_dev_can
 			unlock_decision_tooltip = ENG_dev_raj
@@ -1683,7 +1710,7 @@ focus_tree = {
 
 		completion_reward = {
 			add_ideas = {
-				ENG_raf_1_idea
+				ENG_expand_raf
 			}
 			air_experience = 80
 			add_doctrine_cost_reduction = {
@@ -1741,8 +1768,10 @@ focus_tree = {
             factor = 1
         }
         completion_reward = {
-            custom_effect_tooltip = shadow_scheme_focus_tt
-            add_ideas = ENG_wartime_industry_focus
+			custom_effect_tooltip = ENG_shadow_scheme_focus_tt2
+	    	add_to_variable = {
+				ENG_production_speed_arms_factory_factor_var = 0.05
+			}
             unlock_decision_tooltip = ENG_expand_shadow_scheme
             hidden_effect = {
                 ENG = {
@@ -1960,10 +1989,31 @@ focus_tree = {
         ai_will_do = {
             factor = 1
         }
+		available = {
+			OR = {
+				has_completed_focus = ENG_modernize_air_armaments
+				has_completed_focus = ENG_advanced_night_bombing
+			}			
+		}
 
         completion_reward = {
-			add_ideas = {
-				dowding_system
+			if = {
+				limit = {
+					has_idea = ENG_raf_offensive_2_idea
+				}
+			}
+			swap_ideas = {
+				remove_idea = ENG_raf_offensive_2_idea
+				add_idea = ENG_raf_offensive_3_idea
+			}
+			if = {
+				limit = {
+					has_idea = ENG_raf_defensive_2_idea
+				}
+			}
+			swap_ideas = {
+				remove_idea = ENG_raf_defensive_2_idea
+				add_idea = ENG_raf_defensive_3_idea
 			}
 		}
     }
@@ -2073,8 +2123,9 @@ focus_tree = {
 
 		completion_reward = {	
 		
-			add_ideas = {
-				ENG_raf_defensive_idea
+			swap_ideas = {
+				remove_idea = ENG_expand_raf
+				add_idea = ENG_raf_defensive_idea
 			}
 
 			add_doctrine_cost_reduction = {
@@ -2153,8 +2204,9 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_ideas = {
-				ENG_raf_offensive_idea
+			swap_ideas = {
+				remove_idea = ENG_expand_raf
+				add_idea = ENG_raf_offensive_idea
 			}
 			add_ideas = {
 				arthur_harris
@@ -2382,10 +2434,9 @@ focus_tree = {
 				uses = 3
 				category = tank_upgrade
 			}
-			swap_ideas = { 
-				remove_idea = ENG_wartime_industry_focus
-				add_idea = british_arms_discount
-			}
+
+			add_ideas = british_arms_discount
+			
 		}
 	}
 	focus = {
@@ -2514,9 +2565,15 @@ focus_tree = {
 				uses = 2
 				category = special_tech
 			} 
-			add_ideas = ENG_special_air_service_idea
+			custom_effect_tooltip = ENG_special_forces_tt
+			add_to_variable = {
+				ENG_special_forces_training_time_factor_var = -0.1
+			}
+			add_to_variable = {
+				ENG_amphibious_invasion_defence_var = 0.1
+			}
 			custom_effect_tooltip = available_military_high_command
-			show_ideas_tooltip = ENG_david_stirling
+			custom_effect_tooltip = ENG_stirling_tt
 			army_experience = 20
 			custom_effect_tooltip = ENG_paratroopers_tt
 			hidden_effect = {
@@ -2703,12 +2760,6 @@ focus_tree = {
 				hidden_effect = {
 					load_oob = ENG_7_armoured_div
 				}
-				hidden_effect = {
-					load_oob = ENG_7_armoured_div
-				}
-				hidden_effect = {
-					load_oob = ENG_7_armoured_div
-				}
 			}					
 			army_experience = 40
 		}
@@ -2771,9 +2822,12 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			swap_ideas = {
-				remove_idea = ENG_royal_tank_regiment_idea_first
-				add_idea = ENG_royal_tank_regiment_idea
+			custom_effect_tooltip = ENG_form_tank_board_tt
+			add_to_variable = {
+				ENG_army_armor_attack_factor_var = 0.1
+			}
+			add_to_variable = {
+				ENG_army_armor_defence_factor_var = 0.1
 			}
 			set_technology = {
 				boiling_vessel = 1
@@ -2999,7 +3053,13 @@ focus_tree = {
         }
 
         completion_reward = {
-			add_ideas = ENG_anti_submarine_training_school
+			custom_effect_tooltip = ENG_battle_of_atlantic_tt
+			add_to_variable = {
+				ENG_experience_gain_destroyer_combat_factor_var = 0.1
+			}
+			add_to_variable = {
+				ENG_experience_gain_destroyer_training_factor_var = 0.1
+			}
         }
 	}
 	focus = {
@@ -3067,10 +3127,8 @@ focus_tree = {
         }
 
         completion_reward = {
-			swap_ideas = {
-				remove_idea = ENG_anti_submarine_training_school
-				add_idea = ENG_asw_2
-			}
+			add_ideas = ENG_asw_2
+			
         }
 	}
 	focus = {
@@ -3139,6 +3197,13 @@ focus_tree = {
 
         completion_reward = {
 			add_ideas = ENG_darkest_hour
+			custom_effect_tooltip = ENG_battle_of_britain_tt
+			add_to_variable = {
+				ENG_air_training_xp_gain_factor_var = 0.1
+			}
+			add_to_variable = {
+				ENG_air_mission_xp_gain_factor_var = 0.1
+			}
         }
 	}
 	focus = {
@@ -3220,13 +3285,18 @@ focus_tree = {
         }
 
         completion_reward = {
-			remove_ideas = {
-				ENG_raf_1_idea
-			}
 			swap_ideas = {
 				remove_idea = ENG_darkest_hour
 				add_idea = ENG_darkest_hour_2
 			}
+			custom_effect_tooltip = ENG_battle_of_britain_tt
+			add_to_variable = {
+				ENG_air_training_xp_gain_factor_var = 0.1
+			}
+			add_to_variable = {
+				ENG_air_mission_xp_gain_factor_var = 0.1
+			}
+
         }
 	}
 	focus = {
