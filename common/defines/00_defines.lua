@@ -810,7 +810,7 @@ NMilitary = {
 	RELIABILITY_ORG_REGAIN = -0.5,                 -- how much reliability affects org regain
 	RELIABILITY_ORG_MOVING = -1.0,                 -- how much reliability affects org loss on moving
 	RELIABILITY_WEATHER = 3.0,                     -- how much reliability is afffecting weather impact
-	RELIABILTY_RECOVERY = 0.2,                     -- factor affecting how much equipment is returned "from the dead"
+	RELIABILTY_RECOVERY = 0.18,                     -- factor affecting how much equipment is returned "from the dead"
 	LAND_COMBAT_COLLATERAL_FORT_FACTOR = 0.005,		-- Factor to scale collateral damage to forts with.
 	LAND_COMBAT_COLLATERAL_INFRA_FACTOR = 0.0022,	-- Factor to scale collateral damage to infra with.
 	USE_MULTIPLICATIVE_ORG_LOSS_WHEN_MOVING = true, -- whether to apply org_loss_when_moving modifiers additively or multiplicatively (hardcoded multiplicative pre-2021)
@@ -883,7 +883,7 @@ NMilitary = {
 	CHANCE_TO_AVOID_HIT_AT_NO_DEF = 60,	           -- chance to avoid hit if no defences left.
 	COMBAT_MOVEMENT_SPEED = 0.3,	               -- speed reduction base modifier in combat
 	TACTIC_SWAP_FREQUENCEY = 12,                   -- hours between tactic swaps
-	INITIATIVE_PICK_COUNTER_ADVANTAGE_FACTOR  = 1.2, -- advantage per leader level for picking a counter
+	INITIATIVE_PICK_COUNTER_ADVANTAGE_FACTOR  = 1.6, -- advantage per leader level for picking a counter
 	BASE_COMBAT_WIDTH = 90,                       -- base combat width
 	ADDITIONAL_COMBAT_WIDTH = 30,                  -- more opened up by support attack
 	AMPHIBIOUS_INVADE_MOVEMENT_COST = 24.0,        -- total progress cost of movement while amphibious invading
@@ -1518,10 +1518,10 @@ NSupply = {
 
 
 	-- used for calculating "flow" for railways.
-	RAILWAY_BASE_FLOW = 5, 		-- how much base flow railway gives when a node connected to its capital/a naval node by a railway
+	RAILWAY_BASE_FLOW = 6, 		-- how much base flow railway gives when a node connected to its capital/a naval node by a railway
 	RAILWAY_FLOW_PER_LEVEL = 5, 	-- how much additional flow a railway level gives
-	RAILWAY_FLOW_PENALTY_PER_DAMAGED = 2.0, -- penalty to flow per damaged railway
-	RAILWAY_MIN_FLOW = 5.0, 		-- minimum railway flow can be reduced to
+	RAILWAY_FLOW_PENALTY_PER_DAMAGED = 4.0, -- penalty to flow per damaged railway
+	RAILWAY_MIN_FLOW = 6.0, 		-- minimum railway flow can be reduced to
 
 	-- used for calculating "flow" from a naval node to another naval node when it is connected via a convoy route
 	-- NAVAL_BASE_MAX_SUPPLY_FLOW_FACTOR = 0.9, -- flow of the parent node is factored to this ratio (so at most it can transfer parent naval node flow * this define)
@@ -2103,7 +2103,7 @@ NNavy = {
 	
 	SHIP_TO_FLEET_ANTI_AIR_RATIO									= 0.02,	-- total sum of fleet's anti air will be multiplied with this ratio and added to calculations anti-air of individual ships while air damage reduction
 	
-	ANTI_AIR_POW_ON_INCOMING_AIR_DAMAGE								= 0.7,	-- received air damage is calculated using following: 1 - ( (ship_anti_air + fleet_anti_air * SHIP_TO_FLEET_ANTI_AIR_RATIO )^ANTI_AIR_POW_ON_INCOMING_AIR_DAMAGE ) * ANTI_AIR_MULT_ON_INCOMING_AIR_DAMAGE
+	ANTI_AIR_POW_ON_INCOMING_AIR_DAMAGE								= 0.8,	-- received air damage is calculated using following: 1 - ( (ship_anti_air + fleet_anti_air * SHIP_TO_FLEET_ANTI_AIR_RATIO )^ANTI_AIR_POW_ON_INCOMING_AIR_DAMAGE ) * ANTI_AIR_MULT_ON_INCOMING_AIR_DAMAGE
 	ANTI_AIR_MULT_ON_INCOMING_AIR_DAMAGE							= 0.07,
 	
 	MAX_ANTI_AIR_REDUCTION_EFFECT_ON_INCOMING_AIR_DAMAGE 			= 0.85,	-- damage reduction for incoming air attacks is clamped to this value at maximum.
