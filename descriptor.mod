@@ -25,4 +25,4 @@ tags={
 }
 picture="thumbnail.png"
 name="MFU-Github"
-supported_version="1.11.4"
+supported_version="1.12.5"
