@@ -960,7 +960,7 @@ NMilitary = {
 	EQUIPMENT_COMBAT_LOSS_FACTOR = 0.4,	 	       -- % of equipment lost to strength ratio in combat, so some % is returned if below 1
 	SUPPLY_USE_FACTOR_MOVING = 1.4,                -- supply use when moving/fighting vs inactive
 	SUPPLY_USE_FACTOR_INACTIVE = 0.9,
-	SUPPLY_GRACE = 72,		-- troops always carry 3 days of food and supply
+	SUPPLY_GRACE = 100,		-- troops always carry 3 days of food and supply
 	SUPPLY_GRACE_MAX_REDUCE_PER_HOUR = 2,          -- supply grace is not decreased instantly when it is buffed temporarily and buff is removed
 	MAX_OUT_OF_SUPPLY_DAYS = 30, 				   -- how many days of shitty supply until max penalty achieved
 	OUT_OF_SUPPLY_ATTRITION = 0.25,                 -- max attrition when out of supply
@@ -1579,8 +1579,8 @@ NSupply = {
 	-- armies slowly gains and buffers supply above >100% up to their supply grace if they have efficent supply flow
 	-- otherwuse they will lose up to 100% supply every day depending on how bad supply flow is
 	ARMY_SUPPLY_RATIO_STARTING_GAIN = 0.0,
-	ARMY_SUPPLY_RATIO_SPEED_GAIN_PER_HOUR = 0.01,
-	ARMY_MAX_SUPPLY_RATIO_GAIN_PER_HOUR = 0.15,
+	ARMY_SUPPLY_RATIO_SPEED_GAIN_PER_HOUR = 0.1,
+	ARMY_MAX_SUPPLY_RATIO_GAIN_PER_HOUR = 1.5,
 
 	MIN_SURRENDER_LIMIT_TO_MOVE_SUPPLY_CAPITAL = 0.1, -- country needs to be above thos surrender ratio to be able to move its capital
 	COOLDOWN_DAYS_AFTER_MOVING_SUPPLY_CAPITAL = 20, -- cooldown for moving supply again after last move
@@ -1607,7 +1607,7 @@ NSupply = {
 	NUMBER_OF_SHOWN_SUPPLY_SOURCES_IN_SUPPLY_MAPMODE = 3, -- number of supply flow sources shown in breakdown tooltip
 	ESTIMATED_DIVISION_WEIGHT_FOR_SUPPLY_ESTIMATIONS_GUI = 1.0,	--Division supply consumption used for estimating frontline weight for order tooltips
 	AVAILABLE_MANPOWER_STATE_SUPPLY = 0.15,						--Factor for state supply from max manpower (population)
-	STORED_SUPPLY_CONSUMPTION_RATE_FACTOR = 0.75,				--Multiplies consumption rate of stored supply (more/less easement)
+	STORED_SUPPLY_CONSUMPTION_RATE_FACTOR = 1,				--Multiplies consumption rate of stored supply (more/less easement)
 },
 NRailwayGun = {
 	RAILWAY_GUN_RANGE = 15,							-- The range of railway guns in pixels
