@@ -124,8 +124,8 @@ NDiplomacy = {
 	BASE_IMPROVE_RELATION_COST = 10,                -- Political power cost to initiate relation improvement
 	BASE_IMPROVE_RELATION_SAME_IDEOLOGY_GROUP_MAINTAIN_COST = 0.2, -- Political power cost each update when boosting relations with nation of same ideology
 	BASE_IMPROVE_RELATION_DIFFERENT_IDEOLOGY_GROUP_MAINTAIN_COST = 0.4,    -- Political power cost each update when boosting relations with nation of different ideology
-	BASE_SEND_ATTACHE_COST = 50,					-- Political power cost to send attache
-	BASE_SEND_ATTACHE_CP_COST = 40.0,				-- Command Power sent attache usage cost
+	BASE_SEND_ATTACHE_COST = 100,					-- Political power cost to send attache
+	BASE_SEND_ATTACHE_CP_COST = 0.0,				-- Command Power sent attache usage cost
 	BASE_SEND_ATTACHE_MAINTAIN_COST = 0,			-- Political power cost each update when sending the attache to another country
 	BASE_GENERATE_WARGOAL_DAILY_PP = 0.8,	-- Daily pp cost for generation of wargoals # was 0.2
 	WARGOAL_VERSUS_MAJOR_AT_WAR_REDUCTION = -0.4, 	-- reduction of pp cost for wargoal vs major at war. # was -0.75
@@ -400,7 +400,7 @@ NCountry = {
 	STARTING_COMMAND_POWER = 50,					-- starting command power for every country
 	BASE_MAX_COMMAND_POWER = 100.0,					-- base value for maximum command power
 	BASE_COMMAND_POWER_GAIN = 0.4,				-- base value for daily command power gain
-	ATTACHE_XP_SHARE = 0.08,							-- Country received xp from attaches
+	ATTACHE_XP_SHARE = 0.1,							-- Country received xp from attaches
 	SPECIAL_FORCES_CAP_BASE = 0.00,					-- Max ammount of special forces battalions is total number of non-special forces battalions multiplied by this and modified by a country modifier
 	SPECIAL_FORCES_CAP_MIN = 8000,					-- You can have a minimum of this many special forces battalions, regardless of the number of non-special forces battalions you have, this can also be modified by a country modifier
 	DAYS_OF_WAR_BEFORE_SURRENDER = 7,				-- Number of days a war has to have existed before anyone can surrender in it
@@ -872,7 +872,7 @@ NMilitary = {
 	LAND_AIR_COMBAT_ORG_DAMAGE_MODIFIER = 0.026,    -- global damage modifier
 	LAND_AIR_COMBAT_MAX_PLANES_PER_ENEMY_WIDTH = 1, -- how many CAS/TAC can enter a combat depending on enemy width there
 	LAND_COMBAT_STR_ARMOR_ON_SOFT_DICE_SIZE = 2,   -- extra damage dice if our armor outclasses enemy
-	LAND_COMBAT_ORG_ARMOR_ON_SOFT_DICE_SIZE = 5,   -- extra damage dice if our armor outclasses enemy
+	LAND_COMBAT_ORG_ARMOR_ON_SOFT_DICE_SIZE = 6,   -- extra damage dice if our armor outclasses enemy
 	LAND_COMBAT_STR_ARMOR_DEFLECTION_FACTOR = 0.60, -- damage reduction if armor outclassing enemy
 	LAND_COMBAT_ORG_ARMOR_DEFLECTION_FACTOR = 0.60, -- damage reduction if armor outclassing enemy
 	LAND_COMBAT_COLLATERAL_FACTOR = 0.002,		   -- Factor to scale collateral damage to infra and forts with.
@@ -1065,8 +1065,8 @@ NMilitary = {
 	STRATEGIC_REDEPLOY_ORG_RATIO = 0.1,				-- Ratio of max org while strategic redeployment
 	BATALION_NOT_CHANGED_EXPERIENCE_DROP = 0.0,		-- Division experience drop if unit has same batalion
 	BATALION_CHANGED_EXPERIENCE_DROP = 0.6,			-- Division experience drop if unit has different batalion
-	ARMOR_VS_AVERAGE = 0.3,			                -- how to weight in highest armor & pen vs the division average
-	PEN_VS_AVERAGE = 0.3,
+	ARMOR_VS_AVERAGE = 0.1,			                -- how to weight in highest armor & pen vs the division average
+	PEN_VS_AVERAGE = 0.1,
 
 	DECRYPTION_ADVANTAGE_BONUS = 0.05,				-- How much unit base damage and base defense is increased per decryption level compared to enemies average encryption level (ex: dec. level is 5 and enemy average enc. level is 3 then 5-3 = 2 which gives 10 % increase)
 	
@@ -1275,7 +1275,7 @@ NAir = {
 	COMBAT_SUP_VS_SUP_ATTACK_CHANCE_SPEED_DIFF = 0.25, 	-- How much diff in speed between aircrafts affects the chance of who attacks first in superiority vs superiority.( Naval air combat only )
 	COMBAT_MULTIPLANE_CAP = 1.5,						-- How many planes can shoot at each plane on other side ( if there are 100 planes we are atttacking COMBAT_MULTIPLANE_CAP * 100 of our planes can shoot )
 	COMBAT_DAMAGE_SCALE = 0.18,							-- Higher value = more shot down planes
-	COMBAT_DAMAGE_SCALE_CARRIER = 5,                    -- same as above but used inside naval combat for carrier battles																								   
+	COMBAT_DAMAGE_SCALE_CARRIER = 6,                    -- same as above but used inside naval combat for carrier battles																								   
 	DETECT_CHANCE_FROM_OCCUPATION = 0.15, 				-- How much the controlled provinces in area affects the air detection base value.
 	DETECT_CHANCE_FROM_RADARS = 0.7, 					-- How much the radars in area affects detection chance.
 	DETECT_CHANCE_FROM_AIRCRAFTS_EFFECTIVE_COUNT = 2400, -- Max amount of aircrafts in region to give full detection bonus.
@@ -1642,6 +1642,7 @@ NRailwayGun = {
 
 NNavy = {
 	--NEW SHIT*/
+	PEACE_ACTION_TRANSFER_NAVY_EXPERIENCE_RETAINED = 0.25,			-- % of experience to retain after being transferred in a peace conference
 	HIT_PROFILE_SPEED_BASE											= 20,		-- Base value added to hitprofile speed calulation
 	NAVY_PIERCING_THRESHOLDS = {					-- Our piercing / their armor must be this value to deal damage fraction equal to the index in the array below [higher number = higher penetration]. If armor is 0, 1.00 will be returned.
 		2.00,
@@ -1808,7 +1809,7 @@ NNavy = {
 	NAVAL_TRANSFER_BASE_SPEED = 12,                                  -- base speed of units on water being transported
 	NAVAL_TRANSFER_BASE_NAVAL_DIST_ADD = 100,						-- Extra cost for naval movement ( compared to land movement ) when deciding what ports to use for a naval transfer
 	NAVAL_TRANSFER_BASE_NAVAL_DIST_MULT = 20,						-- Multiplier for the cost of naval movement ( compared to land movement ) when deciding what ports to use for naval transfer
-	NAVAL_SUPREMACY_CAN_INVADE = 0.2,								-- required naval supremacy to perform invasions on an area
+	NAVAL_SUPREMACY_CAN_INVADE = 0.5,								-- required naval supremacy to perform invasions on an area
 	CARRIER_STACK_PENALTY = 8,										-- The most efficient is 4 carriers in combat. 5+ brings the penalty to the amount of wings in battle.
 	CARRIER_STACK_PENALTY_EFFECT = 0.125,								-- Each carrier above the optimal amount decreases the amount of airplanes being able to takeoff by such %.
 	SHORE_BOMBARDMENT_CAP = 0.3,
@@ -2302,6 +2303,13 @@ NAITheatre = {
 },
 NAI = {
 	--NEW NEW SHIT
+	-- stuff related to how the AI evaluates/scores how useful modifiers are
+	EVAL_MODIFIER_NON_PERCENT_FACTOR = 0.1,                       -- Multiply non-percent-based modifiers with this to put the values in the approximately same range so they can be compared. (Why we are using 0.1 and not 0.01? No idea...)
+	EVAL_MODIFIER_UNSPECIFIED_CATEGORY_FACTOR = 0.75,             -- Arbitrary scoring factor for modifiers the AI doesn't know how to categorize
+	EVAL_MODIFIER_MAX_COMMAND_POWER_FACTOR = 0.01,                -- Increasing CP cap with x is maybe 100 times less useful than e.g. gaining x more XP per day
+	ADVISOR_SCORE_TRAIT_MODIFIER_FACTOR = 0.2,     -- When scoring advisors, factor the score contribution from the advisor's trait modifiers by this value
+	ADVISOR_SCORE_CHEAPER_IS_BETTER_FACTOR = 0.1,  -- When scoring advisors, this define scales how much the AI prefers cheaper advisors over more expensive ones. 0.0 means no effect, 0.15 means a cost difference of 100 PP modifies the score by 15 %.
+	ADVISOR_SCORE_CHEAPER_IS_BETTER_MIN = 0.5,     -- Clamps the above scoring factor to at minimum this value
 	PEACE_BID_FOLD_TURNS_AGAINST_OTHER_AI = 2,					--Resolve contests against other AIs after this many turns. Don't always contest forever, it yields the same results.
 	UNLOCK_SPIRIT_AI_WILL_DO_FACTOR = 10,       -- Factor for scripted ai_will_do value
 	UNLOCK_SPIRIT_MODIFIER_FACTOR = 0.1,        -- Factor for AI's evaluated value of the modifiers connected to the spirit
