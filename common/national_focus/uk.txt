@@ -2684,10 +2684,10 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
+            set_technology = { eng_mechanised_infantry1 = 1 }
 			add_tech_bonus = {				
 				bonus = 1
 				uses = 1 
-				technology = eng_mechanised_infantry1
 				technology = eng_mechanised_infantry2
 			}
 		}
@@ -2713,6 +2713,7 @@ focus_tree = {
 
 		completion_reward = {
 			add_ideas = ENG_royal_tank_regiment_idea_first
+			army_experience = 20
 			if = {
 				limit = {
 					NOT = {
@@ -2731,17 +2732,41 @@ focus_tree = {
 			custom_effect_tooltip = ENG_tank_spawn_in
 			if = {
 				limit = {
-					OR = {
 					    has_tech = eng_1936_medium_tank_chassis
-						has_tech = eng_1939_medium_tank_chassis
-						has_tech = eng_1940_medium_tank_chassis
+					NOT = {
+					    has_tech = eng_1939_heavy_tank_chassis	
 					}
-				}	
+			    }				
 				hidden_effect = {
 					load_oob = ENG_7_armoured_div
 				}
 			}					
-			army_experience = 40
+			else_if = {
+				limit = {
+					    has_tech = eng_1939_heavy_tank_chassis					
+				
+					NOT = {
+					    has_tech = eng_1936_medium_tank_chassis
+					}
+			    }
+				hidden_effect = {	
+					load_oob = ENG_7_heavy_armoured_div
+			    }					
+		   	}
+			else_if = {
+				limit = {
+					    has_tech = eng_1939_heavy_tank_chassis					
+
+					AND = {
+					    has_tech = eng_1936_medium_tank_chassis
+
+					}
+			    }
+				hidden_effect = {	
+					load_oob = ENG_7_heavy_medium_div
+			    }					
+		   	}
+			
 		}
 	}
 ####should give percy hobbart as tank expert	
