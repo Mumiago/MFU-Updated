@@ -1215,7 +1215,7 @@ NAir = {
 	BIGGEST_SPEED_FACTOR_DIFF = 2.5,					-- biggest factor difference in speed for doing damage (caps to this)
 	TOP_SPEED_DAMAGE_BONUS_FACTOR = 0.02,				-- A factor for scaling the top speed of a plane into damage buff
 	COMBAT_DAMAGE_STATS_MULTILPIER = 0.2,
-	CARRIER_SIZE_STAT_INCREMENT = 20,					-- Each Point of carrier_size state adds capacity for this many planes
+	CARRIER_SIZE_STAT_INCREMENT = 15,					-- Each Point of carrier_size state adds capacity for this many planes
 	BASE_UNIT_WEIGHT_IN_TRANSPORT_PLANES = 45.0,
 	EFFICIENCY_REGION_CHANGE_DAILY_GAIN_MARITIME_PATROL_PLANE = 1,
 	MIN_PLANE_COUNT_PARADROP = 50,
@@ -1370,7 +1370,7 @@ NAir = {
 	AIR_WING_XP_LOSS_REDUCTION_OVER_FRIENDLY_TERRITORY_FACTOR = 0.3, 	--Reduction on XP loss over friendly territory
 
 	DISRUPTION_FACTOR = 4,							-- multiplier on disruption damage to scale its effects on planes
-	DISRUPTION_FACTOR_CARRIER = 10.5,							-- multiplier on disruption damage to scale its effects on carrier vs carrier planes	
+	DISRUPTION_FACTOR_CARRIER = 11,							-- multiplier on disruption damage to scale its effects on carrier vs carrier planes	
 	DISRUPTION_SPEED_FACTOR = 1.0,
 	DISRUPTION_AGILITY_FACTOR = 0.0,
 	DISRUPTION_ATTACK_FACTOR = 1.0,
@@ -1812,7 +1812,7 @@ NNavy = {
 	NAVAL_SUPREMACY_CAN_INVADE = 0.5,								-- required naval supremacy to perform invasions on an area
 	CARRIER_STACK_PENALTY = 8,										-- The most efficient is 4 carriers in combat. 5+ brings the penalty to the amount of wings in battle.
 	CARRIER_STACK_PENALTY_EFFECT = 0.125,								-- Each carrier above the optimal amount decreases the amount of airplanes being able to takeoff by such %.
-	SHORE_BOMBARDMENT_CAP = 0.3,
+	SHORE_BOMBARDMENT_CAP = 0.25,
 	ANTI_AIR_TARGETING = 0.8,                                       -- how good ships are at hitting aircraft
 	MIN_TRACTED_ASSIST_DAMAGE_RATIO = 0.05,							-- How much damage counts as assist damage
 	SUPPLY_NEED_FACTOR = 0.1,										    -- multiplies supply usage
@@ -3270,13 +3270,13 @@ NAI = {
 
     GIE_EXILE_AIR_MANPOWER_USAGE_RATIO = 0.2, -- AI will not deploy new exile wings when this percentage of available exile manpower is already used for wing recruitment.
 
-	CARRIER_TASKFORCE_MAX_CARRIER_COUNT = 4, 		-- optimum carrier count for carrier taskforces
-	CAPITAL_TASKFORCE_MAX_CAPITAL_COUNT = 12, 		-- optimum capital count for capital taskforces
-	SCREEN_TASKFORCE_MAX_SHIP_COUNT = 12,			-- optimum screen count for screen taskforces
-	SUB_TASKFORCE_MAX_SHIP_COUNT = 16 ,				-- optimum sub count for sub taskforces
+	CARRIER_TASKFORCE_MAX_CARRIER_COUNT = 8, 		-- optimum carrier count for carrier taskforces
+	CAPITAL_TASKFORCE_MAX_CAPITAL_COUNT = 16, 		-- optimum capital count for capital taskforces
+	SCREEN_TASKFORCE_MAX_SHIP_COUNT = 60,			-- optimum screen count for screen taskforces
+	SUB_TASKFORCE_MAX_SHIP_COUNT = 10 ,				-- optimum sub count for sub taskforces
 	
 	MIN_CAPITALS_FOR_CARRIER_TASKFORCE = 10,			-- carrier fleets will at least have this amount of capitals
-	CAPITALS_TO_CARRIER_RATIO = 1.0,				-- capital to carrier count in carrier taskfoces
+	CAPITALS_TO_CARRIER_RATIO = 2.0,				-- capital to carrier count in carrier taskfoces
 	SCREENS_TO_CAPITAL_RATIO = 3.0,					-- screens to capital/carrier count in carrier & capital taskforces
 	
 	MISSION_FLEET_ICONS = {
