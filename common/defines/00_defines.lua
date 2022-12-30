@@ -1164,7 +1164,7 @@ NMilitary = {
     NEW_NAVY_LEADER_RANDOM_SKILL_CHANCES = { -- chances to give a random stat skill point for a new admiral
 	},
 	
-	UNIT_LEADER_MODIFIER_COOLDOWN_ON_GROUP_CHANGE = 15,		-- time in days for a unit leader to regain its modifiers
+	UNIT_LEADER_MODIFIER_COOLDOWN_ON_GROUP_CHANGE = 0,		-- time in days for a unit leader to regain its modifiers
 	UNIT_LEADER_ASSIGN_TRAIT_COST = 5.0,					-- cost to assign a new trait to a unit leader
 	ATTACHED_WINGS_ORDER_UPDATE_DAYS = 5,					-- Days untill the attached wing will update the order
 	
