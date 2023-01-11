@@ -890,7 +890,7 @@ NMilitary = {
 	ADDITIONAL_COMBAT_WIDTH = 30,                  -- more opened up by support attack
 	AMPHIBIOUS_INVADE_MOVEMENT_COST = 24.0,        -- total progress cost of movement while amphibious invading
 	LAND_SPEED_MODIFIER = 0.031,                    -- basic speed control
-	RIVER_CROSSING_PENALTY = -0.15,                 -- small river crossing
+	RIVER_CROSSING_PENALTY = -0.175,                 -- small river crossing
 	RIVER_CROSSING_PENALTY_LARGE = -0.3,           -- large river crossing
 	RIVER_CROSSING_SPEED_PENALTY = -0.15,          -- small river crossing
 	RIVER_CROSSING_SPEED_PENALTY_LARGE = -0.3,     -- large river crossing
@@ -905,7 +905,7 @@ NMilitary = {
 	ARMY_LEADER_XP_GAIN_PER_UNIT_IN_COMBAT = 0.08, -- XP gain per unit in combat
 	CONSTANT_XP_RATIO_FOR_MULTIPLE_LEADERS_IN_SAME_COMBAT = 0.66, -- if there are multiple leaders in same combat, each one gets thisratio + 1-thisratio/num leaders. amount of xp each general gets scales 1 0.75 0.66 etc for 1 2 3 generals
 	BASE_LEADER_TRAIT_GAIN_XP = 0.7,				   -- Base xp gain for traits per hour for armies.
-	MAX_NUM_TRAITS = -1,					-- cant have more
+	MAX_NUM_TRAITS = 7,					-- cant have more
 	ENEMY_AIR_SUPERIORITY_IMPACT = -0.4,           -- effect on defense due to enemy air superiorty
 	ENEMY_AIR_SUPERIORITY_DEFENSE = 0.45,	       -- more AA attack will approach this amount of help (diminishing returns)
 	ENEMY_AIR_SUPERIORITY_DEFENSE_STEEPNESS = 75, -- how quickly defense approaches the max impact diminishing returns curve
@@ -2304,7 +2304,7 @@ NAITheatre = {
 NAI = {
 	--NEW NEW SHIT
 	-- stuff related to how the AI evaluates/scores how useful modifiers are
-	EVAL_MODIFIER_NON_PERCENT_FACTOR = 0.1,                       -- Multiply non-percent-based modifiers with this to put the values in the approximately same range so they can be compared. (Why we are using 0.1 and not 0.01? No idea...)
+	EVAL_MODIFIER_NON_PERCENT_FACTOR = 0.11,                       -- Multiply non-percent-based modifiers with this to put the values in the approximately same range so they can be compared. (Why we are using 0.1 and not 0.01? No idea...)
 	EVAL_MODIFIER_UNSPECIFIED_CATEGORY_FACTOR = 0.75,             -- Arbitrary scoring factor for modifiers the AI doesn't know how to categorize
 	EVAL_MODIFIER_MAX_COMMAND_POWER_FACTOR = 0.01,                -- Increasing CP cap with x is maybe 100 times less useful than e.g. gaining x more XP per day
 	ADVISOR_SCORE_TRAIT_MODIFIER_FACTOR = 0.2,     -- When scoring advisors, factor the score contribution from the advisor's trait modifiers by this value
