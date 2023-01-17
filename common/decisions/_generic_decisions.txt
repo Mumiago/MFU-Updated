@@ -41,60 +41,6 @@ ai_decision_2 = {
 	
 }
 political_actions = {
-	targeted_race_for_the_bomb = {
-
-		icon = nuke_icon
-
-		allowed = {
-			always = no
-		}
-
-		available = {
-			#Target is FROM
-			has_tech = atomic_research
-			NOT = { has_global_flag = first_nuke_dropped }
-			NOT = { has_idea = race_for_the_bomb }
-		}
-
-		#If this trigger matches a country.
-		target_trigger = {
-			#Target is FROM
-			FROM = {
-				NOT = { is_in_faction_with = ROOT }
-				has_tech = nuclear_reactor
-				any_owned_state = {
-					nuclear_reactor > 0
-				}
-			}
-		}
-
-		visible = {
-			#Target is FROM
-			has_tech = atomic_research
-			NOT = { has_global_flag = first_nuke_dropped }
-			NOT = { has_idea = race_for_the_bomb }
-			FROM = {
-				NOT = { is_in_faction_with = ROOT }
-				has_tech = nuclear_reactor
-				any_owned_state = {
-					nuclear_reactor > 0
-				}
-			}
-		}
-
-		complete_effect = {
-			set_country_flag = racing_for_the_bomb
-			add_ideas = race_for_the_bomb
-		}
-
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				any_other_country = { has_tech = nukes }
-			}
-		}
-	}
 	
 	Increased_luxuries = { #Massive Propaganda Investment
 
@@ -253,87 +199,6 @@ political_actions = {
 
 economy_decisions = {
 
-	economy_inflation = {
-
-		icon = generic_paperwork
-
-		available = {
-			has_stability > 0.85
-			has_government = democratic
-			OR = {
-				has_idea_with_trait = capitalist
-				has_idea_with_trait = smooth_talking_charmer
-			}
-		}
-
-		visible = {
-			has_government = democratic
-		}
-
-		fire_only_once = no
-
-		modifier = {
-			min_export = 0.1
-			political_power_gain = 0.25
-		}
-
-		days_remove = 120
-		days_re_enable = 120
-
-		cost = 25
-
-		complete_effect = {
-
-		}
-
-		ai_will_do = {
-			base = 0
-			modifier = {
-				add = 1
-				has_stability < 0.4
-			}
-		}
-	}
-
-	economy_deflation = {
-
-		icon = generic_bureaucracy
-
-		available = {
-			has_stability > 0.85
-			has_government = democratic
-			has_idea_with_trait = backroom_backstabber
-		}
-
-		visible = {
-			has_government = democratic
-		}
-
-		fire_only_once = no
-
-		modifier = {
-			min_export = -0.1
-			political_power_gain = -0.2
-		}
-
-		days_remove = 120
-		days_re_enable = 120
-
-		cost = 25
-
-		complete_effect = {
-
-		}
-
-		ai_will_do = {
-			base = 0
-			modifier = {
-				add = 1
-				has_stability < 0.4
-			}
-		}
-	}	
-
 	focus_on_land = {
 
 		icon = ger_military_buildup
@@ -353,7 +218,7 @@ economy_decisions = {
 
 		modifier = {
 			industrial_capacity_factory = 0.075
-			industrial_capacity_dockyard = -0.1
+			industrial_capacity_dockyard = -0.2
 			political_power_gain = -0.05
 		}
 
@@ -395,7 +260,7 @@ economy_decisions = {
 
 		modifier = {
 			industrial_capacity_factory = -0.1
-			industrial_capacity_dockyard = 0.075
+			industrial_capacity_dockyard = 0.2
 		}
 
 		days_remove = 120
@@ -576,188 +441,147 @@ economy_decisions = {
 			}
 		}
 	}
-
-	emergency_factory_conversion_offensive = {
-
-		icon = generic_industry
-
-		available = {
-			num_of_civilian_factories > 5 #Change this if amount of factories change
-		}
-
-		visible = {
-			OR = {
-				AND = {
-					has_government = fascism
-					has_war_support > 0.75
-				}
-				AND = {
-					has_government = communism
-					threat > 90
-				}
-				AND = {
-					has_government = democratic
-					threat > 100
-				}
-			}
-		}
-
-		fire_only_once = no
-
-		days_re_enable = 180
-
-		cost = 50
-
-		modifier = {
-			civilian_factory_use = 5			
-		}
-
-		days_remove = 90
-
-		remove_effect = {
-			replace_civ_with_arms_factories = yes
-			add_war_support = 0.01
-			add_stability = -0.01
-		}
-		ai_will_do = {
-			factor = 0
-		}
-	}
-
-	emergency_factory_conversion_civilian = {
+	convert_industrial_complexes = {
 
 		icon = generic_construction
 
 		available = {
-			num_of_military_factories > 5 #Change this if amount of factories change
-		}
-
-		visible = {
-			has_government = democratic
-			has_stability > 0.65
-		}
-
-		fire_only_once = no
-
-		days_re_enable = 90
-
-		cost = 70
-
-		modifier = {
-			civilian_factory_use = 5	
-		}
-
-		days_remove = 90
-
-		remove_effect = {
-			replace_arms_with_civ_factories = yes
-			add_war_support = -0.01
-			add_stability = 0.01
-		}
-		ai_will_do = {
-			factor = 0
-		}
-	}
-
-	commission_defence_line = {
-
-		icon = generic_construction
-
-		available = {
-			has_war = yes
-		}
-
-		visible = {
-			has_war = yes
-			NOT = { tag = SOV }			
-		}
-
-		fire_only_once = no
-
-		days_re_enable = 160
-
-		cost = 50
-
-		modifier = {
-			civilian_factory_use = 10
-			industrial_capacity_factory = -0.01
-		}
-
-		days_remove = 90
-
-		remove_effect = {
-			commission_defence_line = yes
-			add_war_support = 0.01
-			add_stability = 0.01
-		}
-		ai_will_do = {
-			factor = 0
-		}
-	}
-
-	commission_coast_defence_line = {
-
-		icon = generic_construction
-
-		available = {
-			has_war = yes
-		}
-
-		visible = {
-			has_war = yes
-			NOT = { tag = SOV }
-		}
-
-		fire_only_once = no
-
-		days_re_enable = 160
-
-		cost = 100
-
-		modifier = {
-			civilian_factory_use = 10
-			industrial_capacity_factory = -0.01
-		}
-
-		days_remove = 90
-
-		remove_effect = {
-			commission_coast_defence = yes
-			add_war_support = 0.01
-			add_stability = 0.01
-		}
-		ai_will_do = {
-			factor = 0
-		}
-	}
-
-
-remove_incompetent_industry = {
-
-		icon = generic_industry
-
-		available = {
-			num_of_factories > 120
-			OR = {
-			has_tech = concentrated_industry3
-			has_tech = dispersed_industry3
-			}
-			has_idea = incompetent_industry_real
+			has_stability > 0.2
 			
 		}
-		cost = 100
+
 		visible = {
-			has_idea = incompetent_industry_real
+			always = yes
 		}
+
+		fire_only_once = yes
+
+		modifier = {
+			conversion_cost_mil_to_civ_factor = -0.2
+			industrial_capacity_factory = -0.1
+		}
+
+		days_remove = 120
+
+		cost = 25
+
 		complete_effect = {
-			remove_ideas = incompetent_industry_real
-			set_country_flag = industry_improved
+
 		}
+
 		ai_will_do = {
-			base = 100
+			base = 0
+			modifier = {
+				add = 1
+				has_stability < 0.4
+			}
+		}
+	}
+	convert_military_complexes = {
+
+		icon = generic_construction
+
+		available = {
+			has_stability > 0.2
 			
 		}
- 	}	
+
+		visible = {
+			always = yes
+		}
+
+		fire_only_once = yes
+
+		modifier = {
+			conversion_cost_civ_to_mil_factor = -0.2
+			industrial_capacity_factory = -0.1
+		}
+
+		days_remove = 120
+
+		cost = 25
+
+		complete_effect = {
+
+		}
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 1
+				has_stability < 0.4
+			}
+		}
+	}
+	war_building_slot = {
+
+		icon = generic_construction
+
+		allowed = {
+			always = yes
+		}
+
+		cost = 50
+		fire_only_once = yes
+
+		available = {
+			any_state = {
+				NOT = { has_state_flag = war_building_slot_flag }
+				is_fully_controlled_by = ROOT
+				is_owned_by = ROOT
+			}
+			has_war = yes
+		}
+
+		visible = {
+			any_state = {
+				NOT = { has_state_flag = war_building_slot_flag }
+				is_fully_controlled_by = ROOT
+				is_owned_by = ROOT
+			}
+			has_war = yes
+		}
+
+		complete_effect = {
+			add_war_support = -0.025
+			add_stability = -0.025
+			random_owned_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+					is_owned_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 5
+						include_locked = yes
+					}
+					NOT = { has_state_flag = infrastructure_building_slot_flag }
+				}
+				add_extra_state_shared_building_slots = 5
+				set_state_flag = war_building_slot_flag
+			}
+			random_owned_state = {
+				limit = {
+					is_fully_controlled_by = ROOT
+					is_owned_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 5
+						include_locked = yes
+					}
+					NOT = { has_state_flag = infrastructure_building_slot_flag }
+				}
+				add_extra_state_shared_building_slots = 5
+				set_state_flag = war_building_slot_flag
+			}
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 10
+				any_owned_state = { free_building_slots = { building = industrial_complex size < 1 include_locked = no } }
+			}
+		}
+	}	
 }
 
 propaganda_efforts = {
@@ -884,111 +708,6 @@ operations = {
 				add = 5
 				tag = ENG
 				date > 1937.5.1
-			}
-		}
-	}
-	convert_military_complexes = {
-
-		icon = generic_construction
-
-		available = {
-			has_stability > 0.2
-			has_war = yes
-		}
-
-		visible = {
-			always = yes
-		}
-
-		fire_only_once = yes
-
-		modifier = {
-			conversion_cost_civ_to_mil_factor = -0.15
-			industrial_capacity_factory = -0.05
-		}
-
-		days_remove = 120
-
-		cost = 25
-
-		complete_effect = {
-
-		}
-
-		ai_will_do = {
-			base = 0
-			modifier = {
-				add = 1
-				has_stability < 0.4
-			}
-		}
-	}
-	war_building_slot = {
-
-		icon = generic_construction
-
-		allowed = {
-			always = yes
-		}
-
-		cost = 50
-		fire_only_once = yes
-
-		available = {
-			any_state = {
-				NOT = { has_state_flag = war_building_slot_flag }
-				is_fully_controlled_by = ROOT
-				is_owned_by = ROOT
-			}
-			has_war = yes
-		}
-
-		visible = {
-			any_state = {
-				NOT = { has_state_flag = war_building_slot_flag }
-				is_fully_controlled_by = ROOT
-				is_owned_by = ROOT
-			}
-			has_war = yes
-		}
-
-		complete_effect = {
-			add_war_support = -0.025
-			add_stability = -0.025
-			random_owned_state = {
-				limit = {
-					is_fully_controlled_by = ROOT
-					is_owned_by = ROOT
-					free_building_slots = {
-						building = industrial_complex
-						size > 5
-						include_locked = yes
-					}
-					NOT = { has_state_flag = infrastructure_building_slot_flag }
-				}
-				add_extra_state_shared_building_slots = 5
-				set_state_flag = war_building_slot_flag
-			}
-			random_owned_state = {
-				limit = {
-					is_fully_controlled_by = ROOT
-					is_owned_by = ROOT
-					free_building_slots = {
-						building = industrial_complex
-						size > 5
-						include_locked = yes
-					}
-					NOT = { has_state_flag = infrastructure_building_slot_flag }
-				}
-				add_extra_state_shared_building_slots = 5
-				set_state_flag = war_building_slot_flag
-			}
-		}
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 10
-				any_owned_state = { free_building_slots = { building = industrial_complex size < 1 include_locked = no } }
 			}
 		}
 	}

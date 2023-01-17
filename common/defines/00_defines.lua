@@ -867,7 +867,7 @@ NMilitary = {
 	LAND_COMBAT_ORG_DICE_SIZE = 4,                 -- nr of damage dice
 	LAND_COMBAT_STR_DICE_SIZE = 2,                 -- nr of damage dice
 	LAND_COMBAT_STR_DAMAGE_MODIFIER = 0.058,        -- global damage modifier... but some equipment is returned at end of battles see : EQUIPMENT_COMBAT_LOSS_FACTOR
-	LAND_COMBAT_ORG_DAMAGE_MODIFIER = 0.05,        -- global damage modifier
+	LAND_COMBAT_ORG_DAMAGE_MODIFIER = 0.047,        -- global damage modifier
 	LAND_AIR_COMBAT_STR_DAMAGE_MODIFIER = 0.028,    -- air global damage modifier
 	LAND_AIR_COMBAT_ORG_DAMAGE_MODIFIER = 0.024,    -- global damage modifier
 	LAND_AIR_COMBAT_MAX_PLANES_PER_ENEMY_WIDTH = 1, -- how many CAS/TAC can enter a combat depending on enemy width there
@@ -911,8 +911,8 @@ NMilitary = {
 	ENEMY_AIR_SUPERIORITY_DEFENSE_STEEPNESS = 75, -- how quickly defense approaches the max impact diminishing returns curve
 	ENEMY_AIR_SUPERIORITY_SPEED_IMPACT = -0.2,     -- effect on speed due to enemy air superiority
 
-	ANTI_AIR_TARGETTING_TO_CHANCE = 0.01,			-- Balancing value to determine the chance of ground AA hitting an attacking airplane, affecting both the effective average damage done by AA to airplanes, and the reduction of damage done by airplanes due to AA support
-	ANTI_AIR_ATTACK_TO_AMOUNT = 0.002,				-- Balancing value to convert equipment stat anti_air_attack to the random % value of airplanes being hit.																																																																
+	ANTI_AIR_TARGETTING_TO_CHANCE = 0.015,			-- Balancing value to determine the chance of ground AA hitting an attacking airplane, affecting both the effective average damage done by AA to airplanes, and the reduction of damage done by airplanes due to AA support
+	ANTI_AIR_ATTACK_TO_AMOUNT = 0.001,				-- Balancing value to convert equipment stat anti_air_attack to the random % value of airplanes being hit.																																																																
 
 	ENCIRCLED_PENALTY = -0.3,                      -- penalty when completely encircled
 	WARSCORE_WINNER_FACTOR = 1,						-- Warscore effect on winners
@@ -1208,6 +1208,7 @@ NMilitary = {
 
 NAir = {
 	--NEW SHIT*/
+	MANPOWER_LOSS_RATIO_PLANE_SHOT = 0.10,	-- The loss ratio of manpower for a shot plane.
 	FIELD_EXPERIENCE_FACTOR = 0.3,						-- Factor all air experience gain from missions by this
 	INTERCEPTION_DISTANCE_SCALE = 50, -- At this many pixels of path length, full interception efficiency is applied to air missions. Lerp from 0.
 	INTERCEPTION_DAMAGE_SCALE = 0.3, -- Multiply the interception damage with this value. Works as a cap when interception distance is at maximum.
@@ -1791,7 +1792,7 @@ NNavy = {
 	LEADER_EXPERIENCE_SCALE = 1.0,
 	BATTLE_NAME_VP_FACTOR = 100,									-- Name is given by ((VP value) * BATTLE_NAME_VP_FACTOR) / (Distance VP -> battle)
 	BATTLE_NAME_VP_CUTOFF = 1.0,									-- If best score of above calculation is below this, name will be that of region.
-	AMPHIBIOUS_LANDING_PENALTY = -0.7,								-- amphibious landing penalty
+	AMPHIBIOUS_LANDING_PENALTY = -0.75,								-- amphibious landing penalty
 	AMPHIBIOUS_INVADE_SPEED_BASE = 0.5, 							-- every hour movement progress on amphibious invasion
 	AMPHIBIOUS_INVADE_MOVEMENT_COST = 24.0, 						-- total progress cost of movement while amphibious invading
 	AMPHIBIOUS_INVADE_ATTACK_LOW = 0.2, 							-- low and high cap of attack modifier scale. Scale interpolated by invasion progress.
@@ -1903,7 +1904,7 @@ NNavy = {
 	AGGRESSION_HEAVY_GUN_EFFICIENCY_ON_LIGHT_SHIPS = 0.3,-- ratio for scoring for different gun types against light ships
 	AGGRESSION_TORPEDO_EFFICIENCY_ON_LIGHT_SHIPS = 0.3,   -- ratio for scoring for different gun types against light ships
 	
-	AGGRESSION_LIGHT_GUN_EFFICIENCY_ON_HEAVY_SHIPS = 0.1, -- ratio for scoring for different gun types against heavy ships
+	AGGRESSION_LIGHT_GUN_EFFICIENCY_ON_HEAVY_SHIPS = 0.07, -- ratio for scoring for different gun types against heavy ships
 	AGGRESSION_HEAVY_GUN_EFFICIENCY_ON_HEAVY_SHIPS = 2, -- ratio for scoring for different gun types against heavy ships
 	AGGRESSION_TORPEDO_EFFICIENCY_ON_HEAVY_SHIPS = 2,   -- ratio for scoring for different gun types against heavy ships
 	
@@ -2304,6 +2305,8 @@ NAITheatre = {
 NAI = {
 	--NEW NEW SHIT
 	-- stuff related to how the AI evaluates/scores how useful modifiers are
+	DIVISION_MATCH_ROLE_BOOST_FACTOR = 1.2,                 -- When finding closest matching existing template to a target template, boost the score by this much if the template also has the correct role
+	UNLOCK_SPIRIT_USE_TRUNCATION_SELECT = false,       -- Whether to use truncation select or roulette-wheel select. Set threshold for truncation select below.
 	EVAL_MODIFIER_NON_PERCENT_FACTOR = 0.11,                       -- Multiply non-percent-based modifiers with this to put the values in the approximately same range so they can be compared. (Why we are using 0.1 and not 0.01? No idea...)
 	EVAL_MODIFIER_UNSPECIFIED_CATEGORY_FACTOR = 0.75,             -- Arbitrary scoring factor for modifiers the AI doesn't know how to categorize
 	EVAL_MODIFIER_MAX_COMMAND_POWER_FACTOR = 0.01,                -- Increasing CP cap with x is maybe 100 times less useful than e.g. gaining x more XP per day
