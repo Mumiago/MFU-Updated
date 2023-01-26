@@ -139,33 +139,45 @@ scripted_gui = {
                     amount = 4
                     tooltip = GER_increase_resistance_4
 		    	}
-				add_equipment_to_stockpile = {
-					type = infantry_equipment_1
-					amount = 1000
-					producer = GER
-				}
-				add_equipment_to_stockpile = {
-					type = radio_equipment_1
-					amount = 50
-					producer = GER
-				}
-				
-				add_equipment_to_stockpile = {
-					type = support_equipment_1
-					amount = 50
-					producer = GER
-				}
-				
-				add_equipment_to_stockpile = {
-					type = motorized_equipment_1
-					amount = 30
-					producer = GER
-				}
-				
-				add_equipment_to_stockpile = {
-					type = artillery_equipment_1
-					amount = 100
-					producer = GER
+				GER = {
+					add_equipment_to_stockpile = {
+						type = infantry_equipment
+						amount = 2000
+						producer = GER
+					}
+					add_equipment_to_stockpile = {
+						type = radio_equipment_1
+						amount = 80
+						producer = GER
+					}
+					
+					add_equipment_to_stockpile = {
+						type = support_equipment_1
+						amount = 150
+						producer = GER
+					}
+					
+					add_equipment_to_stockpile = {
+						type = motorized_equipment_1
+						amount = 80
+						producer = GER
+					}
+					
+					add_equipment_to_stockpile = {
+						type = artillery_equipment
+						amount = 120
+						producer = GER
+					}
+					add_equipment_to_stockpile = {
+						type = anti_air_equipment
+						amount = 40
+						producer = GER
+					}
+					add_equipment_to_stockpile = {
+						type = anti_tank_equipment
+						amount = 20
+						producer = GER
+					}
 				}
 				
 			   	set_state_flag = { 
@@ -212,19 +224,123 @@ scripted_gui = {
 			GER_construction_anti_air_button_click_enabled = {
 				
 				check_variable = { GER.GER_num_arbeitseinsatz > 2199 }
-				anti_air_building < 5
+				if = {
+					limit = {
+						GER = {
+							has_tech = heavy_antiair
+							NOT = {
+								has_tech = heavy_antiair_2
+							}
+						}
+					}
+					anti_air_building < 5
+				}
+				if = {
+					limit = {
+						GER = {
+							has_tech = heavy_antiair_2
+							NOT = {
+								has_tech = heavy_antiair_5
+							}
+						}
+					}
+					anti_air_building < 6
+				}
+			  
+				if = {
+					limit = {
+						GER = {
+							has_tech = heavy_antiair_5
+							NOT = {
+								has_tech = antiairfc
+							}
+						}
+					}
+					anti_air_building < 8
+				}
+				if = {
+					limit = {
+						GER = {
+							has_tech = antiairfc
+							NOT = {
+								has_tech = antiairfc2
+							}
+						}
+					}
+					anti_air_building < 9
+				}
+				if = {
+					limit = {
+						GER = {
+							has_tech = antiairfc2
+						}
+					}
+					anti_air_building < 10
+				}
 			    is_owned_by = GER
             }
 			GER_construction_air_base_button_click_enabled = {
 				
 				check_variable = { GER.GER_num_arbeitseinsatz > 1799 }
-			    air_base < 10
+			    air_base < 6
 			    is_owned_by = GER
             }
             GER_construction_radar_button_click_enabled = {
 				
 				check_variable = { GER.GER_num_arbeitseinsatz > 2799 }
-			    radar_station < 5
+			   if = {
+					limit = {
+						GER = {
+							NOT = {
+								has_tech = radio_detection
+							}
+						}
+					}
+					radar_station < 0
+				}
+				if = {
+					limit = {
+						GER = {
+							has_tech = radio_detection
+							NOT = {
+								has_tech = decimetric_radar
+							}
+						}
+					}
+					radar_station < 1
+				}
+			  
+				if = {
+					limit = {
+						GER = {
+							has_tech = decimetric_radar
+							NOT = {
+								has_tech = centimetric_radar
+							}
+						}
+					}
+					radar_station < 2
+				}
+				if = {
+					limit = {
+						GER = {
+							has_tech = centimetric_radar
+							NOT = {
+								has_tech = advanced_centimetric_radar
+							}
+						}
+						
+					}
+					radar_station < 3
+				}
+				if = {
+					limit = {
+						GER = {
+							has_tech = advanced_centimetric_radar
+						}
+					}
+					radar_station < 4
+				}
 			    is_owned_by = GER
             }
             GER_plunder_button_click_enabled = {
