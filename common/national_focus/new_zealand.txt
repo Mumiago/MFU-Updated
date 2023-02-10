@@ -43,9 +43,7 @@
 		ai_will_do = { factor = 1 }
 		
 		completion_reward = {
-			
-			add_war_support = 0.15
-			
+			add_ideas = low_economic_mobilisation
 		}
 	}
 
@@ -84,7 +82,7 @@ focus = {
 		y = 2
 		cost = 5
 		prerequisite = { focus = NZL_labour_victory }
-		available = { date > 1937.3.1 }
+		
 		
 		ai_will_do = { factor = 1 }
 		#Adds two advisors#
@@ -99,11 +97,10 @@ focus = {
 	focus = {
 		id = NZL_death_of_savage
 		icon = GFX_focus_AST_never_gallipoli
-		x = 2
-		y = 3
+		x = 3
+		y = 4
 		cost = 5
-		prerequisite = { focus = NZL_savages_government }
-		prerequisite = { focus = NZL_anti_appeasment }
+		prerequisite = { focus = NZL_revitalize_economy }
 
 		
 		ai_will_do = { factor = 1 }
@@ -111,12 +108,14 @@ focus = {
 		
 
 		completion_reward = {
+			add_war_support = 0.20
 			retire_country_leader = yes
 			create_country_leader = {
 				name = "Peter Fraser"
 				picture = "GFX_NZL_john_ormond"
 				expire = "1965.1.1"
 				ideology = socialism
+				traits = guns_over_butter_advocate
 			}
 		}
 	}
@@ -126,7 +125,7 @@ focus = {
 		x = 1
 		y = 4
 		cost = 5
-		prerequisite = { focus = NZL_death_of_savage }
+		prerequisite = { focus = NZL_revitalize_economy }
 
 	
 		ai_will_do = { factor = 1 }
@@ -138,7 +137,13 @@ focus = {
 			NZL = {
 				add_offsite_building = { type = arms_factory level = 2 }
 			}
-			
+			custom_effect_tooltip = NZL_australian_loans_tt1
+			add_to_variable = {
+				NZL_political_power_factor_var = -0.10
+			}
+			add_to_variable = {
+				NZL_industrial_capacity_factory_var = 0.10
+			}
 		}
 	}
 	focus = {
@@ -148,12 +153,12 @@ focus = {
 		y = 5
 		cost = 5
 		prerequisite = { focus = NZL_australian_loans }
-		available = { date > 1941.6.22}
+		available = { has_war = yes }
 	
 		ai_will_do = { factor = 1 }
 		
 		completion_reward = {
-			add_ideas = tot_economic_mobilisation
+			add_ideas = NZL_a_part_to_play_idea
 			
 			
 		}
@@ -161,10 +166,11 @@ focus = {
 	focus = {
 		id = NZL_revitalize_economy
 		icon = GFX_suburban_industry
-		x = 3
-		y = 4
+		x = 2
+		y = 3
 		cost = 5
-		prerequisite = { focus = NZL_death_of_savage }
+		prerequisite = { focus = NZL_savages_government }
+		prerequisite = { focus = NZL_anti_appeasment }
 		prerequisite = { has_completed_focus = NZL_wairarapa_farms }
 
 	
@@ -185,35 +191,7 @@ focus = {
 			add_offsite_building = { type = arms_factory level = 2 }
 		}
 	}
-	focus = {
-		id = NZL_war_dependant_economy
-		icon = GFX_advanced_industry
-		x = 3
-		y = 5
-		cost = 10
-		prerequisite = { focus = NZL_revitalize_economy }
-
 	
-		ai_will_do = { factor = 1 }
-		available = {
-			has_war= yes
-		}
-		completion_reward = {
-			add_to_variable = {
-				NZL_consumer_goods_factor_var = -0.10
-			}
-			custom_effect_tooltip = NZL_modifiy_spirit_of_aotearoa_GDP2_tt1
-			add_to_variable = {
-				NZL_production_speed_buildings_var = 0.05
-			}
-			add_to_variable = {
-				NZL_political_power_factor = 0.20
-			}
-			add_offsite_building = { type = arms_factory level = 2 }
-			
-			
-		}
-	}
 	focus = {
 		id = NZL_national_victory
 		icon = GFX_goal_generic_propaganda
@@ -226,6 +204,8 @@ focus = {
 		ai_will_do = { factor = 1 }
 		
 		completion_reward = {
+			add_ideas = { NZL_irish }
+		
 		retire_country_leader = yes
 		create_country_leader = {
 		name = "Adam Hamilton"
@@ -233,7 +213,7 @@ focus = {
 		expire = "1965.1.1"
 		ideology = socialism
 		traits = {
-			captain_of_industry
+			
 		}
 }
 			
@@ -253,7 +233,7 @@ focus = {
 		completion_reward = {
 			
 			add_tech_bonus = {
-				uses = 2
+				uses = 1
 				bonus = 0.75
 				category = industry
 			}
@@ -286,6 +266,9 @@ focus = {
 	x = 10
 	y = 3
 	cost = 5
+	available = {
+		has_completed_focus = NZL_wairarapa_farms
+	}
 	prerequisite = { focus = NZL_raise_agricultural_funding}
 	prerequisite = { focus = NZL_increase_trade }
 	ai_will_do = { factor = 1 }
@@ -293,7 +276,7 @@ focus = {
 		completion_reward = {
 			
 			add_ideas = NZL_hamiltons_plan_idea
-			
+			add_traits = captain_of_industry
 		}
 
 
@@ -339,9 +322,7 @@ focus = {
 	x = 9
 	y = 4
 	cost = 5
-	available = {
-		has_completed_focus = NZL_wairarapa_farms
-	}
+	
 	prerequisite = { focus = NZL_hamiltons_plan}
 	ai_will_do = { factor = 1 }
 		
@@ -365,11 +346,11 @@ focus = {
 	focus = {
 	id = NZL_economy_reborn
 	icon = GFX_GOAL_mode_of_production
-	x = 9
-	y = 5
+	x = 3
+	y = 6
 	cost = 10
 	available = { date > 1938.9.1 }
-	prerequisite = { focus = NZL_business_payouts }
+	prerequisite = { focus = NZL_welfare_state }
 	ai_will_do = { factor = 1 }
 		
 		completion_reward = {
@@ -424,7 +405,7 @@ focus = {
 	icon = GFX_GOAL_the_ukraine
 	x = 5
 	y = 3
-	cost = 5
+	cost = 7.2
 	prerequisite = { focus = NZL_manpower_act}
 	mutually_exclusive = { focus = NZL_amend_treaty}
 	ai_will_do = { factor = 1 }
@@ -433,12 +414,12 @@ focus = {
 			add_stability = -0.1
 		random_owned_controlled_state = {	
 			prioritize = {284}
-			add_extra_state_shared_building_slots = 6
+			add_extra_state_shared_building_slots = 5
 			
 		}
 		random_owned_controlled_state = {	
 			prioritize = {284}
-			add_extra_state_shared_building_slots = 6
+			add_extra_state_shared_building_slots = 5
 			}
 		
 		}
@@ -447,11 +428,11 @@ focus = {
 	focus = {
 	id = NZL_force_conscription
 	icon = GFX_goal_generic_into_fire
-	x = 5
-	y = 4
+	x = 3
+	y = 5
 	cost = 5
-	prerequisite = { focus = NZL_seize_land}
-	
+	prerequisite = { focus = NZL_revitalize_economy }
+	available = { has_war = yes }
 	ai_will_do = { factor = 1 }
 		
 		completion_reward = {
@@ -468,7 +449,7 @@ focus = {
 	icon = GFX_focus_hol_the_foundations_of_defense
 	x = 7
 	y = 3
-	cost = 5
+	cost = 7.2
 	prerequisite = { focus = NZL_manpower_act}
 	mutually_exclusive = { focus = NZL_seize_land}
 	ai_will_do = { factor = 1 }
@@ -488,26 +469,25 @@ focus = {
 	focus = {
 	id = NZL_maori_volunteers
 	icon = GFX_focus_generic_military_academy
-	x = 7
-	y = 4
+	x = 9
+	y = 5
 	cost = 5
-	prerequisite = { focus = NZL_amend_treaty}
+	prerequisite = { focus = NZL_business_payouts }
 	ai_will_do = { factor = 1 }
 		
 		completion_reward = {
 			custom_effect_tooltip = NZL_social_security_act_tt1
 			add_to_variable = {
-				NZL_industrial_capacity_dockyard_var = 0.05
+				NZL_industrial_capacity_dockyard_var = 0.10
 			}
 			add_to_variable = {
 				NZL_industrial_capacity_factory_var = 0.05
 			}
 			add_to_variable = {
-				NZL_conscription_var = 0.01
+				NZL_conscription_var = 0.05
 			}
-			add_to_variable = {
-				NZL_production_factory_max_efficiency_factor_var = 0.05
-			}
+			
+			
 		}
 	}
 	focus = {
@@ -516,7 +496,7 @@ focus = {
 	x = 6
 	y = 5
 	cost = 5
-	prerequisite = { focus = NZL_maori_volunteers focus = NZL_force_conscription }
+	
 	available = {
 		GER = {
 				has_completed_focus = GER_demand_sudetenland
@@ -538,33 +518,14 @@ focus = {
 
 
 	}
-	focus = {
-	id = NZL_maori_migration
-	icon = GFX_AUS_agriculture
-	x = 3
-	y = 6
-	cost = 5
-	prerequisite = { focus = NZL_welfare_state }
-	ai_will_do = { factor = 1 }
-		
-		completion_reward = {
-			custom_effect_tooltip = NZL_maori_migration_tt1
-			add_to_variable = { 
-				NZL_production_factory_max_efficiency_factor_var = 0.05
-			}
-			
-			
-		}
-
-
-	}
+	
 	focus = {
 	id = NZL_equal_education
 	icon = GFX_goal_research_silver
 	x = 2
 	y = 7
 	cost = 5
-	prerequisite = { focus = NZL_maori_migration}
+	prerequisite = { focus = NZL_economy_reborn }
 	mutually_exclusive = { focus = NZL_to_the_factories }
 	ai_will_do = { factor = 1 }
 		
@@ -587,7 +548,7 @@ focus = {
 	x = 4
 	y = 7
 	cost = 5
-	prerequisite = { focus = NZL_maori_migration}
+	prerequisite = { focus = NZL_economy_reborn }
 	mutually_exclusive = { focus = NZL_equal_education}
 	ai_will_do = { factor = 1 }
 		
@@ -614,7 +575,7 @@ focus = {
 		completion_reward = {
 			custom_effect_tooltip = NZL_maori_land_act_tt1
 			add_to_variable = {
-				NZL_production_speed_buildings_factor_var = 0.15
+				NZL_production_speed_buildings_factor_var = 0.10
 			}
 			
 			
@@ -655,7 +616,7 @@ focus = {
 		completion_reward = {
 			custom_effect_tooltip = NZL_polynesian_immigrants_tt1
 			add_to_variable = {
-				NZL_conscription_var = 0.005
+				NZL_conscription_var = 0.01
 			}
 			
 		}
@@ -676,7 +637,7 @@ focus = {
 			
 			custom_effect_tooltip = NZL_polynesian_immigrants_tt1
 			add_to_variable = {
-				NZL_conscription_var = 0.005
+				NZL_conscription_var = 0.01
 			}
 			
 		}
@@ -695,7 +656,7 @@ focus = {
 		completion_reward = {
 			custom_effect_tooltip = NZL_polynesian_immigrants_tt1
 			add_to_variable = {
-				NZL_conscription_var = 0.005
+				NZL_conscription_var = 0.01
 			}
 		}
 	}
@@ -712,7 +673,7 @@ focus = {
 			
 			custom_effect_tooltip = NZL_polynesian_immigrants_tt1
 			add_to_variable = {
-				NZL_conscription_var = 0.005
+				NZL_conscription_var = 0.01
 			}
 			
 			
@@ -734,7 +695,7 @@ focus = {
 			
 			custom_effect_tooltip = NZL_polynesian_immigrants_tt1
 			add_to_variable = {
-				NZL_conscription_var = 0.005
+				NZL_conscription_var = 0.01
 			}
 		}
 
@@ -754,7 +715,7 @@ focus = {
 			
 			custom_effect_tooltip = NZL_polynesian_immigrants_tt1
 			add_to_variable = {
-				NZL_conscription_var = 0.005
+				NZL_conscription_var = 0.01
 			}
 			
 		}
@@ -773,7 +734,7 @@ focus = {
 		completion_reward = {
 			custom_effect_tooltip = NZL_polynesian_immigrants_tt1
 			add_to_variable = {
-				NZL_conscription_var = 0.005
+				NZL_conscription_var = 0.01
 			}
 			
 			
@@ -793,7 +754,7 @@ focus = {
 			
 			custom_effect_tooltip = NZL_polynesian_immigrants_tt1
 			add_to_variable = {
-				NZL_conscription_var = 0.005
+				NZL_conscription_var = 0.01
 			}
 			
 		}
@@ -838,7 +799,7 @@ focus = {
 		completion_reward = {
 			custom_effect_tooltip = NZL_polynesian_immigrants_tt1
 			add_to_variable = {
-				NZL_conscription_var = 0.005
+				NZL_conscription_var = 0.01
 			}
 		}
 
@@ -858,38 +819,37 @@ focus = {
 		ai_will_do = { factor = 5 }
 		completion_reward = {
 			
-						random_owned_controlled_state = {
-							prioritize = { 284 }
+						284 = {
 							limit = {
 								free_building_slots = {
 									building = infrastructure
 									size > 1
 								}
 							}
-							add_building_construction = {
-								type = infrastructure
-								level = 2
-								instant_build = yes
-							}
-							set_state_flag = NZL_national_roads_board_Inf1
-						}
-			
-						random_owned_controlled_state = {
-							prioritize = { 723 }
-							limit = {
-								free_building_slots = {
-									building = infrastructure
-									size > 1
+								add_building_construction = {
+									type = infrastructure
+									level = 2
+									instant_build = yes
 								}
 							}
-							add_building_construction = {
-								type = infrastructure
-								level = 2
-								instant_build = yes
-							}
-							set_state_flag = NZL_national_roads_board_Inf2
 						
-						}
+			
+						
+						723 = {
+							limit = {
+									free_building_slots = {
+										building = infrastructure
+										size > 1
+									}
+								}
+								add_building_construction = {
+									type = infrastructure
+									level = 3
+										instant_build = yes
+								}
+							}
+			
+						
 						
 					
 		}
@@ -917,7 +877,7 @@ focus = {
 						284 = {
 							add_resource = {
 								type = steel
-								amount = 24
+								amount = 16
 							}
 						}
 					
@@ -947,7 +907,7 @@ focus = {
 						284 = {
 							add_resource = {
 								type = tungsten
-								amount = 16
+								amount = 10
 							}
 						}
 					
@@ -1005,7 +965,7 @@ focus = {
 									include_locked = yes
 								}
 							}
-							add_extra_state_shared_building_slots = 6
+							add_extra_state_shared_building_slots = 5
 							add_building_construction = {
 								type = industrial_complex
 								level = 2
@@ -1060,7 +1020,7 @@ focus = {
 									include_locked = yes
 								}
 							}
-							add_extra_state_shared_building_slots = 6
+							add_extra_state_shared_building_slots = 5
 							add_building_construction = {
 								type = arms_factory
 								level = 2
@@ -1082,7 +1042,7 @@ focus = {
 		search_filters = {
 			FOCUS_FILTER_INDUSTRY
 		}
-		prerequisite = { focus = NZL_expand_the_dairy_industry  focus = NZL_military_rearmament  }
+		prerequisite = { focus = NZL_expand_the_dairy_industry} prerequisite = { focus = NZL_military_rearmament  }
 		ai_will_do = { factor = 5 }
 		completion_reward = {
 			
@@ -1095,7 +1055,7 @@ focus = {
 									include_locked = yes
 								}
 							}
-							add_extra_state_shared_building_slots = 6
+							add_extra_state_shared_building_slots = 5
 							add_building_construction = {
 								type = industrial_complex
 								level = 2
@@ -1112,7 +1072,7 @@ focus = {
 									include_locked = yes
 								}
 							}
-							add_extra_state_shared_building_slots = 6
+							add_extra_state_shared_building_slots = 5
 							add_building_construction = {
 								type = arms_factory
 								level = 2
@@ -1217,12 +1177,7 @@ focus = {
 							add_idea = NZL_army_infantry
 							remove_idea = NZL_army
 						}
-						add_tech_bonus = {
-							name = NZL_charlton_automatic_rifle
-							bonus = 0.5
-							uses = 2
-							category = infantry_weapons
-						}
+						
 					
 			
 		}
@@ -1282,7 +1237,7 @@ focus = {
 									include_locked = yes
 								}
 							}
-							add_extra_state_shared_building_slots = 6
+							add_extra_state_shared_building_slots = 5
 							add_building_construction = {
 								type = arms_factory
 								level = 2
@@ -1310,9 +1265,9 @@ focus = {
 		completion_reward = {
 			
 						add_tech_bonus = {
-							category = cat_light_armor
+							
 							category = cat_medium_armor
-							uses = 2
+							uses = 1
 							bonus = 0.5
 							name = GER_mobile_fortresses 
 						}
@@ -1336,15 +1291,7 @@ focus = {
 		ai_will_do = { factor = 1 }
 		completion_reward = {
 			
-						add_tech_bonus = {
-							name = NZL_long_range_patrol
-							bonus = 2
-							uses = 2
-							category = marine_tech
-							category = para_tech
-							uses = 3
-							bonus = 1
-						}
+				
 					
 		}
 	}
@@ -1362,11 +1309,20 @@ focus = {
 		prerequisite = { focus = NZL_give_freyberg_command  }
 		ai_will_do = { factor = 1 }
 		completion_reward = {
-			
+						add_equipment_to_stockpile = {
+							type = 	anti_air_equipment
+							date = 1936
+							amount = 100
+						}
+							add_equipment_to_stockpile = {
+							type = 	anti_tank_equipment
+							date = 1936
+							amount = 100
+						}
 						add_tech_bonus = {
 							name = NZL_artillery_focus
 							bonus = 0.5
-							uses = 2
+							uses = 1
 							category = artillery
 						}
 					
@@ -1425,7 +1381,7 @@ focus = {
 			
 						add_tech_bonus = {
 							category = cat_heavy_armor
-							uses = 2
+							uses = 1
 							bonus = 0.5
 							name = GER_mobile_fortresses 
 						}
@@ -1455,7 +1411,7 @@ focus = {
 									include_locked = yes
 								}
 							}
-							add_extra_state_shared_building_slots = 6
+							add_extra_state_shared_building_slots = 5
 							add_building_construction = {
 								type = industrial_complex
 								level = 2
@@ -1480,7 +1436,7 @@ focus = {
 			FOCUS_FILTER_INDUSTRY
 		}
 		ai_will_do = { factor = 5 }
-		prerequisite = { focus = NZL_wairarapa_farms  }
+		prerequisite = { focus = NZL_mt_taranaki_oil focus = NZL_preserve_mt_taranaki}
 		completion_reward = {
 			
 			random_owned_controlled_state = {
@@ -1492,7 +1448,7 @@ focus = {
 									include_locked = yes
 								}
 							}
-							add_extra_state_shared_building_slots = 6
+							add_extra_state_shared_building_slots = 5
 							add_building_construction = {
 								type = industrial_complex
 								level = 2
@@ -1569,8 +1525,8 @@ focus = {
 		ai_will_do = { factor = 5 }
 		prerequisite = { focus = NZL_national_roads_board  }
 		completion_reward = {
-			random_owned_controlled_state = {
-							prioritize = { 284 723 }
+			
+						284 = {
 							limit = {				
 								free_building_slots = {
 									building = industrial_complex
@@ -1578,15 +1534,15 @@ focus = {
 									include_locked = yes
 								}
 							}
-							add_extra_state_shared_building_slots = 6
+							add_extra_state_shared_building_slots = 4
 							add_building_construction = {
 								type = industrial_complex
 								level = 2
 								instant_build = yes
 							}
 							set_state_flag = NZL_bureau_of_industry_IC1
-							
-						}
+							}
+						
 			
 			
 		}
@@ -1604,14 +1560,22 @@ focus = {
 		}
 		prerequisite = { focus = NZL_national_roads_board  }
 		completion_reward = {
-			random_owned_controlled_state = {
-				prioritize = {723}
-			add_extra_state_shared_building_slots = 4
-			}
-			random_owned_controlled_state = {
-				prioritize = {723}
-			add_extra_state_shared_building_slots = 4
-			}
+			723 = {
+							limit = {				
+								free_building_slots = {
+									building = industrial_complex
+									size > 1
+									include_locked = yes
+								}
+							}
+							add_extra_state_shared_building_slots = 4
+							add_building_construction = {
+								type = industrial_complex
+								level = 2
+								instant_build = yes
+							}
+							set_state_flag = NZL_bureau_of_industry_IC1
+							}
 		}
 	}
 
@@ -1628,8 +1592,12 @@ focus = {
 		prerequisite = { focus = NZL_te_ikaamaui  }
 		mutually_exclusive = { focus = NZL_mt_taranaki_oil  }
 		completion_reward = {
-			add_stability = 0.15
 			
+			add_stability = 0.10
+			custom_effect_tooltip = NZL_taranaki_tt1
+			add_to_variable = {
+				NZL_consumer_goods_factor_var = -0.025
+			}			
 			
 		}
 	}
@@ -1647,7 +1615,7 @@ focus = {
 		completion_reward = {
 			add_tech_bonus = {
 			    bonus = 0.5
-			    uses = 3
+			    uses = 2
 			    category = artillery
 			}
 			
@@ -1669,6 +1637,12 @@ focus = {
 		prerequisite = { focus = NZL_give_freyberg_command  }
 		completion_reward = {
 			add_ideas = NZL_massed_rifle_production
+			add_tech_bonus = {
+							name = NZL_charlton_automatic_rifle
+							bonus = 0.5
+							uses = 2
+							category = infantry_weapons
+						}
 		}
 	}
 
@@ -1685,8 +1659,9 @@ focus = {
 		available = {
 			has_war = yes
 		}
-		prerequisite = { focus = NZL_military_rearmament  } prerequisite = { focus = NZL_bureau_of_industry  }
+		prerequisite = { focus = NZL_military_rearmament  }
 		completion_reward = {
+			add_ideas = { war_economy }
 			custom_effect_tooltip = NZL_wartime_mobilization_tt1
 			add_to_variable = {
 				NZL_war_support_factor_var = 0.4
@@ -1750,11 +1725,7 @@ focus = {
 		prerequisite = { focus = NZL_give_freyberg_command  }
 		mutually_exclusive = { focus = NZL_nzmc  }
 		completion_reward = {
-			add_tech_bonus = {
-			    bonus = 0.75
-			    uses = 2
-			    category = mountaineers_tech
-			}
+			
 			
 			
 			
@@ -1779,6 +1750,16 @@ focus = {
 							cost_reduction = 0.5
 							uses = 1
 							category = land_doctrine
+						}
+						add_tech_bonus = {
+							name = NZL_long_range_patrol
+							bonus = 2
+							uses = 2
+							category = marine_tech
+							category = para_tech
+							category = mountaineers_tech
+							uses = 2
+							bonus = 0.75
 						}
 		}
 	}
@@ -1814,7 +1795,7 @@ focus = {
 		search_filters = {
 			FOCUS_FILTER_INDUSTRY
 		}
-		prerequisite = { focus = NZL_civilian_investments  }
+		prerequisite = { focus = NZL_civilian_investments  } prerequisite = { focus = NZL_military_rearmament }
 		completion_reward = {
 			add_ideas = NZL_simplify_deisgns
 		}
@@ -1830,7 +1811,7 @@ focus = {
 		search_filters = {
 			FOCUS_FILTER_INDUSTRY
 		}
-		prerequisite = { focus = NZL_te_ikaamaui  }
+	prerequisite = { focus = NZL_mt_taranaki_oil focus = NZL_preserve_mt_taranaki}
 		completion_reward = {
 			add_tech_bonus = {
 			    bonus = 0.5
@@ -2030,23 +2011,161 @@ focus = {
 		mutually_exclusive = { focus = NZL_british_lendlease  }
 		completion_reward = {
 
-			add_equipment_to_stockpile = {
-				type = light_tank_chassis_1936
-				amount = 150
-				producer = USA
-			}
-			add_equipment_to_stockpile = {
-				type = medium_tank_chassis_1936
-				amount = 250
-				producer = FRA
-			}
-			add_equipment_to_stockpile = {
-				 type = motorized_equipment_1 
-				 amount = 750
-				 	producer = ENG 
-			}
-			
+			custom_effect_tooltip = ITA_Divisione_corazzata_unit_tt
+			hidden_effect = {
+		if = {
+			limit = {
+					has_tech = eng_1939_heavy_tank_chassis
+				}	
+				division_template = {
+					name = "Armoured Division"
+					division_names_group = ITA_ARM_01
+					priority = 2
+					
+					regiments = {
+						heavy_armor = { x = 0 y = 0 }
+						heavy_armor = { x = 0 y = 1 }
+						heavy_armor = { x = 0 y = 2 }
+						heavy_armor = { x = 0 y = 3 }
+		
+						heavy_armor = { x = 1 y = 0 }
+						heavy_armor = { x = 1 y = 1 }
+						heavy_armor = { x = 1 y = 2 }
+						heavy_armor = { x = 1 y = 3 }
+						
+		
+						motorized = { x = 2 y = 0 }
+						motorized = { x = 2 y = 1 }
+						armored_car = { x = 2 y = 2 }
+
+						motorized = { x = 3 y = 0 }
+						motorized = { x = 3 y = 1 }
+						motorized = { x = 3 y = 2 }
+						motorized = { x = 3 y = 3 }
+					}
+					
+					support = {
+						DIV_HQ = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+						engineer = { x = 0 y = 2 }
+						maintenance_company = { x = 1 y = 0 }
+						logistics_company = { x = 1 y = 1 }
+					}
+				}
+				every_state = {
+		limit = { state = 2 }
+		create_unit = {
+			division = "division_names_group = \"ITA_ARM_01\" division_template = \"Divisione corazzata\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+			owner = ITA
+				}   
+				}	
 		}
+			else_if = {
+				limit = {
+						has_tech = ita_1940_medium_tank_chassis
+					}	
+				division_template = {
+					name = "Divisione corazzata"
+					division_names_group = ITA_ARM_01
+					priority = 2
+					
+					regiments = {
+						medium_armor = { x = 0 y = 0 }
+						medium_armor = { x = 0 y = 1 }
+						medium_armor = { x = 0 y = 2 }
+						medium_armor = { x = 0 y = 3 }
+		
+						medium_armor = { x = 1 y = 0 }
+						medium_armor = { x = 1 y = 1 }
+						medium_armor = { x = 1 y = 2 }
+						medium_armor = { x = 1 y = 3 }
+						
+		
+						motorized = { x = 2 y = 0 }
+						motorized = { x = 2 y = 1 }
+						armored_car = { x = 2 y = 2 }
+
+						motorized = { x = 3 y = 0 }
+						motorized = { x = 3 y = 1 }
+						motorized = { x = 3 y = 2 }
+						motorized = { x = 3 y = 3 }
+					}
+					
+					support = {
+						DIV_HQ = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+						engineer = { x = 0 y = 2 }
+						maintenance_company = { x = 1 y = 0 }
+						logistics_company = { x = 1 y = 1 }
+					}
+				}
+			 every_state = {
+				limit = { state = 2 }
+				create_unit = {
+					division = "division_names_group = \"ITA_ARM_01\" division_template = \"Divisione corazzata\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+					owner = ITA
+				}  
+				create_unit = {
+					division = "division_names_group = \"ITA_ARM_01\" division_template = \"Divisione corazzata\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+					owner = ITA
+				} 		
+			}	
+			}
+		else_if = {
+
+				division_template = {
+					name = "Divisione corazzata"
+					division_names_group = ITA_ARM_01
+					priority = 2
+					
+					regiments = {
+						light_armor = { x = 0 y = 0 }
+						light_armor = { x = 0 y = 1 }
+						light_armor = { x = 0 y = 2 }
+						light_armor = { x = 0 y = 3 }
+		
+						light_armor = { x = 1 y = 0 }
+						light_armor = { x = 1 y = 1 }
+						light_armor = { x = 1 y = 2 }
+						light_armor = { x = 1 y = 3 }
+						
+		
+						motorized = { x = 2 y = 0 }
+						motorized = { x = 2 y = 1 }
+						armored_car = { x = 2 y = 2 }
+
+						motorized = { x = 3 y = 0 }
+						motorized = { x = 3 y = 1 }
+						motorized = { x = 3 y = 2 }
+						motorized = { x = 3 y = 3 }
+					}
+					
+					support = {
+						DIV_HQ = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+						engineer = { x = 0 y = 2 }
+						maintenance_company = { x = 1 y = 0 }
+						logistics_company = { x = 1 y = 1 }
+					}
+				}
+			 every_state = {
+		limit = { state = 2 }
+		create_unit = {
+			division = "division_names_group = \"ITA_ARM_01\" division_template = \"Divisione corazzata\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+			owner = ITA
+			   }   
+		create_unit = {
+			division = "division_names_group = \"ITA_ARM_01\" division_template = \"Divisione corazzata\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+			owner = ITA
+			   }
+		create_unit = {
+			division = "division_names_group = \"ITA_ARM_01\" division_template = \"Divisione corazzata\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+			owner = ITA
+			   }
+			  }	
+		}
+		}
+	}
 	}
 
 	#More US Equipment
@@ -2143,13 +2262,11 @@ focus = {
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
 		}
-		prerequisite = { focus = NZL_better_weaponry  }
+		prerequisite = { focus = NZL_better_weaponry focus = NZL_contact_veterans focus = NZL_observe_blitzkrieg }
 		completion_reward = {
-			add_tech_bonus = {
-				name = arty_radio_bonus
-				bonus = 2
-				uses = 1
-				technology = radio
+			add_equipment_to_stockpile = {
+			 type = radio_equipment_1 
+			 amount = 400
 			}
 			
 			
@@ -2174,6 +2291,7 @@ focus = {
 				bonus = 3
 				uses = 1
 				technology = infantry_radio
+				technology = artillery_radio
 			}
 			
 			
@@ -2364,7 +2482,7 @@ focus = {
 		ai_will_do = { factor = 1 }
 		completion_reward = {
 			
-						air_experience = 75
+						air_experience = 25
 						random_owned_controlled_state = {
 							limit = {
 								free_building_slots = {
@@ -2450,11 +2568,11 @@ focus = {
 		}
 		prerequisite = { focus = NZL_learn_from_the_britsh  }
 		completion_reward = {
-			air_experience = 75
+			air_experience = 50
 			add_doctrine_cost_reduction = {
 							name = land_doc_bonus
 							cost_reduction = 0.5
-							uses = 2
+							uses = 1
 							category = air_doctrine
 						}
 		}
@@ -2502,7 +2620,7 @@ focus = {
 			
 						add_tech_bonus = {
 							name = NZL_defend_our_islands
-							bonus = 1
+							bonus = 0.75
 							uses = 2
 							category = naval_air
 						}
@@ -2526,7 +2644,7 @@ focus = {
 			
 						add_tech_bonus = {
 							name = NZL_modern_fighters
-							bonus = 1
+							bonus = 0.75
 							uses = 2
 							category = light_fighter
 						}
@@ -2607,7 +2725,7 @@ focus = {
 									include_locked = yes
 								}
 							}
-							add_extra_state_shared_building_slots = 8
+							add_extra_state_shared_building_slots = 2
 							add_building_construction = {
 								type = dockyard
 								level = 2
@@ -2814,22 +2932,15 @@ focus = {
 		completion_reward = {
 			
 					
-			random_owned_controlled_state = {
-			limit = {
-			free_building_slots = {
-			building = dockyard
-			size > 2
-			include_locked = yes
-			}
-			}
-			add_extra_state_shared_building_slots = 8
 			
-			add_building_construction = {
-			type = dockyard
-			level = 3
-			instant_build = yes
+			284 = {
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+				type = dockyard
+				level = 3
+				instant_build = yes
+				}
 			}
-			
 			
 		}
 		
