@@ -250,8 +250,8 @@ NCountry = {
 	GIE_CAPITULATION_LEGITIMACY_WARLENGTH_FACTOR = 1.0,     -- Multiplies war length (nr of weeks) with this factor for part of starting legitimacy. (1.0 would mean a war length of 30 weeks gives 30 more legitimacy)
 	STATE_VALUE_BASE = 10.0,                        -- Base value of a state (value is used to determine costs in e.g. peace conferences)
 	STATE_VALUE_MANPOWER_FACTOR = 0.1,              -- State cost increases with this for every 10k population (so 3.1M becomes 310 and then multiplied by this)
-	AIR_VOLUNTEER_PLANES_RATIO = 0.5,				-- Ratio for volunteer planes available for sending in relation to sender air force
-	AIR_VOLUNTEER_BASES_CAPACITY_LIMIT = 0.1,		-- Ratio for volunteer planes available for sending in relation to receiver air base capacity
+	AIR_VOLUNTEER_PLANES_RATIO = 0,				-- Ratio for volunteer planes available for sending in relation to sender air force
+	AIR_VOLUNTEER_BASES_CAPACITY_LIMIT = 0,		-- Ratio for volunteer planes available for sending in relation to receiver air base capacity
 	WAR_SUPPORT_FROM_CASUALTIES = 0.025,							-- Base value (inverted) for calculating heroes being killed
 
 
@@ -890,8 +890,8 @@ NMilitary = {
 	ADDITIONAL_COMBAT_WIDTH = 30,                  -- more opened up by support attack
 	AMPHIBIOUS_INVADE_MOVEMENT_COST = 24.0,        -- total progress cost of movement while amphibious invading
 	LAND_SPEED_MODIFIER = 0.031,                    -- basic speed control
-	RIVER_CROSSING_PENALTY = -0.175,                 -- small river crossing
-	RIVER_CROSSING_PENALTY_LARGE = -0.3,           -- large river crossing
+	RIVER_CROSSING_PENALTY = -0.2,                 -- small river crossing
+	RIVER_CROSSING_PENALTY_LARGE = -0.325,           -- large river crossing
 	RIVER_CROSSING_SPEED_PENALTY = -0.15,          -- small river crossing
 	RIVER_CROSSING_SPEED_PENALTY_LARGE = -0.3,     -- large river crossing
 	RIVER_SMALL_START_INDEX = 0,                   -- color indices for rivers
