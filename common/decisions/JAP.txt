@@ -1893,7 +1893,7 @@ JAP_intervene_in_china_decision = {
 					set_technology = {
 						pocket_defence = 1
 						defence_in_depth = 1
-						peoples_army = 1 
+						large_front_operations = 1 
 					}
 					add_war_support = 2
 					add_stability = 2 
@@ -1943,12 +1943,6 @@ JAP_intervene_in_china_decision = {
 						producer = GER
 					}
 					add_equipment_to_stockpile = {
-						type = light_tank_chassis_1934
-						amount = 450
-						producer = GER 
-						variant_name = "Panzer I Ausf.A"
-					}
-					add_equipment_to_stockpile = {
 						type = horse_equipment_0
 							amount = 30000
 							producer = GER
@@ -1960,7 +1954,7 @@ JAP_intervene_in_china_decision = {
 					}
 					add_equipment_to_stockpile = {
 						type = light_tank_chassis_1936
-						amount = 500
+						amount = 1500
 						producer = SOV
 					}
 
@@ -2069,27 +2063,6 @@ JAP_intervene_in_china_decision = {
 							instant_build = yes
 						}
 					}
-
-					create_equipment_variant = {
-						name = "BT-7"
-						type = light_tank_chassis_1936
-						parent_version = 0
-						modules = {
-							main_armament_slot = tank_small_cannon_2
-							turret_type_slot = tank_light_two_man_tank_turret
-							suspension_type_slot = tank_christie_suspension
-							armor_type_slot = tank_welded_armor
-							armor_sloping_slot = unsloped_armor
-							engine_type_slot = tank_gasoline_engine
-							radio_slot = tank_radio_1
-						}
-						upgrades = {
-							tank_nsb_engine_upgrade = 8
-							tank_nsb_armor_upgrade = 2
-						}
-						icon = "gfx/interface/technologies/land/sov/bt7.tga"
-					}
-
 					division_template = {
 						division_names_group = CHI_ARM_01
 						name = "200th Division"
@@ -2148,7 +2121,7 @@ JAP_intervene_in_china_decision = {
 						limit = { 
 							state = 605	
 						}
-						set_temp_variable = { num_units_to_create = 120 }
+						set_temp_variable = { num_units_to_create = 130 }
 						for_loop_effect = {
 							end = num_units_to_create
 							
@@ -2172,6 +2145,99 @@ JAP_intervene_in_china_decision = {
 							}
 						}
 					}		
+				}
+				SOV = {
+					if = {
+						limit = {
+							SOV = {
+								NOT = {
+									OR = {
+										has_completed_focus = SOV_dual_command
+										has_completed_focus = SOV_begin_from_nothing
+									}
+								}
+							}
+						}
+						SOV = {
+
+							swap_ideas = {
+
+								remove_idea = SOV_STAVKA1
+								remove_idea = SOV_STAVKA11
+								add_idea = SOV_STAVKA111
+							}
+						}
+					}
+					if = {
+						limit = {
+							SOV = {
+								has_completed_focus = SOV_begin_from_nothing
+								AND = {
+									NOT = {
+										has_completed_focus = SOV_increase_standards_for_officer_training
+									}
+								}
+								
+							}
+						}
+						SOV = {
+							swap_ideas = {
+								remove_idea = SOV_STAVKA2
+								remove_idea = SOV_STAVKA22
+								add_idea = SOV_STAVKA222
+							}
+						}
+					}	
+					if = {
+						limit = {
+							SOV = {
+								has_completed_focus = SOV_increase_standards_for_officer_training
+								
+							}
+						}
+						SOV = {
+							swap_ideas = {
+								remove_idea = SOV_STAVKA3
+								remove_idea = SOV_STAVKA33
+								add_idea = SOV_STAVKA333
+							}
+						}
+					}
+					if = {
+						limit = {
+							SOV = {
+								has_completed_focus = SOV_dual_command
+								AND = {
+									NOT = {
+										has_completed_focus = SOV_for_motherland_and_for_stalin
+									}
+								}		
+								
+							}
+						}
+						SOV = {
+							swap_ideas = {
+								remove_idea = SOV_STAVKA_2
+								remove_idea = SOV_STAVKA_22
+								add_idea = SOV_STAVKA_222
+							}
+						}
+					}	
+					if = {
+						limit = {
+							SOV = {
+								has_completed_focus = SOV_for_motherland_and_for_stalin
+								
+							}
+						}
+						SOV = {
+							swap_ideas = {
+								remove_idea = SOV_STAVKA_3
+								remove_idea = SOV_STAVKA_33
+								add_idea = SOV_STAVKA_333
+							}
+						}
+					}
 				}
 			}
 		}
@@ -2197,6 +2263,80 @@ JAP_intervene_in_china_decision = {
 
 		ai_will_do = {
 			factor = 0
+		}
+	}
+	JAP_peace_china = {
+		icon = jap_conquer_china
+
+		available = {
+
+			date > 1940.1.1
+		}
+
+		visible = {
+		}
+
+		fire_only_once = yes 
+
+		days_remove = 1
+
+		remove_effect = {
+			set_global_flag = JAP_china_war_over_flag
+			custom_effect_tooltip = JAP_peaceout_tt
+			every_state = {
+				limit = {
+					NOT = {	
+						state = 608
+						state = 614
+						state = 621
+						state = 615
+						state = 607
+						state = 597
+						state = 743
+						state = 598
+						state = 606
+						state = 613
+						state = 749
+						state = 596
+						state = 592
+						state = 594
+						state = 591
+						state = 609	
+						state = 611
+						state = 612
+						state = 610
+						state = 715
+						state = 714
+						state = 761
+						state = 717
+						state = 328
+						state = 716
+						state = 745
+						state = 524
+					}
+					is_core_of = CHI 
+					is_fully_controlled_by = JAP
+				}
+				transfer_state_to = JAP
+			}
+			white_peace = CHI
+			remove_ideas = JAP_no_grinding
+			remove_ideas = JAP_china_bonus
+			JAP = {
+				every_army_leader = {
+					remove_unit_leader_trait = jap_kwantung_veto
+				}
+			}
+			MAN = {
+				remove_ideas = JAP_china_bonus
+				every_army_leader = {
+					remove_unit_leader_trait = jap_kwantung_veto
+				}
+			}
+			MAN = {
+				remove_ideas = JAP_no_grinding
+			}
+			
 		}
 	}
 }
