@@ -55,9 +55,17 @@ scripted_gui = {
 				 
             }
             GER_construction_arms_factory_conversion_button_click = {
-				GER = { add_to_variable = { GER.GER_num_arbeitseinsatz = -2000 } }
+				GER = { add_to_variable = { GER.GER_num_arbeitseinsatz = -1000 } }
 				set_state_flag  = { flag = GER_arbeitsinsatz_cooldown value = 1 days = 70 }
-                remove_building = { type = industrial_complex  level = 1 }
+				if = {
+					limit = {
+						industrial_complex > 0
+					}
+					remove_building = { type = industrial_complex level = 1 }
+				}
+				else = {
+					remove_building = { type = arms_factory level = 1 }
+				}
 				add_to_variable = { GER.GER_plunder_factory_var = 1 }
    			   	add_resistance_target = {
                     amount = 4
@@ -94,7 +102,7 @@ scripted_gui = {
             }
 
 			GER_construction_air_base_button_click = {
-				GER = { add_to_variable = { GER.GER_num_arbeitseinsatz = -1500 } }
+				GER = { add_to_variable = { GER.GER_num_arbeitseinsatz = -999 } }
    			   	add_resistance_target = {
                     amount = 2
                     tooltip = GER_increase_resistance_2
@@ -114,7 +122,7 @@ scripted_gui = {
    			
             }
             GER_construction_radar_button_click = {
-				GER = { add_to_variable = { GER.GER_num_arbeitseinsatz = -2800 } }
+				GER = { add_to_variable = { GER.GER_num_arbeitseinsatz = -1499 } }
 				add_building_construction = { type = radar_station level = 1 instant_build = yes }
    			   	add_resistance_target = {
                     amount = 2
@@ -142,40 +150,40 @@ scripted_gui = {
 				GER = {
 					add_equipment_to_stockpile = {
 						type = infantry_equipment
-						amount = 2000
+						amount = 2500
 						producer = GER
 					}
 					add_equipment_to_stockpile = {
 						type = radio_equipment_1
-						amount = 80
+						amount = 100
 						producer = GER
 					}
 					
 					add_equipment_to_stockpile = {
 						type = support_equipment_1
-						amount = 150
+						amount = 180
 						producer = GER
 					}
 					
 					add_equipment_to_stockpile = {
 						type = motorized_equipment_1
-						amount = 80
+						amount = 100
 						producer = GER
 					}
 					
 					add_equipment_to_stockpile = {
 						type = artillery_equipment
-						amount = 120
+						amount = 150
 						producer = GER
 					}
 					add_equipment_to_stockpile = {
 						type = anti_air_equipment
-						amount = 40
+						amount = 50
 						producer = GER
 					}
 					add_equipment_to_stockpile = {
 						type = anti_tank_equipment
-						amount = 20
+						amount = 30
 						producer = GER
 					}
 				}
@@ -217,13 +225,16 @@ scripted_gui = {
 				
 			}
 			GER_construction_arms_factory_conversion_button_click_enabled = {
-				check_variable = { GER.GER_num_arbeitseinsatz > 1999 }
-			    industrial_complex > 0
+				check_variable = { GER.GER_num_arbeitseinsatz > 999 }
+				OR = {	
+			    	industrial_complex > 0
+					arms_factory > 0
+				}
 			    is_owned_by = GER
 			}
 			GER_construction_anti_air_button_click_enabled = {
 				
-				check_variable = { GER.GER_num_arbeitseinsatz > 2199 }
+				check_variable = { GER.GER_num_arbeitseinsatz > 1499 }
 				if = {
 					limit = {
 						GER = {
@@ -281,13 +292,13 @@ scripted_gui = {
             }
 			GER_construction_air_base_button_click_enabled = {
 				
-				check_variable = { GER.GER_num_arbeitseinsatz > 1499 }
+				check_variable = { GER.GER_num_arbeitseinsatz > 999 }
 			    air_base < 6
 			    is_owned_by = GER
             }
             GER_construction_radar_button_click_enabled = {
 				
-				check_variable = { GER.GER_num_arbeitseinsatz > 2799 }
+				check_variable = { GER.GER_num_arbeitseinsatz > 1499 }
 			   if = {
 					limit = {
 						GER = {
@@ -347,7 +358,7 @@ scripted_gui = {
 				NOT = {
 					has_state_flag = GER_arbeitsinsatz_cooldown
 				}
-				check_variable = { GER.GER_num_arbeitseinsatz > 1000 }
+				check_variable = { GER.GER_num_arbeitseinsatz > 999 }
 			    arms_factory > 0
                 industrial_complex > 0 
 			    is_owned_by = GER
