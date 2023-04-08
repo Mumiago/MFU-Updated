@@ -1956,6 +1956,8 @@ focus_tree = {
  		search_filters = {FOCUS_FILTER_ARMY_XP}
 
  		completion_reward = {
+			army_experience = 100 
+			air_experience = 100 
 
  		}
  	}
@@ -1994,7 +1996,7 @@ focus_tree = {
 			
 			add_tech_bonus = {
 				name = construction_tech_bonus
-				bonus = 1
+				bonus = 0.5
 				uses = 1
 				technology = construction3
 			}
@@ -2035,7 +2037,7 @@ focus_tree = {
 			
 			add_tech_bonus = {
 				name = construction_tech_bonus
-				bonus = 1
+				bonus = 0.5
 				uses = 1
 				technology = construction3
 			}
@@ -2064,7 +2066,13 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH}
 
 		completion_reward = {
-			custom_effect_tooltip = "Add 5 resource gain efficiency somewhere"
+			custom_effect_tooltip = ITA_modify_ricostruzione_industriale_dynamic_modifier_ns_intro
+
+			add_to_variable = {
+				var = ITA_iri_local_resources_factor
+				value = 0.05 
+				tooltip = local_resources_factor_tooltip
+			}
 
 			add_research_slot = 1 
 
@@ -2377,7 +2385,7 @@ focus_tree = {
 							instant_build = yes						
 						}
 					}
-					add_extra_state_shared_building_slots = 2
+					add_extra_state_shared_building_slots = 3
 					add_building_construction = {
 						type = industrial_complex
 						level = 1
@@ -2385,7 +2393,7 @@ focus_tree = {
 					}
 					add_building_construction = {
 						type = arms_factory
-						level = 1
+						level = 2
 						instant_build = yes
 					}
 				}
@@ -2690,13 +2698,13 @@ focus_tree = {
 
 			add_tech_bonus = {
 				name = ITA_milan_comms_industry
-				bonus = 1
+				bonus = 0.5
 				uses = 1
 				category = radar_tech
 			}
 			add_tech_bonus = {
 				name = ITA_milan_comms_industry
-				bonus = 1
+				bonus = 0.5
 				uses = 1
 				category = industry
 			}
@@ -2786,13 +2794,44 @@ focus_tree = {
 			add_to_variable = { ITA_military_industry_dm_production_lack_of_resource_penalty_factor = -0.1 }
 			custom_effect_tooltip = ITA_end_fiat_ansaldo_duopoly_military_industry_tt
 
+			random_core_state = {
+				limit = {
+					is_controlled_by = ROOT
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+				}
+				prioritize = { 162 161 157 } 
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_core_state = {
+				limit = {
+					is_controlled_by = ROOT
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+				}
+				prioritize = { 162 161 157 } 
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+
 			hidden_effect = {
 				remove_ideas = ITA_hidden_research_penalties_ns
 			}
-
-			add_to_variable = { ITA_iri_consumer_goods_factor = 0.01 }
-			custom_effect_tooltip = ITA_ricostruzione_industriale_cg_penalty_tt
-
 		}
 	}
 
@@ -2816,46 +2855,38 @@ focus_tree = {
 			add_to_variable = { ITA_military_industry_dm_industrial_capacity_dockyard = 0.05 }
 			custom_effect_tooltip = ITA_modernize_ansaldo_facilities_military_industry_tt
 
-			add_to_variable = { ITA_iri_consumer_goods_factor = 0.01 }
-			custom_effect_tooltip = ITA_ricostruzione_industriale_cg_penalty_tt
-
-			if = {
+			random_core_state = {
 				limit = {
-					has_full_control_of_state = 158
-					158 = {
-						free_building_slots = {
-							building = arms_factory
-							size > 1
-							include_locked = yes
-						}
+					is_controlled_by = ROOT
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
 					}
 				}
-				158 = { #PIEDMONT (Genova)
-					add_extra_state_shared_building_slots = 2
-					add_building_construction = {
-						type = arms_factory
-						level = 2
-						instant_build = yes
-					}
+				prioritize = { 162 161 157 } 
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
 				}
 			}
-			else = {
-				random_core_state = {
-					limit = {
-						is_controlled_by = ROOT
-						free_building_slots = {
-							building = arms_factory
-							size > 1
-							include_locked = yes
-						}
+			random_core_state = {
+				limit = {
+					is_controlled_by = ROOT
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
 					}
-					prioritize = { 162 161 157 } #TOSCANA as main fallback
-					add_extra_state_shared_building_slots = 2
-					add_building_construction = {
-						type = arms_factory
-						level = 2
-						instant_build = yes
-					}
+				}
+				prioritize = { 162 161 157 } 
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
 				}
 			}
 		}
@@ -3210,6 +3241,9 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_ARMY_XP}
 
 		completion_reward = {
+
+			custom_effect_tooltip = ITA_modern_celere_division_modify_tt
+
 			add_ideas = ITA_tank_and_mot_production
 
 			army_experience = 25
@@ -3257,13 +3291,31 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_ARMY_XP}
 
 		completion_reward = {
-			if = {
-				limit = {
-					has_completed_focus = ITA_a_bandits_war
-				}
-				remove_ideas = italian_leadership 
-				army_experience = -100
+
+			custom_effect_tooltip = ITA_OAK_modify_regio_esercito_dynamic_modifier_ns_intro
+			
+			subtract_from_variable = {
+				value = -0.25
+				var = ITA_re_planning_speed
+				tooltip = planning_speed_tooltip
 			}
+			subtract_from_variable = {
+				value = -0.25
+				var = ITA_re_max_planning
+				tooltip = max_planning_tooltip
+			}
+			subtract_from_variable = {
+				value = -0.05
+				var = ITA_re_army_attack_factor
+				tooltip = army_attack_factor_tooltip
+			}
+			subtract_from_variable = {
+				value = -0.05
+				var = ITA_re_defense_attack_factor
+				tooltip = army_defense_factor_tooltip
+			}
+
+			army_experience = -100
 
 			#Update NS icon
 			ITA_improve_regio_esercito_dm_effect = yes
@@ -3314,14 +3366,20 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_RESEARCH FOCUS_FILTER_ARMY_XP}
 
 		completion_reward = {
-			add_to_variable = { ITA_re_special_forces_cap = 0.02 }
-			custom_effect_tooltip = ITA_divisioni_alpine_re_tt
+		
+			custom_effect_tooltip = ITA_OAK_modify_regio_esercito_dynamic_modifier_ns_intro
+
+			add_to_variable = { 
+				var = ITA_re_special_forces_cap 
+				value = 0.02
+				tooltip = special_forces_cap_tooltip
+			}
 
 			army_experience = 15
 
 			add_tech_bonus = {
 				name = ITA_divisioni_alpine
-				bonus = 1.5
+				bonus = 0.5.5
 				uses = 1
 				category = mountaineers_tech
 			}
@@ -3356,7 +3414,7 @@ focus_tree = {
 			}
 			add_tech_bonus = {
 				name = ITA_fanti_dell_aria
-				bonus = 1.5
+				bonus = 0.5.5
 				uses = 1
 				category = para_tech
 			}
@@ -3379,14 +3437,10 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_INDUSTRY FOCUS_FILTER_ARMY_XP}
 
 		completion_reward = {
-			custom_effect_tooltip = ITA_self_propelled_guns_military_industry_tt
-			hidden_effect = {
-				add_ideas = ITA_hidden_spg_production_ns
-			}
 
 			add_tech_bonus = {
 				name = ITA_self_propelled_guns
-				bonus = 1
+				bonus = 0.5
 				uses = 2
 				category = artillery
 			}
@@ -3466,7 +3520,12 @@ focus_tree = {
 		continue_if_invalid = yes
 
 		completion_reward = {
-			add_ideas = eight_million_idea
+			hidden_effect = {
+				add_ideas = eight_million_idea
+			}
+
+			custom_effect_tooltip = ITA_8_million_bayonets_modify_tt
+
 			add_equipment_to_stockpile = { type = infantry_equipment_0 amount = 8000 producer = ITA } 
 		}
 	}
@@ -3552,19 +3611,19 @@ focus_tree = {
 			air_experience = 25
 			add_tech_bonus = {
 				name = air_fighter
-				bonus = 1
+				bonus = 0.5
 				uses = 1
 				technology = fighter_1938
 			}
 			add_tech_bonus = {
 				name = air_fighter
-				bonus = 1
+				bonus = 0.5
 				uses = 1
 				technology = heavy_fighter_1938
 			}
 			add_tech_bonus = {
 				name = air_upgrade
-				bonus = 1
+				bonus = 0.5
 				uses = 3
 				category = air_upgrade
 			}
@@ -3886,7 +3945,7 @@ focus_tree = {
 				}
 				add_tech_bonus = {
 					name = bomber_bonus
-					bonus = 1
+					bonus = 0.5
 					uses = 1
 					technology = strategic_bomber_1939
 				}
@@ -3897,7 +3956,7 @@ focus_tree = {
 				}
 				add_tech_bonus = {
 					name = bomber_bonus
-					bonus = 1
+					bonus = 0.5
 					uses = 1
 					technology = strategic_bomber_1941
 				}
@@ -3910,7 +3969,7 @@ focus_tree = {
 				}
 				add_tech_bonus = {
 					name = bomber_bonus
-					bonus = 1
+					bonus = 0.5
 					uses = 1
 					technology = tactical_bomber_1939
 				}
@@ -3921,7 +3980,7 @@ focus_tree = {
 				}
 				add_tech_bonus = {
 					name = bomber_bonus
-					bonus = 1
+					bonus = 0.5
 					uses = 1
 					technology = tactical_bomber_1941
 				}
@@ -3956,13 +4015,13 @@ focus_tree = {
 			air_experience = 25
 			add_tech_bonus = {
 				name = air_fighter
-				bonus = 1
+				bonus = 0.5
 				uses = 1
 				technology = fighter_1940
 			}
 			add_tech_bonus = {
 				name = air_fighter
-				bonus = 1
+				bonus = 0.5
 				uses = 1
 				technology = heavy_fighter_1940
 			}
@@ -3986,13 +4045,13 @@ focus_tree = {
 		completion_reward = {
 			add_tech_bonus = {
 				name = air_fighter
-				bonus = 1
+				bonus = 0.5
 				uses = 1
 				technology = fighter_1942
 			}
 			add_tech_bonus = {
 				name = air_fighter
-				bonus = 1
+				bonus = 0.5
 				uses = 1
 				technology = heavy_fighter_1942
 			}
@@ -4112,7 +4171,7 @@ focus_tree = {
 
 			add_tech_bonus = {
 				name = ITA_intensify_torpedo_manufacturing
-				bonus = 1.0
+				bonus = 0.5.0
 				uses = 2
 				category = cat_torpedoes
 			}
@@ -4182,7 +4241,7 @@ focus_tree = {
 
 			add_tech_bonus = {
 				name = ITA_oto_naval_guns
-				bonus = 1.0
+				bonus = 0.5.0
 				uses = 2
 				category = cat_ship_medium_battery
 				category = cat_ship_heavy_battery
@@ -4207,7 +4266,7 @@ focus_tree = {
 		completion_reward = {
 			add_tech_bonus = {
 				name = ITA_milizia_marittima_di_artiglieria
-				bonus = 1.0
+				bonus = 0.5.0
 				uses = 1
 				category = artillery
 			}
@@ -4261,7 +4320,7 @@ focus_tree = {
 			}
 			add_tech_bonus = {
 				name = dd_bonus
-				bonus = 1.0
+				bonus = 0.5.0
 				uses = 1
 				category = dd_tech
 			}
@@ -4474,7 +4533,7 @@ focus_tree = {
 				}
 				add_tech_bonus = {
 					name = ITA_Modern_naval_bomber_effort
-					bonus = 1
+					bonus = 0.5
 					uses = 1
 					category = naval_bomber
 				}
@@ -4483,7 +4542,7 @@ focus_tree = {
 		
 			add_tech_bonus = {
 				name = ITA_Modern_naval_bomber_effort
-				bonus = 1
+				bonus = 0.5
 				uses = 1
 				category = naval_bomber
 			}
@@ -4678,7 +4737,7 @@ focus_tree = {
 			}
 			add_tech_bonus = {
 				name = radar_focus
-				bonus = 1
+				bonus = 0.5
 				uses = 2
 				category = radar_tech
 			}
@@ -4736,7 +4795,7 @@ focus_tree = {
 
 			add_tech_bonus = {
 				name = ITA_cacciatorpediniere_di_scorta
-				bonus = 1.0
+				bonus = 0.5.0
 				uses = 1
 				category = dd_tech
 			}
@@ -4874,7 +4933,7 @@ focus_tree = {
 
 			add_tech_bonus = {
 				name = ITA_navi_da_battaglia
-				bonus = 1.5
+				bonus = 0.5.5
 				uses = 1
 				category = bb_tech
 			}
@@ -4982,7 +5041,7 @@ focus_tree = {
 			navy_experience = 15
 			add_tech_bonus = {
 				name = ITA_proper_carriers
-				bonus = 1.0
+				bonus = 0.5.0
 				uses = 1
 				category = cv_tech
 			}
@@ -6248,7 +6307,7 @@ focus_tree = {
 		completion_reward = {
 			add_tech_bonus = {
 				name = ITA_strengthen_the_blackshirts
-				bonus = 1
+				bonus = 0.5
 				uses = 2
 				category = infantry_weapons
 			}
