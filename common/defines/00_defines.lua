@@ -1079,7 +1079,7 @@ NMilitary = {
 	BATALION_NOT_CHANGED_EXPERIENCE_DROP = 0.0,		-- Division experience drop if unit has same batalion
 	BATALION_CHANGED_EXPERIENCE_DROP = 0.6,			-- Division experience drop if unit has different batalion
 	ARMOR_VS_AVERAGE = 0.05,			                -- how to weight in highest armor & pen vs the division average
-	PEN_VS_AVERAGE = 0.15,
+	PEN_VS_AVERAGE = 0.1,
 
 	DECRYPTION_ADVANTAGE_BONUS = 0.05,				-- How much unit base damage and base defense is increased per decryption level compared to enemies average encryption level (ex: dec. level is 5 and enemy average enc. level is 3 then 5-3 = 2 which gives 10 % increase)
 	
@@ -1289,7 +1289,7 @@ NAir = {
 	AIR_REGION_SUPERIORITY_PIXEL_SCALE = 0.04,           -- air superiority scale = superiority/(pixels*this)
 	COMBAT_SUP_VS_SUP_ATTACK_CHANCE_SPEED_DIFF = 0.25, 	-- How much diff in speed between aircrafts affects the chance of who attacks first in superiority vs superiority.( Naval air combat only )
 	COMBAT_MULTIPLANE_CAP = 1.5,						-- How many planes can shoot at each plane on other side ( if there are 100 planes we are atttacking COMBAT_MULTIPLANE_CAP * 100 of our planes can shoot )
-	COMBAT_DAMAGE_SCALE = 0.18,							-- Higher value = more shot down planes
+	COMBAT_DAMAGE_SCALE = 0.2,							-- Higher value = more shot down planes
 	COMBAT_DAMAGE_SCALE_CARRIER = 8,                    -- same as above but used inside naval combat for carrier battles																								   
 	DETECT_CHANCE_FROM_OCCUPATION = 0.15, 				-- How much the controlled provinces in area affects the air detection base value.
 	DETECT_CHANCE_FROM_RADARS = 0.7, 					-- How much the radars in area affects detection chance.
@@ -1748,9 +1748,9 @@ NNavy = {
 	MAX_SUBMARINES_PER_AUTO_TASK_FORCE = 30,						-- maximum number of submarines the auto-task force creation will put together when designing wolfpack
 	BEST_CAPITALS_TO_CARRIER_RATIO = 2,							-- capitals / carriers ratio used when auto-task force creation designs CarrierTaskForce
 	BEST_CAPITALS_TO_SCREENS_RATIO = 0.33, 							-- capitals / screens ratio used for creating FEX groups in naval combat
-	COMBAT_BASE_HIT_CHANCE = 0.07,									-- base chance for hit
+	COMBAT_BASE_HIT_CHANCE = 0.06,									-- base chance for hit
 
-	COMBAT_MIN_HIT_CHANCE = 0.03,									-- never less hit chance then this?
+	COMBAT_MIN_HIT_CHANCE = 0.02,									-- never less hit chance then this?
 	COMBAT_EVASION_TO_HIT_CHANCE = 0.007,							-- we take ship evasion stats, and mult by this value, so it gives hit chance reduction. So if reduction is 0.025 and ship evasion = 10, then there will be 0.25 (25%) lower hit chance. (Fe. 50% base -25% from evasion +10% bcoz it's very close).
 	COMBAT_EVASION_TO_HIT_CHANCE_TORPEDO_MULT = 10.0,				-- the above evasion hit chance is multiplied by 100% if shooting with torpedos. Torpedoes are slow, so evasion matters more.
 	MIN_HIT_PROFILE_MULT = 0.0,										-- largest hit profile penalty to hitting
@@ -2151,9 +2151,9 @@ NNavy = {
 	LIGHT_GUN_ATTACK_TO_SHORE_BOMBARDMENT							= 0.05, -- light gun attack value is divided by this value * 100 and added to shore bombardment modifier 
 
 	GUN_HIT_PROFILES = { -- hit profiles for guns, if target ih profile is lower the gun will have lower accuracy
-		80.0,	-- big guns
+		72.0,	-- big guns
 		120.0,	-- torpedos
-		40.0,	-- small guns
+		36.0,	-- small guns
 	},
 	
 	DEPTH_CHARGES_HIT_CHANCE_MULT 									= 1.1, 		-- multiplies hit chance of small guns
