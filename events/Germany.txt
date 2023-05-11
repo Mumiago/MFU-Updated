@@ -15,9 +15,18 @@ country_event = {
 	
 	option = {
 		name = germany.4.a
+		if = {
+			limit = {
+				ENG = {
+					has_idea = civilian_economy
+				}
+			}
+			ENG = {
+				add_ideas = low_economic_mobilisation
+			}
+		}
 		ENG = {
-			add_war_support = 0.2
-			add_ideas = low_economic_mobilisation
+			add_war_support = 0.15
 		}
 		4 = {
 			if = {
@@ -89,6 +98,9 @@ country_event = {
 		name = germany.565.a
 		retire_character = GER_werner_blomberg
 		retire_character = GER_werner_fritsch
+		remove_ideas = GER_werner_fritsch
+		remove_ideas = GER_werner_blomberg
+
 		swap_ideas = { 
 			remove_idea = og_general_staff
 			add_idea = general_staff0
@@ -305,6 +317,9 @@ country_event = {
 	
 	option = {
 		name = germany.14.a
+		GER = {
+			country_event = { id = germany.704 days = 14 }
+		}
 		if = {
 			limit = {
 				96 = {
@@ -1397,6 +1412,8 @@ country_event = {
 		name = germany.52.a
 		72 = { add_core_of = POL }
 		POL = { transfer_state = 72 }
+		811 = { add_core_of = POL }
+		POL = { transfer_state = 811 }
 	}
 }
 
@@ -1612,6 +1629,18 @@ country_event = {
 			}
 			SLO = { transfer_state = 664 }
 		}
+		CZE = {
+			delete_unit = { state = 9 disband = yes }
+			delete_unit = { state = 69 disband = yes }
+			delete_unit = { state = 74 disband = yes }
+			delete_unit = { state = 75 disband = yes }
+			delete_unit = { state = 72 disband = yes }
+			delete_unit = { state = 70 disband = yes }
+			delete_unit = { state = 809 disband = yes }
+			delete_unit = { state = 71 disband = yes }
+			delete_unit = { state = 73 disband = yes }
+			delete_unit = { state = 664 disband = yes }
+		}
 		if = {
 			limit = { country_exists = CZE }
 			SLO = { 
@@ -1702,9 +1731,10 @@ country_event = {
 						}
 					}
 				}
+				
 				annex_country = { 
 					target = CZE 
-					transfer_troops = yes
+					transfer_troops = no
 				} 
 			}
 	   	}
@@ -1806,13 +1836,13 @@ country_event = {
 			}
 			SLO = {
 				inherit_technology = CZE
-				load_oob = SLO_1939
 				add_manpower = 50000
 				add_command_power = -50
 				set_research_slots = 4
 				set_technology = {
 					slo_1940_light_tank_chassis = 1
 				}
+				load_oob = SLO_1939
 			}
 		}
 		set_country_flag = GER_the_end_of_czechoslovakia
@@ -2811,16 +2841,20 @@ country_event = {
 		name = germany.76.a	
 		GER = {
 		
-		add_tech_bonus = {
-			name = armor_bonus
-			bonus = 0.5
-			uses = 1
-			category = armor
-		}
-		add_tech_bonus = {
-			bonus = 0.5
-			category = tank_upgrade
-		}
+			add_tech_bonus = {
+				name = armor_bonus
+				bonus = 0.5
+				uses = 1
+				category = armor
+			}
+			add_tech_bonus = {
+				bonus = 0.5
+				category = tank_upgrade
+			}
+			add_tech_bonus = {
+				bonus = 1
+				category = cat_mechanized_equipment
+			}
 			add_opinion_modifier = { target = GER modifier = sov_ger_treaty }
 			add_opinion_modifier = { target = GER modifier = sov_ger_treaty_trade }
 		}
@@ -3439,12 +3473,50 @@ country_event = {
 	is_triggered_only = yes
 	
 	option = {
-		name = germany.88.a
-		ENG = {
-			remove_dynamic_modifier = {
-				modifier = ENG_prosperity_of_the_empire
+		hidden_effect = {
+			every_country = {
+				limit = { has_naval_treaty_trigger = yes }
+				remove_naval_treaty_effect = yes
+				set_country_flag = FLG_treaty_already_gone
+				#MTG_TODO_GABRIEL: news event
+			}
+			ENG = {
+				set_variable = {
+					ENG_stability_factor_var = 0
+				}
+				set_variable = {
+					ENG_production_speed_arms_factory_factor_var = 0
+				}
+				set_variable = {
+					ENG_production_speed_industrial_complex_factor_var = 0
+				}
+				set_variable = {
+					ENG_war_support_factor_var = 0
+				}
+				set_variable = {
+					ENG_political_power_factor_var = 0
+				}
+				set_variable = {
+					ENG_political_power_cost_var = 0
+				}
+				add_to_variable = {
+					ENG_experience_gain_army_factor_var = -0.1
+				}
+				set_variable = {
+					ENG_production_cost_max_ship_hull_cruiser_var = 0
+				}
+				set_variable = {
+					ENG_production_cost_max_ship_hull_heavy_var = 0
+				}
+				set_variable = {
+					ENG_production_cost_max_ship_hull_carrier_var = 0
+				}
+				set_variable = {
+					ENG_political_power_cost_var = 0
+				}
 			}
 		}
+		name = germany.88.a
 		declare_war_on = {
 				target = POL
 				type = annex_everything
@@ -5417,7 +5489,7 @@ country_event = {
 				tooltip = Yugoslav_Partisans_1942
 			}
 			add_resistance = 20
-			add_compliance = -10
+			add_compliance = -20
 		}
 	}	
 	option = {
@@ -5447,7 +5519,7 @@ country_event = {
 				tooltip = Yugoslav_Partisans_1943
 			}
 			add_resistance = 30
-			add_compliance = -20 
+			add_compliance = -30
 		}
 	}	
 	option = {
@@ -5477,7 +5549,7 @@ country_event = {
 				tooltip = Yugoslav_Partisans_1944
 			}
 			add_resistance = 40 
-			add_compliance = -40 
+			add_compliance = -50
 		}
 	}	
 	option = {
@@ -5506,7 +5578,32 @@ country_event = {
 	is_triggered_only = yes
 		
 	immediate = { 
-		load_oob = "GER_deployment_oob"
+		if = {
+			limit = {
+				GER = {
+					NOT = {
+						OR = {
+							has_tech = large_front_operations
+							has_tech = peoples_army
+						}
+					}
+				}
+			}
+			load_oob = "GER_deployment_oob"
+		}
+		else_if = {
+			limit = {
+				GER = {
+					OR = {
+						has_tech = large_front_operations
+						has_tech = peoples_army
+					}
+					
+				}
+			}
+			load_oob = "GER_mass_deployment_oob"
+			add_manpower = -165000
+		}
 	}	
 }
 country_event = {
@@ -6012,3 +6109,248 @@ country_event = {
 		}
 	}
 }
+country_event = {
+	id = germany.703
+	title = germany.703.t
+	desc = germany.703.d
+	picture = GFX_report_event_german_speech
+	
+	is_triggered_only = yes
+	hidden = yes
+	
+	option = {
+		name = germany.703.a
+		if = {
+			limit = {
+				ITA = {
+					has_country_flag = ITA_operation_compass
+					controls_state = 451
+				}
+			}
+			51 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					instant_build = yes
+					level = 2
+				}
+			}
+			64 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					instant_build = yes
+					level = 2
+				}
+			}
+			54 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					instant_build = yes
+					level = 2
+				}
+			}
+			59 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					instant_build = yes
+					level = 2
+				}
+			}
+		}
+		if = {
+			limit = {
+				ITA = {
+					has_country_flag = ITA_operation_compass
+					controls_state = 663
+				}
+			}
+			51 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					instant_build = yes
+					level = 2
+				}
+			}
+			64 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					instant_build = yes
+					level = 2
+				}
+			}
+			54 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					instant_build = yes
+					level = 2
+				}
+			}
+			59 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					instant_build = yes
+					level = 2
+				}
+			}
+		}
+		if = {
+			limit = {
+				ITA = {
+					has_country_flag = ITA_operation_compass
+					controls_state = 450
+				}
+			}
+			51 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					instant_build = yes
+					level = 2
+				}
+			}
+			64 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					instant_build = yes
+					level = 2
+				}
+			}
+			54 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					instant_build = yes
+					level = 2
+				}
+			}
+			59 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					instant_build = yes
+					level = 2
+				}
+			}
+		}
+		if = {
+			limit = {
+				ITA = {
+					has_country_flag = ITA_operation_compass
+					controls_state = 449
+				}
+			}
+			51 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					instant_build = yes
+					level = 2
+				}
+			}
+			64 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					instant_build = yes
+					level = 2
+				}
+			}
+			54 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					instant_build = yes
+					level = 2
+				}
+			}
+			59 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					instant_build = yes
+					level = 2
+				}
+			}
+		}
+		if = {
+			limit = {
+				ITA = {
+					has_country_flag = ITA_operation_compass
+					controls_state = 448
+				}
+			}
+			51 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					instant_build = yes
+					level = 2
+				}
+			}
+			64 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					instant_build = yes
+					level = 2
+				}
+			}
+			54 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					instant_build = yes
+					level = 2
+				}
+			}
+			59 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					instant_build = yes
+					level = 2
+				}
+			}
+		}
+	}
+}
+country_event = {
+	id = germany.704
+	title = germany.704.t
+	desc = germany.704.d
+	picture = GFX_reich_occupies_norwegian_ports
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = germany.704.a
+		custom_effect_tooltip = "Prepare your divisions according to tooltip under operation Weserübung"
+		GER = {
+			set_country_flag = GER_falkenhorst_flag
+		}
+	}
+	option = {
+		name = germany.704.b
+		custom_effect_tooltip = "You are free to deal with Norway as you wish"
+		GER = {
+			set_country_flag = GER_myownplan_flags
+		}
+	}
+}
+
+
+
+
+
+
+
+
+				

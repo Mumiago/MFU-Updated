@@ -6,6 +6,8 @@ NWiki = {
 },
 
 NMapMode = {
+	SELECTION_HOVERED_STATE_COLOR_INDEX_CONTROLLED = 0, -- Border color of hovered controlled states in various select mapmodes. Refers to the colors in BORDER_COLOR_CUSTOM_HIGHLIGHTS.
+	SELECTION_HOVERED_STATE_COLOR_INDEX_FOREIGN = 0,	-- Border color of hovered foreign states in various select mapmodes. Refers to the colors in BORDER_COLOR_CUSTOM_HIGHLIGHTS.
 	FABRICATE_CLAIM_SELECTED_SECONDARY_COLOR = { 0, 1, 0, 1 },
 	FABRICATE_CLAIM_TARGET_COUNTRY_SECONDARY_COLOR = { 0, 0, 0, 0 },
 	FABRICATE_CLAIM_NON_TARGET_COUNTRY_SECONDARY_COLOR = { 0, 0, 0, 0 },
@@ -578,6 +580,7 @@ NAirGfx = {
 },
 
 NGraphics = {
+	COUNTRY_FLAG_MEDIUM_TEX_MAX_SIZE = 512, -- Tweak dependly on amount of countries. Must be power of 2. No more then 2048.
 	COUNTER_MODE_ALLEGIANCE_OURS = { 0.32, 0.71, 0.39, 1.0 },
 	COUNTER_MODE_ALLEGIANCE_ALLIED = { 0.31, 0.65, 0.94, 1.0 },
 	COUNTER_MODE_ALLEGIANCE_ENEMY = { 0.91, 0.30, 0.30, 1.0 },
@@ -787,7 +790,7 @@ NGraphics = {
 	COUNTRY_FLAG_SMALL_TEX_WIDTH = 10,
 	COUNTRY_FLAG_SMALL_TEX_HEIGHT = 7,
 	COUNTRY_FLAG_TEX_MAX_SIZE = 256, -- Tweak dependly on amount of countries. Must be power of 2. No more then 2048.
-	COUNTRY_FLAG_SMALL_TEX_MAX_SIZE = 64, -- Tweak dependly on amount of countries. Must be power of 2. No more then 2048.
+	COUNTRY_FLAG_SMALL_TEX_MAX_SIZE = 128, -- Tweak dependly on amount of countries. Must be power of 2. No more then 2048.
 	COUNTRY_FLAG_STRIPE_TEX_MAX_WIDTH = 10,
 	COUNTRY_FLAG_STRIPE_TEX_MAX_HEIGHT = 4096,
 	COUNTRY_FLAG_LARGE_STRIPE_MAX_WIDTH = 41,

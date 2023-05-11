@@ -74,8 +74,9 @@ ideas = {
 		effective_training_programs_spirit = {
 			ledger = air
 			modifier = {
+				experience_gain_air = 0.1
 				air_training_xp_gain_factor = 0.25
-				air_ace_generation_chance_factor = 0.2
+				air_ace_generation_chance_factor = 0.5
 				air_wing_xp_loss_when_killed_factor = -0.1
 			}
 			ai_will_do = {
@@ -85,9 +86,7 @@ ideas = {
 		branch_independence_spirit = {
 			ledger = air
 			visible = {
-				NOT = {
-					tag = JAP
-				}
+				
 			}
 			modifier = {
 				sortie_efficiency = 0.05
@@ -117,12 +116,13 @@ ideas = {
 			ledger = air
 			visible = {
 				NOT = {
-					tag = GER 
+					tag = GER
+					tag = ENG
+					tag = USA
 				}
 			}
 			modifier = {
-				ground_attack_factor = 0.05
-				air_escort_efficiency = 0.1
+				air_cas_efficiency = 0.05
 				air_cas_present_factor = 0.1
 			}
 			ai_will_do = {	
@@ -133,7 +133,9 @@ ideas = {
 			ledger = air
 			visible = { 
 				NOT = {
-					tag = GER 
+					tag = GER
+					tag = ENG 
+					tag = USA
 				} 
 			}
 			modifier = {
@@ -147,10 +149,14 @@ ideas = {
 			ledger = air
 			visible = {
 				NOT = {
-					tag = GER 
+					tag = GER
+					tag = ENG 
+					tag = USA
 				}
 			}
 			modifier = {
+				experience_gain_air = 0.1
+				air_ace_generation_chance_factor = 0.5
 				air_wing_xp_loss_when_killed_factor = -0.25
 				air_training_xp_gain_factor = 0.5
 			}
@@ -162,13 +168,16 @@ ideas = {
 			ledger = air
 			visible = {
 				NOT = {
-					tag = GER 
+					tag = GER
+					tag = ENG 
+					tag = USA
 				}
 			}
 			
 			modifier = {
-				air_superiority_detect_factor = 0.05
-				air_mission_efficiency = 0.05
+				air_superiority_detect_factor = 0.10
+				air_interception_detect_factor = 0.10
+				air_mission_efficiency = 0.10
 			}
 			ai_will_do = {
 				factor = 1
@@ -178,13 +187,15 @@ ideas = {
 			ledger = air
 			visible = {
 				NOT = {
-					tag = GER 
+					tag = GER
+					tag = ENG
+					tag = USA 
 				}
 			}
 			modifier = {
 				air_untrained_pilots_penalty_factor = -0.5
 				air_home_defence_factor = 0.05
-				air_intercept_efficiency = 0.05
+				air_intercept_efficiency = 0.1
 			}
 			ai_will_do = {
 				factor = 1.5
@@ -194,13 +205,14 @@ ideas = {
 			ledger = air
 			visible = {
 				NOT = {
-					tag = GER 
-	
+					tag = GER
+					tag = ENG 
+					tag = USA
 				}
 			}
 			modifier = {
 				air_home_defence_factor = 0.15
-				air_intercept_efficiency = 0.15
+				air_intercept_efficiency = 0.1
 			}
 			ai_will_do = {
 				factor = 1
@@ -210,11 +222,14 @@ ideas = {
 			ledger = air
 			visible = {
 				NOT = {
-					tag = GER 
+					tag = GER
+					tag = ENG 
+					tag = USA
 				}
 			}
 			modifier = {
 				air_power_projection_factor = 0.1
+				army_bonus_air_superiority_factor = 0.1
 			}
 			ai_will_do = {
 				factor = 1
@@ -224,12 +239,13 @@ ideas = {
 			ledger = air
 			visible = { 
 				NOT = {
-					tag = GER 
+					tag = GER
+					tag = ENG 
+					tag = USA
 				}
 			}
 			modifier = {
-				army_bonus_air_superiority_factor = 0.07
-				air_superiority_efficiency = 0.075	
+				air_superiority_efficiency = 0.10	
 			}
 			ai_will_do = {
 				factor = 1.5
@@ -243,13 +259,14 @@ ideas = {
 			ledger = air
 			visible = { 
 				NOT = {
-					tag = GER 
+					tag = GER
+					tag = ENG 
+					tag = USA
 				}
 			}
 			modifier = {
-				air_cas_efficiency = 0.15
-				air_cas_present_factor = 0.1
-				ground_attack_factor = 0.05	
+				air_cas_efficiency = 0.05
+				ground_attack_factor = 0.05
 			}
 			ai_will_do = {
 				factor = 1.5
@@ -259,18 +276,50 @@ ideas = {
 			ledger = air
 			visible = { 
 				NOT = {
-					tag = GER 
+					tag = GER
+					tag = ENG 
+					tag = USA
 				}
 			}
 			modifier = {
 				air_strategic_bomber_bombing_factor = 0.15
-				air_escort_efficiency = 0.1
 			}
 			ai_will_do = {
 				factor = 1.5
 			}
 		}
         ####UK air spirits##
+		
+		ENG_expand_raf = {
+			ledger = air
+
+			visible = {
+				tag = ENG 
+				NOT = {
+					OR = {
+						has_completed_focus = ENG_bomber_will_get_through
+						has_completed_focus = ENG_prioritize_home_defence
+					}
+				}
+			}
+	
+			available = {
+				has_completed_focus = ENG_raf_expansion
+			}
+	
+			equipment_bonus = {
+				small_plane_airframe = {
+					build_cost_ic = -0.05 instant = yes
+				}
+			}
+			modifier = {
+				
+			}			
+	
+			ai_will_do = {	
+				factor = 1
+			}
+		}
 
 		ENG_raf_offensive_idea = {
 			ledger = air
@@ -292,13 +341,16 @@ ideas = {
 			}
 	
 			equipment_bonus = {
-				heavy_fighter_equipment = {
+				small_plane_airframe = {
 					build_cost_ic = -0.05 instant = yes
 				}
-				strat_bomber_equipment = {
+				medium_plane_fighter_airframe = {
 					build_cost_ic = -0.05 instant = yes
 				}
-				tac_bomber_equipment = {
+				large_plane_airframe = {
+					build_cost_ic = -0.05 instant = yes
+				}
+				medium_plane_airframe = {
 					build_cost_ic = -0.05 instant = yes
 				}
 			}
@@ -306,7 +358,7 @@ ideas = {
 				experience_gain_air_factor = 0.1
 				air_mission_xp_gain_factor = 0.1
 				air_strategic_bomber_bombing_factor = 0.15
-				air_power_projection_factor = 0.05
+				air_power_projection_factor = 0.025
 			}			
 	
 			ai_will_do = {	
@@ -328,13 +380,56 @@ ideas = {
 			}
 	
 			equipment_bonus = {
-				heavy_fighter_equipment = {
+				small_plane_airframe = {
+					build_cost_ic = -0.05 instant = yes
+				}
+				medium_plane_fighter_airframe = {
 					build_cost_ic = -0.1 instant = yes
 				}
-				strat_bomber_equipment = {
+				large_plane_airframe = {
 					build_cost_ic = -0.1 instant = yes
 				}
-				tac_bomber_equipment = {
+				medium_plane_airframe = {
+					build_cost_ic = -0.1 instant = yes
+				}
+			}
+			modifier = {
+				experience_gain_air_factor = 0.15
+				air_mission_xp_gain_factor = 0.15
+				air_strategic_bomber_bombing_factor = 0.15
+				air_power_projection_factor = 0.05
+				air_strategic_bomber_night_penalty = -0.25
+			}			
+	
+			ai_will_do = {	
+				factor = 1
+			}
+		}
+		ENG_raf_offensive_3_idea = {
+			ledger = air
+	
+			available = {
+				has_completed_focus = ENG_dowding_system
+			}
+			visible = {
+				tag = ENG 
+				AND = {
+					has_completed_focus	= ENG_advanced_night_bombing
+					has_completed_focus = ENG_bomber_will_get_through
+				}
+			}
+	
+			equipment_bonus = {
+				small_plane_airframe = {
+					build_cost_ic = -0.05 instant = yes
+				}
+				medium_plane_fighter_airframe = {
+					build_cost_ic = -0.1 instant = yes
+				}
+				large_plane_airframe = {
+					build_cost_ic = -0.1 instant = yes
+				}
+				medium_plane_airframe = {
 					build_cost_ic = -0.1 instant = yes
 				}
 			}
@@ -344,6 +439,9 @@ ideas = {
 				air_strategic_bomber_bombing_factor = 0.15
 				air_power_projection_factor = 0.1
 				air_strategic_bomber_night_penalty = -0.25
+				air_home_defence_factor = 0.05
+				air_interception_detect_factor = 0.05
+				air_intercept_efficiency = 0.05
 			}			
 	
 			ai_will_do = {	
@@ -370,8 +468,8 @@ ideas = {
 			}
 
 			equipment_bonus = {
-				fighter_equipment = {
-					build_cost_ic = -0.05 instant = yes
+				small_plane_airframe = {
+					build_cost_ic = -0.1 instant = yes
 				}
 			}	
 			modifier = {
@@ -399,22 +497,222 @@ ideas = {
 			}
 
 			equipment_bonus = {
-				fighter_equipment = {
-					build_cost_ic = -0.1 instant = yes
+				small_plane_airframe = {
+					build_cost_ic = -0.15 instant = yes
 				}
 			}	
 			modifier = {
 				experience_gain_air_factor = 0.15
 				air_mission_xp_gain_factor = 0.15
-				air_superiority_efficiency = 0.15
+				air_superiority_efficiency = 0.1
 				air_ace_generation_chance_factor = 0.25		
-				air_mission_efficiency = 0.15				
+				air_mission_efficiency = 0.1				
 			}	
 			ai_will_do = {	
 				factor = 1
 			}
 		}
+		ENG_raf_defensive_3_idea = {
+			ledger = air
 
+			available = {
+				has_completed_focus = ENG_dowding_system
+			}
+			visible = {
+				tag = ENG 
+				AND = {
+					has_completed_focus	= ENG_prioritize_home_defence
+					has_completed_focus = ENG_modernize_air_armaments
+				}
+			}
+
+			equipment_bonus = {
+				small_plane_airframe = {
+					build_cost_ic = -0.15 instant = yes
+				}
+			}	
+			modifier = {
+				experience_gain_air_factor = 0.15
+				air_mission_xp_gain_factor = 0.15
+				air_superiority_efficiency = 0.1
+				air_ace_generation_chance_factor = 0.25		
+				air_mission_efficiency = 0.1	
+				air_home_defence_factor = 0.1
+				air_interception_detect_factor = 0.05
+				air_intercept_efficiency = 0.05			
+			}	
+			ai_will_do = {	
+				factor = 1
+			}
+		}
+####USA AIR
+		USA_centralized_airforce_idea = {
+			ledger = air
+
+			visible = {
+				tag = USA
+				NOT = {
+					has_completed_focus = USA_a_modern_anaconda_plan
+				}
+			}
+	
+			available = {
+				AND = {
+					has_completed_focus = USA_centralize_the_airforce
+					NOT = {
+						has_completed_focus = USA_a_modern_anaconda_plan
+					}
+				}
+			}
+			modifier = {
+				air_mission_efficiency = 0.10
+				air_nav_efficiency = 0.05
+			}			
+	
+			ai_will_do = {	
+				factor = 1
+			}
+		}
+		USA_centralized_airforce_2_idea = {
+			ledger = air
+
+			visible = {
+				tag = USA
+				has_completed_focus = USA_a_modern_anaconda_plan
+				NOT = {
+					has_completed_focus = USA_coordinate_with_the_british
+				}
+			}
+	
+			available = {
+				AND = {
+					has_completed_focus = USA_a_modern_anaconda_plan
+					NOT = {
+						has_completed_focus = USA_coordinate_with_the_british
+					}
+				}
+			}
+			modifier = {
+				air_mission_efficiency = 0.10
+				air_nav_efficiency = 0.05
+				air_strategic_bomber_bombing_factor = 0.15
+			}			
+	
+			ai_will_do = {	
+				factor = 1
+			}
+		}
+		USA_centralized_airforce_3_idea = {
+			ledger = air
+
+			visible = {
+				tag = USA
+				has_completed_focus = USA_coordinate_with_the_british
+			}
+	
+			available = {
+					has_completed_focus = USA_coordinate_with_the_british			
+			}
+			equipment_bonus = {
+				large_plane_airframe = {
+					build_cost_ic = -0.1 instant = yes
+				}
+				medium_plane_airframe = {
+					build_cost_ic = -0.1 instant = yes
+				}
+			}
+			modifier = {
+				air_mission_efficiency = 0.10
+				air_strategic_bomber_bombing_factor = 0.15
+			}			
+	
+			ai_will_do = {	
+				factor = 1
+			}
+		}
+		USA_autonomous_airforce_idea = {
+			ledger = air
+
+			visible = {
+				tag = USA
+				NOT = {
+					has_completed_focus = USA_swarm_the_skies
+				}
+			}
+	
+			available = {
+				AND = {
+					has_completed_focus = USA_autonomous_airforce
+					NOT = {
+						has_completed_focus = USA_swarm_the_skies
+					}
+				}
+			}
+			modifier = {
+				air_power_projection_factor = 0.05
+				experience_gain_air = 0.1
+				air_training_xp_gain_factor = 0.25
+			}			
+	
+			ai_will_do = {	
+				factor = 1
+			}
+		}
+		USA_autonomous_airforce_2_idea = {
+			ledger = air
+
+			visible = {
+				tag = USA
+				has_completed_focus = USA_swarm_the_skies
+				NOT = {
+					has_completed_focus = USA_armored_column_cover
+				}
+			}
+	
+			available = {
+				AND = {
+					has_completed_focus = USA_swarm_the_skies
+					NOT = {
+						has_completed_focus = USA_armored_column_cover
+					}
+				}
+			}
+			modifier = {
+				air_power_projection_factor = 0.1
+				experience_gain_air = 0.1
+				air_ace_generation_chance_factor = 0.25
+				air_wing_xp_loss_when_killed_factor = -0.25
+				air_training_xp_gain_factor = 0.25
+			}			
+	
+			ai_will_do = {	
+				factor = 1
+			}
+		}
+		USA_autonomous_airforce_3_idea = {
+			ledger = air
+
+			visible = {
+				tag = USA
+				has_completed_focus = USA_armored_column_cover
+			}
+	
+			available = {
+				has_completed_focus = USA_armored_column_cover
+			}
+			modifier = {
+				air_power_projection_factor = 0.1
+				air_cas_efficiency = 0.1
+				experience_gain_air = 0.1
+				air_ace_generation_chance_factor = 0.25
+				air_wing_xp_loss_when_killed_factor = -0.25
+				air_training_xp_gain_factor = 0.25
+			}			
+	
+			ai_will_do = {	
+				factor = 1
+			}
+		}
 		#Germany Air spirits# 
 
 		GER_air_innovations_1_idea = {
@@ -481,7 +779,7 @@ ideas = {
 				air_training_xp_gain_factor = 0.2
 				air_ace_generation_chance_factor = 0.25
 				air_cas_present_factor = 0.10
-				air_cas_efficiency = 0.2								
+				air_cas_efficiency = 0.1						
 			}
 
 			ai_will_do = {	
@@ -575,7 +873,7 @@ ideas = {
 				air_training_xp_gain_factor = 0.2
 				air_ace_generation_chance_factor = 0.25
 				air_cas_present_factor = 0.10
-				air_cas_efficiency = 0.2								
+				air_cas_efficiency = 0.1						
 			}
 
 			ai_will_do = {
@@ -635,7 +933,7 @@ ideas = {
 				air_training_xp_gain_factor = 0.2
 				air_ace_generation_chance_factor = 0.25
 				air_cas_present_factor = 0.10
-				air_cas_efficiency = 0.25							
+				air_cas_efficiency = 0.15						
 			}
 
 			ai_will_do = {

@@ -1,8 +1,1000 @@
 
 PAR_instant_effect_decisions = {
+	NOR_add_to_faction = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			ENG = {
+				has_country_flag = ENG_didnt_help_nor
+			}
+			NOR = {
+				surrender_progress > 0.9
+			}
+			
+		}
+		cost = 0
+		fire_only_once = yes
+
+		complete_effect = {
+			ENG = {
+				add_to_faction = NOR
+			}
+			NOR = { 
+				add_to_war = { 
+					targeted_alliance = ENG
+					enemy = GER
+				}
+			}
+		}
+	}
+	ENG_remove_debuff = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			ENG = {
+				has_country_flag = ENG_helped_norway
+				has_country_flag = ENG_give_output_back
+				NOT = {
+					has_country_flag = ENG_give_output_back_2
+				}
+			}
+			
+		}
+		cost = 0
+		fire_only_once = yes
+
+		complete_effect = {
+			ENG = {
+				add_to_variable = {
+					ENG_industrial_capacity_factory_var = 0.15
+				}
+			}
+		}
+	}
+	ENG_give_debuff = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			ENG = {
+				has_country_flag = ENG_helped_norway
+			}
+			
+		}
+		cost = 0
+		fire_only_once = yes
+
+		complete_effect = {
+			ENG = {
+				add_to_variable = {
+					ENG_industrial_capacity_factory_var = -0.15
+				}
+				set_country_flag = ENG_give_output_back
+				set_country_flag = { flag = ENG_give_output_back_2 value = 1 days = 180 }
+			}
+		}
+	}
+	SCW_force_end = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			GER = {
+				has_war_with = ENG
+			}	
+			NOT = {
+				has_global_flag = scw_over
+			}
+		}
+		cost = 0
+		fire_only_once = yes
+
+		complete_effect = {
+			if = {
+				limit = {
+					D01 = { 
+						OR = { 
+							has_government = democratic 
+							has_government = communism 
+						}
+					}
+					SPR = {
+						controls_state = 41
+					}			
+				}
+				hidden_effect = { 
+					set_global_flag = scw_over
+					every_country = {
+						set_variable = { var = super_event value = 7 }			
+					}
+					
+					if = {
+						limit = {
+							NOT = {
+								has_global_flag = ETH_capitulated
+							}
+						}
+					
+						ITA = {
+							annex_country = { target = ETH }
+							country_event = { id = italy.32 }
+						}
+					}
+					
+					set_global_flag = SPR_over_flag_tt
+					sound_effect = se_spanish_civil_war_nationalist_victory
+					ITA = {	
+						if = {
+							limit = { 
+								any_army_leader = {
+									has_trait = ita_kwantung_veto
+								} 
+							}
+							every_army_leader = {
+								remove_unit_leader_trait = ita_kwantung_veto
+							}
+						}
+
+					}	
+					GER = {	
+				
+						if = {
+							limit = { 
+								any_army_leader = {
+									has_trait = ita_kwantung_veto
+								} 
+							}
+							every_army_leader = {
+								remove_unit_leader_trait = ita_kwantung_veto
+							}
+						}
+						
+					}
+					SPR = {	
+				
+						add_ideas = ROM_ger_trade_treaty
+						if = {
+							limit = { 
+								any_army_leader = {
+									has_trait = spr_kwantung_veto
+								} 
+							}
+							every_army_leader = {
+								remove_unit_leader_trait = spr_kwantung_veto
+							}
+						}
+					}
+					SOV = {	
+						if = {
+							limit = { 
+								any_army_leader = {
+									has_trait = ita_kwantung_veto
+								} 
+							}
+							every_army_leader = {
+								remove_unit_leader_trait = ita_kwantung_veto
+							}
+						}
+					}
+					SPR = { 
+						annex_country = { target = D01 transfer_troops = yes }
+						add_ideas = SPA_recovering_from_civil_war
+						delete_unit_template_and_units = {
+							division_template = "Guarnición Republicana"
+							disband = yes
+						}
+						delete_unit_template_and_units = {
+							division_template = "División de la Guardia de Asalto"
+							disband = yes
+						}	
+						delete_unit_template_and_units = {
+							division_template = "Brigada de Juventudes Sindicales"
+							disband = yes
+						}	
+						delete_unit_template_and_units = {
+							division_template = "Guarnición Nacionalista"
+							disband = yes
+						}
+						delete_unit_template_and_units = {
+							division_template = "Requeté Carlista"
+							disband = yes
+						}
+						delete_unit_template_and_units = {
+							division_template = "Brigada de la Guardia Civil"
+							disband = yes
+						}
+
+					}
+					794 ={
+					remove_core_of = SPR 
+					#add_core_of = 
+					}
+					165 ={
+						remove_core_of = SPR 
+					}
+					41 ={
+						remove_core_of = SPR 
+					}
+					793 ={
+						remove_core_of = SPR 
+					}
+					167 ={
+						remove_core_of = SPR 
+					}
+					41 ={
+						remove_core_of = SPR 
+					}
+					175 ={
+						remove_core_of = SPR 
+					}
+					168 ={
+						remove_core_of = SPR 
+					}
+					173 ={
+						remove_core_of = SPR 
+					}
+
+				}
+			}	
+			if = {
+				limit = {
+					D01 = { 
+						OR = { 
+							has_government = democratic 
+							has_government = communism 
+						}
+					}
+					D01 = {
+						controls_state = 41
+					}			
+				}
+				hidden_effect = { 
+					every_country = {
+						set_variable = { var = super_event value = 6 }			
+					}
+					
+					if = {
+						limit = {
+							NOT = {
+								has_global_flag = ETH_capitulated
+							}
+						}
+				
+						ITA = {
+							annex_country = { target = ETH }
+							country_event = { id = italy.32 }
+						}
+					}
+					set_global_flag = SPR_over_flag_tt
+					sound_effect = se_spanish_civil_war_republican_victory
+					ITA = {	
+						if = {
+							limit = { 
+								any_army_leader = {
+									has_trait = ita_kwantung_veto
+								} 
+							}
+							every_army_leader = {
+								remove_unit_leader_trait = ita_kwantung_veto
+							}
+						}
+						
+					}	
+					GER = {	
+						if = {
+							limit = { 
+								any_army_leader = {
+									has_trait = ita_kwantung_veto
+								} 
+							}
+							every_army_leader = {
+								remove_unit_leader_trait = ita_kwantung_veto
+							}
+						}
+						
+					}
+					SPR = {	
+						add_ideas = ROM_ger_trade_treaty
+						if = {
+							limit = { 
+								any_army_leader = {
+									has_trait = spr_kwantung_veto
+								} 
+							}
+							every_army_leader = {
+								remove_unit_leader_trait = spr_kwantung_veto
+							}
+						}
+
+					}
+
+					SOV = {	
+						if = {
+							limit = { 
+								any_army_leader = {
+									has_trait = ita_kwantung_veto
+								} 
+							}
+							every_army_leader = {
+								remove_unit_leader_trait = ita_kwantung_veto
+							}
+						}
+					}		
+				}
+				set_global_flag = scw_over
+				set_global_flag = scw_over_spr_lost
+				
+				SPR = { 
+					annex_country = { target = D01 transfer_troops = yes }
+					add_ideas = SPA_recovering_from_civil_war
+					delete_unit_template_and_units = {
+						division_template = "Guarnición Republicana"
+						disband = yes
+					}
+					delete_unit_template_and_units = {
+						division_template = "División de la Guardia de Asalto"
+						disband = yes
+					}	
+					delete_unit_template_and_units = {
+						division_template = "Brigada de Juventudes Sindicales"
+						disband = yes
+					}	
+					delete_unit_template_and_units = {
+						division_template = "Guarnición Nacionalista"
+						disband = yes
+					}
+					delete_unit_template_and_units = {
+						division_template = "Requeté Carlista"
+						disband = yes
+					}
+					delete_unit_template_and_units = {
+						division_template = "Brigada da la Guardia Civil"
+						disband = yes
+					}
+					delete_unit_template_and_units = {
+						division_template = "Brigada de la Guardia Civil"
+						disband = yes
+					}
+				}
+				794 ={
+					remove_core_of = SPR 
+					#add_core_of = 
+				}
+				165 ={
+					remove_core_of = SPR 
+				}
+				41 ={
+					remove_core_of = SPR 
+				}
+				793 ={
+					remove_core_of = SPR 
+				}
+				167 ={
+					remove_core_of = SPR 
+				}
+				41 ={
+					remove_core_of = SPR 
+				}
+				175 ={
+					remove_core_of = SPR 
+				}
+				168 ={
+					remove_core_of = SPR 
+				}
+				173 ={
+					remove_core_of = SPR 
+				}
+				SOV = {	
+					add_offsite_building = { type = industrial_complex level = 15 }
+				}	
+			}
+		}
+	}
+	GER_fuhrerhappy = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			date > 1942.1.1
+			GER = {
+				OR = {
+					controls_state = 195
+					controls_state = 219
+					controls_state = 217
+				}	
+				controls_state = 16
+			}	
+			ITA = {
+				controls_state = 2
+			}
+			NOT = {
+				SOV = {
+					OR = {
+						controls_state = 12
+						controls_state = 206
+						controls_state = 202
+					}	
+				}
+				
+			}
+		}
+		days_re_enable = 90
+		cost = 0
+		fire_only_once = no
+
+		complete_effect = {
+			GER = {
+				retire_country_leader = yes 
+				create_country_leader = {
+					name = " Adolf Hitler"
+					#desc="POLITICS_ADOLF_HITLER_DESC"
+					picture = "verygood.dds"
+					ideology=nazism
+					traits={ Fuehrer sour_loser }
+					expire="1965.1.1.1"
+					id=-1
+				}
+			}
+		}
+	}
+	GER_fuhrer_gets_worse = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			date > 1942.1.1
+			OR = {
+				SOV = {
+					OR = {
+						controls_state = 12
+						controls_state = 206
+						controls_state = 202
+					}	
+				}
+				FRA = {
+					controls_state = 16
+				}
+				OR = {
+					tag = ENG 
+					is_in_faction_with = ENG 
+
+				}
+			}
+			NOT = {
+				GER = {
+					OR = {
+						controls_state = 195
+						controls_state = 219
+						controls_state = 217
+					}	
+					controls_state = 16
+				}
+			}
+		}
+		days_re_enable = 90
+		cost = 0
+		fire_only_once = no
+
+		complete_effect = {
+			GER = {
+				retire_country_leader = yes 
+				create_country_leader = {
+					name = "Adolf Hitler "
+					#desc="POLITICS_ADOLF_HITLER_DESC"
+					picture = "notsogood.dds"
+					ideology=nazism
+					traits={ Fuehrer sour_loser }
+					expire="1965.1.1.1"
+					id=-1
+				}
+			}
+		}
+	}
+	GER_fuhrer_gets_worse2 = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			date > 1942.1.1
+			NOT = {
+				GER = {
+					OR = {
+						controls_state = 195
+						controls_state = 219
+						controls_state = 217
+					}	
+					controls_state = 16
+				}
+			}
+			GER = {
+				any_enemy_country = {
+					OR = {
+						controls_state = 50
+						controls_state = 42
+						controls_state = 51
+						controls_state = 57
+						controls_state = 56
+						controls_state = 59
+						controls_state = 58
+						controls_state = 61
+					}
+				}
+			}
+		}
+		cost = 0
+		fire_only_once = no
+		days_re_enable = 90
+
+		complete_effect = {
+			GER = {
+				retire_country_leader = yes 
+				create_country_leader = {
+					name = "Adolf  Hitler"
+					#desc="POLITICS_ADOLF_HITLER_DESC"
+					picture = "downfall.dds"
+					ideology=nazism
+					traits={ Fuehrer sour_loser }
+					expire="1965.1.1.1"
+					id=-1
+				}
+			}
+		}
+	}
+	NZL_is_player = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			date > 1936.1.7
+			AND = {
+				ITA = {
+					NOT = {
+						has_idea = ITA_nzl_is_player
+					}
+				}
+				NZL = {
+					OR = {
+						is_ai = no
+						country_exists = yes 
+					}
+				}
+			}
+		}
+		cost = 0
+		fire_only_once = yes
+
+		complete_effect = {
+			ITA = {
+				add_ideas = ITA_nzl_is_player
+			}
+		}
+	}
+	SLO_stalingrad = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			date > 1943.1.1
+		}
+		cost = 0
+		fire_only_once = yes
+
+		complete_effect = {
+			SLO = {
+				country_event = { id = slovakia.9 days = 1 }
+			}
+		}
+	}
+	SLO_suffered_casualties = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			SLO = {
+				casualties > 40000
+			}	
+		}
+		cost = 0
+		fire_only_once = yes
+
+		complete_effect = {
+			SLO = {
+				add_to_variable = {
+					SLO_army_attack_factor_var = -0.015
+					tooltip = SLO_add_attack_tt1 
+				}
+				add_to_variable = {
+					SLO_army_defense_factor = -0.015
+					tooltip = SLO_add_defense_tt1 
+				}
+				add_to_variable = {
+					SLO_army_speed_factor_var = -0.015
+					tooltip = SLO_add_speed_tt1 
+				}
+				add_to_variable = {
+					SLO_army_morale_factor_var = -0.015
+					tooltip = SLO_add_morale_tt1 
+				}
+				swap_ideas = {
+					remove_idea = SLO_vig_mil_idea
+					add_idea = SLO_vig_mil_idea2
+
+				}
+			}
+		}
+	}
+	SLO_suffered_casualties2 = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			SLO = {
+				casualties > 80000
+			}	
+		}
+		cost = 0
+		fire_only_once = yes
+
+		complete_effect = {
+			SLO = {
+				add_to_variable = {
+					SLO_army_attack_factor_var = -0.015
+					tooltip = SLO_add_attack_tt1 
+				}
+				add_to_variable = {
+					SLO_army_defense_factor = -0.015
+					tooltip = SLO_add_defense_tt1 
+				}
+				add_to_variable = {
+					SLO_army_speed_factor_var = -0.015
+					tooltip = SLO_add_speed_tt1 
+				}
+				add_to_variable = {
+					SLO_army_morale_factor_var = -0.015
+					tooltip = SLO_add_morale_tt1 
+				}
+				swap_ideas = {
+					remove_idea = SLO_vig_mil_idea2
+					add_idea = SLO_vig_mil_idea3
+
+				}
+			}
+		}
+	}
+	SLO_suffered_casualties3 = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			SLO = {
+				casualties > 120000
+			}	
+		}
+		cost = 0
+		fire_only_once = yes
+
+		complete_effect = {
+			SLO = {
+				add_to_variable = {
+					SLO_army_attack_factor_var = -0.015
+					tooltip = SLO_add_attack_tt1 
+				}
+				add_to_variable = {
+					SLO_army_defense_factor = -0.015
+					tooltip = SLO_add_defense_tt1 
+				}
+				add_to_variable = {
+					SLO_army_speed_factor_var = -0.015
+					tooltip = SLO_add_speed_tt1 
+				}
+				add_to_variable = {
+					SLO_army_morale_factor_var = -0.015
+					tooltip = SLO_add_morale_tt1 
+				}
+				swap_ideas = {
+					remove_idea = SLO_vig_mil_idea3
+					add_idea = SLO_vig_mil_idea4
+
+				}
+			}
+		}
+	}
+	SLO_suffered_casualties4 = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			SLO = {
+				casualties > 160000
+			}	
+		}
+		cost = 0
+		fire_only_once = yes
+
+		complete_effect = {
+			SLO = {
+				add_to_variable = {
+					SLO_army_attack_factor_var = -0.015
+					tooltip = SLO_add_attack_tt1 
+				}
+				add_to_variable = {
+					SLO_army_defense_factor = -0.015
+					tooltip = SLO_add_defense_tt1 
+				}
+				add_to_variable = {
+					SLO_army_speed_factor_var = -0.015
+					tooltip = SLO_add_speed_tt1 
+				}
+				add_to_variable = {
+					SLO_army_morale_factor_var = -0.015
+					tooltip = SLO_add_morale_tt1 
+				}
+				swap_ideas = {
+					remove_idea = SLO_vig_mil_idea4
+					add_idea = SLO_vig_mil_idea5
+
+				}
+			}
+		}
+	}
+	SLO_suffered_casualties5 = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			SLO = {
+				casualties > 200000
+			}	
+		}
+		cost = 0
+		fire_only_once = yes
+
+		complete_effect = {
+			SLO = {
+				add_to_variable = {
+					SLO_army_attack_factor_var = -0.015
+					tooltip = SLO_add_attack_tt1 
+				}
+				add_to_variable = {
+					SLO_army_defense_factor = -0.015
+					tooltip = SLO_add_defense_tt1 
+				}
+				add_to_variable = {
+					SLO_army_speed_factor_var = -0.015
+					tooltip = SLO_add_speed_tt1 
+				}
+				add_to_variable = {
+					SLO_army_morale_factor_var = -0.015
+					tooltip = SLO_add_morale_tt1 
+				}
+				swap_ideas = {
+					remove_idea = SLO_vig_mil_idea5
+					add_idea = SLO_vig_mil_idea6
+				}
+			}
+		}
+	}
+	SLO_suffered_casualties6 = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			SLO = {
+				casualties > 240000
+			}	
+		}
+		cost = 0
+		fire_only_once = yes
+
+		complete_effect = {
+			SLO = {
+				add_to_variable = {
+					SLO_army_attack_factor_var = -0.015
+					tooltip = SLO_add_attack_tt1 
+				}
+				add_to_variable = {
+					SLO_army_defense_factor = -0.015
+					tooltip = SLO_add_defense_tt1 
+				}
+				add_to_variable = {
+					SLO_army_speed_factor_var = -0.015
+					tooltip = SLO_add_speed_tt1 
+				}
+				add_to_variable = {
+					SLO_army_morale_factor_var = -0.015
+					tooltip = SLO_add_morale_tt1 
+				}
+				swap_ideas = {
+					remove_idea = SLO_vig_mil_idea6
+					add_idea = SLO_vig_mil_idea7
+				}
+			}
+		}
+	}
+	SLO_suffered_casualties7 = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			SLO = {
+				casualties > 300000
+			}	
+		}
+		cost = 0
+		fire_only_once = yes
+
+		complete_effect = {
+			SLO = {
+				add_to_variable = {
+					SLO_army_attack_factor_var = -0.015
+					tooltip = SLO_add_attack_tt1 
+				}
+				add_to_variable = {
+					SLO_army_defense_factor = -0.015
+					tooltip = SLO_add_defense_tt1 
+				}
+				add_to_variable = {
+					SLO_army_speed_factor_var = -0.015
+					tooltip = SLO_add_speed_tt1 
+				}
+				add_to_variable = {
+					SLO_army_morale_factor_var = -0.015
+					tooltip = SLO_add_morale_tt1 
+				}
+				swap_ideas = {
+					remove_idea = SLO_vig_mil_idea7
+					add_idea = SLO_vig_mil_idea8
+				}
+			}
+		}
+	}
+	SLO_suffered_casualties8 = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			SLO = {
+				casualties > 360000
+			}	
+		}
+		cost = 0
+		fire_only_once = yes
+
+		complete_effect = {
+			SLO = {
+				add_to_variable = {
+					SLO_army_attack_factor_var = -0.025
+					tooltip = SLO_add_attack_tt1 
+				}
+				add_to_variable = {
+					SLO_army_defense_factor = -0.025
+					tooltip = SLO_add_defense_tt1 
+				}
+				add_to_variable = {
+					SLO_army_speed_factor_var = -0.025
+					tooltip = SLO_add_speed_tt1 
+				}
+				add_to_variable = {
+					SLO_army_morale_factor_var = -0.025
+					tooltip = SLO_add_morale_tt1 
+				}
+				swap_ideas = {
+					remove_idea = SLO_vig_mil_idea8
+					add_idea = SLO_vig_mil_idea9
+				}
+			}
+		}
+	}
+	SLO_suffered_casualties9 = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			SLO = {
+				casualties > 420000
+			}	
+		}
+		cost = 0
+		fire_only_once = yes
+
+		complete_effect = {
+			SLO = {
+				add_to_variable = {
+					SLO_army_attack_factor_var = -0.025
+					tooltip = SLO_add_attack_tt1 
+				}
+				add_to_variable = {
+					SLO_army_defense_factor = -0.025
+					tooltip = SLO_add_defense_tt1 
+				}
+				add_to_variable = {
+					SLO_army_speed_factor_var = -0.025
+					tooltip = SLO_add_speed_tt1 
+				}
+				add_to_variable = {
+					SLO_army_morale_factor_var = -0.025
+					tooltip = SLO_add_morale_tt1 
+				}
+				swap_ideas = {
+					remove_idea = SLO_vig_mil_idea9
+					add_idea = SLO_vig_mil_idea10
+				}
+			}
+		}
+	}
+	GER_add_back_waffenSS2= {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			GER = {
+				NOT = {
+					has_idea = GER_waffen_ss_2
+				}
+				has_idea = GER_heinrich_himmler
+				has_completed_focus = GER_Schutzstaffel_focus
+				has_completed_focus = GER_SS_recruit_everywhere
+			}	
+		}
+		cost = 0
+		fire_only_once = no
+
+		complete_effect = {
+			GER = {
+				add_ideas = GER_waffen_ss_2
+			}
+		}
+	}
+	GER_add_back_waffenSS= {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			GER = {
+				NOT = {
+					has_idea = GER_waffen_ss
+				}
+				has_idea = GER_heinrich_himmler
+				has_completed_focus = GER_Schutzstaffel_focus
+				NOT = {
+					has_completed_focus = GER_SS_recruit_everywhere
+				}	
+			}	
+		}
+		cost = 0
+		fire_only_once = no
+
+		complete_effect = {
+			GER = {
+				add_ideas = GER_waffen_ss
+			}
+		}
+	}
 
 
-ENG_subsup1 = {
+	ENG_subsup1 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
 			base = 6000			
@@ -1805,7 +2797,7 @@ ENG_subsup1 = {
 				}
 				set_building_level = {
 					type = air_base
-					level = 25
+					level = 17
 				}
 			}	
 		}	
@@ -1817,7 +2809,7 @@ ENG_subsup1 = {
 			base = 5000			
 		}
 		available = {
-			date > 1943.9.1
+			date > 1943.1.1
 			ENG = {
 				OR = {
 					has_idea = ALLIES_pacific_war_1
@@ -1849,7 +2841,7 @@ ENG_subsup1 = {
 			base = 5000			
 		}
 		available = {
-			date > 1943.9.1
+			date > 1943.1.1
 			GER = {
 				OR = {
 					has_idea = GER_atlanticc_wall_5
@@ -1879,7 +2871,13 @@ ENG_subsup1 = {
 			base = 5000			
 		}
 		available = {
-		date > 1936.1.1
+			date > 1936.1.1
+			POR = {
+				is_ai = yes
+				NOT = {
+					has_tech = excavation1
+				}
+			}
 		}
 
 		fire_only_once = yes
@@ -1905,7 +2903,13 @@ ENG_subsup1 = {
 			base = 5000			
 		}
 		available = {
-		date > 1937.1.1
+			date > 1937.1.1
+			POR = {
+				is_ai = yes
+				NOT = {
+					has_tech = excavation2
+				}
+			}
 		}
 
 		fire_only_once = yes
@@ -1931,7 +2935,13 @@ ENG_subsup1 = {
 			base = 5000			
 		}
 		available = {
-		date > 1939.1.1
+			date > 1939.1.1
+			POR = {
+				is_ai = yes
+				NOT = {
+					has_tech = excavation3
+				}
+			}
 		}
 
 		fire_only_once = yes
@@ -1957,7 +2967,13 @@ ENG_subsup1 = {
 			base = 5000			
 		}
 		available = {
-		date > 1941.1.1
+			date > 1941.1.1
+			POR = {
+				is_ai = yes
+				NOT = {
+					has_tech = excavation4
+				}
+			}
 		}
 
 		fire_only_once = yes
@@ -1983,7 +2999,13 @@ ENG_subsup1 = {
 			base = 5000			
 		}
 		available = {
-		date > 1943.1.1
+			date > 1943.1.1
+			POR = {
+				is_ai = yes
+				NOT = {
+					has_tech = excavation5
+				}
+			}
 		}
 
 		fire_only_once = yes
@@ -4193,30 +5215,6 @@ ENG_subsup1 = {
 		}
 	}
 
-	CAN_recession_of_1937 = {
-		icon = generic_megaphone
-   
-		allowed = {
-		   tag = PAR
-		}
-
-		fire_only_once = yes
-
-		available = {	
-			date > 1937.3.1
-		}
-
-		cost = 0
-
-		complete_effect = {
-           CAN = { country_event = { id = canada.2 } }
-		}
-
-		ai_will_do = {
-			base = 5000			
-		}
-	}
-
 	quit_india_movement = {
 
 		icon = generic_megaphone
@@ -4265,7 +5263,8 @@ ENG_subsup1 = {
 		cost = 0
 
 		complete_effect = {
-           RAJ = { remove_ideas = RAJ_poor_industrial_infrastructure }
+			RAJ = { country_event = { id = tfv_raj.213 } }
+			RAJ = { remove_ideas = RAJ_poor_industrial_infrastructure }
 		}
 
 		ai_will_do = {
@@ -4814,7 +5813,7 @@ ENG_subsup1 = {
 			JAP = { has_war_with = RAJ }
 			OR = {
 				RAJ = { has_completed_focus = RAJ_duragraha }
-				RAJ = { has_completed_focus = RAJ_satyagraha }
+				RAJ = { has_completed_focus = RAJ_democracy_3 }
 			}
 		}
 

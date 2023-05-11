@@ -359,26 +359,26 @@ country_event = {
 	fire_only_once = yes
 
 	immediate = {
+
 		hidden_effect = {
 			set_country_flag = ENG_king_died
-			remove_ideas = george_v
 		}
 	}
 	
 	option = {
 		name = britain.16.a
-		effect_tooltip = {
-			remove_ideas = george_v		
+		add_to_variable = {
+			ENG_stability_factor_var = -0.15
 		}
-
+		custom_effect_tooltip = ENG_goergedies_tt
 		complete_national_focus = ENG_king_george
 	}
 	option = {
 		name = britain.16.b
-		effect_tooltip = {
-			remove_ideas = george_v		
+		add_to_variable = {
+			ENG_stability_factor_var = -0.15
 		}
-		
+		custom_effect_tooltip = ENG_goergedies_tt
 		complete_national_focus = ENG_king_edward
 	}
 }
@@ -672,17 +672,125 @@ country_event = {
 	id = britain.47
 	title = britain.47.t
 	desc = britain.47.d
-	picture = GFX_report_event_dead_soldiers
+	picture = GFX_connor
 
 	fire_only_once = yes
 	is_triggered_only = yes
 	option = {
 		name = britain.47.a	
 		ENG = {
-			remove_unit_leader = 993
+			ENG_richard_oconnor = { remove_unit_leader_role = yes }
 		}
 		set_country_flag = no_connor
 	}	
 }
+country_event = {
+	id = britain.48
+	title = britain.48.t
+	desc = britain.48.d
+	picture = GFX_reich_occupies_norwegian_ports
+
+	fire_only_once = yes
+	is_triggered_only = yes
+	option = {
+		name = britain.48.a	
+		ai_chance = { factor = 90 }
+		custom_effect_tooltip = ENG_help_norway_tt
+		hidden_effect = {
+			news_event = { hours = 6 id = news.521 }
+			ENG = {
+				load_oob = "ENG_nor_defense"
+				add_to_faction = NOR
+				set_country_flag = ENG_helped_norway
+			}
+			NOR = {
+				remove_ideas = developing_country
+				load_oob = "NOR_defense"	
+				add_to_war = { 
+					targeted_alliance = ENG
+					enemy = GER
+				}
+			}
+		}
+	}
+	option = {
+		name = britain.48.b
+		custom_effect_tooltip = ENG_dont_help_norway_tt
+		hidden_effect = {
+			news_event = { hours = 6 id = news.522 }
+			ENG = {
+				set_country_flag = ENG_didnt_help_nor
+			}
+			NOR = {
+				remove_ideas = developing_country
+				add_ideas = cant_join_factions
+				load_oob = "NOR_defense"	
+			}
+			GER = {
+				declare_war_on = {
+					target = NOR
+					type = annex_everything
+				}
+			}
+			if = {
+				limit = {
+					country_exists = ROM
+				}
+				ROM = { 
+					add_to_war = { 
+						targeted_alliance = GER 
+						enemy = NOR 
+					}
+				}
+			}
+			if = {
+				limit = {
+					country_exists = HUN
+				}	
+				HUN = { 
+					add_to_war = { 
+						targeted_alliance = GER 
+						enemy = NOR 
+					}
+				}
+			}	
+			if = {
+				limit = {
+					country_exists = SLO
+				}
+				SLO = { 
+					add_to_war = { 
+						targeted_alliance = GER 
+						enemy = NOR 
+					}
+				}
+			}	
+			if = {
+				limit = {
+					country_exists = SPR
+				}
+				SPR = { 
+					add_to_war = { 
+						targeted_alliance = GER 
+						enemy = NOR 
+					}
+				}
+			}	
+			if = {
+				limit = {
+					country_exists = BUL
+				}
+				BUL = { 
+					add_to_war = { 
+						targeted_alliance = GER 
+						enemy = NOR
+					}
+				}
+			}
+		}
+		
+	}	
+}
+
 
 ### EOF ###
