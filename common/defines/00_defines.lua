@@ -667,7 +667,7 @@ NPolitics = {
 },
 
 NBuildings = {
-	SUPPLY_ROUTE_RESOURCE_BONUS = 3.8,   -- multiplicative resource bonus for having a railway/naval connection to the capital
+	SUPPLY_ROUTE_RESOURCE_BONUS = 3,   -- multiplicative resource bonus for having a railway/naval connection to the capital
 	INFRASTRUCTURE_MUD_EFFECT = -0.8, -- multiplicative effect on mud growth for max infra
 	ANTI_AIR_SUPERIORITY_MULT = 5.0,	-- How much air superiority reduction to the enemy does our AA guns? Normally each building level = -1 reduction. With this multiplier.
 	MAX_BUILDING_LEVELS = 15,			-- Max levels a building can have.
@@ -1497,7 +1497,7 @@ NSupply = {
 	NODE_FLOW_BONUS_PER_RAIL_LEVEL = 0.4,
 
 	-- rivers will transfer in between nodes as if they were this level
-	RIVER_RAILWAY_LEVEL = 2,
+	RIVER_RAILWAY_LEVEL = 3,
 
 	-- defines that are used for supply reach for floating harbors
 	FLOATING_HARBOR_INITIAL_SUPPLY_FLOW = 2,
