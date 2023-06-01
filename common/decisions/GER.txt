@@ -1429,6 +1429,10 @@ GER_operation_barbarossa_category = {
 				}
 				fall_blau_get_summer_offensive = yes 
 			}
+			
+			GER = {
+				activate_decision = GER_race_for_baku_oil
+			}
 
 			hidden_effect = {
 				every_country = {
@@ -1447,6 +1451,10 @@ GER_operation_barbarossa_category = {
 					}
 					remove_dynamic_modifier = { modifier = SOV_war_zone_modifier }
  				}
+				
+			SOV = {
+				activate_decision = SOV_race_for_baku_oil
+			}
 			}
 			news_event = { hours = 20 id = news.458 }
 			set_country_flag = GERsummeroffensive1
@@ -1658,6 +1666,68 @@ GER_operation_barbarossa_category = {
 			}	
 			news_event = { hours = 20 id = news.458 }
 			set_country_flag = GERsummeroffensive4
+		}
+	}
+	GER_race_for_baku_oil = {
+
+		icon = generic_scorched_earth
+
+		allowed = {
+			tag = GER
+		}
+
+		available = {
+			hidden_trigger = { date > 1942.09.01 }
+			custom_trigger_tooltip = { tooltip = baku_tooltip_tt }
+		}
+		visible = {
+			date > 1942.01.01
+		}
+
+		days_remove = 90
+		fire_only_once = yes
+
+		activation = {
+		}
+
+		is_good = no
+
+		complete_effect = {
+		}
+		
+		remove_effect = {
+			custom_effect_tooltip = GER_race_for_baku_oil_tt
+			if = {
+				limit = {
+					AND = {
+						GER = {
+							NOT = {
+								controls_state = 229
+							}
+						}
+						SOV = {
+							NOT = {
+								AND = {
+									controls_state = 221
+									controls_state = 227
+									controls_state = 218
+									controls_state = 234
+								}
+							}
+						}
+					}
+				}
+				229 = {
+					add_resource = {
+						type = oil
+						amount = -60
+					}
+				}
+			}	
+		}
+
+		ai_will_do = {
+			factor = 1
 		}
 	}
 }
