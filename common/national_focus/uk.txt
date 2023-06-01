@@ -2447,6 +2447,12 @@ focus_tree = {
 				category = infantry_weapons
 			}
 			add_tech_bonus = {
+				name = special_bonus
+				bonus = 1.0
+				uses = 1
+				category = special_tech
+			} 
+			add_tech_bonus = {
 				bonus = 0.5
 				uses = 3
 				category = tank_upgrade
@@ -2640,7 +2646,7 @@ focus_tree = {
 	focus = {
 		id = ENG_infantry_tank
 		icon = GFX_matilda
-		prerequisite = { focus = ENG_motorized_focus }
+		prerequisite = { focus = ENG_motorized_focus focus = ENG_royal_ordinance_factories }
 		x = 1
 		y = 1
 		cost = 5
@@ -2655,59 +2661,29 @@ focus_tree = {
 
 		completion_reward = {
 			army_experience = 20
+			custom_effect_tooltip = ENG_form_tank_board_tt
+			add_to_variable = {
+				ENG_army_armor_attack_factor_var = 0.05
+			}
+			add_to_variable = {
+				ENG_army_armor_defence_factor_var = 0.05
+			}
 			add_tech_bonus = {
 				category = cat_heavy_armor
 				uses = 2
 				bonus = 0.9
 				name = GER_mobile_fortresses 
 			}
+	
 		}
 	}
 	
-
-	
-
-	focus = {
-		id = ENG_cruiser_tank
-		icon = GFX_crusader
-		prerequisite = { focus = uk_small_arms_focus }
-		x = 2
-		y = 1
-		cost = 5
-		available_if_capitulated = yes
-		relative_position_id =  uk_small_arms_focus
-
-		available = {
-				
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			army_experience = 20
-			if = {
-				limit = {
-					NOT = {
-						has_tech = eng_1937_light_tank_chassis
-					}
-				}
-				set_technology = {
-					eng_1937_light_tank_chassis = 1
-				}
-			}
-			add_tech_bonus = {
-				category = cat_medium_armor
-				uses = 2
-				bonus = 0.75
-			}
-		}
-	}
 	focus = {
 		id = ENG_form_mobile_forces
-		prerequisite = { focus = ENG_cruiser_tank }
-		relative_position_id = ENG_cruiser_tank
+		prerequisite = { focus = uk_small_arms_focus }
+		relative_position_id = uk_small_arms_focus
 		icon = GFX_mobile_forces
-		x = -1
+		x = 2
 		y = 1
 		cost = 5
 		ai_will_do = {
@@ -2722,16 +2698,16 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_ideas = ENG_royal_tank_regiment_idea_first
 			army_experience = 20
+
 			if = {
 				limit = {
 					NOT = {
-						has_tech = eng_1940_light_tank_chassis
+						has_tech = eng_1937_light_tank_chassis
 					}
 				}
 				set_technology = {
-					eng_1940_light_tank_chassis = 1
+					eng_1937_light_tank_chassis = 1
 				}
 			}
 			add_equipment_to_stockpile = {
@@ -2780,11 +2756,56 @@ focus_tree = {
 		}
 	}
 
+	
+
+	focus = {
+		id = ENG_cruiser_tank
+		icon = GFX_crusader
+		prerequisite = { focus = ENG_form_mobile_forces focus = ENG_royal_ordinance_factories }
+		x = -1
+		y = 1
+		cost = 5
+		available_if_capitulated = yes
+		relative_position_id =  ENG_form_mobile_forces
+
+		available = {
+				
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			army_experience = 20
+			custom_effect_tooltip = ENG_form_tank_board_tt
+			add_to_variable = {
+				ENG_army_armor_attack_factor_var = 0.05
+			}
+			add_to_variable = {
+				ENG_army_armor_defence_factor_var = 0.05
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_tech = eng_1940_light_tank_chassis
+					}
+				}
+				set_technology = {
+					eng_1940_light_tank_chassis = 1
+				}
+			}
+			add_tech_bonus = {
+				category = cat_medium_armor
+				uses = 2
+				bonus = 0.75
+			}
+		}
+	}
+
 
 	focus = {
 		id = ENG_machine_gun_carrier
-		prerequisite = { focus = ENG_cruiser_tank}
-		relative_position_id = ENG_cruiser_tank
+		prerequisite = { focus = ENG_form_mobile_forces}
+		relative_position_id = ENG_form_mobile_forces
 		icon = GFX_universal
 		x = 1
 		y = 1
@@ -2805,7 +2826,7 @@ focus_tree = {
 			add_tech_bonus = {				
 				bonus = 1
 				uses = 1 
-				technology = eng_nsb_mechanised_infantry2
+				technology = eng_mechanised_infantry2
 			}
 		}
 	}
@@ -2814,7 +2835,7 @@ focus_tree = {
 ####should give percy hobbart as tank expert	
 	focus = {
 		id = ENG_support_tanks 
-		prerequisite = { focus = ENG_machine_gun_carrier focus = ENG_form_mobile_forces}
+		prerequisite = { focus = ENG_machine_gun_carrier focus = ENG_cruiser_tank}
 		relative_position_id = ENG_machine_gun_carrier
 		icon = GFX_hobart
 		x = -1
@@ -2854,7 +2875,7 @@ focus_tree = {
 	focus = {
 		id = ENG_form_tank_board
 		prerequisite = { focus = ENG_infantry_tank }
-		prerequisite = { focus = ENG_form_mobile_forces }
+		prerequisite = { focus = ENG_cruiser_tank }
 		continue_if_invalid = yes
 
 		icon = GFX_tank_board
@@ -2871,13 +2892,8 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = ENG_form_tank_board_tt
-			add_to_variable = {
-				ENG_army_armor_attack_factor_var = 0.1
-			}
-			add_to_variable = {
-				ENG_army_armor_defence_factor_var = 0.1
-			}
+			add_ideas = ENG_royal_tank_regiment_idea_first
+
 			set_technology = {
 				boiling_vessel = 1
 			}
