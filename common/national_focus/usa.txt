@@ -2214,6 +2214,16 @@ focus_tree = {
 					value = 0.05
 				}
 			}
+			remove_opinion_modifier = {
+				modifier = usa_jap_trade
+				target = JAP
+			}
+			JAP = {
+				remove_opinion_modifier = {
+					modifier = usa_jap_trade
+					target = USA
+				}
+			}
 			custom_effect_tooltip = USA_voter_support_5_tt
 			add_war_support = 0.1
 			add_political_power = 150
@@ -2524,18 +2534,29 @@ focus_tree = {
 		available_if_capitulated = yes		
 		
 		available = { 
+			OR = {
+				NOT = {
+					523 = {
+						is_fully_controlled_by = AST
+					}
+				}
+				date > 1942.1.1
+			}
 		}
 
 		bypass = {
 		}
 		
 		completion_reward = {
-			every_state = {
-				limit={OR={state = 669 state = 523 }}
-				add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
+			hidden_effect = {
+				every_state = {
+					limit={OR={state = 669 state = 523 }}
+					add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
+				}
 			}
-			custom_effect_tooltip = Allied_bombardment
+			
 			custom_effect_tooltip = "We will level the Japanese defenses in Papua and West Papua."
+			custom_effect_tooltip = Allied_bombardment
 		}
 	}
 	focus = {
@@ -2556,19 +2577,34 @@ focus_tree = {
 				NOT = {
 					has_capitulated = yes
 				}
+				OR = {
+					controls_state = 523
+					controls_state = 634
+				}
 			}
+			
 		}
 
 		bypass = {
 		}
 		
 		completion_reward = {
-			every_state = {
-				limit={OR={state = 684 state = 647 state = 633 state = 639 }}
-				add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
+			hidden_effect = {
+				every_state = {
+					limit={OR={state = 684 state = 647 state = 633 state = 639 }}
+					add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
+				}
 			}
-			custom_effect_tooltip = Allied_bombardment
+			
 			custom_effect_tooltip = "We will level the Japanese defenses in Palau, Caroline Islands,Marshal Islands and Gilbert Islands."
+			custom_effect_tooltip = Allied_bombardment
+			hidden_effect = {
+				add_to_variable = {
+					var = USA_popular_support_var
+					value = 0.03
+				}
+			}
+			custom_effect_tooltip = USA_voter_support_3_tt
 		}
 	}
 	focus = {
@@ -2588,7 +2624,22 @@ focus_tree = {
 			AST = {
 				NOT = {
 					has_capitulated = yes
+				}	
+			}
+			OR = {
+				AND = {
+					672={is_controlled_by_ROOT_or_ally=yes}
+					335={is_controlled_by_ROOT_or_ally=yes}
+					334={is_controlled_by_ROOT_or_ally=yes}
+					333={is_controlled_by_ROOT_or_ally=yes}
 				}
+				AND = {
+					647={is_controlled_by_ROOT_or_ally=yes}
+					638={is_controlled_by_ROOT_or_ally=yes}
+					684={is_controlled_by_ROOT_or_ally=yes}
+					646={is_controlled_by_ROOT_or_ally=yes}
+				}
+
 			}
 		}
 
@@ -2596,12 +2647,22 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			every_state = {
-				limit={OR={state = 623 state = 327 state = 624 state = 625 state = 628 state = 627 state = 626 }}
-				add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
+			hidden_effect = {
+				every_state = {
+					limit={OR={state = 623 state = 327 state = 624 state = 625 state = 628 state = 627 state = 626 }}
+					add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
+				}
 			}
-			custom_effect_tooltip = Allied_bombardment
+			
 			custom_effect_tooltip = "We will level the Japanese defenses in the Phillippines."
+			custom_effect_tooltip = Allied_bombardment
+			hidden_effect = {
+				add_to_variable = {
+					var = USA_popular_support_var
+					value = 0.03
+				}
+			}
+			custom_effect_tooltip = USA_voter_support_3_tt
 		}
 	}
 	focus = {
@@ -2623,18 +2684,33 @@ focus_tree = {
 					has_capitulated = yes
 				}
 			}
+			OR = {
+				633={is_controlled_by_ROOT_or_ally=yes}
+				684={is_controlled_by_ROOT_or_ally=yes}
+			}	
+			632={is_controlled_by_ROOT_or_ally=yes}
 		}
 
 		bypass = {
 		}
 		
 		completion_reward = {
-			every_state = {
-				limit={OR={state = 526 state = 645 state = 646 state = 524 state = 638 }}
-				add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
+			hidden_effect = {
+				every_state = {
+					limit={OR={state = 526 state = 645 state = 646 state = 524 state = 638 }}
+					add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
+				}
 			}
-			custom_effect_tooltip = Allied_bombardment
+			
 			custom_effect_tooltip = "We will level the Japanese defenses in Okinawa, Iwo Jima, Taiwan, Saipan and Guam."
+			custom_effect_tooltip = Allied_bombardment
+			hidden_effect = {
+				add_to_variable = {
+					var = USA_popular_support_var
+					value = 0.03
+				}
+			}
+			custom_effect_tooltip = USA_voter_support_3_tt
 		}
 	}
 	focus = {
@@ -2684,6 +2760,13 @@ focus_tree = {
 			JAP = {
 				add_ideas = USA_continous_air_raids 
 			}
+			hidden_effect = {
+				add_to_variable = {
+					var = USA_popular_support_var
+					value = 0.05
+				}
+			}
+			custom_effect_tooltip = USA_voter_support_5_tt
 		}
 	}
 	focus = {
@@ -5416,12 +5499,15 @@ focus_tree = {
 		mutually_exclusive = { focus = USA_operation_desert_storm }
 
 		completion_reward = {
-			every_state = {
-				limit={OR={state = 456 state = 457 }}
-				add_dynamic_modifier = { modifier = USA_bombardment days = 120 }
+			hidden_effect = {
+				every_state = {
+					limit={OR={state = 456 state = 457 }}
+					add_dynamic_modifier = { modifier = USA_bombardment days = 120 }
+				}
 			}
-			custom_effect_tooltip = Allied_bombardment
+			
 			custom_effect_tooltip = "We will level the Axis defenses in Aswan, Eastern Desert."
+			custom_effect_tooltip = Allied_bombardment
 		}
 	}
 
@@ -5433,13 +5519,28 @@ focus_tree = {
 		icon = GFX_USA_oregon_maneauvers
 		relative_position_id = USA_operation_muskeeter
 		prerequisite = { focus = USA_operation_muskeeter }
+		available = {
+			456={is_controlled_by_ROOT_or_ally=yes}
+			457={is_controlled_by_ROOT_or_ally=yes}
+		
+		}
 		completion_reward = {
-			every_state = {
-				limit={OR={state = 446 state = 453 }}
-				add_dynamic_modifier = { modifier = USA_bombardment days = 120 }
+			hidden_effect = {
+				every_state = {
+					limit={OR={state = 446 state = 453 }}
+					add_dynamic_modifier = { modifier = USA_bombardment days = 120 }
+				}
 			}
-			custom_effect_tooltip = Allied_bombardment
+			
 			custom_effect_tooltip = "We will level the Axis defenses in Cairo, Sinai."
+			custom_effect_tooltip = Allied_bombardment
+			hidden_effect = {
+				add_to_variable = {
+					var = USA_popular_support_var
+					value = 0.03
+				}
+			}
+			custom_effect_tooltip = USA_voter_support_3_tt
 		}
 	}
 
@@ -5456,12 +5557,16 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-			every_state = {
-				limit={OR={state = 412 state = 411 state = 421 state = 413 state = 417 }}
-				add_dynamic_modifier = { modifier = USA_bombardment days = 120 }
+			hidden_effect = {
+				every_state = {
+					limit={OR={state = 412 state = 411 state = 421 state = 413 state = 417 }}
+					add_dynamic_modifier = { modifier = USA_bombardment days = 120 }
+				}
 			}
-			custom_effect_tooltip = Allied_bombardment
+			
 			custom_effect_tooltip = "We will level the Axis defenses in Fars, Isfahan, Ahvaz, Hamadan, Kurdistan."
+			custom_effect_tooltip = Allied_bombardment
+			
 		}
 	}
 	focus = {
@@ -5473,22 +5578,31 @@ focus_tree = {
 		prerequisite = { focus = USA_operation_desert_storm }
 		relative_position_id = USA_operation_desert_storm
 		available = {
+			412={is_controlled_by_ROOT_or_ally=yes}
+			411={is_controlled_by_ROOT_or_ally=yes}
+			421={is_controlled_by_ROOT_or_ally=yes}
+			413={is_controlled_by_ROOT_or_ally=yes}
+			417={is_controlled_by_ROOT_or_ally=yes}
 		}
 		completion_reward = {
-			every_state = {
-				limit={OR={state = 656 state = 291 state = 675 state = 413 state = 676 state = 680 state = 677 state = 554 state = 455 }}
-				add_dynamic_modifier = { modifier = USA_bombardment days = 120 }
+			hidden_effect = {
+				every_state = {
+					limit={OR={state = 656 state = 291 state = 675 state = 413 state = 676 state = 680 state = 677 state = 554 state = 455 }}
+					add_dynamic_modifier = { modifier = USA_bombardment days = 120 }
+				}
 			}
-			custom_effect_tooltip = Allied_bombardment
+			
 			custom_effect_tooltip = "We will level the Axis defenses in Baghdad, Kuwait, Al Hajara, Mosul."
+			custom_effect_tooltip = Allied_bombardment
+			hidden_effect = {
+				add_to_variable = {
+					var = USA_popular_support_var
+					value = 0.03
+				}
+			}
+			custom_effect_tooltip = USA_voter_support_3_tt
 
-			add_timed_idea = {
-				idea = iraqi_freedom
-				days = 90
-			}
-			IRQ = {
-				add_ideas = bombing_iraq
-			}
+			
 		}
 	}
 	focus = {
@@ -5503,18 +5617,20 @@ focus_tree = {
 			has_war_with = GER
 		}
 		completion_reward = {
-			every_state = {
-				limit={OR={state = 461 state = 462 state = 459 state = 460 state = 513 state = 118 }}
-				add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
-			}
-			custom_effect_tooltip = Allied_bombardment
+			
+			
 			custom_effect_tooltip = "We will level the Axis defenses in Casablanca, Marrakech, Algiers, Constantine, Tlemecen, Gibraltar."
+			custom_effect_tooltip = Allied_bombardment
 			custom_effect_tooltip = USA_torch_gibraltar_tt
 			declare_war_on = {
 				target = EFR
 				type = annex_everything
 			}
 			hidden_effect = {
+				every_state = {
+					limit={OR={state = 461 state = 462 state = 459 state = 460 state = 513 state = 118 }}
+					add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
+				}
 				EFR = { 
 					add_to_war = { 
 						targeted_alliance = GER
@@ -5638,22 +5754,32 @@ focus_tree = {
 			461 = {
 				set_building_level = {
 					type = air_base
-					level = 4
+					level = 6
 				}
 			}
 			462 = {
 				set_building_level = {
 					type = air_base
-					level = 4
+					level = 6
 				}
 			}
-			every_state = {
-				limit={OR={state = 458 state = 665 }}
-				add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
+			hidden_effect = {
+				every_state = {
+					limit={OR={state = 458 state = 665 }}
+					add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
+				}
 			}
-			custom_effect_tooltip = Allied_bombardment
+			
 			custom_effect_tooltip = "We will level the Axis defenses in Tunisia, Gabes."
+			custom_effect_tooltip = Allied_bombardment
 			custom_effect_tooltip = USA_patton_tt 
+			hidden_effect = {
+				add_to_variable = {
+					var = USA_popular_support_var
+					value = 0.03
+				}
+			}
+			custom_effect_tooltip = USA_voter_support_3_tt
 		}
 	}
 
@@ -5671,12 +5797,15 @@ focus_tree = {
 			448={is_controlled_by_ROOT_or_ally=yes}
 			450={is_controlled_by_ROOT_or_ally=yes}
 		}
-		bypass = {
-			458={is_controlled_by_ROOT_or_ally=yes}
-			448={is_controlled_by_ROOT_or_ally=yes}
-			450={is_controlled_by_ROOT_or_ally=yes}
-		}
+	
 		completion_reward = {
+			hidden_effect = {
+				add_to_variable = {
+					var = USA_popular_support_var
+					value = 0.05
+				}
+			}
+			custom_effect_tooltip = USA_voter_support_5_tt
 			every_country = {
 				limit = {
 					is_in_faction_with = ENG
@@ -5729,12 +5858,12 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			every_state = {
-				limit={OR={state = 115 state = 114 state = 1 }}
-				add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
+			hidden_effect = {
+				every_state = {
+					limit={OR={state = 115 state = 114 state = 1 }}
+					add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
+				}
 			}
-			custom_effect_tooltip = Allied_bombardment
-			custom_effect_tooltip = "We will level the Axis defenses in Sicily, Sardinia, Corsica."
 			create_field_marshal = {
 				name = "Dwight D. Eisenhower"
 				picture = "Portrait_USA_Dwight_D_Eisenhower.dds"
@@ -5746,6 +5875,9 @@ focus_tree = {
 				planning_skill = 7
 				logistics_skill = 7
 			}
+			custom_effect_tooltip = "We will level the Axis defenses in Sicily, Sardinia, Corsica."
+			custom_effect_tooltip = Allied_bombardment
+			
 		}
 	}
 	focus = {
@@ -5759,12 +5891,14 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-			every_state = {
-				limit={OR={state = 21 state = 22 state = 735 }}
-				add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
+			hidden_effect = {
+				every_state = {
+					limit={OR={state = 21 state = 22 state = 735 }}
+					add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
+				}
 			}
-			custom_effect_tooltip = Allied_bombardment
 			custom_effect_tooltip = "We will level the Axis defenses in Savoy, Provence, Languedoc."
+			custom_effect_tooltip = Allied_bombardment
 		}
 	}
 
@@ -5777,14 +5911,27 @@ focus_tree = {
 		prerequisite = { focus = USA_operation_dragoon }
 		relative_position_id = USA_operation_dragoon
 		available = {
+			21={is_controlled_by_ROOT_or_ally=yes}
+			22={is_controlled_by_ROOT_or_ally=yes}
+			735={is_controlled_by_ROOT_or_ally=yes}
 		}
 		completion_reward = {
-			every_state = {
-				limit={OR={state = 19 state = 23 }}
-				add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
+			
+			hidden_effect = {
+				every_state = {
+					limit={OR={state = 19 state = 23 state = 25 state = 31 }}
+					add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
+				}
 			}
+			custom_effect_tooltip = "Aquitaine, Poitou, Midi Pyrenees, Limousin, Auvergne and Rhone:"
 			custom_effect_tooltip = Allied_bombardment
-			custom_effect_tooltip = "We will level the Axis defenses in Aquitaine, Poitou."
+			hidden_effect = {
+				add_to_variable = {
+					var = USA_popular_support_var
+					value = 0.03
+				}
+			}
+			custom_effect_tooltip = USA_voter_support_3_tt
 		}
 	}
 
@@ -5799,12 +5946,15 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-			every_state = {
-				limit={OR={state = 185 state = 186 state = 47 }}
-				add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
+			hidden_effect = {
+				every_state = {
+					limit={OR={state = 185 state = 186 state = 47 }}
+					add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
+				}
 			}
-			custom_effect_tooltip = Allied_bombardment
+			
 			custom_effect_tooltip = "We will level the Axis defenses in Peloponnese, Thessaly, Epirus."
+			custom_effect_tooltip = Allied_bombardment
 		}
 	}
 
@@ -5817,14 +5967,29 @@ focus_tree = {
 		prerequisite = { focus = USA_operation_mincemeat }
 		relative_position_id = USA_operation_mincemeat
 		available = {
+			185={is_controlled_by_ROOT_or_ally=yes}
+			186={is_controlled_by_ROOT_or_ally=yes}
+			47={is_controlled_by_ROOT_or_ally=yes}
+
+
 		}
 		completion_reward = {
-			every_state = {
-				limit={OR={state = 731 state = 44 state = 106 state = 184 }}
-				add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
+			hidden_effect = {
+				every_state = {
+					limit={OR={state = 731 state = 44 state = 106 state = 184 }}
+					add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
+				}
 			}
-			custom_effect_tooltip = Allied_bombardment
+			
 			custom_effect_tooltip = "We will level the Axis defenses in Albania, Central Macedonia, Macedonia, Thrace."
+			custom_effect_tooltip = Allied_bombardment
+			hidden_effect = {
+				add_to_variable = {
+					var = USA_popular_support_var
+					value = 0.03
+				}
+			}
+			custom_effect_tooltip = USA_voter_support_3_tt
 		}
 	}
 
@@ -5840,20 +6005,29 @@ focus_tree = {
 		available = {
 			ITA = {
 				NOT = {
-					has_full_control_of_state = 448
-					has_full_control_of_state = 450
-					has_full_control_of_state = 458
-					controls_state = 115
+					has_full_control_of_state = 115
+					has_full_control_of_state = 114
+					has_full_control_of_state = 1
 				}
 			}
 		}
 		completion_reward = {
-			every_state = {
-				limit={OR={state = 156 state = 117 state = 2 }}
-				add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
+			hidden_effect = {
+				every_state = {
+					limit={OR={state = 156 state = 117 state = 2 }}
+					add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
+				}
 			}
-			custom_effect_tooltip = Allied_bombardment
+			
 			custom_effect_tooltip = "We will level the Axis defenses in Lazio, Campania, Calabria."
+			custom_effect_tooltip = Allied_bombardment
+			hidden_effect = {
+				add_to_variable = {
+					var = USA_popular_support_var
+					value = 0.03
+				}
+			}
+			custom_effect_tooltip = USA_voter_support_3_tt
 			add_timed_idea = {
 				idea = operation_avalanche
 				days = 120
@@ -5919,19 +6093,20 @@ focus_tree = {
 					has_full_control_of_state = 115
 					has_full_control_of_state = 156
 					has_full_control_of_state = 114
+					has_full_control_of_state = 117
 				}
 			}
 		}
-		bypass = {
-			ITA = {
-				NOT = {
-					has_full_control_of_state = 115
-					has_full_control_of_state = 156
-					has_full_control_of_state = 114
-				}
-			}
-		}
+	
 		completion_reward = {
+			hidden_effect = {
+				add_to_variable = {
+					var = USA_popular_support_var
+					value = 0.05
+				}
+			}
+			custom_effect_tooltip = USA_voter_support_5_tt
+			has_full_control_of_state = 114
 			every_country = {
 				limit = {
 					is_in_faction_with = ENG

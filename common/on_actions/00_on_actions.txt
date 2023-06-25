@@ -1,6 +1,18 @@
 on_actions = {
 	on_startup = {
 		effect = {
+			JAP = {
+				add_opinion_modifier = {
+					modifier = usa_jap_trade
+					target = USA
+				}
+			}
+			USA = {
+				add_opinion_modifier = {
+					modifier = usa_jap_trade
+					target = JAP
+				}
+			}
 			every_country = {
 				add_ideas = no_guarantees 
 			}
@@ -4081,7 +4093,7 @@ on_actions = {
 						state = 627
 						state = 647
 					}
-					anti_air_building > 5
+					anti_air_building > 4
 				}
 				remove_building = {
 					type = anti_air_building
@@ -4092,7 +4104,99 @@ on_actions = {
 			
 		}
 	}
+	on_weekly_USA = {
+		effect = {
+			if = {
+				limit = {
+					USA = {
+						has_war = yes 
+					}
+				}
+			
+				USA = {
+					#divide_variable = { casualties_against = 4000 }
+					add_to_variable = {
+						var = USA_popular_support_var
+						value = casualties_against
+					}
+					set_variable = {
+						variable = casualties_against
+						value = 0
+					}
+					
+					while_loop_effect = {
+						limit = {
+							casualties_k > casualties_against
+						}
+						add_to_variable = { casualties_against = 1000 }
+					}
+					if= {
+						limit = {
 
+							casualties_k < casualties_against
+						}
+						add_to_variable = { casualties_against = -1000 }
+					}
+					while_loop_effect = {
+						limit = {
+
+							casualties_k > casualties_against
+						}
+						add_to_variable = { casualties_against = 100 }
+					}
+					if= {
+						limit = {
+
+							casualties_k < casualties_against
+						}
+						add_to_variable = { casualties_against = -100 }
+					}
+					while_loop_effect = {
+						limit = {
+
+							casualties_k > casualties_against
+						}
+						add_to_variable = { casualties_against = 10 }
+					}
+					if= {
+						limit = {
+
+							casualties_k < casualties_against
+						}
+						add_to_variable = { casualties_against = -10}
+					}
+					while_loop_effect = {
+						limit = {
+
+							casualties_k > casualties_against
+						}
+						add_to_variable = { casualties_against = 1 }
+					}
+					if= {
+						limit = {
+
+							casualties_k < casualties_against
+						}
+						#add_to_variable = { casualties_against = -1}
+					}
+
+					
+					USA = {
+						add_equipment_to_stockpile = {
+							type = fighter_equipment_1934
+							amount = casualties_against
+						}
+					}
+					divide_variable = { casualties_against = 4000 }
+					subtract_from_variable = {
+						var = USA_popular_support_var
+						value = casualties_against
+					}
+				}
+			
+			}
+		}
+	}
 	on_weekly_SOV = {
 		effect = {
 			if = {
