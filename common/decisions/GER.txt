@@ -39,7 +39,7 @@ GER_operation_barbarossa_category = {
 		icon = generic_scorched_earth
 
 		available = {
-			date > 1944.1.1
+			date > 1943.1.1
 		}
 
 		fire_only_once = yes
@@ -268,7 +268,7 @@ GER_operation_barbarossa_category = {
 		available = {
 			date > 1941.06.22
 			is_puppet = no
-			has_army_manpower = { size > 1999999 } 
+
 			is_neighbor_of = SOV
 		}
 
@@ -333,11 +333,49 @@ GER_operation_barbarossa_category = {
 					}
 					add_dynamic_modifier = { modifier = SOV_war_zone_modifier }
 				}
-				sound_effect = sp_ger_barb_SS
 				every_country = {
-					set_variable = { var = super_event value = 9 }			
+					set_variable = { var = super_event value = 9 }
+				}	
+				every_country = {
+					limit = { 
+						AND = {
+							check_variable= { 
+								speeches_enabled > 0
+							} 
+							check_variable= { 
+								music_enabled < 2
+							} 
+						}
+					}
+					scoped_sound_effect = "sp_ger_barb_SS"
 				}
-				sound_effect = se_operation_barbarossa
+				every_country = {
+					limit = { 
+						AND = {
+							check_variable= { 
+								music_enabled > 0
+							} 
+							check_variable= { 
+								speeches_enabled < 2
+							} 
+						}
+					}
+					scoped_sound_effect = "se_operation_barbarossa"
+				}
+				every_country = {
+					limit = { 
+						AND = {
+							check_variable= { 
+								music_enabled > 0
+							} 
+							check_variable= { 
+								speeches_enabled > 0
+							} 
+						}
+					}
+					scoped_sound_effect = "sp_ger_barb_SS"
+				}
+				
 				GER = {
 					declare_war_on = {
 						target = SOV
@@ -1391,15 +1429,32 @@ GER_operation_barbarossa_category = {
 				}
 				fall_blau_get_summer_offensive = yes 
 			}
+			
+			GER = {
+				activate_decision = GER_race_for_baku_oil
+			}
 
 			hidden_effect = {
-				sound_effect = sp_ger_georges_song
+				every_country = {
+					limit = { 
+						AND = {
+							check_variable= { 
+								speeches_enabled > 0
+							} 
+						}
+					}
+					scoped_sound_effect = "sp_ger_georges_song"
+				}
 				every_state = {
 					limit = {
 						has_state_flag = SOV_war_zone_flag
 					}
 					remove_dynamic_modifier = { modifier = SOV_war_zone_modifier }
  				}
+				
+			SOV = {
+				activate_decision = SOV_race_for_baku_oil
+			}
 			}
 			news_event = { hours = 20 id = news.458 }
 			set_country_flag = GERsummeroffensive1
@@ -1458,7 +1513,14 @@ GER_operation_barbarossa_category = {
 			}
 
 			hidden_effect = {
-				 sound_effect = sp_ger_georges_song_2
+				every_country = {
+					limit = { 
+						check_variable= { 
+							speeches_enabled > 0
+						} 
+					}
+					scoped_sound_effect = "sp_ger_georges_song_2"
+				}
 				 every_state = {
 					limit = {
 						has_state_flag = SOV_war_zone_flag
@@ -1523,7 +1585,14 @@ GER_operation_barbarossa_category = {
 			}
 
 			hidden_effect = {
-				 sound_effect = sp_ger_georges_song_3
+				every_country = {
+					limit = { 
+						check_variable= { 
+							speeches_enabled > 0
+						} 
+					}
+					scoped_sound_effect = "sp_ger_georges_song_3"
+				}
 				 every_state = {
 					limit = {
 						has_state_flag = SOV_war_zone_flag
@@ -1597,6 +1666,68 @@ GER_operation_barbarossa_category = {
 			}	
 			news_event = { hours = 20 id = news.458 }
 			set_country_flag = GERsummeroffensive4
+		}
+	}
+	GER_race_for_baku_oil = {
+
+		icon = generic_scorched_earth
+
+		allowed = {
+			tag = GER
+		}
+
+		available = {
+			hidden_trigger = { date > 1942.09.01 }
+			custom_trigger_tooltip = { tooltip = baku_tooltip_tt }
+		}
+		visible = {
+			date > 1942.01.01
+		}
+
+		days_remove = 90
+		fire_only_once = yes
+
+		activation = {
+		}
+
+		is_good = no
+
+		complete_effect = {
+		}
+		
+		remove_effect = {
+			custom_effect_tooltip = GER_race_for_baku_oil_tt
+			if = {
+				limit = {
+					AND = {
+						GER = {
+							NOT = {
+								controls_state = 229
+							}
+						}
+						SOV = {
+							NOT = {
+								AND = {
+									controls_state = 221
+									controls_state = 227
+									controls_state = 218
+									controls_state = 234
+								}
+							}
+						}
+					}
+				}
+				229 = {
+					add_resource = {
+						type = oil
+						amount = -60
+					}
+				}
+			}	
+		}
+
+		ai_will_do = {
+			factor = 1
 		}
 	}
 }
@@ -1896,26 +2027,26 @@ economy_decisions = {
 				add_idea = GER_rationing_expanded
 			}
 			71 = {
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = fuel_silo
-					level = 2
+					level = 1
 					instant_build = yes
 				}
 			}
 			808 = {
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = fuel_silo
-					level = 2
+					level = 1
 					instant_build = yes
 				}
 			}
 			79 = {
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = fuel_silo
-					level = 2
+					level = 1
 					instant_build = yes
 				}
 			}
@@ -3323,44 +3454,6 @@ GER_case_anton_category = {
 }
 
 foreign_politics = {
-	GER_operation_green = {
-		
-		icon = ger_reichskommissariats
-
-		fire_only_once = yes
-
-		allowed = {
-			original_tag = GER
-		}
-
-		available = {
-			controls_state = 119
-			ENG = {
-				has_capitulated = yes
-			}
-		}
-
-		visible = {
-			has_war = yes
-		}
-
-		complete_effect = {
-			declare_war_on = {
-				target = IRE
-				type = annex_everything
-			}
-			IRE = { 
-				add_to_war = { 
-					targeted_alliance = ENG
-					enemy = GER
-				}
-			}
-		}	
-
-		ai_will_do = {
-			factor = 1
-		}
-	}
 	GER_form_greater_german_reich = {
 
 		icon = generic_form_nation
@@ -3387,9 +3480,9 @@ foreign_politics = {
 			set_cosmetic_tag = GER_greater_german_reich
 			set_province_name = { id = 6521 name = "Germania" }
 			add_political_power = 10
-			hidden_effect = {
-				sound_effect = sp_greater_german_reich
-			}	
+			every_country = {limit = { check_variable= { speeches_enabled > 0}  }
+				scoped_sound_effect = "sp_greater_german_reich"
+			}
 		}	
 
 		ai_will_do = {
@@ -3445,16 +3538,8 @@ foreign_politics = {
 			42 = { is_demilitarized_zone = no }
 			51 = { is_demilitarized_zone = no }
 			is_puppet = no
-			or = {
-				AND = { has_army_manpower = { size > 749999 } date > 1937.7.1 }
-				date > 1938.4.1
-			}
-			GER = {
-				OR = {
-					has_completed_focus = GER_freedom_to_the_steel_barons
-					has_completed_focus = GER_curtail_the_steel_barons
-				}
-			}	
+			date > 1937.7.1 
+	
 			#if = {
 			#	limit = {
 			#		GER = {	is_ai = yes }
@@ -3492,30 +3577,7 @@ foreign_politics = {
 					}	
 				}
 			}
-			if = {
-				limit = {
-					GER = {
-						has_completed_focus = GER_curtail_the_steel_barons
-
-					}
-				}					
-				swap_ideas = {
-					remove_idea = GER_nationalize_steel_barons
-					add_idea = GER_nationalize_steel_barons2 			
-				}
-			}	
-			if = {
-				limit = {
-					GER = {
-						has_completed_focus = GER_freedom_to_the_steel_barons
-
-					}
-				}					
-				swap_ideas = {
-					remove_idea = GER_guide_the_steel_barons
-					add_idea = GER_guide_the_steel_barons2 			
-				}
-			}
+			
 			add_political_power = 100
 			if = {
 				limit = {
@@ -3637,7 +3699,7 @@ foreign_politics = {
 		available = {
 			owns_state = 4
 			is_puppet = no
-			has_army_manpower = { size > 949999 } #80 div	
+			
 			date > 1938.1.1	
 			#if = {
 			#	limit = {
@@ -3660,7 +3722,10 @@ foreign_politics = {
 		remove_effect = {
 			hidden_effect = {
 				complete_national_focus = GER_demand_sudetenland
-				sound_effect = sp_ger_sudeten
+				every_country = {limit = { check_variable= { speeches_enabled > 0}  }
+					scoped_sound_effect = "sp_ger_sudeten"
+				}
+			
 				FRA = {
 					complete_national_focus = FRA_sudetenland_question
 				}
@@ -3833,8 +3898,8 @@ foreign_politics = {
 			or = {
 				CZE = { is_puppet_of = GER }
 				CZE = { is_in_faction_with = GER }
-				has_army_manpower = { size > 949999 }
-				date > 1939.3.16
+			
+				date > 1938.1.1
 			}
 			#if = {
 			#	limit = {
@@ -3904,7 +3969,7 @@ foreign_politics = {
 
 		available = {
 			is_puppet = no
-			has_army_manpower = { size > 999999 }
+			
 			has_capitulated = no
 			has_country_flag = GER_the_end_of_czechoslovakia
 			country_exists = HUN
@@ -3951,7 +4016,7 @@ foreign_politics = {
 		
 		available = {
 			is_puppet = no
-			has_army_manpower = { size > 999999 }
+			
 			has_capitulated = no
 			has_country_flag = GER_the_end_of_czechoslovakia
 		}
@@ -4000,12 +4065,7 @@ foreign_politics = {
 				
 			}
 			has_capitulated = no
-			if = {
-				limit = {
-					GER = {	is_ai = no }
-				}
-					has_army_manpower = { size > 999999 }
-			}
+			
 			if = {
 				limit = {
 					OR = {
@@ -4062,21 +4122,213 @@ foreign_politics = {
 		   tag = GER
 		}
 		visible = {
-			has_war = yes
+			#has_war = yes
 		}
 
 		available = {
-			POL = { has_capitulated = yes }
-			OR = { 
-				has_war_with = ENG
-				NOT = { country_exists = ENG }
+			custom_trigger_tooltip = {
+				tooltip = GER_weserubung_tt
+				OR = {
+					has_country_flag = GER_myownplan_flags
+					AND = {
+						has_country_flag = GER_falkenhorst_flag
+						OR = {
+							AND = {
+								ships_in_state_ports = {
+									type = capital_ship
+									size > 1
+									state = 59
+								}
+								ships_in_state_ports = {
+									type = screen_ship
+									size > 9
+									state = 59
+								}
+								num_divisions_in_states = {
+									count < 6
+									states = { 59 }
+								}
+							}
+							AND = {
+								ships_in_state_ports = {
+									type = capital_ship
+									size > 2
+									state = 59
+								}
+								ships_in_state_ports = {
+									type = screen_ship
+									size > 19
+									state = 59
+								}
+								num_divisions_in_states = {
+									count < 11
+									states = { 59 }
+								}
+							}
+							num_divisions_in_states = {
+								count < 1
+								states = { 59 }
+							}
+						}
+						OR = {
+							AND = {
+								ships_in_state_ports = {
+									type = capital_ship
+									size > 1
+									state = 56
+								}
+								ships_in_state_ports = {
+									type = screen_ship
+									size > 9
+									state = 56
+								}
+								num_divisions_in_states = {
+									count < 6
+									states = { 56 }
+								}
+							}
+							AND = {
+								ships_in_state_ports = {
+									type = capital_ship
+									size > 2
+									state = 56
+								}
+								ships_in_state_ports = {
+									type = screen_ship
+									size > 19
+									state = 56
+								}
+								num_divisions_in_states = {
+									count < 11
+									states = { 56 }
+								}
+							}
+							num_divisions_in_states = {
+								count < 1
+								states = { 56 }
+							}
+						}
+						OR = {
+							AND = {
+								ships_in_state_ports = {
+									type = capital_ship
+									size > 1
+									state = 62
+								}
+								ships_in_state_ports = {
+									type = screen_ship
+									size > 9
+									state = 62
+								}
+								num_divisions_in_states = {
+									count < 6
+									states = { 62 }
+								}
+							}
+							AND = {
+								ships_in_state_ports = {
+									type = capital_ship
+									size > 2
+									state = 62
+								}
+								ships_in_state_ports = {
+									type = screen_ship
+									size > 19
+									state = 62
+								}
+								num_divisions_in_states = {
+									count < 11
+									states = { 62 }
+								}
+							}
+							num_divisions_in_states = {
+								count < 1
+								states = { 62 }
+							}
+						}
+						OR = {
+							AND = {
+								ships_in_state_ports = {
+									type = capital_ship
+									size > 1
+									state = 61
+								}
+								ships_in_state_ports = {
+									type = screen_ship
+									size > 9
+									state = 61
+								}
+								
+								num_divisions_in_states = {
+									count < 6
+									states = { 61 }
+								}
+							}
+							AND = {
+								ships_in_state_ports = {
+									type = capital_ship
+									size > 2
+									state = 61
+								}
+								ships_in_state_ports = {
+									type = screen_ship
+									size > 19
+									state = 61
+								}
+								num_divisions_in_states = {
+									count < 11
+									states = { 61 }
+								}
+							}
+							num_divisions_in_states = {
+								count < 1
+								states = { 61 }
+							}
+						
+						}
+						OR = {
+							AND = {
+								ships_in_state_ports = {
+									type = capital_ship
+									size > 1
+									state = 63
+								}
+								ships_in_state_ports = {
+									type = screen_ship
+									size > 9
+									state = 63
+								}
+								num_divisions_in_states = {
+									count < 6
+									states = { 63 }
+								}
+							}
+							AND = {
+								ships_in_state_ports = {
+									type = capital_ship
+									size > 2
+									state = 63
+								}
+								ships_in_state_ports = {
+									type = screen_ship
+									size > 19
+									state = 63
+								}
+								num_divisions_in_states = {
+									count < 11
+									states = { 63 }
+								}
+							}
+							num_divisions_in_states = {
+								count < 1
+								states = { 63 }
+							}
+							
+						}
+					}
+				}
 			}
-			#if = {
-			#	limit = {
-			#		GER = {	is_ai = yes }
-			#	}
-			#	date > 1940.4.1
-			#}
+				
 		}
 
 		ai_will_do = {
@@ -4084,38 +4336,179 @@ foreign_politics = {
 		}
 
 		complete_effect = {
+			
 			hidden_effect = {
 				complete_national_focus = GER_weserubung
 			}
-			DEN = { remove_ideas = neutrality_idea }
-			NOR = { remove_ideas = neutrality_idea }
-			ENG = { add_to_faction = DEN }
-			DEN = { 
-				add_to_war = { 
-					targeted_alliance = ENG
-					enemy = GER
-				}
-			}
-			every_country = {
+			if = {
 				limit = {
-					OR = {
-						tag = GER
-						tag = BUL
-						tag = ROM
-						tag = HUN
-						tag = EFR
-						tag = SLO
-						tag = SPR
+					has_country_flag = GER_falkenhorst_flag
+				}
+				
+				ENG = {
+					country_event = { id = britain.48 days = 4 }
+				}
+				ENG = { add_to_faction = DEN }
+				DEN = { 
+					add_to_war = { 
+						targeted_alliance = ENG
+						enemy = GER
 					}
 				}
-				create_wargoal = {
-					type = annex_everything
-					target = NOR
+				if = { 
+					limit = {
+						num_divisions_in_states = {
+							count > 0
+							states = { 59 }
+						}
+					}
+					GER = {
+						set_state_owner = 819
+						set_state_controller = 819
+						set_province_controller = 192
+						set_province_controller = 6055
+						set_province_controller = 9178
+					}
+					if = {
+						59 = {
+						
+							teleport_armies = {
+								limit =  {
+									tag = GER
+								}
+								
+								to_state = 819
+							}
+						}
+					}	
 				}
-			}	
-			hidden_effect = {
-				news_event = { hours = 6 id = news.233 }
-			}	
+				if = { 
+					limit = {
+						num_divisions_in_states = {
+							count > 0
+							states = { 56 }
+						}
+					}
+					GER = {
+						set_state_owner = 814	
+						set_state_controller = 814
+					
+					}
+					
+					56 = {
+						teleport_armies = {
+							limit =  {
+								tag = GER
+							}
+							to_state = 814
+						}
+					}
+				}
+				
+				
+				if = { 
+					limit = {
+						num_divisions_in_states = {
+							count > 0
+							states = { 62 }
+						}
+					}
+					GER = {
+						set_state_owner = 815	
+						set_state_controller = 815
+					}
+					62 = {
+						teleport_armies = {
+							limit =  {
+								tag = GER
+							}
+							to_state = 815
+						}
+					}
+					
+				}
+				
+				if = { 
+					limit = {
+						num_divisions_in_states = {
+							count > 0
+							states = { 61 }
+						}
+					}
+					GER = {
+						set_state_owner = 816
+						set_state_controller = 816	
+					}
+					61 = {
+						teleport_armies = {
+							limit =  {
+								tag = GER
+							}
+							to_state = 816
+						}
+					}
+					
+				}
+				if = { 
+					limit = {
+						num_divisions_in_states = {
+							count > 0
+							states = { 63 }
+						}
+					}
+					GER = {
+						set_state_owner = 817	
+						set_state_controller = 817
+					}
+					63 = {
+						teleport_armies = {
+							limit =  {
+								tag = GER
+							}
+							to_state = 817
+						}
+					}
+				}
+			}
+			else = {
+				NOR = { 
+					remove_ideas = developing_country 
+					remove_ideas = NOR_cant_justify
+
+				}
+				NOR = {
+					load_oob = "NOR_defense"
+				}
+				ENG = { add_to_faction = DEN }
+				DEN = { 
+					add_to_war = { 
+						targeted_alliance = ENG
+						enemy = GER
+					}
+				}
+				every_country = {
+					limit = {
+						OR = {
+							tag = GER
+							tag = BUL
+							tag = ROM
+							tag = HUN
+							tag = EFR
+							tag = SLO
+							tag = SPR
+						}
+					}
+					create_wargoal = {
+						type = annex_everything
+						target = NOR
+					}
+				}	
+				hidden_effect = {
+					news_event = { hours = 6 id = news.233 }
+					
+				}
+			}
+				
 		}
 	}
 
@@ -4308,7 +4701,7 @@ foreign_politics = {
 		available = {
 			NOT = { is_in_faction_with = POL }
 			is_puppet = no
-			has_army_manpower = { size > 949999 } 
+			
 			date > 1939.4.1	 
 			if = {
 				limit = {
@@ -4483,6 +4876,12 @@ foreign_politics = {
 		}
 
 		available = {
+			any_state = {
+				is_core_of = SOV 
+				NOT = {
+					is_controlled_by = BUL
+				}
+			}
 			AND = {
 				BUL = {
 					is_in_faction_with = ROOT
@@ -4495,6 +4894,10 @@ foreign_politics = {
 			}
 			FRA = { has_capitulated = yes }
 			has_war = yes
+			GRE = {
+				has_capitulated = yes
+			}
+			
 
 		}
 
@@ -4640,6 +5043,12 @@ foreign_politics = {
 		}
 
 		available = {
+			any_state = {
+				is_core_of = SOV 
+				NOT = {
+					is_controlled_by = ROM
+				}
+			}
 			HUN = {
 				has_full_control_of_state = 155
 				has_full_control_of_state = 808
@@ -5252,7 +5661,11 @@ GER_endsieg_category = {
 			}
 			hidden_effect = {
 				news_event = { id = news.492 hours = 6 }
-				sound_effect = sp_ger_counter
+				
+				every_country = {limit = { check_variable= { speeches_enabled > 0}  }
+					scoped_sound_effect = "sp_ger_counter"
+				}
+				
 			}			
 		}
 	}
@@ -6026,7 +6439,7 @@ GER_military_buildup = {
 
 		available = {
 			synthetic_refinery > 9
-			synthetic_rubber_refinery > 9
+			synthetic_rubber_refinery > 12
 
 			has_deployed_air_force_size = {
 				size > 1269
@@ -6037,7 +6450,7 @@ GER_military_buildup = {
 				type = cas
 			}
 			has_deployed_air_force_size = {
-				size > 329
+				size > 449
 				type = tactical_bomber
 			}
 		}
@@ -6083,7 +6496,7 @@ GER_military_buildup = {
 		available = {
 
 			synthetic_refinery > 9
-			synthetic_rubber_refinery > 9
+			synthetic_rubber_refinery > 12
 
 			has_deployed_air_force_size = {
 				size > 1269
@@ -6092,6 +6505,10 @@ GER_military_buildup = {
 			has_deployed_air_force_size = {
 				size > 369
 				type = cas
+			}
+			has_deployed_air_force_size = {
+				size > 449
+				type = tactical_bomber
 			}
 		}
 

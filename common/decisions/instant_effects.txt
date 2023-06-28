@@ -1,5 +1,484 @@
 
 PAR_instant_effect_decisions = {
+	USA_sue_for_peace_manpower = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			USA = {
+				casualties > 4000000
+				NOT = {
+					GER = {
+						surrender_progress > 0.1
+					}
+
+				}
+			}
+		}
+		cost = 0
+		fire_only_once = yes
+
+		complete_effect = {
+			USA = {
+				retire_country_leader = yes 
+				leave_faction = yes
+				add_ideas =  developing_country_usa
+
+			}
+			every_country ={
+				limit = {
+					OR = {
+						tag = GER
+						is_in_faction_with = GER
+						is_in_faction_with = JAP
+					}
+				}
+				white_peace = USA
+			}
+			every_country = {
+				set_variable = { var = super_event value = 14 }	
+						
+			}
+			every_country = {limit = { check_variable= { music_enabled > 0}  }
+				scoped_sound_effect = "se_usa_out_of_war"
+			}
+
+		}
+	}
+	
+	NOR_add_to_faction = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 10000			
+		}
+		available = {
+			GER = {
+				has_country_flag = GER_falkenhorst_flag
+			}
+			NOR = {
+				NOT = {
+					controls_state = 817
+					controls_state = 110
+					controls_state = 816
+					controls_state = 142
+					controls_state = 815
+					controls_state = 142	
+					controls_state = 814
+					controls_state = 143
+					controls_state = 819
+
+				}
+			}
+			
+		}
+		cost = 0
+		fire_only_once = yes
+
+		complete_effect = {
+			if = {
+				limit = {
+					ENG = {
+						has_country_flag = ENG_didnt_help_nor
+					}	
+				}
+				ENG = {
+					add_to_faction = NOR
+				}
+				NOR = { 
+					add_to_war = { 
+						targeted_alliance = ENG
+						enemy = GER
+					}
+					swap_ideas = {
+						remove_idea = norway_suurender
+						add_idea = norway_suurender2
+					}
+				}
+			}
+			else = {
+				NOR = { 
+					swap_ideas = {
+						remove_idea = norway_suurender
+						add_idea = norway_suurender2
+					}
+				}
+			}
+		}
+	}
+	ENG_remove_debuff = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			ENG = {
+				has_country_flag = ENG_helped_norway
+				has_country_flag = ENG_give_output_back
+				NOT = {
+					has_country_flag = ENG_give_output_back_2
+				}
+			}
+			
+		}
+		cost = 0
+		fire_only_once = yes
+
+		complete_effect = {
+			ENG = {
+				add_to_variable = {
+					ENG_industrial_capacity_factory_var = 0.15
+				}
+			}
+		}
+	}
+	ENG_give_debuff = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			ENG = {
+				has_country_flag = ENG_helped_norway
+			}
+			
+		}
+		cost = 0
+		fire_only_once = yes
+
+		complete_effect = {
+			ENG = {
+				add_to_variable = {
+					ENG_industrial_capacity_factory_var = -0.15
+				}
+				set_country_flag = ENG_give_output_back
+				set_country_flag = { flag = ENG_give_output_back_2 value = 1 days = 180 }
+			}
+		}
+	}
+	SCW_force_end = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			GER = {
+				has_war_with = ENG
+			}	
+			NOT = {
+				has_global_flag = scw_over
+			}
+		}
+		cost = 0
+		fire_only_once = yes
+
+		complete_effect = {
+			if = {
+				limit = {
+					D01 = { 
+						OR = { 
+							has_government = democratic 
+							has_government = communism 
+						}
+					}
+					SPR = {
+						controls_state = 41
+					}			
+				}
+				hidden_effect = { 
+					set_global_flag = scw_over
+					every_country = {
+						set_variable = { var = super_event value = 7 }			
+					}
+					
+					if = {
+						limit = {
+							NOT = {
+								has_global_flag = ETH_capitulated
+							}
+						}
+					
+						ITA = {
+							annex_country = { target = ETH }
+							country_event = { id = italy.32 }
+						}
+					}
+					
+					set_global_flag = SPR_over_flag_tt
+					every_country = {limit = { check_variable= { music_enabled > 0}  }
+						scoped_sound_effect = "se_spanish_civil_war_nationalist_victory"
+					}
+			
+					ITA = {	
+						if = {
+							limit = { 
+								any_army_leader = {
+									has_trait = ita_kwantung_veto
+								} 
+							}
+							every_army_leader = {
+								remove_unit_leader_trait = ita_kwantung_veto
+							}
+						}
+
+					}	
+					GER = {	
+				
+						if = {
+							limit = { 
+								any_army_leader = {
+									has_trait = ita_kwantung_veto
+								} 
+							}
+							every_army_leader = {
+								remove_unit_leader_trait = ita_kwantung_veto
+							}
+						}
+						
+					}
+					SPR = {	
+				
+						add_ideas = ROM_ger_trade_treaty
+						if = {
+							limit = { 
+								any_army_leader = {
+									has_trait = spr_kwantung_veto
+								} 
+							}
+							every_army_leader = {
+								remove_unit_leader_trait = spr_kwantung_veto
+							}
+						}
+					}
+					SOV = {	
+						if = {
+							limit = { 
+								any_army_leader = {
+									has_trait = ita_kwantung_veto
+								} 
+							}
+							every_army_leader = {
+								remove_unit_leader_trait = ita_kwantung_veto
+							}
+						}
+					}
+					SPR = { 
+						annex_country = { target = D01 transfer_troops = yes }
+						add_ideas = SPA_recovering_from_civil_war
+						delete_unit_template_and_units = {
+							division_template = "Guarnición Republicana"
+							disband = yes
+						}
+						delete_unit_template_and_units = {
+							division_template = "División de la Guardia de Asalto"
+							disband = yes
+						}	
+						delete_unit_template_and_units = {
+							division_template = "Brigada de Juventudes Sindicales"
+							disband = yes
+						}	
+						delete_unit_template_and_units = {
+							division_template = "Guarnición Nacionalista"
+							disband = yes
+						}
+						delete_unit_template_and_units = {
+							division_template = "Requeté Carlista"
+							disband = yes
+						}
+						delete_unit_template_and_units = {
+							division_template = "Brigada de la Guardia Civil"
+							disband = yes
+						}
+
+					}
+					794 ={
+					remove_core_of = SPR 
+					#add_core_of = 
+					}
+					165 ={
+						remove_core_of = SPR 
+					}
+					41 ={
+						remove_core_of = SPR 
+					}
+					793 ={
+						remove_core_of = SPR 
+					}
+					167 ={
+						remove_core_of = SPR 
+					}
+					41 ={
+						remove_core_of = SPR 
+					}
+					175 ={
+						remove_core_of = SPR 
+					}
+					168 ={
+						remove_core_of = SPR 
+					}
+					173 ={
+						remove_core_of = SPR 
+					}
+
+				}
+			}	
+			if = {
+				limit = {
+					D01 = { 
+						OR = { 
+							has_government = democratic 
+							has_government = communism 
+						}
+					}
+					D01 = {
+						controls_state = 41
+					}			
+				}
+				hidden_effect = { 
+					every_country = {
+						set_variable = { var = super_event value = 6 }			
+					}
+					
+					if = {
+						limit = {
+							NOT = {
+								has_global_flag = ETH_capitulated
+							}
+						}
+				
+						ITA = {
+							annex_country = { target = ETH }
+							country_event = { id = italy.32 }
+						}
+					}
+					set_global_flag = SPR_over_flag_tt
+					every_country = {limit = { check_variable= { music_enabled > 0}  }
+						scoped_sound_effect = "se_spanish_civil_war_republican_victory"
+					}
+
+					ITA = {	
+						if = {
+							limit = { 
+								any_army_leader = {
+									has_trait = ita_kwantung_veto
+								} 
+							}
+							every_army_leader = {
+								remove_unit_leader_trait = ita_kwantung_veto
+							}
+						}
+						
+					}	
+					GER = {	
+						if = {
+							limit = { 
+								any_army_leader = {
+									has_trait = ita_kwantung_veto
+								} 
+							}
+							every_army_leader = {
+								remove_unit_leader_trait = ita_kwantung_veto
+							}
+						}
+						
+					}
+					SPR = {	
+						add_ideas = ROM_ger_trade_treaty
+						if = {
+							limit = { 
+								any_army_leader = {
+									has_trait = spr_kwantung_veto
+								} 
+							}
+							every_army_leader = {
+								remove_unit_leader_trait = spr_kwantung_veto
+							}
+						}
+
+					}
+
+					SOV = {	
+						if = {
+							limit = { 
+								any_army_leader = {
+									has_trait = ita_kwantung_veto
+								} 
+							}
+							every_army_leader = {
+								remove_unit_leader_trait = ita_kwantung_veto
+							}
+						}
+					}		
+				}
+				set_global_flag = scw_over
+				set_global_flag = scw_over_spr_lost
+				
+				SPR = { 
+					annex_country = { target = D01 transfer_troops = yes }
+					add_ideas = SPA_recovering_from_civil_war
+					delete_unit_template_and_units = {
+						division_template = "Guarnición Republicana"
+						disband = yes
+					}
+					delete_unit_template_and_units = {
+						division_template = "División de la Guardia de Asalto"
+						disband = yes
+					}	
+					delete_unit_template_and_units = {
+						division_template = "Brigada de Juventudes Sindicales"
+						disband = yes
+					}	
+					delete_unit_template_and_units = {
+						division_template = "Guarnición Nacionalista"
+						disband = yes
+					}
+					delete_unit_template_and_units = {
+						division_template = "Requeté Carlista"
+						disband = yes
+					}
+					delete_unit_template_and_units = {
+						division_template = "Brigada da la Guardia Civil"
+						disband = yes
+					}
+					delete_unit_template_and_units = {
+						division_template = "Brigada de la Guardia Civil"
+						disband = yes
+					}
+				}
+				794 ={
+					remove_core_of = SPR 
+					#add_core_of = 
+				}
+				165 ={
+					remove_core_of = SPR 
+				}
+				41 ={
+					remove_core_of = SPR 
+				}
+				793 ={
+					remove_core_of = SPR 
+				}
+				167 ={
+					remove_core_of = SPR 
+				}
+				41 ={
+					remove_core_of = SPR 
+				}
+				175 ={
+					remove_core_of = SPR 
+				}
+				168 ={
+					remove_core_of = SPR 
+				}
+				173 ={
+					remove_core_of = SPR 
+				}
+				SOV = {	
+					add_offsite_building = { type = industrial_complex level = 15 }
+				}	
+			}
+		}
+	}
 	GER_fuhrerhappy = {
 		allowed = { tag = PAR }
 		ai_will_do = {
@@ -15,9 +494,23 @@ PAR_instant_effect_decisions = {
 				}	
 				controls_state = 16
 			}	
+			ITA = {
+				controls_state = 2
+			}
+			NOT = {
+				SOV = {
+					OR = {
+						controls_state = 12
+						controls_state = 206
+						controls_state = 202
+					}	
+				}
+				
+			}
 		}
+		days_re_enable = 90
 		cost = 0
-		fire_only_once = yes
+		fire_only_once = no
 
 		complete_effect = {
 			GER = {
@@ -52,10 +545,26 @@ PAR_instant_effect_decisions = {
 				FRA = {
 					controls_state = 16
 				}
+				OR = {
+					tag = ENG 
+					is_in_faction_with = ENG 
+
+				}
+			}
+			NOT = {
+				GER = {
+					OR = {
+						controls_state = 195
+						controls_state = 219
+						controls_state = 217
+					}	
+					controls_state = 16
+				}
 			}
 		}
+		days_re_enable = 90
 		cost = 0
-		fire_only_once = yes
+		fire_only_once = no
 
 		complete_effect = {
 			GER = {
@@ -79,6 +588,16 @@ PAR_instant_effect_decisions = {
 		}
 		available = {
 			date > 1942.1.1
+			NOT = {
+				GER = {
+					OR = {
+						controls_state = 195
+						controls_state = 219
+						controls_state = 217
+					}	
+					controls_state = 16
+				}
+			}
 			GER = {
 				any_enemy_country = {
 					OR = {
@@ -95,7 +614,8 @@ PAR_instant_effect_decisions = {
 			}
 		}
 		cost = 0
-		fire_only_once = yes
+		fire_only_once = no
+		days_re_enable = 90
 
 		complete_effect = {
 			GER = {
@@ -2229,7 +2749,9 @@ PAR_instant_effect_decisions = {
 				every_country = {
 					set_variable = { var = super_event value = 15 }
 				}
-				sound_effect = se_nuclear_siren
+				every_country = {limit = { check_variable= { music_enabled > 0}  }
+					scoped_sound_effect = "se_nuclear_siren"
+				}
 			}
 		}	
 	}
@@ -5409,7 +5931,9 @@ PAR_instant_effect_decisions = {
 
 		complete_effect = {
            hidden_effect = {
-				sound_effect = sp_ger_stalingrad
+				every_country = {limit = { check_variable= { speeches_enabled > 0}  }
+					scoped_sound_effect = "sp_ger_stalingrad"
+				}
 		    }
 		}
 
@@ -5436,7 +5960,10 @@ PAR_instant_effect_decisions = {
 
 		complete_effect = {
            hidden_effect = {
-				sound_effect = sp_sov_victory 
+				every_country = {limit = { check_variable= { speeches_enabled > 0}  }
+					scoped_sound_effect = "sp_sov_victory"
+				}
+			
 		    }
 		}
 
@@ -5463,7 +5990,10 @@ PAR_instant_effect_decisions = {
 
 		complete_effect = {
            hidden_effect = {
-				sound_effect = sp_eng_fight_them
+				every_country = {limit = { check_variable= { speeches_enabled > 0}  }
+					scoped_sound_effect = "sp_eng_fight_them"
+				}
+
 		    }
 		}
 
@@ -5507,7 +6037,9 @@ PAR_instant_effect_decisions = {
 
 		complete_effect = {
            hidden_effect = {
-				sound_effect = sp_dday
+				every_country = {limit = { check_variable= { speeches_enabled > 0}  }
+					scoped_sound_effect = "sp_dday"
+				}
 		    }
 		    GER = {
         		set_country_flag = GER_dday_flag
@@ -5554,7 +6086,9 @@ PAR_instant_effect_decisions = {
 
 		complete_effect = {
            hidden_effect = {
-				sound_effect = sp_dday
+				every_country = {limit = { check_variable= { speeches_enabled > 0}  }
+					scoped_sound_effect = "sp_dday"
+				}
 		    }
 		    GER = {
         		set_country_flag = GER_dday_flag
@@ -5601,7 +6135,9 @@ PAR_instant_effect_decisions = {
 
 		complete_effect = {
            hidden_effect = {
-				sound_effect = sp_dday
+				every_country = {limit = { check_variable= { speeches_enabled > 0}  }
+					scoped_sound_effect = "sp_dday"
+				}
 		    }
 		    GER = {
         		set_country_flag = GER_dday_flag
@@ -5648,7 +6184,9 @@ PAR_instant_effect_decisions = {
 
 		complete_effect = {
            hidden_effect = {
-				sound_effect = sp_dday
+				every_country = {limit = { check_variable= { speeches_enabled > 0}  }
+					scoped_sound_effect = "sp_dday"
+				}
 		    }
 		    GER = {
         		set_country_flag = GER_dday_flag
@@ -5695,7 +6233,9 @@ PAR_instant_effect_decisions = {
 
 		complete_effect = {
            hidden_effect = {
-				sound_effect = sp_dday
+				every_country = {limit = { check_variable= { speeches_enabled > 0}  }
+					scoped_sound_effect = "sp_dday"
+				}
 		    }
 		    GER = {
         		set_country_flag = GER_dday_flag
@@ -5742,7 +6282,9 @@ PAR_instant_effect_decisions = {
 
 		complete_effect = {
            hidden_effect = {
-				sound_effect = sp_dday
+				every_country = {limit = { check_variable= { speeches_enabled > 0}  }
+					scoped_sound_effect = "sp_dday"
+				}
 		    }
 		    GER = {
         		set_country_flag = GER_dday_flag
@@ -6901,32 +7443,4 @@ PAR_instant_effect_decisions = {
 			
 		}
 	}
-
-	##########################
-	PAR_partisans_for_SLO = {
-		icon = generic_megaphone
-   
-		allowed = {
-		   tag = PAR
-		}
-
-		fire_only_once = yes
-
-		available = {
-			tag = PAR
-			date > 1942.1.1	
-			SLO = { has_war_with = SOV }
-		}
-
-		cost = 0
-		
-		complete_effect = {
-          SLO = { add_ideas = SLO_partisans }
-		}
-
-		ai_will_do = {
-			base = 5000			
-		}
-	}
-
 }

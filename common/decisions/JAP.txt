@@ -107,6 +107,55 @@ JAP_pacific_war_explanation_category = {
 		}		
 
 		remove_effect = {
+			hidden_effect = {
+				division_template = {
+					name = "Indochina"
+					priority = 100
+					is_locked = no 
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 0 y = 3 }
+						
+						infantry = { x = 1 y = 0 }
+						infantry = { x = 1 y = 1 }
+						infantry = { x = 1 y = 2 }
+						infantry = { x = 1 y = 3 }
+							
+						infantry = { x = 2 y = 0 }
+						infantry = { x = 2 y = 1 }
+						artillery_brigade= { x = 2 y = 2 }
+						artillery_brigade = { x = 2 y = 3 }
+
+						artillery_brigade = { x = 3 y = 0 }		
+						artillery_brigade = { x = 3 y = 1 }
+						artillery_brigade = { x = 3 y = 2 }				
+					}
+
+					support = {
+						DIV_HQ = { x = 0 y = 0 }
+						engineer = { x = 0 y = 1 }
+						field_gun_support = { x = 0 y = 2 }
+						military_police = { x = 1 y = 0 }
+						recon = { x = 1 y = 1 }
+					}
+				}
+				671 = {
+					create_unit = {
+						division = "division_template = \"Indochina\" start_experience_factor = 0.4" 
+						owner = JAP
+						count = 5
+					}
+				}
+				670 = {
+					create_unit = {
+						division = "division_template = \"Indochina\" start_experience_factor = 0.4" 
+						owner = JAP
+						count = 5
+					}
+				}
+			}
 			EFR = { country_event = { days = 3 id = france.1 } }
 			JAP = {
 				add_opinion_modifier = { target = EFR modifier = efr_indochina_diplo }
@@ -243,6 +292,8 @@ JAP_pacific_war_explanation_category = {
 					level = 1
 					instant_build = yes
 				}
+				set_compliance = 80
+				set_resistance = 5
 			}
 			333 = {
 				if = {
@@ -252,9 +303,11 @@ JAP_pacific_war_explanation_category = {
 						level = 1
 						instant_build = yes
 					}
+					set_compliance = 80
+					set_resistance = 5
 				}
 			}
-			672 = {
+			672 = {	
 				if = {
 					limit = { is_fully_controlled_by = ROOT }
 					add_building_construction = {
@@ -279,7 +332,8 @@ JAP_pacific_war_explanation_category = {
 					type = aluminium
 					amount = 6
 				}
-			}		
+			}	
+			
 		}		
 	}
 
@@ -300,7 +354,7 @@ JAP_pacific_war_explanation_category = {
 					controls_state = 335 #Java
 					controls_state = 285 #New South Wales
 					controls_state = 629 #Hawaii
-					date > 1943.6.1	
+				
 				}				
 			}
 		}
@@ -398,7 +452,10 @@ JAP_pacific_war_explanation_category = {
 				every_country = {
 					set_variable = { var = super_event value = 11 }
 				}
-				sound_effect = se_pearl_harbour 
+				every_country = {limit = { check_variable= { music_enabled > 0}  }
+					scoped_sound_effect = "se_pearl_harbour"
+				}
+			
 				play_song = "Shussei Heishi o Okuru Uta"
 				
 			}
@@ -408,7 +465,7 @@ JAP_pacific_war_explanation_category = {
 			custom_effect_tooltip = JAP_tora_tora_tora_tt
 			if = {	
 				limit = {
-					date < 1941.12.1
+					date < 1941.12.6
 				}
 				add_timed_idea = {
 					idea = JAP_tora_tora_tora_idea
@@ -417,7 +474,7 @@ JAP_pacific_war_explanation_category = {
 			}			
 			else_if = {
 				limit = {
-					date > 1941.12.31
+					date > 1941.12.6
 				}			
 				add_timed_idea = {
 					idea = JAP_tora_tora_tora_idea
@@ -1874,16 +1931,44 @@ JAP_intervene_in_china_decision = {
 			MAN = {
 				add_ideas = JAP_no_grinding
 			}
+			every_state = {
+				limit = {
+					is_core_of = CHI 
+					is_controlled_by = CHI   
+				}
+				add_dynamic_modifier = { modifier  = CHI_no_more_no_supply }
+			}
 			hidden_effect = {
+					
 
 				CHI = {
+					create_equipment_variant = {
+						name = "BT-7"
+						type = light_tank_chassis_1936
+						parent_version = 0
+						modules = {
+							main_armament_slot = tank_small_cannon_2
+							turret_type_slot = tank_light_two_man_tank_turret
+							suspension_type_slot = tank_christie_suspension
+							armor_type_slot = tank_welded_armor
+							armor_sloping_slot = unsloped_armor
+							engine_type_slot = tank_gasoline_engine
+							special_type_slot_1 = basket
+							radio_slot = tank_radio_1
+						}
+						upgrades = {
+							tank_nsb_engine_upgrade = 8
+							tank_nsb_armor_upgrade = 5
+						}
+						icon = "gfx/interface/technologies/land/sov/bt7.tga"
+					}
 					remove_ideas = neutrality_idea
 					remove_ideas = developing_country
 					remove_ideas = no_spies_idea
 
-					set_variable = { CHI_army_defence_factor_var = 0.2 }
+					set_variable = { CHI_army_defence_factor_var = 0.1 }
 					set_variable = { CHI_army_strength_factor  = 0.5 }
-					set_variable = { CHI_dig_in_speed_factor_var = 3 }
+					set_variable = { CHI_dig_in_speed_factor_var = 4 }
 					set_variable = { CHI_max_dig_in_factor_var = 0.35 }
 					set_variable = { CHI_pocket_penalty_var = 0 }
 
@@ -1957,12 +2042,18 @@ JAP_intervene_in_china_decision = {
 						amount = 1500
 						producer = SOV
 					}
+					add_equipment_to_stockpile = {
+						type = light_tank_chassis_1936
+						amount = 500
+						producer = GER
+					}
 
 					add_equipment_to_stockpile = { type = fighter_equipment_1936 amount = 1000 producer = USA }
 
 					division_template = {
 						name = "Juntuan"
-						priority = 2
+						priority = 3
+
 
 						regiments = {
 							infantry = { x = 0 y = 0 }
@@ -2150,6 +2241,12 @@ JAP_intervene_in_china_decision = {
 		}
 		
 		remove_effect = {
+			every_country = {
+				set_variable = { var = super_event value = 3 }			
+			}
+			every_country = {limit = { check_variable= { music_enabled > 0}  }
+				scoped_sound_effect = "se_sino_jap_war"
+			}
 			JAP = {
 				declare_war_on = {
 					target = CHI 
@@ -2178,6 +2275,9 @@ JAP_intervene_in_china_decision = {
 		available = {
 
 			date > 1940.1.1
+			NOT = {
+				has_war_with = USA
+			}
 		}
 
 		visible = {
@@ -2340,7 +2440,6 @@ JAP_interservice_rivalry = {
 			factor = 5
 		}
 		modifier = {
-			industrial_capacity_dockyard = -0.1
 			industrial_capacity_factory = 0.1
 		}
 		complete_effect = {
@@ -2363,6 +2462,15 @@ JAP_interservice_rivalry = {
 				remove_building = {
 					type = dockyard
 					level = 2
+				}
+			}
+			random_owned_state = {
+				limit = {
+					dockyard > 0 
+				}
+				remove_building = {
+					type = dockyard
+					level = 1
 				}
 			}
 			
@@ -2418,7 +2526,6 @@ JAP_interservice_rivalry = {
 		}
 		modifier = {
 			industrial_capacity_dockyard = 0.1
-			industrial_capacity_factory = -0.1
 		}
 		complete_effect = {
 			random_owned_state = {
@@ -2436,7 +2543,7 @@ JAP_interservice_rivalry = {
 				}
 				remove_building = {
 					type = arms_factory
-					level = 1
+					level = 2
 				}
 			}
 			random_owned_state = {
@@ -2484,10 +2591,6 @@ JAP_interservice_rivalry = {
 			NOT = {
 				has_country_flag = JAP_war_conferences_cd
 			}
-			has_navy_size = {
-				size > 2
-				archetype = ship_hull_heavy	
-			}
 							
 		}
 		visible = {
@@ -2500,33 +2603,32 @@ JAP_interservice_rivalry = {
 			
 		}
 		cost = 40
-		fire_only_once = no
+		fire_only_once = yes
 		days_remove = 120
 		ai_will_do = {
 			factor = 5
 		}
 		modifier = {
-			industrial_capacity_dockyard = -0.1
 			industrial_capacity_factory = 0.1
 		}
 		complete_effect = {
 			destroy_ships = {
 				type = ship_hull_heavy_1
-				count = 3
+				count = 6
 			}
-			random_owned_state = {
-				add_extra_state_shared_building_slots = 4
+			random_core_state   = {
+				add_extra_state_shared_building_slots = 7
 				add_building_construction = {
 					type = arms_factory
-					level = 4
+					level = 7
 					instant_build = yes
 				}
 			}
-			random_owned_state = {
-				add_extra_state_shared_building_slots = 4
+			random_core_state  = {
+				add_extra_state_shared_building_slots = 7
 				add_building_construction = {
 					type = arms_factory
-					level = 4
+					level = 7
 					instant_build = yes
 				}
 			}
@@ -2584,7 +2686,6 @@ JAP_interservice_rivalry = {
 		modifier = {
 			refit_speed = 0.2
 			industrial_capacity_dockyard = 0.1
-			industrial_capacity_factory = -0.1
 		}
 		complete_effect = {
 			random_owned_state = {
@@ -2627,7 +2728,6 @@ JAP_interservice_rivalry = {
 			factor = 0
 		}
 		modifier = {
-			industrial_capacity_dockyard = -0.1
 			industrial_capacity_factory = 0.1
 		}
 		
@@ -2668,7 +2768,6 @@ JAP_interservice_rivalry = {
 		}
 		modifier = {
 			industrial_capacity_dockyard = 0.1
-			industrial_capacity_factory = -0.1
 		}
 		
 		complete_effect = {
@@ -2711,7 +2810,6 @@ JAP_interservice_rivalry = {
 			factor = 0
 		}
 		modifier = {
-			industrial_capacity_dockyard = -0.1
 			industrial_capacity_factory = 0.1
 		}
 		complete_effect = {
@@ -2762,7 +2860,7 @@ JAP_interservice_rivalry = {
 		}
 		modifier = {
 			industrial_capacity_dockyard = 0.1
-			industrial_capacity_factory = -0.1
+		
 		}
 		complete_effect = {
 			add_tech_bonus = {
@@ -2810,7 +2908,7 @@ JAP_interservice_rivalry = {
 			factor = 5
 		}
 		modifier = {
-			industrial_capacity_dockyard = -0.1
+			
 			industrial_capacity_factory = 0.1
 		}
 		complete_effect = {
@@ -2850,7 +2948,7 @@ JAP_interservice_rivalry = {
 		}
 		modifier = {
 			industrial_capacity_dockyard = 0.1
-			industrial_capacity_factory = -0.1
+		
 		}
 		complete_effect = {
 			custom_effect_tooltip = JAP_ijn_air_tt
@@ -2891,7 +2989,7 @@ JAP_interservice_rivalry = {
 			factor = 0
 		}
 		modifier = {
-			industrial_capacity_dockyard = -0.1
+	
 			industrial_capacity_factory = 0.1
 		}
 		complete_effect = {
@@ -2937,7 +3035,7 @@ JAP_interservice_rivalry = {
 		}
 		modifier = {
 			industrial_capacity_dockyard = 0.1
-			industrial_capacity_factory = -0.1
+	
 		}
 		complete_effect = {
 			every_navy_leader = {
@@ -2977,7 +3075,7 @@ JAP_interservice_rivalry = {
 			factor = 1
 		}
 		modifier = {
-			industrial_capacity_factory = 0.2
+			industrial_capacity_factory = 0.25
 		}
 		
 		complete_effect = {
@@ -3038,7 +3136,7 @@ JAP_interservice_rivalry = {
 			factor = 1
 		}
 		modifier = {
-			industrial_capacity_dockyard = 0.2
+			industrial_capacity_dockyard = 0.3
 		}
 		
 		complete_effect = {
