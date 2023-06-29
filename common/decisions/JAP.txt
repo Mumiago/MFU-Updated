@@ -23,32 +23,26 @@ JAP_pacific_war_explanation_category = {
 		ai_will_do = {
 			factor = 100
 		}
-		
+		cancel_trigger = {
+			JAP = {
+				has_country_flag = JAP_has_opt
+			}
+		}
 		selectable_mission = no
-		days_remove = 35
 		days_mission_timeout = 35
 
-		cancel_trigger = {
-			289 = { is_owned_by = JAP }
+		available = {
+			JAP = {
+				has_country_flag = JAP_has_opt
+			}
 		}
 		
-		complete_effect = {
-			JAP = {
-				set_country_flag = { flag = JAP_operation_T_done value = 1 } 
-			} 
-			annex_country = { target = SIA }
-			every_state = {
-				limit = {
-					is_core_of = SIA 
-				}
-				set_compliance = 90
-				set_resistance = 0 
-			}
-		}		
+			
 		
-		remove_effect = {
+		timeout_effect = {
 			JAP = {
 				set_country_flag = { flag = JAP_operation_T_done value = 1 } 
+				set_country_flag = JAP_has_opt
 			} 
 			annex_country = { target = SIA }
 			every_state = {
@@ -82,13 +76,20 @@ JAP_pacific_war_explanation_category = {
 				}
 			}		
 		}
+		available = {
+			JAP = {
+				has_country_flag = JAP_has_indochina
+			}
 
+		}
 		cancel_trigger = {
-			286 = { is_owned_by = JAP }
+			JAP = {
+				has_country_flag = JAP_has_indochina
+			}
 		}
 		
 		selectable_mission = no
-		days_remove = 35
+	
 		days_mission_timeout = 35
 		
 		fire_only_once = yes
@@ -96,74 +97,133 @@ JAP_pacific_war_explanation_category = {
 		ai_will_do = {
 			factor = 100
 		}
-		complete_effect = {
-			EFR = { country_event = { days = 3 id = france.1 } }
+		
+		timeout_effect = {
+	
 			JAP = {
 				add_opinion_modifier = { target = EFR modifier = efr_indochina_diplo }
+				set_country_flag = JAP_has_indochina
 			}
 			EFR = {
 				add_opinion_modifier = { target = JAP modifier = jap_indochina_diplo }
 			}
-		}		
-
-		remove_effect = {
 			hidden_effect = {
-				division_template = {
-					name = "Indochina"
-					priority = 100
-					is_locked = no 
-					regiments = {
-						infantry = { x = 0 y = 0 }
-						infantry = { x = 0 y = 1 }
-						infantry = { x = 0 y = 2 }
-						infantry = { x = 0 y = 3 }
-						
-						infantry = { x = 1 y = 0 }
-						infantry = { x = 1 y = 1 }
-						infantry = { x = 1 y = 2 }
-						infantry = { x = 1 y = 3 }
-							
-						infantry = { x = 2 y = 0 }
-						infantry = { x = 2 y = 1 }
-						artillery_brigade= { x = 2 y = 2 }
-						artillery_brigade = { x = 2 y = 3 }
-
-						artillery_brigade = { x = 3 y = 0 }		
-						artillery_brigade = { x = 3 y = 1 }
-						artillery_brigade = { x = 3 y = 2 }				
-					}
-
-					support = {
-						DIV_HQ = { x = 0 y = 0 }
-						engineer = { x = 0 y = 1 }
-						field_gun_support = { x = 0 y = 2 }
-						military_police = { x = 1 y = 0 }
-						recon = { x = 1 y = 1 }
-					}
-				}
-				671 = {
-					create_unit = {
-						division = "division_template = \"Indochina\" start_experience_factor = 0.4" 
-						owner = JAP
-						count = 5
-					}
-				}
-				670 = {
-					create_unit = {
-						division = "division_template = \"Indochina\" start_experience_factor = 0.4" 
-						owner = JAP
-						count = 5
-					}
-				}
+				news_event = { days = 5 id = news.5 }
 			}
-			EFR = { country_event = { days = 3 id = france.1 } }
 			JAP = {
-				add_opinion_modifier = { target = EFR modifier = efr_indochina_diplo }
+				if = {
+					limit = {
+						286 = {
+							is_owned_by = EFR
+							OR = {
+								is_controlled_by = EFR
+								is_controlled_by = JAP
+							}
+						}
+					}
+					transfer_state = 286
+				}
+				if = {
+					limit = {
+						670 = {
+							is_owned_by = EFR
+							OR = {
+								is_controlled_by = EFR
+								is_controlled_by = JAP
+							}
+						}
+					}
+					transfer_state = 670
+				}
+				if = {
+					limit = {
+						671 = {
+							is_owned_by = EFR
+							OR = {
+								is_controlled_by = EFR
+								is_controlled_by = JAP
+							}
+						}
+					}
+					transfer_state = 671
+				}
+				if = {
+					limit = {
+						741 = {
+							is_owned_by = EFR
+							OR = {
+								is_controlled_by = EFR
+								is_controlled_by = JAP
+							}
+						}
+					}
+					transfer_state = 741
+				}
+				if = {
+					limit = {
+						728 = {
+							is_owned_by = EFR
+							OR = {
+								is_controlled_by = EFR
+								is_controlled_by = JAP
+							}
+						}
+					}
+					transfer_state = 728
+				}
+				add_named_threat = { threat = 3 name = france.1.t }
+					
+				hidden_effect = {
+					division_template = {
+						name = "Indochina"
+						priority = 100
+						is_locked = no 
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+								
+							infantry = { x = 2 y = 0 }
+							infantry = { x = 2 y = 1 }
+							artillery_brigade= { x = 2 y = 2 }
+							artillery_brigade = { x = 2 y = 3 }
+
+							artillery_brigade = { x = 3 y = 0 }		
+							artillery_brigade = { x = 3 y = 1 }
+							artillery_brigade = { x = 3 y = 2 }				
+						}
+
+						support = {
+							DIV_HQ = { x = 0 y = 0 }
+							engineer = { x = 0 y = 1 }
+							field_gun_support = { x = 0 y = 2 }
+							military_police = { x = 1 y = 0 }
+							recon = { x = 1 y = 1 }
+						}
+					}
+					671 = {
+						create_unit = {
+							division = "division_template = \"Indochina\" start_experience_factor = 0.4" 
+							owner = JAP
+							count = 5
+						}
+					}
+					670 = {
+						create_unit = {
+							division = "division_template = \"Indochina\" start_experience_factor = 0.4" 
+							owner = JAP
+							count = 5
+						}
+					}
+				}
 			}
-			EFR = {
-				add_opinion_modifier = { target = JAP modifier = jap_indochina_diplo }
-			}
-		}		
+		}	
 	}
 
 	JAP_seize_the_indies = {
@@ -1991,51 +2051,51 @@ JAP_intervene_in_china_decision = {
 					add_equipment_to_stockpile = {
 						type = infantry_equipment_1
 						amount = 20000
-						producer = JAP
+						producer = CHI
 					}
 					
 					add_equipment_to_stockpile = {
 						type = support_equipment_1
 						amount = 4500
-						producer = JAP
+						producer = CHI
 					}
 					add_equipment_to_stockpile = {
 						type = motorized_equipment_1
 						amount = 1000
-						producer = JAP
+						producer = CHI
 					}
 
 					add_equipment_to_stockpile = {
 						type = special_equipment_1
 						amount = 400
-						producer = JAP
+						producer = CHI
 					}
 
 					add_equipment_to_stockpile = {
-						type = artillery_equipment_1
+						type = artillery_equipment
 						amount = 2000
-						producer = JAP
+						producer = CHI
 					}
 
 					add_equipment_to_stockpile = {
-						type = anti_tank_equipment_1
+						type = anti_tank_equipment
 						amount = 500
-						producer = JAP
+						producer = CHI
 					}
 					add_equipment_to_stockpile = {
-						type = anti_air_equipment_1
-						amount = 500
-						producer = GER
+						type = anti_air_equipment
+						amount = 1500
+						producer = CHI
 					}
 					add_equipment_to_stockpile = {
 						type = horse_equipment_0
 							amount = 30000
-							producer = GER
+							producer = CHI
 					}
 					add_equipment_to_stockpile = {
 						type = radio_equipment_1
 						amount = 2000
-						producer = GER
+						producer = CHI
 					}
 					add_equipment_to_stockpile = {
 						type = light_tank_chassis_1936
@@ -2071,7 +2131,7 @@ JAP_intervene_in_china_decision = {
 							infantry = { x = 2 y = 2 }
 							infantry = { x = 2 y = 3 }
 							
-							infantry = { x = 3 y = 0 }		
+							anti_air = { x = 3 y = 0 }		
 							pack_artillery_brigade = { x = 3 y = 1 }
 							pack_artillery_brigade = { x = 3 y = 2 }
 							pack_artillery_brigade = { x = 3 y = 3 }
