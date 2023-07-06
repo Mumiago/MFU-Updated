@@ -99,12 +99,16 @@ country_event = {
 						priority = 2
 					}
 					random_owned_state = {
+						
+						limit = {
+							check_variable = { var = SPA_garrison_control value = 2 compare = less_than_or_equals }
+						}
 						prioritize = {167}
 					
 						create_unit = {
 							division = "division_template = \"Gornostrelkovaya Diviziya\" start_experience_factor = 0.6" 
 							owner = SPN
-							allow_spawning_on_enemy_provs = yes
+							allow_spawning_on_enemy_provs = no
 							count = 4
 						}
 					}
@@ -130,82 +134,12 @@ country_event = {
 
 				}
 				
-				# Give SPD Madrid if the Nationalists don't have complete garrison control over it - becomes capital
-				if = {
-					limit = {
-						41 = {
-							check_variable = { var = SPA_garrison_control value = 1 compare = equals }
-						}
-					}
-					SPN = {
-						transfer_state = 41
-					
-					}
-					41 = {
-						set_state_flag = SPR_sided_with_republicans_flag
-						create_unit = {
-							division = "division_template = \"Guarnición Republicana\" start_experience_factor = 0.1" 
-							owner = SPN
-							allow_spawning_on_enemy_provs = yes
-							count = 3
-						}
-					}
-				}
-				else_if = {
-					limit = {
-						41 = {
-							check_variable = { var = SPA_garrison_control value = 2 compare = equals }
-						}
-					}
-					SPN = {
-						transfer_state = 41
-					}
-					41 = {
-						set_state_flag = SPR_sided_with_republicans_flag
-						create_unit = {
-							division = "division_template = \"Guarnición Republicana\" start_experience_factor = 0.1" 
-							owner = SPN
-							allow_spawning_on_enemy_provs = yes
-							count = 2
-						}
-						create_unit = {
-							division = "division_template = \"Guarnición Nacionalista\" start_experience_factor = 0.1" 
-							owner = SPR
-							allow_spawning_on_enemy_provs = yes
-							count = 1
-						}
-					}
-				}
-				else_if = {
-					limit = {
-						41 = {
-							check_variable = { var = SPA_garrison_control value = 3 compare = equals }
-						}
-					}
-					SPN = {
-						transfer_state = 41
-					}
-					41 = {
-						set_state_flag = SPR_sided_with_republicans_flag
-						create_unit = {
-							division = "division_template = \"Guarnición Republicana\" start_experience_factor = 0.1" 
-							owner = SPN
-							allow_spawning_on_enemy_provs = yes
-							count = 1
-						}
-						create_unit = {
-							division = "division_template = \"Guarnición Nacionalista\" start_experience_factor = 0.1" 
-							owner = SPR
-							allow_spawning_on_enemy_provs = yes
-							count = 2
-						}
-					}
-				}
+				
 				# If Madrid is controlled by Nationalists, but a random state exists that has total Republican garrison control, give that as capital first
 				if = {
 					limit = {
 						41 = {
-							check_variable = { var = SPA_garrison_control value = 4 compare = equals }
+							check_variable = { var = SPA_garrison_control value = 3 compare = greater_than_or_equals }
 						}
 						any_owned_state = {
 							check_variable = { var = SPA_garrison_control value = 1 compare = equals }
@@ -231,7 +165,7 @@ country_event = {
 				else_if = {
 					limit = {
 						41 = {
-							check_variable = { var = SPA_garrison_control value = 4 compare = equals }
+							check_variable = { var = SPA_garrison_control value = 3 compare = greater_than_or_equals}
 						}
 						any_owned_state = {
 							check_variable = { var = SPA_garrison_control value = 2 compare = equals }
@@ -262,7 +196,7 @@ country_event = {
 				else_if = {
 					limit = {
 						41 = {
-							check_variable = { var = SPA_garrison_control value = 4 compare = equals }
+							check_variable = {var = SPA_garrison_control value = 3 compare = greater_than_or_equals }
 						}
 						any_owned_state = {
 							check_variable = { var = SPA_garrison_control value = 3 compare = equals }
@@ -277,20 +211,28 @@ country_event = {
 						}
 						set_state_flag = SPR_sided_with_republicans_flag
 						create_unit = {
-							division = "division_template = \"Guarnición Republicana\" start_experience_factor = 0.1" 
-							owner = SPN
-							allow_spawning_on_enemy_provs = yes
-							count = 1
-						}
-						create_unit = {
 							division = "division_template = \"Guarnición Nacionalista\" start_experience_factor = 0.1" 
 							owner = SPR
 							allow_spawning_on_enemy_provs = yes
 							count = 2
 						}
+						create_unit = {
+							division = "division_template = \"Guarnición Republicana\" start_experience_factor = 0.1" 
+							owner = SPN
+							allow_spawning_on_enemy_provs = yes
+							count = 1
+						}
+						
 					}
 				}
 					# If player has completed this focus, give North Africa and spawn units there (this effect is run first so the tag has any territory whatsoever - it's assumed all players take this focus)
+				if = {
+					limit = {
+						SPR = {
+							has_completed_focus = SPA_the_army_of_africa
+						}
+					}
+
 					division_template = {
 						name = "División del Ejército de África"
 						template_counter = 4
@@ -356,6 +298,7 @@ country_event = {
 						}
 						
 					}
+				}
 				
 				
 				# Add 3 Republican garrisons to every state where the Nationalists have NONE control
@@ -433,7 +376,10 @@ country_event = {
 				every_state = {
 					limit = {
 						check_variable = { var = SPA_garrison_control value = 3 compare = equals }
-						NOT = { has_state_flag = SPR_northern_garrisons_state_flag }
+						NOT = { 
+							has_state_flag = SPR_northern_garrisons_state_flag
+							
+						}
 					}
 					# Transfer states and set flag to prepare for post-Civil War de-coring
 					SPR = {
@@ -1740,125 +1686,7 @@ country_event = {
 							allow_spawning_on_enemy_provs = yes
 							count = 1
 						}
-						if = {
-							limit = {
-								difficulty > 1
-								ROOT = {
-									is_ai = no
-								}
-							}
-							create_unit = {
-								division = "division_template = \"Brigada de Juventudes Sindicales\" start_experience_factor = 0.2" 
-								owner = SPN
-								allow_spawning_on_enemy_provs = yes
-								count = 1
-							}
-						}
-					}
-					random_state = {
-						limit = {
-							check_variable = { var = SPA_garrison_control value = 2 compare = less_than_or_equals }
-							check_variable = { var = SPA_garrison_control value = 1 compare = greater_than_or_equals }
-							if = {
-								limit = {
-									ROOT = {
-										is_ai = yes
-										OR = {
-											AND = {
-												is_historical_focus_on = yes
-												has_game_rule = {
-													rule = SPR_ai_behavior 
-													option = DEFAULT
-												}
-											}
-											has_country_flag = SPR_AI_RANDOM_NATIONALIST_HISTORICAL
-											has_game_rule = {
-												rule = SPR_ai_behavior 
-												option = NATIONALIST_HISTORICAL
-											}
-										}
-									}
-								}
-								NOT = {
-									state = 790
-									state = 792
-									state = 177
-								}
-							}
-						}
-						create_unit = {
-							division = "division_template = \"Brigada de Juventudes Sindicales\" start_experience_factor = 0.2" 
-							owner = SPN
-							allow_spawning_on_enemy_provs = yes
-							count = 1
-						}
-						if = {
-							limit = {
-								difficulty > 1
-								ROOT = {
-									is_ai = no
-								}
-							}
-							create_unit = {
-								division = "division_template = \"Brigada de Juventudes Sindicales\" start_experience_factor = 0.2" 
-								owner = SPN
-								allow_spawning_on_enemy_provs = yes
-								count = 1
-							}
-						}
-					}
-					random_state = {
-						limit = {
-							check_variable = { var = SPA_garrison_control value = 2 compare = less_than_or_equals }
-							check_variable = { var = SPA_garrison_control value = 1 compare = greater_than_or_equals }
-							if = {
-								limit = {
-									ROOT = {
-										is_ai = yes
-										OR = {
-											AND = {
-												is_historical_focus_on = yes
-												has_game_rule = {
-													rule = SPR_ai_behavior 
-													option = DEFAULT
-												}
-											}
-											has_country_flag = SPR_AI_RANDOM_NATIONALIST_HISTORICAL
-											has_game_rule = {
-												rule = SPR_ai_behavior 
-												option = NATIONALIST_HISTORICAL
-											}
-										}
-									}
-								}
-								NOT = {
-									state = 790
-									state = 792
-									state = 177
-								}
-							}
-						}
-						create_unit = {
-							division = "division_template = \"Brigada de Juventudes Sindicales\" start_experience_factor = 0.2" 
-							owner = SPN
-							allow_spawning_on_enemy_provs = yes
-							count = 1
-						}
-						if = {
-							limit = {
-								difficulty > 1
-								ROOT = {
-									is_ai = no
-								}
-							}
-							create_unit = {
-								division = "division_template = \"Brigada de Juventudes Sindicales\" start_experience_factor = 0.2" 
-								owner = SPN
-								allow_spawning_on_enemy_provs = yes
-								count = 1
-							}
-						}
-					}
+					}	
 				}
 				# If Republicans had time to Distribute Arms to the People, add these divisions to random states that have at MOST WEAK Nationalist control
 				if = {
