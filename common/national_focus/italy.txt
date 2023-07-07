@@ -41,7 +41,7 @@ focus_tree = {
 
 	focus = {
 		id = ITA_march_of_the_iron_will
-		icon = GFX_focus_generic_attack_ethiopia
+		icon = GFX_focus_ITA_aerial_legion
 		mutually_exclusive = { focus = ITA_victory_by_any_means }
 		relative_position_id = ITA_victoryinETH
 		x = 12
@@ -71,7 +71,7 @@ focus_tree = {
 
 	focus = {
 		id = ITA_victoryinETH
-		icon = GFX_ITA_Ultranationalism_2
+		icon = GFX_focus_ITA_bold_fascism
 		prerequisite = { focus = ITA_march_of_the_iron_will }
 
 		x = 10
@@ -106,7 +106,7 @@ focus_tree = {
 
 	focus = {
 		id = ITA_Hitler_visits_Rome
-		icon = GFX_goal_italy_draw_closer_to_germany
+		icon = GFX_goal_ita_pact_of_steel
 		prerequisite = { focus = ITA_victoryinETH }
 		relative_position_id = ITA_victoryinETH
 		x = -2
@@ -324,7 +324,7 @@ focus_tree = {
 	}
 	focus = {
 		id = ITA_pact_of_steel
-		icon = GFX_ITA_Generic_Ultranat_Eagle
+		icon = GFX_focus_ITA_pact_of_steel
 		prerequisite = { focus = ITA_force_a_nationalist_victory focus = ITA_aid_the_caudillo }
 		relative_position_id = ITA_Hitler_visits_Rome
 		available = {
@@ -387,7 +387,7 @@ focus_tree = {
 
 	focus = {
 		id = ITA_culto_del_duce
-		icon = GFX_focus_ITA_culto_del_duce
+		icon = GFX_focus_ITA_muss_greatness
 		prerequisite = { focus = ITA_victoryinETH }
 
 		allow_branch = {
@@ -411,7 +411,7 @@ focus_tree = {
 	}
 	focus = {
 		id = ITA_Minculpop
-		icon = GFX_focus_generic_italy_propaganda
+		icon = GFX_goal_ITA_ministero_cultura_popolare
 		prerequisite = { focus = ITA_victoryinETH }
 		relative_position_id = ITA_victoryinETH
 		x = 2
@@ -543,7 +543,7 @@ focus_tree = {
 	}	
 	focus = {
 		id = ITA_trains_on_time
-		icon = GFX_ITA_victory_by_any_means
+		icon = GFX_focus_ITA_muss_trains
 		prerequisite = { focus = ITA_la_battaglia_per_la_terra focus = ITA_la_battaglia_del_grano }
 		relative_position_id = ITA_Minculpop
 		x = 0
@@ -1441,6 +1441,7 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_INDUSTRY}
 
 		completion_reward = {
+		    add_research_slot = 1
 			custom_effect_tooltip = ITA_modify_ricostruzione_industriale_dynamic_modifier_ns_intro
 			add_to_variable = { 
 				var = ITA_iri_production_speed_infrastructure_factor 
@@ -2904,12 +2905,35 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
+			custom_effect_tooltip = ITA_modify_ricostruzione_industriale_dynamic_modifier_ns_intro
+			add_to_variable = { 
+				var = ITA_iri_local_resources_factor 
+				value = 0.05 
+				tooltip = local_resources_factor_tooltip
+			}
+			add_to_variable = { 
+				var = ITA_industry_consumer_goods_modifier 
+				value = 0.01 
+				tooltip = industry_consumer_goods_factor_tooltip
+			}
+			add_to_variable = { 
+				var = ITA_political_power_gain_modifier 
+				value = -0.15 
+				tooltip = political_power_gain_modifier
+			}
+
+			custom_effect_tooltip = ITA_modify_military_industry_dynamic_modifier_ns_intro
+			add_to_variable = { 
+				var = ITA_production_speed_synthetic_rubber_refinery_factor_var 
+				value = 0.01
+				tooltip = synthetic_rubber_refinery_factor_tooltip
+			}
 			add_tech_bonus = {
-				bonus = 2
-				uses = 3
+				bonus = 1
+				uses = 2
 				category = excavation_tech
 			}
-			add_timed_idea = { idea = ITA_devaluated_lira days = 365 }
+			add_timed_idea = { idea = ITA_devaluated_lira days = 165 }
 		}
 	}
 	
@@ -2930,13 +2954,15 @@ focus_tree = {
 		mutually_exclusive = { focus = ITA_end_fiat_ansaldo_duopoly }
 
 		completion_reward = {
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = ITA_renato_ricci
 			set_country_flag = ITA_stat_iri
 			custom_effect_tooltip = ITA_unlock_iri_programs
 		}
 	}
 	focus = {
 		id = ITA_continue_puricellis_work
-		icon = GFX_focus_generic_truck
+		icon = GFX_ITA_italian_highways
 		x = 1
 		y = 1
 		relative_position_id = ITA_iri_ente_permanente
@@ -2948,6 +2974,11 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 
 		completion_reward = {
+			add_tech_bonus = {
+				bonus = 1
+				uses = 1
+				category = construction_tech
+			}
 			every_state = {
 				limit = {
 					OR = {
@@ -2991,18 +3022,29 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			313 = {
+		add_tech_bonus = {
+				name = industrial_bonus
+				bonus = 0.8
+				uses = 2
+				category = industry
+			}
+			158 = {
 				add_building_construction  = {
 					type = industrial_complex
 					level = 2
 					instant_build = yes
 				}
-				add_extra_state_shared_building_slots = 2
+				add_building_construction  = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = 3
 			}
 			add_resource = {
 				type = steel
-				amount = 27
-				state = 313
+				amount = 40
+				state = 158
 			}
 		}
 	}
@@ -3022,6 +3064,8 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
+			custom_effect_tooltip = available_industrial_concern
+			show_ideas_tooltip = ITA_agip
 			custom_effect_tooltip = ITA_modify_ricostruzione_industriale_dynamic_modifier_ns_intro
 
 			add_to_variable = {
@@ -3036,7 +3080,6 @@ focus_tree = {
 				uses = 2
 				category = synth_resources
 			}
-			custom_effect_tooltip = agip_exploit_tt
 		}
 	}
 	focus = {
@@ -3056,12 +3099,7 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = ITA_guido_jung
-			custom_effect_tooltip = ITA_modify_ricostruzione_industriale_dynamic_modifier_ns_intro
-			add_to_variable = { 
-				var = ITA_iri_production_speed_buildings_factor 
-				value = 0.2 
-				tooltip = buildings_build_speed_factor_tooltip
-			}
+
 			159 = {
 				add_building_construction  = {
 					type = industrial_complex
@@ -3104,16 +3142,16 @@ focus_tree = {
 
 		completion_reward = {
 			custom_effect_tooltip = ITA_modify_ricostruzione_industriale_dynamic_modifier_ns_intro
-
-			add_to_variable = {
-				var = 
-				value = 0.2
-				tooltip = local_resources_factor_tooltip
+			add_to_variable = { 
+				var = ITA_iri_production_speed_buildings_factor 
+				value = 0.2 
+				tooltip = buildings_build_speed_factor_tooltip
 			}
 		}
 	}
+###cq to import new techs
 	focus = {
-		id = ITA_modernize_construction_and_extraction
+		id = ITA_modernize_construction_and_production
 		icon = GFX_goal_ITA_foreign_construction
 		x = -1
 		y = 1
@@ -3126,10 +3164,21 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
+			custom_effect_tooltip = ITA_modify_ricostruzione_industriale_dynamic_modifier_ns_intro
+			add_to_variable = { 
+				var = ITA_industry_consumer_goods_modifier 
+				value = 0.05 
+				tooltip = industry_consumer_goods_modifier_tooltip
+			}
 			add_tech_bonus = {
 				bonus = 2
 				uses = 2
 				category = construction_tech
+			}
+			add_tech_bonus = {
+				bonus = 1
+				uses = 2
+				category = industry
 			}
 		}
 	}
@@ -3142,11 +3191,12 @@ focus_tree = {
 		ai_will_do = {
 			factor = 10
 		}
-		prerequisite = { focus = ITA_modernize_construction_and_extraction focus = ITA_deregulation}
+		prerequisite = { focus = ITA_modernize_construction_and_production focus = ITA_deregulation}
 		relative_position_id = ITA_privatize_iri
 		available_if_capitulated = yes
 
 		completion_reward = {
+		    add_research_slot = 1
 			160 = {
 				add_building_construction  = {
 					type = industrial_complex
@@ -3191,7 +3241,10 @@ focus_tree = {
 		y =  2
 		cost = 5
 		available = {
-			has_full_control_of_state = 159
+			GER = {
+				has_completed_focus = GER_demand_sudetenland
+			}
+
 		}
 
 		search_filters = {FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH}
@@ -3364,7 +3417,7 @@ focus_tree = {
 
 	focus = {
 		id = ITA_economia_armata
-		icon = GFX_goal_ita_economia_armata
+		icon = GFX_ITA_The_industrial_triangle
 		prerequisite = { focus = ITA_end_fiat_ansaldo_duopoly focus = ITA_modernize_ansaldo_facilities }
 		prerequisite = { focus = ITA_joint_industrial_development focus = ITA_agip }
 
