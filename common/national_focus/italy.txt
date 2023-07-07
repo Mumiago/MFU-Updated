@@ -145,7 +145,7 @@ focus_tree = {
 		id = ITA_aid_the_caudillo
 		icon = GFX_focus_intervention_spain_nationalists
 		prerequisite = { focus = ITA_Hitler_visits_Rome }
-		mutually_exclusive = { focus = ITA_spain_or_bust }
+		mutually_exclusive = { focus = ITA_force_a_nationalist_victory }
 		x = -1
 		y = 1
 		relative_position_id = ITA_Hitler_visits_Rome
@@ -221,8 +221,8 @@ focus_tree = {
 	focus = {
 		id = ITA_force_a_nationalist_victory
 		icon = GFX_FRA_support_spain
-		prerequisite = { focus = ITA_Hitler_visits_Rome }
-		mutually_exclusive = { focus = ITA_equipment_shipments_to_spain }
+		prerequisite = { focus = ITA_Hitler_visits_Rome  }
+		mutually_exclusive = { focus = ITA_aid_the_caudillo }
 		x = 1
 		y = 1
 		relative_position_id = ITA_Hitler_visits_Rome
@@ -325,7 +325,7 @@ focus_tree = {
 	focus = {
 		id = ITA_pact_of_steel
 		icon = GFX_ITA_Generic_Ultranat_Eagle
-		prerequisite = { focus = ITA_Hitler_visits_Rome }
+		prerequisite = { focus = ITA_force_a_nationalist_victory focus = ITA_aid_the_caudillo }
 		relative_position_id = ITA_Hitler_visits_Rome
 		available = {
 			has_government = fascism
@@ -1384,7 +1384,7 @@ focus_tree = {
 		icon = GFX_focus_ITA_ministry_of_italian_africa
 		prerequisite = { focus = ITA_victoryinETH}
 
-		x = 7
+		x = 8
 		y = 1
 		relative_position_id = ITA_victoryinETH
 		cost = 5
@@ -1814,7 +1814,7 @@ focus_tree = {
 		icon = GFX_goal_generic_construct_infrastructure
 		prerequisite = { focus = ITA_massive_colonial_investments  }
 
-		x = -2
+		x = 2
 		y = 1
 		relative_position_id = ITA_massive_colonial_investments
 		cost = 7.145
@@ -1849,11 +1849,65 @@ focus_tree = {
 		}		
 	}
 	focus = {
+		id = ITA_spirito_fascista
+		icon = GFX_goal_generic_propaganda
+		prerequisite = { focus = ITA_immigration_ethiopia  }
+
+		x = 0
+		y = 1
+		relative_position_id = ITA_immigration_ethiopia
+		cost = 2.2
+		ai_will_do = {
+			factor = 10
+		}
+		available = { 
+			271 = {
+				CONTROLLER = {
+					OR = {
+						tag = ITA
+						is_subject_of = ITA
+					}
+				}
+			}
+		}
+
+		bypass = {
+			
+		}
+
+		completion_reward = {
+			271 = {
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+						}
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+					add_compliance = 10
+			}
+			550 = {
+				add_compliance = 10
+			}
+			559 = {
+				add_compliance = 10
+			}
+		}		
+	}
+	focus = {
 		id = ITA_empire_of_work
 		icon = GFX_goal_generic_national_unity
 		prerequisite = { focus = ITA_massive_colonial_investments  }
 
-		x = 2
+		x = 0
 		y = 1
 		relative_position_id = ITA_massive_colonial_investments
 		cost = 7.145
@@ -1934,7 +1988,7 @@ focus_tree = {
 
 	focus = {
 		id = ITA_import_oil_drilling_equipment
-		icon = GFX_goal_generic_oil_refinery
+		icon = GFX_goal_ITA_fondo_nazionale_carburante
 		prerequisite = { focus = ITA_exploit_the_empire }
 
 		x = 1
@@ -2031,7 +2085,7 @@ focus_tree = {
 		icon = GFX_focus_generic_improve_roads
 		prerequisite = { focus = ITA_massive_colonial_investments}
 
-		x = 0
+		x = -2
 		y = 1
 		relative_position_id = ITA_massive_colonial_investments
 		cost = 5
@@ -3000,6 +3054,14 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = ITA_guido_jung
+			custom_effect_tooltip = ITA_modify_ricostruzione_industriale_dynamic_modifier_ns_intro
+			add_to_variable = { 
+				var = ITA_iri_production_speed_buildings_factor 
+				value = 0.2 
+				tooltip = buildings_build_speed_factor_tooltip
+			}
 			159 = {
 				add_building_construction  = {
 					type = industrial_complex
@@ -3011,7 +3073,7 @@ focus_tree = {
 			158 = {
 				add_building_construction  = {
 					type = industrial_complex
-					level = 1
+					level = 2
 					instant_build = yes
 				}
 				add_extra_state_shared_building_slots = 1
@@ -3019,15 +3081,12 @@ focus_tree = {
 			160 = {
 				add_building_construction  = {
 					type = industrial_complex
-					level = 1
+					level = 2
 					instant_build = yes
 				}
 				add_extra_state_shared_building_slots = 1
 			}
-			add_timed_idea = {
-				idea = ITA_privatized_iri
-				days = 365
-			}
+
 		}
 	}
 	focus = {
@@ -3047,7 +3106,7 @@ focus_tree = {
 			custom_effect_tooltip = ITA_modify_ricostruzione_industriale_dynamic_modifier_ns_intro
 
 			add_to_variable = {
-				var = ITA_iri_construction_speed_factor
+				var = 
 				value = 0.2
 				tooltip = local_resources_factor_tooltip
 			}
