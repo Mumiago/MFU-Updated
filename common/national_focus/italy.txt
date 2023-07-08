@@ -307,7 +307,7 @@ focus_tree = {
 	}
 	focus = {
 		id = ITA_pact_of_steel
-		icon = GFX_focus_ITA_pact_of_steel
+		icon = GFX_goal_further_military_cooperation
 		prerequisite = { focus = ITA_force_a_nationalist_victory focus = ITA_aid_the_caudillo }
 		relative_position_id = ITA_Hitler_visits_Rome
 		available = {
@@ -728,7 +728,7 @@ focus_tree = {
 
 	focus = {
 		id = ITA_german_military_cooperation
-		icon = GFX_focus_ger_oppose_hitler
+		icon = GFX_focus_ITA_pact_of_steel
 		prerequisite = { focus = ITA_pact_of_steel }
 		prerequisite = { focus = ITA_by_blood_alone }
 
@@ -777,7 +777,7 @@ focus_tree = {
 	}
 	focus = {
 		id = ITA_learn_from_the_luftwaffe
-		icon = GFX_focus_generic_long_range_aircraft
+		icon = GFX_goal_GER_luftwaffe
 		prerequisite = { focus = ITA_german_military_cooperation }
 		x = 2
 		y = 1
@@ -848,7 +848,7 @@ focus_tree = {
 	}
 	focus = {
 		id = ITA_learn_from_wehrmacht
-		icon = GFX_goal_generic_army_motorized
+		icon = GFX_focus_ger_oppose_hitler
 		prerequisite = { focus = ITA_german_military_cooperation }
 		x = -2
 		y = 1
@@ -1302,7 +1302,7 @@ focus_tree = {
 
 	focus = {
 		id = ITA_ARMIR
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_ITA_armir
 		prerequisite = {  focus = ITA_learn_from_the_luftwaffe focus = ITA_learn_from_wehrmacht}
 
 		x = 0
@@ -1399,7 +1399,7 @@ focus_tree = {
 
 	focus = {
 		id = ITA_massive_colonial_investments
-		icon = GFX_focus_generic_develop_ethiopia
+		icon = GFX_goal_italy_colonial_investments
 		prerequisite = { focus = ITA_ministry_of_italian_africa }
 
 		x = 0
@@ -1424,375 +1424,128 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_INDUSTRY}
 
 		completion_reward = {
+			add_timed_idea = {
+				idea = ITA_spent_budget
+				days = 365
+			}
 		    add_research_slot = 1
 			custom_effect_tooltip = ITA_modify_ricostruzione_industriale_dynamic_modifier_ns_intro
 			add_to_variable = { 
 				var = ITA_iri_production_speed_infrastructure_factor 
-				value = 0.025 
+				value = 0.05 
 				tooltip = infrastructure_build_speed_factor_tooltip
 			}
 			add_to_variable = { 
-				var = ITA_iri_production_speed_dockyard_factor 
-				value = 0.025 
-				tooltip = dockyard_build_speed_factor_tooltip
-			}
-			add_to_variable = { 
-				var = ITA_iri_production_speed_naval_base_factor 
-				value = 0.025 
-				tooltip = naval_base_build_speed_factor_tooltip
-			}
-			add_to_variable = { 
 				var = ITA_iri_production_speed_buildings_factor 
-				value = 0.025 
+				value = 0.05 
 				tooltip = buildings_build_speed_factor_tooltip
 			}
-
-			custom_effect_tooltip = ITA_modify_military_industry_dynamic_modifier_ns_intro
-			add_to_variable = { 
-				var = ITA_iri_production_speed_naval_base_factor 
-				value = 0.025 
-				tooltip = industrial_capacity_factory_tooltip
-			}
-			add_to_variable = { 
-				var = ITA_iri_production_speed_buildings_factor 
-				value = 0.025 
-				tooltip = industrial_dockyard_capacity_factory_tooltip
-			}
-			custom_effect_tooltip = ITA_develop_ethiopia_tt
-
-			if = {
-				limit = {
-					271 = { #SHEWA (Addis Ababa)
-						OR = {
-							is_fully_controlled_by = ROOT
-							controller = {
-								is_subject_of = ROOT
-								has_full_control_of_state = PREV
-							}
+			
+			271 = {
+					add_building_construction = {
+						type = infrastructure
+						level = 3
+						instant_build = yes
 						}
-						NOT = { has_state_flag = ITA_improved_infrastructure_in_state_flag }
+					add_building_construction = {
+						type = arms_factory
+						level = 2
+						instant_build = yes
 					}
+					add_building_construction = {
+						type = industrial_complex
+						level = 5
+						instant_build = yes
+					}
+					add_extra_state_shared_building_slots = 10
+					add_compliance = 20
+				add_dynamic_modifier = {
+					modifier = ITA_state_development_africa
+					days = 365
 				}
-				271 = { #SHEWA (Addis Ababa)
-					set_state_flag = ITA_improved_infrastructure_in_state_flag
+			}
+			550 = {
 					add_building_construction = {
 						type = infrastructure
 						level = 1
 						instant_build = yes
+						}
+
+					add_building_construction = {
+						type = industrial_complex
+						level = 3
+						instant_build = yes
 					}
-					add_extra_state_shared_building_slots = 1
+					add_extra_state_shared_building_slots = 5
+					add_compliance = 10
+				add_dynamic_modifier = {
+					modifier = ITA_state_development_africa
+					days = 365
 				}
 			}
-			else_if = {
-				limit = {
-					ROOT = {
-						any_controlled_state = {
-							is_core_of = ETH
-							is_fully_controlled_by = ROOT
-							NOT = { has_state_flag = ITA_improved_infrastructure_in_state_flag }
-						}
-					}
-				}
-				ROOT = {
-					random_controlled_state = {
-						prioritize = { 835 } #HARARGHE
-						limit = {
-							is_core_of = ETH
-							is_fully_controlled_by = ROOT
-							NOT = { has_state_flag = ITA_improved_infrastructure_in_state_flag }
-						}
-						set_state_flag = ITA_improved_infrastructure_in_state_flag
-						add_building_construction = {
-							type = infrastructure
-							level = 1
-							instant_build = yes
-						}
-						add_extra_state_shared_building_slots = 1
-					}
-				}
-			}
-			else_if = {
-				limit = {
-					any_subject_country = { #FOR PUPPETS
-						any_controlled_state = {
-							is_core_of = ETH
-							is_fully_controlled_by = PREV
-						}
-					}
-				}
-				random_other_country = {
-					limit = {
-						is_subject_of = ROOT
-						any_controlled_state = {
-							is_core_of = ETH
-							is_fully_controlled_by = PREV
-						}
-					}
-					random_controlled_state = {
-						prioritize = { 835 } #HARARGHE
-						limit = {
-							is_core_of = ETH
-							is_fully_controlled_by = PREV
-							NOT = { has_state_flag = ITA_improved_infrastructure_in_state_flag }
-						}
-						set_state_flag = ITA_improved_infrastructure_in_state_flag
-						add_building_construction = {
-							type = infrastructure
-							level = 1
-							instant_build = yes
-						}
-						add_extra_state_shared_building_slots = 1
-					}
-				}
-			}
-			if = {
-				limit = {
-					843 = { #WELLO
-						OR = {
-							is_fully_controlled_by = ROOT
-							controller = {
-								is_subject_of = ROOT
-								has_full_control_of_state = PREV
-							}
-						}
-						NOT = { has_state_flag = ITA_improved_infrastructure_in_state_flag }
-					}
-				}
-				843 = { #WELLO
+			559 = {
 					add_building_construction = {
 						type = infrastructure
 						level = 1
 						instant_build = yes
-					}
-					add_extra_state_shared_building_slots = 1
-				}
-			}
-			else_if = {
-				limit = {
-					ROOT = {
-						any_controlled_state = {
-							is_core_of = ETH
-							is_fully_controlled_by = ROOT
-							NOT = { has_state_flag = ITA_improved_infrastructure_in_state_flag }
 						}
-					}
-				}
-				ROOT = {
-					random_controlled_state = {
-						prioritize = { 837 } #SIDAMO
-						limit = {
-							is_core_of = ETH
-							is_fully_controlled_by = ROOT
-							NOT = { has_state_flag = ITA_improved_infrastructure_in_state_flag }
-						}
-						set_state_flag = ITA_improved_infrastructure_in_state_flag
-						add_building_construction = {
-							type = infrastructure
-							level = 1
-							instant_build = yes
-						}
-						add_extra_state_shared_building_slots = 1
-					}
-				}
-			}
-			else_if = {
-				limit = {
-					any_subject_country = { #FOR PUPPETS
-						any_controlled_state = {
-							is_core_of = ETH
-							is_fully_controlled_by = PREV
-							NOT = { has_state_flag = ITA_improved_infrastructure_in_state_flag }
-						}
-					}
-				}
-				random_other_country = {
-					limit = {
-						is_subject_of = ROOT
-						any_controlled_state = {
-							is_core_of = ETH
-							is_fully_controlled_by = PREV
-							NOT = { has_state_flag = ITA_improved_infrastructure_in_state_flag }
-						}
-					}
-					random_controlled_state = {
-						prioritize = { 837 } #SIDAMO
-						limit = {
-							is_core_of = ETH
-							is_fully_controlled_by = PREV
-							NOT = { has_state_flag = ITA_improved_infrastructure_in_state_flag }
-						}
-						set_state_flag = ITA_improved_infrastructure_in_state_flag
-						add_building_construction = {
-							type = infrastructure
-							level = 1
-							instant_build = yes
-						}
-						add_extra_state_shared_building_slots = 1
-					}
-				}
-			}
 
-			if = {
-				limit = {
-					842 = { #TIGRAY
-						OR = {
-							is_fully_controlled_by = ROOT
-							controller = {
-								is_subject_of = ROOT
-								has_full_control_of_state = PREV
-							}
-						}
-						NOT = { has_state_flag = ITA_improved_infrastructure_in_state_flag }
-					}
-				}
-				842 = { #TIGRAY
 					add_building_construction = {
-						type = infrastructure
-						level = 1
+						type = industrial_complex
+						level = 2
 						instant_build = yes
 					}
-					add_extra_state_shared_building_slots = 1
+					add_extra_state_shared_building_slots = 4
+					add_compliance = 10
+				add_dynamic_modifier = {
+					modifier = ITA_state_development_africa
+					days = 365
 				}
 			}
-			else_if = {
-				limit = {
-					ROOT = {
-						any_controlled_state = {
-							is_core_of = ETH
-							is_fully_controlled_by = ROOT
-							NOT = { has_state_flag = ITA_improved_infrastructure_in_state_flag }
-						}
-					}
-				}
-				ROOT = {
-					random_controlled_state = {
-						prioritize = { 841 } #BEGEMDER
-						limit = {
-							is_core_of = ETH
-							is_fully_controlled_by = ROOT
-							NOT = { has_state_flag = ITA_improved_infrastructure_in_state_flag }
-						}
-						set_state_flag = ITA_improved_infrastructure_in_state_flag
-						add_building_construction = {
-							type = infrastructure
-							level = 1
-							instant_build = yes
-						}
-						add_extra_state_shared_building_slots = 1
-					}
-				}
-			}
-			else_if = {
-				limit = {
-					any_subject_country = { #FOR PUPPETS
-						any_controlled_state = {
-							is_core_of = ETH
-							is_fully_controlled_by = PREV
-							NOT = { has_state_flag = ITA_improved_infrastructure_in_state_flag }
-						}
-					}
-				}
-				random_other_country = {
-					limit = {
-						is_subject_of = ROOT
-						any_controlled_state = {
-							is_core_of = ETH
-							is_fully_controlled_by = PREV
-							NOT = { has_state_flag = ITA_improved_infrastructure_in_state_flag }
-						}
-					}
-					random_controlled_state = {
-						prioritize = { 841 } #BEGEMDER
-						limit = {
-							is_core_of = ETH
-							is_fully_controlled_by = PREV
-							NOT = { has_state_flag = ITA_improved_infrastructure_in_state_flag }
-						}
-						set_state_flag = ITA_improved_infrastructure_in_state_flag
-						add_building_construction = {
-							type = infrastructure
-							level = 1
-							instant_build = yes
-						}
-						add_extra_state_shared_building_slots = 1
-					}
-				}
-			}
-
-
-			448 = { #TRIPOLI
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-				add_extra_state_shared_building_slots = 1
-				set_state_flag = ITA_improved_infrastructure_in_state_flag
-			}
-			450 = { #BENGHALI
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-				add_extra_state_shared_building_slots = 1
-				set_state_flag = ITA_improved_infrastructure_in_state_flag
-			}
-			451 = { #DERNA
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-				add_extra_state_shared_building_slots = 1
-				set_state_flag = ITA_improved_infrastructure_in_state_flag
-			}
-
-
-			550 = { #ERITREA
-				set_state_flag = ITA_improved_infrastructure_in_state_flag
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-				add_extra_state_shared_building_slots = 1
-			}
-
-
-			559 = { #SOMALILAND
-				set_state_flag = ITA_improved_infrastructure_in_state_flag
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-				add_extra_state_shared_building_slots = 1
-			}
-			if = {
-				limit = {
-					844 = { #JUBALAND
-						OR = {
-							is_fully_controlled_by = ROOT
-							any_other_country = {
-								is_subject_of = ROOT
-								has_full_control_of_state = 559
-							}
-						}
-					}
-				}
-				844 = { #JUBALAND
-					set_state_flag = ITA_improved_infrastructure_in_state_flag
+			448 = {
 					add_building_construction = {
 						type = infrastructure
-						level = 1
+						level = 2
+						instant_build = yes
+						}
+					add_building_construction = {
+						type = arms_factory
+						level = 2
 						instant_build = yes
 					}
-					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 4
+						instant_build = yes
+					}
+					add_extra_state_shared_building_slots = 10
+					add_compliance = 10
+				add_dynamic_modifier = {
+					modifier = ITA_state_development_africa
+					days = 365
+				}
+			}
+			450 = {
+					add_building_construction = {
+						type = infrastructure
+						level = 3
+						instant_build = yes
+						}
+
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
+					add_extra_state_shared_building_slots = 4
+					add_compliance = 10
+				add_dynamic_modifier = {
+					modifier = ITA_state_development_africa
+					days = 365
 				}
 			}
 		}
-	}
+     }
 	focus = {
 		id = ITA_immigration_ethiopia
 		icon = GFX_goal_generic_construct_infrastructure
@@ -1888,7 +1641,7 @@ focus_tree = {
 	}
 	focus = {
 		id = ITA_empire_of_work
-		icon = GFX_goal_generic_national_unity
+		icon = GFX_focus_ITA_workhouse
 		prerequisite = { focus = ITA_massive_colonial_investments  }
 
 		x = 0
@@ -1927,7 +1680,7 @@ focus_tree = {
 	}
 	focus = {
 		id = ITA_exploit_the_empire
-		icon = GFX_goal_generic_construction
+		icon = GFX_goal_ITA_exploit_empire
 		prerequisite = { focus = ITA_empire_of_work  }
 
 		x = 0
@@ -2024,6 +1777,7 @@ focus_tree = {
 	focus = {
 		id = ITA_saiga
 		prerequisite = { focus = ITA_exploit_the_empire }
+		icon = GFX_goal_ita_saiga
 
 		x = -1
 		y = 1
@@ -2066,7 +1820,7 @@ focus_tree = {
 	}
 	focus = {
 		id = ITA_via_balbia
-		icon = GFX_focus_generic_improve_roads
+		icon = GFX_goal_ita_via_balbia
 		prerequisite = { focus = ITA_massive_colonial_investments}
 
 		x = -2
@@ -2132,7 +1886,7 @@ focus_tree = {
 
 	focus = {
 		id = ITA_via_della_vittoria
-		icon = GFX_goal_reichsautobahn
+		icon = GFX_ITA_ob_sud
 		prerequisite = { focus = ITA_via_balbia }
 
 		x = 0
@@ -2140,8 +1894,6 @@ focus_tree = {
 		relative_position_id = ITA_via_balbia
 		cost = 5
 		available = {
-			451 = { is_controlled_by_ROOT_or_ally = yes }
-			452 = { is_controlled_by_ROOT_or_ally = yes }
 		}
 
 		search_filters = {FOCUS_FILTER_INDUSTRY}
@@ -2164,26 +1916,6 @@ focus_tree = {
 					add_compliance = 5
 				}
 			}
-			452 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-				add_dynamic_modifier = {
-					modifier = ITA_state_development_africa
-					days = 180 
-				}
-				if = {
-					limit = {
-						has_resistance = yes
-					}
-					add_compliance = 5
-				}
-			}
-
-			custom_effect_tooltip = ITA_via_della_vittoria_extra_states_tt
-
 			#LIBYA
 			if = {
 				limit = {
@@ -2495,10 +2227,33 @@ focus_tree = {
 		y = 1
 		relative_position_id = ITA_via_della_vittoria
 		cost = 5
-		available = {
-
-		ITA = {	controls_state = 115 }
-		ITA = { controls_state = 448 }
+		available = {	
+		AND = {
+			GER = {
+				has_completed_focus = GER_arbeitseinsatz
+			}
+			OR = {
+				ROOT = {
+					controls_state = 452 
+				}
+				any_other_country = {
+					is_in_faction_with = GER
+					controls_state = 452
+				}	
+				AND = {
+					ITA = {
+						OR = {
+							controls_state = 458 
+							controls_state = 448 
+							controls_state = 449 
+							controls_state = 450 
+							controls_state = 451 
+						}
+					}
+					date > 1942.1.1
+				}
+			}
+		}
 		}
 
 
@@ -2508,6 +2263,48 @@ focus_tree = {
 					state = 116
 				}
 				add_dynamic_modifier = { modifier = malta_offensive days = 90 }
+			}
+			random_owned_controlled_state = {
+				prioritize = { 161 }
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = arms_factory
+					level = 5
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				prioritize = { 159 }
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = arms_factory
+					level = 5
+					instant_build = yes
+				}
+			}
+			GER = {
+				custom_effect_tooltip = GER_elalamein_tt
+				add_to_variable = {
+					GER_arbeitseinsatz_industrial_capacity_factory = 0.1
+				}
+				random_owned_controlled_state = {
+					prioritize = { 65 }
+					add_extra_state_shared_building_slots = 5
+					add_building_construction = {
+						type = arms_factory
+						level = 5
+						instant_build = yes
+					}
+				}
+				random_owned_controlled_state = {
+					prioritize = { 66 }
+					add_extra_state_shared_building_slots = 5
+					add_building_construction = {
+						type = arms_factory
+						level = 5
+						instant_build = yes
+					}
+				}	
 			}
 		}
 	}
@@ -2522,12 +2319,34 @@ focus_tree = {
  		y = 1
  		relative_position_id = ITA_via_della_vittoria
  		cost = 5
- 		available = {
-			447 = { is_controlled_by_ROOT_or_ally = yes }
-			446 = { is_controlled_by_ROOT_or_ally = yes }
-			452 = { is_controlled_by_ROOT_or_ally = yes }
-			
- 		}
+		available = {	
+		AND = {
+			GER = {
+				has_completed_focus = GER_arbeitseinsatz
+			}
+			OR = {
+				ROOT = {
+					controls_state = 452 
+				}
+				any_other_country = {
+					is_in_faction_with = GER
+					controls_state = 452
+				}	
+				AND = {
+					ITA = {
+						OR = {
+							controls_state = 458 
+							controls_state = 448 
+							controls_state = 449 
+							controls_state = 450 
+							controls_state = 451 
+						}
+					}
+					date > 1942.1.1
+				}
+			}
+		}
+		}
 
  		search_filters = {}
 
@@ -2553,6 +2372,48 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
+			random_owned_controlled_state = {
+				prioritize = { 161 }
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = arms_factory
+					level = 5
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				prioritize = { 159 }
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = arms_factory
+					level = 5
+					instant_build = yes
+				}
+			}
+			GER = {
+				custom_effect_tooltip = GER_elalamein_tt
+				add_to_variable = {
+					GER_arbeitseinsatz_industrial_capacity_factory = 0.1
+				}
+				random_owned_controlled_state = {
+					prioritize = { 65 }
+					add_extra_state_shared_building_slots = 5
+					add_building_construction = {
+						type = arms_factory
+						level = 5
+						instant_build = yes
+					}
+				}
+				random_owned_controlled_state = {
+					prioritize = { 66 }
+					add_extra_state_shared_building_slots = 5
+					add_building_construction = {
+						type = arms_factory
+						level = 5
+						instant_build = yes
+					}
+				}	
+			}
  		}
  	}
 
@@ -2565,29 +2426,91 @@ focus_tree = {
  		relative_position_id = ITA_castello_di_sabbia
  		cost = 5
  		available = {
-			675 = { is_controlled_by_ROOT_or_ally = yes }
-			291 = { is_controlled_by_ROOT_or_ally = yes }
-			676 = { is_controlled_by_ROOT_or_ally = yes }
- 		}
-
- 		search_filters = {}
-
- 		completion_reward = {
-			build_railway = {
-				path = { 4206 1086 7151 7001 1544 4440 1631 12413 12839 12046 2097 }
-			}
-
-			random_owned_controlled_state = {
-				prioritize = { 2 }
-				add_extra_state_shared_building_slots = 5 
-				add_building_construction = {
-					type = arms_factory
-					level = 5 
-					instant_build = yes 
+			OR = {
+				AND = {
+					date > 1941.1.1
+					OR = {
+						ROOT = {
+							controls_state = 446 
+						}
+						any_other_country = {
+							is_in_faction_with = GER
+							controls_state = 446
+						}	
+					}
+				}
+				AND = {
+					date > 1941.7.1
+					OR = {
+						ROOT = {
+							controls_state = 452 
+						}
+						any_other_country = {
+							is_in_faction_with = GER
+							controls_state = 452
+						}	
+					}
+				}
+				AND = {
+					ITA = {
+						OR = {
+							controls_state = 458 
+							controls_state = 448 
+							controls_state = 449 
+							controls_state = 450 
+							controls_state = 451 
+						}
+					}
+					date > 1942.6.1
 				}
 			}
- 		}
- 	}
+		}
+		completion_reward = {
+
+			random_owned_controlled_state = {
+				prioritize = { 161 }
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = arms_factory
+					level = 5
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				prioritize = { 159 }
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = arms_factory
+					level = 5
+					instant_build = yes
+				}
+			}
+			GER = {
+				custom_effect_tooltip = GER_elalamein_tt
+				add_to_variable = {
+					GER_arbeitseinsatz_industrial_capacity_factory = 0.1
+				}
+				random_owned_controlled_state = {
+					prioritize = { 52 }
+					add_extra_state_shared_building_slots = 5
+					add_building_construction = {
+						type = arms_factory
+						level = 5
+						instant_build = yes
+					}
+				}
+				random_owned_controlled_state = {
+					prioritize = { 53 }
+					add_extra_state_shared_building_slots = 5
+					add_building_construction = {
+						type = arms_factory
+						level = 5
+						instant_build = yes
+					}
+				}
+			}
+		}
+	}
  	focus = {
  		id = ITA_the_king_of_egypt 
  		icon = GFX_focus_generic_provoke_border_clashes
@@ -2845,27 +2768,47 @@ focus_tree = {
 		ai_will_do = {
 			factor = 10
 		}
-		available = {	
-	   	 	AND = {
+		available = {
+				
 				OR = {
-					NOT = {
-						country_exists = YUG
-					}	
-					YUG = { has_capitulated = yes }
+					ITA = { controls_state = 116 }
+					any_other_country = {
+						is_in_faction_with = ITA
+						controls_state = 116
+					}
 				}
 				OR = {
-					NOT = {
-						country_exists = GRE
-					}	
-					GRE = { has_capitulated = yes }
+					ITA = { controls_state = 446 }
+					any_other_country = {
+						is_in_faction_with = ITA
+						controls_state = 446
+					}
 				}
-			}	
+				OR = {
+					ITA = { controls_state = 453 }
+					any_other_country = {
+						is_in_faction_with = ITA
+						controls_state = 453
+					}
+				}
+				OR = {
+					ITA = { controls_state = 183 }
+					any_other_country = {
+						is_in_faction_with = ITA
+						controls_state = 183
+					}
+				}
+				OR = {
+					ITA = { controls_state = 182 }
+					any_other_country = {
+						is_in_faction_with = ITA
+						controls_state = 182
+					}
+				}
 		}
 		completion_reward = {
-			swap_ideas = { 
-				remove_idea = parola_di_ordine_vincere
-				add_idea = parola_di_ordine_vincere_2
-			}
+		add_political_power = 200
+		add_ideas = mare_nostrum
 		}
 	}
 
@@ -3669,7 +3612,7 @@ focus_tree = {
 
 	focus = {
 		id = ITA_the_results_of_the_ethiopian_war
-		icon = GFX_goal_ITA_status_army
+		icon = GFX_goal_ITA_question_the_high_command
 		relative_position_id = ITA_victoryinETH
 		prerequisite = { focus = ITA_march_of_the_iron_will }
 		x = 24
@@ -4301,6 +4244,7 @@ focus_tree = {
 			remove_ideas = ITA_lack_of_firepower_2
 		}
 	}
+#extra mot and mech attack, but they use special equipment 
 	focus = {
 		id = ITA_bersaglieri_divisions
 		icon = GFX_goal_ITA_more_cannons_for_the_army
