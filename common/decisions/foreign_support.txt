@@ -3,6 +3,692 @@ foreign_support = {
     ##################################################################################################################################################
     ################################################################### ALLIES STUFF FOR CHI & SCW ###################################################
     ##################################################################################################################################################
+	
+	SOV_fund_chinese_offensives = {
+
+		icon = generic_nationalism
+
+		allowed = {
+			tag = SOV
+		}
+
+		available = {
+			country_exists = CHI 
+			JAP = {
+                has_war_with = CHI
+            }
+			has_country_flag = JAP_the_frontlines_stabilized
+			 
+		}
+
+		visible = {
+			country_exists = CHI 
+			JAP = {
+                has_war_with = CHI
+            }
+		}
+
+		cost = 100
+
+		modifier = {
+			civilian_factory_use = 20			
+		}
+
+		ai_will_do = {
+			factor = 25
+		}
+
+		fire_only_once = no	
+
+		days_re_enable = 200
+
+		days_remove = 60
+
+		complete_effect = {
+			custom_effect_tooltip = SOV_fund_chinese_offensive_tt
+			CHI_frontlines_down = yes
+			CHI_frontlines_down = yes
+			hidden_effect = {
+				CHI = {
+					set_country_flag = SOV_chinese_offensive_flag
+				}
+			}
+			CHI = {
+				add_equipment_to_stockpile = { type = pack_artillery_equipment amount = 1000 producer = SOV } 
+				add_equipment_to_stockpile = { type = radio_equipment amount = 1000 producer = SOV } 
+				add_equipment_to_stockpile = { type = motorized_equipment amount = 1000 producer = SOV } 
+				add_equipment_to_stockpile = { type = anti_air_equipment amount = 500 producer = SOV } 
+			}
+
+			
+		}
+		remove_effect = {
+			CHI_frontlines_up = yes
+			CHI_frontlines_up = yes
+			hidden_effect = {
+				CHI = {
+					clr_country_flag = SOV_chinese_offensive_flag
+				}
+			}
+
+		}
+	}
+	SOV_guns_for_china_pre_war = {
+
+		icon = generic_prepare_civil_war
+
+		allowed = {
+			tag = SOV
+		}
+
+		available = {
+
+			has_equipment = { infantry_equipment > 2999 }
+			country_exists = CHI 
+			JAP = {
+                has_completed_focus = JAP_intervene_in_china
+            }
+            
+		}
+
+		visible = {
+		
+			country_exists = CHI 
+           SOV = {
+				has_country_flag = SOV_sino_japanese_war_started_flag
+			}
+			
+			NOT = {
+				SOV = {
+					has_country_flag = SOV_support_china_flag
+				}
+			}
+			
+		}
+
+		cost = 25
+
+		ai_will_do = {
+			factor = 25
+		}
+
+		fire_only_once = no	
+
+		days_re_enable = 1
+
+		complete_effect = {
+			if = {
+                limit = {
+                    check_variable = {
+                        var = global.CHI_chi_weapon_clicks
+                        value = 0 
+                        compare = less_than_or_equals
+                        
+                    }
+                }
+                set_variable = { global.CHI_chi_weapon_clicks = 1 }
+            }
+            else_if = {
+                limit = {
+                    check_variable = {
+                        var = global.CHI_chi_weapon_clicks
+                        value = 0 
+                        compare = greater_than_or_equals
+                    }
+                }
+                add_to_variable = { global.CHI_chi_weapon_clicks = 1 }
+            }
+			custom_effect_tooltip = SOV_increase_xp_from_china_tt
+			custom_effect_tooltip = USA_spawn_in_china_2	
+			hidden_effect = {
+				set_country_flag = { flag = SOV_support_china_flag value = 1 days = 180}
+			}
+			if = {
+				limit = {
+					NOT = {
+						JAP = {
+							has_war_with = CHI
+						}
+					}
+				}
+				add_to_variable = {
+					var = global.china_spawn_in_boost
+					value = 3
+				}
+			}
+			if = {
+				limit = {
+					JAP = {
+						has_war_with = CHI
+					}
+				}
+				CHI = {
+					random_owned_controlled_state = {
+						prioritize = {
+							605
+						} 							
+						create_unit = {
+							division = "division_template = \"Juntuan\" start_experience_factor = 0.2 start_equipment_factor = 1"
+							owner = CHI
+							count = 2
+						}
+					}
+				}
+			}
+			
+			
+			add_to_variable = { SOV_china_army_xp_gain_var = 0.04 }
+			ROOT = {
+				send_equipment = {
+					target = CHI 
+					type = infantry_equipment
+					amount = 3000
+					old_prioritised = yes
+				}
+			}
+		}
+	}
+	SOV_factories_for_china_pre_war = {
+
+		icon = generic_industry
+
+		allowed = {
+			tag = SOV
+		}
+
+		available = {
+			has_war = no
+			has_equipment = { infantry_equipment > 2999 }
+			country_exists = CHI 
+			 JAP = {
+                has_completed_focus = JAP_intervene_in_china
+            }
+            
+		}
+		visible = {
+			country_exists = CHI 
+            SOV = {
+				has_country_flag = SOV_sino_japanese_war_started_flag
+			}
+			
+			NOT = {
+				SOV = {
+					has_country_flag = SOV_support_china_flag2
+				}
+			}
+			
+		}
+
+		cost = 25
+
+		ai_will_do = {
+			factor = 25
+		}
+
+		fire_only_once = no	
+
+		days_re_enable = 1
+		days_remove = 120
+		modifier = {
+			civilian_factory_use = 4			
+		}
+
+		complete_effect = {
+			add_war_support = 0.05
+			custom_effect_tooltip = SOV_increase_pp_from_china_tt
+			add_to_variable = { SOV_china_pp_gain_var = 0.05 }
+			hidden_effect = {
+				set_country_flag = { flag = SOV_support_china_flag2 value = 1 days = 180}
+			}
+			CHI = {
+				add_offsite_building = { type = arms_factory level = 3 }
+			}
+			 if = {
+                limit = {
+                    check_variable = {
+                        var = GLOBAL.CHI_chi_arms_clicks
+                        value = 0 
+                        compare = less_than_or_equals
+                        
+                    }
+                }
+                set_variable = { GLOBAL.CHI_chi_arms_clicks = 1 }
+            }
+            else_if = {
+                limit = {
+                    check_variable = {
+                        var = GLOBAL.CHI_chi_weapon_clicks
+                        value = 0 
+                        compare = greater_than_or_equals
+                    }
+                }
+                add_to_variable = { GLOBAL.CHI_chi_arms_clicks = 1 }
+            }
+			
+		}
+	}
+	SOV_fighters_for_china_pre_war = {
+
+		icon = generic_air
+
+		allowed = {
+			tag = SOV
+		}
+
+		available = {
+			if = {
+				limit = {
+					has_tech = sov_fighter_1944
+				}
+				has_equipment = { fighter_equipment_1944 > 99 }
+			}
+			else_if = {
+				limit = {
+					has_tech = sov_fighter_1943
+				}
+				has_equipment = { fighter_equipment_1943 > 99 }
+			}
+
+			else_if = {
+				limit = {
+					has_tech = sov_fighter_1942
+				}
+				has_equipment = { fighter_equipment_1942 > 99 }
+			}
+			else_if = {
+				limit = {
+					has_tech = sov_fighter_1941
+				}
+				has_equipment = { fighter_equipment_1941 > 99 }
+			}
+			else_if = {
+				limit = {
+					has_tech = sov_fighter_1940
+				}
+				has_equipment = { fighter_equipment_1940 > 99 }
+			}
+			else_if = {
+				limit = {
+					has_tech = sov_fighter_1939
+				}
+				has_equipment = { fighter_equipment_1939 > 99 }
+			}
+			else_if = {
+				limit = {
+					has_tech = sov_fighter_1938
+				}
+				has_equipment = { fighter_equipment_1938 > 99 }
+			}
+			else_if = {
+				limit = {
+					has_tech = sov_fighter_1936
+				}
+				has_equipment = { fighter_equipment_1936 > 99 }
+			}
+			country_exists = CHI 
+			JAP = {
+                has_completed_focus = JAP_intervene_in_china
+            }
+			SOV = {
+				has_completed_focus = SOV_air_volunteers_in_china
+			}
+            
+		}
+
+		visible = {
+		
+			country_exists = CHI 
+           SOV = {
+				has_country_flag = SOV_sino_japanese_war_started_flag
+			}
+			
+			NOT = {
+				SOV = {
+					has_country_flag = SOV_support_china_flag3
+				}
+			}
+			
+		}
+
+		cost = 0
+
+		ai_will_do = {
+			factor = 25
+		}
+
+		fire_only_once = no	
+
+		days_re_enable = 1
+
+		complete_effect = {
+			if = {
+                limit = {
+                    check_variable = {
+                        var = global.CHI_chi_weapon_clicks
+                        value = 0 
+                        compare = less_than_or_equals
+                        
+                    }
+                }
+                set_variable = { global.CHI_chi_weapon_clicks = 1 }
+            }
+            else_if = {
+                limit = {
+                    check_variable = {
+                        var = global.CHI_chi_weapon_clicks
+                        value = 0 
+                        compare = greater_than_or_equals
+                    }
+                }
+                add_to_variable = { global.CHI_chi_weapon_clicks = 1 }
+            }
+			hidden_effect = {
+				set_country_flag = { flag = SOV_support_china_flag3 value = 1 days = 60}
+			}
+
+			SOV = {
+				if = {
+					limit = {
+						has_tech = sov_fighter_1944
+					}
+					add_equipment_to_stockpile = { type = fighter_equipment_1944 amount = -100 producer = SOV } 
+				}
+				else_if = {
+					limit = {
+						has_tech = sov_fighter_1943
+					}
+					add_equipment_to_stockpile = { type = fighter_equipment_1943 amount = -100 producer = SOV } 
+				}
+
+				else_if = {
+					limit = {
+						has_tech = sov_fighter_1942
+					}
+					add_equipment_to_stockpile = { type = fighter_equipment_1942 amount = -100 producer = SOV } 
+				}
+				else_if = {
+					limit = {
+						has_tech = sov_fighter_1941
+					}
+					add_equipment_to_stockpile = { type = fighter_equipment_1941 amount = -100 producer = SOV } 
+				}
+				else_if = {
+					limit = {
+						has_tech = sov_fighter_1940
+					}
+					add_equipment_to_stockpile = { type = fighter_equipment_1940 amount = -100 producer = SOV } 
+				}
+				else_if = {
+					limit = {
+						has_tech = sov_fighter_1939
+					}
+					add_equipment_to_stockpile = { type = fighter_equipment_1939 amount = -100 producer = SOV } 
+				}
+				else_if = {
+					limit = {
+						has_tech = sov_fighter_1938
+					}
+					add_equipment_to_stockpile = { type = fighter_equipment_1938 amount = -100 producer = SOV } 
+				}
+				else_if = {
+					limit = {
+						has_tech = sov_fighter_1936
+					}
+					add_equipment_to_stockpile = { type = fighter_equipment_1936 amount = -100 producer = SOV } 
+				}
+				
+			}
+			CHI = {
+				add_equipment_to_stockpile = { type = small_plane_airframe amount = 100 producer = SOV } 
+			}
+			
+		}
+	}
+	SOV_cas_for_china_pre_war = {
+
+		icon = generic_air
+
+		allowed = {
+			tag = SOV
+		}
+
+		available = {
+			has_tech = sov_CAS_1937
+			if = {
+				limit = {
+					has_tech = sov_CAS_1943
+				}
+				has_equipment = { CAS_equipment_1943 > 99 }
+			}
+			else_if = {
+				limit = {
+					has_tech = sov_CAS_1941
+				}
+				has_equipment = { CAS_equipment_1941 > 99 }
+			}
+
+			else_if = {
+				limit = {
+					has_tech = sov_CAS_1939
+				}
+				has_equipment = { CAS_equipment_1939 > 99 }
+			}
+			else_if = {
+				limit = {
+					has_tech = sov_CAS_1937
+				}
+				has_equipment = { CAS_equipment_1937 > 99 }
+				
+			}
+			
+			country_exists = CHI 
+			JAP = {
+                has_completed_focus = JAP_intervene_in_china
+            }
+			SOV = {
+				has_completed_focus = SOV_air_volunteers_in_china
+			}
+            
+		}
+
+		visible = {
+		
+		   country_exists = CHI 
+           SOV = {
+				has_country_flag = SOV_sino_japanese_war_started_flag
+			}
+			
+			NOT = {
+				SOV = {
+					has_country_flag = SOV_support_china_flag4
+				}
+			}
+			
+		}
+
+		cost = 0
+
+		ai_will_do = {
+			factor = 25
+		}
+
+		fire_only_once = no	
+
+		days_re_enable = 1
+
+		complete_effect = {
+			if = {
+                limit = {
+                    check_variable = {
+                        var = global.CHI_chi_weapon_clicks
+                        value = 0 
+                        compare = less_than_or_equals
+                        
+                    }
+                }
+                set_variable = { global.CHI_chi_weapon_clicks = 1 }
+            }
+            else_if = {
+                limit = {
+                    check_variable = {
+                        var = global.CHI_chi_weapon_clicks
+                        value = 0 
+                        compare = greater_than_or_equals
+                    }
+                }
+                add_to_variable = { global.CHI_chi_weapon_clicks = 1 }
+            }
+			hidden_effect = {
+				set_country_flag = { flag = SOV_support_china_flag4 value = 1 days = 60}
+			}
+			SOV = {
+				if = {
+					limit = {
+						has_tech = sov_CAS_1943
+					}
+					add_equipment_to_stockpile = { type = CAS_equipment_1943 amount = -100 producer = SOV } 
+				}
+				else_if = {
+					limit = {
+						has_tech = sov_CAS_1941
+					}
+					add_equipment_to_stockpile = { type = CAS_equipment_1941 amount = -100 producer = SOV } 
+				}
+
+				else_if = {
+					limit = {
+						has_tech = sov_CAS_1939
+					}
+					add_equipment_to_stockpile = { type = CAS_equipment_1939 amount = -100 producer = SOV } 
+				}
+				else_if = {
+					limit = {
+						has_tech = sov_CAS_1937
+					}
+					add_equipment_to_stockpile = { type = CAS_equipment_1937 amount = -100 producer = SOV } 
+				}
+			}
+			CHI = {
+				add_equipment_to_stockpile = { type = small_plane_cas_airframe amount = 100 producer = SOV } 
+			}
+			
+		}
+	}
+	SOV_tanks_for_china_pre_war = {
+
+		icon = generic_tank
+
+		allowed = {
+			tag = SOV
+		}
+
+		available = {
+			if = {
+				limit = {
+					has_tech = sov_1942_light_tank_chassis
+				}
+				has_equipment = { light_tank_chassis_1942 > 99 }
+			}
+
+			else_if = {
+				limit = {
+					has_tech = sov_1939_light_tank_chassis
+				}
+				has_equipment = { light_tank_chassis_1939 > 99 }
+			}
+			else_if = {
+				limit = {
+					has_tech = sov_1936_light_tank_chassis
+				}
+				has_equipment = { light_tank_chassis_1936 > 99 }	
+			}
+			country_exists = CHI 
+			JAP = {
+                has_completed_focus = JAP_intervene_in_china
+            }
+			SOV = {
+				has_completed_focus = SOV_air_volunteers_in_china
+			}
+            
+		}
+
+		visible = {
+		
+			country_exists = CHI 
+           SOV = {
+				has_country_flag = SOV_sino_japanese_war_started_flag
+			}
+			
+			NOT = {
+				SOV = {
+					has_country_flag = SOV_support_china_flag5
+				}
+			}
+			
+		}
+
+		cost = 0
+
+		ai_will_do = {
+			factor = 25
+		}
+
+		fire_only_once = no	
+
+		days_re_enable = 1
+
+		complete_effect = {
+			if = {
+                limit = {
+                    check_variable = {
+                        var = global.CHI_chi_weapon_clicks
+                        value = 0 
+                        compare = less_than_or_equals
+                        
+                    }
+                }
+                set_variable = { global.CHI_chi_weapon_clicks = 1 }
+            }
+            else_if = {
+                limit = {
+                    check_variable = {
+                        var = global.CHI_chi_weapon_clicks
+                        value = 0 
+                        compare = greater_than_or_equals
+                    }
+                }
+                add_to_variable = { global.CHI_chi_weapon_clicks = 1 }
+            }
+			hidden_effect = {
+				set_country_flag = { flag = SOV_support_china_flag5 value = 1 days = 60}
+			}
+			SOV = {
+				if = {
+					limit = {
+						has_tech = sov_1942_light_tank_chassis
+					}
+					add_equipment_to_stockpile = { type = light_tank_chassis_1942 amount = -100 producer = SOV }
+				}
+				else_if = {
+					limit = {
+						has_tech = sov_1939_light_tank_chassis
+					}
+					add_equipment_to_stockpile = { type = light_tank_chassis_1939 amount = -100 producer = SOV }
+				}
+				else_if = {
+					limit = {
+						has_tech = sov_1936_light_tank_chassis
+					}
+					add_equipment_to_stockpile = { type = light_tank_chassis_1936 amount = -100 producer = SOV }	
+				}
+			}
+			CHI = {
+				add_equipment_to_stockpile = { type = light_tank_chassis amount = 100 producer = SOV } 
+				add_equipment_to_stockpile = { type = motorized_equipment amount = 200 producer = SOV } 
+			}
+			
+		}
+	}
 
 	guns_for_china = {
 
@@ -71,14 +757,7 @@ foreign_support = {
                 add_to_variable = { global.CHI_chi_weapon_clicks = 1 }
             }
 
-			ROOT = {
-				send_equipment = {
-					target = CHI 
-					type = infantry_equipment
-					amount = 3000
-					old_prioritised = yes
-				}
-			}
+			
 		}
 	}
 

@@ -2,6 +2,35 @@ on_actions = {
 		
 
 	#ROOT is new controller #FROM is old controller #FROM.FROM is state ID
+	on_state_control_changed = {
+		effect = {
+			if = {
+				limit = {
+					FROM = { 
+						tag = CHI	
+					}
+					ROOT = { 
+						OR = { 
+							is_in_faction_with = JAP
+							tag = MAN
+						} 
+					}
+					FROM.FROM = {
+						has_state_flag = JAP_interior_flag
+					}
+				}
+				FROM.FROM = {  
+				 	clr_state_flag = JAP_interior_flag
+				}
+				JAP = {
+					add_to_variable = {
+						var = JAP_interior_counter_var
+						value = 1
+					}
+				}					
+				}
+			}
+		}
 
 	##Island Hopping
 	on_state_control_changed = {
@@ -653,29 +682,6 @@ on_actions = {
 		}
 	}
 
-	on_monthly = {
-		effect = {
-			if = {
-				limit = {
-					tag = JAP
-				}
-				JAP = {
-					add_ideas = JAP_war_in_china
-				}
-				if = { 
-				limit = { 
-					tag = JAP
-					NOT = { has_war_with = CHI  }
-				 }
-				 JAP = { 
-					 remove_ideas = JAP_war_in_china
-				 }
-
-			}
-		}
-	}
-}	
-	
 	
 	
 	#all fallen cities and islands
@@ -875,7 +881,7 @@ on_actions = {
 			if = {
 				limit = {
 					613 = { is_controlled_by = JAP }
-					JAP = { has_war_with = CHI }
+					
 				}
 				news_event = { id = news.121 }
 			}

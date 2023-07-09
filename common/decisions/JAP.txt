@@ -528,6 +528,9 @@ JAP_pacific_war_explanation_category = {
 		remove_effect = {
 			
 			hidden_effect = {
+				JAP = {
+					set_country_flag = JAP_the_frontlines_stabilized
+				}
 				every_country = {
 					set_variable = { var = super_event value = 11 }
 				}
@@ -578,6 +581,14 @@ JAP_pacific_war_explanation_category = {
 						has_idea = JAP_no_grinding
 					}
 					remove_ideas = JAP_no_grinding
+				}
+				hidden_effect = {
+					if = {
+						limit ={
+							has_war_with = CHI
+						}
+						set_technology = { JAP_china_armor_tech_remove = 1 }
+					}
 				}
 				
 				declare_war_on = {
@@ -767,6 +778,14 @@ JAP_pacific_war_explanation_category = {
 							has_idea = JAP_no_grinding
 						}
 						remove_ideas = JAP_no_grinding
+					}
+					hidden_effect = {
+						if = {
+							limit ={
+								has_war_with = CHI
+							}
+							set_technology = { JAP_china_armor_tech_remove = 1 }
+						}
 					}
 					add_to_war = { 
 				   		targeted_alliance = JAP
@@ -2042,13 +2061,13 @@ JAP_intervene_in_china_decision = {
 						icon = "gfx/interface/technologies/land/sov/bt7.tga"
 					}
 					remove_ideas = neutrality_idea
-					remove_ideas = developing_country
+					remove_ideas = developing_country_chi
 					remove_ideas = no_spies_idea
 
 					set_variable = { CHI_army_defence_factor_var = 0.1 }
 					set_variable = { CHI_army_strength_factor  = 0.5 }
 					set_variable = { CHI_dig_in_speed_factor_var = 4 }
-					set_variable = { CHI_max_dig_in_factor_var = 0.35 }
+					set_variable = { CHI_max_dig_in_factor_var = 0.1 }
 					set_variable = { CHI_pocket_penalty_var = 0 }
 
 					add_dynamic_modifier = {
@@ -2165,6 +2184,7 @@ JAP_intervene_in_china_decision = {
 							DIV_HQ = { x = 0 y = 0 }
 							engineer = { x = 0 y = 1 }
 							anti_air_company = { x = 0 y = 2 }
+							pack_artillery = { x = 0 y = 3 }
 						
 						}
 					}		
@@ -2246,6 +2266,7 @@ JAP_intervene_in_china_decision = {
 
 							motorized = { x = 1 y = 0 }
 							motorized = { x = 1 y = 1 }
+							anti_air_mot  = { x = 1 y = 2 }
 							
 							light_armor = { x = 2 y = 0 }
 							light_armor = { x = 2 y = 1 }
@@ -2259,7 +2280,6 @@ JAP_intervene_in_china_decision = {
 							
 							light_armor = { x = 4 y = 0 }
 							light_armor = { x = 4 y = 1 }
-							light_armor = { x = 4 y = 2 }
 						}
 		
 						support = {
@@ -2267,6 +2287,7 @@ JAP_intervene_in_china_decision = {
 							engineer = { x = 0 y = 1 }
 							mot_recon = { x = 1 y = 0 }
 							anti_air_company = { x = 1 y = 1 }
+							pack_artillery = { x = 1 y = 2 }
 						}
 					}
 		
@@ -2321,6 +2342,8 @@ JAP_intervene_in_china_decision = {
 		}
 		
 		remove_effect = {
+			
+
 			every_country = {
 				set_variable = { var = super_event value = 3 }			
 			}
@@ -2332,13 +2355,25 @@ JAP_intervene_in_china_decision = {
 					target = CHI 
 					type = annex_everything
 				}
+				add_dynamic_modifier = {
+					modifier = JAP_china_war_bonus
+				}
+				hidden_effect = {
+					set_technology = { JAP_china_armor_tech = 1 }
+				}
 			}
+		
 			hidden_effect = {
 				MAN = {
 					declare_war_on = {
 						target = CHI 
 						type = annex_everything
 					}
+					add_dynamic_modifier = {
+						modifier = JAP_china_war_bonus
+					}
+					set_technology = { JAP_china_armor_tech = 1 }
+				
 				}
 			}
 			add_stability = 0.1
@@ -2408,16 +2443,27 @@ JAP_intervene_in_china_decision = {
 			}
 			white_peace = CHI
 			remove_ideas = JAP_no_grinding
-			remove_ideas = JAP_china_bonus
+	
 			JAP = {
 				every_army_leader = {
 					remove_unit_leader_trait = jap_kwantung_veto
 				}
+				remove_dynamic_modifier = {
+					modifier= JAP_china_war_bonus
+				}
+				hidden_effect = {
+					set_technology = { JAP_china_armor_tech_remove = 1 }
+				}
 			}
 			MAN = {
-				remove_ideas = JAP_china_bonus
+				remove_dynamic_modifier = {
+					modifier= JAP_china_war_bonus
+				}
 				every_army_leader = {
 					remove_unit_leader_trait = jap_kwantung_veto
+				}
+				hidden_effect = {
+					set_technology = { JAP_china_armor_tech_remove = 1 }
 				}
 			}
 			MAN = {
