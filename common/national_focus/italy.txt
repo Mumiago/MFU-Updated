@@ -1607,7 +1607,7 @@ focus_tree = {
 	}
 	focus = {
 		id = ITA_spirito_fascista
-		icon = GFX_goal_generic_propaganda
+		icon = GFX_USA_reorganize_the_army_departments
 		prerequisite = { focus = ITA_immigration_ethiopia  }
 
 		x = 0
@@ -2332,7 +2332,7 @@ focus_tree = {
 
  	focus = { #Forts in Egypt 
  		id = ITA_castello_di_sabbia
- 		icon = GFX_goal_generic_more_territorial_claims
+ 		icon = GFX_focus_generic_coastal_fort
  		prerequisite = { focus = ITA_via_della_vittoria }
 		prerequisite = { focus = ITA_by_blood_alone }
 		mutually_exclusive = { focus = ITA_bend_the_bars }
@@ -2440,7 +2440,7 @@ focus_tree = {
 
  	focus = {
  		id = ITA_victory_in_the_desert
- 		icon = GFX_focus_ITA_victory_in_the_desert
+ 		icon = GFX_focus_ITA_mare_nostrum
  		prerequisite = { focus = ITA_castello_di_sabbia focus = ITA_bend_the_bars }
  		x = -1
  		y = 1
@@ -2536,7 +2536,7 @@ focus_tree = {
 	}
  	focus = {
  		id = ITA_the_king_of_egypt 
- 		icon = GFX_focus_generic_provoke_border_clashes
+ 		icon = GFX_focus_ITA_islam
  		prerequisite = { focus = ITA_victory_in_the_desert }
  		x = 1
  		y = 1
@@ -2732,7 +2732,7 @@ focus_tree = {
 
  	focus = {
  		id = ITA_return_to_ethiopia 
- 		icon = GFX_focus_ITA_return_to_ethiopia
+ 		icon = GFX_focus_ITA_italy_first
  		prerequisite = { focus = ITA_victory_in_the_desert }
  		x = -1
  		y = 1
@@ -2782,7 +2782,7 @@ focus_tree = {
  	}
 	focus = {
 		id = ITA_viva_il_duce
-		icon = GFX_focus_ger_assassinate_mussolini
+		icon = GFX_focus_ITA_to_live_as_a_lion
 		prerequisite = { focus = ITA_return_to_ethiopia focus = ITA_the_king_of_egypt }
 		relative_position_id = ITA_victory_in_the_desert
 		x = 0
@@ -3539,7 +3539,7 @@ focus_tree = {
 	}
 	focus = { 
 		id = ITA_great_airforce
-		icon = GFX_ITA_Regia_Aeronautica
+		icon = GFX_goal_ITA_regia_aeronautica
 		prerequisite = { focus = ITA_economia_armata }
 		mutually_exclusive = { focus = ITA_great_airforce focus = ITA_great_navy }
 		relative_position_id = ITA_redirect_alfa_romeo_production
@@ -3740,7 +3740,7 @@ focus_tree = {
 	}
 	focus = {
 		id = ITA_a_new_caliber
-		icon = GFX_goal_generic_construct_mil_factory
+		icon = GFX_goal_ammunitions
 		prerequisite = { focus = ITA_the_results_of_the_ethiopian_war }
 
 		x = 0
@@ -3819,17 +3819,9 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			if = {
-				limit = {
-					NOT = {
-						has_idea = ITA_emilio_de_bono
-					}
-				}
-				activate_advisor = ITA_pietro_badoglio
-			}
-			else = {
-				custom_effect_tooltip = available_chief_of_army
-				show_ideas_tooltip = ITA_pietro_badoglio
+			add_stability = 0.1
+			every_army_leader = {
+				add_defense = 1
 			}
 		}
 	}
@@ -3850,22 +3842,15 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_ideas = ITA_credere_obbedire_combattere
-			custom_effect_tooltip = available_chief_of_army
-			show_ideas_tooltip = ITA_rodolfo_graziani
-			add_doctrine_cost_reduction = {
-				cost_reduction = 0.5
-				uses = 1
-				category = land_doctrine
-			}
-			add_to_variable = { land_doctrine_discount_50_@THIS = 1 }
+			custom_effect_tooltip = available_officer_spirit_of_army
+			show_ideas_tooltip = schorner_ideological_loyalty_spirit	
 		}
 	}	
 
 	
 	focus = {
 		id = ITA_expand_the_comando_supremo_role
-		icon = GFX_goal_generic_military_government
+		icon = GFX_goal_ITA_NCO_autonomy
 		prerequisite = { focus = ITA_the_backbone_of_the_party }
 		relative_position_id = ITA_the_backbone_of_the_party
 		x = 0
@@ -3880,7 +3865,10 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_ideas = ITA_comando_supremo
+			add_to_variable = { ITA_re_max_planning = 0.25 }
+			add_to_variable = { ITA_re_planning_speed = -0.1 }
+			custom_effect_tooltip = ITA_expand_the_comando_supremo_role_tt
+
 		}
 	}
 	
@@ -3888,7 +3876,7 @@ focus_tree = {
 	
 	focus = {
 		id = ITA_a_loyal_army
-		icon = GFX_goal_ITA_hard_lesson
+		icon = GFX_focus_ITA_bella_italia
 		prerequisite = { focus = ITA_expand_the_comando_supremo_role }
 		prerequisite = { focus = ITA_orgoglio_degli_italiani }
 		relative_position_id = ITA_the_backbone_of_the_party
@@ -3899,42 +3887,22 @@ focus_tree = {
 			factor = 10
 		}
 		available = {
-			has_war = yes
-			has_army_experience > 299.99
+
 		}
 
 		available_if_capitulated = yes
 
 		completion_reward = {
-			remove_ideas = ITA_fedelta_prima_di_tutto
-			army_experience  = -300
-			hidden_effect = {
-				add_to_variable = { days_land_doctrine_@THIS = -90 }
-				add_to_variable = { days_air_doctrine_@THIS = -45 } 
-				add_to_variable = { days_navy_doctrine_@THIS = -90 }
-    			clamp_variable = {
-	    			var = days_land_doctrine_@THIS
-	    			min = 0
-	    			max = 2000
-   				}
-				clamp_variable = {
-	    			var = days_air_doctrine_@THIS
-	    			min = 0
-	    			max = 2000
-   				}
-				clamp_variable = {
-	    			var = days_navy_doctrine_@THIS
-	    			min = 0
-	    			max = 2000
-   				}
-			}
+			ITA_bop_low_increase_effect = yes
+			add_political_power = 75
+
 		}
 	}
 
 	
 	focus = {
 		id = ITA_question_the_high_command
-		icon = GFX_goal_ITA_question_the_high_command
+		icon = GFX_goal_italy_messe_plan
 		mutually_exclusive = {
 			focus = ITA_maintain_the_old_guard
 		}
@@ -3947,28 +3915,17 @@ focus_tree = {
 			factor = 10
 		}
 		available = {
+			has_war = yes
+			has_army_experience > 50
 		}
 
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_timed_idea = {
-				idea = ITA_questioning_the_high_command
-				days = 120
-			}
-			custom_effect_tooltip = ITA_questioning_high_command_tt
-			hidden_effect = {
-				country_event = {
-					id = italy.24
-					days = 120
-				}
-				add_to_variable = { days_land_doctrine_@THIS = 30 }
-    			clamp_variable = {
-	    			var = days_land_doctrine_@THIS
-	    			min = 0
-	    			max = 2000
-   				}
-			}
+			army_experience  = -50
+		custom_effect_tooltip = remove_military_high_command
+		retire_character = ITA_pietro_badoglio
+		retire_character = ITA_emilio_de_bono
 		}
 	}
 	
@@ -3984,13 +3941,18 @@ focus_tree = {
 			factor = 10
 		}
 		available = {
+			has_army_experience > 50
 		}
 
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_ideas = ITA_unified_branches
-			add_stability = -0.1
+		army_experience  = -50
+		custom_effect_tooltip = ITA_break_the_three_army_independence_tt
+		custom_effect_tooltip = ITA_break_the_three_army_independence_tt_air
+			add_to_variable = { ITA_ra_ground_attack_factor = 0.025 }
+			add_to_variable = { ITA_re_armor_attack = 0.025 }
+			add_to_variable = { ITA_re_artillery_attack_factor = 0.025 }
 		}
 	}
 	
@@ -4012,14 +3974,19 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-
+          ITA_bop_low_decrease_effect = yes
+			add_to_variable = { ITA_re_max_planning = 0.25 }
+			add_to_variable = { ITA_re_planning_speed = 0.25 }
+			add_to_variable = { ITA_re_army_attack_factor = 0.05 }
+			add_to_variable = { ITA_re_army_defence_factor = 0.05 }
+			custom_effect_tooltip = ITA_fight_corruption_tt
 		}
 	}
 
 	
 	focus = {
 		id = ITA_a_reformed_army
-		icon = GFX_goal_ITA_reformed_army
+		icon = GFX_focus_ITA_army_primacy
 		prerequisite = { focus = ITA_fight_corruption }
 		prerequisite = { focus = ITA_break_the_three_army_independence }
 		relative_position_id = ITA_question_the_high_command
@@ -4035,7 +4002,15 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 2
+				category = land_doctrine
+			}
+			every_army_leader = {
+				add_attack = 1
+			}
 		}
 	}
 	
@@ -4095,7 +4070,7 @@ focus_tree = {
 	}
 	focus = {
 		id = ITA_6_Million_Bayonets
-		icon = GFX_ITA_Ultranationalism_2
+		icon = GFX_focus_ITA_oath
 		mutually_exclusive = { focus = ITA_an_army_of_cannons  }
 		prerequisite = { focus = ITA_guerra_a_rapido_corso focus = ITA_restructure_the_divisions }
 		relative_position_id = ITA_the_results_of_the_ethiopian_war
@@ -4132,7 +4107,7 @@ focus_tree = {
 	}	
 	focus = {
 		id = ITA_reshuffle_the_budget
-		icon = GFX_goal_ITA_more_cannons_for_the_army
+		icon = GFX_ITA_dirigism
 		prerequisite = { focus = ITA_6_Million_Bayonets }
 		relative_position_id = ITA_6_Million_Bayonets
 		x = 1
@@ -4173,7 +4148,7 @@ focus_tree = {
 	}	
 	focus = {
 		id = ITA_empower_the_office_of_press_and_propaganda
-		icon = GFX_goal_ITA_more_cannons_for_the_army
+		icon = GFX_ITA_Ultranationalism_2
 		prerequisite = { focus = ITA_6_Million_Bayonets }
 		relative_position_id = ITA_6_Million_Bayonets
 		x = -1
@@ -4253,7 +4228,7 @@ focus_tree = {
 	
 	focus = {
 		id = ITA_armaguerra_mod39
-		icon = GFX_goal_ITA_develop_assault_rifles
+		icon = GFX_goal_generic_small_arms
 		prerequisite = { focus = ITA_an_army_of_cannons }
 		relative_position_id = ITA_an_army_of_cannons
 		x = -1
@@ -4317,7 +4292,7 @@ focus_tree = {
 #extra mot and mech attack, but they use special equipment 
 	focus = {
 		id = ITA_bersaglieri_divisions
-		icon = GFX_goal_ITA_more_cannons_for_the_army
+		icon = GFX_focus_ITA_bersaglieri
 		prerequisite = { focus = ITA_subsidise_oto }
 		prerequisite = { focus = ITA_armaguerra_mod39 }
 		relative_position_id = ITA_an_army_of_cannons
@@ -4613,7 +4588,7 @@ focus_tree = {
 					}
 				}
 				division_template = {
-					name = "Divisione Corrazzata Heavy"
+					name = "Divisione Corazzata Heavy"
 
 					division_names_group = ITA_ARM_01			
 					
@@ -4653,7 +4628,7 @@ focus_tree = {
 			}
 			else_if = {
 				division_template = {
-					name = "Divisione Corrazzata Heavy"
+					name = "Divisione Corazzata Heavy"
 
 					division_names_group = ITA_ARM_01			
 					
@@ -4696,11 +4671,11 @@ focus_tree = {
 					random_owned_controlled_state = {
 						prioritize = { 2 }
 						create_unit = {
-							division = "name = \"Divisione Corrazzata 'Penne di Falco'\" division_template = \"Divisione Corrazzata Heavy\" start_experience_factor = 0.0 start_equipment_factor = 1.0" 
+							division = "name = \"Divisione Corazzata 'Penne di Falco'\" division_template = \"Divisione Corazzata Heavy\" start_experience_factor = 0.0 start_equipment_factor = 1.0" 
 							owner = ITA
 						}	
 						create_unit = {
-							division = "name = \"Divisione Corrazzata 'Lancieri d’Africa'\" division_template = \"Divisione Corrazzata Heavy\" start_experience_factor = 0.0 start_equipment_factor = 1.0" 
+							division = "name = \"Divisione Corazzata 'Lancieri d’Africa'\" division_template = \"Divisione Corazzata Heavy\" start_experience_factor = 0.0 start_equipment_factor = 1.0" 
 							owner = ITA
 						}		
 					}
