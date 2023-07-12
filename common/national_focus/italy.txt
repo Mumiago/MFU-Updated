@@ -184,7 +184,7 @@ focus_tree = {
 		
 		completion_reward = {
 			ITA_bop_very_low_increase_effect = yes
-			army_experience = 40
+			army_experience = 100
 			air_experience = 100
 			add_political_power = 100
 			add_war_support = 0.05
@@ -249,7 +249,7 @@ focus_tree = {
 		
 		completion_reward = {
 			ITA_bop_low_increase_effect = yes
-			army_experience = 100
+			army_experience = 150
 			air_experience = 150
 			add_political_power = 200
 			add_war_support = 0.1
@@ -449,13 +449,13 @@ focus_tree = {
 				value = 0.05
 				tooltip = army_morale_factor_tooltip
 			}
-			custom_effect_tooltip = ITA_bop_unlock_decisions
+			#custom_effect_tooltip = ITA_bop_unlock_decisions
 
-			unlock_decision_tooltip = ITA_prioritize_machine_tools_for_construction
-			unlock_decision_tooltip = ITA_prioritize_machine_tools_for_military
-			unlock_decision_tooltip = ITA_convert_industrial_complexes
-			unlock_decision_tooltip = ITA_convert_military_complexes
-			unlock_decision_tooltip = ITA_war_building_slot
+			#unlock_decision_tooltip = ITA_prioritize_machine_tools_for_construction
+			#unlock_decision_tooltip = ITA_prioritize_machine_tools_for_military
+			#unlock_decision_tooltip = ITA_convert_industrial_complexes
+			#unlock_decision_tooltip = ITA_convert_military_complexes
+			#unlock_decision_tooltip = ITA_war_building_slot
 		}
 	}	
 
@@ -1444,12 +1444,17 @@ focus_tree = {
 		search_filters = {FOCUS_FILTER_INDUSTRY}
 
 		completion_reward = {
-			add_timed_idea = {
-				idea = ITA_spent_budget
-				days = 365
-			}
+			#add_timed_idea = {
+			#	idea = ITA_spent_budget
+			#	days = 365
+			#}
 		    add_research_slot = 1
 			custom_effect_tooltip = ITA_modify_ricostruzione_industriale_dynamic_modifier_ns_intro
+			add_to_variable = { 
+				var = ITA_industry_consumer_goods_modifier 
+				value = 0.05
+				tooltip = consumer_goods_tooltip
+			}
 			add_to_variable = { 
 				var = ITA_iri_production_speed_infrastructure_factor 
 				value = 0.05 
@@ -2731,6 +2736,19 @@ focus_tree = {
  		search_filters = {}
 
  		completion_reward = {
+			custom_effect_tooltip = ITA_modify_military_industry_dynamic_modifier_ns_intro
+
+			add_to_variable = {
+				var = ITA_military_industry_dm_industrial_capacity_factory
+				value = 0.05 
+				tooltip = industrial_capacity_factory_tooltip
+			}
+			add_to_variable = {
+				var = ITA_military_industry_dm_factory_max_efficiency_factor
+				value = 0.02 
+				tooltip = production_factory_max_efficiency_tooltip
+			}
+
 			build_railway = {
 				path = { 5010 5097 1984 12862 12802 12881 2046 7989 10745 10844 11999 1028 7073 12044 11974 7144 10031 1068 4055 3996 7011 }
 			}
@@ -2853,11 +2871,11 @@ focus_tree = {
 				value = 0.05 
 				tooltip = local_resources_factor_tooltip
 			}
-			add_to_variable = { 
-				var = ITA_industry_consumer_goods_modifier 
-				value = 0.01 
-				tooltip = consumer_goods_tooltip
-			}
+			#add_to_variable = { 
+			#	var = ITA_industry_consumer_goods_modifier 
+			#	value = 0.01 
+			#	tooltip = consumer_goods_tooltip
+			#}
 			add_to_variable = { 
 				var = ITA_political_power_gain_modifier 
 				value = -0.15 
@@ -2893,7 +2911,7 @@ focus_tree = {
 		prerequisite = { focus = ITA_avtarkia }
 		relative_position_id = ITA_avtarkia
 		available_if_capitulated = yes
-		mutually_exclusive = { focus = ITA_end_fiat_ansaldo_duopoly }
+	#	mutually_exclusive = { focus = ITA_end_fiat_ansaldo_duopoly }
 
 		completion_reward = {
 			custom_effect_tooltip = available_political_advisor
@@ -2926,28 +2944,25 @@ focus_tree = {
 					OR = {
 						state = 2 
 						state = 117 	
+						state = 117 	
+						state = 156			
+						state = 157
+						state = 117 		
 						state = 156			
 						state = 157
 						state = 158
 						state = 159
 						state = 160
-						state = 161
-						state = 162
 					}
 				}
-				set_building_level = {
+				add_building_construction = {
 					type = infrastructure
-					level = 9
+					level = 2
 					instant_build = yes
 				}
-				add_extra_state_shared_building_slots = 4
+				add_extra_state_shared_building_slots = 8
 			}
-			every_owned_state = {
-				limit = {
-					is_core_of = ROOT
-					is_fully_controlled_by = ROOT
-				}
-			}		
+
 		}
 	}
 	focus = {
@@ -3066,7 +3081,7 @@ focus_tree = {
 					level = 2
 					instant_build = yes
 				}
-				add_extra_state_shared_building_slots = 1
+				add_extra_state_shared_building_slots = 2
 			}
 			160 = {
 				add_building_construction  = {
@@ -3074,7 +3089,7 @@ focus_tree = {
 					level = 2
 					instant_build = yes
 				}
-				add_extra_state_shared_building_slots = 1
+				add_extra_state_shared_building_slots = 2
 			}
 
 		}
@@ -3152,10 +3167,14 @@ focus_tree = {
 				limit = {
 					OR = {
 						state = 2 
-						state = 117 		
+						state = 117 	
+						state = 156			
+						state = 157
 						state = 158
 						state = 159
 						state = 160
+						state = 161
+						state = 162
 					}
 				}
 				add_building_construction  = {
@@ -3163,16 +3182,16 @@ focus_tree = {
 					level = 1
 					instant_build = yes
 				}
-				add_building_construction = {
+				set_building_level = {
 					type = infrastructure
-					level = 2
+					level = 9
 					instant_build = yes
 				}
-				add_extra_state_shared_building_slots = 8
+				add_extra_state_shared_building_slots = 6
 			}
 			GER = {
 				52 = {
-					add_extra_state_shared_building_slots = 4
+					add_extra_state_shared_building_slots = 6
 					add_building_construction = {
 						type = infrastructure
 						level = 1
@@ -3182,7 +3201,7 @@ focus_tree = {
 			}
 			HUN = {
 				43 = {
-					add_extra_state_shared_building_slots = 4
+					add_extra_state_shared_building_slots = 6
 					add_building_construction = {
 						type = infrastructure
 						level = 1
@@ -3192,7 +3211,7 @@ focus_tree = {
 			}
 			ROM = {
 				46 = {
-					add_extra_state_shared_building_slots = 4
+					add_extra_state_shared_building_slots = 6
 					add_building_construction = {
 						type = infrastructure
 						level = 1
@@ -3202,7 +3221,7 @@ focus_tree = {
 			}
 			BUL = {
 				48 = {
-					add_extra_state_shared_building_slots = 4
+					add_extra_state_shared_building_slots = 6
 					add_building_construction = {
 						type = infrastructure
 						level = 1
@@ -3218,7 +3237,7 @@ focus_tree = {
 				}
 				FIN = {
 					111 = {
-						add_extra_state_shared_building_slots = 4
+						add_extra_state_shared_building_slots = 6
 						add_building_construction = {
 							type = infrastructure
 							level = 1
@@ -3420,7 +3439,7 @@ focus_tree = {
 			#}
 
 			hidden_effect = {
-				swap_ideas = ITA_hidden_research_penalties_ns
+				remove_ideas = ITA_hidden_research_penalties_ns
 			}
 		}
 	}
@@ -3712,7 +3731,7 @@ focus_tree = {
 			add_doctrine_cost_reduction = {
 				name = land_doc_bonus
 				cost_reduction = 0.5
-				uses = 2
+				uses = 1
 				category = land_doctrine
 			}
 		}
@@ -3850,7 +3869,9 @@ focus_tree = {
 			add_to_variable = { ITA_re_max_planning = 0.25 }
 			add_to_variable = { ITA_re_planning_speed = -0.1 }
 			custom_effect_tooltip = ITA_expand_the_comando_supremo_role_tt
-
+			every_army_leader = {
+				add_planning = 1
+			}
 		}
 	}
 	
@@ -3875,7 +3896,7 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			ITA_bop_low_increase_effect = yes
+			ITA_bop_high_increase_effect = yes
 			add_political_power = 75
 
 		}
@@ -3886,7 +3907,7 @@ focus_tree = {
 		id = ITA_question_the_high_command
 		icon = GFX_goal_italy_messe_plan
 		mutually_exclusive = {
-			focus = ITA_maintain_the_old_guard
+			focus = ITA_the_backbone_of_the_party
 		}
 		prerequisite = { focus = ITA_the_results_of_the_ethiopian_war }
 		relative_position_id = ITA_the_results_of_the_ethiopian_war
@@ -3984,14 +4005,15 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 2
-				category = land_doctrine
-			}
+			#add_doctrine_cost_reduction = {
+			#	name = land_doc_bonus
+			#	cost_reduction = 0.5
+			#	uses = 2
+			#	category = land_doctrine
+			#}
 			every_army_leader = {
 				add_attack = 1
+				add_logistics = 1
 			}
 		}
 	}
@@ -4162,6 +4184,7 @@ focus_tree = {
 
 		completion_reward = {
 			add_political_power = 100
+			ITA_bop_low_increase_effect = yes
 			custom_effect_tooltip = ITA_empower_the_office_of_press_and_propaganda_tt
 			
 			add_to_variable = { ITA_re_army_army_org_factor = 0.05 }
@@ -4211,7 +4234,7 @@ focus_tree = {
 		completion_reward = {
 			add_doctrine_cost_reduction = {
 				cost_reduction = 0.5
-				uses = 2
+				uses = 1
 				category = land_doctrine
 			}
 			custom_effect_tooltip = ITAarta_bonus_tt
@@ -4243,15 +4266,15 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = available_designer
 			show_ideas_tooltip = Revelli
-			add_tech_bonus = {
-				bonus = 0.5
-				uses = 1
-				category = infantry_weapons
-			}
+			#add_tech_bonus = {
+			#	bonus = 0.5
+			#	uses = 1
+			#	category = infantry_weapons
+			#}
 			add_tech_bonus = {
 				technology = advanced_infantry_weapons
 				uses = 1
-				bonus = 2
+				bonus = 1
 				name = ITA_armaguerra_mod39 
 			}
 		}
@@ -4571,7 +4594,7 @@ focus_tree = {
 				bonus = 0.5
 				name = ITA_mobile_fortresses 
 			}
-			army_experience = 25
+			#army_experience = 25
 
 			custom_effect_tooltip = SOV_heavy_tank_template_tt	
 			if = {
@@ -4729,35 +4752,19 @@ focus_tree = {
 
 		available_if_capitulated = yes
 
-		completion_reward = {
-
-		custom_effect_tooltip = ITA_engine_tt			
+		completion_reward = {	
+			swap_ideas ={
+				remove_idea = ITA_bad_engine_1
+				add_idea = ITA_bad_engine_2
+			}
+			#custom_effect_tooltip = ITA_engine_tt			
 			add_tech_bonus = {
 				name = air_upgrade
 				bonus = 0.5
 				uses = 2
 				category = air_upgrade
 			}
-			hidden_effect = {
-    		if = {
-			limit = {
-				has_idea = ITA_hidden_research_penalties_ns
-			}
-			swap_ideas = {
-				remove_idea = ITA_hidden_research_penalties_ns
-				add_idea = ITA_hidden_research_penalties_combat_technological_backwardness_ansaldo_not_taken
-			        }
-				}
-		     }
-		    if = {
-			limit = {
-				has_idea = ITA_hidden_research_penalties_ansaldo
-			}
-			swap_ideas = {
-				remove_idea = ITA_hidden_research_penalties_ansaldo
-				add_idea = ITA_hidden_research_penalties_combat_technological_backwardness_ansaldo_taken
-			}
-		}
+			
 		}
 
 	}
@@ -4782,32 +4789,14 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-		custom_effect_tooltip = ITA_engine_tt	
+			remove_ideas = ITA_bad_engine_2
+			#custom_effect_tooltip = ITA_engine_tt	
 			add_tech_bonus = {
 				bonus = 0.5
 				uses = 1
 				category = air_equipment
 			}
-			hidden_effect = {
-    		if = {
-			limit = {
-				has_idea = ITA_hidden_research_penalties_combat_technological_backwardness_ansaldo_not_taken
-			}
-			swap_ideas = {
-				remove_idea = ITA_hidden_research_penalties_combat_technological_backwardness_ansaldo_not_taken
-				add_idea = ITA_hidden_research_penalties_combat_technological_backwardness_air_taken
-			        }
-				}
-		     }
-		    if = {
-			limit = {
-				has_idea = ITA_hidden_research_penalties_combat_technological_backwardness_ansaldo_taken
-			}
-			remove_idea = {
-				remove_ideas = ITA_hidden_research_penalties_combat_technological_backwardness_ansaldo_taken
-
-			}
-		}
+			
 		}
 	}
 	
@@ -4831,33 +4820,14 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-
-		custom_effect_tooltip = ITA_engine_tt
-				set_technology = {
+			remove_ideas = ITA_bad_engine_2
+			#custom_effect_tooltip = ITA_engine_tt
+			set_technology = {
 					fighter_1938  = 1
 					heavy_fighter_1938  = 1
 				
 			}
-			hidden_effect = {
-    		if = {
-			limit = {
-				has_idea = ITA_hidden_research_penalties_combat_technological_backwardness_ansaldo_not_taken
-			}
-			swap_ideas = {
-				remove_idea = ITA_hidden_research_penalties_combat_technological_backwardness_ansaldo_not_taken
-				add_idea = ITA_hidden_research_penalties_combat_technological_backwardness_air_taken
-			        }
-				}
-		     }
-		    if = {
-			limit = {
-				has_idea = ITA_hidden_research_penalties_combat_technological_backwardness_ansaldo_taken
-			}
-			remove_idea = {
-				remove_ideas = ITA_hidden_research_penalties_combat_technological_backwardness_ansaldo_taken
-
-			}
-		}
+		
 		}
 	}
 ####add oil development as requirement
@@ -5165,9 +5135,9 @@ focus_tree = {
 		available = {
 			
 		}
-		prerequisite = {
-			focus = ITA_anglo_italian_crisis
-		}
+		#prerequisite = {
+		#	focus = ITA_anglo_italian_crisis
+		#}
 		mutually_exclusive = {
 			focus = ITA_challenge_the_royal_navy
 		}
@@ -5203,11 +5173,11 @@ focus_tree = {
 		available = {
 			
 		}
-		prerequisite = {
-			focus = ITA_anglo_italian_crisis
-		}
+		#prerequisite = {
+		#	focus = ITA_anglo_italian_crisis
+		#}
 		mutually_exclusive = {
-			focus = ITA_reach_the_french_capitals
+			focus = ITA_prioritize_the_immediate_threat
 		}
 
 		available_if_capitulated = yes
