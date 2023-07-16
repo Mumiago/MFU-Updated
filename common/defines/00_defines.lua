@@ -1049,8 +1049,8 @@ NMilitary = {
 	PLAN_PROVINCE_PRIO_DISTRIBUTION_DPP_LOW = 2.0,	-- At what divisions per province should we use PLAN_PROVINCE_PRIO_DISTRIBUTION_MAX
 	
 	
-	PLAN_EXECUTE_CAREFUL_LIMIT = 10,				-- When looking for an attach target, this score limit is required in the battle plan to consider province for attack
-	PLAN_EXECUTE_BALANCED_LIMIT = -1,				-- When looking for an attach target, this score limit is required in the battle plan to consider province for attack
+	PLAN_EXECUTE_CAREFUL_LIMIT = 25,				-- When looking for an attach target, this score limit is required in the battle plan to consider province for attack
+	PLAN_EXECUTE_BALANCED_LIMIT = 0,				-- When looking for an attach target, this score limit is required in the battle plan to consider province for attack
 	PLAN_EXECUTE_RUSH = -10,						-- When looking for an attach target, this score limit is required in the battle plan to consider province for attack
 	PLAN_EXECUTE_CAREFUL_MAX_FORT = 5,				-- If execution mode is set to careful, units will not attack provinces with fort levels greater than or equal to this
 	
@@ -1059,7 +1059,7 @@ NMilitary = {
 	PLAN_BLITZ_OPTIMISM = 0.2,						-- Additional combat balance value in favor of blitzing side when considering targets (not a combat bonus, just offsets planning)
 	
 	FLANKED_PROVINCES_COUNT = 3,					-- Attacker has to attack from that many provinces for the attack to be considered as flanking
-	NUKE_MIN_DAMAGE_PERCENT = 0.9,					-- Minimum damage from nukes as a percentage of current strength/organisation
+	NUKE_MIN_DAMAGE_PERCENT = 0.9,					-- Minimu	m damage from nukes as a percentage of current strength/organisation
 	NUKE_MAX_DAMAGE_PERCENT = 0.9,					-- Minimum damage from nukes as a percentage of current strength/organisation
 	EQUIPMENT_REPLACEMENT_RATIO = 0.1,				-- Equipment min ratio after blocking the equipment type
 	NUKE_DELAY_HOURS = 12,							-- How many hours does it take for the nuclear drop to happen
@@ -2359,7 +2359,7 @@ NAI = {
 	AIR_DESIGN_ALTERNATIVE_OF_LESSER_TECH = 10000,
 	AIR_DESIGN_ALTERNATIVE_OF_EQUAL_TECH = 100,
 	AIR_DESIGN_ALTERNATIVE_OF_GREATER_TECH = 1,
-	AIR_DESIGN_DEMAND_MAX = 33,
+	AIR_DESIGN_DEMAND_MAX = 34,
 	AIR_DESIGN_DEMAND_MIN = 1,
 	AIR_DESIGN_DEMAND_ABSENT = 0,
 	AIR_DESIGN_CUTOFF_AS_PERCENTAGE_OF_MAX = 0.34,
