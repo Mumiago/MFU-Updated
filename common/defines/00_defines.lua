@@ -1212,8 +1212,8 @@ NMilitary = {
 	
 	FUEL_FLOW_PENALTY_FOR_SUPPLY_CHUNK_EDGE_RATIO = 0.5, -- supply flow that is limited by control of incoming edge provinces will have lesser effect on fuel flow	
 	
-	OUT_OF_FUEL_EQUIPMENT_MULT = 0.2,				-- ratio of the stats that you get from equipments that uses fuel and you lack it
-	OUT_OF_FUEL_SPEED_MULT = 0.4,					-- speed mult that armies get when out of fuel
+	OUT_OF_FUEL_EQUIPMENT_MULT = 0.7,				-- ratio of the stats that you get from equipments that uses fuel and you lack it
+	OUT_OF_FUEL_SPEED_MULT = 0.7,					-- speed mult that armies get when out of fuel
 	OUT_OF_FUEL_TRAINING_XP_GAIN_MULT = 0.0,		-- xp gain mult from training when a unit is out of fuel
 	FUEL_CAPACITY_DEFAULT_HOURS = 600              -- default capacity if not specified
 },
@@ -1634,7 +1634,7 @@ NRailwayGun = {
 	DAILY_MANPOWER_GAIN_RATIO = 0.05,				-- Railway Guns will be able to gain this ratio of their max manpower daily
 	DISBAND_MANPOWER_LOSS = 0.0,					-- The ration of manpower lost on disbanding railway guns
 	ENCIRCLED_DISBAND_MANPOWER_FACTOR = 0.2,		-- The percentage of manpower returned when an encircled unit is disbanded
-	OUT_OF_SUPPLY_SPEED = -0.8,						-- Max speed reduction from supply for railway guns
+	OUT_OF_SUPPLY_SPEED = -0.5,						-- Max speed reduction from supply for railway guns
 	BASE_CAPTURE_CHANCE = 1,						-- The base chance of railway guns being captured during an overrrun. Will be further modified by the equipment capture chance of the capturing unit.
 	ANNEX_RATIO = 1,								-- How many railway guns will be transferred on annexation
 	HOURS_BETWEEN_REDISTRIBUTION = 24,				-- Number of hours between redistribution of attached railway guns, tracked per army
@@ -1882,9 +1882,9 @@ NNavy = {
 	FUEL_COST_MULT = 0.1, -- fuel multiplier for all naval missions
 	
 	OUT_OF_FUEL_SPEED_FACTOR = -0.3,
-	OUT_OF_FUEL_RANGE_FACTOR = -0.5,
-	OUT_OF_FUEL_ATTACK_FACTOR = -0.8,
-	OUT_OF_FUEL_TORPEDO_FACTOR = -0.8,
+	OUT_OF_FUEL_RANGE_FACTOR = -0.3,
+	OUT_OF_FUEL_ATTACK_FACTOR = -0.3,
+	OUT_OF_FUEL_TORPEDO_FACTOR = -0.3,
 
 	MISSION_SPREADS = {  -- mission spreads in the case a ship join combat, which is calculated for number of ships that will be in combat. 1 means no ship will be at start
 		0.0, -- HOLD 

@@ -28,6 +28,10 @@ on_actions = {
 					delete_unit_template_and_units = { division_template = "Qibing Jun" }
 
 					annex_country = { target = PRC transfer_troops = no } 
+                    add_offsite_building = {
+                        type = arms_factory 
+                        level = 20
+                    }
 				}
 				every_state = {
 					limit = {
@@ -43,22 +47,10 @@ on_actions = {
 					}
 					remove_building = { type = industrial_complex level = 20 }
 				}
+                
+               
 			}
-            CHI = {
-                if = {
-                    limit = { 
-                        JAP = { 
-                            is_ai = no
-                        }
-                        CHI = {
-                            is_ai = yes
-                        }
-                    }
-
-                    add_equipment_to_stockpile = { type = motorized_equipment_1 amount = 500 producer = USA } 
-                    add_equipment_to_stockpile = { type = infantry_equipment_0 amount = 10000 producer = CHI }
-                }
-            }		
+      	
         }
     }
     on_state_control_changed = { 
@@ -88,7 +80,7 @@ on_actions = {
                     }
                 }
                 CHI = {
-                    add_to_variable = { CHI_army_defence_factor_var = 0.03 }
+                    add_to_variable = { CHI_army_defence_factor_var = 0.06 }
                     add_to_variable = { CHI_dig_in_speed_factor_var = 0.25 }
                     add_to_variable = { CHI_max_dig_in_factor_var = 0.02 }
                     random_owned_controlled_state = {
@@ -98,11 +90,21 @@ on_actions = {
                         create_unit = {
                             division = "division_template = \"Juntuan\" start_experience_factor = 0.2 start_equipment_factor = 1"
                             owner = CHI
-                            count = 4
+                            count = 5
                         }
 					}
                 }
-                CHI_frontlines_up = yes
+                if = {
+                    limit = {
+                        NOT = {
+                            JAP = {
+                                has_war_with = USA
+                            }
+                        }
+                    }
+                    CHI_frontlines_up = yes
+                }
+              
                 JAP = {
                     add_to_variable = { JAP_factory_output_modifier = 0.05 }
                     add_to_variable = { JAP_dockyard_output_modifier = 0.05 }

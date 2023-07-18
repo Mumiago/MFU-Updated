@@ -9,44 +9,16 @@
 # garrison
 # protect
 # influence
-CHI_scripted_war = {
+CHI_scripted_war_no_battleplan = {
 	allowed = { 
 		tag = CHI 
 	}
 	
 	enable = {
-		JAP = {
-			NOT = {
-				has_war_with = USA
-			}
-		}
-	}
-
-	abort_when_not_enabled = yes
-
-	ai_strategy = {
-		type = front_control
-		tag = JAP
-		priority = 4
-		ordertype = front
-		execution_type = careful
-		manual_attack = yes 
-		execute_order = yes
-	}
-}
-CHI_scripted_war2 = {
-	allowed = { 
-		tag = CHI 
-	}
-	
-	enable = {
-		JAP = {
-			has_war_with = USA
-		}
-		CHI = {
-			NOT = {
-				has_country_flag = SOV_chinese_offensive_flag
-			}
+		check_variable = {
+			var = CHI_state_of_army_var
+			value = 10
+			compare = less_than
 		}
 	}
 
@@ -62,16 +34,21 @@ CHI_scripted_war2 = {
 		execute_order = no
 	}
 }
-
-CHI_offensives_scripted = {
+CHI_scripted_war_careful_battleplan = {
 	allowed = { 
 		tag = CHI 
 	}
 	
 	enable = {
-		has_war_with = JAP
-		CHI = {
-			has_country_flag = SOV_chinese_offensive_flag
+		check_variable = {
+			var = CHI_state_of_army_var
+			value = 10
+			compare = greater_than_or_equals
+		}
+		check_variable = {
+			var = CHI_state_of_army_var
+			value = 20
+			compare = less_than
 		}
 	}
 
@@ -79,11 +56,66 @@ CHI_offensives_scripted = {
 
 	ai_strategy = {
 		type = front_control
-		tag = JAP 
+		tag = JAP
+		priority = 4
+		ordertype = front
+		execution_type = careful
+		manual_attack = yes 
+		execute_order = yes
+	}
+}
+CHI_scripted_war_normal_battleplan = {
+	allowed = { 
+		tag = CHI 
+	}
+	
+	enable = {
+		check_variable = {	
+			var = CHI_state_of_army_var
+			value = 20
+			compare = greater_than_or_equals
+		}
+		check_variable = {
+			var = CHI_state_of_army_var
+			value = 30
+			compare = less_than
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = front_control
+		tag = JAP
+		priority = 4
+		ordertype = front
+		execution_type = balanced 
+		manual_attack = yes 
+		execute_order = yes
+	}
+}
+CHI_scripted_war_rush_battleplan = {
+	allowed = { 
+		tag = CHI 
+	}
+	
+	enable = {
+		check_variable = {
+			var = CHI_state_of_army_var
+			value = 30
+			compare = greater_than_or_equals
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = front_control
+		tag = JAP
 		priority = 4
 		ordertype = front
 		execution_type = rush 
-		manual_attack = yes
+		manual_attack = yes 
 		execute_order = yes
 	}
 }
@@ -164,34 +196,34 @@ CHI_unit_production = {
 	ai_strategy = { type = role_ratio id = mountaineers 						value = 0 		}	
 	ai_strategy = { type = role_ratio id = marines 								value = 0		}	
 	ai_strategy = { type = role_ratio id = paratroopers							value = 0 		}	
-	ai_strategy = { type = role_ratio id = motorized 							value = 0 		}	
+	ai_strategy = { type = role_ratio id = motorized 							value = 5 		}	
 	ai_strategy = { type = role_ratio id = cavalry 								value = 0 		}	
-	ai_strategy = { type = role_ratio id = armor 								value = 0 		}	
+	ai_strategy = { type = role_ratio id = armor 								value = 5 		}	
 	ai_strategy = { type = role_ratio id = mechanized 							value = 0 		}	
 	ai_strategy = { type = role_ratio id = garrison								value = 0 		}
 	
 	
-	ai_strategy = { type = equipment_production_factor id = armor 				value = 0		}
+	ai_strategy = { type = equipment_production_factor id = armor 				value = 10		}
 	ai_strategy = { type = equipment_production_factor id = motorized 			value = 0	  }
 	ai_strategy = { type = equipment_variant_production_factor id = light_tank_artillery_equipment value = 0 }
 	ai_strategy = { type = equipment_variant_production_factor id = light_tank_destroyer_equipment value = 0 }
 	
-	ai_strategy = { type = air_factory_balance value = -35 }
+	ai_strategy = { type = air_factory_balance value = 20 }
 	
 	ai_strategy = { type = equipment_production_factor id = fighter 			value = 40 	   }	
 	ai_strategy = { type = equipment_production_factor id = interceptor 		value = -200 	}	
-	ai_strategy = { type = equipment_production_factor id = tactical_bomber 	value = 5 	}	
-	ai_strategy = { type = equipment_production_factor id = naval_bomber 		value = 5	}	
+	ai_strategy = { type = equipment_production_factor id = tactical_bomber 	value = -200 	}	
+	ai_strategy = { type = equipment_production_factor id = naval_bomber 		value = -100	}	
 	ai_strategy = { type = equipment_production_factor id = strategic_bomber 	value = -200 	}	
 	ai_strategy = { type = equipment_production_factor id = cas 				value = 20 		}	
 	ai_strategy = { type = equipment_production_factor id = air_transport 		value = -200 	}	
 	
-	ai_strategy = { type = unit_ratio id = fighter 								value = -100 	}	
-	ai_strategy = { type = unit_ratio id = interceptor							value = -100 	}	
-	ai_strategy = { type = unit_ratio id = tactical_bomber 						value = -100 	}	
+	ai_strategy = { type = unit_ratio id = fighter 								value = 10	    }	
+	ai_strategy = { type = unit_ratio id = interceptor							value = 10	}	
+	ai_strategy = { type = unit_ratio id = tactical_bomber 						value = -200 	}	
 	ai_strategy = { type = unit_ratio id = naval_bomber 						value = -90 	}	
 	ai_strategy = { type = unit_ratio id = strategic_bomber 					value = -200 	}	
-	ai_strategy = { type = unit_ratio id = cas 									value = -200 	}	
+	ai_strategy = { type = unit_ratio id = cas 									value = 10 	}	
 	ai_strategy = { type = unit_ratio id = air_transport 						value = -100 	}	
 	
 	ai_strategy = { type = unit_ratio id = capital_ship 						value = -200 	}	
@@ -199,12 +231,23 @@ CHI_unit_production = {
 	ai_strategy = { type = unit_ratio id = submarine 							value = 100 	}	
 	ai_strategy = { type = unit_ratio id = screen_ship 							value = 15 		}	
 
-	ai_strategy = { type = air_factory_balance value = -50 }
+	ai_strategy = { type = air_factory_balance value = 20 }
+	ai_strategy = {
+		type = unit_ratio
+		id = armor
+		value = 1
+	}
+	ai_strategy = {
+		type = unit_ratio
+		id = screen_ship
+		value = 20
+	}
 	ai_strategy = {
 		type = unit_ratio
 		id = capital_ship
 		value = 25 # from 15 to 25
 	}
+	
 
 	ai_strategy = {
 		type = unit_ratio
@@ -242,11 +285,7 @@ CHI_unit_production = {
 		value = 25
 	}
 	
-	ai_strategy = {
-		type = equipment_production_factor
-		id = armor
-		value = 0
-	}
+	
 	
 	ai_strategy = {
 		type = ignore_army_incompetence
@@ -366,24 +405,7 @@ CHI_armored_production = {
 	}
 }
 
-CHI_highered_armored_production = {
-	allowed = {
-		original_tag = CHI
-	}
-	enable = {
-		original_tag = CHI
-		num_of_military_factories > 54
-	}
-	abort = {
-		num_of_military_factories < 55
-	}
 
-	ai_strategy = {
-		type = role_ratio
-		id = armor
-		value = 0
-	}
-}
 
 CHI_dont_mess_with_the_soviets = {
 	allowed = {
@@ -447,20 +469,7 @@ CHI_some_safer_places_to_build = {
 	}	
 }
 
-CHI_you_should_be_prepared_for_war = {
-	allowed = {
-		is_literally_china = yes
-	}	
-	enable = {
-		is_literally_china = yes
-	}
-	abort_when_not_enabled = yes
-	
-	ai_strategy = {
-		type = force_build_armies
-		value = 100
-	}
-}									  
+								  
 
 # cuck_JAP_paratroopers = {
 # 	allowed = { tag = CHI }
