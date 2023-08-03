@@ -9,6 +9,32 @@
 # garrison
 # protect
 # influence
+CHI_help_RAJ = {
+	allowed = { 
+		tag = CHI 
+	}
+	
+	enable = {
+		640 = {
+			OR = {
+				is_controlled_by = JAP
+				is_controlled_by = MAN
+			}
+		}
+	}
+
+	abort_when_not_enabled = yes
+
+	ai_strategy = {
+		type = front_control
+		state = 823
+		priority = 4
+		ordertype = front
+		execution_type = careful
+		manual_attack = yes 
+		execute_order = yes
+	}
+}
 
 CHI_scripted_war_no_battleplan = {
 	allowed = { 
@@ -367,7 +393,16 @@ CHI_unit_production = {
 		id = medium_plane_airframe
 		value = 20
 	}
-	
+	ai_strategy = {
+		type = equipment_variant_production_factor
+		id = light_tank_chassis
+		value = 20
+	}
+	ai_strategy = {
+		type = equipment_variant_production_factor
+		id = motorized_equipment
+		value = 15
+	}
 	ai_strategy = {
 		type = equipment_production_factor
 		id = fighter
@@ -460,7 +495,7 @@ CHI_garrison_central_china = {
 		value = 20
 	}	
 }
-CHI_prevent_encirclement = {
+CHI_prevent_encirclement_south = {
 	allowed = { tag = CHI }
 	
 	enable = {
@@ -493,9 +528,65 @@ CHI_prevent_encirclement = {
 		}
 		subtract_fronts_from_need = yes
 	}
+	
 	ai_strategy = {
 		type = front_unit_request
 		state = 602
+		value = 100
+	
+	}
+	
+}
+CHI_prevent_encirclement_north = {
+	allowed = { tag = CHI }
+	
+	enable = {
+		date > 1936.1.1
+	}
+	abort = {
+		
+		JAP = {
+			controls_state = 746
+		}
+	}
+	
+	ai_strategy = {
+		type = put_unit_buffers
+		ratio = 0.1
+		states = { 
+			622
+		}
+		subtract_fronts_from_need = yes
+	}
+	
+	ai_strategy = {
+		type = front_unit_request
+		state = 622
+		value = 100
+	
+	}
+}
+CHI_garrison_coast = {
+	allowed = { tag = CHI }
+	
+	enable = {
+		date > 1936.1.1
+	}
+	
+	
+	ai_strategy = {
+		type = put_unit_buffers
+		ratio = 0.1
+		states = { 
+			596
+			595
+		}
+		subtract_fronts_from_need = yes
+	}
+	
+	ai_strategy = {
+		type = front_unit_request
+		state = 622
 		value = 100
 	
 	}

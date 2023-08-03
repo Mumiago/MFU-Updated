@@ -875,7 +875,7 @@ NMilitary = {
 	SPOTTING_QUALITY_DROP_HOURS = 4, 	-- Each X hours the intel quality drops after unit was spotted.
 	LEADER_GROUP_MAX_SIZE = 1000, 		-- 5 Max slots for leader groups.
 																							 
-	MIN_SUPPLY_CONSUMPTION = 0.1,					-- minimum value of supply consumption that a unit can get
+	MIN_SUPPLY_CONSUMPTION = 0.01,					-- minimum value of supply consumption that a unit can get
 	
 	LAND_COMBAT_ORG_DICE_SIZE = 4,                 -- nr of damage dice
 	LAND_COMBAT_STR_DICE_SIZE = 2,                 -- nr of damage dice
@@ -1007,7 +1007,7 @@ NMilitary = {
 	PLAN_CONSIDERED_GOOD = 0.5,					-- Plan evaluations above this value are considered more or less safe
 	PLAN_CONSIDERED_BAD = 0.05,					-- Plan evaluations below this value are considered unsafe
 	PLAN_MIN_AUTOMATED_EMPTY_POCKET_SIZE = 2,		-- The battle plan system will only automatically attack provinces in pockets that has no resistance and are no bigger than these many provinces
-	PLAN_SPREAD_ATTACK_WEIGHT = 11.0,				-- The higher the value, the less it should crowd provinces with multiple attacks.
+	PLAN_SPREAD_ATTACK_WEIGHT = 15.0,				-- The higher the value, the less it should crowd provinces with multiple attacks.
 	PLAN_SUPPLY_FACTOR = 0.2,						-- Factor applied to available supply on a front location when determining priority
 	PLAN_NEIGHBORING_ENEMY_PROVINCE_FACTOR = 0.7,	-- When calculating the importance of provinces, it takes number of enemy provinces into account, factored by this
 	PLAN_PROVINCE_BASE_IMPORTANCE = 2.0,			-- Used when calculating the calue of front and defense area provinces for the battle plan system
@@ -1049,9 +1049,9 @@ NMilitary = {
 	PLAN_PROVINCE_PRIO_DISTRIBUTION_DPP_LOW = 2.0,	-- At what divisions per province should we use PLAN_PROVINCE_PRIO_DISTRIBUTION_MAX
 	
 	
-	PLAN_EXECUTE_CAREFUL_LIMIT = 250,				-- When looking for an attach target, this score limit is required in the battle plan to consider province for attack
-	PLAN_EXECUTE_BALANCED_LIMIT = 150,				-- When looking for an attach target, this score limit is required in the battle plan to consider province for attack
-	PLAN_EXECUTE_RUSH = 50 ,						-- When looking for an attach target, this score limit is required in the battle plan to consider province for attack
+	PLAN_EXECUTE_CAREFUL_LIMIT = 350,				-- When looking for an attach target, this score limit is required in the battle plan to consider province for attack
+	PLAN_EXECUTE_BALANCED_LIMIT = 250,				-- When looking for an attach target, this score limit is required in the battle plan to consider province for attack
+	PLAN_EXECUTE_RUSH = 100 ,						-- When looking for an attach target, this score limit is required in the battle plan to consider province for attack
 	PLAN_EXECUTE_CAREFUL_MAX_FORT = 3,				-- If execution mode is set to careful, units will not attack provinces with fort levels greater than or equal to this
 	
 	PLAN_MAX_PROGRESS_TO_JOIN = 0.50,				-- If Lower progress than this, probably needs support
@@ -1199,7 +1199,7 @@ NMilitary = {
 	
 	SURPLUS_SUPPLY_RATIO_FOR_ZERO_FUEL_FLOW = 0.6 ,		-- if a supply chunk has more supply needed than this ratio + 1 compared to its max supply flow, the units inside the chiunk will get no fuel 
 	
-	ARMY_MAX_FUEL_FLOW_MULT = 2.0,					-- max fuel ratio that an army can get per hour, multiplied by supply situation
+	ARMY_MAX_FUEL_FLOW_MULT = 1,					-- max fuel ratio that an army can get per hour, multiplied by supply situation
 	
 	ARMY_FUEL_COST_MULT = 0.5,						-- fuel cost multiplier for all army related stuff
 	ARMY_COMBAT_FUEL_MULT =   2.0,					-- fuel consumption ratio in combat
@@ -1212,10 +1212,10 @@ NMilitary = {
 	
 	FUEL_FLOW_PENALTY_FOR_SUPPLY_CHUNK_EDGE_RATIO = 0.5, -- supply flow that is limited by control of incoming edge provinces will have lesser effect on fuel flow	
 	
-	OUT_OF_FUEL_EQUIPMENT_MULT = 0.7,				-- ratio of the stats that you get from equipments that uses fuel and you lack it
-	OUT_OF_FUEL_SPEED_MULT = 0.7,					-- speed mult that armies get when out of fuel
+	OUT_OF_FUEL_EQUIPMENT_MULT = 0.3,				-- ratio of the stats that you get from equipments that uses fuel and you lack it
+	OUT_OF_FUEL_SPEED_MULT = 0.8,					-- speed mult that armies get when out of fuel
 	OUT_OF_FUEL_TRAINING_XP_GAIN_MULT = 0.0,		-- xp gain mult from training when a unit is out of fuel
-	FUEL_CAPACITY_DEFAULT_HOURS = 600              -- default capacity if not specified
+	FUEL_CAPACITY_DEFAULT_HOURS = 240              -- default capacity if not specified
 },
 
 
@@ -1442,7 +1442,7 @@ NAir = {
 	
 	FUEL_COST_MULT = 0.525, -- fuel multiplier for all air missions
 	
-	MISSION_EFFICIENCY_MULT_AT_LACK_OF_FUEL = 0.25, 				-- multiplier for mission efficiency when a base lacks fuel
+	MISSION_EFFICIENCY_MULT_AT_LACK_OF_FUEL = 0.6, 				-- multiplier for mission efficiency when a base lacks fuel
 																														
 	BOMBING_TARGETING_RANDOM_FACTOR = 0.2,							-- % of picking the wrong target
 	BOMBING_PROV_BUILD_PRIO_SCALE = 1.5,							-- Scale of the selected priority for provincial buildings
