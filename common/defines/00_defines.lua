@@ -568,8 +568,8 @@ NResistance = {
 NProduction = {
 	--NEW SHIT*/
 	LEND_LEASE_DELIVERY_TOTAL_DAYS = 30,                    -- Nr of days between lend lease deliveries
-	BASE_NAVAL_EQUIPMENT_CONVERSION_IC_COST_FACTOR = 0.225,       -- Fraction of the hull industry cost which is always included in the refitting cost.
-	BASE_LAND_EQUIPMENT_CONVERSION_IC_COST_FACTOR = 0.9,        -- Fraction of the chassis industry cost which is always included in the conversion cost.
+	BASE_NAVAL_EQUIPMENT_CONVERSION_IC_COST_FACTOR = 0.0,       -- Fraction of the hull industry cost which is always included in the refitting cost.
+	BASE_LAND_EQUIPMENT_CONVERSION_IC_COST_FACTOR = 0.0,        -- Fraction of the chassis industry cost which is always included in the conversion cost.
 
 	FLOATING_HARBOR_MAX_NAV_FACTORIES_PER_LINE = 5,
 	RAILWAY_GUN_MAX_MIL_FACTORIES_PER_LINE = 15,
@@ -623,8 +623,8 @@ NProduction = {
 	EQUIPMENT_MODULE_REPLACE_XP_COST = 0,				-- XP cost for replacing one equipment module with an unrelated module when creating an equipment variant.
 	EQUIPMENT_MODULE_CONVERT_XP_COST = 0,				-- XP cost for converting one equipment module to a related module when creating an equipment variant.
 	EQUIPMENT_MODULE_REMOVE_XP_COST = 0,				-- XP cost for removing an equipment module and leaving the slot empty when creating an equipment variant.
-	MIN_NAVAL_EQUIPMENT_CONVERSION_IC_COST_FACTOR = 0.08,		-- Minimum fraction of an equipment type's base industry capacity cost to use when converting a naval equipment, such as through ship refitting.
-	MIN_NAVAL_EQUIPMENT_CONVERSION_RESOURCE_COST_FACTOR = 0.08,	-- Minimum fraction of an equipment type's base strategic resource cost to use when converting a naval equipment, such as through ship refitting.
+	MIN_NAVAL_EQUIPMENT_CONVERSION_IC_COST_FACTOR = 0.00,		-- Minimum fraction of an equipment type's base industry capacity cost to use when converting a naval equipment, such as through ship refitting.
+	MIN_NAVAL_EQUIPMENT_CONVERSION_RESOURCE_COST_FACTOR = 0.00,	-- Minimum fraction of an equipment type's base strategic resource cost to use when converting a naval equipment, such as through ship refitting.
 	MIN_LAND_EQUIPMENT_CONVERSION_IC_COST_FACTOR = 1,		-- Fraction of the chassis industry cost which is always included in the conversion cost.
 	SHIP_REFIT_MAX_PROGRESS_TO_CANCEL = 0.8,			-- Maximum refitting progress % that we still allow to cancel wihtout having to scuttle the ship.
 	SHIP_REFIT_DAMAGE_TO_PROGRESS_FACTOR = 0.1,			-- When a ship is being damaged (for example port strike) while refitting, the damage is transferred to the production line progress instead. This variable is used to balance it.
