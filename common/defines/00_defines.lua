@@ -1732,10 +1732,10 @@ NNavy = {
 	-- Convoy Priorities START
 	NAVAL_INVASION_PRIORITY = 1,									-- Default convoy priority for naval invasions
 	NAVAL_TRANSFER_PRIORITY = 1,									-- Default convoy priority for naval transports
-	SUPPLY_PRIORITY = 2,											-- Default convoy priority for supplying units via sea
-	RESOURCE_LENDLEASE_PRIORITY = 3,								-- Default convoy priority for export lend lease
-	RESOURCE_EXPORT_PRIORITY = 4,									-- Default convoy priority for export trade
-	RESOURCE_ORIGIN_PRIORITY = 5,									-- Default convoy priority for resources shipped internally
+	SUPPLY_PRIORITY = 3,											-- Default convoy priority for supplying units via sea
+	RESOURCE_LENDLEASE_PRIORITY = 2,								-- Default convoy priority for export lend lease
+	RESOURCE_EXPORT_PRIORITY = 5,									-- Default convoy priority for export trade
+	RESOURCE_ORIGIN_PRIORITY = 6,									-- Default convoy priority for resources shipped internally
 	-- Convoy Priorities END
 	
 	ADMIRAL_TASKFORCE_CAP = 8,										-- admirals will start getting penalties after this amount of taskforces
@@ -1842,7 +1842,7 @@ NNavy = {
 	PRIDE_OF_THE_FLEET_LOST_TEMP_MODIFIER_DURATION = 10,			-- duration for temp modifiers that you get when you lose your pride of the fleet
 	XP_GAIN_FACTOR = 1.0,	   			   							-- xp gain factor for navy
 
-	NAVAL_TRANSFER_DAMAGE_REDUCTION = 0.2,							-- its hard to specifically balance 1-tick naval strikes vs unit transports so here is a factor for it
+	NAVAL_TRANSFER_DAMAGE_REDUCTION = 0.05,							-- its hard to specifically balance 1-tick naval strikes vs unit transports so here is a factor for it
 	CARRIER_ONLY_COMBAT_ACTIVATE_TIME = 6,							-- hours from start of combat when carriers get to fight
 	CAPITAL_ONLY_COMBAT_ACTIVATE_TIME = 0,                          -- hours from start of combat when only carriers, capitals and subs get to attack
 	ALL_SHIPS_ACTIVATE_TIME = 0,                                    -- hours where all get to attack
@@ -2072,8 +2072,8 @@ NNavy = {
 	BASE_NAVAL_INVASION_SPOTTING_SPEED = 0.0,						-- daily base spotting speed against unit transfers
 
 	CONVOY_SPOTTING_SPEED_MULT = 1.0,								-- spotting speed mult against convoys
-	UNIT_TRANSFER_SPOTTING_SPEED_MULT = 1.0,						-- spotting speed mult against unit transfers
-	NAVAL_INVASION_SPOTTING_SPEED_MULT = 2,						-- spotting speed mult against naval invasion armies
+	UNIT_TRANSFER_SPOTTING_SPEED_MULT = 3.0,						-- spotting speed mult against unit transfers
+	NAVAL_INVASION_SPOTTING_SPEED_MULT = 5.0,						-- spotting speed mult against naval invasion armies
 	
 	
 	CONVOY_DETECTION_CHANCE_BASE = 4.12,							-- regular convoy base chance detection percentage (if this fails, no detection is done on that tick)
