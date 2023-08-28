@@ -889,7 +889,7 @@ NMilitary = {
 	LAND_COMBAT_STR_ARMOR_DEFLECTION_FACTOR = 0.60, -- damage reduction if armor outclassing enemy
 	LAND_COMBAT_ORG_ARMOR_DEFLECTION_FACTOR = 0.60, -- damage reduction if armor outclassing enemy
 	LAND_COMBAT_COLLATERAL_FACTOR = 0.002,		   -- Factor to scale collateral damage to infra and forts with.
-	LAND_COMBAT_FORT_DAMAGE_CHANCE = 12,		-- chance to get a hit to damage on forts. (out of 100)
+	LAND_COMBAT_FORT_DAMAGE_CHANCE = 13,		-- chance to get a hit to damage on forts. (out of 100)
 	ATTRITION_DAMAGE_ORG = 0.1,					   -- damage from attrition to Organisation
 	ATTRITION_EQUIPMENT_LOSS_CHANCE = 0.066,		   -- Chance for loosing equipment when suffer attrition. Scaled up the stronger attrition is. Then scaled down by equipment reliability.
 	ATTRITION_EQUIPMENT_PER_TYPE_LOSS_CHANCE = 0.066, -- Chance for loosing equipment when suffer attrition. Scaled up the stronger attrition is. Then scaled down by equipment reliability.
@@ -980,8 +980,8 @@ NMilitary = {
 	MAX_OUT_OF_SUPPLY_DAYS = 30, 				   -- how many days of shitty supply until max penalty achieved
 	OUT_OF_SUPPLY_ATTRITION = 0.5,                 -- max attrition when out of supply
 	OUT_OF_SUPPLY_SPEED = -0.2,                    -- max speed reduction from supply
-	NON_CORE_SUPPLY_SPEED = -0.4,				   -- we are not running on our own VP supply so need to steal stuff along the way
-	NON_CORE_SUPPLY_AIR_SPEED = -0.25,			   -- we are not running on our own VP supply so need to steal stuff along the way, a bit less due to air supply
+	NON_CORE_SUPPLY_SPEED = -0.1,				   -- we are not running on our own VP supply so need to steal stuff along the way
+	NON_CORE_SUPPLY_AIR_SPEED = -0.05,			   -- we are not running on our own VP supply so need to steal stuff along the way, a bit less due to air supply
 	OUT_OF_SUPPLY_MORALE = -0.3,                   -- max org regain reduction from supply
 	TRAINING_ATTRITION = 0.0075,		  			   -- amount of extra attrition from being in training
 	TRAINING_MIN_STRENGTH = 0.1,					-- if strength is less than this, the unit will pause training until it's been reinforced
@@ -1627,7 +1627,7 @@ NSupply = {
 	STORED_SUPPLY_CONSUMPTION_RATE_FACTOR = 1,				--Multiplies consumption rate of stored supply (more/less easement)
 },
 NRailwayGun = {
-	RAILWAY_GUN_RANGE = 17,							-- The range of railway guns in pixels
+	RAILWAY_GUN_RANGE = 18,							-- The range of railway guns in pixels
 	ATTACK_TO_FORTS_MODIFIER_FACTOR = 0.8,		-- Forts modifier is calculated by multiplying railway gun attack value with this and dividing by 100
 	ATTACK_TO_ENTRENCHMENT_MODIFIER_FACTOR = 1,		-- Entrenchment modifier is calculated by multiplying railway gun attack value with this and dividing by 100
 	ATTACK_TO_BOMBARDMENT_MODIFIER_FACTOR = 0.4,	-- Bombardment modifier is calculated by multiplying railway gun attack value with this and dividing by 100
@@ -2112,17 +2112,17 @@ NNavy = {
 	MAX_POSITIONING_PENALTY_FOR_NEWLY_JOINED_SHIPS 					= 0.1,  -- the accumulated penalty from new ships will be clamped to this value
 	POSITIONING_PENALTY_HOURLY_DECAY_FOR_NEWLY_JOINED_SHIPS			= 0.5,-- the accumulated penalty from new ships will decay hourly by this value
 	
-	DAMAGE_PENALTY_ON_MINIMUM_POSITIONING 							= 0.99,	-- damage penalty at 0% positioning
+	DAMAGE_PENALTY_ON_MINIMUM_POSITIONING 							= 0.95,	-- damage penalty at 0% positioning
 	SCREENING_EFFICIENCY_PENALTY_ON_MINIMUM_POSITIONING				= 0.2,  -- screening efficiency (screen to capital ratio) at 0% positioning
 	AA_EFFICIENCY_PENALTY_ON_MINIMUM_POSITIONING					= 0.4,  -- AA penalty at 0% positioning
 	SUBMARINE_REVEAL_ON_MINIMUM_POSITIONING                         = 2,  -- submarine reveal change on 0% positioning 
 	
-	SHIP_TO_FLEET_ANTI_AIR_RATIO									= 0.03,	-- total sum of fleet's anti air will be multiplied with this ratio and added to calculations anti-air of individual ships while air damage reduction
+	SHIP_TO_FLEET_ANTI_AIR_RATIO									= 0.04,	-- total sum of fleet's anti air will be multiplied with this ratio and added to calculations anti-air of individual ships while air damage reduction
 	
 	ANTI_AIR_POW_ON_INCOMING_AIR_DAMAGE								= 0.8,	-- received air damage is calculated using following: 1 - ( (ship_anti_air + fleet_anti_air * SHIP_TO_FLEET_ANTI_AIR_RATIO )^ANTI_AIR_POW_ON_INCOMING_AIR_DAMAGE ) * ANTI_AIR_MULT_ON_INCOMING_AIR_DAMAGE
 	ANTI_AIR_MULT_ON_INCOMING_AIR_DAMAGE							= 0.05,
 	
-	MAX_ANTI_AIR_REDUCTION_EFFECT_ON_INCOMING_AIR_DAMAGE 			= 0.85,	-- damage reduction for incoming air attacks is clamped to this value at maximum.
+	MAX_ANTI_AIR_REDUCTION_EFFECT_ON_INCOMING_AIR_DAMAGE 			= 0.9,	-- damage reduction for incoming air attacks is clamped to this value at maximum.
 	
 	CHANCE_TO_DAMAGE_PART_ON_CRITICAL_HIT							= 0.1,	-- the game will roll between 0-1 and will damage a random part if below this val on naval critical hits
 	CHANCE_TO_DAMAGE_PART_ON_CRITICAL_HIT_FROM_AIR					= 0.1,	-- the game will roll between 0-1 and will damage a random part if below this val on air critical hits
