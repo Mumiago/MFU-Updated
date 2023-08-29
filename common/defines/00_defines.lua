@@ -1066,12 +1066,12 @@ NMilitary = {
 	PARADROP_PENALTY = -0.5, 						-- Combat penalty when recently paradropped
 	PARADROP_HOURS = 48,							-- time paratroopers suffer penalties in combat
 	COMBAT_SUPPLY_LACK_IMPACT = -0.4,				-- combat penalty if out of supply
-	COMBAT_STACKING_START = 4,						-- at what nr of divisions stacking penalty starts
-	COMBAT_STACKING_EXTRA = 1,                      -- extra stacking from directions
+	COMBAT_STACKING_START = 2,						-- at what nr of divisions stacking penalty starts
+	COMBAT_STACKING_EXTRA = 2,                      -- extra stacking from directions
 	COMBAT_STACKING_PENALTY = -0.1,                -- how much stackign penalty per division
 	COMBAT_OVER_WIDTH_PENALTY = -2.5,					-- over combat width penalty per %.
-	COMBAT_OVER_WIDTH_PENALTY_MAX = -0.4,			-- over combat width max (when you cant join no more).
-	RETREAT_SPEED_FACTOR = 0.225,                    -- speed bonus when retreating
+	COMBAT_OVER_WIDTH_PENALTY_MAX = -1,			-- over combat width max (when you cant join no more).
+	RETREAT_SPEED_FACTOR = 0.2,                    -- speed bonus when retreating
 	WITHDRAWING_SPEED_FACTOR = 0.15,				-- speed bonus when withdrawing
 	STRATEGIC_SPEED_BASE = 5,                 	-- Speed of strategic redeployment
 	STRATEGIC_INFRA_SPEED = 14.0,                   -- Max of additional speed gained trouh=gh level for strategic redeployment per infra
@@ -1199,7 +1199,7 @@ NMilitary = {
 	
 	SURPLUS_SUPPLY_RATIO_FOR_ZERO_FUEL_FLOW = 0.6 ,		-- if a supply chunk has more supply needed than this ratio + 1 compared to its max supply flow, the units inside the chiunk will get no fuel 
 	
-	ARMY_MAX_FUEL_FLOW_MULT = 1,					-- max fuel ratio that an army can get per hour, multiplied by supply situation
+	ARMY_MAX_FUEL_FLOW_MULT = 1.5,					-- max fuel ratio that an army can get per hour, multiplied by supply situation
 	
 	ARMY_FUEL_COST_MULT = 0.5,						-- fuel cost multiplier for all army related stuff
 	ARMY_COMBAT_FUEL_MULT =   2.0,					-- fuel consumption ratio in combat
@@ -2152,7 +2152,7 @@ NNavy = {
 
 	GUN_HIT_PROFILES = { -- hit profiles for guns, if target ih profile is lower the gun will have lower accuracy
 		72.0,	-- big guns
-		120.0,	-- torpedos
+		130.0,	-- torpedos
 		36.0,	-- small guns
 	},
 	
