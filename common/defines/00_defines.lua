@@ -1049,9 +1049,9 @@ NMilitary = {
 	PLAN_PROVINCE_PRIO_DISTRIBUTION_DPP_LOW = 2.0,	-- At what divisions per province should we use PLAN_PROVINCE_PRIO_DISTRIBUTION_MAX
 	
 	
-	PLAN_EXECUTE_CAREFUL_LIMIT = 350,				-- When looking for an attach target, this score limit is required in the battle plan to consider province for attack
-	PLAN_EXECUTE_BALANCED_LIMIT = 250,				-- When looking for an attach target, this score limit is required in the battle plan to consider province for attack
-	PLAN_EXECUTE_RUSH = 100 ,						-- When looking for an attach target, this score limit is required in the battle plan to consider province for attack
+	PLAN_EXECUTE_CAREFUL_LIMIT = 250,				-- When looking for an attach target, this score limit is required in the battle plan to consider province for attack
+	PLAN_EXECUTE_BALANCED_LIMIT = 150,				-- When looking for an attach target, this score limit is required in the battle plan to consider province for attack
+	PLAN_EXECUTE_RUSH = 50 ,						-- When looking for an attach target, this score limit is required in the battle plan to consider province for attack
 	PLAN_EXECUTE_CAREFUL_MAX_FORT = 3,				-- If execution mode is set to careful, units will not attack provinces with fort levels greater than or equal to this
 	
 	PLAN_MAX_PROGRESS_TO_JOIN = 0.50,				-- If Lower progress than this, probably needs support
@@ -1099,7 +1099,7 @@ NMilitary = {
 	MIN_DIVISION_DEPLOYMENT_TRAINING = 0.3,			-- Min level of division training
 	
 	FRONT_MIN_PATH_TO_REDEPLOY = 4,					-- If a units path is at least this long to reach its front location, it will strategically redeploy.
-	ARMY_INITIATIVE_REINFORCE_FACTOR = 0.80,		-- scales initiative for reinforce chance
+	ARMY_INITIATIVE_REINFORCE_FACTOR = 0.9,		-- scales initiative for reinforce chance
 		
 	BASE_CAPTURE_EQUIPMENT_RATIO = 0.01,				-- after a successful land combat, ratio of the equipments that are being captured/salvaged from enemy's lost equipment
 
@@ -2122,7 +2122,7 @@ NNavy = {
 	ANTI_AIR_POW_ON_INCOMING_AIR_DAMAGE								= 0.8,	-- received air damage is calculated using following: 1 - ( (ship_anti_air + fleet_anti_air * SHIP_TO_FLEET_ANTI_AIR_RATIO )^ANTI_AIR_POW_ON_INCOMING_AIR_DAMAGE ) * ANTI_AIR_MULT_ON_INCOMING_AIR_DAMAGE
 	ANTI_AIR_MULT_ON_INCOMING_AIR_DAMAGE							= 0.05,
 	
-	MAX_ANTI_AIR_REDUCTION_EFFECT_ON_INCOMING_AIR_DAMAGE 			= 0.9,	-- damage reduction for incoming air attacks is clamped to this value at maximum.
+	MAX_ANTI_AIR_REDUCTION_EFFECT_ON_INCOMING_AIR_DAMAGE 			= 0.85,	-- damage reduction for incoming air attacks is clamped to this value at maximum.
 	
 	CHANCE_TO_DAMAGE_PART_ON_CRITICAL_HIT							= 0.1,	-- the game will roll between 0-1 and will damage a random part if below this val on naval critical hits
 	CHANCE_TO_DAMAGE_PART_ON_CRITICAL_HIT_FROM_AIR					= 0.1,	-- the game will roll between 0-1 and will damage a random part if below this val on air critical hits
