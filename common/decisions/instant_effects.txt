@@ -1,63 +1,199 @@
 
 PAR_instant_effect_decisions = {
-	PAR_dontknow_why_this_tile_goes_to_uk = {
+	PAR_sealion_lost = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
-			OR = {
-				ITA = {
-					NOT = {
-						controls_province = 13339
-					}
-				}
-				ETH = {
-					NOT = {
-						controls_province = 13339
-					}
-				}
+			ENG = {
+				has_capitulated = yes 
 			}
-			OR = {
-				ITA = {
-					controls_state = 550
-				}
-				ETH = {
-					controls_state = 550	
-				}
-			}
+			has_global_flag = ENG_sealion_in_progress
+
 		}
-		cost = 0
+		fire_only_once = yes
+
+		complete_effect = {
+			#clr_global_flag = ENG_sealion_in_progress
+			every_state = {
+				limit = {
+					is_core_of = ENG 
+					NOT = {
+						state = 118
+					}
+					
+				}
+				
+				set_building_level = {
+					type = air_base
+					level = 6
+				}
+				
+			}
+			every_state = {
+				limit = {
+					is_core_of = ENG 
+					NOT = {
+						state = 118
+					}
+					
+				}
+				
+				set_building_level = {
+					type = air_base
+					level = 6
+				}
+				
+			}
+		}	
+	}
+	PAR_sealion_pushed = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 1000			
+		}
+		available = {
+			ENG = {
+				all_core_state = {
+					
+					NOT = {
+						OR = {
+							is_controlled_by = GER 
+							is_controlled_by = ITA 
+							is_controlled_by = ROM 
+							is_controlled_by = SPR 
+							is_controlled_by = SLO 
+							is_controlled_by = HUN 
+							is_controlled_by = BUL 
+							is_controlled_by = EFR 
+						}
+					}
+				}
+			}
+			has_global_flag = ENG_sealion_in_progress
+
+		}
 		fire_only_once = no
 
 		complete_effect = {
-			if = {
+			clr_global_flag = ENG_sealion_in_progress
+			every_state = {
 				limit = {
-					ETH = {
-						controls_state = 550
+					is_core_of = ENG 
+					NOT = {
+						state = 118
+					}
+					
+				}
+				if = {
+					limit = {
+						ENG = {
+							has_completed_focus = ENG_operation_overlord
+						}
+					}
+					set_building_level = {
+						type = air_base
+						level = 10
 					}
 				}
-				ETH = {
-					set_province_controller = 13339
-				}
-			}
-			if = {
-				limit = {
-					ITA = {
-						controls_state = 550
+				else = {
+				
+					set_building_level = {
+						type = air_base
+						level = 6
 					}
 				}
-				ITA = {
-					set_province_controller = 13339
-				}
+				
 			}
-		}
+			every_state = {
+				limit = {
+					is_core_of = ENG 
+					NOT = {
+						state = 118
+					}
+					
+				}
+				if = {
+					limit = {
+						ENG = {
+							has_completed_focus = ENG_operation_overlord
+						}
+					}
+					set_building_level = {
+						type = air_base
+						level = 10
+					}
+				}
+				else = {
+				
+					set_building_level = {
+						type = air_base
+						level = 6
+					}
+				}
+				
+			}
+		}	
 	}
+	PAR_sealion_happening = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 5000			
+		}
+		available = {
+			any_state = {
+				is_core_of = ENG 
+				NOT = {
+					state = 118
+					is_controlled_by = ENG
+				}
+			}
+			NOT = {
+				has_global_flag = ENG_sealion_in_progress
+			}
 
+		}
+		fire_only_once = no
+
+		complete_effect = {
+			set_global_flag = ENG_sealion_in_progress
+			every_state = {
+				limit = {
+					is_core_of = ENG 
+					NOT = {
+						state = 118
+					}
+					is_controlled_by = ENG 
+				}
+				set_building_level = {
+					type = air_base
+					level = 20
+				}
+			}
+		}	
+	}
+	PAR_nomohan_or_whatever = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 9000			
+		}
+		available = {
+			date > 1938.6.1
+		}
+		fire_only_once = yes
+
+		complete_effect = {
+			JAP = {
+				complete_national_focus = JAP_nomonhan_incident	
+			}
+		}	
+	}
+	
 	PAR_amendo_captured = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			550 = {
@@ -117,7 +253,7 @@ PAR_instant_effect_decisions = {
 	PAR_reset_china = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			JAP = {
@@ -282,7 +418,7 @@ PAR_instant_effect_decisions = {
 	SOV_china_event = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			date > 1937.7.1
@@ -299,7 +435,7 @@ PAR_instant_effect_decisions = {
 	SOV_vlasov_defects = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			SOV = {
@@ -320,7 +456,7 @@ PAR_instant_effect_decisions = {
 	USA_sue_for_peace_manpower = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			USA = {
@@ -435,7 +571,7 @@ PAR_instant_effect_decisions = {
 	ENG_remove_debuff = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			ENG = {
@@ -461,7 +597,7 @@ PAR_instant_effect_decisions = {
 	ENG_give_debuff = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			ENG = {
@@ -485,7 +621,7 @@ PAR_instant_effect_decisions = {
 	SCW_force_end = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			GER = {
@@ -796,7 +932,7 @@ PAR_instant_effect_decisions = {
 	GER_fuhrerhappy = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			date > 1942.1.1
@@ -844,7 +980,7 @@ PAR_instant_effect_decisions = {
 	GER_fuhrer_gets_worse = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			date > 1942.1.1
@@ -894,7 +1030,7 @@ PAR_instant_effect_decisions = {
 	GER_fuhrer_gets_worse2 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			date > 1942.1.1
@@ -950,7 +1086,7 @@ PAR_instant_effect_decisions = {
 	NZL_is_player = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			date > 1936.1.7
@@ -980,7 +1116,7 @@ PAR_instant_effect_decisions = {
 	SLO_stalingrad = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			date > 1943.1.1
@@ -997,7 +1133,7 @@ PAR_instant_effect_decisions = {
 	SLO_suffered_casualties = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			SLO = {
@@ -1036,7 +1172,7 @@ PAR_instant_effect_decisions = {
 	SLO_suffered_casualties2 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			SLO = {
@@ -1074,7 +1210,7 @@ PAR_instant_effect_decisions = {
 	SLO_suffered_casualties3 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			SLO = {
@@ -1112,11 +1248,11 @@ PAR_instant_effect_decisions = {
 	SLO_suffered_casualties4 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			SLO = {
-				casualties > 160000
+				casualties > 110000
 			}	
 		}
 		cost = 0
@@ -1150,7 +1286,7 @@ PAR_instant_effect_decisions = {
 	SLO_suffered_casualties5 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			SLO = {
@@ -1188,7 +1324,7 @@ PAR_instant_effect_decisions = {
 	SLO_suffered_casualties6 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			SLO = {
@@ -1226,7 +1362,7 @@ PAR_instant_effect_decisions = {
 	SLO_suffered_casualties7 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			SLO = {
@@ -1264,11 +1400,11 @@ PAR_instant_effect_decisions = {
 	SLO_suffered_casualties8 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			SLO = {
-				casualties > 360000
+				casualties > 310000
 			}	
 		}
 		cost = 0
@@ -1302,7 +1438,7 @@ PAR_instant_effect_decisions = {
 	SLO_suffered_casualties9 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			SLO = {
@@ -1340,7 +1476,7 @@ PAR_instant_effect_decisions = {
 	GER_add_back_waffenSS2= {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			GER = {
@@ -1364,7 +1500,7 @@ PAR_instant_effect_decisions = {
 	GER_add_back_waffenSS= {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			GER = {
@@ -1392,7 +1528,7 @@ PAR_instant_effect_decisions = {
 	ENG_subsup1 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			ENG = {
@@ -1422,7 +1558,7 @@ PAR_instant_effect_decisions = {
 	ENG_subsdown1 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			ENG = {
@@ -1452,7 +1588,7 @@ PAR_instant_effect_decisions = {
 	ENG_subsup2 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			ENG = {
@@ -1482,7 +1618,7 @@ PAR_instant_effect_decisions = {
 	ENG_subsdown2 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			ENG = {
@@ -1512,7 +1648,7 @@ PAR_instant_effect_decisions = {
 	ENG_subsup3 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			ENG = {
@@ -1542,7 +1678,7 @@ PAR_instant_effect_decisions = {
 	ENG_subsdown3 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			ENG = {
@@ -1572,7 +1708,7 @@ PAR_instant_effect_decisions = {
 	ENG_subsup4 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			ENG = {
@@ -1602,7 +1738,7 @@ PAR_instant_effect_decisions = {
 	ENG_subsdown4 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			ENG = {
@@ -1632,7 +1768,7 @@ PAR_instant_effect_decisions = {
 	JAP_subsup1 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			JAP = {
@@ -1662,7 +1798,7 @@ PAR_instant_effect_decisions = {
 	JAP_subsdown1 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			JAP = {
@@ -1692,7 +1828,7 @@ PAR_instant_effect_decisions = {
 	JAP_subsup2 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			JAP = {
@@ -1722,7 +1858,7 @@ PAR_instant_effect_decisions = {
 	JAP_subsdown2 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			JAP = {
@@ -1752,7 +1888,7 @@ PAR_instant_effect_decisions = {
 	JAP_subsup3 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			JAP = {
@@ -1782,7 +1918,7 @@ PAR_instant_effect_decisions = {
 	JAP_subsdown3 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			JAP = {
@@ -1812,7 +1948,7 @@ PAR_instant_effect_decisions = {
 	JAP_subsup4 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			JAP = {
@@ -1842,7 +1978,7 @@ PAR_instant_effect_decisions = {
 	JAP_subsdown4 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			JAP = {
@@ -1872,7 +2008,7 @@ PAR_instant_effect_decisions = {
 	USA_subsup1 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			USA = {
@@ -1902,7 +2038,7 @@ PAR_instant_effect_decisions = {
 	USA_subsdown1 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			USA = {
@@ -1932,7 +2068,7 @@ PAR_instant_effect_decisions = {
 	USA_subsup2 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			USA = {
@@ -1962,7 +2098,7 @@ PAR_instant_effect_decisions = {
 	USA_subsdown2 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			USA = {
@@ -1992,7 +2128,7 @@ PAR_instant_effect_decisions = {
 	USA_subsup3 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			USA = {
@@ -2022,7 +2158,7 @@ PAR_instant_effect_decisions = {
 	USA_subsdown3 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			USA = {
@@ -2052,7 +2188,7 @@ PAR_instant_effect_decisions = {
 	USA_subsup4 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			USA = {
@@ -2082,7 +2218,7 @@ PAR_instant_effect_decisions = {
 	USA_subsdown4 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			USA = {
@@ -2112,7 +2248,7 @@ PAR_instant_effect_decisions = {
 	ITA_subsup1 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			ITA = {
@@ -2142,7 +2278,7 @@ PAR_instant_effect_decisions = {
 	ITA_subsdown1 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			ITA = {
@@ -2172,7 +2308,7 @@ PAR_instant_effect_decisions = {
 	ITA_subsup2 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			ITA = {
@@ -2202,7 +2338,7 @@ PAR_instant_effect_decisions = {
 	ITA_subsdown2 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			ITA = {
@@ -2232,7 +2368,7 @@ PAR_instant_effect_decisions = {
 	ITA_subsup3 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			ITA = {
@@ -2262,7 +2398,7 @@ PAR_instant_effect_decisions = {
 	ITA_subsdown3 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			ITA = {
@@ -2292,7 +2428,7 @@ PAR_instant_effect_decisions = {
 	ITA_subsup4 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			ITA = {
@@ -2322,7 +2458,7 @@ PAR_instant_effect_decisions = {
 	ITA_subsdown4 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			ITA = {
@@ -2352,7 +2488,7 @@ PAR_instant_effect_decisions = {
 	GER_subsup1 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			GER = {
@@ -2382,7 +2518,7 @@ PAR_instant_effect_decisions = {
 	GER_subsdown1 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			GER = {
@@ -2412,7 +2548,7 @@ PAR_instant_effect_decisions = {
 	GER_subsup2 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			GER = {
@@ -2442,7 +2578,7 @@ PAR_instant_effect_decisions = {
 	GER_subsdown2 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			GER = {
@@ -2472,7 +2608,7 @@ PAR_instant_effect_decisions = {
 	GER_subsup3 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			GER = {
@@ -2502,7 +2638,7 @@ PAR_instant_effect_decisions = {
 	GER_subsdown3 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			GER = {
@@ -2532,7 +2668,7 @@ PAR_instant_effect_decisions = {
 	GER_subsup4 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			GER = {
@@ -2562,7 +2698,7 @@ PAR_instant_effect_decisions = {
 	GER_subsdown4 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			GER = {
@@ -2592,7 +2728,7 @@ PAR_instant_effect_decisions = {
 	CHI_dont_let_japan_snake = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			JAP = {
@@ -2641,7 +2777,7 @@ PAR_instant_effect_decisions = {
 	YUG_partisans_2 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			any_state = {
@@ -2688,7 +2824,7 @@ PAR_instant_effect_decisions = {
 	YUG_yugoslav_partisans_spawned_1 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			date > 1941.8.1
@@ -3717,7 +3853,7 @@ PAR_instant_effect_decisions = {
 	JAP_sue_for_peace_nuke = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			has_global_flag = JAP_nuke_1
@@ -3765,7 +3901,7 @@ PAR_instant_effect_decisions = {
 	FRA_trigger_missions = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 6000			
+			base = 1000			
 		}
 		available = {
 			AND = {
@@ -3883,7 +4019,7 @@ PAR_instant_effect_decisions = {
 	PAR_italy_reconquered_africa = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 		available = {
 			date > 1939.1.1
@@ -3914,7 +4050,7 @@ PAR_instant_effect_decisions = {
 	PAR_italy_lost_africa = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 		available = {
 			ITA = {
@@ -3963,26 +4099,11 @@ PAR_instant_effect_decisions = {
 			}
 		}	
 	}
-	PAR_nomohan_or_whatever = {
-		allowed = { tag = PAR }
-		ai_will_do = {
-			base = 5000			
-		}
-		available = {
-			date > 1938.6.1
-		}
-		fire_only_once = yes
-
-		complete_effect = {
-			JAP = {
-				complete_national_focus = JAP_nomonhan_incident	
-			}
-		}	
-	}
+	
 	PAR_nuke_supereventtrigger = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 		available = {
 			OR = {
@@ -4016,7 +4137,7 @@ PAR_instant_effect_decisions = {
 	PAR_jap_focus_dec = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 		available = {
 			date > 1941.1.1
@@ -4040,7 +4161,7 @@ PAR_instant_effect_decisions = {
 	PAR_usa_focus_dec = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 		available = {
 			USA = {
@@ -4069,7 +4190,7 @@ PAR_instant_effect_decisions = {
 	PAR_gibraltar_retakenNUMBER2 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 		available = {
 			ENG = {
@@ -4096,7 +4217,7 @@ PAR_instant_effect_decisions = {
 	PAR_gibraltar_taken = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 		available = {
 			ENG = {
@@ -4119,7 +4240,7 @@ PAR_instant_effect_decisions = {
 	PAR_gibraltar_retaken = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 		available = {
 			ENG = {
@@ -4149,7 +4270,7 @@ PAR_instant_effect_decisions = {
 	PAR_reduce_1943_2 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 		available = {
 			date > 1943.1.1
@@ -4181,7 +4302,7 @@ PAR_instant_effect_decisions = {
 	PAR_reduce_1943_1 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 		available = {
 			date > 1943.1.1
@@ -4211,7 +4332,7 @@ PAR_instant_effect_decisions = {
 	POR_SWE_excavation_mission_1 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 		available = {
 			date > 1936.1.1
@@ -4243,7 +4364,7 @@ PAR_instant_effect_decisions = {
 	POR_SWE_excavation_mission_2 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 		available = {
 			date > 1937.1.1
@@ -4275,7 +4396,7 @@ PAR_instant_effect_decisions = {
 	POR_SWE_excavation_mission_3 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 		available = {
 			date > 1939.1.1
@@ -4307,7 +4428,7 @@ PAR_instant_effect_decisions = {
 	POR_SWE_excavation_mission_4 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 		available = {
 			date > 1941.1.1
@@ -4339,7 +4460,7 @@ PAR_instant_effect_decisions = {
 	POR_SWE_excavation_mission_5 = {
 		allowed = { tag = PAR }
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 		available = {
 			date > 1943.1.1
@@ -4395,7 +4516,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -4427,7 +4548,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -4459,7 +4580,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -4491,7 +4612,7 @@ PAR_instant_effect_decisions = {
 
 		cost = 0
 		ai_will_do = {
-			factor = 5000
+			factor = 1000
 		}
 
 		fire_only_once = yes
@@ -4505,7 +4626,7 @@ PAR_instant_effect_decisions = {
 				}
 				add_equipment_to_stockpile = {
 					type = infantry_equipment_0
-						amount = 5000
+						amount = 1000
 						producer = JAP
 				}
 				add_equipment_to_stockpile = {
@@ -4548,7 +4669,7 @@ PAR_instant_effect_decisions = {
 
 		cost = 0
 		ai_will_do = {
-			factor = 5000
+			factor = 1000
 		}
 
 		fire_only_once = yes
@@ -4616,7 +4737,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -4644,26 +4765,26 @@ PAR_instant_effect_decisions = {
 				AND = {
 					SOV = {
 						surrender_progress > 0.2
-						casualties > 750000							
+						casualties > 710000							
 					}			
 				}
 				AND = {
 					SOV = {					
 						surrender_progress > 0.28
-						casualties > 500000
+						casualties > 100000
 					}			
 				}
 				AND = {
 					date > 1941.08.01
 					SOV = {					
 						surrender_progress > 0.2
-						casualties > 500000
+						casualties > 100000
 					}			
 				}
 				AND = {
 					date > 1941.09.01
 					SOV = {					
-						casualties > 750000	
+						casualties > 710000	
 					}					
 				}											
 			}			
@@ -4676,7 +4797,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -4708,14 +4829,14 @@ PAR_instant_effect_decisions = {
 					date > 1941.07.01
 					SOV = {					
 						surrender_progress > 0.33
-						casualties > 750000
+						casualties > 710000
 					}			
 				}
 				AND = {
 					date > 1941.10.01
 					SOV = {					
 						surrender_progress > 0.25
-						casualties > 750000
+						casualties > 710000
 					}			
 				}
 				AND = {
@@ -4734,7 +4855,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -4759,27 +4880,27 @@ PAR_instant_effect_decisions = {
 					date > 1941.08.01
 					SOV = {
 						surrender_progress > 0.3
-						casualties > 1500000						
+						casualties > 1100000						
 					}			
 				}
 				AND = {
 					date > 1941.08.01
 					SOV = {					
 						surrender_progress > 0.38
-						casualties > 1150000
+						casualties > 1110000
 					}			
 				}
 				AND = {
 					date > 1941.11.01
 					SOV = {					
 						surrender_progress > 0.3
-						casualties > 1150000
+						casualties > 1110000
 					}			
 				}
 				AND = {
 					date > 1941.12.01
 					SOV = {					
-						casualties > 1500000
+						casualties > 1100000
 					}					
 				}											
 			}			
@@ -4792,7 +4913,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -4824,14 +4945,14 @@ PAR_instant_effect_decisions = {
 					date > 1941.09.01
 					SOV = {					
 						surrender_progress > 0.43
-						casualties > 1500000
+						casualties > 1100000
 					}			
 				}
 				AND = {
 					date > 1941.12.01
 					SOV = {					
 						surrender_progress > 0.35
-						casualties > 1500000
+						casualties > 1100000
 					}			
 				}
 				AND = {
@@ -4850,7 +4971,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}	
 
@@ -4875,7 +4996,7 @@ PAR_instant_effect_decisions = {
 					date > 1941.10.01
 					SOV = {
 						surrender_progress > 0.4
-						casualties > 2500000						
+						casualties > 2100000						
 					}			
 				}
 				AND = {
@@ -4895,7 +5016,7 @@ PAR_instant_effect_decisions = {
 				AND = {
 					date > 1942.02.01
 					SOV = {					
-						casualties > 2500000
+						casualties > 2100000
 					}					
 				}											
 			}			
@@ -4908,7 +5029,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -5075,7 +5196,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -5245,7 +5366,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -5282,7 +5403,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -5310,7 +5431,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -5343,7 +5464,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -5393,7 +5514,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}	
 
@@ -5439,7 +5560,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -5485,7 +5606,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -5531,7 +5652,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -5577,7 +5698,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -5623,7 +5744,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -5669,7 +5790,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -5709,7 +5830,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}	
 	
@@ -5808,7 +5929,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -5907,7 +6028,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -6006,7 +6127,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -6105,7 +6226,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -6204,7 +6325,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -6232,7 +6353,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -6261,7 +6382,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -6285,7 +6406,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -6309,7 +6430,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -6333,7 +6454,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -6357,7 +6478,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -6385,7 +6506,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -6410,7 +6531,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -6434,7 +6555,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -6464,7 +6585,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -6488,7 +6609,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -6513,7 +6634,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -6545,7 +6666,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}	
     salo = {
@@ -6558,7 +6679,7 @@ PAR_instant_effect_decisions = {
 		}
 	   available = {	
 		   ITA = { surrender_progress > 0.4 }
-		   ITA = {casualties > 350000 }
+		   ITA = {casualties > 310000 }
 		   GER = { has_capitulated = no }
 		   ITA = { has_war_with = ENG }
 		   ITA = { has_war_with = USA }
@@ -6671,7 +6792,7 @@ PAR_instant_effect_decisions = {
 	       }
 		}
 	    ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}	
     leader_1 = {
@@ -6693,7 +6814,7 @@ PAR_instant_effect_decisions = {
 			GER = { country_event = leaderdies.1 }
 		}
 	    ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}
 
@@ -6717,7 +6838,7 @@ PAR_instant_effect_decisions = {
 			GER = { add_country_leader_trait = bidding_time_trait }
 		}
 	    ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}	
 	
@@ -6740,7 +6861,7 @@ PAR_instant_effect_decisions = {
 			ITA = { country_event = leaderdies.3 } 
 		}
 	    ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}	
 
@@ -6763,7 +6884,7 @@ PAR_instant_effect_decisions = {
 			SOV = { country_event = leaderdies.5 } 
 		}
 	    ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}		
 		
@@ -6789,7 +6910,7 @@ PAR_instant_effect_decisions = {
 			FIN = { country_event = finland.28 } 
 		}
 	    ai_will_do = {
-			base = 5000			
+			base = 1000			
 		}
 	}		
 	
@@ -6814,7 +6935,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -6839,7 +6960,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -6864,7 +6985,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -6889,7 +7010,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -6915,7 +7036,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -6941,7 +7062,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -6967,7 +7088,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -6993,7 +7114,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7018,7 +7139,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7043,7 +7164,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7072,7 +7193,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}	
@@ -7101,7 +7222,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7130,7 +7251,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7160,7 +7281,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7190,7 +7311,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7239,7 +7360,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7288,7 +7409,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7337,7 +7458,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7386,7 +7507,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7435,7 +7556,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7484,7 +7605,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7524,7 +7645,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7564,7 +7685,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7604,7 +7725,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7644,7 +7765,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7684,7 +7805,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7723,7 +7844,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7762,7 +7883,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7801,7 +7922,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7840,7 +7961,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7879,7 +8000,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7918,7 +8039,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7953,7 +8074,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -7988,7 +8109,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -8023,7 +8144,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -8058,7 +8179,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -8111,7 +8232,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -8151,7 +8272,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -8191,7 +8312,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -8231,7 +8352,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -8271,7 +8392,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}	
@@ -8311,7 +8432,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -8351,7 +8472,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -8391,7 +8512,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -8431,7 +8552,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -8471,7 +8592,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -8511,7 +8632,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -8551,7 +8672,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -8591,7 +8712,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
@@ -8631,7 +8752,7 @@ PAR_instant_effect_decisions = {
 		}
 
 		ai_will_do = {
-			base = 5000
+			base = 1000
 			
 		}
 	}
