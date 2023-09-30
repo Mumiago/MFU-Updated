@@ -26,34 +26,31 @@ focus_tree = {
 		ai_will_do = {
 			factor = 1
 		}
-
 		available = {
 
 		}
-
 		bypass = {
 
 		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
 		complete_tooltip = {
 
 		}
-
 		completion_reward = {
-			add_political_power = 50
+			add_political_power = 100
 			unlock_decision_category_tooltip = MAN_banditry_category
-			set_variable = { MAN_maintain_control_timer = 180 }
-			custom_effect_tooltip = MAN_pacify_the_countryside_effect_tooltip
+			add_power_balance_value = {
+				id = MAN_centralization_balance
+				value = 0.25
+			}
 		}
 	}
 	focus = {
 		id = MAN_crack_down_on_banditry
 		icon = GFX_focus_spr_crush_the_revolution
 		relative_position_id = MAN_pacify_the_countryside
+		mutually_exclusive = {
+			focus = MAN_apease_the_bandits
+		}
 		x = 2
 		y = 1
 
@@ -73,17 +70,14 @@ focus_tree = {
 		bypass = {
 
 		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
 		complete_tooltip = {
 
 		}
-
 		completion_reward = {
-
+			add_power_balance_value = {
+				id = MAN_centralization_balance
+				value = 0.15
+			}
 		}
 	}
 	focus = {
@@ -119,13 +113,19 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_power_balance_value = {
+				id = MAN_centralization_balance
+				value = 0.15
+			}
 		}
 	}
 	focus = {
 		id = MAN_apease_the_bandits
 		icon = GFX_focus_spr_crush_the_revolution
 		relative_position_id = MAN_pacify_the_countryside
+		mutually_exclusive = {
+			focus = MAN_crack_down_on_banditry
+		}
 		x = -2
 		y = 1
 
@@ -144,23 +144,23 @@ focus_tree = {
 		bypass = {
 
 		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
 		complete_tooltip = {
 
 		}
 
 		completion_reward = {
-
+			add_political_power = 50
+			add_power_balance_value = {
+				id = MAN_centralization_balance
+				value = 0.15
+			}
 		}
 	}
 	focus = {
 		id = MAN_appoint_the_leaders
 		icon = GFX_focus_spr_crush_the_revolution
 		relative_position_id = MAN_apease_the_bandits
+		
 		x = -1
 		y = 1
 
@@ -189,7 +189,10 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_power_balance_value = {
+				id = MAN_centralization_balance
+				value = 0.15
+			}
 		}
 	}
 	focus = {
@@ -235,7 +238,7 @@ focus_tree = {
 		mutually_exclusive = { focus = MAN_obedience focus = MAN_kwantung_army_takes_control }
 		x = -7
 		y = 3
-
+		#prerequisite = { focus = MAN_pacify_the_countryside }
 		cost = 5
 
 		relative_position_id = MAN_pacify_the_countryside
@@ -244,17 +247,11 @@ focus_tree = {
 			factor = 1
 		}
 
-		available = {	
-			has_completed_focus = MAN_Apease_the_Bandits
+		available = {
+			IF = {
+				has_completed_focus = MAN_apease_the_bandits
+			}
 		}
-		bypass = {
-
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
 		complete_tooltip = {
 
 		}
@@ -266,6 +263,7 @@ focus_tree = {
 			}
 		}
 	}
+
 
 	focus = { #20 construction speed spirit 
 		id = MAN_corporate_takeover
@@ -734,13 +732,14 @@ focus_tree = {
 		}
 
 		available = {
-			IF={
+			IF = {
 				OR ={
-					has_completed_focus = MAN_Apease_the_Bandits
-					has_completed_focus = MAN_Crack_down_on_Banditry
+				has_completed_focus = MAN_apease_the_bandits
+				has_completed_focus = MAN_crack_down_on_banditry				
 				}
 			}
 		}
+		
 
 		bypass = {
 
@@ -1410,8 +1409,8 @@ focus_tree = {
 		}
 
 		available = {
-			IF={
-				has_completed_focus = MAN_Crack_down_on_Banditry
+			IF = {
+				has_completed_focus = MAN_crack_down_on_banditry
 			}
 		}
 
