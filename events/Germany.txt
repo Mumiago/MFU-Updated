@@ -264,6 +264,7 @@ country_event = {
 		add_state_claim = 96
 		add_state_claim = 97
 		add_state_claim = 784
+		add_state_claim = 825
 		hidden_effect = { add_timed_idea = { idea = SOV_molotov_ribbentrop_pact days = 730 } }
 		GER = {
 			country_event = { days = 1 id = germany.12 }
@@ -456,6 +457,21 @@ country_event = {
 				}
 			}
 			SOV = { transfer_state = 784 }
+		}
+		if = {
+			limit = {
+				825 = {
+					OR = {
+						is_controlled_by = GER
+						any_other_country = {
+							controls_state = 825
+							is_in_faction_with = GER
+							GER = { is_faction_leader = yes }
+						}
+					}
+				}
+			}
+			SOV = { transfer_state = 825 }
 		}
 		SOV = { country_event = germany.15 }
 	}
@@ -3840,6 +3856,10 @@ country_event = {
 				target = POL
 				type = annex_everything
 		}
+		annex_country = {
+                target = DNZ
+                transfer_troops = yes
+        }
 		ENG = { add_to_faction = POL }
 		ENG = { add_to_faction = FRA }
 		ENG = { 
@@ -3937,7 +3957,7 @@ country_event = {
 					enemy = GER 
 				}
 			}
-		}	
+		}
 		if = { 
 			limit = { 
 				ROM = { 
@@ -3955,7 +3975,7 @@ country_event = {
 					enemy = POL 
 				}
 			}
-		}	
+		}
 		if = {
 			limit = {
 				
@@ -3963,17 +3983,6 @@ country_event = {
 				
 			}
 			HUN = { 
-				add_to_war = { 
-					targeted_alliance = GER 
-					enemy = POL 
-				}
-			}
-		}	
-		if = {
-			limit = {
-				country_exists = SLO
-			}
-			SLO = { 
 				add_to_war = { 
 					targeted_alliance = GER 
 					enemy = POL 
@@ -3990,15 +3999,62 @@ country_event = {
 					enemy = POL 
 				}
 			}
+		}		
+		if = {
+			limit = {
+				country_exists = SLO
+			}
+			SLO = { 
+				add_to_war = { 
+					targeted_alliance = GER 
+					enemy = POL 
+				}
+			}
 		}
 		hidden_effect = { 
 			every_country = {
 				set_variable = { var = super_event value = 8 }			
 			}
-			every_country = {limit = { check_variable= { music_enabled > 0}  }
-				scoped_sound_effect = "se_danzig_or_war"
-			}
-		}				
+			every_country = {
+					limit = { 
+						AND = {
+							check_variable= { 
+								speeches_enabled > 0
+							} 
+							check_variable= { 
+								music_enabled < 2
+							} 
+						}
+					}
+					scoped_sound_effect = "sp_pol_beck"
+				}
+				every_country = {
+					limit = { 
+						AND = {
+							check_variable= { 
+								music_enabled > 0
+							} 
+							check_variable= { 
+								speeches_enabled < 2
+							} 
+						}
+					}
+					scoped_sound_effect = "se_danzig_or_war"
+				}
+				every_country = {
+					limit = { 
+						AND = {
+							check_variable= {
+								music_enabled > 0
+							} 
+							check_variable= { 
+								speeches_enabled > 0
+							} 
+						}
+					}
+					scoped_sound_effect = "sp_pol_beck"
+				}
+		}			
 		if = {
 			limit = {
 				NOT = { has_idea = GER_war_economy }
@@ -5890,6 +5946,21 @@ country_event = {
 
 	option = {
 		name = germany.563.a
+
+	}
+
+}
+
+country_event = {
+	id = germany.564
+	title = germany.564.t
+	desc = germany.564.d
+	picture = GFX_report_event_generic_peaceful_annexation
+
+	is_triggered_only = yes
+
+	option = {
+		name = germany.564.a
 
 	}
 
