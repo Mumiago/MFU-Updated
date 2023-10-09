@@ -259,7 +259,9 @@ country_event = {
 			every_country = {
 					set_variable = { var = super_event value = 12 }	 
 				}
-			sound_effect = se_winter_war
+			every_country = {limit = { check_variable= { music_enabled > 0}  }
+				scoped_sound_effect = "se_winter_war"
+			}
 		}
 	}
 }
@@ -627,17 +629,35 @@ country_event = {
 		remove_unit_leader = 406 #gordey_levchenko, naval commander
 		custom_effect_tooltip = soviet.27_tt
 		hidden_effect = {
-			if = {
-				limit = {
-					SOV = { is_ai = no } 
-				}
-				add_ideas = SOV_lavrentiy_beria
-			}
 			retire_character = SOV_nikolai_yezhov
 			retire_character = SOV_yakov_smushkevich
 			retire_character = SOV_pavel_rychagov
 			retire_character = SOV_alexander_novikov
 			retire_character = SOV_gordey_levchenko
+			if = {
+				limit = {
+					SOV = { is_ai = no } 
+					amount_taken_ideas = {
+						amount < 3
+						slots = {
+							political_advisor
+						}
+					}
+				}
+				add_ideas = SOV_lavrentiy_beria
+			}
+			else_if = {
+				limit = {
+					SOV = { is_ai = no } 
+					amount_taken_ideas = {
+						amount > 2
+						slots = {
+							political_advisor
+						}
+					}
+				}
+				add_political_power = 150
+			}
 		}
 	}
 	option = {
@@ -895,7 +915,7 @@ country_event = {
 					}
 				}
 				custom_effect_tooltip = SOV_5_year_plan_tt
- 				add_to_variable = { var = 5_year_plan_progress value = 2 }
+ 				add_to_variable = { var = progress_5_year_plan value = 2 }
 			}
 		}
 	}
@@ -1947,7 +1967,7 @@ country_event = {
 			add_to_variable = { var = stalin_paranoia value = 20 }		
 		}
 		else = {
-			add_stability = -0.15
+			add_stability = -0.1
 		}
 	}
 }
@@ -2969,5 +2989,50 @@ country_event = {
 
 	option = {
 		name = soviet.135.a 
+	}
+}
+country_event = {
+	id = soviet.136
+	title = soviet.136.t 
+	desc = soviet.136.desc
+	picture = GFX_report_event_chinese_soldiers
+
+
+	is_triggered_only = yes 
+
+	option = {
+		name = soviet.136.a 
+		hidden_effect = {
+			SOV = {
+				add_dynamic_modifier = {
+					modifier = SOV_china_xp
+				}
+			}
+			CHI = {
+				add_to_variable = { var = CHI_juntuan_division_cap value = 200 }			
+			}
+			
+			set_country_flag = SOV_sino_japanese_war_started_flag
+		}
+
+	}
+}
+##andrey_vlasov
+country_event = {
+	id = soviet.1000
+	title = soviet.1000.t
+	desc = soviet.1000.d
+	picture = GFX_sov_vlasov
+	
+
+	is_triggered_only = yes 
+	
+	immediate = {
+	GER= { country_event = { id = germany.1000 } }
+	}
+
+	option = { 
+		name = soviet.1000.a
+        retire_character = SOV_andrey_vlasov
 	}
 }

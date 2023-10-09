@@ -10,7 +10,7 @@ on_actions = {
 				}
 				CHI = {
 					add_ideas = neutrality_idea
-					add_ideas = developing_country
+					add_ideas = developing_country_chi
 					add_ideas = no_spies_idea
                     remove_ideas = german_advisors
                     remove_ideas = CHI_incompentent
@@ -22,12 +22,102 @@ on_actions = {
 					remove_ideas = CHI_chinese_unity_1
 
 					delete_unit_template_and_units = { division_template = "Sanjiao Jun" }
+                    delete_unit_template_and_units = { division_template = "Sanjiao Brigade" }
 					delete_unit_template_and_units = { division_template = "Juntuán" }
 					delete_unit_template_and_units = { division_template = "Motorized Corps" }
 					delete_unit_template_and_units = { division_template = "Reorganized Division" }
 					delete_unit_template_and_units = { division_template = "Qibing Jun" }
+                    division_template = {
+						division_names_group = CHI_ARM_01
+						name = "200th Division"
+						priority = 2
+						is_locked = no
+    					division_cap = 0 
+		
+						regiments = {
+							motorized = { x = 0 y = 0 }
+							motorized = { x = 0 y = 1 }
+							motorized = { x = 0 y = 2 }
+
+							motorized = { x = 1 y = 0 }
+							motorized = { x = 1 y = 1 }
+							anti_air_mot  = { x = 1 y = 2 }
+							
+							light_armor = { x = 2 y = 0 }
+							light_armor = { x = 2 y = 1 }
+							light_armor = { x = 2 y = 2 }
+							light_armor = { x = 2 y = 3 }
+
+							light_armor = { x = 3 y = 0 }
+							light_armor = { x = 3 y = 1 }
+							light_armor = { x = 3 y = 2 }
+							light_armor = { x = 3 y = 3 }
+							
+							light_armor = { x = 4 y = 0 }
+							light_armor = { x = 4 y = 1 }
+						}
+		
+						support = {
+							DIV_HQ = { x = 0 y = 0 }
+							engineer = { x = 0 y = 1 }
+							military_police = { x = 0 y = 2 }
+							artillery = { x = 0 y = 3 }
+							mot_recon = { x = 1 y = 0 }
+							anti_air_company = { x = 1 y = 1 }
+							pack_artillery = { x = 1 y = 2 }
+							maintenance_company = { x = 1 y = 3 }
+							
+						}
+					}
+                    division_template = {
+						name = "Juntuan"
+						priority = 1
+                        is_locked = no
+    					division_cap = 0
+
+						regiments = {
+							infantry = { x = 0 y = 0 }
+							infantry = { x = 0 y = 1 }
+							infantry = { x = 0 y = 2 }
+							infantry = { x = 0 y = 3 }
+							
+							infantry = { x = 1 y = 0 }
+							infantry = { x = 1 y = 1 }
+							infantry = { x = 1 y = 2 }
+							infantry = { x = 1 y = 3 }
+								
+							infantry = { x = 2 y = 0 }
+							infantry = { x = 2 y = 1 }
+							infantry = { x = 2 y = 2 }
+							infantry = { x = 2 y = 3 }
+							
+							anti_air = { x = 3 y = 0 }		
+							pack_artillery_brigade = { x = 3 y = 1 }
+							pack_artillery_brigade = { x = 3 y = 2 }
+							pack_artillery_brigade = { x = 3 y = 3 }
+
+							pack_artillery_brigade = { x = 4 y = 0 }		
+							pack_artillery_brigade = { x = 4 y = 1 }
+			
+							
+						}
+
+						support = {
+							DIV_HQ = { x = 0 y = 0 }
+							engineer = { x = 0 y = 1 }
+							anti_air_company = { x = 0 y = 2 }
+							pack_artillery = { x = 0 y = 3 }
+							military_police = { x = 1 y = 0 }
+							artillery = { x = 1 y = 1 }
+						
+						}
+					}
 
 					annex_country = { target = PRC transfer_troops = no } 
+                    add_offsite_building = {
+                        type = arms_factory 
+                        level = 20
+                    }
 				}
 				every_state = {
 					limit = {
@@ -43,22 +133,10 @@ on_actions = {
 					}
 					remove_building = { type = industrial_complex level = 20 }
 				}
+                
+               
 			}
-            CHI = {
-                if = {
-                    limit = { 
-                        JAP = { 
-                            is_ai = no
-                        }
-                        CHI = {
-                            is_ai = yes
-                        }
-                    }
-
-                    add_equipment_to_stockpile = { type = motorized_equipment_1 amount = 500 producer = USA } 
-                    add_equipment_to_stockpile = { type = infantry_equipment_0 amount = 10000 producer = CHI }
-                }
-            }		
+      	
         }
     }
     on_state_control_changed = { 
@@ -81,14 +159,41 @@ on_actions = {
                 limit = {
                     FROM = { tag = CHI }
                     ROOT = { has_war_with = CHI }
+                    NOT = {
+                        FROM.FROM = {
+                            has_state_flag = CHI_riches_of_china_flag
+                        }
+                    }
                 }
                 CHI = {
-                    add_to_variable = { CHI_army_defence_factor_var = 0.05 }
-                    add_to_variable = { CHI_army_strength_factor = 0.1 }
-                    add_to_variable = { CHI_dig_in_speed_factor_var = 0.5 }
-                    add_to_variable = { CHI_max_dig_in_factor_var = 0.03 }
-                    add_to_variable = { CHI_pocket_penalty_var = -0.02 }
+                   
+                    random_owned_controlled_state = {
+						prioritize = {
+                            605
+                        } 							
+                        create_unit = {
+                            division = "division_template = \"Juntuan\" start_experience_factor = 0.2 start_equipment_factor = 1"
+                            owner = CHI
+                            count = 4
+                        }
+					}
                 }
+                if = {
+                    limit = {
+                        NOT = {
+                            JAP = {
+                                has_war_with = USA
+                            }
+                        }
+                    }
+                    CHI_frontlines_up = yes
+                    CHI = {
+                        add_to_variable = { CHI_army_defence_factor_var = 0.03 }
+                    }
+                }
+              
+                
+                
             }
         }
         effect = {
@@ -105,11 +210,1055 @@ on_actions = {
                 FROM.FROM = { 
                     add_building_construction = {
                         type = industrial_complex
-                        level = 6
+                        level = 5
                         instant_build = yes 
                     }
+                  
+                   
                     set_state_flag = CHI_riches_of_china_flag
                 }
+                
+            }
+        }
+        effect = {
+            if = { 
+                limit = {
+                    FROM = { tag = CHI }
+                    ROOT = { 
+                        OR = {
+                            tag = JAP 
+                            tag = MAN
+                        }
+                    }
+                    has_global_flag = Sino_jap_war_started_flag
+                }
+                if = {
+                    limit = {
+                         CHI = {
+                            OR = {
+                                has_country_flag = CHI_riches_flag12
+                                has_country_flag = CHI_riches_flag11
+                                has_country_flag = CHI_riches_flag10
+                                has_country_flag = CHI_riches_flag9
+                                has_country_flag = CHI_riches_flag8
+                                has_country_flag = CHI_riches_flag7
+                                has_country_flag = CHI_riches_flag6
+                                has_country_flag = CHI_riches_flag5
+                                has_country_flag = CHI_riches_flag4
+                                has_country_flag = CHI_riches_flag3
+                                has_country_flag = CHI_riches_flag2
+                                has_country_flag = CHI_riches_flag1
+
+                            }
+                        }
+                    }
+                     SOV = {
+                        add_to_variable = { SOV_china_army_xp_gain_var = -0.04 }
+                        add_to_variable = { SOV_china_pp_gain_var = -0.05 }
+                    }
+                }
+                if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-15
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-15
+                        set_country_flag = CHI_riches_flag-14
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-14
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-14
+                        set_country_flag = CHI_riches_flag-13
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-13
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-13
+                        set_country_flag = CHI_riches_flag-12
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-12
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-12
+                        set_country_flag = CHI_riches_flag-11
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-11
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-11
+                        set_country_flag = CHI_riches_flag-10
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-10
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-10
+                        set_country_flag = CHI_riches_flag-9
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-9
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-9
+                        set_country_flag = CHI_riches_flag-8
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-8
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-8
+                        set_country_flag = CHI_riches_flag-7
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-7
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-7
+                        set_country_flag = CHI_riches_flag-6
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-6
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-6
+                        set_country_flag = CHI_riches_flag-5
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-5
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-5
+                        set_country_flag = CHI_riches_flag-4
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-4
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-4
+                        set_country_flag = CHI_riches_flag-3
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-3
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-3
+                        set_country_flag = CHI_riches_flag-2
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-2
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-2
+                        set_country_flag = CHI_riches_flag-1
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-1
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-1
+                        set_country_flag = CHI_riches_flag0
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag0
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag0
+                        set_country_flag = CHI_riches_flag1
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag1
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag1
+                        set_country_flag = CHI_riches_flag2
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag2
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag2
+                        set_country_flag = CHI_riches_flag3
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag3
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag3
+                        set_country_flag = CHI_riches_flag4
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag4
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag4
+                        set_country_flag = CHI_riches_flag5
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag5
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag5
+                        set_country_flag = CHI_riches_flag6
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag6
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag6
+                        set_country_flag = CHI_riches_flag7
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag7
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag7
+                        set_country_flag = CHI_riches_flag8
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag8
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag8
+                        set_country_flag = CHI_riches_flag9
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag9
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag9
+                        set_country_flag = CHI_riches_flag10
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag10
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag10
+                        set_country_flag = CHI_riches_flag11
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag11
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag11
+                        set_country_flag = CHI_riches_flag12
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag12
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag12
+                        set_country_flag = CHI_riches_flag13
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag13
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag13
+                        set_country_flag = CHI_riches_flag14
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag14
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag14
+                        set_country_flag = CHI_riches_flag15
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag15
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag15
+                        set_country_flag = CHI_riches_flag16
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag16
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag16
+                        set_country_flag = CHI_riches_flag17
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag17
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag17
+                        set_country_flag = CHI_riches_flag18
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag18
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag18
+                        set_country_flag = CHI_riches_flag19
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag19
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag19
+                        set_country_flag = CHI_riches_flag20
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag20
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag20
+                        set_country_flag = CHI_riches_flag21
+                    }
+                }
+
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag21
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag21
+                        set_country_flag = CHI_riches_flag22
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag22
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag22
+                        set_country_flag = CHI_riches_flag23
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag23
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag23
+                        set_country_flag = CHI_riches_flag24
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag24
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag24
+                        set_country_flag = CHI_riches_flag25
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag25
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag25
+                        set_country_flag = CHI_riches_flag26
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag26
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag26
+                        set_country_flag = CHI_riches_flag27
+                    }
+                }
+
+               
+                
+               
+                JAP = {
+                    add_to_variable = { JAP_factory_output_modifier = 0.03 }
+                    add_to_variable = { JAP_dockyard_output_modifier = 0.025 }
+                }
+                MAN = {
+                    add_to_variable = { JAP_factory_output_modifier = 0.03 }
+                    add_to_variable = { JAP_dockyard_output_modifier = 0.025 }
+                
+                }
+                
+            }
+        }
+        effect = {
+            if = { 
+                limit = {
+                    FROM = { 
+                        OR = {
+                            tag = JAP 
+                            tag = MAN
+                        }
+                    }
+                    ROOT = { tag = CHI }
+                }
+                if = {
+                    limit = {
+                        CHI = {
+                            NOT = {
+                                has_country_flag = CHI_riches_flag-15
+                                has_country_flag = CHI_riches_flag-14
+                                has_country_flag = CHI_riches_flag-13
+                                has_country_flag = CHI_riches_flag-12
+                                has_country_flag = CHI_riches_flag-11
+                                has_country_flag = CHI_riches_flag-10
+                                has_country_flag = CHI_riches_flag-9
+                                has_country_flag = CHI_riches_flag-8
+                                has_country_flag = CHI_riches_flag-7
+                                has_country_flag = CHI_riches_flag-6
+                                has_country_flag = CHI_riches_flag-5
+                                has_country_flag = CHI_riches_flag-4
+                                has_country_flag = CHI_riches_flag-3
+                                has_country_flag = CHI_riches_flag-2
+                                has_country_flag = CHI_riches_flag-1
+                                has_country_flag = CHI_riches_flag0
+                                has_country_flag = CHI_riches_flag1
+                                has_country_flag = CHI_riches_flag14
+                                has_country_flag = CHI_riches_flag15
+                                has_country_flag = CHI_riches_flag16
+                                has_country_flag = CHI_riches_flag17
+                                has_country_flag = CHI_riches_flag18
+                                has_country_flag = CHI_riches_flag19
+                                has_country_flag = CHI_riches_flag20
+                                has_country_flag = CHI_riches_flag21
+                                has_country_flag = CHI_riches_flag22
+                                has_country_flag = CHI_riches_flag23
+                                has_country_flag = CHI_riches_flag24
+                                has_country_flag = CHI_riches_flag25
+                                has_country_flag = CHI_riches_flag26
+                                has_country_flag = CHI_riches_flag27
+                            }
+                        }
+                    }
+                    SOV = {
+                        add_to_variable = { SOV_china_army_xp_gain_var = 0.04 }
+                        add_to_variable = { SOV_china_pp_gain_var = 0.05 }
+                    }
+                }
+                if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag27
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag27
+                        set_country_flag = CHI_riches_flag26
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag26
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag26
+                        set_country_flag = CHI_riches_flag25
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag25
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag25
+                        set_country_flag = CHI_riches_flag24
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag24
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag24
+                        set_country_flag = CHI_riches_flag23
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag23
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag23
+                        set_country_flag = CHI_riches_flag22
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag22
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag22
+                        set_country_flag = CHI_riches_flag21
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag21
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag21
+                        set_country_flag = CHI_riches_flag20
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag19
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag19
+                        set_country_flag = CHI_riches_flag18
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag18
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag18
+                        set_country_flag = CHI_riches_flag17
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag17
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag17
+                        set_country_flag = CHI_riches_flag16
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag16
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag16
+                        set_country_flag = CHI_riches_flag15
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag15
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag15
+                        set_country_flag = CHI_riches_flag14
+                    }
+                }
+
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag14
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag14
+                        set_country_flag = CHI_riches_flag13
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag13
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag13
+                        set_country_flag = CHI_riches_flag12
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag12
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag12
+                        set_country_flag = CHI_riches_flag11
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag11
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag11
+                        set_country_flag = CHI_riches_flag10
+                    }
+                }
+
+
+
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag10
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag10
+                        set_country_flag = CHI_riches_flag9
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag9
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag9
+                        set_country_flag = CHI_riches_flag8
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag8
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag8
+                        set_country_flag = CHI_riches_flag7
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag7
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag7
+                        set_country_flag = CHI_riches_flag6
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag6
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag6
+                        set_country_flag = CHI_riches_flag5
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag5
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag5
+                        set_country_flag = CHI_riches_flag4
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag4
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag4
+                        set_country_flag = CHI_riches_flag3
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag3
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag3
+                        set_country_flag = CHI_riches_flag2
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag2
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag2
+                        set_country_flag = CHI_riches_flag1
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag1
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag1
+                        set_country_flag = CHI_riches_flag0
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag0
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag0
+                        set_country_flag = CHI_riches_flag-1
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-1
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-1
+                        set_country_flag = CHI_riches_flag-2
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-2
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-2
+                        set_country_flag = CHI_riches_flag-3
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-3
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-3
+                        set_country_flag = CHI_riches_flag-4
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-4
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-4
+                        set_country_flag = CHI_riches_flag-5
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-5
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-5
+                        set_country_flag = CHI_riches_flag-6
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-6
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-6
+                        set_country_flag = CHI_riches_flag-7
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-7
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-7
+                        set_country_flag = CHI_riches_flag-8
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-8
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-8
+                        set_country_flag = CHI_riches_flag-9
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-9
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-9
+                        set_country_flag = CHI_riches_flag-10
+                    }
+                }
+
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-10
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-10
+                        set_country_flag = CHI_riches_flag-11
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-11
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-11
+                        set_country_flag = CHI_riches_flag-12
+                    }
+                }
+
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-12
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-12
+                        set_country_flag = CHI_riches_flag-13
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-13
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-13
+                        set_country_flag = CHI_riches_flag-14
+                    }
+                }
+                else_if = {
+                    limit = {
+                        CHI = {
+                             has_country_flag = CHI_riches_flag-14
+                        }
+                    }
+                    CHI = {
+                        clr_country_flag = CHI_riches_flag-14
+                        set_country_flag = CHI_riches_flag-15
+                    }
+                }
+                
+
+                JAP = {
+                    add_to_variable = { JAP_factory_output_modifier = -0.03 }
+                    add_to_variable = { JAP_dockyard_output_modifier = -0.025 }
+                }
+                MAN = {
+                    add_to_variable = { JAP_factory_output_modifier = -0.03 }
+                    add_to_variable = { JAP_dockyard_output_modifier = -0.025 }
+                
+                }
+                
             }
         }
     }

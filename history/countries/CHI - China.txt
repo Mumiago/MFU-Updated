@@ -3,13 +3,16 @@
 oob = "CHI_1936"
 if = {
 	limit = { has_dlc = "Man the Guns" }
-		set_naval_oob = "CHI_1936_naval_mtg"
+		set_naval_oob = "CHI_1936_naval"
 	else = {
-		set_naval_oob = "CHI_1936_naval_legacy"
+		set_naval_oob = "CHI_1936_naval"
 	}
 }
+
+
+set_variable = { global.SOV_china_tank_spawn_ins = 5 }
 set_stability = 0.5
-set_war_support = 0.3
+set_war_support = 1
 set_research_slots = 4
 set_fuel_ratio = 0.85
 # Starting tech
@@ -51,7 +54,11 @@ recruit_character = CHI_dai_li
 recruit_character = CHI_he_yingqin
 recruit_character = CHI_gao_zhihang
 recruit_character = CHI_xiao_yisu_2	
-
+recruit_character = CHI_wei_lihuang2	
+recruit_character = CHI_wei_lihuang3	
+recruit_character = CHI_wei_lihuang4
+recruit_character = CHI_wei_lihuang5	
+ set_country_flag = CHI_riches_flag1
 set_technology = { #player 
 	basic_train = 1
 	##################### infantry ###############
@@ -70,12 +77,17 @@ set_technology = { #player
 	heavy_antiair_1 = 1
 	heavy_antiair_2 = 1
 	interwar_antitank = 1
+	antiair1 = 1
+	antiair2_1 = 1
+	antiair3 = 1 
 	############### support ############
 	tech_recon = 1	
 	tech_engineers = 1
 	tech_field_hospital = 1
 	tech_support = 1
 	############### custom technology ############
+	tech_military_police = 1
+	tech_military_police2 = 1
 	CHI_light_infantry = 1
 	tech_light_infantry = 1
 	tech_light_infantry2 = 1 
@@ -90,7 +102,9 @@ set_technology = { #player
 	interwar_antiair = 1
 	############## aircraft ##############
 	fighter_1934 = 1
+	CAS_1937 = 1
 	tactical_bomber_1934 = 1
+	#tactical_bomber_1937 = 1
 	mass_assault = 1
 	heavy_artillery1 = 1
 	
@@ -98,6 +112,25 @@ set_technology = { #player
 	starting_industry = 1
 	
 }
+create_equipment_variant = {
+	name = "Panzer I Ausf. B"
+	type = light_tank_chassis_1934
+	parent_version = 0
+	modules = {
+		main_armament_slot = tank_heavy_machine_gun
+		turret_type_slot = tank_light_one_man_tank_turret
+		suspension_type_slot = tank_bogie_suspension
+		armor_type_slot = tank_welded_armor
+		armor_sloping_slot = unsloped_armor
+		engine_type_slot = tank_gasoline_engine
+		radio_slot = tank_radio_1
+	}
+	upgrades = {
+		tank_nsb_engine_upgrade = 3
+		tank_nsb_armor_upgrade = 1
+	}
+	icon = "gfx/interface/technologies/land/ger/p1b.tga"
+	}
 if = {
 	limit = { not = { has_dlc = "Man the Guns" } }
 	set_technology = {
@@ -124,6 +157,7 @@ if = {
 		usa_motorised_infantry = 1
 		usa_tech_armored_cars = 1
 		usa_1934_light_tank_chassis = 1
+		usa_1936_light_tank_chassis = 1
 		unlock_modules = 1
 		automatic_gun = 1
 		small_gun = 1
@@ -138,6 +172,7 @@ add_to_faction = CHI
 add_ideas = {
 	german_advisors
 	CHI_incompentent
+	CHI_state_of_army
 }
 
 if = {
@@ -169,7 +204,7 @@ if = {
 }
 save_global_event_target_as = WTT_current_china_leader
 
-set_convoys = 140
+set_convoys = 0
 
 create_import = {
 	resource = steel
@@ -192,84 +227,3 @@ set_popularities = {
 
 add_opinion_modifier = { target = PRC modifier = hostile_status }
 
-
-### VARIANTS ###
-# 1936 Start #
-if = {
-	limit = { not = { has_dlc = "Man the Guns" } }
-}
-if = {
-	limit = { has_dlc = "Man the Guns" }
-	# Destroyers #
-	create_equipment_variant = {
-		name = "Jianwei Class"			
-		type = ship_hull_light_1
-		name_group = CHI_DD_HISTORICAL
-		parent_version = 0
-		modules = {
-			fixed_ship_battery_slot = ship_light_battery_1
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = light_ship_engine_1
-			fixed_ship_torpedo_slot = ship_torpedo_1
-			mid_1_custom_slot = ship_anti_air_1
-			rear_1_custom_slot = ship_torpedo_1
-		}
-	}
-	# Light Cruisers #
-	create_equipment_variant = {
-		name = "Hairong Class"					# Hairong protected cruisers and Zhaohe, Yingrui training cruisers
-		type = ship_hull_cruiser_coastal_defense_ship
-		name_group = CHI_CL_HISTORICAL
-		parent_version = 0
-		modules = {
-			fixed_ship_battery_slot = ship_light_medium_battery_1
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_cruiser_1
-			mid_1_custom_slot = empty
-			mid_2_custom_slot = empty
-			rear_1_custom_slot = empty
-		}
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Haiqi Class"
-		type = ship_hull_cruiser_coastal_defense_ship
-		name_group = CHI_CL_HISTORICAL
-		parent_version = 0
-		modules = {
-			fixed_ship_battery_slot = ship_medium_battery_1
-			fixed_ship_anti_air_slot = empty
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_secondaries_slot = ship_secondaries_1
-			fixed_ship_armor_slot = ship_armor_cruiser_1
-			mid_1_custom_slot = empty
-			mid_2_custom_slot = empty
-			rear_1_custom_slot = empty
-		}
-		obsolete = yes
-	}
-	create_equipment_variant = {
-		name = "Ninghai Class"
-		type = ship_hull_cruiser_1
-		name_group = CHI_CL_HISTORICAL
-		parent_version = 0
-		modules = {
-			fixed_ship_battery_slot = ship_light_medium_battery_1
-			fixed_ship_anti_air_slot = ship_anti_air_1
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
-			fixed_ship_armor_slot = ship_armor_cruiser_1
-			mid_1_custom_slot = ship_torpedo_1
-			mid_2_custom_slot = empty
-			rear_1_custom_slot = empty
-		}
-	}
-}

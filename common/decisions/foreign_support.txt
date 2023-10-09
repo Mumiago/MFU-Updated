@@ -4,28 +4,1848 @@ foreign_support = {
     ################################################################### ALLIES STUFF FOR CHI & SCW ###################################################
     ##################################################################################################################################################
 
+	SOV_guns_for_china_pre_war = {
+
+		icon = generic_operation
+
+		allowed = {
+			tag = SOV
+		}
+
+		available = {
+
+			has_equipment = { infantry_equipment > 2999 }
+			
+			JAP = {
+                has_completed_focus = JAP_intervene_in_china
+            }
+			
+            
+		}
+
+		visible = {
+		
+			
+           SOV = {
+				has_country_flag = SOV_sino_japanese_war_started_flag
+		   }
+			NOT = {
+				SOV = {
+					has_country_flag = SOV_support_china_flag
+				}
+			}
+			JAP = {
+				NOT = {
+					has_war_with = CHI
+				}
+			}
+			
+			
+			
+		}
+
+		cost = 25
+
+		ai_will_do = {
+			factor = 25
+		}
+
+		fire_only_once = no	
+
+		days_re_enable = 1
+
+		complete_effect = {
+			if = {
+                limit = {
+                    check_variable = {
+                        var = global.CHI_chi_weapon_clicks
+                        value = 0 
+                        compare = less_than_or_equals
+                        
+                    }
+                }
+                set_variable = { global.CHI_chi_weapon_clicks = 3 }
+            }
+            else_if = {
+                limit = {
+                    check_variable = {
+                        var = global.CHI_chi_weapon_clicks
+                        value = 0 
+                        compare = greater_than_or_equals
+                    }
+                }
+                add_to_variable = { global.CHI_chi_weapon_clicks = 3 }
+            }
+			
+			hidden_effect = {
+				set_country_flag = { flag = SOV_support_china_flag value = 1 days = 180}
+
+			}
+			if = {
+				limit = {
+					NOT = {
+						JAP = {
+							has_war_with = CHI
+						}
+					}
+				}
+				custom_effect_tooltip = USA_spawn_in_china_2	
+				add_to_variable = {
+					var = global.china_spawn_in_boost
+					value = 3
+				}
+			}
+			
+			ROOT = {
+				send_equipment = {
+					target = CHI 
+					type = infantry_equipment
+					amount = 3000
+					old_prioritised = yes
+				}
+			}
+		}
+	}
+	
+	SOV_factories_for_china_pre_war = {
+
+		icon = generic_industry
+
+		allowed = {
+			tag = SOV
+		}
+
+		available = {
+			has_war = no
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = CHI_has_to_control_coast_tt
+					OR = {
+						AND = {
+							CHI = {
+								controls_state = 595
+							}
+							595 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 822
+							}
+							822 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 596
+							}
+							596 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 613
+							}
+							613 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 592
+							}
+							592 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 591
+							}
+							591 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 743
+							}
+							743 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+					}
+				}
+				
+				OR = {
+					288 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+					823 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+				}
+			}
+
+			
+			 JAP = {
+                has_completed_focus = JAP_intervene_in_china
+            }
+            
+		}
+		visible = {
+			
+           SOV = {
+				has_country_flag = SOV_sino_japanese_war_started_flag
+			}
+			NOT = {
+				SOV = {
+					has_country_flag = SOV_support_china_flag2
+				}
+			}
+			
+		}
+
+		cost = 25
+
+		ai_will_do = {
+			factor = 25
+		}
+
+		fire_only_once = no	
+
+		days_re_enable = 1
+		days_remove = 120
+		modifier = {
+			civilian_factory_use = 3			
+		}
+
+		complete_effect = {
+
+			add_war_support = 0.05
+			hidden_effect = {
+				set_country_flag = { flag = SOV_support_china_flag2 value = 1 days = 180}
+				
+			}
+			CHI = {
+				add_offsite_building = { type = arms_factory level = 4 }
+			}
+			
+		}
+	}
+	SOV_modernweapons_for_china = {
+
+		icon = generic_prepare_civil_war
+
+		allowed = {
+			tag = SOV
+		}
+
+		available = {
+			
+			has_equipment = { infantry_equipment > 7999 }
+			
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = CHI_has_to_control_coast_tt
+					OR = {
+						AND = {
+							CHI = {
+								controls_state = 595
+							}
+							595 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 822
+							}
+							822 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 596
+							}
+							596 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 613
+							}
+							613 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 592
+							}
+							592 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 591
+							}
+							591 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 743
+							}
+							743 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+					}
+				}
+				OR = {
+					288 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+					823 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+				}
+			}
+			
+			
+			
+            
+		}
+
+		visible = {
+			
+			has_tech = improved_infantry_weapons
+			JAP = {
+                has_completed_focus = JAP_intervene_in_china
+            }
+			
+           SOV = {
+				has_country_flag = SOV_sino_japanese_war_started_flag
+			}
+			NOT = {
+				SOV = {
+					has_country_flag = SOV_support_china_flag5
+				}
+			}
+			
+			
+		}
+
+		cost = 25
+
+		ai_will_do = {
+			factor = 25
+		}
+
+		fire_only_once = no	
+
+		days_re_enable = 1
+
+		complete_effect = {
+			
+			
+			hidden_effect = {
+				set_country_flag = { flag = SOV_support_china_flag5 value = 1 days = 180}
+				CHI = {
+					add_to_variable = { CHI_state_of_army_var = 1 }
+				}
+				if = {
+					limit = {
+						CHI = {
+							has_army_manpower = {
+								size < 100000
+							}
+						}
+						
+					}
+					CHI = {
+						add_to_variable = { var = CHI_juntuan_division_cap value = 1 }			
+					}
+				}
+				else = {
+					CHI = {
+						add_to_variable = { var = CHI_juntuan_division_cap value = 1 }	
+						set_division_template_cap = {  division_template = "Juntuan" division_cap = CHI_juntuan_division_cap }		
+					}
+
+				}
+				
+
+			}
+			custom_effect_tooltip = CHI_state_of_chinese_army_up_tt
+			
+			send_equipment = {
+				equipment = infantry_equipment
+				amount = 8000
+				target = CHI
+				new_prioritised = yes
+			}
+			SOV = {
+				if = {
+					limit = {
+						has_tech = modern_infantry_weapons
+					}
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = modern_infantry_weapons
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								modern_infantry_weapons = 1
+							}
+						}
+						
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = advanced_infantry_weapons
+					}
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = advanced_infantry_weapons
+								}
+								
+							}
+						}
+							
+						CHI = {
+							set_technology = {
+								advanced_infantry_weapons = 1
+							}
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = improved_infantry_weapons
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = improved_infantry_weapons
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								improved_infantry_weapons = 1
+							}
+						}
+					}
+				}
+				
+
+				
+			}
+			
+		}
+	}
+	SOV_modernarty_for_china = {
+
+		icon = generic_ignite_civil_war
+
+		allowed = {
+			tag = SOV
+		}
+
+		available = {
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = CHI_has_to_control_coast_tt
+					OR = {
+						AND = {
+							CHI = {
+								controls_state = 595
+							}
+							595 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 822
+							}
+							822 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 596
+							}
+							596 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 613
+							}
+							613 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 592
+							}
+							592 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 591
+							}
+							591 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 743
+							}
+							743 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+					}
+				}
+				
+				OR = {
+					288 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+					823 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+				}
+			}
+			
+			if = {
+				limit = {
+					has_tech = artillery8_2
+				}
+				has_equipment = { artillery_equipment > 449 }
+			}
+			else_if = {
+				limit = {
+					has_tech = heavy_artillery6_1
+				}
+				has_equipment = { heavy_artillery_equipment > 219 }
+			}
+
+			else_if = {
+				limit = {
+					has_tech = pack_artillery4
+				}
+				has_equipment = { pack_artillery_equipment > 819 }
+			}
+			
+			else_if = {
+				limit = {
+					has_tech = artillery4
+				}
+				has_equipment = { artillery_equipment> 449 }
+			}
+			else_if = {
+				limit = {
+					has_tech = heavy_artillery2
+				}
+				has_equipment = { heavy_artillery_equipment > 219 }
+			}
+			else_if = {
+				limit = {
+					has_tech = field_gun3
+				}
+				has_equipment = { heavy_artillery_equipment > 549 }
+			}
+			
+			
+			
+			
+            
+		}
+
+		visible = {
+			JAP = {
+                has_completed_focus = JAP_intervene_in_china
+            }
+			OR = {
+				has_tech = artillery5_2
+				has_tech = artillery5_1
+				has_tech = heavy_artillery3_1
+				has_tech = heavy_artillery3_2
+				has_tech = pack_artillery2_1
+				has_tech = pack_artillery2_2
+				has_tech = field_gun4	
+			}
+			
+           SOV = {
+				has_country_flag = SOV_sino_japanese_war_started_flag
+			}
+			NOT = {
+				SOV = {
+					has_country_flag = SOV_support_china_flag6
+				}
+			}
+			
+			
+			
+			
+		}
+
+		cost = 25
+
+		ai_will_do = {
+			factor = 25
+		}
+
+		fire_only_once = no	
+
+		days_re_enable = 1
+
+		complete_effect = {
+			
+			
+			hidden_effect = {
+				set_country_flag = { flag = SOV_support_china_flag6 value = 1 days = 180}
+				CHI = {
+					add_to_variable = { CHI_state_of_army_var = 1 }
+				}
+				if = {
+					limit = {
+						CHI = {
+							has_army_manpower = {
+								size < 100000
+							}
+						}
+						
+					}
+					CHI = {
+						add_to_variable = { var = CHI_juntuan_division_cap value = 1 }			
+					}
+				}
+				else = {
+					CHI = {
+						add_to_variable = { var = CHI_juntuan_division_cap value = 1 }	
+						set_division_template_cap = {  division_template = "Juntuan" division_cap = CHI_juntuan_division_cap }		
+					}
+
+				}
+
+			}
+			custom_effect_tooltip = CHI_state_of_chinese_army_up_tt
+			
+			
+			SOV = {
+				if = {
+					limit = {
+						has_tech = artillery8_2
+					}
+					add_equipment_to_stockpile = { type = artillery_equipment amount = -450 producer = SOV } 
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = pack_artillery4
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								pack_artillery4 = 1
+							}
+						}
+						
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = heavy_artillery6_1
+					}
+					add_equipment_to_stockpile = { type = heavy_artillery_equipment amount = -220 producer = SOV } 
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = pack_artillery4
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								pack_artillery4 = 1
+							}
+						}
+						
+					}
+				}
+
+				else_if = {
+					limit = {
+						has_tech = pack_artillery4
+					}
+					add_equipment_to_stockpile = { type = pack_artillery_equipment amount = -820 producer = SOV } 
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = pack_artillery4
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								pack_artillery4 = 1
+							}
+						}
+						
+					}
+				}
+				
+				else_if = {
+					limit = {
+						has_tech = artillery4
+					}
+					add_equipment_to_stockpile = { type = artillery_equipment amount = -450 producer = SOV } 
+				}
+				else_if = {
+					limit = {
+						has_tech = heavy_artillery2
+					}
+					add_equipment_to_stockpile = { type = heavy_artillery_equipment amount = -220 producer = SOV } 
+				}
+				else_if = {
+					limit = {
+						has_tech = field_gun3
+					}
+					add_equipment_to_stockpile = { type = heavy_artillery_equipment amount = -550 producer = SOV } 
+				}
+			}
+			CHI = {
+				add_equipment_to_stockpile = { type = pack_artillery_equipment amount = 700 producer = SOV } 
+				add_equipment_to_stockpile = { type = artillery_equipment amount = 150 producer = SOV }
+				add_equipment_to_stockpile = { type = anti_air_equipment amount = 100 producer = SOV }
+			}
+		}
+	}
+	SOV_fighters_for_china_pre_war = {
+
+		icon = generic_air
+
+		allowed = {
+			tag = SOV
+		}
+
+		available = {
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = CHI_has_to_control_coast_tt
+					OR = {
+						AND = {
+							CHI = {
+								controls_state = 595
+							}
+							595 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 822
+							}
+							822 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 596
+							}
+							596 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 613
+							}
+							613 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 592
+							}
+							592 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 591
+							}
+							591 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 743
+							}
+							743 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+					}
+				}
+				
+				OR = {
+					288 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+					823 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+				}
+			}
+			
+			
+			has_equipment = { small_plane_airframe > 99 }
+			
+			
+			
+			SOV = {
+				has_completed_focus = SOV_air_volunteers_in_china
+			}
+            
+		}
+
+		visible = {
+		
+			JAP = {
+                has_completed_focus = JAP_intervene_in_china
+            }
+           SOV = {
+				has_country_flag = SOV_sino_japanese_war_started_flag
+			}
+			
+			NOT = {
+				SOV = {
+					has_country_flag = SOV_support_china_flag3
+				}
+			}
+			
+		}
+
+		cost = 0
+
+		ai_will_do = {
+			factor = 25
+		}
+
+		fire_only_once = no	
+
+		days_re_enable = 1
+
+		complete_effect = {
+			  custom_effect_tooltip = CHI_state_of_chinese_army_up_tt
+			hidden_effect = {
+				set_country_flag = { flag = SOV_support_china_flag3 value = 1 days = 60}
+				CHI = {
+					add_to_variable = { CHI_state_of_army_var = 1 }
+				}
+				if = {
+					limit = {
+						CHI = {
+							has_army_manpower = {
+								size < 100000
+							}
+						}
+						
+					}
+					CHI = {
+						add_to_variable = { var = CHI_juntuan_division_cap value = 1 }			
+					}
+				}
+				else = {
+					CHI = {
+						add_to_variable = { var = CHI_juntuan_division_cap value = 1 }	
+						set_division_template_cap = {  division_template = "Juntuan" division_cap = CHI_juntuan_division_cap }		
+					}
+
+				}
+			}
+			send_equipment = {
+				equipment = small_plane_airframe
+				amount = 100
+				target = CHI
+				new_prioritised = yes
+			}
+
+			SOV = {
+				if = {
+					limit = {
+						has_tech = sov_fighter_1944
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = fighter_1944
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								fighter_1944 = 1
+							}
+						}
+						
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = sov_fighter_1943
+					}
+				
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = fighter_1942
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								fighter_1942 = 1
+							}
+						}
+						
+					}
+				}
+
+				else_if = {
+					limit = {
+						has_tech = sov_fighter_1942
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = fighter_1942
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								fighter_1942 = 1
+							}
+						}
+						
+					} 
+				}
+				else_if = {
+					limit = {
+						has_tech = sov_fighter_1941
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = fighter_1940
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								fighter_1940 = 1
+							}
+						}
+						
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = sov_fighter_1940
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = fighter_1940
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								fighter_1940 = 1
+							}
+						}
+						
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = sov_fighter_1939
+					}
+				
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = fighter_1938
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								fighter_1938 = 1
+							}
+						}
+						
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = sov_fighter_1938
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = fighter_1938
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								fighter_1938 = 1
+							}
+						}
+						
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = sov_fighter_1936
+					}
+				
+
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = fighter_1936
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								fighter_1936 = 1
+							}
+						}
+						
+					}
+				}
+				
+			}
+			
+			
+		}
+	}
+	SOV_cas_for_china_pre_war = {
+
+		icon = generic_air
+
+		allowed = {
+			tag = SOV
+		}
+
+		available = {
+			
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = CHI_has_to_control_coast_tt
+					OR = {
+						AND = {
+							CHI = {
+								controls_state = 595
+							}
+							595 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 822
+							}
+							822 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 596
+							}
+							596 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 613
+							}
+							613 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 592
+							}
+							592 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 591
+							}
+							591 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 743
+							}
+							743 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+					}
+				}
+				
+				OR = {
+					288 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+					823 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+				}
+			}
+			has_tech = sov_CAS_1937
+			
+			has_equipment = { small_plane_cas_airframe > 99 }
+			
+			
+			
+			SOV = {
+				has_completed_focus = SOV_air_volunteers_in_china
+			}
+            
+		}
+
+		visible = {
+		
+		   JAP = {
+                has_completed_focus = JAP_intervene_in_china
+            }
+           SOV = {
+				has_country_flag = SOV_sino_japanese_war_started_flag
+			}
+			
+			NOT = {
+				SOV = {
+					has_country_flag = SOV_support_china_flag4
+				}
+			}
+			
+		}
+
+		cost = 0
+
+		ai_will_do = {
+			factor = 25
+		}
+
+		fire_only_once = no	
+
+		days_re_enable = 1
+
+		complete_effect = {
+			custom_effect_tooltip = CHI_state_of_chinese_army_up_tt
+			hidden_effect = {
+				set_country_flag = { flag = SOV_support_china_flag4 value = 1 days = 60}
+				CHI = {
+					add_to_variable = { CHI_state_of_army_var = 1 }
+				}
+				if = {
+					limit = {
+						CHI = {
+							has_army_manpower = {
+								size < 100000
+							}
+						}
+						
+					}
+					CHI = {
+						add_to_variable = { var = CHI_juntuan_division_cap value = 1 }			
+					}
+				}
+				else = {
+					CHI = {
+						add_to_variable = { var = CHI_juntuan_division_cap value = 1 }	
+						set_division_template_cap = {  division_template = "Juntuan" division_cap = CHI_juntuan_division_cap }		
+					}
+
+				}
+			}
+			send_equipment = {
+				equipment = small_plane_cas_airframe
+				amount = 100
+				target = CHI
+				new_prioritised = yes
+			}
+			SOV = {
+				if = {
+					limit = {
+						has_tech = sov_CAS_1943
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = CAS_1943
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								CAS_1943 = 1
+							}
+							set_technology = {
+								tactical_bomber_1943 = 1
+							}
+						}
+						
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = sov_CAS_1941
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = CAS_1941
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								CAS_1941 = 1
+							}
+							set_technology = {
+								tactical_bomber_1941 = 1
+							}
+						}
+						
+					}
+				}
+
+				else_if = {
+					limit = {
+						has_tech = sov_CAS_1939
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = CAS_1939
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								CAS_1939 = 1
+							}
+							set_technology = {
+								tactical_bomber_1939 = 1
+							}
+						}
+						
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = sov_CAS_1937
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = CAS_1937
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								CAS_1937 = 1
+							}
+							set_technology = {
+								tactical_bomber_1937 = 1
+							}
+						}
+						
+					}
+				}
+			}
+			
+			
+		}
+	}
+	SOV_tanks_for_china_pre_war = {
+
+		icon = generic_tank
+
+		allowed = {
+			tag = SOV
+		}
+
+		available = {
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = CHI_has_to_control_coast_tt
+					OR = {
+						AND = {
+							CHI = {
+								controls_state = 595
+							}
+							595 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 822
+							}
+							822 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 596
+							}
+							596 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 613
+							}
+							613 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 592
+							}
+							592 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 591
+							}
+							591 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 743
+							}
+							743 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+					}
+				}
+				
+				OR = {
+					288 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+					823 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+				}
+			}
+			
+			has_equipment = { light_tank_chassis > 99 }
+			has_equipment = { motorized_equipment > 99 }
+			
+			
+			SOV = {
+				has_completed_focus = SOV_operation_zet
+			}
+            
+		}
+
+		visible = {
+		
+			JAP = {
+                has_completed_focus = JAP_intervene_in_china
+            }
+           SOV = {
+				has_country_flag = SOV_sino_japanese_war_started_flag
+			}
+			
+			NOT = {
+				SOV = {
+					has_country_flag = SOV_support_china_flag5
+				}
+			}
+			
+		}
+
+		cost = 0
+
+		ai_will_do = {
+			factor = 25
+		}
+
+		fire_only_once = no	
+
+		days_re_enable = 1
+
+		complete_effect = {
+			  custom_effect_tooltip = CHI_state_of_chinese_army_up_tt
+			hidden_effect = {
+				set_country_flag = { flag = SOV_support_china_flag5 value = 1 days = 60}
+				CHI = {
+					add_to_variable = { CHI_state_of_army_var = 1 }
+				}
+				if = {
+					limit = {
+						CHI = {
+							has_army_manpower = {
+								size < 100000
+							}
+						}
+						
+					}
+					CHI = {
+						add_to_variable = { var = CHI_juntuan_division_cap value = 1 }			
+					}
+				}
+				else = {
+					CHI = {
+						add_to_variable = { var = CHI_juntuan_division_cap value = 1 }	
+						set_division_template_cap = {  division_template = "Juntuan" division_cap = CHI_juntuan_division_cap }		
+					}
+
+				}
+			}
+			SOV = {
+				if = {
+					limit = {
+						has_tech = sov_1942_light_tank_chassis
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = usa_1939_light_tank_chassis
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								usa_1939_light_tank_chassis = 1
+							}
+						}
+						
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = sov_1939_light_tank_chassis
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = usa_1939_light_tank_chassis
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								usa_1939_light_tank_chassis = 1
+							}
+						}
+						
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = sov_1936_light_tank_chassis
+					}
+					
+				
+				}
+			}
+			send_equipment = {
+				equipment = light_tank_chassis
+				amount = 100
+				target = CHI
+				new_prioritised = yes
+			}
+			send_equipment = {
+				equipment = motorized_equipment
+				amount = 100
+				target = CHI
+				new_prioritised = yes
+			}
+			
+		}
+	}
+
 	guns_for_china = {
 
 		icon = generic_prepare_civil_war
 
 		allowed = {
+			tag = USA
 		}
 
 		available = {
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = CHI_has_to_control_coast_tt
+					OR = {
+						AND = {
+							CHI = {
+								controls_state = 595
+							}
+							595 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 822
+							}
+							822 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 596
+							}
+							596 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 613
+							}
+							613 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 592
+							}
+							592 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 591
+							}
+							591 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 743
+							}
+							743 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+					}
+				}
+				
+				OR = {
+					288 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+					823 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+				}
+			}
+		
 			has_equipment = { infantry_equipment > 2999 }
-			country_exists = CHI 
-            JAP = {
-                has_completed_focus = JAP_intervene_in_china
-            }
+			
+            
 		}
 
 		visible = {
-            has_country_flag = CHI_can_support_china_with_guns
-			country_exists = CHI 
-            JAP = {
+		
+			JAP = {
                 has_completed_focus = JAP_intervene_in_china
             }
-            date < 1938.8.1 
+
+			JAP = {
+				NOT = {
+					has_war_with = CHI
+				}
+			}
+           SOV = {
+				has_country_flag = SOV_sino_japanese_war_started_flag
+			}
+			
+		
 		}
 
 		cost = 25
@@ -37,15 +1857,24 @@ foreign_support = {
 		fire_only_once = no	
 
 		days_re_enable = 180
+		
 
 		complete_effect = {
-            army_experience = 25
+           
 
-            custom_effect_tooltip = USA_spawn_in_china_1
+            custom_effect_tooltip = USA_spawn_in_china_2
 			
 			add_to_variable = {
 				var = global.china_spawn_in_boost
-				value = 1
+				value = 3
+			}
+			ROOT = {
+				send_equipment = {
+					target = CHI 
+					type = infantry_equipment
+					amount = 3000
+					old_prioritised = yes
+				}
 			}
 
             if = {
@@ -57,7 +1886,7 @@ foreign_support = {
                         
                     }
                 }
-                set_variable = { global.CHI_chi_weapon_clicks = 1 }
+                set_variable = { global.CHI_chi_weapon_clicks = 3 }
             }
             else_if = {
                 limit = {
@@ -67,17 +1896,10 @@ foreign_support = {
                         compare = greater_than_or_equals
                     }
                 }
-                add_to_variable = { global.CHI_chi_weapon_clicks = 1 }
+                add_to_variable = { global.CHI_chi_weapon_clicks = 3 }
             }
 
-			ROOT = {
-				send_equipment = {
-					target = CHI 
-					type = infantry_equipment
-					amount = 3000
-					old_prioritised = yes
-				}
-			}
+			
 		}
 	}
 
@@ -86,9 +1908,108 @@ foreign_support = {
 		icon = generic_industry
 
 		allowed = {
+			tag = USA
 		}
 
 		available = {
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = CHI_has_to_control_coast_tt
+					OR = {
+						AND = {
+							CHI = {
+								controls_state = 595
+							}
+							595 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 822
+							}
+							822 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 596
+							}
+							596 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 613
+							}
+							613 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 592
+							}
+							592 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 591
+							}
+							591 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 743
+							}
+							743 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+					}
+				}
+				
+				OR = {
+					288 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+					823 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+				}
+			}
+
+		
             num_of_civilian_factories_available_for_projects > 2 
             JAP = {
                 has_completed_focus = JAP_intervene_in_china
@@ -96,11 +2017,12 @@ foreign_support = {
 		}
 
 		visible = {
-            has_country_flag = CHI_can_support_china_with_guns
-            JAP = {
-                has_completed_focus = JAP_intervene_in_china
-            }
-           date < 1938.8.1 
+			
+           SOV = {
+				has_country_flag = SOV_sino_japanese_war_started_flag
+			}
+			
+			
 		}
 
 		cost = 25
@@ -112,61 +2034,1422 @@ foreign_support = {
 		fire_only_once = no
 
 		modifier = {
-			civilian_factory_use = 3			
+			civilian_factory_use = 4			
 		}
 
 		days_remove = 180
 
 		complete_effect = {
-			random_country = {
-				limit = {
-					Tag = CHI 
-				}
-				add_offsite_building = { type = arms_factory level = 3 }
+			add_war_support = 0.05
+			CHI = {
+				add_offsite_building = { type = arms_factory level = 4 }
 				set_country_flag = SOV_support_china_with_factories
 			}
-
-            if = {
-                limit = {
-                    check_variable = {
-                        var = GLOBAL.CHI_chi_arms_clicks
-                        value = 0 
-                        compare = less_than_or_equals
-                        
-                    }
-                }
-                set_variable = { GLOBAL.CHI_chi_arms_clicks = 1 }
-            }
-            else_if = {
-                limit = {
-                    check_variable = {
-                        var = GLOBAL.CHI_chi_weapon_clicks
-                        value = 0 
-                        compare = greater_than_or_equals
-                    }
-                }
-                add_to_variable = { GLOBAL.CHI_chi_arms_clicks = 1 }
-            }
+			
+		
+			
 
 		}
 
-		remove_effect = {
-			add_political_power = 100
-			add_war_support = 0.05
+	}
+	USA_modernweapons_for_china = {
 
-            custom_effect_tooltip = USA_spawn_in_china_1
+		icon = generic_prepare_civil_war
 
-			add_to_variable = {
-				var = global.china_spawn_in_boost
-				value = 1
-			}
+		allowed = {
+			tag = USA
+		}
 
-			random_country = {
-				limit = {
-					Tag = CHI 
+		available = {
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = CHI_has_to_control_coast_tt
+					OR = {
+						AND = {
+							CHI = {
+								controls_state = 595
+							}
+							595 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 822
+							}
+							822 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 596
+							}
+							596 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 613
+							}
+							613 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 592
+							}
+							592 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 591
+							}
+							591 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 743
+							}
+							743 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+					}
 				}
-				add_offsite_building = { type = arms_factory level = -3 }
+				
+				OR = {
+					288 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+					823 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+				}
 			}
+			
+			has_equipment = { infantry_equipment > 7999 }
+			
+			
+			
+
+			
+			
+			
+			
+            
+		}
+
+		visible = {
+			JAP = {
+                has_completed_focus = JAP_intervene_in_china
+            }
+			has_tech = improved_infantry_weapons
+			
+           SOV = {
+				has_country_flag = SOV_sino_japanese_war_started_flag
+			}
+			NOT = {
+				USA = {
+					has_country_flag = USA_support_china_flag5
+				}
+			}
+
+			
+			
+			
+		}
+
+		cost = 25
+
+		ai_will_do = {
+			factor = 25
+		}
+
+		fire_only_once = no	
+
+		days_re_enable = 1
+
+		complete_effect = {
+			
+			
+			hidden_effect = {
+				set_country_flag = { flag = USA_support_china_flag5 value = 1 days = 180}
+				CHI = {
+					add_to_variable = { CHI_state_of_army_var = 1 }
+				}
+				if = {
+					limit = {
+						CHI = {
+							has_army_manpower = {
+								size < 100000
+							}
+						}
+						
+					}
+					CHI = {
+						add_to_variable = { var = CHI_juntuan_division_cap value = 1 }			
+					}
+				}
+				else = {
+					CHI = {
+						add_to_variable = { var = CHI_juntuan_division_cap value = 1 }	
+						set_division_template_cap = {  division_template = "Juntuan" division_cap = CHI_juntuan_division_cap }		
+					}
+
+				}
+
+
+			}
+			custom_effect_tooltip = CHI_state_of_chinese_army_up_tt
+			
+			
+			USA = {
+				if = {
+					limit = {
+						has_tech = modern_infantry_weapons
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = modern_infantry_weapons
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								modern_infantry_weapons = 1
+							}
+						}
+						
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = advanced_infantry_weapons
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = advanced_infantry_weapons
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								advanced_infantry_weapons = 1
+							}
+						}
+						
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = improved_infantry_weapons
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = improved_infantry_weapons
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								improved_infantry_weapons = 1
+							}
+						}
+						
+					} 
+				}
+				
+
+				
+			}
+			send_equipment = {
+				equipment = infantry_equipment
+				amount = 8000
+				target = CHI
+				new_prioritised = yes
+			}
+		}
+	}
+	USA_modernarty_for_china = {
+
+		icon = generic_ignite_civil_war
+
+		allowed = {
+			tag = USA
+		}
+
+		available = {
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = CHI_has_to_control_coast_tt
+					OR = {
+						AND = {
+							CHI = {
+								controls_state = 595
+							}
+							595 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 822
+							}
+							822 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 596
+							}
+							596 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 613
+							}
+							613 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 592
+							}
+							592 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 591
+							}
+							591 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 743
+							}
+							743 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+					}
+				}
+				
+				OR = {
+					288 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+					823 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+				}
+			}
+			
+			if = {
+				limit = {
+					has_tech = artillery8_2
+				}
+				has_equipment = { artillery_equipment > 449 }
+			}
+			else_if = {
+				limit = {
+					has_tech = heavy_artillery6_1
+				}
+				has_equipment = { heavy_artillery_equipment > 219 }
+			}
+
+			else_if = {
+				limit = {
+					has_tech = pack_artillery4
+				}
+				has_equipment = { pack_artillery_equipment > 819 }
+			}
+			
+			else_if = {
+				limit = {
+					has_tech = artillery4
+				}
+				has_equipment = { artillery_equipment > 449 }
+			}
+			else_if = {
+				limit = {
+					has_tech = heavy_artillery2
+				}
+				has_equipment = { heavy_artillery_equipment > 219 }
+			}
+			else_if = {
+				limit = {
+					has_tech = field_gun3
+				}
+				has_equipment = { field_gun_equipment > 549 }
+			}
+			
+			
+			
+			
+            
+		}
+
+		visible = {
+			JAP = {
+                has_completed_focus = JAP_intervene_in_china
+            }
+			OR = {
+				has_tech = artillery5_2
+				has_tech = artillery5_1
+				has_tech = heavy_artillery3_1
+				has_tech = heavy_artillery3_2
+				has_tech = pack_artillery2_1
+				has_tech = pack_artillery2_2
+				has_tech = field_gun4	
+			}
+			
+           SOV = {
+				has_country_flag = SOV_sino_japanese_war_started_flag
+			}
+			NOT = {
+				USA = {
+					has_country_flag = USA_support_china_flag6
+				}
+			}
+			
+			
+			
+			
+		}
+
+		cost = 25
+
+		ai_will_do = {
+			factor = 25
+		}
+
+		fire_only_once = no	
+
+		days_re_enable = 1
+
+		complete_effect = {
+			
+			
+			hidden_effect = {
+				set_country_flag = { flag = USA_support_china_flag6 value = 1 days = 180}
+				CHI = {
+					add_to_variable = { CHI_state_of_army_var = 1 }
+				}
+				if = {
+					limit = {
+						CHI = {
+							has_army_manpower = {
+								size < 100000
+							}
+						}
+						
+					}
+					CHI = {
+						add_to_variable = { var = CHI_juntuan_division_cap value = 1 }			
+					}
+				}
+				else = {
+					CHI = {
+						add_to_variable = { var = CHI_juntuan_division_cap value = 1 }	
+						set_division_template_cap = {  division_template = "Juntuan" division_cap = CHI_juntuan_division_cap }		
+					}
+
+				}
+
+			}
+			custom_effect_tooltip = CHI_state_of_chinese_army_up_tt
+			
+			
+			USA = {
+				if = {
+					limit = {
+						has_tech = artillery8_2
+					}
+					add_equipment_to_stockpile = { type = artillery_equipment amount = -450 producer = USA } 
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = pack_artillery4
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								pack_artillery4 = 1
+							}
+						}
+						
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = heavy_artillery6_1
+					}
+					add_equipment_to_stockpile = { type = heavy_artillery_equipment amount = -220 producer = USA }
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = pack_artillery4
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								pack_artillery4 = 1
+							}
+						}
+						
+					} 
+				}
+
+				else_if = {
+					limit = {
+						has_tech = pack_artillery4
+					}
+					add_equipment_to_stockpile = { type = pack_artillery_equipment amount = -820 producer = USA } 
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = pack_artillery4
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								pack_artillery4 = 1
+							}
+						}
+						
+					}
+				}
+				
+				else_if = {
+					limit = {
+						has_tech = artillery4
+					}
+					add_equipment_to_stockpile = { type = artillery_equipment amount = -450 producer = USA } 
+				}
+				else_if = {
+					limit = {
+						has_tech = heavy_artillery2
+					}
+					add_equipment_to_stockpile = { type = heavy_artillery_equipment amount = -220 producer = USA } 
+				}
+				else_if = {
+					limit = {
+						has_tech = field_gun3
+					}
+					add_equipment_to_stockpile = { type = field_gun_equipment amount = -550 producer = USA } 
+				}
+			}
+			CHI = {
+				add_equipment_to_stockpile = { type = pack_artillery_equipment amount = 700 producer = USA } 
+				add_equipment_to_stockpile = { type = artillery_equipment amount = 150 producer = USA }
+				add_equipment_to_stockpile = { type = anti_air_equipment amount = 100 producer = USA }
+			}
+		}
+	}
+	USA_fighters_for_china_pre_war = {
+
+		icon = generic_air
+
+		allowed = {
+			tag = USA
+		}
+
+		available = {
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = CHI_has_to_control_coast_tt
+					OR = {
+						AND = {
+							CHI = {
+								controls_state = 595
+							}
+							595 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 822
+							}
+							822 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 596
+							}
+							596 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 613
+							}
+							613 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 592
+							}
+							592 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 591
+							}
+							591 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 743
+							}
+							743 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+					}
+				}
+				
+				OR = {
+					288 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+					823 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+				}
+			}
+			has_tech = usa_fighter_1938
+			
+			has_equipment = { small_plane_airframe > 99 }
+			
+			
+			USA = {
+				has_completed_focus = USA_form_modern_chinese_airforce
+			}
+            
+		}
+
+		visible = {
+			JAP = {
+                has_completed_focus = JAP_intervene_in_china
+            }
+		
+			
+           SOV = {
+				has_country_flag = SOV_sino_japanese_war_started_flag
+			}
+			
+			NOT = {
+				USA = {
+					has_country_flag = USA_support_china_flag3
+				}
+			}
+			
+		}
+
+		cost = 0
+
+		ai_will_do = {
+			factor = 25
+		}
+
+		fire_only_once = no	
+
+		days_re_enable = 1
+
+		complete_effect = {
+			  custom_effect_tooltip = CHI_state_of_chinese_army_up_tt
+			hidden_effect = {
+				set_country_flag = { flag = USA_support_china_flag3 value = 1 days = 60}
+				CHI = {
+					add_to_variable = { CHI_state_of_army_var = 1 }
+				}
+				if = {
+					limit = {
+						CHI = {
+							has_army_manpower = {
+								size < 100000
+							}
+						}
+						
+					}
+					CHI = {
+						add_to_variable = { var = CHI_juntuan_division_cap value = 1 }			
+					}
+				}
+				else = {
+					CHI = {
+						add_to_variable = { var = CHI_juntuan_division_cap value = 1 }	
+						set_division_template_cap = {  division_template = "Juntuan" division_cap = CHI_juntuan_division_cap }		
+					}
+
+				}
+			}
+
+			USA = {
+				if = {
+					limit = {
+						has_tech = usa_fighter_1944
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = fighter_1944
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								fighter_1944 = 1
+							}
+						}
+						
+					}
+				}
+				
+
+				else_if = {
+					limit = {
+						has_tech = usa_fighter_1942
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = fighter_1942
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								fighter_1942 = 1
+							}
+						}
+						
+					}
+				}
+				
+				else_if = {
+					limit = {
+						has_tech = usa_fighter_1940
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = fighter_1940
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								fighter_1940 = 1
+							}
+						}
+						
+					}
+				}
+				
+				else_if = {
+					limit = {
+						has_tech = usa_fighter_1938
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = fighter_1938
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								fighter_1938 = 1
+							}
+						}
+						
+					}
+				}
+				
+				
+			}
+			send_equipment = {
+				equipment = small_plane_airframe
+				amount = 100
+				target = CHI
+				new_prioritised = yes
+			}
+			
+		}
+	}
+	USA_cas_for_china_pre_war = {
+
+		icon = generic_air
+
+		allowed = {
+			tag = USA
+		}
+
+		available = {
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = CHI_has_to_control_coast_tt
+					OR = {
+						AND = {
+							CHI = {
+								controls_state = 595
+							}
+							595 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 822
+							}
+							822 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 596
+							}
+							596 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 613
+							}
+							613 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 592
+							}
+							592 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 591
+							}
+							591 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 743
+							}
+							743 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+					}
+				}
+				
+				OR = {
+					288 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+					823 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+				}
+			}
+			has_tech = usa_CAS_1937
+			
+			has_equipment = { small_plane_cas_airframe > 99 }
+			
+			
+			
+			
+			USA = {
+				has_completed_focus = USA_form_modern_chinese_airforce
+			}
+            
+		}
+
+		visible = {
+			JAP = {
+                has_completed_focus = JAP_intervene_in_china
+            }
+		
+		   
+           SOV = {
+				has_country_flag = SOV_sino_japanese_war_started_flag
+			}
+			
+			NOT = {
+				USA = {
+					has_country_flag = USA_support_china_flag4
+				}
+			}
+			
+		}
+
+		cost = 0
+
+		ai_will_do = {
+			factor = 25
+		}
+
+		fire_only_once = no	
+
+		days_re_enable = 1
+
+		complete_effect = {
+			custom_effect_tooltip = CHI_state_of_chinese_army_up_tt
+			hidden_effect = {
+				set_country_flag = { flag = USA_support_china_flag4 value = 1 days = 60}
+				CHI = {
+					add_to_variable = { CHI_state_of_army_var = 1 }
+				}
+				if = {
+					limit = {
+						CHI = {
+							has_army_manpower = {
+								size < 100000
+							}
+						}
+						
+					}
+					CHI = {
+						add_to_variable = { var = CHI_juntuan_division_cap value = 1 }			
+					}
+				}
+				else = {
+					CHI = {
+						add_to_variable = { var = CHI_juntuan_division_cap value = 1 }	
+						set_division_template_cap = {  division_template = "Juntuan" division_cap = CHI_juntuan_division_cap }		
+					}
+
+				}
+			}
+			send_equipment = {
+				equipment = small_plane_cas_airframe
+				amount = 100
+				target = CHI
+				new_prioritised = yes
+			}
+			USA = {
+				if = {
+					limit = {
+						has_tech = usa_CAS_1943
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = CAS_1943
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								CAS_1943 = 1
+							}
+							set_technology = {
+								tactical_bomber_1943 = 1
+							}
+							
+						}
+						
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = usa_CAS_1941
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = CAS_1941
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								CAS_1941 = 1
+							}
+							set_technology = {
+								tactical_bomber_1941 = 1
+							}
+						}
+						
+					}
+				}
+
+				else_if = {
+					limit = {
+						has_tech = usa_CAS_1939
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = CAS_1939
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								CAS_1939 = 1
+							}
+							set_technology = {
+								tactical_bomber_1939 = 1
+							}
+						}
+						
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = usa_CAS_1937
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = CAS_1937
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								CAS_1937 = 1
+							}
+							set_technology = {
+								tactical_bomber_1937 = 1
+							}
+						}
+						
+					}
+				}
+			}
+			
+			
+		}
+	}
+	USA_tanks_for_china_pre_war = {
+
+		icon = generic_tank
+
+		allowed = {
+			tag = USA
+		}
+
+		available = {
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = CHI_has_to_control_coast_tt
+					OR = {
+						AND = {
+							CHI = {
+								controls_state = 595
+							}
+							595 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 822
+							}
+							822 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 596
+							}
+							596 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 613
+							}
+							613 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 592
+							}
+							592 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 591
+							}
+							591 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+						AND = {
+							CHI = {
+								controls_state = 743
+							}
+							743 = {
+								any_neighbor_state = {
+									is_controlled_by = CHI
+								}
+							}
+						}
+					}
+				}
+				
+				OR = {
+					288 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+					823 = {
+						NOT = {
+							OR = {
+								is_fully_controlled_by = JAP 
+								is_fully_controlled_by = MAN 
+							}
+						} 
+					}
+				}
+			}
+			
+			has_equipment = { light_tank_chassis > 99 }
+			has_equipment = { motorized_equipment > 99 }
+			
+			
+			USA = {
+				has_completed_focus = USA_increase_equipment_shipments
+			}
+			
+            
+		}
+
+		visible = {
+			JAP = {
+                has_completed_focus = JAP_intervene_in_china
+            }
+           SOV = {
+				has_country_flag = SOV_sino_japanese_war_started_flag
+			}
+			
+			NOT = {
+				USA = {
+					has_country_flag = SOV_support_china_flag5
+				}
+			}
+			
+		}
+
+		cost = 0
+
+		ai_will_do = {
+			factor = 25
+		}
+
+		fire_only_once = no	
+
+		days_re_enable = 1
+
+		complete_effect = {
+			  custom_effect_tooltip = CHI_state_of_chinese_army_up_tt
+			hidden_effect = {
+				set_country_flag = { flag = USA_support_china_flag5 value = 1 days = 60}
+				CHI = {
+					add_to_variable = { CHI_state_of_army_var = 1 }
+				}
+				if = {
+					limit = {
+						CHI = {
+							has_army_manpower = {
+								size < 100000
+							}
+						}
+						
+					}
+					CHI = {
+						add_to_variable = { var = CHI_juntuan_division_cap value = 1 }			
+					}
+				}
+				else = {
+					CHI = {
+						add_to_variable = { var = CHI_juntuan_division_cap value = 1 }	
+						set_division_template_cap = {  division_template = "Juntuan" division_cap = CHI_juntuan_division_cap }		
+					}
+
+				}
+			}
+			
+			send_equipment = {
+				equipment = light_tank_chassis
+				amount = 100
+				target = CHI
+				new_prioritised = yes
+			}
+			send_equipment = {
+				equipment = motorized_equipment
+				amount = 100
+				target = CHI
+				new_prioritised = yes
+			}
+			USA = {
+				if = {
+					limit = {
+						has_tech = usa_1943_light_tank_chassis
+					}
+					 
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = usa_1943_light_tank_chassis
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								usa_1943_light_tank_chassis = 1
+							}
+						}
+						
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = usa_1939_light_tank_chassis
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = usa_1939_light_tank_chassis
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								usa_1939_light_tank_chassis = 1
+							}
+						}
+						
+					}
+				}
+				else_if = {
+					limit = {
+						has_tech = sov_1936_light_tank_chassis
+					}
+					
+					if = {
+						limit = {
+							CHI = {
+								NOT = {
+									has_tech = sov_1936_light_tank_chassis
+								}
+								
+							}
+						}
+						CHI = {
+							set_technology = {
+								sov_1936_light_tank_chassis = 1
+							}
+						}
+						
+					}
+				}
+			}
+			
+			
 		}
 	}
 	
@@ -180,11 +3463,26 @@ foreign_support = {
 
 		available = {
 			has_equipment = { infantry_equipment > 1999 }
-			SPR = { has_civil_war = yes }
+			has_global_flag = spanish_civil_war
+			OR = {
+				NOT = {
+					has_global_flag = scw_over
+				}
+				has_global_flag = scw_over_spr_lost
+			}
 		}
 
 		visible = {
-			SPR = { has_civil_war = yes }
+			has_global_flag = spanish_civil_war
+			OR = {
+				NOT = {
+					has_global_flag = scw_over
+				}
+				AND = {
+					has_global_flag = scw_over_spr_lost
+					date < 1939.9.1
+				}
+			}
 		}
 
 		cost = 10
@@ -197,10 +3495,10 @@ foreign_support = {
 		days_re_enable = 180
 
 		complete_effect = {		
-			army_experience = 20
+			army_experience = 50
 			random_country = {
 				limit = {
-					original_tag = SPR 
+					original_tag = SPN 
 					OR = { 
 						has_government = democratic 
 						has_government = communism 
@@ -208,10 +3506,24 @@ foreign_support = {
 				}
 				send_equipment = { 
 					type = infantry_equipment
-					target = SPD
-					amount = 2000
+					target = SPN
+					amount = 3000
 					old_prioritised = yes
 				}	
+				if = {
+					limit = {
+						SOV = {
+							has_equipment = { special_equipment > 299 }
+						}
+					}
+					send_equipment = { 
+						type = special_equipment
+						target = SPN
+						amount = 300
+						old_prioritised = yes
+					}
+				}
+				
 			}			
 		}
 	}
@@ -225,12 +3537,27 @@ foreign_support = {
 		}
 
 		available = {
-			SPR = { has_civil_war = yes }
+			has_global_flag = spanish_civil_war
+			OR = {
+				NOT = {
+					has_global_flag = scw_over
+				}
+				has_global_flag = scw_over_spr_lost
+			}
 			num_of_civilian_factories_available_for_projects > 3			
 		}
 
 		visible = {
-			SPR = { has_civil_war = yes }
+			has_global_flag = spanish_civil_war
+			OR = {
+				NOT = {
+					has_global_flag = scw_over
+				}
+				AND = {
+					has_global_flag = scw_over_spr_lost
+					date < 1939.9.1
+				}
+			}
 		}
 
 		ai_will_do = {
@@ -249,7 +3576,7 @@ foreign_support = {
 		complete_effect = {
 			random_country = {
 				limit = {
-					original_tag = SPR 
+					original_tag = SPN
 					OR = { 
 						has_government = democratic 
 						has_government = communism 
@@ -261,11 +3588,12 @@ foreign_support = {
 		}
 
 		remove_effect = {
+			army_experience = 5
 			add_political_power = 100
 			add_war_support = 0.05
 			random_country = {
 				limit = {
-					original_tag = SPR 
+					original_tag = SPN 
 					OR = { 
 						has_government = democratic 
 						has_government = communism 

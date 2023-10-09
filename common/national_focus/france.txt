@@ -27,10 +27,16 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			swap_ideas = {
-				remove_idea = FRA_political_extremism
-				add_idea = FRA_political_extremism2
-			}	
+			add_to_variable = {
+				FRA_collapsing_government_stability_factor_modifier = 0.075
+			}
+			add_to_variable = {
+				FRA_fascism_drift_modifier = -0.02
+			}
+			add_to_variable = {
+				FRA_communism_drift_modifier = -0.02
+			}
+			custom_effect_tooltip = FRA_pol_chaos_tt
 			
 		}
 	}
@@ -56,11 +62,10 @@ focus_tree = {
 
 		completion_reward = {
 			add_political_power = 100
-			swap_ideas = {
-				remove_idea = FRA_political_chaos
-				add_idea = FRA_political_chaos2
+			add_to_variable = {
+				FRA_democratic_drift_modifier = 0.05
 			}
-			custom_effect_tooltip = FRA_leftspain_tt
+			custom_effect_tooltip = FRA_pol_chaos1_tt
 		}
 	}
 
@@ -100,10 +105,13 @@ focus_tree = {
 				FRA = { country_event = { id = france.53 days = 20 } }
 
 			}
-			swap_ideas = {
-				remove_idea = FRA_political_chaos2
-				add_idea = FRA_political_chaos3
+			add_to_variable = {
+				FRA_collapsing_government_stability_factor_modifier = 0.15
 			}
+			add_to_variable = {
+				FRA_stability_weekly_modifier = 0.003
+			}
+			custom_effect_tooltip = FRA_pol_chaos2_tt
 		}
 	}
 
@@ -172,20 +180,12 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = FRA_improve_tt
 			remove_ideas = FRA_factory_strikes
-			add_ideas = FRA_matignon_agreements
 			add_political_power = 25
 			activate_mission_tooltip = FRA_40_hours_a_week
 
-			set_variable = { var = FRA_collapsing_government_political_power_gain_modifier value = -0.25 }
-			set_variable = { var = FRA_collapsing_government_stability_factor_modifier value = -0.1 }
-			set_variable = { var = FRA_industry_consumer_goods_modifier value = 0.05 } 
-
-			set_variable = { var = FRA_industry_construction_speed_modifier value = -0.1 }
-			set_variable = { var = FRA_industry_industrial_capacity_factory_modifier value = -0.05 } 
-			set_variable = { var = FRA_industry_production_efficiency_max_modifier value = -0.02 }
-
 			add_to_variable = { var = FRA_collapsing_government_political_power_gain_modifier value = 0.05 }
-			add_to_variable = { var = FRA_collapsing_government_stability_factor_modifier value = 0.05 }
+			add_to_variable = { var = FRA_collapsing_government_stability_factor_modifier value = 0.1 }
+			add_to_variable = { var = FRA_industry_consumer_goods_modifier value = 0.03 }
 		}
 	}
 
@@ -200,9 +200,7 @@ focus_tree = {
 			focus = FRA_declare_martial_law
 		}
 		available = {
-			SPR = {
-				has_war = yes
-			}
+			has_global_flag = spanish_civil_war
 		}
 		x = 6
 		y = 1
@@ -219,7 +217,21 @@ focus_tree = {
 					}
 				}
 				set_rule = { can_send_volunteers = yes }
-				add_ideas = FRA_volunteers_yes
+				custom_effect_tooltip = FRA_can_volunteers_tt
+				add_to_variable = {
+					FRA_experience_gain_army_var = 0.07
+				}
+				add_to_variable = {
+					FRA_send_volunteers_tension_var = -0.5
+				}
+				add_to_variable = {
+					FRA_send_volunteer_divisions_required_var = -1
+				}
+					
+				SPN = {
+					add_equipment_to_stockpile = { type = fighter_equipment_1934 amount = 50 producer = FRA }
+				}
+				
 			}
 			else_if = {
 				limit = {
@@ -230,7 +242,7 @@ focus_tree = {
 
 				add_political_power = 100
 				add_command_power = 50
-				army_experience = 175
+				army_experience = 150
 
 				if = {
 					limit = {
@@ -279,59 +291,28 @@ focus_tree = {
 		}
 
 		completion_reward = {
-				if = {
-					limit = {
-						FRA = {
-							has_completed_focus = FRA_rally_behind_the_popular_front
-						}
-					}
-					army_experience = 50
-					add_political_power = -50
-				if = {
-					limit = {
-						D01 = { 
-							OR = { 
-								has_government = democratic 
-								has_government = communism 
-							}
-						}			
-					}
-					D01 = {
-						add_equipment_to_stockpile = {
-							type = infantry_equipment_0
-							amount = 10000
-							producer = FRA
-						}	
-						add_equipment_to_stockpile = {
-							type = artillery_equipment_1
-							amount = 250
-							producer = FRA
-						}
+			if = {
+				limit = {
+					FRA = {
+						has_completed_focus = FRA_rally_behind_the_popular_front
 					}
 				}
-				if = {
-					limit = {
-						SPR = { 
-							OR = { 
-								has_government = democratic 
-								has_government = communism 
-							}
-						}			
+				army_experience = 75
+				add_political_power = -50
+	
+				SPN = {
+					add_equipment_to_stockpile = {
+						type = infantry_equipment_0
+						amount = 10000
+						producer = FRA
+					}	
+					add_equipment_to_stockpile = {
+						type = artillery_equipment_1
+						amount = 250
+						producer = FRA
 					}
-					SPR = {
-						add_equipment_to_stockpile = {
-							type = infantry_equipment_0
-							amount = 10000
-							producer = FRA
-						}	
-						add_equipment_to_stockpile = {
-							type = artillery_equipment_1
-							amount = 250
-							producer = FRA
-						}
-					}
-				}	
-				
+				}
+
 			}
 			else_if = {
 				limit = {
@@ -339,52 +320,22 @@ focus_tree = {
 						has_completed_focus = FRA_settlements_with_right_wing_leagues
 					}
 				}
-				army_experience = 50
+				army_experience = 75
 				add_political_power = -50
-				if = {
-					limit = {
-						D01 = { 
-							OR = { 
-								has_government = democratic 
-								has_government = communism 
-							}
-						}			
-					}
-					D01 = {
-						add_equipment_to_stockpile = {
-							type = infantry_equipment_0
-							amount = 10000
-							producer = FRA
-						}	
-						add_equipment_to_stockpile = {
-							type = artillery_equipment_1
-							amount = 250
-							producer = FRA
-						}
+				
+				SPN = {
+					add_equipment_to_stockpile = {
+						type = infantry_equipment_0
+						amount = 6000
+						producer = FRA
+					}	
+					add_equipment_to_stockpile = {
+						type = artillery_equipment_1
+						amount = 250
+						producer = FRA
 					}
 				}
-				if = {
-					limit = {
-						SPR = { 
-							OR = { 
-								has_government = democratic 
-								has_government = communism 
-							}
-						}			
-					}
-					SPR = {
-						add_equipment_to_stockpile = {
-							type = infantry_equipment_0
-							amount = 10000
-							producer = FRA
-						}	
-						add_equipment_to_stockpile = {
-							type = artillery_equipment_1
-							amount = 250
-							producer = FRA
-						}
-					}	
-				}	
+				
 			}			
 		}
 	}
@@ -410,7 +361,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_political_power = 150
+			add_political_power = 100
 		}
 	}
 
@@ -816,14 +767,14 @@ focus_tree = {
 				mission = FRA_political_collapse
 				days = 40
 			}
+			add_to_variable = {
+				FRA_fascism_drift_modifier = -0.03
+			}
+			add_to_variable = {
+				FRA_collapsing_government_stability_factor_modifier = 0.025
+			}
 			custom_effect_tooltip = FRA_change_extremism_tt
-			hidden_effect = {
-				remove_ideas = FRA_political_extremism2
-				add_dynamic_modifier = {
-					modifier = FRA_political_extremism_modifier
-					scope = ROOT
-				}
-			}			
+			
 		}
 	}
 	
@@ -852,7 +803,10 @@ focus_tree = {
 				mission = FRA_political_collapse
 				days = 40
 			}
-			add_ideas = FRA_research_speed
+			add_to_variable = {
+				FRA_research_speed_factor_var = 0.05
+			}
+			custom_effect_tooltip = FRA_pol_chaos24_tt
 			add_tech_bonus = {
 				name = lasers
 				bonus = 1
@@ -883,18 +837,16 @@ focus_tree = {
 			factor = 1
 		}
 		bypass = {
-			has_country_flag = mumiago_mission_timed_out
+			
 		}
 
 		completion_reward = {
 
 			add_political_power = 50
 			custom_effect_tooltip = FRA_improve_stab_tt
-			swap_ideas = {
-				remove_idea = FRA_matignon_agreements
-				add_idea = FRA_matignon_agreements2
-			}	
 			add_to_variable = { var = FRA_collapsing_government_stability_factor_modifier value = 0.05 }
+			add_to_variable = { var = FRA_stability_weekly_modifier value = 0.002 }
+			add_to_variable = { var = FRA_industry_construction_speed_modifier value = -0.2 }
 		
 		}
 
@@ -923,10 +875,11 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = FRA_benoit_frachon
-			swap_ideas = {
-				remove_idea = FRA_matignon_agreements2
-				add_idea = FRA_matignon_agreements3
+	
+			add_to_variable = {
+				FRA_collapsing_government_political_power_gain_modifier = 0.25
 			}
+			custom_effect_tooltip = FRA_pol_chaos25_tt
 			add_tech_bonus = {
 				name = industry_bonus
 				bonus = 1.25
@@ -1025,11 +978,17 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_ideas = FRA_industrialist_support
-			swap_ideas = {
-				remove_idea = FRA_political_chaos
-				add_idea = FRA_political_chaos4
+	
+			add_to_variable = {
+				FRA_collapsing_government_stability_factor_modifier = 0.1
 			}
+			add_to_variable = {
+				FRA_democratic_drift_modifier = 0.05
+			}
+			add_to_variable = {
+				FRA_collapsing_government_political_power_gain_modifier = -0.15
+			}
+			custom_effect_tooltip = FRA_pol_chaos4_tt
 			if = {
 				limit = {
 					FRA = {
@@ -1062,10 +1021,13 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			swap_ideas = {
-				remove_idea = FRA_political_extremism2
-				add_idea = FRA_political_extremism3
-			}	
+			add_to_variable = {
+				FRA_collapsing_government_stability_factor_modifier = 0.1
+			}
+			add_to_variable = {
+				FRA_communism_drift_modifier = -0.03
+			}
+			custom_effect_tooltip = FRA_pol_chaos6_tt
 			if = {
 				limit = {
 					FRA = {
@@ -1107,14 +1069,13 @@ focus_tree = {
 			remove_ideas = FRA_factory_strikes
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = FRA_vincent_auriol
-			add_ideas = FRA_worker_dissatisfaction
-			set_variable = { var = FRA_collapsing_government_political_power_gain_modifier value = -0.25 }
-			set_variable = { var = FRA_collapsing_government_stability_factor_modifier value = -0.1 }
-			set_variable = { var = FRA_industry_consumer_goods_modifier value = 0.05 } 
-
-			set_variable = { var = FRA_industry_construction_speed_modifier value = -0.1 }
-			set_variable = { var = FRA_industry_industrial_capacity_factory_modifier value = -0.05 } 
-			set_variable = { var = FRA_industry_production_efficiency_max_modifier value = -0.02 }
+			add_to_variable = {
+				FRA_industry_production_efficiency_max_modifier = -0.05
+			}
+			add_to_variable = {
+				FRA_industry_industrial_capacity_factory_modifier = -0.2
+			}
+			custom_effect_tooltip = FRA_pol_chaos7_tt
 
 		}
 	}
@@ -1143,27 +1104,31 @@ focus_tree = {
 				mission = FRA_political_collapse
 				days = 100
 			}
-			swap_ideas = {
-				remove_idea = FRA_industrialist_support
-				add_idea = FRA_industrialist_support2
+			add_to_variable = {
+				FRA_industry_construction_speed_modifier = -0.05
 			}
+			add_to_variable = {
+				FRA_production_factory_efficiency_gain_factor_modifier = -0.1
+			}
+			custom_effect_tooltip = FRA_pol_chaos8_tt
+			
 			random_owned_controlled_state = {
 				limit = {
 					is_core_of = FRA
 					free_building_slots = {
 						building = industrial_complex
-						size > 4
+						size > 2
 						include_locked = yes
 					}
 				}
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
-					level = 2
+					level = 1
 					instant_build = yes
 				}	
 			}
-			515 = {
+			781 = {
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
@@ -1195,11 +1160,13 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			
-			swap_ideas = {
-				remove_idea = FRA_industrialist_support2
-				add_idea = FRA_industrialist_support3
+		
+			add_to_variable = {
+				FRA_industry_consumer_goods_modifier = 0.03
 			}
+			custom_effect_tooltip = "These consumer goods will be removed after completing focus Refus Absurde"
+	
+			custom_effect_tooltip = FRA_pol_chaos9_tt
 			random_owned_controlled_state = {
 				limit = {
 					is_core_of = FRA
@@ -1350,8 +1317,8 @@ focus_tree = {
 				mission = FRA_political_collapse
 				days = 50
 			}
-			add_political_power = 100
-			add_stability = -0.05
+			add_ideas = FRA_political_violence
+			add_political_power = 150
 			add_popularity = { ideology = fascism popularity = 0.05 }
 			add_popularity = { ideology = communism popularity = -0.1 }
 			country_event = { id = france.57 days = 10 }
@@ -1385,10 +1352,7 @@ focus_tree = {
 
 		completion_reward = {
 			remove_ideas = FRA_political_violence
-			swap_ideas = {
-				remove_idea = FRA_political_extremism3
-				add_idea = FRA_political_extremism4
-			}
+			add_stability = 0.025
 
 		}
 	}
@@ -1485,10 +1449,10 @@ focus_tree = {
 				}	
 			}
 			515 = {
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
-					level = 2
+					level = 1
 					instant_build = yes
 				}
 				
@@ -1519,10 +1483,6 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			swap_ideas = {
-				remove_idea = FRA_industrialist_support3
-				add_idea = FRA_industrialist_support5
-			}
 			custom_effect_tooltip = FRA_improve_slugish_eco3_tt
 			add_to_variable = { var = FRA_industry_consumer_goods_modifier value = -0.05 }
 			random_owned_controlled_state = {
@@ -1542,10 +1502,10 @@ focus_tree = {
 				}	
 			}
 			781 = {
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
-					level = 2
+					level = 1
 					instant_build = yes
 				}
 				
@@ -1580,56 +1540,44 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			if = {
-				limit = {
-					FRA = {
-						has_completed_focus = FRA_settlements_with_right_wing_leagues
-					}
-				}
-				remove_dynamic_modifier = {
-					modifier = FRA_declining_economy
-					scope = FRA
-				}
-				remove_dynamic_modifier = {
-					modifier = FRA_collapsing_government
-					scope = FRA
-				}
-				retire_country_leader = yes
-		   		create_country_leader = {
-					name = "Édouard Daladier"
-					desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
-					picture = "Portrait_France_Edouard_Daladier.dds"
-					expire = "1965.1.1"
-					ideology = socialism
-					traits = {
-					}
-					
-				}
+			add_to_variable = {
+				FRA_collapsing_government_political_power_gain_modifier = 0.55
 			}
-			else_if = {
-				limit = {
-					FRA = {
-						has_completed_focus = FRA_rally_behind_the_popular_front
-					}
-				}
-				remove_dynamic_modifier = {
-					modifier = FRA_declining_economy
-					scope = FRA
-				}
-				remove_dynamic_modifier = {
-					modifier = FRA_collapsing_government
-					scope = FRA
-				}
-				retire_country_leader = yes
-		   		create_country_leader = {
-					name = "Édouard Daladier"
-					desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
-					picture = "Portrait_France_Edouard_Daladier.dds"
-					expire = "1965.1.1"
-					ideology = socialism
-					traits = {
-					}
-					
+			add_to_variable = {
+				FRA_industry_consumer_goods_modifier = -0.08
+			}
+			add_to_variable = {
+				FRA_collapsing_government_stability_factor_modifier = 0.25
+			}
+			add_to_variable = {
+				FRA_industry_construction_speed_modifier = 0.1
+			}
+			add_to_variable = {
+				FRA_industry_industrial_capacity_factory_modifier = 0.05
+			}
+			add_to_variable = {
+				FRA_industry_production_efficiency_max_modifier = 0.02
+			}
+			add_to_variable = {
+				FRA_communism_drift_modifier = 0
+			}
+			add_to_variable = {
+				FRA_fascism_drift_modifier = 0
+			}
+			custom_effect_tooltip = FRA_pol_chaos10_tt
+			hidden_effect = {
+				remove_dynamic_modifier = { modifier = FRA_politics_modifier }
+				add_dynamic_modifier = { modifier = FRA_politics_strong_modifier }
+			}
+			
+			retire_country_leader = yes
+			create_country_leader = {
+				name = "Édouard Daladier"
+				desc = "POLITICS_ÉDOUARD_DALADIER_DESC"
+				picture = "Portrait_France_Edouard_Daladier.dds"
+				expire = "1965.1.1"
+				ideology = socialism
+				traits = {
 				}
 			}
 			
@@ -1754,6 +1702,13 @@ focus_tree = {
 		prerequisite = {
 			focus = FRA_declare_national_emergency
 		}
+		bypass = {
+			NOT = {
+				has_completed_focus = FRA_40_hour_work_week
+				has_completed_focus = FRA_settlements_with_right_wing_leagues
+			}
+			
+		}
 		
 
 		x = -2
@@ -1764,6 +1719,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			
 			if = {
 				limit = {
 					FRA = {
@@ -1771,28 +1727,11 @@ focus_tree = {
 					}
 				}
 				add_war_support = -0.05
-				if = {
-					limit = {
-						FRA = {
-							has_idea = FRA_matignon_agreements2
-						}
-					}			
-					swap_ideas = {
-						remove_idea = FRA_matignon_agreements2
-						add_idea = FRA_matignon_agreements
-					}
+				add_to_variable = {
+					FRA_industry_construction_speed_modifier = 0.2
 				}
-				if = {
-					limit = {
-						FRA = {
-							has_idea = FRA_matignon_agreements3
-						}
-					}			
-					swap_ideas = {
-						remove_idea = FRA_matignon_agreements3
-						add_idea = FRA_matignon_agreements
-					}
-				}	
+				custom_effect_tooltip = FRA_pol_chaos11_tt
+
 			}	
 			if = {
 				limit = {
@@ -1801,46 +1740,183 @@ focus_tree = {
 					}
 				}
 				add_war_support = -0.05
+				
 				if = {
 					limit = {
 						FRA = {
-							has_idea = FRA_industrialist_support
+							has_completed_focus = FRA_find_support_amongst_industrialists
+							NOT = {
+								has_completed_focus = FRA_strengthen_industrial_monopolies
+								has_completed_focus = FRA_strengthen_cooperation_in_the_government
+							}
 						}
 					}			
-					remove_ideas = FRA_industrialist_support
+					add_to_variable = {
+						FRA_collapsing_government_political_power_gain_modifier = 0.15
+					}
+					custom_effect_tooltip = FRA_pol_chaos12_tt
 				}
 				if = {
 					limit = {
 						FRA = {
-							has_idea = FRA_industrialist_support2
+							has_completed_focus = FRA_strengthen_industrial_monopolies
+							NOT = {
+								has_completed_focus = FRA_industrial_economic_cooperation
+								has_completed_focus = FRA_strengthen_cooperation_in_the_government
+							}
 						}
 					}			
-					remove_ideas = FRA_industrialist_support2
-				}
-				if = {
-					limit = {
-						FRA = {
-							has_idea = FRA_industrialist_support3
-						}
-					}			
-					remove_ideas = FRA_industrialist_support3
-				}
-				if = {
-					limit = {
-						FRA = {
-							has_idea = FRA_industrialist_support4
-						}
-					}			
-					remove_ideas = FRA_industrialist_support4
-				}
-				if = {
-					limit = {
-						FRA = {
-							has_idea = FRA_industrialist_support5
-						}
-					}			
-					remove_ideas = FRA_industrialist_support5
+					add_to_variable = {
+						FRA_collapsing_government_political_power_gain_modifier = 0.15
+					}
+					add_to_variable = {
+						FRA_production_factory_efficiency_gain_factor_modifier = 0.1
+					}
+					add_to_variable = {
+						FRA_industry_construction_speed_modifier = 0.05
+					}
+					custom_effect_tooltip = FRA_pol_chaos13_tt
 				}	
+				if = {
+					limit = {
+						FRA = {
+							has_completed_focus = FRA_industrial_economic_cooperation
+							NOT = {
+								has_completed_focus = FRA_raise_taxes
+								has_completed_focus = FRA_strengthen_cooperation_in_the_government
+							}
+						}
+					}			
+					add_to_variable = {
+						FRA_collapsing_government_political_power_gain_modifier = 0.15
+					}
+					add_to_variable = {
+						FRA_production_factory_efficiency_gain_factor_modifier = 0.1
+					}
+					add_to_variable = {
+						FRA_industry_construction_speed_modifier = 0.05
+					}
+					add_to_variable = {
+						FRA_industry_consumer_goods_modifier = -0.03
+					}
+					custom_effect_tooltip = FRA_pol_chaos14_tt
+				}
+				if = {
+					limit = {
+						FRA = {
+							has_completed_focus = FRA_raise_taxes
+							NOT = {
+								has_completed_focus = FRA_strengthen_cooperation_in_the_government
+							}
+						}
+					}			
+					add_to_variable = {
+						FRA_collapsing_government_political_power_gain_modifier = 0.3
+					}
+					add_to_variable = {
+						FRA_production_factory_efficiency_gain_factor_modifier = 0.1
+					}
+					add_to_variable = {
+						FRA_industry_construction_speed_modifier = 0.05
+					}
+					add_to_variable = {
+						FRA_industry_consumer_goods_modifier = -0.03
+					}
+					add_to_variable = {
+						FRA_stability_weekly_modifier = 0.001
+					}
+					add_to_variable = {
+						FRA_research_speed_factor_var = 0.05
+					}
+					custom_effect_tooltip = FRA_pol_chaos15_tt
+				}
+				if = {
+					limit = {
+						FRA = {
+							has_completed_focus = FRA_find_support_amongst_industrialists
+							has_completed_focus = FRA_strengthen_cooperation_in_the_government
+							NOT = {
+								has_completed_focus = FRA_strengthen_industrial_monopolies
+							}
+						}
+					}			
+					add_to_variable = {
+						FRA_collapsing_government_political_power_gain_modifier = 0.35
+					}
+					custom_effect_tooltip = FRA_pol_chaos16_tt
+				}
+				if = {
+					limit = {
+						FRA = {
+							has_completed_focus = FRA_strengthen_industrial_monopolies
+							has_completed_focus = FRA_strengthen_cooperation_in_the_government
+							NOT = {
+								has_completed_focus = FRA_industrial_economic_cooperation
+							}
+						}
+					}			
+					add_to_variable = {
+						FRA_collapsing_government_political_power_gain_modifier = 0.35
+					}
+					add_to_variable = {
+						FRA_production_factory_efficiency_gain_factor_modifier = 0.1
+					}
+					add_to_variable = {
+						FRA_industry_construction_speed_modifier = 0.05
+					}
+					custom_effect_tooltip = FRA_pol_chaos17_tt
+				}
+				if = {
+					limit = {
+						FRA = {
+							has_completed_focus = FRA_strengthen_cooperation_in_the_government
+							has_completed_focus = FRA_industrial_economic_cooperation
+							NOT = {
+								has_completed_focus = FRA_raise_taxes
+							}
+						}
+					}			
+					add_to_variable = {
+						FRA_collapsing_government_political_power_gain_modifier = 0.35
+					}
+					add_to_variable = {
+						FRA_production_factory_efficiency_gain_factor_modifier = 0.1
+					}
+					add_to_variable = {
+						FRA_industry_construction_speed_modifier = 0.05
+					}
+					add_to_variable = {
+						FRA_industry_consumer_goods_modifier = -0.03
+					}
+					custom_effect_tooltip = FRA_pol_chaos18_tt
+				}
+				if = {
+					limit = {
+						FRA = {
+							has_completed_focus = FRA_strengthen_cooperation_in_the_government
+							has_completed_focus = FRA_raise_taxes
+						}
+					}			
+					add_to_variable = {
+						FRA_collapsing_government_political_power_gain_modifier = 0.5
+					}
+					add_to_variable = {
+						FRA_production_factory_efficiency_gain_factor_modifier = 0.1
+					}
+					add_to_variable = {
+						FRA_industry_construction_speed_modifier = 0.05
+					}
+					add_to_variable = {
+						FRA_industry_consumer_goods_modifier = -0.03
+					}
+					add_to_variable = {
+						FRA_stability_weekly_modifier = 0.001
+					}
+					add_to_variable = {
+						FRA_research_speed_factor_var = 0.05
+					}
+					custom_effect_tooltip = FRA_pol_chaos19_tt
+				}
 			}
 			
 		}	
@@ -1872,7 +1948,13 @@ focus_tree = {
 					}	
 				}
 				add_war_support = -0.05
-				add_ideas = FRA_blindfolded
+				add_to_variable = {
+					FRA_industry_consumer_goods_modifier = -0.05
+				}
+				add_to_variable = {
+					FRA_industry_construction_speed_modifier = 0.1
+				}
+				custom_effect_tooltip = FRA_pol_chaos20_tt
 			}
 			if = {
 				limit = {
@@ -1881,7 +1963,13 @@ focus_tree = {
 					}
 				}
 				add_war_support = -0.05
-				add_ideas = FRA_blindfolded
+				add_to_variable = {
+					FRA_industry_consumer_goods_modifier = -0.05
+				}
+				add_to_variable = {
+					FRA_industry_construction_speed_modifier = 0.1
+				}
+				custom_effect_tooltip = FRA_pol_chaos20_tt
 			}	
 			
 		}	
@@ -1913,8 +2001,17 @@ focus_tree = {
 					}
 				}
 				add_war_support = -0.05
-				add_ideas = FRA_slugish_eco3
 				add_stability = 0.05
+				add_to_variable = {
+					FRA_industry_industrial_capacity_factory_modifier = 0.075
+				}
+				add_to_variable = {
+					FRA_industrial_capacity_dockyard_modifier = 0.075
+				}
+				add_to_variable = {
+					FRA_production_factory_efficiency_gain_factor_modifier = 0.1
+				}
+				custom_effect_tooltip = FRA_pol_chaos21_tt
 			}
 			if = {
 				limit = {
@@ -1923,8 +2020,18 @@ focus_tree = {
 					}
 				}
 				add_war_support = -0.05
-				add_ideas = FRA_slugish_eco3
 				add_stability = 0.05
+				add_to_variable = {
+				add_to_variable = {
+					FRA_industry_industrial_capacity_factory_modifier = 0.075
+				}
+				add_to_variable = {
+					FRA_industrial_capacity_dockyard_modifier = 0.075
+				}
+				add_to_variable = {
+					FRA_production_factory_efficiency_gain_factor_modifier = 0.1
+				}
+				custom_effect_tooltip = FRA_pol_chaos21_tt	
 			}	
 			
 		}	
@@ -1954,7 +2061,256 @@ focus_tree = {
 			factor = 10
 		}
 		available = {
-			num_of_military_factories > 65
+				OR = { 
+					custom_trigger_tooltip = {
+						tooltip = FRA_en_avant_tt
+						count_triggers = {
+							amount = 3
+							16 = {
+								OR = {
+									arms_factory > 9
+									industrial_complex > 9 
+									AND = {
+										arms_factory > 4
+										industrial_complex > 4 
+									}
+								}
+							}
+							24 = {
+								OR = {
+									arms_factory > 9
+									industrial_complex > 9 
+									AND = {
+										arms_factory > 4
+										industrial_complex > 4 
+									}
+								}
+							}
+							27 = {
+								OR = {
+									arms_factory > 9
+									industrial_complex > 9 
+									AND = {
+										arms_factory > 4
+										industrial_complex > 4 
+									}
+								}
+							}
+							29 = {
+								OR = {
+									arms_factory > 9
+									industrial_complex > 9 
+									AND = {
+										arms_factory > 4
+										industrial_complex > 4 
+									}
+								}
+							}
+							28 = {
+								OR = {
+									arms_factory > 9
+									industrial_complex > 9 
+									AND = {
+										arms_factory > 4
+										industrial_complex > 4 
+									}
+								}
+							}
+							17 = {
+								OR = {
+									arms_factory > 9
+									industrial_complex > 9 
+									AND = {
+										arms_factory > 4
+										industrial_complex > 4 
+									}
+								}
+							}
+							18 = {
+								OR = {
+									arms_factory > 9
+									industrial_complex > 9 
+									AND = {
+										arms_factory > 4
+										industrial_complex > 4 
+									}
+								}
+							}
+							785 = {
+								OR = {
+									arms_factory > 9
+									industrial_complex > 9 
+									AND = {
+										arms_factory > 4
+										industrial_complex > 4 
+									}
+								}
+							}
+							15 = {
+								OR = {
+									arms_factory > 9
+									industrial_complex > 9 
+									AND = {
+										arms_factory > 4
+										industrial_complex > 4 
+									}
+								}
+							}
+							20 = {
+								OR = {
+									arms_factory > 9
+									industrial_complex > 9 
+									AND = {
+										arms_factory > 4
+										industrial_complex > 4 
+									}
+								}
+							}
+							32 = {
+								OR = {
+									arms_factory > 9
+									industrial_complex > 9 
+									AND = {
+										arms_factory > 4
+										industrial_complex > 4 
+									}
+								}
+							}
+							21 = {
+								OR = {
+									arms_factory > 9
+									industrial_complex > 9 
+									AND = {
+										arms_factory > 4
+										industrial_complex > 4 
+									}
+								}
+							}
+
+							735 = {
+								OR = {
+									arms_factory > 9
+									industrial_complex > 9 
+									AND = {
+										arms_factory > 4
+										industrial_complex > 4 
+									}
+								}
+							}
+							22 = {
+								OR = {
+									arms_factory > 9
+									industrial_complex > 9 
+									AND = {
+										arms_factory > 4
+										industrial_complex > 4 
+									}
+								}
+							}
+
+							31 = {
+								OR = {
+									arms_factory > 9
+									industrial_complex > 9 
+									AND = {
+										arms_factory > 4
+										industrial_complex > 4 
+									}
+								}
+							}
+							19 = {
+								OR = {
+									arms_factory > 9
+									industrial_complex > 9 
+									AND = {
+										arms_factory > 4
+										industrial_complex > 4 
+									}
+								}
+							}
+							25 = {
+								OR = {
+									arms_factory > 9
+									industrial_complex > 9 
+									AND = {
+										arms_factory > 4
+										industrial_complex > 4 
+									}
+								}
+							}
+							33 = {
+								OR = {
+									arms_factory > 9
+									industrial_complex > 9 
+									AND = {
+										arms_factory > 4
+										industrial_complex > 4 
+									}
+								}
+							}
+
+							26 = {
+								OR = {
+									arms_factory > 9
+									industrial_complex > 9 
+									AND = {
+										arms_factory > 4
+										industrial_complex > 4 
+									}
+								}
+							}
+							23 = {
+								OR = {
+									arms_factory > 9
+									industrial_complex > 9 
+									AND = {
+										arms_factory > 4
+										industrial_complex > 4 
+									}
+								}
+							}
+
+							30 = {
+								OR = {
+									arms_factory > 9
+									industrial_complex > 9 
+									AND = {
+										arms_factory > 4
+										industrial_complex > 4 
+									}
+								}
+							}
+							14 = {
+								OR = {
+									arms_factory > 9
+									industrial_complex > 9 
+									AND = {
+										arms_factory > 4
+										industrial_complex > 4 
+									}
+								}
+							}
+
+							1 = {
+								OR = {
+									arms_factory > 9
+									industrial_complex > 9 
+									AND = {
+										arms_factory > 4
+										industrial_complex > 4 
+									}
+								}
+							}
+						}
+					}
+					hidden_trigger = {
+						has_country_flag = FRA_SNCAN_formed
+						has_country_flag = FRA_SNCAO_formed
+						has_country_flag = FRA_SNCAC_formed
+						has_country_flag = FRA_SNCASE_formed
+						has_country_flag = FRA_SNCASO_formed
+					}
+				}
 		}	
 
 
@@ -1965,7 +2321,7 @@ focus_tree = {
 						has_completed_focus = FRA_rally_behind_the_popular_front
 					}
 				}
-				add_political_power = 50
+				add_political_power = 100
 				add_war_support = 0.2
 			}
 			if = {
@@ -1974,8 +2330,8 @@ focus_tree = {
 						has_completed_focus = FRA_settlements_with_right_wing_leagues
 					}
 				}
-				add_political_power = 50
-				add_war_support = 0.15
+				add_political_power = 100
+				add_war_support = 0.2
 			}		
 		}	
 	}
@@ -2081,15 +2437,14 @@ focus_tree = {
 
 		available_if_capitulated = no
 		completion_reward = {
+			add_war_support = -0.2
 			FRA = { country_event = { id = france.54 days = 1 } }
 			add_dynamic_modifier = {
 				modifier = FRA_initial_war_euthasium
 				scope = ROOT
 			}
 			custom_effect_tooltip = FRA_die_for_danzig_tt
-			hidden_effect = {
-				play_song = "Ligne Siegfried"
-			}
+			
 		}
 		ai_will_do = {
 			factor = 1
@@ -2198,9 +2553,28 @@ focus_tree = {
 
 		available_if_capitulated = yes
 		completion_reward = {
+			hidden_effect = {
+				if = {
+					limit = {
+						FRA = {
+							has_completed_focus = FRA_industrial_economic_cooperation
+						}
+					}
+					add_to_variable = {
+						FRA_industry_consumer_goods_modifier = -0.03
+					}
+				}
+			}
 			remove_dynamic_modifier = {
 				modifier = FRA_initial_war_euthasium
 				scope = ROOT
+			}
+			custom_effect_tooltip = FRA_core_tt
+			add_to_variable = {
+				FRA_army_core_attack_factor = -0.15
+			}
+			add_to_variable = {
+				FRA_army_core_defence_factor = -0.15
 			}
 			add_timed_idea = {
 				idea = FRA_training_idea_cap
@@ -3065,34 +3439,7 @@ focus_tree = {
 				remove_ideas = FRA_instable_gouvernment_5
 			}
 
-			if = {
-				limit = {
-					has_idea = FRA_political_extremism4
-				}
-				remove_ideas = FRA_political_extremism4
-			}
-			else_if = {
-				limit = {
-					has_idea = FRA_political_extremism3
-				}
-				remove_ideas = FRA_political_extremism3
-			}
-			if = {
-				limit = {
-					has_idea = FRA_political_extremism2
-				}
-				remove_ideas = FRA_political_extremism2
-			}
-			if = {
-				limit = {
-					has_idea = FRA_political_extremism
-				}
-				remove_ideas = FRA_political_extremism
-			}
-			remove_dynamic_modifier = {
-				modifier = FRA_political_extremism_modifier
-				scope = FRA
-			}
+			
 			if = {
 				limit = {
 					has_idea = FRA_widespread_defeatism2
@@ -3229,7 +3576,7 @@ focus_tree = {
 	focus = {
 		id = FRA_appel_du_18_juin
 
-		icon = GFX_focus_prc_infiltration
+		icon = GFX_r56_goal_generic_war_of_words
 		relative_position_id = FRA_refus_absurde
 		prerequisite = { focus = FRA_refus_absurde }
 		x = 0
@@ -3240,8 +3587,10 @@ focus_tree = {
 		}
 		available_if_capitulated = yes
 		completion_reward = {				
-			add_ideas = FRA_appel_du_18_juin
-			add_manpower = 100000
+			custom_effect_tooltip = FRA_appel_tt
+			add_to_variable = {
+				FRA_conscription_var = -0.05
+			}
 			hidden_effect = {
 				sound_effect = fra_appel
 			}
@@ -3269,7 +3618,6 @@ focus_tree = {
 		completion_reward = {
 
 			set_capital = {state = 772}
-			remove_ideas = French_Malaise
 			772 = {
 				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
@@ -3448,6 +3796,44 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = FRA_liberation
+		icon = GFX_r56_goal_FRA_status_quo
+		prerequisite = { focus = FRA_use_foreign_equipements focus = FRA_use_our_colonial_empire }
+		relative_position_id = FRA_free_france
+		x = 0
+		y = 2
+		cost = 1
+		ai_will_do = {
+			factor = 12
+		}
+
+		available = {			
+			has_capitulated = yes
+			
+			OR = {
+				ROOT = {
+					has_full_control_of_state = 16 
+				}
+				any_other_country = {
+					is_in_faction_with = FRA
+					has_full_control_of_state = 16
+				}
+                date > 1942.6.1				
+			}
+		}
+
+		available_if_capitulated = yes
+		completion_reward = {
+			add_to_variable = {
+				FRA_army_core_attack_factor = 0.15
+			}
+			add_to_variable = {
+				FRA_army_core_defence_factor = 0.15
+			}
+			custom_effect_tooltip = FRA_core2_tt
+		}
+	}
+	focus = {
 		id = FRA_form_the_FNFL
 
 		icon = GFX_goal_generic_navy_battleship
@@ -3510,39 +3896,95 @@ focus_tree = {
 			set_technology = {
 			   marines = 1
 			}
-			division_template = {
-				name = "Kieffer Commando"
-				priority = 2
-
-				regiments = {
-					marine = { x = 0 y = 0 }
-					marine = { x = 0 y = 1 }
-					marine = { x = 0 y = 2 }
-					marine = { x = 0 y = 3 }
-					
-					marine = { x = 3 y = 0 }
-
-					marine = { x = 1 y = 0 }
-					marine = { x = 1 y = 1 }
-					marine = { x = 1 y = 2 }
-					marine = { x = 1 y = 3 }
-				   
-					marine = { x = 2 y = 0 }
-					marine = { x = 2 y = 1 }
-					marine = { x = 2 y = 2 }
-					marine = { x = 2 y = 3 }
-
-					artillery_brigade = { x = 3 y = 0 }
-					artillery_brigade = { x = 3 y = 1 }
-					artillery_brigade = { x = 3 y = 2 }
+			if = {
+				limit = {
+					FRA = {
+						NOT = {
+							OR = {
+								has_tech = large_front_operations
+								has_tech = peoples_army
+							}
+						}
+					}
 				}
-				support = {
-					DIV_HQ = { x = 0 y = 0 }
-					recon = { x = 0 y = 1 }
-					engineer = { x = 0 y = 2 }
-					recon_ac = { x = 0 y = 3 }
-					maintenance_company = { x = 1 y = 0 }
-					logistics_company = { x = 1 y = 1 }
+				division_template = {
+					name = "Kieffer Commando"
+					priority = 2
+					is_locked = no 
+
+					regiments = {
+						marine = { x = 0 y = 0 }
+						marine = { x = 0 y = 1 }
+						marine = { x = 0 y = 2 }
+						marine = { x = 0 y = 3 }
+
+						marine = { x = 1 y = 0 }
+						marine = { x = 1 y = 1 }
+						marine = { x = 1 y = 2 }
+						marine = { x = 1 y = 3 }
+				   
+						marine = { x = 2 y = 0 }
+
+						artillery_brigade = { x = 3 y = 0 }
+						artillery_brigade = { x = 3 y = 1 }
+						artillery_brigade = { x = 3 y = 2 }
+						artillery_brigade = { x = 3 y = 3 }
+
+						artillery_brigade = { x = 4 y = 0 }
+						artillery_brigade = { x = 4 y = 1 }
+					}
+					support = {
+						DIV_HQ = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+						engineer = { x = 0 y = 2 }
+						artillery = { x = 0 y = 3}
+						maintenance_company = { x = 1 y = 0 }
+						field_gun_support = { x = 1 y = 1 }
+						anti_air_company = { x = 1 y = 2 }
+						military_police = { x = 1 y = 3 }
+					}
+				}
+			}	
+			else_if = {
+				division_template = {
+					name = "Kieffer Commando"
+					priority = 2
+					is_locked = no 
+
+					regiments = {
+						marine = { x = 0 y = 0 }
+						marine = { x = 0 y = 1 }
+						marine = { x = 0 y = 2 }
+						marine = { x = 0 y = 3 }
+
+						marine = { x = 1 y = 0 }
+						marine = { x = 1 y = 1 }
+						marine = { x = 1 y = 2 }
+						marine = { x = 1 y = 3 }
+				   
+						marine = { x = 2 y = 0 }
+						marine = { x = 2 y = 1 }
+						marine = { x = 2 y = 2 }
+						marine = { x = 2 y = 3 }
+
+						artillery_brigade = { x = 3 y = 0 }
+						artillery_brigade = { x = 3 y = 1 }
+						artillery_brigade = { x = 3 y = 2 }
+						artillery_brigade = { x = 3 y = 3 }
+
+						artillery_brigade = { x = 4 y = 0 }
+						artillery_brigade = { x = 4 y = 1 }
+					}
+					support = {
+						DIV_HQ = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+						engineer = { x = 0 y = 2 }
+						artillery = { x = 0 y = 3}
+						maintenance_company = { x = 1 y = 0 }
+						field_gun_support = { x = 1 y = 1 }
+						anti_air_company = { x = 1 y = 2 }
+						military_police = { x = 1 y = 3 }
+					}
 				}
 			}
 			random_owned_controlled_state = {
@@ -3604,38 +4046,96 @@ focus_tree = {
 		}
 		available_if_capitulated = yes
 		completion_reward = {
-		set_technology = { legionnaires = 1 }
-		custom_effect_tooltip = FRA_legion_etrangere_tt
-			division_template = {
-				name = "Légionnaires"
-				priority = 2
-
-				regiments = {
-					mountaineers = { x = 0 y = 0 }
-					mountaineers = { x = 0 y = 1 }
-					mountaineers = { x = 0 y = 2 }
-					mountaineers = { x = 0 y = 3 }
-
-					mountaineers = { x = 1 y = 0 }
-					mountaineers = { x = 1 y = 1 }
-					mountaineers = { x = 1 y = 2 }
-					mountaineers = { x = 1 y = 3 }
-				   
-					mountaineers = { x = 2 y = 0 }
-					mountaineers = { x = 2 y = 1 }
-					mountaineers = { x = 2 y = 2 }
-					mountaineers = { x = 2 y = 3 }
-
-					artillery_brigade = { x = 3 y = 0 }
-					artillery_brigade = { x = 3 y = 1 }
-					artillery_brigade = { x = 3 y = 2 }
+			set_technology = { legionnaires = 1 }
+			custom_effect_tooltip = FRA_legion_etrangere_tt
+			if = {
+				limit = {
+					FRA = {
+						NOT = {
+							OR = {
+								has_tech = large_front_operations
+								has_tech = peoples_army
+							}
+						}
+					}
 				}
-				support = {
-					DIV_HQ = { x = 0 y = 0 }
-					recon = { x = 0 y = 1 }
-					engineer = { x = 0 y = 2 }
-					maintenance_company = { x = 1 y = 0 }
-					logistics_company = { x = 1 y = 1 }
+				division_template = {
+					name = "Légionnaires"
+					priority = 2
+					is_locked = no 
+
+					regiments = {
+						mountaineers = { x = 0 y = 0 }
+						mountaineers = { x = 0 y = 1 }
+						mountaineers = { x = 0 y = 2 }
+						mountaineers = { x = 0 y = 3 }
+
+						mountaineers = { x = 1 y = 0 }
+						mountaineers = { x = 1 y = 1 }
+						mountaineers = { x = 1 y = 2 }
+						mountaineers = { x = 1 y = 3 }
+				   
+						mountaineers = { x = 2 y = 0 }
+						mountaineers = { x = 2 y = 1 }
+						mountaineers = { x = 2 y = 2 }
+
+						artillery_brigade = { x = 3 y = 0 }
+						artillery_brigade = { x = 3 y = 1 }
+						artillery_brigade = { x = 3 y = 2 }
+						anti_tank_brigade = { x = 3 y = 3 }
+					}
+					support = {
+						DIV_HQ = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+						engineer = { x = 0 y = 2 }
+						artillery = { x = 0 y = 3}
+						maintenance_company = { x = 1 y = 0 }
+						logistics_company = { x = 1 y = 1 }
+						anti_air_company = { x = 1 y = 2 }
+						field_gun_support = { x = 1 y = 3 }
+					}
+				}
+			}	
+			else_if = {
+				division_template = {
+					name = "Légionnaires"
+					priority = 2
+					is_locked = no 
+
+					regiments = {
+						mountaineers = { x = 0 y = 0 }
+						mountaineers = { x = 0 y = 1 }
+						mountaineers = { x = 0 y = 2 }
+						mountaineers = { x = 0 y = 3 }
+
+						mountaineers = { x = 1 y = 0 }
+						mountaineers = { x = 1 y = 1 }
+						mountaineers = { x = 1 y = 2 }
+						mountaineers = { x = 1 y = 3 }
+				   
+						mountaineers = { x = 2 y = 0 }
+						mountaineers = { x = 2 y = 1 }
+						mountaineers = { x = 2 y = 2 }
+						mountaineers = { x = 2 y = 3 }
+
+						artillery_brigade = { x = 3 y = 0 }
+						artillery_brigade = { x = 3 y = 1 }
+						artillery_brigade = { x = 3 y = 2 }
+						anti_tank_brigade = { x = 3 y = 3 }
+
+						artillery_brigade = { x = 4 y = 0 }
+						artillery_brigade = { x = 4 y = 1 }
+					}
+					support = {
+						DIV_HQ = { x = 0 y = 0 }
+						recon = { x = 0 y = 1 }
+						engineer = { x = 0 y = 2 }
+						artillery = { x = 0 y = 3}
+						maintenance_company = { x = 1 y = 0 }
+						logistics_company = { x = 1 y = 1 }
+						anti_air_company = { x = 1 y = 2 }
+						field_gun_support = { x = 1 y = 3 }
+					}
 				}
 			}
 			random_owned_controlled_state = {
@@ -3673,8 +4173,9 @@ focus_tree = {
 		
 		completion_reward = {
 			custom_effect_tooltip = FRA_form_1_DB_tt
+			army_experience = 30
 			hidden_effect= {
-
+				
 				division_template = {
 					name = "FFL Division-Blindée"
 					priority = 2
@@ -3703,7 +4204,7 @@ focus_tree = {
 					}
 					support = {
 						DIV_HQ = { x = 0 y = 0 }
-						recon = { x = 0 y = 1 }
+						artillery = { x = 0 y = 1 }
 						engineer = { x = 0 y = 2 }
 						recon_ac = { x = 0 y = 3 }
 						maintenance_company = { x = 1 y = 0 }
@@ -3741,6 +4242,47 @@ focus_tree = {
 		
 		completion_reward = {
 			custom_effect_tooltip = FRA_serment_of_kufra_tt
+			army_experience = 30
+			hidden_effect= {
+				
+				division_template = {
+					name = "FFL Division-Blindée"
+					priority = 2
+
+					regiments = {
+						motorized = { x = 0 y = 0 }
+						motorized = { x = 0 y = 1 }
+						motorized = { x = 0 y = 2 }
+						motorized = { x = 0 y = 3 }
+						
+						motorized = { x = 3 y = 0 }
+
+						medium_armor = { x = 1 y = 0 }
+						medium_armor = { x = 1 y = 1 }
+						medium_armor = { x = 1 y = 2 }
+						medium_armor = { x = 1 y = 3 }
+					   
+						medium_armor = { x = 2 y = 0 }
+						medium_armor = { x = 2 y = 1 }
+						medium_armor = { x = 2 y = 2 }
+						medium_armor = { x = 2 y = 3 }
+
+						medium_armor = { x = 3 y = 0 }
+						medium_armor = { x = 3 y = 1 }
+						medium_armor = { x = 3 y = 2 }
+					}
+					support = {
+						DIV_HQ = { x = 0 y = 0 }
+						artillery = { x = 0 y = 1 }
+						engineer = { x = 0 y = 2 }
+						recon_ac = { x = 0 y = 3 }
+						maintenance_company = { x = 1 y = 0 }
+						logistics_company = { x = 1 y = 1 }
+						military_police = { x = 1 y = 2 }	
+					}
+				}
+				
+			}
 			random_owned_controlled_state = {
 					prioritize = { 774 }
 					create_unit = {
@@ -3817,6 +4359,7 @@ focus_tree = {
 		
 		completion_reward = {
 			add_political_power = 100
+			army_experience = 30
 		}
 	}
 	
@@ -3998,6 +4541,7 @@ focus_tree = {
 		available_if_capitulated = yes
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
+			army_experience = 30
 			division_template = {
 				name = "Colonial troops"
 				priority = 0
@@ -4101,7 +4645,11 @@ focus_tree = {
 		available_if_capitulated = yes
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		completion_reward = {
-			add_ideas = { FRA_maquis }
+			add_to_variable = {
+				FRA_resistance_growth_on_our_occupied_states_var = 0.1
+			}
+			custom_effect_tooltip = FRA_army8_tt
+
 		}
 	}
 	focus = {
@@ -4128,7 +4676,10 @@ focus_tree = {
 		available_if_capitulated = yes
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		completion_reward = {
-			add_ideas = { FRA_contact_established }
+			add_to_variable = {
+				FRA_intel_network_gain_factor_var = 0.2
+			}
+			custom_effect_tooltip = FRA_army9_tt
 
 		}
 	}
@@ -4156,7 +4707,10 @@ focus_tree = {
 		available_if_capitulated = yes
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		completion_reward = {
-			add_ideas = { FRA_communist_leadership }
+			add_to_variable = {
+				FRA_intel_from_operatives_factor_var = 0.2
+			}
+			custom_effect_tooltip = FRA_army10_tt
 
 		}
 	}
@@ -4185,18 +4739,10 @@ focus_tree = {
 		available_if_capitulated = yes
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		completion_reward = {
-			add_ideas = { FRA_maquis_improved }
-			every_state = {
-				limit = {
-					is_core_of = ROOT
-					not = { is_controlled_by = ROOT }
-					infrastructure < 7
-				}
-				add_resistance_target = {
-					amount = 10
-					tooltip = FRA_maquis_1
-				}
+			add_to_variable = {
+				FRA_resistance_growth_on_our_occupied_states_var = 0.15
 			}
+			custom_effect_tooltip = FRA_army11_tt
 		}
 	}
 	focus = {
@@ -4223,7 +4769,10 @@ focus_tree = {
 		available_if_capitulated = yes
 		search_filters = { FOCUS_FILTER_POLITICAL }
 		completion_reward = {
-			add_ideas = { FRA_france_participate_for_the_war }
+			add_to_variable = {
+				FRA_legitimacy_gain_factor_var = 0.3
+			}
+			custom_effect_tooltip = FRA_army12_tt
 		}
 	}
 	focus = {
@@ -4291,10 +4840,17 @@ focus_tree = {
 		available_if_capitulated = no
 		completion_reward = {
 			army_experience = 10
-			swap_ideas = {
-				remove_idea = FRA_methodical_battle
-				add_idea = FRA_methodical_battle2
-			}	
+			add_to_variable = {
+				FRA_army_attack_factor_var = 0.05
+
+			}
+			add_to_variable = {
+				FRA_army_speed_factor_var = -0.025
+			}
+			add_to_variable = {
+				FRA_army_morale_factor_var = -0.05
+			}
+			custom_effect_tooltip = FRA_army_tt
 
 		}
 	}
@@ -4382,14 +4938,14 @@ focus_tree = {
 		
 		available_if_capitulated = no
 		completion_reward = {
+			add_to_variable = {
+				FRA_max_dig_in_var = 1
+			}
+			custom_effect_tooltip = FRA_army2_tt
 			add_equipment_to_stockpile = {
 				type = support_equipment
 				amount = 1000
 				producer = FRA
-			}
-			swap_ideas = {
-				remove_idea = FRA_methodical_battle2
-				add_idea = FRA_methodical_battle3
 			}
 			add_tech_bonus = {
 				technology = tech_engineers
@@ -4446,8 +5002,6 @@ focus_tree = {
 		available_if_capitulated = no
 		completion_reward = {
 			add_ideas = FRA_arty_idea
-
-
 			add_tech_bonus = {
 				name = artillery_bonus
 				bonus = 0.5
@@ -4476,6 +5030,8 @@ focus_tree = {
 		 	hidden_effect = {
 	   			division_template = {
   					name = "Division d'Infanterie Algérienne"  
+					priority = 2
+
 					regiments = {
 					infantry = { x = 0 y = 0 }
 					infantry = { x = 0 y = 1 }
@@ -4546,6 +5102,7 @@ focus_tree = {
 			hidden_effect = {
 	   			division_template = {
   					name = "Class B Division"  
+					priority = 2
 					regiments = {
 					infantry = { x = 0 y = 0 }
 					infantry = { x = 0 y = 1 }
@@ -4622,10 +5179,7 @@ focus_tree = {
 		available_if_capitulated = no
 		completion_reward = {
 			add_political_power = 100
-			swap_ideas = {
-				remove_idea = FRA_methodical_battle3
-				add_idea = FRA_methodical_battle4
-			}
+			custom_effect_tooltip = FRA_army3_tt
 			add_equipment_to_stockpile = {
 				type = infantry_equipment_1
 				amount = 10000
@@ -4636,6 +5190,16 @@ focus_tree = {
 				amount = 800
 				producer = FRA 
 			}	
+			add_to_variable = {
+				FRA_max_dig_in_var = 2
+			}
+			add_to_variable = {
+				FRA_army_speed_factor_var = 0.075
+			}
+			add_to_variable = {
+				FRA_army_morale_factor_var = 0.2
+			}
+		
 
 		}
 	}
@@ -4662,9 +5226,9 @@ focus_tree = {
 				idea = FRA_reforms
 				days = 730
 			}
-			custom_effect_tooltip = FRA_level_up
-			hidden_effect = {
-				FRA_rearmament_level_up = yes
+			custom_effect_tooltip = FRA_pol_chaos22_tt	
+			add_to_variable = {
+				FRA_industry_consumer_goods_modifier = 0.015
 			}
 
 		}
@@ -4683,6 +5247,7 @@ focus_tree = {
 		
 		available_if_capitulated = no
 		completion_reward = {
+	
 			random_owned_controlled_state = {
 				limit = {
 					is_core_of = FRA
@@ -4809,7 +5374,7 @@ focus_tree = {
 			add_tech_bonus = {
 				name = artillery_bonus
 				bonus = 1
-				uses = 1
+				uses = 2
 				category = artillery
 			}
 	
@@ -4832,10 +5397,18 @@ focus_tree = {
 		
 		available_if_capitulated = no
 		completion_reward = {
+			custom_effect_tooltip = FRA_army4_tt
 			custom_effect_tooltip = FRA_reservist_tt
 			add_timed_idea = {
 				idea = FRA_general_rehearsals
 				days = 120
+			}
+				
+			add_to_variable = {
+				FRA_army_speed_factor_var = 0.025
+			}
+			add_to_variable = {
+				FRA_army_morale_factor_var = 0.1
 			}
 			hidden_effect = {
 				FRA = { country_event = { days = 120 id = france.46 } }
@@ -4856,7 +5429,13 @@ focus_tree = {
 		
 		available_if_capitulated = no
 		completion_reward = {
-			add_ideas = FRA_rearmament
+			add_to_variable = {
+				FRA_industry_consumer_goods_modifier = 0.025
+			}
+			add_to_variable = {
+				FRA_industry_construction_speed_modifier = 0.1
+			}
+			custom_effect_tooltip = FRA_pol_chaos23_tt
 			random_owned_controlled_state = {
 				limit = {
 					is_core_of = FRA
@@ -4893,10 +5472,10 @@ focus_tree = {
 		
 		available_if_capitulated = no
 		completion_reward = {
-			custom_effect_tooltip = FRA_level_up
-			hidden_effect = {
-				FRA_rearmament_level_up = yes
+			add_to_variable = {
+				FRA_industry_consumer_goods_modifier = 0.015
 			}
+			custom_effect_tooltip = FRA_pol_chaos22_tt
 			add_political_power = -50
 			random_owned_controlled_state = {
 				limit = {
@@ -5047,82 +5626,39 @@ focus_tree = {
 			factor = 1
 		}
 		
-		available_if_capitulated = yes
+		available_if_capitulated = no
 		completion_reward = {
-			if = {
-				limit = {
-					has_capitulated = no 
-				}
-				21 = { 
-					remove_building = {
-						type = dockyard
-						level = 6
-					}
-				}
-				random_owned_controlled_state = {
-					limit = {
-						is_core_of = FRA
-						free_building_slots = {
-							building = arms_factory
-							size > 3
-							include_locked = yes
-						}
-					}
-					add_extra_state_shared_building_slots = 2
-					add_building_construction = {
-						type = arms_factory
-						level = 2
-						instant_build = yes
-					}
-				}
-				272	= {
-					add_extra_state_shared_building_slots = 2
-					add_building_construction = {
-						type = arms_factory
-						level = 2
-						instant_build = yes
-					}
-				}
-				add_ideas = FRA_antitank_tank_drive
-			}
-			if = {
-				limit = {
-					has_capitulated = yes 
-				}
-				GER = {
-					21 = { 
-						remove_building = {
-							type = dockyard
-							level = 6
-						}
-					}
-					random_owned_controlled_state = {
-						limit = {
-							is_core_of = FRA
-							free_building_slots = {
-								building = arms_factory
-								size > 0
-								include_locked = yes
-							}
-						}
-						add_extra_state_shared_building_slots = 1
-						add_building_construction = {
-							type = arms_factory
-							level = 1
-							instant_build = yes
-						}
-					}
-					random_owned_controlled_state = {
-						add_extra_state_shared_building_slots = 1
-						add_building_construction = {
-							type = arms_factory
-							level = 1
-							instant_build = yes
-						}
-					}
-					add_ideas = FRA_antitank_tank_drive
+			21 = { 
+				remove_building = {
+					type = dockyard
+					level = 6
 				}
 			}
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = FRA
+					free_building_slots = {
+						building = arms_factory
+						size > 3
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+			272	= {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+			add_ideas = FRA_antitank_tank_drive
 		}
 	}
 	focus = {
@@ -5399,11 +5935,11 @@ focus_tree = {
 			show_ideas_tooltip = charles_degaul
 			add_political_power = -50
 			add_tech_bonus = {
-					name = armor_bonus	
-					bonus = 1
-					uses = 1
-					category = armor 
-				}
+				name = armor_bonus	
+				bonus = 1
+				uses = 1
+				category = armor 
+			}
 		}
 	}
 	focus = {
@@ -5484,13 +6020,13 @@ focus_tree = {
 			}
 
 			custom_effect_tooltip = available_designer
-			show_ideas_tooltip = renault_fra2
+			show_ideas_tooltip = renault_fra
 
 		}
 	}
 	focus = {
 		id = FRA_war_council
-		icon = GFX_goal_military_government
+		icon = GFX_goal_generic_axis_build_infantry
 		x = 1 
 		y = 2
 		prerequisite = { focus = FRA_see_to_daladier }
@@ -5558,7 +6094,10 @@ focus_tree = {
 
 		available_if_capitulated = yes
 		completion_reward = {
-			add_ideas = FRA_redefined_armor
+			add_to_variable = {
+				FRA_army_armor_attack_factor_var = 0.05
+			}
+			custom_effect_tooltip = FRA_army5_tt
 			if = {
 				limit = {
 					has_capitulated = no 
@@ -5613,9 +6152,8 @@ focus_tree = {
 			hidden_effect = {
 				FRA = { country_event = { days = 1 id = france.48 } }
 				FRA = { country_event = { days = 120 id = france.49 } }
-				FRA = { country_event = { days = 240 id = france.50 } }
-				FRA = { country_event = { days = 360 id = france.51 } }
-				FRA = { country_event = { days = 480 id = france.52 } }
+				FRA = { country_event = { days = 240 id = france.51 } }
+				FRA = { country_event = { days = 360 id = france.52 } }
 			}	
 		}
 	}
@@ -5663,10 +6201,11 @@ focus_tree = {
 		}	
 		available_if_capitulated = yes
 		completion_reward = {
-			swap_ideas = {
-				remove_idea = FRA_bad_airforce
-				add_idea = FRA_not_as_bad_airforce
-			}
+			add_tech_bonus = {
+				category = air_equipment
+				uses = 1
+				bonus = 0.5
+			}	
 			random_owned_controlled_state = {
 				limit = {
 					is_core_of = FRA
@@ -5683,11 +6222,12 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
-			add_tech_bonus = {
-				category = air_equipment
-				uses = 1
-				bonus = 0.5
-			}	
+			swap_ideas = {
+				remove_idea = FRA_bad_airforce
+				add_idea = FRA_not_as_bad_airforce
+			}
+		
+			
 				
 		}
 	}
@@ -5810,7 +6350,12 @@ focus_tree = {
 		
 		available_if_capitulated = no
 		completion_reward = {
-			add_ideas = FRA_air_pop	
+			air_experience = 100
+			add_to_variable = {
+				FRA_air_ace_generation_chance_factor_var = 0.2
+			}
+			custom_effect_tooltip = FRA_army6_tt
+			
 		}
 	}
 	focus = {
@@ -5862,8 +6407,7 @@ focus_tree = {
 		
 		available_if_capitulated = yes
 		completion_reward = {
-				remove_ideas = FRA_not_as_bad_airforce
-				random_owned_controlled_state = {
+			random_owned_controlled_state = {
 				limit = {
 					is_core_of = FRA
 					free_building_slots = {
@@ -5879,8 +6423,13 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
+			swap_ideas = {
+				remove_idea = FRA_not_as_bad_airforce
+				add_idea = FRA_not_as_bad_airforce2
+			}
 			
 		}
+		
 	}
 	focus = {
 		id = FRA_new_bombers
@@ -6023,7 +6572,11 @@ focus_tree = {
 		
 		available_if_capitulated = no
 		completion_reward = {
-			add_ideas = FRA_planes_on_menu
+			swap_ideas = {
+				remove_idea = FRA_not_as_bad_airforce2
+				add_idea = FRA_not_as_bad_airforce3
+			}
+				
 			random_owned_controlled_state = {
 				limit = {
 					is_core_of = FRA
@@ -6119,7 +6672,10 @@ focus_tree = {
 		relative_position_id = FRA_marine_nationale_needs
 		prerequisite = { focus = FRA_marine_nationale_needs }
 		completion_reward = {
-				add_ideas = FRA_build_new_escorts_1
+			add_timed_idea = {
+				idea = FRA_build_new_escorts_1
+				days = 365
+			}
 				random_owned_controlled_state = {
 				limit = {
 					is_core_of = FRA
@@ -6469,7 +7025,7 @@ focus_tree = {
 		completion_reward = {
 			add_equipment_to_stockpile = {
 				type = cv_small_plane_airframe
-				amount = 100
+				amount = 66
 				producer = FRA 
 			}	
 		}
@@ -6489,7 +7045,7 @@ focus_tree = {
 		completion_reward = {
 			add_equipment_to_stockpile = {
 				type = cv_small_plane_naval_bomber_airframe
-				amount = 100
+				amount = 66
 				producer = FRA 
 			}	
 			add_tech_bonus = {

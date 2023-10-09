@@ -508,6 +508,20 @@
 		available_if_capitulated = yes
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
+			
+			random_owned_controlled_state = {
+				prioritize = { 46 }
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes 
+				}
+				add_resource = {
+					type = steel
+					amount = 10 
+				}
+			}
 			add_tech_bonus = {
 				category = electronics
 				uses = 2
@@ -825,6 +839,11 @@
 					level = 2
 					instant_build = yes
 				}
+				add_resource = {
+					type = steel
+					amount = 2 
+				}
+				
 			}
 			82 = {
 				add_extra_state_shared_building_slots = 2
@@ -833,6 +852,10 @@
 					level = 2
 					instant_build = yes
 				}
+				add_resource = {
+					type = steel
+					amount = 2 
+				}
 			}
 			81 = {
 				add_extra_state_shared_building_slots = 2
@@ -840,6 +863,10 @@
 					type = industrial_complex
 					level = 2
 					instant_build = yes
+				}
+				add_resource = {
+					type = steel
+					amount = 2 
 				}
 			}
 		}
@@ -1152,8 +1179,9 @@
 		}
 
 		available = {
-			SPA = {
-				has_civil_war = yes 
+			has_global_flag = spanish_civil_war
+			NOT = {
+				has_global_flag = scw_over
 			}
 		}
 
@@ -1180,7 +1208,7 @@
 				country_event = { id = romania.6 days = 1 }
 			}
 
-			SPA = {
+			SPR = {
 				add_manpower = 2000
 			}
 		}
@@ -1731,6 +1759,14 @@
 				popularity = 0.2 
 			}
 			add_stability = 0.1 
+			46 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes 
+				}
+			}
 		}
 	}
 
@@ -1890,8 +1926,8 @@
 			add_ideas = ROM_the_sentinel_of_the_motherland
 			add_doctrine_cost_reduction = {
 				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
+				cost_reduction = 0.35
+				uses = 2
 				category = land_doctrine
 			}
 		}
@@ -2107,13 +2143,9 @@
 
 		available = {
 			HUN = {
-				NOT = {
-					is_in_faction_with = GER 
-				}
+				is_ai = yes
 			}
-			ROM = {
-				is_in_faction_with = GER 
-			}
+			
 		}
 
 		bypass = {
@@ -2129,9 +2161,9 @@
 		}
 
 		completion_reward = {
-			create_wargoal = {
-				type = annex_everything 
-				target = HUN 
+			annex_country = {
+				target = HUN
+				transfer_troops = yes
 			}
 		}
 	}		
@@ -2144,16 +2176,14 @@
 		x = 0
 		y = 1
 
-		cost = 5
+		cost = 1
 
 		ai_will_do = {
 			factor = 9
 		}
 
 		available = {
-			HUN = {
-				has_capitulated = yes 
-			}
+			
 		}
 
 		bypass = {
@@ -2174,7 +2204,6 @@
 					is_core_of = HUN 
 				}
 				set_compliance = 90 
-				set_resistance = 5 
 			}
 		}
 	}		
@@ -2195,14 +2224,8 @@
 
 		available = {
 			BUL = {
-				NOT = {
-					is_in_faction_with = GER 
-				}
+				is_ai = yes
 			}
-			ROM = {
-				is_in_faction_with = GER 
-			}
-			is_ai = no 
 		}
 
 		bypass = {
@@ -2218,9 +2241,9 @@
 		}
 
 		completion_reward = {
-			create_wargoal = {
-				target = BUL 
-				type = annex_everything  
+			annex_country = {
+				target = BUL
+				transfer_troops = yes
 			}
 		}
 	}		
@@ -2240,9 +2263,7 @@
 		}
 
 		available = {
-			BUL = {
-				has_capitulated = yes 
-			}
+			
 		}
 
 		bypass = {
@@ -2263,52 +2284,11 @@
 					is_core_of = BUL 
 				}
 				set_compliance = 90 
-				set_resistance = 5 
 			}
 		}
 	}		
 
-	focus = {
-		id = ROM_federation_of_the_danube
-		icon = GFX_focus_rom_preserve_romania
-		relative_position_id = ROM_wargoal_on_bulgaria
-		prerequisite = { focus = ROM_integrate_bulgaria }
-		prerequisite = { focus = ROM_integrate_hungary }
-		x = -1
-		y = 2
-
-		cost = 5
-
-		ai_will_do = {
-			factor = 9
-		}
-
-		available = {
-
-		}
-
-		bypass = {
-
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		complete_tooltip = {
-
-		}
-
-		completion_reward = {
-			every_state = {
-				limit = {
-					is_core_of = YUG 
-				}
-				add_claim_by = ROM 
-			}
-		}
-	}		
-
+	
 	focus = {
 		id = ROM_legionnaires_rebellion
 		icon = GFX_focus_rom_preserve_romania
@@ -2340,6 +2320,12 @@
 		}
 
 		completion_reward = {
+			if = {
+				limit = {
+					has_idea = ROM_army_tensions
+				}
+				remove_ideas = ROM_army_tensions
+			}
 			add_popularity = {
 				ideology = fascism 
 				popularity = 1 
@@ -2424,14 +2410,14 @@
 				79 = {
 					set_building_level = {
 						type = air_base
-						level = 8
+						level = 6
 						instant_build = yes
 					}
 				}
 				46 = {
 					set_building_level = {
 						type = air_base
-						level = 8
+						level = 10
 						instant_build = yes
 					}
 				}
@@ -2447,14 +2433,14 @@
 				79 = {
 					set_building_level = {
 						type = air_base
-						level = 8
+						level = 6
 						instant_build = yes
 					}
 				}
 				46 = {
 					set_building_level = {
 						type = air_base
-						level = 8
+						level = 10
 						instant_build = yes
 					}
 				}
@@ -2623,6 +2609,14 @@
 		}
 
 		completion_reward = {
+			46 = {
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = industrial_complex
+					level = 3
+					instant_build = yes 
+				}
+			}
 			show_ideas_tooltip = ROM_junkers
 			show_ideas_tooltip = ROM_messerschmitt
 			show_ideas_tooltip = ROM_focke_wulf
@@ -3697,7 +3691,6 @@
 		completion_reward = {
 			custom_effect_tooltip = available_designer
 			show_ideas_tooltip = ROM_leonidas_works
-			remove_ideas = ROM_acquire_modern_tanks 
 			add_tech_bonus = {
 				category = cat_light_armor 
 				uses = 2
@@ -3897,9 +3890,10 @@
 				limit = {
 					has_state_flag = ROM_expand_the_galati_shipyards_AB
 				}
+				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
 					type = dockyard
-					level = 2
+					level = 4
 					instant_build = yes
 				}
 			}
@@ -3914,10 +3908,10 @@
 			}
 			navy_experience = 25
 			46 = {
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
 					type = dockyard
-					level = 2
+					level = 4
 					instant_build = yes
 				}
 				set_state_flag = ROM_expand_the_galati_shipyards_AB
@@ -3961,10 +3955,10 @@
 			show_ideas_tooltip = ROM_coastal_defense_navy_designer
 
 			46 = {
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
 					type = dockyard
-					level = 2
+					level = 4
 					instant_build = yes
 				}
 				set_state_flag = ROM_expand_the_galati_shipyards_AB
@@ -4007,10 +4001,10 @@
 			#custom_effect_tooltip = ROM_coastal_defense_ships_tech_tt
 			#hidden_effect = { set_technology = { coastal_defense_ships = 1 } }
 			46 = {
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
 					type = dockyard
-					level = 2
+					level = 4
 					instant_build = yes
 				}
 				set_state_flag = ROM_expand_the_galati_shipyards_AB
@@ -4052,7 +4046,7 @@
 		completion_reward = {
 			add_tech_bonus = {
 				name = ROM_torpedo_bombers
-				bonus = 0.4
+				bonus = 1
 				uses = 1
 				category = dd_tech
 			}
@@ -4099,7 +4093,7 @@
 
 	focus = {
 		id = ROM_modern_submarines
-		icon = GFX_goal_generic_navy_submarine
+		icon = GFX_focus_generic_steel
 		prerequisite = { focus = ROM_modern_destroyers }
 		x = 0
 		y = 2
@@ -4128,11 +4122,16 @@
 		}
 
 		completion_reward = {
-			add_tech_bonus = {
-				name = ROM_modern_submarines
-				bonus = 1
-				uses = 1
-				category = ss_tech
+		
+			add_resource = {
+				type = steel
+				amount = 15
+				state = 46
+			}
+			add_resource = {
+				type = chromium
+				amount = 5
+				state = 46
 			}
 		}
 	}
@@ -4168,7 +4167,16 @@
 
 		}
 
-		completion_reward = {			
+		completion_reward = {	
+			46 = {
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = dockyard
+					level = 4
+					instant_build = yes
+				}
+				set_state_flag = ROM_expand_the_galati_shipyards_AB
+			}		
 			custom_effect_tooltip = available_designer
 			show_ideas_tooltip = ROM_black_sea_dominance_designer
 		}
@@ -4205,6 +4213,15 @@
 		}
 
 		completion_reward = {
+			46 = {
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = dockyard
+					level = 4
+					instant_build = yes
+				}
+				set_state_flag = ROM_expand_the_galati_shipyards_AB
+			}
 			add_tech_bonus = {
 				name = ROM_capital_ships
 				bonus = 1
@@ -4252,6 +4269,15 @@
 				bonus = 1
 				uses = 1
 				category = naval_bomber
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = arms_factory
+					level = 4
+					instant_build = yes
+				}
+				set_state_flag = ROM_expand_the_galati_shipyards_AB
 			}
 		}
 	}

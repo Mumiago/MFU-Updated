@@ -8,6 +8,8 @@ if = {
 		set_naval_oob = "SOV_1936_naval_legacy"
 	}
 }
+set_variable = { SOV_china_army_xp_gain_var = 0.4 }
+set_variable = { SOV_china_pp_gain_var = 0.6 }
 
 recruit_character = SOV_kliment_voroshilov
 recruit_character = SOV_semyon_timoshenko
@@ -86,9 +88,10 @@ recruit_character = SOV_josip_broz_tito
 set_research_slots = 5
 
 set_variable = { var = stalin_paranoia value = 20 }
-set_variable = { var = 5_year_plan_progress value = 60 }
+set_variable = { var = progress_5_year_plan value = 60 }
 
 add_ideas = {
+	SOV_cant_send_volunteers
 	closed_economy
 	trotskyite_plot
 	home_of_revolution
@@ -476,7 +479,7 @@ if = {
 	}
 }
 
-set_convoys = 160
+set_convoys = 400
 set_stability = 0.75
 set_war_support = 0.6
 
@@ -569,8 +572,20 @@ if = {
 if = {
 	limit = { has_dlc = "Man the Guns" }
 	# Submarines #
+	create_equipment_variant = {			
+		name = "AG Class"
+		type = ship_hull_submarine_1
+		name_group = SOV_SS_SHCHUKA
+		parent_version = 0
+		modules = {
+			fixed_ship_torpedo_slot = ship_torpedo_sub_1
+			fixed_ship_engine_slot = sub_ship_engine_1
+			rear_1_custom_slot = empty
+		}
+		obsolete = yes
+	}
 	create_equipment_variant = {
-		name = "SUB 1"		
+		name = "Series I Debakrist"			# represents Debakrist, B class, L-55 sub
 		type = ship_hull_submarine_1
 		name_group = SOV_SS_SHCHUKA
 		parent_version = 0
@@ -579,27 +594,66 @@ if = {
 			fixed_ship_engine_slot = sub_ship_engine_1
 			rear_1_custom_slot = ship_torpedo_sub_1
 		}
+		obsolete = yes
 	}
-	# Destroyers #
 	create_equipment_variant = {
-		name = "DD 1"				
+		name = "Series V Shchuka"				# represents Shchuka series III, V, V-bis, V-bis-2
+		type = ship_hull_submarine_1
+		name_group = SOV_SS_SHCHUKA
+		parent_version = 0
+		modules = {
+			fixed_ship_torpedo_slot = ship_torpedo_sub_2
+			fixed_ship_engine_slot = sub_ship_engine_1
+			rear_1_custom_slot = empty
+		}
+		obsolete = yes
+	}
+	create_equipment_variant = {
+		name = "Series IX Srednyaya"				# 'Stalinets', series IX, IX-bis, IX-bis-2 and P-class
+		type = ship_hull_submarine_2
+		name_group = SOV_SS_STALINETS
+		parent_version = 0
+		modules = {
+			fixed_ship_torpedo_slot = ship_torpedo_sub_2
+			fixed_ship_engine_slot = sub_ship_engine_2
+			rear_1_custom_slot = empty
+		}
+	}
+	create_equipment_variant = {
+		name = "Fidonisi/Orfey Class"						# represents Fidonisi and Izyaslav classes
 		type = ship_hull_light_1
 		name_group = SOV_DD_HISTORICAL
 		parent_version = 0
 		modules = {
 			fixed_ship_battery_slot = ship_light_battery_1
-			fixed_ship_anti_air_slot = ship_anti_air_1
+			fixed_ship_anti_air_slot = empty
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = ship_sonar_1
+			fixed_ship_radar_slot = empty
 			fixed_ship_engine_slot = light_ship_engine_1
 			fixed_ship_torpedo_slot = ship_torpedo_1
 			mid_1_custom_slot = ship_torpedo_1
 			rear_1_custom_slot = ship_depth_charge_1
 		}
+		obsolete = yes
 	}
-	# Light Cruisers #
 	create_equipment_variant = {
-		name = "CL 1"
+		name = "Leningrad & Minsk Class"				
+		type = ship_hull_light_2
+		name_group = SOV_DD_HISTORICAL
+		parent_version = 0
+		modules = {
+			fixed_ship_battery_slot = ship_light_battery_2
+			fixed_ship_anti_air_slot = ship_anti_air_1
+			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+			fixed_ship_radar_slot = empty
+			fixed_ship_engine_slot = light_ship_engine_2
+			fixed_ship_torpedo_slot = ship_torpedo_1
+			mid_1_custom_slot = ship_light_battery_2
+			rear_1_custom_slot = ship_depth_charge_1
+		}
+	}
+	create_equipment_variant = {
+		name = "Chervona Ukraina Class"
 		type = ship_hull_cruiser_1
 		name_group = SOV_CL_HISTORICAL
 		parent_version = 0
@@ -608,34 +662,35 @@ if = {
 			fixed_ship_anti_air_slot = ship_anti_air_1
 			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
 			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_1
 			fixed_ship_armor_slot = ship_armor_cruiser_1
+			fixed_ship_engine_slot = cruiser_ship_engine_1
 			mid_1_custom_slot = ship_light_medium_battery_1
 			mid_2_custom_slot = ship_torpedo_1
-			rear_1_custom_slot = ship_light_medium_battery_1
+			rear_1_custom_slot = empty
 		}
 	}
 	# Heavy Cruisers #
-	create_equipment_variant = {
-		name = "CA 1"
-		type = ship_hull_cruiser_1
-		name_group = SOV_CA_HISTORICAL
-		parent_version = 0
-		modules = {
-			fixed_ship_battery_slot = ship_medium_battery_1
-			fixed_ship_anti_air_slot = ship_anti_air_1
-			fixed_ship_fire_control_system_slot = ship_fire_control_system_0
-			fixed_ship_radar_slot = empty
-			fixed_ship_engine_slot = cruiser_ship_engine_2
-			fixed_ship_armor_slot = ship_armor_cruiser_1
-			mid_1_custom_slot = ship_airplane_launcher_1
-			mid_2_custom_slot = ship_anti_air_1
-			rear_1_custom_slot = ship_medium_battery_1
+		create_equipment_variant = {
+			name = "Kirov Class"
+			type = ship_hull_cruiser_2
+			name_group = SOV_CA_HISTORICAL
+			parent_version = 0
+			modules = {
+				fixed_ship_battery_slot = ship_medium_battery_2
+				fixed_ship_anti_air_slot = ship_anti_air_1
+				fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+				fixed_ship_radar_slot = empty
+				fixed_ship_secondaries_slot = dp_ship_secondaries_1
+				fixed_ship_engine_slot = cruiser_ship_engine_2
+				fixed_ship_armor_slot = ship_armor_cruiser_1
+				mid_1_custom_slot = ship_airplane_launcher_1
+				mid_2_custom_slot = ship_anti_air_1
+				rear_1_custom_slot = ship_medium_battery_2
+			}
 		}
-	}
 	# Battleships #
 	create_equipment_variant = {
-		name = "BB 1"					
+		name = "Marat Class"					
 		type = ship_hull_heavy_1
 		name_group = SOV_BB_HISTORICAL
 		parent_version = 0
@@ -648,7 +703,7 @@ if = {
 			fixed_ship_secondaries_slot = ship_secondaries_1
 			fixed_ship_armor_slot = ship_armor_bb_1
 			front_1_custom_slot = ship_heavy_battery_1
-			mid_1_custom_slot = ship_anti_air_1
+			mid_1_custom_slot = ship_secondaries_1
 			mid_2_custom_slot = ship_anti_air_1
 			rear_1_custom_slot = ship_heavy_battery_1
 		}
