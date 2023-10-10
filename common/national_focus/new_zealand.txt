@@ -1316,7 +1316,7 @@ focus = {
 
                         	artillery_brigade = { x = 3 y = 0 }
                         	artillery_brigade = { x = 3 y = 1 }
-                        	artillery_brigade = { x = 3 y = 2 }
+                        	anti_air = { x = 3 y = 2 }
 
                     	}
 					
@@ -1801,7 +1801,7 @@ focus = {
 
                         	artillery_brigade = { x = 4 y = 0 }
                         	artillery_brigade = { x = 4 y = 1 }
-                        	artillery_brigade = { x = 4 y = 2 }
+                        	anti_air = { x = 3 y = 2 }
 
                     	}
 					
@@ -1962,6 +1962,11 @@ focus = {
 							uses = 1
 							category = land_doctrine
 						}
+		add_tech_bonus = {
+		bonus = 0.50
+		uses = 1
+		category = armor
+		}
 			
 		}
 	}
@@ -1985,6 +1990,7 @@ focus = {
 							uses = 1
 							category = land_doctrine
 						}
+		add_manpower = 30000
 		}
 	}
 
@@ -2008,7 +2014,11 @@ focus = {
 							uses = 1
 							category = land_doctrine
 						}
-		
+		add_tech_bonus = {
+		bonus = 0.50
+		uses = 2
+		category = artillery
+		}
 		}
 	}
 
@@ -2077,7 +2087,64 @@ focus = {
 			hidden_effect = {
 				if = {
 					limit = {
-						has_tech = marines
+						has_completed_focus = NZL_the_anzac_corp
+						has_tech = tech_mountaineers
+					}	
+					division_template = {
+						name = "ANZAC Corps"
+						division_names_group = NZL_MTN_01
+						priority = 2
+						
+							   regiments = {
+								mountaineers = { x = 0 y = 0 }
+								mountaineers = { x = 0 y = 1 }
+								mountaineers = { x = 0 y = 2 }
+	
+								mountaineers = { x = 1 y = 0 }
+								mountaineers = { x = 1 y = 1 }
+								mountaineers = { x = 1 y = 2 }
+	
+								mountaineers = { x = 2 y = 0 }
+								mountaineers = { x = 2 y = 1 }
+								mountaineers = { x = 2 y = 2 }
+	
+								artillery_brigade = { x = 3 y = 0 }
+								artillery_brigade = { x = 3 y = 1 }
+								artillery_brigade = { x = 3 y = 2 }
+	
+								artillery_brigade = { x = 4 y = 0 }
+								artillery_brigade = { x = 4 y = 1 }
+								anti_air = { x = 3 y = 2 }
+	
+							}
+						
+							support = {
+								DIV_HQ = { x = 0 y = 0 }
+								recon = { x = 0 y = 1 }
+								engineer = { x = 0 y = 2 }
+								maintenance_company = { x = 1 y = 0 }
+								logistics_company = { x = 1 y = 1 }
+							}
+						}
+					every_state = {
+						limit = { state = 723 }
+						create_unit = {
+							division = "division_names_group = \"NZL_MTN_01\" division_template = \"ANZAC Corps\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+							owner = NZL
+						}
+						create_unit = {
+							division = "division_names_group = \"NZL_MTN_01\" division_template = \"ANZAC Corps\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+							owner = NZL
+						} 
+						create_unit = {
+							division = "division_names_group = \"NZL_MTN_01\" division_template = \"ANZAC Corps\" start_experience_factor = 0.5 start_equipment_factor = 1" 
+							owner = NZL
+						}    
+					}		
+				}
+				if = {
+					limit = {
+						has_completed_focus = NZL_nzmc
 					}	
 					division_template = {
 					name = "NZMC"
@@ -2103,7 +2170,7 @@ focus = {
 
                         	artillery_brigade = { x = 3 y = 0 }
                         	artillery_brigade = { x = 3 y = 1 }
-                        	artillery_brigade = { x = 3 y = 2 }
+                        	anti_air = { x = 3 y = 2 }
 
                     	}
 					
@@ -2146,9 +2213,13 @@ focus = {
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
 		}
-		available = { has_tech = eng_1936_medium_tank_chassis has_tech = eng_1934_heavy_tank_chassis  }
-		available = { has_tech = eng_1937_light_tank_chassis }
-		available = { has_tech = eng_1934_heavy_tank_chassis }
+		available = { 
+			OR ={
+				has_tech = eng_1936_medium_tank_chassis
+				has_tech = eng_1937_light_tank_chassis
+				has_tech = eng_1939_heavy_tank_chassis
+			}
+		}
 		prerequisite = { focus = NZL_allied_mentorship  }
 		mutually_exclusive = { focus = NZL_british_lendlease  }
 		completion_reward = {
