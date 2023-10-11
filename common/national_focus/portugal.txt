@@ -26,14 +26,11 @@ focus_tree = {
 focus = {
 	id = POR_support_the_spanish_nationalists
 	available = {	
-		has_global_flag = spanish_civil_war
-		NOT = {
-			has_global_flag = scw_over
-		}
-		#date < 1937.3.1
+		SPR_scw_in_progress = yes
+		country_exists = SPA
+		NOT = { has_war_with = SPA }
 	}
 
-	cancel_if_invalid = no 
 	bypass = {
 		has_global_flag = scw_over	
 	}
@@ -45,141 +42,90 @@ focus = {
 	y = 0
 	cost = 10
 	completion_reward = { 	
-		hidden_effect = {
-			SPN = {
-				division_template = {
-					name = "Gornostrelkovaya Diviziya"		
-					division_names_group = SOV_MNT_01 
-					regiments = {
-						mountaineers = { x = 0 y = 0 }	
-						mountaineers = { x = 0 y = 1 }
-						mountaineers = { x = 0 y = 2 }
-						
-						mountaineers = { x = 1 y = 0 }
-						mountaineers = { x = 1 y = 1 }
-						mountaineers = { x = 1 y = 2 }	
-						
-						mountaineers = { x = 2 y = 0 }	
-						mountaineers = { x = 2 y = 1 }	
-						mountaineers = { x = 2 y = 2 }	
-						
-						artillery_heavy = { x = 3 y = 0 }
-						artillery_heavy = { x = 3 y = 1 }	
-						artillery_heavy = { x = 3 y = 2 }
-						artillery_heavy = { x = 3 y = 3 }
-
-						artillery_heavy = { x = 4 y = 0 }
-						artillery_heavy = { x = 4 y = 1 }	
-					}
-					support = {
-						DIV_HQ = { x = 0 y = 0 } 
-						engineer = { x = 0 y = 1 } 		
-						recon = { x = 0 y = 2 }
-						artillery_heavy_support = { x = 0 y = 3 }
-						pack_artillery = { x = 1 y = 0 }
-						logistics_company = { x = 1 y = 1 }
-						anti_air_company = { x = 1 y = 2 }
-						field_gun_support = { x = 1 y = 3 }
-					}
-
-					priority = 2
-				}
-				random_owned_state = {
-					prioritize = {167}
-				
-					create_unit = {
-						division = "division_template = \"Gornostrelkovaya Diviziya\" start_experience_factor = 0.6" 
-						owner = SPN
-						allow_spawning_on_enemy_provs = yes
-						count = 1
+		if = {
+			limit = {
+				SOV = {
+					NOT = {
+						OR = {
+							has_completed_focus = SOV_dual_command
+							has_completed_focus = SOV_begin_from_nothing
+						}
 					}
 				}
 			}
+			SOV = {
+				swap_ideas = {
+					remove_idea = SOV_STAVKA1
+					add_idea = SOV_STAVKA11
+				}
+			}
 		}
-		#if = {
-		#	limit = {
-				#SOV = {
-					#NOT = {
-					##	OR = {
-						#	has_completed_focus = SOV_dual_command
-						#	has_completed_focus = SOV_begin_from_nothing
-					#	}
-					#}
-				#}
-			#}
-			#SOV = {
-				#swap_ideas = {
-				#	remove_idea = SOV_STAVKA1
-				#	add_idea = SOV_STAVKA11
-				#}
-			#}
-		#}
-		##if = {
-			#limit = {
-			#	SOV = {
-				#	has_completed_focus = SOV_begin_from_nothing
-				#	AND = {
-					#	NOT = {
-					#		has_completed_focus = SOV_increase_standards_for_officer_training
-					#	}
-				#	}
+		if = {
+			limit = {
+				SOV = {
+					has_completed_focus = SOV_begin_from_nothing
+					AND = {
+						NOT = {
+							has_completed_focus = SOV_increase_standards_for_officer_training
+						}
+					}
 					
-				#}
-			#}
-			#SOV = {
-				#swap_ideas = {
-				#	remove_idea = SOV_STAVKA2
-				#	add_idea = SOV_STAVKA22
-			#	}
-			#}
-		#}	
-		#if = {
-			#limit = {
-				#SOV = {
-				#	has_completed_focus = SOV_increase_standards_for_officer_training
+				}
+			}
+			SOV = {
+				swap_ideas = {
+					remove_idea = SOV_STAVKA2
+					add_idea = SOV_STAVKA22
+				}
+			}
+		}	
+		if = {
+			limit = {
+				SOV = {
+					has_completed_focus = SOV_increase_standards_for_officer_training
 					
-				#}
-			#}
-			#SOV = {
-				#swap_ideas = {
-					#remove_idea = SOV_STAVKA3
-				#	add_idea = SOV_STAVKA33
-				#}
-			#}
-		#}
-		#if = {
-			#limit = {
-				#SOV = {
-					#has_completed_focus = SOV_dual_command
-					#AND = {
-						#NOT = {
-						#	has_completed_focus = SOV_for_motherland_and_for_stalin
-						#}
-					#}		
+				}
+			}
+			SOV = {
+				swap_ideas = {
+					remove_idea = SOV_STAVKA3
+					add_idea = SOV_STAVKA33
+				}
+			}
+		}
+		if = {
+			limit = {
+				SOV = {
+					has_completed_focus = SOV_dual_command
+					AND = {
+						NOT = {
+							has_completed_focus = SOV_for_motherland_and_for_stalin
+						}
+					}		
 					
-				#}
-			##}
-		#	SOV = {
-			#	#swap_ideas = {
-					#remove_idea = SOV_STAVKA_2
-					#add_idea = SOV_STAVKA_22
-				#}
-			#}
-		#}	
-		#if = {
-			#limit = {
-				#SOV = {
-					#has_completed_focus = SOV_for_motherland_and_for_stalin
+				}
+			}
+			SOV = {
+				swap_ideas = {
+					remove_idea = SOV_STAVKA_2
+					add_idea = SOV_STAVKA_22
+				}
+			}
+		}	
+		if = {
+			limit = {
+				SOV = {
+					has_completed_focus = SOV_for_motherland_and_for_stalin
 					
-				#}
-			#}
-			#SOV = {
-				#swap_ideas = {
-				#	remove_idea = SOV_STAVKA_3
-				#	add_idea = SOV_STAVKA_33
-				#}
-			#}
-		#}
+				}
+			}
+			SOV = {
+				swap_ideas = {
+					remove_idea = SOV_STAVKA_3
+					add_idea = SOV_STAVKA_33
+				}
+			}
+		}
 			
 		add_ideas = POR_volunteers_in_the_war_nationalist
 		add_manpower = -10000
