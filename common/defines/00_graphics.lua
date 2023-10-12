@@ -541,6 +541,11 @@ NMapIcons = {
 },
 
 NAirGfx = {
+
+	--AAT
+	STRAT_BOMBER_FIREBOMB_THRESHOLD = 50.0,         -- If a strategic bomber has a strat_bomber value >= this, then the firebombing animation will be used
+	STRAT_BOMBER_CARPETBOMB_THRESHOLD = 20.0,       -- If a strategic bomber has a strat_bomber value >= this, then the carpet-bombing animation will be used
+
 	AIRPLANES_ANIMATION_GLOBAL_SPEED_PER_GAMESPEED = { 0.22, 0.28, 0.32, 0.38, 0.44, 0.50 }, -- Speed factor for each game speed (begin with paused). Larger value = faster animation.
 	ROCKET_SPEED = 15.0,							-- Speed of rockets launched from rocket sites
 	AIRPLANES_CURVE_POINT_DENSITY = 2.0, 			-- LOWER value = more midpoints in the flight path.
@@ -580,6 +585,15 @@ NAirGfx = {
 },
 
 NGraphics = {
+	--aat 
+	VICTORY_POINT_MAP_ICON_CAPITAL_CUTOFF_MAX = 1000.0,	--Capitals are special snowflakes, they need their own number
+
+	VICTORY_POINT_MAP_ICON_TEXT_CUTOFF_MIN = 100.0, -- Min range for victory point text
+	VICTORY_POINT_MAP_ICON_TEXT_CUTOFF_MAX = 800.0, -- Max range for victory point text
+	VICTORY_POINT_MAP_ICON_DOT_CUTOFF_MIN = 100.0, -- Min range for victory point dot
+	VICTORY_POINT_MAP_ICON_DOT_CUTOFF_MAX = 1000.0, -- Max range for victory point text
+	VICTORY_POINT_MAP_ICON_MAX_VICTORY_POINTS_FOR_PERCENT = 22, -- Default max value for point on the above range. It doesn't matter much if the VP value exceeds this, it'll be treated as max.
+
 	COUNTRY_FLAG_MEDIUM_TEX_MAX_SIZE = 512, -- Tweak dependly on amount of countries. Must be power of 2. No more then 2048.
 	COUNTER_MODE_ALLEGIANCE_OURS = { 0.32, 0.71, 0.39, 1.0 },
 	COUNTER_MODE_ALLEGIANCE_ALLIED = { 0.31, 0.65, 0.94, 1.0 },
@@ -1126,6 +1140,10 @@ NGraphics = {
 },
 
 NInterface = {
+	--aat 
+	MIO_CENTRAL_TREE_HORIZONTAL_POSITION = 1, -- Horizontal position for auto-generated MIO traits
+
+
 	MAX_NO_FACTION_FILTER_BUTTONS = 40,			-- Max number of faction filter buttons that can be generated in diplomacy view.
 
 	LOGISTICS_PAST_WEEK = 7,					-- Number of days from the past (including current day) we want logistics data for (Max 30 days)
