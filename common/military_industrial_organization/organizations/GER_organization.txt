@@ -9,9 +9,9 @@
  #################### 
 
 
-Ger_german_tank_manufacturers = {
-	include = military_industrial_complex_sector
-	icon = GFX_idea_generic_tank_manufacturer_3
+Ger_alkett = {
+	include = medium_tank_designer
+	icon = GFX_idea_idea_alkett
 
 	allowed = {	
 		tag = GER
@@ -21,11 +21,7 @@ Ger_german_tank_manufacturers = {
 	research_categories = { armor }
 	tree_header_text = {
 		text = mio_header_production_department
-		x = 0.1
-	}
-	tree_header_text = {
-		text = mio_header_light_tank_department
-		x = 4
+		x = 1
 	}
 
 	tree_header_text = {
@@ -36,10 +32,6 @@ Ger_german_tank_manufacturers = {
 		text = mio_header_support_tank_department
 		x = 12
 	}
-	tree_header_text = {
-		text = mio_header_heavy_tank_department
-		x = 16
-	}
 
 	initial_trait = {
 		name = german_tank_manufacturers
@@ -49,8 +41,11 @@ Ger_german_tank_manufacturers = {
 		}
 		
 		equipment_bonus = {
-			build_cost_ic = 0.1
-			reliability = -0.1
+					soft_attack = 0.1
+					hard_attack = 0.1
+					maximum_speed = 0.1
+					reliability = 0.1
+					build_cost_ic = 0.05
 		}
 	}
 
@@ -66,16 +61,809 @@ Ger_german_tank_manufacturers = {
 			reliability = 0.025
 		}
 	}
+
+}
+daimler_benz = {
+	include = sensible_medium_tank_designer
+	icon =GFX_idea_daimler_benz
+
+	allowed = {	
+		tag = GER
+	}
+
+	equipment_type = { armor }
+	research_categories = { armor }
+
+
+
+	initial_trait = {
+		name = sensible_medium_tank_designer
+		
+		limit_to_equipment_type = { 
+			armor
+		}
+		
+		equipment_bonus = {
+					supply_consumption = 0.05
+					reliability = 0.15
+					hard_attack = -0.1
+		}
+	}
+	trait = {
+		token = tank_guns
+		name = "Improved Tank Gun Production Methods"
+		icon = GFX_generic_mio_department_icon_facilities
+		position = { x=2 y=0}
+		equipment_bonus = {
+			hard_attack = -0.05
+		}
+	}
+	trait = {
+		token = generic_mio_enlarged_breech
+		name = "Improved Breech Blocks"
+		icon = GFX_generic_mio_department_icon_tank_medium_tank_weapons
+
+		position = { x=0 y=1 }
+		relative_position_id = tank_guns
+
+		any_parent = { tank_guns}
+		
+		equipment_bonus = {
+			soft_attack = 0.05
+		}
+	}
+	
+	trait = {
+		token = generic_mio_improved_tracks_and_suspension
+		name = generic_mio_improved_tracks_and_suspension
+		icon = GFX_generic_mio_trait_icon_breakthrough
+
+		position = { x=4 y=0 }
+
+		all_parents = { generic_mio_improved_ventilation }
+		
+		equipment_bonus = {
+			breakthrough = 0.05
+			maximum_speed = 0.05
+		}
+	}
+	trait = {
+		token = generic_mio_trait_speed_improvements
+		name = generic_mio_trait_speed_improvements
+		icon = GFX_generic_mio_trait_icon_maximum_speed
+		
+		position = { x=1 y=1 }
+		relative_position_id = generic_mio_improved_tracks_and_suspension
+	
+		any_parent = { generic_mio_improved_tracks_and_suspension  }
+		
+		mutually_exclusive = { generic_mio_quality_assurance_routines }
+		
+		equipment_bonus = {
+			maximum_speed = 0.1
+			breakthrough = 0.1
+		}
+	}
+
+	trait = {
+		token = generic_mio_quality_assurance_routines
+		name = generic_mio_quality_assurance_routines
+		icon = GFX_generic_mio_trait_icon_reliability
+
+		position = { x=-1 y=1 }
+		relative_position_id = generic_mio_improved_tracks_and_suspension
+	
+		any_parent = { generic_mio_improved_tracks_and_suspension  }
+		
+		mutually_exclusive = { generic_mio_trait_speed_improvements }
+
+		
+		equipment_bonus = {
+			reliability = 0.05
+			build_cost_ic = 0.05
+		}
+	}
+
+	trait = {
+		token = generic_mio_streamlined_production
+		name = generic_mio_streamlined_production
+		icon = GFX_generic_mio_department_icon_tank_general_technology		
+
+		position = { x=1 y=1 }
+		relative_position_id = generic_mio_quality_assurance_routines
+
+		all_parents = { generic_mio_quality_assurance_routines generic_mio_trait_speed_improvements  }
+		
+
+		production_bonus = {
+			production_efficiency_cap_factor = 0.05
+		}
+	}
+	trait = {
+		token = hydraulic
+		name = "Powered traverse"
+		icon = GFX_generic_mio_trait_icon_soft_attack	
+
+		position = { x=1 y=2 }
+		relative_position_id = generic_mio_enlarged_breech
+
+		all_parents = { generic_mio_streamlined_production generic_mio_enlarged_breech }
+		
+
+		production_bonus = {
+			production_efficiency_cap_factor = 0.05
+		}
+	}
+	trait = {
+		token = long_range
+		name = "Long range firepower"
+		icon = GFX_generic_mio_trait_icon_hard_attack	
+
+		position = { x=0 y=3 }
+		relative_position_id = generic_mio_enlarged_breech
+
+		all_parents = { hydraulic generic_mio_enlarged_breech }
+		
+
+		production_bonus = {
+			production_efficiency_cap_factor = 0.05
+		}
+	}
+	trait = {
+		token = medium
+		name = "Focus on medium panzers"
+		icon = GFX_generic_mio_department_icon_tank_general_technology		
+
+		position = { x=4 y=2 }
+		relative_position_id = generic_mio_improved_tracks_and_suspension
+         mutually_exclusive = { stug }
+		all_parents = { generic_mio_improved_tracks_and_suspension  }
+		
+
+		production_bonus = {
+			production_efficiency_cap_factor = 0.05
+		}
+	}
+	trait = {
+		token = spaced
+		name = "Applique Armor"
+		icon = GFX_generic_mio_department_icon_tank_general_armor	
+
+		position = { x=3 y=3 }
+		relative_position_id = generic_mio_improved_tracks_and_suspension
+		all_parents = { generic_mio_improved_tracks_and_suspension  }
+		
+
+		production_bonus = {
+			production_efficiency_cap_factor = 0.05
+		}
+	}
+	trait = {
+		token = flak
+		name = "Flakpanzer"
+		icon = GFX_generic_mio_department_icon_tank_medium_tank_aa	
+
+		position = { x=0 y=1 }
+		relative_position_id = medium
+
+		all_parents = { medium  }
+		
+
+		production_bonus = {
+			production_efficiency_cap_factor = 0.05
+		}
+	}
+	trait = {
+		token = stug
+		name = "Focus on Sturmgeshutze"
+		icon = GFX_generic_mio_department_icon_tank_general_spg	
+
+		position = { x=2 y=2 }
+		relative_position_id = generic_mio_improved_tracks_and_suspension
+
+		all_parents = { generic_mio_improved_tracks_and_suspension  }
+		mutually_exclusive = { medium }
+
+		production_bonus = {
+			production_efficiency_cap_factor = 0.05
+		}
+	}
+	trait = {
+		token = jagd
+		name = "Divert towards tank hunter role"
+		icon = GFX_generic_mio_department_icon_tank_general_technology		
+
+		position = { x=0 y=1 }
+		relative_position_id = stug
+
+		all_parents = { stug }
+		
+
+		production_bonus = {
+			production_efficiency_cap_factor = 0.05
+		}
+	}
+}
+ger_MAN = {
+	include = main_battle_tank_designer
+	icon = GFX_idea_MAN_man
+	allowed = {	
+		tag = GER
+	}
+
+	equipment_type = { armor }
+	research_categories = { armor }
+	tree_header_text = {
+		text = mio_header_production_department
+		x = 1
+	}
+
+	tree_header_text = {
+		text = mio_header_medium_tank_department
+		x = 8
+	}
+	tree_header_text = {
+		text = mio_header_support_tank_department
+		x = 12
+	}
+
+	initial_trait = {
+		name = german_tank_manufacturers
+		
+		limit_to_equipment_type = { 
+			armor
+		}
+		
+		equipment_bonus = {
+					maximum_speed = 0.1 
+					hardness = 0.1 
+					hard_attack = 0.15 
+					soft_attack = 0.15 
+					build_cost_ic = 0.05 
+		}
+	}
+}
+
+nibelungenwerke = {
+	include = mass_production_facility
+	icon = 	GFX_idea_AUS_steyr_mannlicher
+
+	allowed = {	
+		tag = GER
+	}
+
+	equipment_type = { armor }
+	research_categories = { armor }
+	tree_header_text = {
+		text = mio_header_production_department
+		x = 1
+	}
+
+	tree_header_text = {
+		text = design_department
+		x = 8
+	}
+
+
+	initial_trait = {
+		name = mass_production_facility
+		
+		limit_to_equipment_type = { 
+			armor
+		}
+		
+		equipment_bonus = {
+					build_cost_ic = -0.05
+		}
+	}
 	trait = {
 		token = construct_the_niebelungenwerke
-		name = "Construct the Niebelungenwerke"
-		icon = GFX_generic_mio_department_icon_tank_light_tank_weapons
+		name = "Merge the Steyr Plants"
+		icon = GFX_generic_mio_department_icon_facilities
 
-		position = { x=0 y=1}
-		relative_position_id = take_over_ckd
-        any_parent = { take_over_ckd }
+		position = { x=4 y=0}
 		equipment_bonus = {
-			reliability = 0.025
+			build_cost_ic = -0.05
+		}
+	}
+	trait = {
+		token = expand_the_niebelungenwerke
+		name = "Expand Manufacturing"
+		icon = GFX_generic_mio_department_icon_tank_general_line_efficiency
+        mutually_exclusive = { expand_armor_steel_production }
+		position = { x=-4 y=1}
+		relative_position_id = construct_the_niebelungenwerke
+        any_parent = { construct_the_niebelungenwerke }
+		equipment_bonus = {
+			build_cost_ic = -0.05
+		}
+	}
+	trait = {
+		token = expand_armor_steel_production
+		name = "Expand Eisenwerke Oberdonau"
+		icon = GFX_generic_mio_department_icon_tank_general_armor
+        mutually_exclusive = { expand_the_niebelungenwerke }
+		position = { x=-2 y=1}
+		relative_position_id = construct_the_niebelungenwerke
+        any_parent = { construct_the_niebelungenwerke }
+		production_bonus = {
+			production_resource_need_factor = -0.2
+		}
+	}
+	trait = {
+		token = volunteers
+		name = "Maximize Volunteer Worker Utilization"
+		icon = GFX_generic_mio_department_icon_tank_general_line_efficiency
+		
+		position = { x=-1 y=1 }
+		relative_position_id = expand_armor_steel_production
+
+		any_parent = {expand_the_niebelungenwerke expand_armor_steel_production }
+
+
+		production_bonus = {
+			production_efficiency_gain_factor = -0.3
+			production_efficiency_cap_factor = 0.3
+		}
+	}
+###tank stats
+	trait = {
+		token = production_line
+		name = "Generously Specified Production line"
+		icon = GFX_generic_mio_department_icon_tank_general_production
+		relative_position_id = construct_the_niebelungenwerke
+		any_parent = { construct_the_niebelungenwerke }
+		position = { x=0 y=1}
+		equipment_bonus = {
+			production_efficiency_gain_factor = 0.2
+		}
+	}
+
+
+	trait = {
+		token = standardized_components
+		name = "Standardised Components"
+		icon = GFX_generic_mio_department_icon_tank_general_quality
+		
+		position = { x=-1 y=1 }
+		relative_position_id = production_line
+
+		any_parent = { production_line }
+
+		equipment_bonus = {
+			soft_attack = 0.05
+			defense = 0.05
+		}
+
+		production_bonus = {
+			reliability = 0.05
+		}
+	}
+	trait = {
+		token = batch_production
+		name = "Batch Production"
+		icon = GFX_generic_mio_department_icon_tank_general_quality
+		
+		position = { x=1 y=1 }
+		relative_position_id = production_line
+
+		any_parent = { production_line }
+        mutually_exclusive = { standardized_components }
+		equipment_bonus = {
+			soft_attack = 0.05
+			defense = 0.05
+		}
+
+		production_bonus = {
+			production_cost_factor = -0.02
+		}
+	}
+	trait = {
+		token = ample_capacity
+		name = "Ample Capacity"
+		icon = GFX_generic_mio_department_icon_tank_general_quality
+		
+		position = { x=0 y=2 }
+		relative_position_id = production_line
+
+		any_parent = { batch_production standardized_components }
+		equipment_bonus = {
+			soft_attack = 0.05
+			defense = 0.05
+		}
+
+		production_bonus = {
+			production_cost_factor = -0.02
+		}
+	}
+
+	trait = {
+		token = lighter_vehicles
+		name = "Focus on Lighter Vehicles"
+		icon = GFX_generic_mio_department_icon_tank_general
+        mutually_exclusive = { heavier_vehicles }
+		position = { x=2 y=1}
+		relative_position_id = construct_the_niebelungenwerke
+        any_parent = { construct_the_niebelungenwerke }
+		mutually_exclusive = { heavier_vehicles }
+		equipment_bonus = {
+			production_cost_factor = -0.02
+		}
+	}
+	trait = {
+		token = heavier_vehicles
+		name = "Focus on Heavier Vehicles"
+		icon = GFX_generic_mio_department_icon_heavy_tank
+		position = { x=4 y=1}
+		relative_position_id = construct_the_niebelungenwerke
+        any_parent = { construct_the_niebelungenwerke }
+		mutually_exclusive = { lighter_vehicles }
+		equipment_bonus = {
+			production_cost_factor = -0.02
+		}
+	}
+	trait = {
+		token = drivetrain
+		name = "Improved Drivetrain"
+		icon = GFX_generic_mio_department_icon_tank_general_quality
+		
+		position = { x=0 y=1 }
+		relative_position_id = heavier_vehicles
+		any_parent = { heavier_vehicles }
+
+		equipment_bonus = {
+			soft_attack = 0.05
+			defense = 0.05
+		}
+
+		production_bonus = {
+			production_cost_factor = -0.03
+		}
+	}
+	trait = {
+		token = hull
+		name = "Improved Hull Construction"
+		icon = GFX_generic_mio_department_icon_tank_general_quality
+		
+		position = { x=0 y=1 }
+		relative_position_id = lighter_vehicles
+		any_parent = { lighter_vehicles }
+
+		equipment_bonus = {
+			soft_attack = 0.05
+			defense = 0.05
+		}
+
+		production_bonus = {
+			production_cost_factor = -0.03
+		}
+	}
+}
+henschel = {
+	include = heavy_tank_designer
+	icon = GFX_idea_henschel2
+
+	allowed = {	
+		tag = GER
+	}
+
+	equipment_type = { armor }
+	research_categories = { armor }
+	tree_header_text = {
+		text = mio_header_heavy_tank_department
+		x = 1
+	}
+
+	tree_header_text = {
+		text = mio_header_support_tank_department
+		x = 8
+	}
+
+	initial_trait = {
+		name = heavy_tank_designer
+		
+		limit_to_equipment_type = { 
+			armor
+		}
+		
+		equipment_bonus = {
+					hard_attack = 0.1
+		}
+	}
+	trait = {
+		token = krupp_turrets
+		name = "Krupp AG Heavy Turret Production"
+		icon = GFX_generic_mio_department_icon_facilities
+        mutually_exclusive = { our_turrets }
+		position = { x=1 y=0}
+		equipment_bonus = {
+			build_cost_ic = -0.05
+		}
+	}
+	trait = {
+		token = our_turrets
+		name = "Our Own Turret Designs"
+		icon = GFX_generic_mio_department_icon_facilities
+        mutually_exclusive = { krupp_turrets }
+		position = { x=3 y=0}
+		equipment_bonus = {
+			build_cost_ic = -0.05
+		}
+	}
+	trait = {
+		token = bigger_weapons
+		name = "Built for Bigger Weapons"
+		icon = GFX_generic_mio_department_icon_tank_heavy_tank_at
+        relative_position_id = our_turrets
+		any_parent = { our_turrets krupp_turrets }
+		position = { x=-1 y=1}
+		equipment_bonus = {
+			build_cost_ic = -0.05
+		}
+	}
+	trait = {
+		token = breakthough
+		name = "Breakthrough Tanks"
+		icon = GFX_generic_mio_department_icon_tank_heavy_tank_armor
+        mutually_exclusive = { tank_hunters }
+		position = { x=5 y=0}
+		equipment_bonus = {
+			build_cost_ic = -0.05
+		}
+	}
+	trait = {
+		token = improved_air_filters
+		name = "Improved Engine Filters"
+		icon = GFX_generic_mio_department_icon_tank_heavy_tank_engine
+		any_parent = { breakthough }
+		position = { x=5 y=1 }
+		equipment_bonus = {
+			build_cost_ic = -0.05
+		}
+	}
+	trait = {
+		token = tank_hunters
+		name = "Dedicated Tank Hunters"
+		icon = GFX_generic_mio_department_icon_tank_heavy_tank_at
+        mutually_exclusive = { breakthough }
+		position = { x=7 y=0}
+		equipment_bonus = {
+			build_cost_ic = -0.05
+		}
+	}
+	trait = {
+		token = suspension_innovations
+		name = "Suspension Innovations"
+		icon = GFX_generic_mio_department_icon_tank_heavy_tank_engine
+		
+		position = { x=0 y=1}
+		relative_position_id = tank_hunters
+
+		any_parent = { tank_hunters }
+		equipment_bonus = {
+			soft_attack = 0.05
+			defense = 0.05
+		}
+
+	}
+	trait = {
+		token = practical
+		name = "Gurantee Practical usage"
+		icon = GFX_generic_mio_department_icon_tank_heavy_tank_production
+		
+		position = { x=2 y=1 }
+		relative_position_id = improved_air_filters
+        mutually_exclusive = { unpractical }
+		any_parent = { suspension_innovations improved_air_filters }
+		equipment_bonus = {
+			soft_attack = 0.05
+			defense = 0.05
+		}
+
+		production_bonus = {
+			production_cost_factor = -0.02
+		}
+	}
+	trait = {
+		token = unpractical
+		name = "Drop the Weight Limit"
+		icon = GFX_generic_mio_department_icon_tank_heavy_tank_line_efficiency
+	    mutually_exclusive = { practical }	
+		position = { x=0 y=1 }
+		relative_position_id = improved_air_filters
+
+		any_parent = { suspension_innovations improved_air_filters }
+		equipment_bonus = {
+			soft_attack = 0.05
+			defense = 0.05
+		}
+
+		production_bonus = {
+			production_cost_factor = -0.02
+		}
+	}
+	trait = {
+		token = armor_steel
+		name = "High strength alloys"
+		icon = GFX_generic_mio_department_icon_tank_general_armor
+		
+		position = { x=4 y=1 }
+		equipment_bonus = {
+			soft_attack = 0.05
+			defense = 0.05
+		}
+
+		equipment_bonus = {
+			hardness = 0.05
+		}
+		production_bonus = {
+			production_resource_need_factor = -0.02
+		}
+	}	
+	trait = {
+		token = hardening
+		name = "Improved Hardening Process"
+		icon = GFX_generic_mio_department_icon_tank_general_armor
+		
+		position = { x=0 y=1 }
+		relative_position_id = armor_steel
+
+		any_parent = { armor_steel }
+		equipment_bonus = {
+			hardness = 0.05
+		}
+
+	}	
+
+	trait = {
+		token = advanced_radiosets
+		name = "Advanced Radiosets"
+		icon = GFX_generic_mio_department_icon_support_line_efficiency
+		
+		position = { x=0 y=1 }
+		relative_position_id = bigger_weapons
+
+		any_parent = { bigger_weapons}
+		equipment_bonus = {
+			soft_attack = 0.05
+			defense = 0.05
+		}
+
+		production_bonus = {
+			production_cost_factor = -0.02
+		}
+	}
+
+	trait = {
+		token = lessons_of_east
+		name = "Apply the lessons of the East"
+		icon = GFX_generic_mio_department_icon_tank_heavy_tank_at
+		
+		position = { x=0 y=1 }
+		available = {
+			owner = {
+				has_completed_focus = GER_mobile_fortresses
+			}
+		}
+		relative_position_id = hardening
+		equipment_bonus = {
+			soft_attack = 0.05
+			defense = 0.05
+		}
+
+		production_bonus = {
+			production_cost_factor = -0.02
+		}
+	}
+	trait = {
+		token = german_qual
+		name = "Pinnacle of German Quality"
+		icon = GFX_generic_mio_department_icon_tank_heavy_tank_quality
+		
+		position = { x=1 y=1 }
+		relative_position_id = lessons_of_east
+        mutually_exclusive = { volunteer_workers }
+		any_parent = { lessons_of_east  }
+		equipment_bonus = {
+			soft_attack = 0.05
+			defense = 0.05
+		}
+
+		production_bonus = {
+			production_cost_factor = -0.02
+		}
+	}
+	trait = {
+		token = volunteer_workers
+		name = "Volunteer workers to the assembly line"
+		icon = GFX_generic_mio_department_icon_tank_heavy_tank_line_efficiency
+		
+		position = { x=-1 y=1 }
+		relative_position_id = lessons_of_east
+        mutually_exclusive = { german_qual }
+		any_parent = { lessons_of_east  }
+		equipment_bonus = {
+			soft_attack = 0.05
+			defense = 0.05
+		}
+
+		production_bonus = {
+			production_cost_factor = -0.02
+		}
+	}
+}
+porsche = {
+	include = heavy_tank_designer
+	icon = GFX_idea_porsche
+
+	allowed = {	
+		tag = GER
+	}
+
+	equipment_type = { armor }
+	research_categories = { armor }
+	tree_header_text = {
+		text = mio_header_production_department
+		x = 1
+	}
+
+	tree_header_text = {
+		text = mio_header_medium_tank_department
+		x = 8
+	}
+	tree_header_text = {
+		text = mio_header_support_tank_department
+		x = 12
+	}
+
+	initial_trait = {
+		name = german_tank_manufacturers
+		
+		limit_to_equipment_type = { 
+			armor
+		}
+		
+		equipment_bonus = {
+                   maximum_speed = -0.1 
+				   defense = 1
+				    breakthrough = 1
+					reliability = -0.1
+		}
+	}
+}
+BMM = {
+	include = support_tank_designer
+	icon = GFX_idea_GER_ckd
+
+	allowed = {	
+		tag = GER
+	}
+
+	equipment_type = { armor }
+	research_categories = { armor }
+	tree_header_text = {
+		text = mio_header_production_department
+		x = 1
+	}
+
+	tree_header_text = {
+		text = mio_header_medium_tank_department
+		x = 8
+	}
+	tree_header_text = {
+		text = mio_header_support_tank_department
+		x = 12
+	}
+
+	initial_trait = {
+		name = german_tank_manufacturers
+		
+		limit_to_equipment_type = { 
+			armor
+		}
+		
+		equipment_bonus = {
+					soft_attack = 0.25
 		}
 	}
 }
