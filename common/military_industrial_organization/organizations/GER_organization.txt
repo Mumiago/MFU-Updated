@@ -10,7 +10,7 @@
 
 
 Ger_alkett = {
-	include = medium_tank_designer
+	include = support_tank_designer
 	icon = GFX_idea_idea_alkett
 
 	allowed = {	
@@ -19,48 +19,203 @@ Ger_alkett = {
 
 	equipment_type = { armor }
 	research_categories = { armor }
-	tree_header_text = {
-		text = mio_header_production_department
-		x = 1
-	}
-
-	tree_header_text = {
-		text = mio_header_medium_tank_department
-		x = 8
-	}
-	tree_header_text = {
-		text = mio_header_support_tank_department
-		x = 12
-	}
 
 	initial_trait = {
-		name = german_tank_manufacturers
+		name = support_tank_designer
 		
 		limit_to_equipment_type = { 
 			armor
 		}
 		
 		equipment_bonus = {
-					soft_attack = 0.1
-					hard_attack = 0.1
+					soft_attack = 0.05
 					maximum_speed = 0.1
-					reliability = 0.1
 					build_cost_ic = 0.05
 		}
 	}
 
+
 	trait = {
-		token = take_over_ckd
-		name = "Take over CKD"
-		icon = GFX_generic_mio_department_icon_tank_light_tank_weapons
+		token = generic_mio_trait_armor_steel_working
+		name = generic_mio_trait_armor_steel_working
+		icon = GFX_generic_mio_department_icon_tank_general_armor
 
-		position = { x=1 y=0 }
+		position = { x=5 y=0 }
 		
-
-		equipment_bonus = {
-			reliability = 0.025
+		production_bonus = {
+			production_capacity_factor = 0.05
 		}
 	}
+	trait = {
+		token = improved_fightingcompartment
+		name = "Improved Fighting Compartment"
+		icon = GFX_generic_mio_trait_icon_max_strength
+
+		position = { x=0 y=1 }
+		relative_position_id = generic_mio_trait_armor_steel_working
+
+		all_parents = { generic_mio_trait_armor_steel_working }
+		
+		production_bonus = {
+			production_capacity_factor = 0.05
+		}
+	}
+	trait = {
+		token = flexible_line
+		name = "Flexible Production line"
+		icon = GFX_generic_mio_department_icon_tank_general_quality
+
+		position = { x=-2 y=1 }
+		relative_position_id = generic_mio_trait_armor_steel_working
+
+		all_parents = { generic_mio_trait_armor_steel_working }
+		
+		equipment_bonus = {
+			breakthrough = 0.05
+			defense = 0.05
+		}
+	}
+	trait = {
+		token = stug_mass
+		name = "Standardise on current models"
+		icon = GFX_generic_mio_department_icon_tank_general_quality
+
+		position = { x=-1 y=1 }
+		relative_position_id = flexible_line
+		all_parents = { flexible_line }
+          mutually_exclusive = { evolution }
+		production_bonus = {
+			production_efficiency_cap_factor = 0.05
+		}
+	}
+	trait = {
+		token = evolution
+		name = "Constant Design Evolution"
+		icon = GFX_generic_mio_department_icon_tank_medium_tank_quality
+
+		position = { x=1 y=1 }
+		relative_position_id = flexible_line
+		all_parents = { flexible_line }
+       mutually_exclusive = { stug_mass }
+		production_bonus = {
+			production_efficiency_cap_factor = 0.05
+		}
+	}
+	trait = {
+		token = generic_mio_trait_improved_wheel_protection
+		name = generic_mio_trait_improved_wheel_protection
+		icon = GFX_generic_mio_department_icon_tank_general_engine
+		
+		position = { x=-1 y=1 }
+		relative_position_id = evolution
+		
+		any_parent = { evolution  stug_mass}
+
+		limit_to_equipment_type = { mio_cat_eq_all_medium_tank }
+
+		equipment_bonus = {
+			reliability = 0.05
+			defense = 0.1
+		}
+	}
+	trait = {
+		token = refurbishment
+		name = "Expand tank refurbishment workshops"
+		icon = GFX_generic_mio_department_icon_tank_general_technology		
+
+		position = { x=-2 y=0 }
+		relative_position_id = flexible_line
+		all_parents = { flexible_line }
+		
+
+		production_bonus = {
+			production_efficiency_cap_factor = 0.05
+		}
+	}
+	trait = {
+		token = generic_mio_trait_heavy_duty_machine_tools
+		name = generic_mio_trait_heavy_duty_machine_tools
+		icon = GFX_generic_mio_department_icon_tank_general_production
+
+		position = { x=2 y=1 }
+		relative_position_id = generic_mio_trait_armor_steel_working
+
+		all_parents = { generic_mio_trait_armor_steel_working }
+
+		limit_to_equipment_type = { armor }
+
+		equipment_bonus = {
+			maximum_speed = 0.1
+		}
+
+		production_bonus = {
+			production_efficiency_gain_factor = 0.05
+			production_efficiency_cap_factor = 0.05
+		}
+	}
+	trait = {
+		token = spanzer
+		name = "Sturmpanzer"
+		icon = GFX_generic_mio_department_icon_tank_general_spg	
+
+		position = { x=-1 y=1 }
+		relative_position_id = generic_mio_trait_heavy_duty_machine_tools
+
+		all_parents = { generic_mio_trait_heavy_duty_machine_tools  }
+		mutually_exclusive = { waffentrager }
+
+		production_bonus = {
+			production_efficiency_cap_factor = 0.05
+		}
+	}
+
+	trait = {
+		token = waffentrager
+		name = "Waffenträger"
+		icon = GFX_generic_mio_department_icon_tank_general_at	
+
+		position = { x=1 y=1 }
+		relative_position_id = generic_mio_trait_heavy_duty_machine_tools
+
+		all_parents = { generic_mio_trait_heavy_duty_machine_tools  }
+        mutually_exclusive = { spanzer }
+		
+
+		production_bonus = {
+			production_efficiency_cap_factor = 0.05
+		}
+	}
+	trait = {
+		token = generic_mio_gunner_sight_improvements
+		name = generic_mio_gunner_sight_improvements
+		icon = GFX_generic_mio_trait_icon_hard_attack
+
+		position = { x=1 y=1 }
+		relative_position_id = spanzer
+
+		any_parent = { spanzer waffentrager}
+		
+		equipment_bonus = {
+			breakthrough = 0.05
+			defense = 0.05
+		}
+	}
+	trait = {
+		token = generic_mio_trait_advanced_shells
+		name = generic_mio_trait_advanced_shells
+		icon = GFX_generic_mio_trait_icon_ap_attack
+
+		position = { x=-2 y=0 }
+		relative_position_id = generic_mio_gunner_sight_improvements
+
+		any_parent = { waffentrager evolution}
+		
+		equipment_bonus = {
+			ap_attack = 0.05
+		}
+	}
+
+
 
 }
 daimler_benz = {
@@ -320,6 +475,33 @@ ger_MAN = {
 					hard_attack = 0.15 
 					soft_attack = 0.15 
 					build_cost_ic = 0.05 
+		}
+	}
+	trait = {
+		token = panther
+		name = "Prepare Panther Production"
+		icon = GFX_generic_mio_department_icon_facilities
+		position = { x=2 y=0}
+		equipment_bonus = {
+			hard_attack = -0.05
+		}
+	}
+	trait = {
+		token = panther
+		name = "Improve the drivetrain"
+		icon = GFX_generic_mio_department_icon_facilities
+		position = { x=2 y=0}
+		equipment_bonus = {
+			hard_attack = -0.05
+		}
+	}
+	trait = {
+		token = panther
+		name = "Prepare Panther Production"
+		icon = GFX_generic_mio_department_icon_facilities
+		position = { x=2 y=0}
+		equipment_bonus = {
+			hard_attack = -0.05
 		}
 	}
 }
