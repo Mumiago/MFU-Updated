@@ -10,13 +10,18 @@
 
 
 Ger_alkett = {
+    name = "Alkett"
 	include = support_tank_designer
 	icon = GFX_idea_idea_alkett
 
 	allowed = {	
 		tag = GER
 	}
-
+	available = {
+		owner = {
+			has_completed_focus = GER_absorb_rheinmetall
+		}
+	}
 	equipment_type = { armor }
 	research_categories = { armor }
 
@@ -445,7 +450,11 @@ ger_MAN = {
 	allowed = {	
 		tag = GER
 	}
-
+	available = {
+		owner = {
+			has_completed_focus = GER_the_wild_cats_that_roam_in_russia
+		}
+	}
 	equipment_type = { armor }
 	research_categories = { armor }
 	tree_header_text = {
@@ -453,17 +462,8 @@ ger_MAN = {
 		x = 1
 	}
 
-	tree_header_text = {
-		text = mio_header_medium_tank_department
-		x = 8
-	}
-	tree_header_text = {
-		text = mio_header_support_tank_department
-		x = 12
-	}
-
 	initial_trait = {
-		name = german_tank_manufacturers
+		name = main_battle_tank_designer
 		
 		limit_to_equipment_type = { 
 			armor
@@ -481,25 +481,65 @@ ger_MAN = {
 		token = panther
 		name = "Prepare Panther Production"
 		icon = GFX_generic_mio_department_icon_facilities
-		position = { x=2 y=0}
+		position = { x=4 y=0}
 		equipment_bonus = {
 			hard_attack = -0.05
 		}
 	}
 	trait = {
-		token = panther
-		name = "Improve the drivetrain"
-		icon = GFX_generic_mio_department_icon_facilities
-		position = { x=2 y=0}
+		token = transmission_improvements
+		name = "Improve the transmission"
+		icon = GFX_generic_mio_trait_icon_reliability
+
+		all_parents = { panther  }
+		mutually_exclusive = { compartment_improvements }
+		position = { x=0 y=1}
 		equipment_bonus = {
 			hard_attack = -0.05
 		}
 	}
 	trait = {
-		token = panther
-		name = "Prepare Panther Production"
-		icon = GFX_generic_mio_department_icon_facilities
-		position = { x=2 y=0}
+		token = compartment_improvements
+		name = "Improve the engine compartment"
+		icon = GFX_generic_mio_department_icon_tank_general_engine
+
+
+		all_parents = {  panther }
+		mutually_exclusive = { transmission_improvements }
+		position = { x=2 y=1}
+		equipment_bonus = {
+			hard_attack = -0.05
+		}
+	}
+	trait = {
+		token = schmalturm
+		name = "Schmalturm"
+		icon = GFX_generic_mio_trait_icon_efficiency_gain
+		position = { x=6 y=1}
+		all_parents = {  panther }
+		mutually_exclusive = { support_tanks }
+		equipment_bonus = {
+			hard_attack = -0.05
+		}
+	}
+	trait = {
+		token = support_tanks
+		name = "Support tank production"
+		icon = GFX_generic_mio_trait_icon_conversion_speed
+		position = { x=8 y=1}
+		all_parents = {  panther }
+		mutually_exclusive = { schmalturm }
+		equipment_bonus = {
+			hard_attack = -0.05
+		}
+	}
+	trait = {
+		token = panther_east
+		name = "Panthers in the East"
+		icon = GFX_generic_mio_trait_icon_breakthrough
+		position = { x=4 y=2}
+	    any_parent = { support_tanks schmalturm }
+		any_parent = { transmission_improvements compartment_improvements }
 		equipment_bonus = {
 			hard_attack = -0.05
 		}
@@ -541,6 +581,7 @@ nibelungenwerke = {
 	trait = {
 		token = construct_the_niebelungenwerke
 		name = "Merge the Steyr Plants"
+		special_trait_background = yes
 		icon = GFX_generic_mio_department_icon_facilities
 
 		position = { x=4 y=0}
@@ -971,6 +1012,135 @@ henschel = {
 
 		production_bonus = {
 			production_cost_factor = -0.02
+		}
+	}
+}
+Krupp = {
+	include = infantry_support_tank_designer
+	icon = GFX_idea_krupp
+
+	allowed = {	
+		tag = GER
+	}
+
+	equipment_type = { armor }
+	research_categories = { armor }
+
+	initial_trait = {
+		name = infantry_support_tank_designer
+		
+		limit_to_equipment_type = { 
+			armor
+		}
+		
+		equipment_bonus = {
+                   maximum_speed = -0.1 
+				   defense = 1
+				    breakthrough = 1
+					reliability = -0.1
+		}
+	}
+	trait = {
+		token = krupp_stahl
+		name = "Krupp Stahl"
+		special_trait_background = yes
+		icon = GFX_generic_mio_department_icon_facilities
+        mutually_exclusive = { our_turrets }
+		position = { x=4 y=0}
+		equipment_bonus = {
+			build_cost_ic = -0.05
+		}
+	}
+	add_trait = {  
+		token = GER_mio_trait_hotrolled_armor
+		name = GER_mio_trait_hotrolled_armor
+		icon = GFX_generic_mio_department_icon_tank_general_technology
+
+
+		limit_to_equipment_type = { light_tank_chassis medium_tank_chassis }
+		production_bonus = {
+			production_efficiency_cap_factor = 0.05
+			production_efficiency_gain_factor = 0.05
+		}
+
+		position = { x=4 y=1 }  
+		ai_will_do = {
+			base = 2
+			modifier = {
+				factor = 1.5
+				date > 1937.1.1
+			}
+		}
+	}
+	trait = {
+		token = krupp_stahl
+		name = "Modern welding methods"
+		icon = GFX_generic_mio_department_icon_facilities
+        mutually_exclusive = { our_turrets }
+		position = { x=1 y=0}
+		equipment_bonus = {
+			build_cost_ic = -0.05
+		}
+	}
+	trait = {
+		token = krupp_stahl
+		name = "Adapt Cast components"
+		icon = GFX_generic_mio_department_icon_facilities
+        mutually_exclusive = { our_turrets }
+		position = { x=1 y=0}
+		equipment_bonus = {
+			build_cost_ic = -0.05
+		}
+	}
+
+	trait = {
+		token = krupp_stahl
+		name = "Improved barrel construction"
+		icon = GFX_generic_mio_department_icon_facilities
+        mutually_exclusive = { our_turrets }
+		position = { x=1 y=0}
+		equipment_bonus = {
+			build_cost_ic = -0.05
+		}
+	}
+	trait = {
+		token = krupp_stahl
+		name = "Improved barrel construction"
+		icon = GFX_generic_mio_department_icon_facilities
+        mutually_exclusive = { our_turrets }
+		position = { x=1 y=0}
+		equipment_bonus = {
+			build_cost_ic = -0.05
+		}
+	}
+	trait = {
+		token = krupp_stahl
+		name = "Rugged components"
+		icon = GFX_generic_mio_department_icon_facilities
+        mutually_exclusive = { our_turrets }
+		position = { x=1 y=0}
+		equipment_bonus = {
+			build_cost_ic = -0.05
+		}
+	}
+	trait = {
+		token = krupp_stahl
+		name = "Reduce raw material usage"
+		icon = GFX_generic_mio_department_icon_facilities
+        mutually_exclusive = { our_turrets }
+		position = { x=1 y=0}
+		equipment_bonus = {
+			build_cost_ic = -0.05
+		}
+	}
+	trait = {
+		token = krupp_stahl
+		name = "Reduce labour costs"
+		icon = GFX_generic_mio_department_icon_facilities
+        mutually_exclusive = { our_turrets }
+		position = { x=1 y=0}
+		equipment_bonus = {
+			build_cost_ic = -0.05
 		}
 	}
 }
