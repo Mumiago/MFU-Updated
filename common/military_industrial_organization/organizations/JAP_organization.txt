@@ -9,14 +9,439 @@
  #################### 
 
 JAP_osaka_army_arsenal_organization = {
-	include = generic_tank_organization
+	include = support_tank_designer
 	icon = GFX_idea_osaka_army_arsenal
+	name = "Osaka Army Arsenal"
 	allowed = {	
-		tag = JAP
-		has_dlc = "Arms Against Tyranny"
+				OR = {
+					original_tag = JAP
+					original_tag = MAN
+				}
 	}
-} 
+	initial_trait = {
+		name = support_tank_designer
 
+		organization_modifier = {
+			military_industrial_organization_research_bonus = 0.05
+		}
+		
+		production_bonus = {
+			production_capacity_factor = 0.05
+		}
+	}
+	equipment_type = { armor }
+	research_categories = { armor }
+	trait = {
+		token = generic_mio_trait_armor_steel_working
+		name = "Plentiful Labour"
+		icon = GFX_generic_mio_trait_icon_efficiency_gain
+
+		position = { x=5 y=0 }
+		
+		production_bonus = {
+			production_capacity_factor = 0.05
+		}
+	}
+	trait = {
+		token = improved_fightingcompartment
+		name = "Improved Fighting Compartment"
+		icon = GFX_generic_mio_trait_icon_max_strength
+
+		position = { x=0 y=1 }
+		relative_position_id = generic_mio_trait_armor_steel_working
+
+		all_parents = { generic_mio_trait_armor_steel_working }
+		
+		equipment_bonus = {
+			soft_attack = 0.025
+			hard_attack = 0.025
+		}
+	}
+	trait = {
+		token = flexible_line
+		name = "Flexible Production line"
+		icon = GFX_generic_mio_department_icon_tank_general_quality
+
+		position = { x=-2 y=1 }
+		relative_position_id = generic_mio_trait_armor_steel_working
+
+		all_parents = { generic_mio_trait_armor_steel_working }
+		
+		production_bonus = {
+			production_efficiency_gain_factor = 0.25
+		}
+	}
+	trait = {
+		token = stug_mass
+		name = "Standardise on current models"
+		icon = GFX_generic_mio_department_icon_tank_general_quality
+
+		position = { x=-1 y=1 }
+		relative_position_id = flexible_line
+		all_parents = { flexible_line }
+          mutually_exclusive = { evolution }
+		production_bonus = {
+			production_efficiency_output_factor = 0.05
+			production_efficiency_gain_factor = -0.5
+		}
+	}
+	trait = {
+		token = evolution
+		name = "Constant Design Evolution"
+		icon = GFX_generic_mio_department_icon_tank_medium_tank_quality
+
+		position = { x=1 y=1 }
+		relative_position_id = flexible_line
+		all_parents = { flexible_line }
+       mutually_exclusive = { stug_mass }
+		organization_modifier = {
+			military_industrial_organization_research_bonus = 0.15
+		}
+	}
+	trait = {
+		token = generic_mio_trait_improved_wheel_protection
+		name = generic_mio_trait_improved_wheel_protection
+		icon = GFX_generic_mio_department_icon_tank_general_engine
+		
+		position = { x=-1 y=1 }
+		relative_position_id = evolution
+		
+		any_parent = { evolution  stug_mass}
+
+		#limit_to_equipment_type = { mio_cat_eq_all_medium_tank }
+
+		equipment_bonus = {
+			defense = 0.1
+		}
+	}
+	trait = {
+		token = refurbishment
+		name = "Expand tank refurbishment workshops"
+		icon = GFX_generic_mio_department_icon_tank_general_technology		
+
+		position = { x=-2 y=0 }
+		relative_position_id = flexible_line
+		all_parents = { flexible_line }
+		
+
+		equipment_bonus = {
+			reliability = 0.1
+		}
+	}
+	trait = {
+		token = generic_mio_trait_heavy_duty_machine_tools
+		name = generic_mio_trait_heavy_duty_machine_tools
+		icon = GFX_generic_mio_department_icon_tank_general_production
+
+		position = { x=2 y=1 }
+		relative_position_id = generic_mio_trait_armor_steel_working
+
+		all_parents = { generic_mio_trait_armor_steel_working }
+
+		#limit_to_equipment_type = { armor }
+
+		equipment_bonus = {
+			build_cost_ic = 0.05
+		}
+
+		production_bonus = {
+			#production_efficiency_gain_factor = 0.15
+			#production_efficiency_cap_factor = 0.05
+		}
+	}
+	trait = {
+		token = spanzer
+		name = "Assault Guns"
+		icon = GFX_generic_mio_department_icon_tank_general_spg	
+
+		position = { x=-1 y=1 }
+		relative_position_id = generic_mio_trait_heavy_duty_machine_tools
+
+		all_parents = { generic_mio_trait_heavy_duty_machine_tools  }
+		mutually_exclusive = { waffentrager }
+		limit_to_equipment_type = { mio_cat_eq_all_assault_guns }
+		equipment_bonus = {
+			breakthrough = 0.1
+		}
+		production_bonus = {
+			production_efficiency_cap_factor = 0.05
+		}
+	}
+
+	trait = {
+		token = waffentrager
+		name = "Oversized Armaments"
+		icon = GFX_generic_mio_department_icon_tank_general_at	
+
+		position = { x=1 y=1 }
+		relative_position_id = generic_mio_trait_heavy_duty_machine_tools
+
+		all_parents = { generic_mio_trait_heavy_duty_machine_tools  }
+        mutually_exclusive = { spanzer }
+		limit_to_equipment_type = { mio_cat_eq_all_tank_destroyers }
+
+		production_bonus = {
+			production_efficiency_cap_factor = 0.05
+		}
+	}
+	trait = {
+		token = generic_mio_gunner_sight_improvements
+		name = generic_mio_gunner_sight_improvements
+		icon = GFX_generic_mio_trait_icon_hard_attack
+
+		position = { x=1 y=1 }
+		relative_position_id = spanzer
+
+		any_parent = { spanzer waffentrager}
+		
+		equipment_bonus = {
+			soft_attack = 0.05
+			hard_attack = 0.05
+		}
+	}
+	trait = {
+		token = generic_mio_trait_advanced_shells
+		name = generic_mio_trait_advanced_shells
+		icon = GFX_generic_mio_trait_icon_ap_attack
+
+		position = { x=-2 y=0 }
+		relative_position_id = generic_mio_gunner_sight_improvements
+
+		any_parent = { waffentrager evolution}
+		
+		equipment_bonus = {
+			ap_attack = 0.05
+			soft_attack = 0.025
+			hard_attack = 0.025
+		}
+	}
+}
+JAP_mitsu = {
+	icon = GFX_idea_mitsubishi
+	name = "Mitsubishi Heavy Industries"
+	include = sensible_medium_tank_designer
+
+	allowed = {	
+				OR = {
+					original_tag = JAP
+					original_tag = MAN
+				}
+	}
+
+	equipment_type = { armor }
+	research_categories = { armor }
+
+
+
+	initial_trait = {
+		name = sensible_medium_tank_designer
+
+		organization_modifier = {
+			military_industrial_organization_design_team_change_cost = -1.0
+		}
+		
+		equipment_bonus = {
+					#supply_consumption = 0.05
+					reliability = 0.15
+					hard_attack = -0.1
+		}
+	}
+	trait = {
+		token = tank_guns
+		name = "Resource Efficient Designs"
+		icon = GFX_generic_mio_trait_icon_resources
+		position = { x=2 y=0}
+		production_bonus = {
+			production_resource_need_factor = -0.1
+		}
+	}
+	trait = {
+		token = generic_mio_enlarged_breech
+		name = "Improved Breech Blocks"
+		icon = GFX_generic_mio_department_icon_tank_medium_tank_weapons
+
+		position = { x=0 y=1 }
+		relative_position_id = tank_guns
+
+		any_parent = { tank_guns}
+		
+		equipment_bonus = {
+			breakthrough = 0.05
+		}
+	}
+	
+	trait = {
+		token = generic_mio_improved_tracks_and_suspension
+		name = generic_mio_improved_tracks_and_suspension
+		icon = GFX_generic_mio_trait_icon_breakthrough
+
+		position = { x=4 y=0 }
+
+		#all_parents = { generic_mio_improved_ventilation }
+		
+		equipment_bonus = {
+			maximum_speed = 0.05
+		}
+	}
+	trait = {
+		token = generic_mio_trait_speed_improvements
+		name = generic_mio_trait_speed_improvements
+		icon = GFX_generic_mio_trait_icon_maximum_speed
+		
+		position = { x=1 y=1 }
+		relative_position_id = generic_mio_improved_tracks_and_suspension
+	
+		any_parent = { generic_mio_improved_tracks_and_suspension  }
+		
+		mutually_exclusive = { generic_mio_quality_assurance_routines }
+		
+		equipment_bonus = {
+			maximum_speed = 0.1
+			supply_consumption = 0.05
+			build_cost_ic = 0.04
+		}
+	}
+
+	trait = {
+		token = generic_mio_quality_assurance_routines
+		name = generic_mio_quality_assurance_routines
+		icon = GFX_generic_mio_trait_icon_reliability
+
+		position = { x=-1 y=1 }
+		relative_position_id = generic_mio_improved_tracks_and_suspension
+	
+		any_parent = { generic_mio_improved_tracks_and_suspension  }
+		
+		mutually_exclusive = { generic_mio_trait_speed_improvements }
+
+		
+		equipment_bonus = {
+			reliability = 0.05
+		}
+	}
+
+	trait = {
+		token = generic_mio_streamlined_production
+		name = generic_mio_streamlined_production
+		icon = GFX_generic_mio_department_icon_tank_general_technology		
+
+		position = { x=1 y=1 }
+		relative_position_id = generic_mio_quality_assurance_routines
+
+		any_parent = { generic_mio_quality_assurance_routines generic_mio_trait_speed_improvements  }
+		
+
+		equipment_bonus = {
+			build_cost_ic = -0.04
+		}
+	}
+	trait = {
+		token = hydraulic
+		name = "Powered traverse"
+		icon = GFX_generic_mio_trait_icon_soft_attack	
+
+		position = { x=1 y=2 }
+		relative_position_id = generic_mio_enlarged_breech
+
+		all_parents = { generic_mio_streamlined_production generic_mio_enlarged_breech }
+		
+
+		equipment_bonus = {
+			defense = 0.05
+			breakthrough = 0.05
+		}
+	}
+	trait = {
+		token = long_range
+		name = "Long range firepower"
+		icon = GFX_generic_mio_trait_icon_hard_attack	
+
+		position = { x=0 y=3 }
+		relative_position_id = generic_mio_enlarged_breech
+
+		all_parents = { hydraulic generic_mio_enlarged_breech }
+		
+
+		equipment_bonus = {
+			hard_attack = 0.05
+		}
+	}
+	trait = {
+		token = medium
+		name = "Focus on Mainline Tanks"
+		icon = GFX_generic_mio_department_icon_tank_general_technology		
+
+		position = { x=4 y=2 }
+		relative_position_id = generic_mio_improved_tracks_and_suspension
+         mutually_exclusive = { stug }
+		all_parents = { generic_mio_improved_tracks_and_suspension  }
+		
+		limit_to_equipment_type = { medium_tank_chassis }
+
+		equipment_bonus = {
+			build_cost_ic = -0.04
+		}
+	}
+	trait = {
+		token = spaced
+		name = "Applique Armor"
+		icon = GFX_generic_mio_department_icon_tank_general_armor	
+
+		position = { x=3 y=3 }
+		relative_position_id = generic_mio_improved_tracks_and_suspension
+		all_parents = { generic_mio_improved_tracks_and_suspension  }
+		
+
+		equipment_bonus = {
+			armor_value = 0.2
+		}
+	}
+	trait = {
+		token = flak
+		name = "Mobile Anti-Air"
+		icon = GFX_generic_mio_department_icon_tank_medium_tank_aa	
+
+		position = { x=0 y=1 }
+		relative_position_id = medium
+
+		all_parents = { medium  }
+		
+		limit_to_equipment_type = { mio_cat_eq_all_medium_tank }
+		equipment_bonus = {
+			air_attack = 0.1
+		}
+	}
+	trait = {
+		token = stug
+		name = "Focus on Assault Vehicles"
+		icon = GFX_generic_mio_department_icon_tank_general_spg	
+
+		position = { x=2 y=2 }
+		relative_position_id = generic_mio_improved_tracks_and_suspension
+
+		all_parents = { generic_mio_improved_tracks_and_suspension  }
+		mutually_exclusive = { medium }
+		limit_to_equipment_type = { mio_cat_eq_all_medium_tank_support }
+		equipment_bonus = {
+			build_cost_ic = -0.04
+		}
+	}
+	trait = {
+		token = jagd
+		name = "Divert towards tank hunter role"
+		icon = GFX_generic_mio_department_icon_tank_general_technology		
+
+		position = { x=0 y=1 }
+		relative_position_id = stug
+
+		all_parents = { stug }
+		limit_to_equipment_type = { mio_cat_eq_all_medium_tank_support }
+
+		equipment_bonus = {
+			ap_attack = 0.1
+		}
+	}
+}
 
 #####################
 
@@ -34,15 +459,6 @@ JAP_kure_naval_arsenal_organization = {
 	icon = GFX_idea_kure_naval_arsenal
 	allowed = {	
 		tag = JAP
-		has_dlc = "Arms Against Tyranny"
-	}
-	available = {
-		FROM = {
-			OR = {
-				has_completed_focus = JAP_supremacy_of_the_battlefleet
-				has_completed_focus = JAP_the_ultimate_battleship
-			}
-		}
 	}
 }
 
@@ -51,62 +467,22 @@ JAP_yokosuka_naval_arsenal_organization = {
 	icon = GFX_idea_yokosuka_naval_arsenal
 	allowed = {	
 		tag = JAP
-		has_dlc = "Arms Against Tyranny"
 	}
 }
 
 JAP_maizuru_naval_arsenal_organization = {
 	include = generic_escort_ship_organization
 	icon = GFX_idea_maizuru_naval_arsenal
-	
-	allowed = {	 
-		OR = {
-			tag = JAP 
-			AND = {
-				tag = ETH
-				has_dlc = "By Blood Alone"
-			}
-		}
-	}
-	
-	visible = {
-		IF = {
-			limit = {
-				FROM = { original_tag = ETH }
-			}
-			FROM = { has_completed_focus = ETH_invite_foreign_industrialists }
-		}
-	}
-	
-	available = {
-		# When in a Foreign MIO, countries need to be at peace with original country
-		IF = {
-			limit = {
-				FROM = { NOT = { original_tag = JAP } }
-			}
-			FROM = { NOT = { has_war_with = JAP } }
-		}
-
-		IF = {
-			limit = {
-				FROM = { original_tag = ETH }
-			}
-			custom_trigger_tooltip = {
-				tooltip = has_invited_mio_tt
-				FROM = {
-					has_country_flag = has_invited_JAP_maizuru_naval_arsenal_organization_flag
-				}
-			}
-		}
+	allowed = {	
+		tag = JAP
 	}
 }
 
 JAP_sasebo_naval_arsenal_organization = {
 	include = generic_raider_ship_organization
 	icon = GFX_idea_sasebo_naval_arsenal
-	allowed = {	 
+	allowed = {	
 		tag = JAP
-		has_dlc = "Arms Against Tyranny"
 	}
 }
 
@@ -124,60 +500,22 @@ JAP_sasebo_naval_arsenal_organization = {
 JAP_mitsubishi_organization = {
 	include = generic_high_agility_fighter_aircraft_organization
 	icon = GFX_idea_mitsubishi
-	
-	allowed = {	 
-		OR = {
-			tag = JAP 
-			AND = {
-				tag = ETH
-				has_dlc = "By Blood Alone"
-			}
-		}
-	}
-	
-	visible = {
-		IF = {
-			limit = {
-				FROM = { original_tag = ETH }
-			}
-			FROM = { has_completed_focus = ETH_invite_foreign_industrialists }
-		}
-	}
-	
-	available = {
-		# When in a Foreign MIO, countries need to be at peace with original country
-		IF = {
-			limit = {
-				FROM = { NOT = { original_tag = JAP } }
-			}
-			FROM = { NOT = { has_war_with = JAP } }
-		}
-		ELSE = {
-			FROM = { has_completed_focus = JAP_agility_focus }
-		}
-
-		IF = {
-			limit = {
-				FROM = { original_tag = ETH }
-			}
-			custom_trigger_tooltip = {
-				tooltip = has_invited_mio_tt
-				FROM = {
-					has_country_flag = has_invited_JAP_mitsubishi_organization_flag
+	allowed = {	
+				OR = {
+					original_tag = JAP
+					original_tag = MAN
 				}
-			}
-		}
 	}
-} 
+}
 
 JAP_aichi_organization = {
 	include = generic_range_focused_aircraft_organization
 	icon = GFX_idea_aichi
 	allowed = {	
-		tag = JAP
-	}
-	available = {
-		FROM = { has_completed_focus = JAP_range_focus }
+				OR = {
+					original_tag = JAP
+					original_tag = MAN
+				}
 	}
 }
 
@@ -185,17 +523,20 @@ JAP_nakajima_organization = {
 	include = generic_heavy_aircraft_organization
 	icon = GFX_idea_nakajima
 	allowed = {	
-		tag = JAP
-		has_dlc = "Arms Against Tyranny"
+				OR = {
+					original_tag = JAP
+					original_tag = MAN
+				}
 	}
 }
-
 JAP_yokosuka_organization = {
 	include = generic_naval_aircraft_organization 
 	icon = GFX_idea_yokosuka
 	allowed = {	
-		tag = JAP
-		has_dlc = "Arms Against Tyranny"
+				OR = {
+					original_tag = JAP
+					original_tag = MAN
+				}
 	}
 }
 
@@ -216,61 +557,30 @@ JAP_tokyo_arsenal_organization = {
 	include = generic_infantry_equipment_organization
 	icon = GFX_idea_tokyo_arsenal
 	allowed = {	
-		tag = JAP
-		has_dlc = "Arms Against Tyranny"
+				OR = {
+					original_tag = JAP
+					original_tag = MAN
+				}
 	}
 }
-
 JAP_osaka_army_arsenal_artillery_organization = {
 	include = generic_artillery_organization
 	icon = GFX_idea_osaka_army_arsenal
 	allowed = {	
-		tag = JAP
-		has_dlc = "Arms Against Tyranny"
+				OR = {
+					original_tag = JAP
+					original_tag = MAN
+				}
 	}
-} 
+}
 
 JAP_nissan_organization = {
 	include = generic_motorized_mechanized_organization 
 	icon = GFX_idea_nissan
-	allowed = {	 
-		OR = {
-			tag = JAP 
-			AND = {
-				tag = ETH
-				has_dlc = "By Blood Alone"
-			}
-		}
-	}
-	
-	visible = {
-		IF = {
-			limit = {
-				FROM = { original_tag = ETH }
-			}
-			FROM = { has_completed_focus = ETH_invite_foreign_industrialists }
-		}
-	}
-	
-	available = {
-		# When in a Foreign MIO, countries need to be at peace with original country
-		IF = {
-			limit = {
-				FROM = { NOT = { original_tag = JAP } }
-			}
-			FROM = { NOT = { has_war_with = JAP } }
-		}
-
-		IF = {
-			limit = {
-				FROM = { original_tag = ETH }
-			}
-			custom_trigger_tooltip = {
-				tooltip = has_invited_mio_tt
-				FROM = {
-					has_country_flag = has_invited_JAP_nissan_organization_flag
+	allowed = {	
+				OR = {
+					original_tag = JAP
+					original_tag = MAN
 				}
-			}
-		}
 	}
 }
