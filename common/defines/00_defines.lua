@@ -622,7 +622,7 @@ NIndustrialOrganisation = {
 	DESIGN_TEAM_RESEARCH_BONUS = 0.0,				-- Research bonus for applying a Design Team that matches the technology
 	ENABLE_TASK_CAPACITY = false,					-- Enable limited task capacity for MIOs
 	DEFAULT_INITIAL_TASK_CAPACITY = 0,				-- Default start task capacity for each MIO (may be overriden in DB)
-	DEFAULT_INITIAL_POLICY_ATTACH_COST = 75,		-- Default start attach cost in PP for policies
+	DEFAULT_INITIAL_POLICY_ATTACH_COST = 50,		-- Default start attach cost in PP for policies
 	DEFAULT_INITIAL_ATTACH_POLICY_COOLDOWN = 180,	-- Default start cooldown in days after attaching a policy
 	LEGACY_COST_FACTOR_SCALE = 1.0,					-- Multiplier to use when legacy Designer cost factors is applied to MIOs (<IdeaGroup>_cost_factor)
 },
