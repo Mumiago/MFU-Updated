@@ -484,6 +484,191 @@ ITA_fiat = {
 		}
 	}
 }
+ITA_terni = {
+	icon = GFX_idea_terni
+	name = "Terni"
+	allowed = {	
+		tag = ITA 
+	}
+	available = {
+			ITA = {
+				has_country_flag = ITA_terni_done
+			}
+	}
+	equipment_type = { armor }
+	research_categories = { armor }
+
+	initial_trait = {
+		name = affordable_tank_manufacturer
+		
+		organization_modifier = {
+			military_industrial_organization_design_team_change_cost = -1.0
+		}
+		equipment_bonus = {
+				reliability = -0.1
+		}
+	}
+	add_trait = { 
+		token = maximize_c
+		name = "Retrain Steel Workers"
+		icon = GFX_generic_mio_department_icon_facilities
+		position = { x=4 y=0 }  
+		production_bonus = {
+			production_cost_factor = -0.05
+			production_efficiency_gain_factor = -0.1
+		}
+	}
+	add_trait = { 
+		token = SS
+		name = "Strict Size Limits"
+		icon = GFX_generic_mio_trait_icon_weight
+ 		position = { x=4 y=1 }  
+		any_parent = { maximize_c }
+		equipment_bonus = {
+			hard_attack = -0.05
+			soft_attack = -0.05
+		}  
+		production_bonus = {
+			production_efficiency_cap_factor = 0.05
+		}
+	}
+	add_trait = { 
+		token = v_i
+		name = "Supply Chain Optimization"
+		icon = GFX_generic_mio_department_icon_tank_general_materials
+		position = { x=4 y=2 }  
+		any_parent = { SS }
+		production_bonus = {
+			production_resource_penalty_factor = 0.05
+			production_resource_need_factor = -0.05
+		}
+	}
+	add_trait = { 
+		token = u_a
+		name = "Utilize Automobile Components"
+		icon = GFX_generic_mio_department_icon_tank_general_engine
+		any_parent = { maximize_c }
+		position = { x=2 y=1 }  
+		equipment_bonus = {
+			reliability = 0.05
+			maximum_speed = -0.1
+		}  
+	}
+	add_trait = { 
+		token = m_p
+		name = "Minimize Powertrain Requirements"
+		icon = GFX_generic_mio_trait_icon_build_cost_ic
+		any_parent = { u_a }
+		relative_position_id = u_a
+				mutually_exclusive = { m_a }
+		position = { x=1 y=1 }  
+		equipment_bonus = {
+			reliability = 0.1
+			maximum_speed = -0.2
+		}  
+	}
+	add_trait = { 
+		token = ba_t
+		name = "Barebones Transmission"
+		icon = GFX_generic_mio_trait_icon_resources
+		any_parent = { m_p }
+		relative_position_id = m_p
+		position = { x=1 y=1 }  
+		equipment_bonus = {
+			build_cost_ic = -0.05
+			breakthrough = -0.1
+		}  
+		production_bonus = {
+			production_resource_need_factor = -0.1
+		}
+	}
+	add_trait = { 
+		token = out_g
+		name = "Outsource Gun Production"
+		icon = GFX_generic_mio_trait_icon_efficiency_gain
+		any_parent = { m_p m_a }
+		relative_position_id = m_p
+		mutually_exclusive = { re_w }
+		position = { x=-1 y=1 }  
+		equipment_bonus = {
+			hard_attack = 0.05
+		}  
+		production_bonus = {
+			production_resource_need_factor = 0.1
+		}  
+	}
+	add_trait = { 
+		token = m_a
+		name = "Minimize Armament Requirements"
+		icon = GFX_generic_mio_trait_icon_build_cost_ic
+		any_parent = { u_a }
+		relative_position_id = u_a
+				mutually_exclusive = { m_p }
+		position = { x=-1 y=1 }  
+		equipment_bonus = {
+			hard_attack = -0.1
+			ap_attack = -0.3
+		}  
+		production_bonus = {
+			production_efficiency_cap_factor = 0.05
+			production_resource_need_factor = -0.1
+		}
+	}
+	add_trait = { 
+		token = re_w
+		name = "Refurbish Existing Weaponry"
+		icon = GFX_generic_mio_trait_icon_efficiency_cap
+		any_parent = { m_a }
+		relative_position_id = m_a
+		mutually_exclusive = { out_g }
+		position = { x=0 y=1 }  
+		equipment_bonus = {
+			build_cost_ic = -0.1
+			hard_attack = -0.1
+			soft_attack = -0.1
+		}  
+	}
+
+	add_trait = { 
+		token = I_p
+		name = "Increase Production Numbers"
+		icon = GFX_generic_mio_trait_icon_production_capacity
+		any_parent = { maximize_c }
+				mutually_exclusive = { en_r }
+		relative_position_id = maximize_c
+		position = { x=1 y=1 }  
+		equipment_bonus = {
+			build_cost_ic = -0.05
+			breakthrough = -0.05
+			reliability = -0.1
+		}  
+	}
+	add_trait = { 
+		token = en_r
+		name = "Ensure reliability of mechanical components"
+		icon = GFX_generic_mio_trait_icon_reliability
+		any_parent = { maximize_c }
+		relative_position_id = maximize_c
+				mutually_exclusive = { I_p }
+		position = { x=3 y=1 } 
+		equipment_bonus = {
+			breakthrough = 0.05
+			reliability = 0.1
+		}  
+	}
+	add_trait = { 
+		token = sa_t
+		name = "Shared Turret Designs"
+		icon = GFX_generic_mio_trait_icon_lg_attack
+		any_parent = { I_p en_r }
+		relative_position_id = I_p
+		position = { x=1 y=1 }  
+		equipment_bonus = {
+			hardness = 0.05
+		}  
+	}
+
+}
 ITA_alfa_romeo = {
 	
 	name = "Alfa Romeo"
@@ -719,31 +904,8 @@ ITA_cantiere_oto_organization = {
 	icon = GFX_idea_ITA_oto
 	
 	allowed = {	
-		tag = ITA 
-	}
-	
-	available = {
-		FROM = {
-			controls_state = 158 #PIEDMONT (Genova)
-		}
-		ITA_is_northern_designer = yes
-	}
+			tag = ITA 
 
-	add_trait = { 
-		token = ITA_mio_trait_new_industrialization_program
-		name = ITA_new_industrialization_program
-		icon = GFX_generic_mio_department_icon_ship_screen_ship_production
-		special_trait_background = yes
-
-		position = { x=9 y=0 }
-	
-		organization_modifier = {
-			military_industrial_organization_research_bonus = 0.1
-		}
-
-		production_bonus = {
-			production_capacity_factor = 0.1
-		}
 	}
 }
 
@@ -752,38 +914,8 @@ ITA_navalmeccanica_organization = {
 	icon = GFX_idea_ITA_navalmeccanica
 	
 	allowed = {	
-		tag = ITA 
-	}
-	
-	available = {
-		FROM = {
-			controls_state = 117 # CAMPAGNA (Napoli)	
-		}
-		ITA_is_southern_designer = yes
-	}
+			tag = ITA 
 
-	add_trait = { 
-		token = ITA_mio_trait_new_industrialization_program
-		name = ITA_new_industrialization_program
-		icon = GFX_generic_mio_department_icon_ship_screen_ship_production
-		special_trait_background = yes
-
-		position = { x=9 y=0 }
-		
-		available = {
-			FROM = {
-				has_completed_focus = ITA_new_industrialization_program
-				has_completed_focus = ITA_modernize_the_mezzogiorno
-			}
-		}
-
-		organization_modifier = {
-			military_industrial_organization_research_bonus = 0.1
-		}
-
-		production_bonus = {
-			production_capacity_factor = 0.1
-		}
 	}
 } 
 
@@ -792,38 +924,8 @@ ITA_cantiere_navale_di_ancona_organization = {
 	icon = GFX_idea_ITA_cantera_navale_di_ancona
 	
 	allowed = {	
-		tag = ITA 
-	}
-	
-	available = {
-		FROM = {
-			controls_state = 157 # ABRUZZO (Ancona)		
-		}
-		ITA_is_southern_designer = yes
-	}
+			tag = ITA 
 
-	add_trait = { 
-		token = ITA_mio_trait_new_industrialization_program
-		name = ITA_new_industrialization_program
-		icon = GFX_generic_mio_department_icon_ship_general_production
-		special_trait_background = yes
-
-		position = { x=9 y=0 }
-		
-		available = {
-			FROM = {
-				has_completed_focus = ITA_new_industrialization_program
-				has_completed_focus = ITA_modernize_the_mezzogiorno
-			}
-		}
-
-		organization_modifier = {
-			military_industrial_organization_research_bonus = 0.1
-		}
-
-		production_bonus = {
-			production_capacity_factor = 0.1
-		}
 	}
 }
 
@@ -832,39 +934,8 @@ ITA_cantieri_navali_tosi_organization = {
 	icon = GFX_idea_ITA_cantieri_navali_tosi
 	
 	allowed = {	
-		tag = ITA 
-	}
-	
-	available = {
-		FROM = {
-			controls_state = 849 # PUGLIA (Taranto)
-			
-		}
-		ITA_is_southern_designer = yes
-	}
+			tag = ITA 
 
-	add_trait = { 
-		token = ITA_mio_trait_new_industrialization_program
-		name = ITA_new_industrialization_program
-		icon = GFX_generic_mio_department_icon_ship_submarine_production
-		special_trait_background = yes
-
-		position = { x=9 y=0 }
-		
-		available = {
-			FROM = {
-				has_completed_focus = ITA_new_industrialization_program
-				has_completed_focus = ITA_modernize_the_mezzogiorno
-			}
-		}
-
-		organization_modifier = {
-			military_industrial_organization_research_bonus = 0.1
-		}
-
-		production_bonus = {
-			production_capacity_factor = 0.1
-		}
 	}
 }
 
@@ -886,61 +957,11 @@ ITA_macchi_organization = {
 	icon = GFX_idea_macchi
 	
 	allowed = {	
-		OR = {
 			tag = ITA 
-			AND = {
-				tag = ETH 
-				has_dlc = "By Blood Alone"
-			}
-		}
-	}
-	
-	visible = {
-		IF = {
-			limit = { FROM = { original_tag = ETH } }
-			FROM = { has_country_flag = ETH_ITA_sends_air_designers }
-		}
-	}
-	
-	available = {
-		# When in a Foreign MIO, countries need to be at peace with original country
-		IF = {
-			limit = {
-				FROM = { NOT = { original_tag = ITA } }
-			}
-			FROM = { NOT = { has_war_with = ITA } }
-		}
-		ELSE = { #original_tag = ITA
-			FROM = {
-				controls_state = 159 #LOMBARDIA
-			}
-			ITA_is_northern_designer = yes
-		}
+
 	}
 
-	add_trait = { 
-		token = ITA_mio_trait_new_industrialization_program
-		name = ITA_new_industrialization_program
-		icon = GFX_generic_mio_department_icon_plane_fighter_production
-		special_trait_background = yes
 
-		position = { x=9 y=0 }
-		
-		available = {
-			FROM = {
-				has_completed_focus = ITA_new_industrialization_program
-				has_completed_focus = ITA_strengthen_northern_industry
-			}
-		}
-
-		organization_modifier = {
-			military_industrial_organization_research_bonus = 0.1
-		}
-
-		production_bonus = {
-			production_capacity_factor = 0.1
-		}
-	}
 }
 
 ITA_savoia_marchetti_organization = {
@@ -1084,61 +1105,9 @@ ITA_beretta_organization = {
 	include = generic_infantry_equipment_organization
 	icon = GFX_idea_beretta
 
-	allowed = {	 
-		OR = {
+	allowed = {	
 			tag = ITA 
-			AND = {
-				tag = ETH
-				has_dlc = "By Blood Alone"
-			}
-		}
-	}
 
-	visible = {
-		IF = {
-			limit = { FROM = { original_tag = ETH } }
-			FROM = { has_country_flag = ETH_ITA_sends_army_designers }
-		}
-	}
-
-	available = {
-		# When in a Foreign MIO, countries need to be at peace with original country
-		IF = {
-			limit = {
-				FROM = { NOT = { original_tag = ITA } }
-			}
-			FROM = { NOT = { has_war_with = ITA } }
-		}
-		ELSE = { #original_tag = ITA
-			FROM = {
-				controls_state = 159 #LOMBARDIA	
-			}
-			ITA_is_northern_designer = yes
-		}
-	}
-
-	add_trait = { 
-		token = ITA_mio_trait_new_industrialization_program
-		name = ITA_new_industrialization_program
-		icon = GFX_generic_mio_department_icon_infantry_production
-		special_trait_background = yes
-
-		position = { x=9 y=0 }
-		
-		available = {
-			FROM = {
-				has_completed_focus = ITA_new_industrialization_program
-				has_completed_focus = ITA_strengthen_northern_industry
-			}
-		}
-
-		organization_modifier = {
-			military_industrial_organization_research_bonus = 0.1
-		}
-
-		production_bonus = {
-			production_capacity_factor = 0.1
-		}
 	}
 }
 
@@ -1146,171 +1115,27 @@ ITA_lancia_organization = {
 	include = generic_motorized_mechanized_organization
 	icon = GFX_idea_lancia
 	
-	allowed = {	 
-		OR = {
+	allowed = {	
 			tag = ITA 
-			AND = {
-				tag = BUL 
-				has_dlc = "Battle for the Bosporus"
-			}
-		}
-	}
-	
-	available = {
-		# When in a Foreign MIO, countries need to be at peace with original country
-		IF = {
-			limit = {
-				FROM = { NOT = { original_tag = ITA } }
-			}
-			FROM = { NOT = { has_war_with = ITA } }
-		}
-		ELSE = { #original_tag = ITA
-			FROM = { controls_state = 159 } #LOMBARDIA
-			ITA_is_northern_designer = yes
-		}
-		
-		IF = {
-			limit = { FROM = { original_tag = BUL } }
-			custom_trigger_tooltip = {
-				tooltip = has_invited_mio_tt
-				FROM = {
-					has_country_flag = has_invited_lancia_mio_flag
-				}
-			}
-			FROM = {
-				OR = {
-					is_subject = no
-					is_subject_of = ITA
-				}
-				#is_in_faction_with = ITA
-				NOT = { has_completed_focus = BUL_nationalization }
-			}
-		}
-	}
 
-	add_trait = { 
-		token = ITA_mio_trait_new_industrialization_program
-		name = ITA_new_industrialization_program
-		icon = GFX_generic_mio_department_icon_motorized_mechanized_production
-		special_trait_background = yes
-
-		position = { x=9 y=0 }
-		
-		available = {
-			FROM = {
-				has_completed_focus = ITA_new_industrialization_program
-				has_completed_focus = ITA_strengthen_northern_industry
-			}
-		}
-
-		organization_modifier = {
-			military_industrial_organization_research_bonus = 0.1
-		}
-
-		production_bonus = {
-			production_capacity_factor = 0.1
-		}
 	}
 }
 
 ITA_breda_organization = {
 	include = generic_artillery_organization
 	icon = GFX_idea_breda
-	allowed = {	 
-		OR = {
+	allowed = {	
 			tag = ITA 
-			AND = {
-				tag = ETH
-				has_dlc = "By Blood Alone"
-			}
-		}
-	}
 
-	visible = {
-		IF = {
-			limit = { FROM = { original_tag = ETH } }
-			FROM = { has_country_flag = ETH_ITA_sends_army_designers }
-		}
-	}
-	
-	available = {
-		# When in a Foreign MIO, countries need to be at peace with original country
-		IF = {
-			limit = {
-				FROM = { NOT = { original_tag = ITA } }
-			}
-			FROM = { NOT = { has_war_with = ITA } }
-		}
-		ELSE = { #original_tag = ITA
-			FROM = {
-				controls_state = 159 #LOMBARDIA
-			}
-			ITA_is_northern_designer = yes
-		}
-	}
-
-	add_trait = { 
-		token = ITA_mio_trait_new_industrialization_program
-		name = ITA_new_industrialization_program
-		icon = GFX_generic_mio_department_icon_artillery_production
-		special_trait_background = yes
-
-		position = { x=9 y=0 }
-		
-		available = {
-			FROM = {
-				has_completed_focus = ITA_new_industrialization_program
-				has_completed_focus = ITA_strengthen_northern_industry
-			}
-		}
-
-		organization_modifier = {
-			military_industrial_organization_research_bonus = 0.1
-		}
-
-		production_bonus = {
-			production_capacity_factor = 0.1
-		}
 	}
 }
 
 ITA_brescia_arsenal_organization = {
 	include = generic_support_equipment_organization
 	icon = GFX_idea_ITA_brescia_arsenal
-	
-	allowed = {	 
-		tag = ITA
-	}
-	
-	available = {
-		FROM = {
-			controls_state = 159 #LOMBARDIA
-		}
-		ITA_is_northern_designer = yes
-	}
+	allowed = {	
+			tag = ITA 
 
-	add_trait = { 
-		token = ITA_mio_trait_new_industrialization_program
-		name = ITA_new_industrialization_program
-		icon = GFX_generic_mio_department_icon_infantry_production
-		special_trait_background = yes
-
-		position = { x=9 y=0 }
-		
-		available = {
-			FROM = {
-				has_completed_focus = ITA_new_industrialization_program
-				has_completed_focus = ITA_strengthen_northern_industry
-			}
-		}
-
-		organization_modifier = {
-			military_industrial_organization_research_bonus = 0.1
-		}
-
-		production_bonus = {
-			production_capacity_factor = 0.1
-		}
 	}
 }
 
