@@ -1016,17 +1016,272 @@ JAP_nissan_organization = {
 				}
 	}
 }
-tokyo_gas = {
-	include = generic_mechanized_designer 
+
+JAP_tokyo_gas = {
 	name = "Tokyo Gas Electric Engineering Co."
 	icon = GFX_idea_JAP_tokyo_gas
+
 	allowed = {	
 				OR = {
 					original_tag = JAP
 					original_tag = MAN
 				}
 	}
+
+
+	equipment_type = { mechanized_equipment }
+	research_categories = { mechanized_equipment }
+
+
+	initial_trait = {
+		name = mechanized_designer
+		
+		limit_to_equipment_type = { 
+			mechanized
+		}
+		
+		equipment_bonus = {
+					soft_attack = 0.30
+		}
+	}
+	trait = {
+		token = makeshift
+		name = "Modify Tracked Transport Vehicles"
+		mutually_exclusive = { scratch }
+		icon = GFX_generic_mio_department_icon_motorized_mechanized_production
+		position = { x=4 y=0}
+		equipment_bonus = {
+			build_cost_ic = -0.1
+			reliability= -0.05
+		}
+	}
+	trait = {
+		token = scratch
+		name = "Ground up Designs"
+		mutually_exclusive = { makeshift }
+		icon = GFX_generic_mio_department_icon_mechanized
+		position = { x=5 y=0}
+		equipment_bonus = {
+			soft_attack = 0.6
+			hard_attack = 0.6
+			build_cost_ic = 0.05
+			fuel_consumption_factor = 0.05
+		}
+	}
+	trait = {
+		token = fully_tracked
+		name = "Fully Tracked"
+		icon = GFX_generic_mio_department_icon_mechanized_engine
+		
+		position = { x=3 y=1 }
+		
+		limit_to_equipment_type = { mechanized_equipment }
+		any_parent = { makeshift scratch }		
+		mutually_exclusive = { half_tracked }
+
+		equipment_bonus = {
+			breakthrough = 0.75
+		}
+	}
+
+	trait = {
+		token = half_tracked
+		name = "Half-Tracked"
+		icon = GFX_generic_mio_department_icon_mechanized_line_efficiency
+		
+		position = { x=6 y=1 }
+		
+		limit_to_equipment_type = { mechanized_equipment }
+		any_parent = { makeshift scratch }		
+		mutually_exclusive = { fully_tracked }
+
+		equipment_bonus = {
+			build_cost_ic = -0.05
+			reliability = -0.05
+		}
+	}
+	trait = {
+		token = adv_armor
+		name = "Advanced armor schemes"
+		icon = GFX_generic_mio_department_icon_tank_general_armor
+		
+		position = { x=6 y=2 }
+		mutually_exclusive = { heavy_weapon better_drivetrain smoke_launchers }		
+		limit_to_equipment_type = { mechanized_equipment }
+		
+		any_parent = {half_tracked fully_tracked }
+
+		equipment_bonus = {
+			armor_value = 0.6
+		}
+	}
+	trait = {
+		token = adv_armor2
+		name = "All Around Shrapnel Protection"
+		icon = GFX_generic_mio_trait_icon_hardness
+		
+		position = { x=0 y=1 }
+		relative_position_id = adv_armor
+		
+		limit_to_equipment_type = { mechanized_equipment }
+		
+		any_parent = { adv_armor  }
+
+		equipment_bonus = {
+			hardness = 0.1
+		}
+	}
+	trait = {
+		token = heavy_weapon
+		name = "Heavier armaments"
+		icon = GFX_generic_mio_department_icon_tank_general_weapons
+		
+		position = { x=3 y=2 }
+		
+		limit_to_equipment_type = { mechanized_equipment }
+		mutually_exclusive = { adv_armor better_drivetrain smoke_launchers }			
+		any_parent = { half_tracked fully_tracked }
+
+		equipment_bonus = {
+			soft_attack = 0.75
+			hard_attack = 0.75
+		}
+	}
+	trait = {
+		token = support_var
+		name = "Dedicated Support Variants"
+		icon = GFX_generic_mio_department_icon_tank_general_spg
+		
+		position = { x=0 y=1 }
+		relative_position_id = heavy_weapon
+		
+		limit_to_equipment_type = { mechanized_equipment }
+		
+		any_parent = { heavy_weapon}
+
+		equipment_bonus = {
+			ap_attack = 9
+		}
+	}
+
+	trait = {
+		token = better_drivetrain
+		name = "Improved drivetrain"
+		icon = GFX_generic_mio_department_icon_mechanized_engine
+		
+		position = { x=0 y=2 }
+		
+		limit_to_equipment_type = { mechanized_equipment }
+		mutually_exclusive = { heavy_weapon adv_armor  smoke_launchers }			
+		any_parent = { half_tracked fully_tracked  }
+
+		equipment_bonus = {
+			breakthrough = 0.75
+		}
+	}
+	trait = {
+		token = reli
+		name = "Reliability on the Offense"
+		icon = GFX_generic_mio_department_icon_mechanized_production
+		
+		position = { x=0 y=1 }
+		relative_position_id = better_drivetrain
+		
+		limit_to_equipment_type = { mechanized_equipment }
+		
+		any_parent = { better_drivetrain }
+
+		equipment_bonus = {
+			reliability = 0.075
+		}
+	}
+	trait = {
+		token = smoke_launchers
+		name = "Smoke Launchers"
+		icon = GFX_generic_mio_trait_icon_sub_attack
+		
+		position = { x=9 y=2 }
+		mutually_exclusive = { heavy_weapon adv_armor better_drivetrain  }			
+		limit_to_equipment_type = { mechanized_equipment }
+		
+		any_parent = { half_tracked fully_tracked }
+
+		equipment_bonus = {
+			breakthrough = 0.4
+			defense = 0.3
+		}
+	}
+	trait = {
+		token = comms_eq
+		name = "Tank Standard Communication Equipment"
+		icon = GFX_generic_mio_department_icon_support_equipment
+		
+		position = { x=0 y=1 }
+		relative_position_id = smoke_launchers
+		
+		limit_to_equipment_type = { mechanized_equipment }
+		
+		any_parent = { smoke_launchers }
+
+		equipment_bonus = {
+			defense = 0.6
+		}
+	}
+	trait = {
+		token = usability
+		name = "Improved Usability"
+		icon = GFX_generic_mio_trait_icon_breakthrough
+		
+		position = { x=1 y=4 }
+
+		
+		limit_to_equipment_type = { mechanized_equipment }
+		mutually_exclusive = {  ample_spares simp }		
+		any_parent = { comms_eq  reli support_var adv_armor2}
+
+		equipment_bonus = {
+			hardness = 0.15
+			build_cost_ic = 0.05
+		}
+	}
+	trait = {
+		token = ample_spares
+		name = "Gurantee Ample Spare Parts"
+		icon = GFX_generic_mio_department_icon_mechanized_production
+		
+		position = { x=5 y=4 }
+
+		
+		limit_to_equipment_type = { mechanized_equipment }
+		mutually_exclusive = { usability  simp }			
+		any_parent = { comms_eq  reli support_var adv_armor2}
+
+		equipment_bonus = {
+			reliability = 0.1
+			
+		}
+	}
+	trait = {
+		token = simp
+		name = "Simplification"
+		icon = GFX_generic_mio_trait_icon_efficiency_gain
+		
+		position = { x=8 y=4 }
+		
+		limit_to_equipment_type = { mechanized_equipment }
+		mutually_exclusive = { usability ample_spares }			
+		any_parent = { comms_eq  reli support_var adv_armor2}
+
+		equipment_bonus = {
+			build_cost_ic = -0.075
+			reliability = -0.025
+		}
+	}
 }
+
+
+
+
 ishikawa = {
 	include = generic_armored_car_organization 
 	name = "Ishikawajima Heavy industries"
