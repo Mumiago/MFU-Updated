@@ -5809,8 +5809,275 @@ generic_infantry_equipment_organization = {
 	}
 
 }
+advanced_infantry_equipment_organization = {
+	icon = GFX_idea_generic_infantry_equipment_manufacturer_1
+	allowed = {
+		always = no # Archetype only - countries using it have their own verisons
+	}
+	equipment_type = {
+		infantry_equipment
+	}
+	research_categories = { infantry_weapons }
+
+	
+
+	tree_header_text = {
+		text = "Production"
+		x = 1
+	}
+	tree_header_text = {
+		text = "Squad Weapons"
+		x = 4
+	}
+	tree_header_text = {
+		text = "Support Weapons"
+		x = 7
+	}
+
+	initial_trait = {
+		name = generic_mio_initial_trait_infantry_manufacturer
+
+		#organization_modifier = {
+		#	military_industrial_organization_research_bonus = 0.05
+		#}
+
+		production_bonus = {
+			production_efficiency_cap_factor = 0.03
+		}
+
+		equipment_bonus = {
+			soft_attack = 0.03
+		}
+	}
+	trait = {
+		token = ci
+		name = "Cross-Industry Co-Operation"
+		icon = GFX_generic_mio_department_icon_facilities
+		position = { x=1 y=1}
+		organization_modifier = {
+			military_industrial_organization_research_bonus = 0.06
+		}
+	}
+##expensive but bit better
+	trait = {
+		token = mc
+		name = "Milled Construction"
+		icon = GFX_generic_mio_trait_icon_reliability
+		position = { x=-1 y=1}
+		mutually_exclusive = { sc }
+		relative_position_id = ci
+	    any_parent = { ci }
+		equipment_bonus = {
+			reliability = 0.1
+			build_cost_ic = 0.075
+		}
+	}
+##stampping very hard to master but very efficient when it works
+	trait = {
+		token = sc
+		name = "Stamped Construction"
+		icon = GFX_generic_mio_trait_icon_build_cost_ic
+		position = { x=1 y=1}
+		mutually_exclusive = { mc }
+		relative_position_id = ci
+	    any_parent = { ci }
+		equipment_bonus = {
+			reliability = -0.1
+			build_cost_ic = -0.05
+		}
+		production_bonus = {
+			production_efficiency_cap_factor = 0.05
+	#production_capacity_factor
+	#production_efficiency_cap_factor
+	#production_efficiency_gain_factor
+		}
+		available = {
+			owner = {
+				has_tech = assembly_line_production
+			}
+		}
+	}
+	trait = {
+		token = cd
+		name = "Compact Designs"
+		icon = GFX_generic_mio_trait_icon_breakthrough
+		position = { x=0 y=2}
+		relative_position_id = ci
+	    any_parent = { mc sc}
+		equipment_bonus = {
+			breakthrough = 0.15
+
+		}
+
+	}
+
+	trait = {
+		token = gpmg1
+		name = "A General Purpose Machine Gun"
+		icon = GFX_mg_2
+		position = { x=4 y=0}
+
+		equipment_bonus = {
+			defense = 0.05
+			breakthrough = 0.05
+			build_cost_ic = 0.03
+		}
+	}
+###Special eq stat buff????
+	trait = {
+		token = s_w
+		name = "Specialist Weapons for Specialist Troops"
+		icon = GFX_smgs5
+		position = { x=0 y=2}
+		relative_position_id = gpmg1
+	    any_parent = { semi_a1 ar_e}
+		available = {
+			owner = {
+				has_tech = improved_infantry_weapons
+			}
+		}
+		equipment_bonus = {
+			soft_attack = 0.05
+			breakthrough = 0.03
+			build_cost_ic = 0.05
+		}
+	}
+	trait = {
+		token = dmr
+		name = "Designated marksman rifles"
+		icon = GFX_generic_mio_department_icon_infantry_offense
+		position = { x=0 y=2}
+		relative_position_id = s_w
+	    any_parent = { s_w }
+		available = {
+			owner = {
+				has_tech = advanced_infantry_weapons
+			}
+		}
+		equipment_bonus = {
+			soft_attack = 0.15
+			build_cost_ic = 0.1
+		}
+	}
+	trait = {
+		token = semi_a1
+		name = "Standardise on Semi-Automatic Rifles"
+		icon = GFX_generic_mio_department_icon_infantry_line_efficiency
+		position = { x=-1 y=1}
+		relative_position_id = gpmg1
+	    all_parents = { gpmg1}
+		mutually_exclusive = { ar_e}
+		equipment_bonus = {
+			soft_attack = 0.1
+			build_cost_ic = 0.05
+		}
+	}
+	trait = {
+		token = pdw
+		name = "Personal Defence Weapons"
+		icon = GFX_smgs1
+		position = { x=0 y=2}
+		relative_position_id = semi_a1
+	    all_parents = { semi_a1  }
+		available = {
+			owner = {
+				has_tech = advanced_infantry_weapons
+			}
+		}
+		equipment_bonus = {
+			soft_attack = 0.05
+			defense = 0.1
+			build_cost_ic = -0.1
+		}
+	}
 
 
+	trait = {
+		token = ar_e
+		name = "Assault Rifle Experiments"
+		icon = GFX_stgs4
+		position = { x=1 y=1}
+		relative_position_id = gpmg1
+		mutually_exclusive = { semi_a1 }
+	    all_parents = { gpmg1 }
+		equipment_bonus = {
+			soft_attack = 0.075
+			breakthrough = 0.075
+			build_cost_ic = 0.1
+			reliability = -0.15
+		}
+	}
+	trait = {
+		token = s_ar
+		name = "Standardize on Assault Rifles"
+		icon = GFX_stgs2
+		position = { x=0 y=2}
+		relative_position_id = ar_e
+	    all_parents = { ar_e  }
+		available = {
+			owner = {
+				has_tech = advanced_infantry_weapons
+			}
+		}
+		equipment_bonus = {
+			soft_attack = 0.1
+			breakthrough = 0.1
+			reliability = 0.1
+		}
+	}
+	trait = {
+		token = lgpmg
+		name = "Lafayette Mount for GPMG"
+		icon = GFX_generic_mio_trait_icon_defense
+		position = { x=7 y=1}
+		equipment_bonus = {
+			defense = 0.03
+		}
+	}
+	trait = {
+		token = improvedatnade
+		name = "Improved Anti Tank Granades"
+		icon = GFX_generic_mio_trait_icon_hard_attack
+		position = { x=-1 y=1}
+		mutually_exclusive = { improvednade }
+		relative_position_id = lgpmg
+	    any_parent = { lgpmg }
+		equipment_bonus = {
+			hard_attack = 0.1
+			ap_attack = 0.25
+		}
+	}
+	trait = {
+		token = improvednade
+		name = "Improved Anti-Personel Granades"
+		icon = GFX_generic_mio_trait_icon_soft_attack
+		position = { x=1 y=1}
+		mutually_exclusive = { improvedatnade }
+		relative_position_id = lgpmg
+	    any_parent = { lgpmg }
+		equipment_bonus = {
+			breakthrough = 0.05
+			soft_attack = 0.05
+		}
+	}
+	trait = {
+		token = atrpg
+		name = "Increase AT-Rocket Launcher Availability"
+		icon = GFX_generic_mio_trait_icon_ap_attack
+		position = { x=0 y=2}
+		relative_position_id = lgpmg
+	    any_parent = { improvednade improvedatnade}
+		available = {
+			owner = {
+				has_tech = infantry_at3
+			}
+		}
+		equipment_bonus = {
+			hard_attack = 0.15
+			ap_attack = 1
+		}
+	}
+}
 ###################################
 ######## Support Equipment ########
 ###################################
