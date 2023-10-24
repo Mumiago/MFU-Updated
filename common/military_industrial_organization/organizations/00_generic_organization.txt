@@ -5503,7 +5503,6 @@ generic_infantry_equipment_organization = {
 			}
 		}
 	}
-
 	equipment_type = {
 		infantry_equipment
 	}
@@ -5512,13 +5511,16 @@ generic_infantry_equipment_organization = {
 	
 
 	tree_header_text = {
-		text = mio_header_design_and_production
-		x = 3
+		text = "Production"
+		x = 1
 	}
-
 	tree_header_text = {
-		text = mio_header_anti_tank
-		x = 8
+		text = "Squad Weapons"
+		x = 4
+	}
+	tree_header_text = {
+		text = "Support Weapons"
+		x = 7
 	}
 
 	initial_trait = {
@@ -5536,66 +5538,69 @@ generic_infantry_equipment_organization = {
 			soft_attack = 0.03
 		}
 	}
-
 	trait = {
-		token = generic_mio_trait_drum_pattern_sights
-		name = generic_mio_trait_drum_pattern_sights
-		icon = GFX_generic_mio_trait_icon_defense
-
-		position = { x=1 y=0 }
-
+		token = c_l
+		name = "Carbine Length Barrel"
+		icon = GFX_generic_mio_department_icon_infantry_technology
+		position = { x=1 y=1}
 		equipment_bonus = {
-			defense = 0.03
+			armor_value = -0.2
+			hardness = -0.1
+			build_cost_ic = -0.05
 		}
 	}
-
 	trait = {
-		token = generic_mio_trait_reinforced_stocks
-		name = generic_mio_trait_reinforced_stocks
-		icon = GFX_generic_mio_trait_icon_reliability
-
-		position = { x=4 y=0 }
-		relative_position_id = generic_mio_trait_drum_pattern_sights
-
+		token = q_f
+		name = "Quality First"
+		icon = GFX_generic_mio_trait_icon_unique
+		position = { x=-1 y=1}
+		mutually_exclusive = { p_q }
+		relative_position_id = c_l
+	    any_parent = { c_l }
 		equipment_bonus = {
-			soft_attack = 0.02
-			reliability = 0.03
+			armor_value = -0.2
+			hardness = -0.1
+			build_cost_ic = -0.05
 		}
 	}
-
 	trait = {
-		token = generic_mio_trait_bolt_action
-		name = generic_mio_trait_bolt_action
-		icon = GFX_generic_mio_department_icon_infantry_line_efficiency
-
-		position = { x=-1 y=2 }
-		relative_position_id = generic_mio_trait_reinforced_stocks
-
-		all_parents = { generic_mio_trait_reinforced_stocks }
-
-		mutually_exclusive = { generic_mio_trait_semi_auto }
-
+		token = p_q
+		name = "Production Quotas First"
+		icon = GFX_generic_mio_trait_icon_production_capacity
+		position = { x=1 y=1}
+		mutually_exclusive = { q_f }
+		relative_position_id = c_l
+	    any_parent = { c_l }
 		equipment_bonus = {
-			soft_attack = -0.03
-		}
-
-		production_bonus = {
-			production_efficiency_gain_factor = 0.15
+			armor_value = -0.2
+			hardness = -0.1
+			build_cost_ic = -0.05
 		}
 	}
-
 	trait = {
-		token = generic_mio_trait_semi_auto
-		name = generic_mio_trait_semi_auto
-		icon = GFX_generic_mio_trait_icon_soft_attack
-
-		position = { x=1 y=2 }
-		relative_position_id = generic_mio_trait_reinforced_stocks
-
-		all_parents = { generic_mio_trait_reinforced_stocks }
-
-		mutually_exclusive = { generic_mio_trait_bolt_action }
-
+		token = a_b
+		name = "Advanced Barrel Forging"
+		icon = GFX_generic_mio_trait_icon_efficiency_cap
+		position = { x=0 y=2}
+		relative_position_id = c_l
+	    any_parent = { p_q q_f}
+		available = {
+			owner = {
+				has_tech = advanced_machine_tools
+			}
+		}
+		equipment_bonus = {
+			armor_value = -0.2
+			hardness = -0.1
+			build_cost_ic = -0.05
+		}
+	}
+	trait = {
+		token = e_w
+		name = "Experiment with Semi-Automatic Rifles"
+		icon = GFX_generic_mio_department_icon_infantry_quality
+		position = { x=2 y=0}
+		mutually_exclusive = { ba }
 		equipment_bonus = {
 			soft_attack = 0.03
 			breakthrough = 0.03
@@ -5605,176 +5610,201 @@ generic_infantry_equipment_organization = {
 			production_efficiency_gain_factor = -0.15
 		}
 	}
-
 	trait = {
-		token = generic_mio_trait_medium_machineguns
-		name = "Improved support weapons"
+		token = ba
+		name = "A Bolt Action for Modern Needs"
+		icon = GFX_generic_mio_department_icon_infantry_line_efficiency
+		position = { x=1 y=0}
+		mutually_exclusive = { e_w }
+		relative_position_id = e_w
+		production_bonus = {
+			production_efficiency_gain_factor = 0.15
+		}
+	}
+	trait = {
+		token = lmg
+		name = "Improved Light Machine Gun"
+		icon = GFX_mg_1
+		position = { x=2 y=0}
+		mutually_exclusive = { gpmg }
+		relative_position_id = ba
+		equipment_bonus = {
+			defense = 0.05
+		}
+	}
+	trait = {
+		token = gpmg
+		name = "Adapt a General Purpose Machine Gun"
+		icon = GFX_mg_2
+		position = { x=1 y=0}
+		mutually_exclusive = { lmg }
+		relative_position_id = lmg
+
+		equipment_bonus = {
+			defense = 0.05
+			breakthrough = 0.05
+			build_cost_ic = 0.03
+		}
+	}
+	trait = {
+		token = smg
+		name = "Simplified SMG Designs"
+		icon = GFX_smgs3
+		position = { x=1 y=1}
+		relative_position_id = ba
+	    any_parent = { e_w ba lmg gpmg}
+		available = {
+			owner = {
+				has_tech = improved_infantry_weapons
+			}
+		}
+		equipment_bonus = {
+			soft_attack = 0.05
+			breakthrough = 0.03
+			build_cost_ic = -0.05
+		}
+	}
+	trait = {
+		token = semi_a
+		name = "Increase Semi-Automatic Rifle Availability"
+		icon = GFX_generic_mio_department_icon_infantry_line_efficiency
+		position = { x=-1 y=1}
+		relative_position_id = smg
+	    all_parents = { smg e_w }
+		mutually_exclusive = { m_p smg_a}
+		equipment_bonus = {
+			soft_attack = 0.075
+			build_cost_ic = 0.05
+		}
+	}
+	trait = {
+		token = every_man
+		name = "Semi-Automatic for Every Rifleman"
+		icon = GFX_generic_mio_department_icon_infantry_offense
+		position = { x=0 y=1}
+		relative_position_id = semi_a
+	    all_parents = { semi_a  }
+		available = {
+			owner = {
+				has_tech = advanced_infantry_weapons
+			}
+		}
+		equipment_bonus = {
+			soft_attack = 0.1
+			breakthrough = 0.1
+			build_cost_ic = 0.1
+		}
+	}
+	trait = {
+		token = smg_a
+		name = "Increase SMG Availability"
+		icon = GFX_smgs2
+		position = { x=0 y=1}
+		relative_position_id = smg
+		mutually_exclusive = { m_p semi_a}
+	    any_parent = { smg }
+		equipment_bonus = {
+			breakthrough = 0.1
+		}
+	}
+	trait = {
+		token = shock
+		name = "Shock Detachments"
 		icon = GFX_generic_mio_trait_icon_breakthrough
-
-		position = { x=1 y=2 }
-		relative_position_id = generic_mio_trait_bolt_action
-
-		any_parent = { generic_mio_trait_semi_auto generic_mio_trait_bolt_action }
-		
+		position = { x=0 y=1}
+		relative_position_id = smg_a
+	    all_parents = { smg_a  }
+		available = {
+			owner = {
+				has_tech = advanced_infantry_weapons
+			}
+		}
+		equipment_bonus = {
+			breakthrough = 0.1
+		}
+	}
+	trait = {
+		token = m_p
+		name = "Machinegun Primacy"
+		icon = GFX_mg_1
+		position = { x=1 y=1}
+		relative_position_id = smg
+		mutually_exclusive = { smg_a semi_a }
+	    all_parents = { smg gpmg }
+		equipment_bonus = {
+			defense = 0.05
+			breakthrough = 0.05
+			build_cost_ic = 0.03
+		}
+	}
+	trait = {
+		token = i_a
+		name = "Increased Ammunition Rations"
+		icon = GFX_generic_mio_department_icon_tank_general_weapons
+		position = { x=0 y=1}
+		relative_position_id = m_p
+	    all_parents = { m_p  }
+		available = {
+			owner = {
+				has_tech = advanced_infantry_weapons
+			}
+		}
 		equipment_bonus = {
 			defense = 0.05
 			breakthrough = 0.02
 			build_cost_ic = 0.03
 		}
 	}
-
 	trait = {
-		token = generic_mio_trait_advanced_barrel_forging
-		name = generic_mio_trait_advanced_barrel_forging
-		icon = GFX_generic_mio_trait_icon_efficiency_gain
-
-		position = { x=2 y=2 }
-		relative_position_id = generic_mio_trait_drum_pattern_sights
-
-		any_parent = { generic_mio_trait_reinforced_stocks generic_mio_trait_drum_pattern_sights }
-
-		production_bonus = {
-			production_efficiency_gain_factor = 0.15
-		}
-	}
-
-	trait = {
-		token = generic_mio_trait_mass_rifle_production
-		name = generic_mio_trait_mass_rifle_production
-		icon = GFX_generic_mio_department_icon_facilities
-
-		position = { x=0 y=2 }
-		relative_position_id = generic_mio_trait_advanced_barrel_forging
-
-		all_parents = { generic_mio_trait_advanced_barrel_forging }
-
-		production_bonus = {
-			production_efficiency_cap_factor = 0.02
-			production_cost_factor = -0.03
-		}
-
-		organization_modifier = {
-			military_industrial_organization_design_team_assign_cost = -0.3
-		}
-	}
-
-
-	trait = {
-		token = generic_mio_trait_quality_materials
-		name = generic_mio_trait_quality_materials
-		icon = GFX_generic_mio_trait_icon_reliability
-
-		position = { x=0 y=2 }
-		relative_position_id = generic_mio_trait_drum_pattern_sights
-
-		all_parents = { generic_mio_trait_drum_pattern_sights }
-
+		token = i_l
+		name = "Improved Landmines"
+		icon = GFX_generic_mio_trait_icon_defense
+		position = { x=7 y=1}
 		equipment_bonus = {
-			reliability = 0.05
-		}
-
-	}
-
-	trait = {
-		token = generic_mio_trait_improved_small_arms_bullet_design
-		name = generic_mio_trait_improved_small_arms_bullet_design
-		icon = GFX_generic_mio_trait_icon_soft_attack
-
-		position = { x=-1 y=2 }
-		relative_position_id = generic_mio_trait_quality_materials
-
-		all_parents = { generic_mio_trait_quality_materials }
-
-		mutually_exclusive = { generic_mio_trait_armor_piercing_rounds }
-
-		equipment_bonus = {
-			soft_attack = 0.05
-			breakthrough = 0.03
+			defense = 0.03
 		}
 	}
-
 	trait = {
-		token = generic_mio_trait_armor_piercing_rounds
-		name = generic_mio_trait_armor_piercing_rounds
-		icon = GFX_generic_mio_trait_icon_ap_attack
-
-		position = { x=1 y=2 }
-		relative_position_id = generic_mio_trait_quality_materials
-
-		all_parents = { generic_mio_trait_quality_materials }
-		
-		mutually_exclusive = { generic_mio_trait_improved_small_arms_bullet_design }
-
-		equipment_bonus = {
-			ap_attack = 0.25
-			hard_attack = 0.05
-		}
-	}
-
-	trait = {
-		token = generic_mio_trait_heavy_anti_armor_ammunition
-		name = generic_mio_trait_heavy_anti_armor_ammunition
-		icon = GFX_generic_mio_trait_icon_ap_attack
-
-		position = { x=3 y=0 }
-		relative_position_id = generic_mio_trait_reinforced_stocks
-
+		token = r_g
+		name = "Rifle Granades"
+		icon = GFX_generic_mio_trait_icon_hard_attack
+		position = { x=-1 y=1}
+		mutually_exclusive = { k_m }
+		relative_position_id = i_l
+	    any_parent = { i_l }
 		equipment_bonus = {
 			hard_attack = 0.1
 			ap_attack = 0.25
 		}
 	}
-
 	trait = {
-		token = generic_mio_trait_vehicle_mounted_capabilities
-		name = generic_mio_trait_vehicle_mounted_capabilities
-		icon = GFX_generic_mio_trait_icon_breakthrough
-
-		position = { x=-1 y=2 }
-		relative_position_id = generic_mio_trait_heavy_anti_armor_ammunition
-
-		all_parents = { generic_mio_trait_heavy_anti_armor_ammunition }
-		
-		mutually_exclusive = { generic_mio_trait_rubber_cushioned_buttpad }
-
-		equipment_bonus = {
-			breakthrough = 0.1
-			build_cost_ic = 0.03
-		}
-	}
-
-	trait = {
-		token = generic_mio_trait_rubber_cushioned_buttpad
-		name = generic_mio_trait_rubber_cushioned_buttpad
-		icon = GFX_generic_mio_trait_icon_breakthrough
-
-		position = { x=1 y=2 }
-		relative_position_id = generic_mio_trait_heavy_anti_armor_ammunition
-
-		all_parents = { generic_mio_trait_heavy_anti_armor_ammunition }
-		
-		mutually_exclusive = { generic_mio_trait_vehicle_mounted_capabilities }
-
+		token = k_m
+		name = "Knee Mortars"
+		icon = GFX_generic_mio_trait_icon_soft_attack
+		position = { x=1 y=1}
+		mutually_exclusive = { r_g }
+		relative_position_id = i_l
+	    any_parent = { i_l }
 		equipment_bonus = {
 			breakthrough = 0.05
+			soft_attack = 0.05
 		}
 	}
-
 	trait = {
-		token = generic_mio_trait_anti_vechicle_land_mines
-		name = generic_mio_trait_anti_vechicle_land_mines
-		icon = GFX_generic_mio_department_icon_infantry_quality
-
-		position = { x=1 y=2 }
-		relative_position_id = generic_mio_trait_vehicle_mounted_capabilities
-
-		any_parent = { generic_mio_trait_rubber_cushioned_buttpad generic_mio_trait_vehicle_mounted_capabilities }
-
+		token = h_c
+		name = "Improved Hollow Charge Designs"
+		icon = GFX_generic_mio_trait_icon_ap_attack
+		position = { x=0 y=2}
+		relative_position_id = i_l
+	    any_parent = { k_m r_g}
+		available = {
+			owner = {
+				has_tech = infantry_at3
+			}
+		}
 		equipment_bonus = {
-			defense = 0.04
-			hard_attack = 0.05
-			build_cost_ic = 0.02
-
+			hard_attack = 0.15
+			ap_attack = 1
 		}
 	}
 
