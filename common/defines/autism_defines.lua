@@ -2,7 +2,7 @@ NDefines.NGame.LAG_DAYS_FOR_LOWER_SPEED = 250
 NDefines.NGame.LAG_DAYS_FOR_PAUSE = 200
 NDefines.NGame.COMBAT_LOG_MAX_MONTHS = 36
 NDefines.NCountry.EVENT_PROCESS_OFFSET = 40 -- Performance enhancer. --TW/WTT
-NDefines.NGame.GAME_SPEED_SECONDS = { 600.0, 0.27 , 0.23, 0.17, 0.09 }
+NDefines.NGame.GAME_SPEED_SECONDS = { 600.0, 0.29 , 0.26, 0.19, 0.11 }
 ---Diplomacy
 NDefines.NDiplomacy.PEACE_SCORE_PER_PASS = 2.0
 NDefines.NDiplomacy.DIPLOMACY_HOURS_BETWEEN_REQUESTS = 12
