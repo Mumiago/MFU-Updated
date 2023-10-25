@@ -631,7 +631,7 @@ NProduction = {
 	--AAT
 	CIC_BANK_SPEED_BOOST_FACTOR = 0.25,                 -- The CIC bank can boost production speed with this factor (0.5 means 50 %)
 	MINIMUM_NUMBER_OF_FACTORIES_TAKEN_BY_CONSUMER_GOODS_VALUE = 1,		-- The minimum number of factories we have to put on consumer goods, by value.
-	MINIMUM_NUMBER_OF_FACTORIES_TAKEN_BY_CONSUMER_GOODS_PERCENT = 0.1,	-- The minimum number of factories we have to put on consumer goods, in percent.
+	MINIMUM_NUMBER_OF_FACTORIES_TAKEN_BY_CONSUMER_GOODS_PERCENT = 0,	-- The minimum number of factories we have to put on consumer goods, in percent.
 	--BBA
 	LEND_LEASE_DELIVERY_TOTAL_DAYS = 30,                    -- Nr of days between lend lease deliveries
 	BASE_NAVAL_EQUIPMENT_CONVERSION_IC_COST_FACTOR = 0.0,       -- Fraction of the hull industry cost which is always included in the refitting cost.
