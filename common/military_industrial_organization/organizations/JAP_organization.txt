@@ -128,7 +128,7 @@ JAP_osaka_army_arsenal_organization = {
 			supply_consumption = -0.1
 			defense = 0.1
 			fuel_consumption = 0.1
-			build_cost_ic =0.05
+			build_cost_ic =0.01
 			armor_value = 0.05
 			hardness = 0.025
 		}
@@ -156,7 +156,6 @@ JAP_osaka_army_arsenal_organization = {
 			defense = 0.3
 			armor_value= 0.05
 			maximum_speed = 0.05
-			build_cost_ic = 0.05
 		}
 	}
 
@@ -234,7 +233,7 @@ JAP_osaka_army_arsenal_organization = {
 
 		equipment_bonus = {
 			
-			build_cost_ic = 0.05
+			build_cost_ic = 0.01
 		}
 
 		
@@ -306,7 +305,7 @@ JAP_osaka_army_arsenal_organization = {
 			soft_attack = 0.1
 			hard_attack = 0.05
 			air_attack = 0.05
-			build_cost_ic = 0.03
+			build_cost_ic = 0.01
 		}
 	}
 	trait = {
@@ -327,11 +326,11 @@ JAP_osaka_army_arsenal_organization = {
 
 		equipment_bonus = {
 			
-			soft_attack = 0.2
+			soft_attack = 0.20
 			hard_attack = 0.1
 			air_attack = 0.05
 			ap_attack = 0.05
-		    build_cost_ic = 0.04
+		    build_cost_ic = 0.02
 		}
 	}
 }
@@ -451,7 +450,7 @@ JAP_mitsu = {
 		}
 
 		equipment_bonus = {
-			build_cost_ic = 0.05
+			build_cost_ic = 0.01
 			reliability = 0.1
 		}
 	}
@@ -472,7 +471,7 @@ JAP_mitsu = {
 		}
 
 		equipment_bonus = {
-			build_cost_ic = -0.05
+			build_cost_ic = -0.03
 		}
 	}
 	trait = {
@@ -487,7 +486,6 @@ JAP_mitsu = {
 		
 
 		equipment_bonus = {
-			build_cost_ic = 0.05
 			defense = 0.05
 			breakthrough = 0.05
 		}
@@ -540,11 +538,10 @@ JAP_mitsu = {
 		all_parents = { generic_mio_improved_tracks_and_suspension  }
 		
             production_bonus = {
-			production_resource_need_factor = 0.10
+			production_resource_need_factor = 0.5
 		}
 		equipment_bonus = {
 			
-			build_cost_ic = 0.05
 			reliability = -0.05
 			armor_value = 0.1
 			hardness = 0.05
@@ -573,12 +570,12 @@ trait = {
 		all_parents = { spaced  }
 		
             production_bonus = {
-			production_resource_need_factor = 0.20
+			production_resource_need_factor = 0.10
 		}
 		equipment_bonus = {
 			
-			build_cost_ic = 0.1
-			reliability = -0.35
+			build_cost_ic = 0.05
+			reliability = -0.30
 			armor_value = 0.3
 			hardness = 0.2
 			defense = 0.05
@@ -952,13 +949,314 @@ JAP_Henschel = {
 #####################
 
 
-JAP_kure_naval_arsenal_organization = {
-	include = generic_battle_line_ship_organization
+JAP_kure_arsenal_organization = {
+	name = "Kure Naval Arsenal"
 	icon = GFX_idea_kure_naval_arsenal
+
+
 	allowed = {	
-		tag = JAP
+				OR = {
+					original_tag = JAP
+					original_tag = MAN
+				}
+	}
+
+	equipment_type = {
+		mio_cat_eq_all_battleship
+		mio_cat_eq_all_cruiser
+	}
+	research_categories = {
+		mio_cat_tech_all_capital_ship_and_modules
+		mio_cat_tech_all_cruiser_and_modules
+	}
+
+	tree_header_text = {
+		text = mio_header_systems
+		x = 1
+	}
+
+	tree_header_text = {
+		text = mio_header_weapons
+		x = 5
+	}
+
+	initial_trait = {
+		name = generic_mio_initial_trait_battle_line_ship_builders
+
+		organization_modifier = {
+			military_industrial_organization_research_bonus = 0.05
+		}
+		production_bonus = {
+			production_capacity_factor = 0.1
+			production_resource_need_factor = 0.05
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_external_armor_belt
+		name = generic_mio_trait_external_armor_belt
+		icon = GFX_generic_mio_trait_icon_armor_value
+
+		position = { x=0 y=0 }
+
+		mutually_exclusive = { generic_mio_trait_internal_armor_belt }
+
+		equipment_bonus = {
+			armor_value = 0.05
+			naval_speed = -0.03
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_internal_armor_belt
+		name = generic_mio_trait_internal_armor_belt
+		icon = GFX_generic_mio_department_icon_ship_capital_ship_armor
+
+		position = { x=2 y=0 }
+		relative_position_id = generic_mio_trait_external_armor_belt
+
+		mutually_exclusive = { generic_mio_trait_external_armor_belt }
+
+		equipment_bonus = {
+			armor_value = 0.15
+			build_cost_ic = 0.1
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_hardened_critical_components
+		name = generic_mio_trait_hardened_critical_components
+		icon = GFX_generic_mio_trait_icon_naval_torpedo_damage_reduction_factor
+
+		position = { x=1 y=1 }
+		relative_position_id = generic_mio_trait_external_armor_belt
+
+		any_parent = { generic_mio_trait_internal_armor_belt generic_mio_trait_external_armor_belt }
+
+		equipment_bonus = {
+			naval_torpedo_enemy_critical_chance_factor = -0.04
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_advanced_hydrodynamic_design
+		name = generic_mio_trait_advanced_hydrodynamic_design
+		icon = GFX_generic_mio_trait_icon_maximum_speed
+
+		position = { x=-1 y=2 }
+		relative_position_id = generic_mio_trait_hardened_critical_components
+
+		any_parent = { generic_mio_trait_hardened_critical_components }
+
+		mutually_exclusive = { generic_mio_trait_advanced_armor_design }
+
+		equipment_bonus = {
+			naval_speed = 0.05
+			naval_range = 0.05
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_advanced_armor_design
+		name = generic_mio_trait_advanced_armor_design
+		icon = GFX_generic_mio_trait_icon_armor_value
+
+		position = { x=1 y=2 }
+		relative_position_id = generic_mio_trait_hardened_critical_components
+
+		any_parent = { generic_mio_trait_hardened_critical_components }
+
+		mutually_exclusive = { generic_mio_trait_advanced_hydrodynamic_design }
+
+		equipment_bonus = {
+			armor_value = 0.1
+			build_cost_ic = 0.1
+			naval_speed = -0.05
+		}
+	}
+
+
+	
+
+
+	trait = {
+		token = generic_mio_trait_anti_air_layout
+		name = generic_mio_trait_anti_air_layout
+		icon = GFX_generic_mio_trait_icon_anti_air_attack
+
+		position = { x=4 y=0 }
+		relative_position_id = generic_mio_trait_external_armor_belt
+
+		equipment_bonus = {
+			anti_air_attack = 0.06
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_secondary_battery_layout
+		name = generic_mio_trait_secondary_battery_layout
+		icon = GFX_generic_mio_trait_icon_lg_attack
+
+		position = { x=2 y=0 }
+		relative_position_id = generic_mio_trait_anti_air_layout
+
+		equipment_bonus = {
+			lg_attack = 0.05
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_gyro_stabilized_mounts
+		name = generic_mio_trait_gyro_stabilized_mounts
+		icon = GFX_generic_mio_department_icon_ship_capital_ship_offense
+
+		position = { x=1 y=1 }
+		relative_position_id = generic_mio_trait_anti_air_layout
+
+		all_parents = { generic_mio_trait_anti_air_layout generic_mio_trait_secondary_battery_layout }
+
+		equipment_bonus = {
+			anti_air_attack = 0.04
+			lg_attack = 0.05
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_secondary_fire_director_control
+		name = generic_mio_trait_secondary_fire_director_control
+		icon = GFX_generic_mio_department_icon_ship_capital_ship_offense
+
+		position = { x=0 y=1 }
+		relative_position_id = generic_mio_trait_gyro_stabilized_mounts
+
+		any_parent = { generic_mio_trait_gyro_stabilized_mounts }
+
+		equipment_bonus = {
+			anti_air_attack = 0.04
+			naval_light_gun_hit_chance_factor = 0.05
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_combat_information_center
+		name = generic_mio_trait_combat_information_center
+		icon = GFX_generic_mio_trait_icon_max_strength
+
+		position = { x=0 y=2 }
+		relative_position_id = generic_mio_trait_secondary_fire_director_control
+
+		all_parents = { generic_mio_trait_advanced_armor_design generic_mio_trait_secondary_fire_director_control }
+		any_parent =  { generic_mio_trait_super_heavy_shells generic_mio_trait_semi_armor_piercing_shells generic_mio_trait_high_velocity_guns }
+
+		equipment_bonus = {
+			max_strength = 0.1
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_primary_battery_layout
+		name = generic_mio_trait_primary_battery_layout
+		icon = GFX_generic_mio_trait_icon_hg_attack
+
+		position = { x=2 y=0 }
+		relative_position_id = generic_mio_trait_secondary_battery_layout
+
+		limit_to_equipment_type = { capital_ship }
+
+		equipment_bonus = {
+			hg_attack = 0.05
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_super_heavy_shells
+		name = generic_mio_trait_super_heavy_shells
+		icon = GFX_generic_mio_trait_icon_hg_attack
+
+		position = { x=-1 y=2 }
+		relative_position_id = generic_mio_trait_primary_battery_layout
+
+		any_parent = { generic_mio_trait_primary_battery_layout }
+
+		mutually_exclusive = { generic_mio_trait_semi_armor_piercing_shells generic_mio_trait_high_velocity_guns }
+
+		equipment_bonus = {
+			hg_attack = 0.05
+			hg_armor_piercing = 0.05
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_semi_armor_piercing_shells
+		name = generic_mio_trait_semi_armor_piercing_shells
+		icon = GFX_generic_mio_trait_icon_lg_attack
+
+		position = { x=1 y=0 }
+		relative_position_id = generic_mio_trait_super_heavy_shells
+
+		any_parent = { generic_mio_trait_primary_battery_layout }
+
+		limit_to_equipment_type = {
+			mio_cat_eq_all_battleship
+		}
+
+		mutually_exclusive = { generic_mio_trait_super_heavy_shells generic_mio_trait_high_velocity_guns }
+
+		equipment_bonus = {
+			lg_attack = 0.05
+			lg_armor_piercing = 0.05
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_high_velocity_guns
+		name = generic_mio_trait_high_velocity_guns
+		icon = GFX_generic_mio_trait_icon_ap_attack
+
+		position = { x=2 y=0 }
+		relative_position_id = generic_mio_trait_super_heavy_shells
+
+		any_parent = { generic_mio_trait_primary_battery_layout }
+
+		mutually_exclusive = { generic_mio_trait_super_heavy_shells generic_mio_trait_semi_armor_piercing_shells }
+
+		equipment_bonus = {
+			lg_armor_piercing = 0.15
+			hg_armor_piercing = 0.15
+			build_cost_ic = 0.05
+		}
+	}
+	
+	
+	trait = {
+		token = yato_rat
+		name = "Yamato"
+		icon = GFX_generic_mio_trait_icon_armor_value
+		special_trait_background = yes
+		limit_to_equipment_type = {mio_cat_tech_all_capital_ship_and_modules}
+
+		available = {
+		JAP = {
+			has_completed_focus = JAP_the_ultimate_battleship
+		    }
+	    }
+
+
+		position = { x=-1 y= 0  }
+		relative_position_id = generic_mio_trait_secondary_fire_director_control
+
+		equipment_bonus = {
+			armor_value = 0.1
+			build_cost_ic = 0.1
+			surface_detection = 0.05
+			naval_speed = 0.05
+		}
 	}
 }
+
+
+
+
 
 JAP_yokosuka_naval_arsenal_organization = {
 	include = generic_task_force_ship_organization
@@ -976,13 +1274,349 @@ JAP_maizuru_naval_arsenal_organization = {
 	}
 }
 
-JAP_sasebo_naval_arsenal_organization = {
-	include = generic_raider_ship_organization
+
+
+
+JAP_sasebo_naval_arsenal = {
+	name = "Sasebo Naval Arsenal"
 	icon = GFX_idea_sasebo_naval_arsenal
+
 	allowed = {	
-		tag = JAP
+				OR = {
+					original_tag = JAP
+					original_tag = MAN
+				}
+	}
+
+	equipment_type = {
+		capital_ship
+		screen_ship
+		submarine
+	}
+	research_categories = {
+		mio_cat_tech_all_capital_ship_and_modules
+		mio_cat_tech_all_screen_ship_and_modules
+		mio_cat_tech_all_submarine_and_modules
+	}
+	
+	tree_header_text = {
+		text = mio_header_long_range_focus
+		x = 1
+	}
+
+	tree_header_text = {
+		text = mio_header_high_speed_focus
+		x = 7
+	}
+
+	initial_trait = {
+		name = generic_mio_initial_trait_raiding_fleet
+
+		organization_modifier = {
+			military_industrial_organization_research_bonus = 0.05
+		}
+		equipment_bonus = {
+			surface_visibility = -0.025
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_long_range_raiding
+		name = generic_mio_trait_long_range_raiding
+		icon = GFX_generic_mio_department_icon_ship_general_engine
+
+		position = { x=1 y=0 }
+
+		mutually_exclusive = { generic_mio_trait_high_speed_raiding }
+
+		equipment_bonus = {
+			naval_range = 0.05
+			fuel_consumption = 0.05
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_high_speed_raiding
+		name = generic_mio_trait_high_speed_raiding
+		icon = GFX_generic_mio_trait_icon_maximum_speed
+
+		position = { x=6 y=0 }
+		relative_position_id = generic_mio_trait_long_range_raiding
+
+		mutually_exclusive = { generic_mio_trait_long_range_raiding }
+
+		equipment_bonus = {
+			naval_speed = 0.05
+			fuel_consumption = 0.05
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_diesel_powerplants
+		name = generic_mio_trait_diesel_powerplants
+		icon = GFX_generic_mio_trait_icon_fuel_consumption
+
+		position = { x=-1 y=1 }
+		relative_position_id = generic_mio_trait_long_range_raiding
+
+		any_parent = { generic_mio_trait_long_range_raiding }
+
+		equipment_bonus = {
+			fuel_consumption = -0.08
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_high_speed_operation_stores
+		name = generic_mio_trait_high_speed_operation_stores
+		icon = GFX_generic_mio_trait_icon_mines
+
+		position = { x=1 y=1 }
+		relative_position_id = generic_mio_trait_high_speed_raiding
+
+		any_parent = { generic_mio_trait_high_speed_raiding }
+
+		visible = {
+			has_dlc = "Man the Guns"
+		}
+
+		equipment_bonus = {
+			naval_speed = 0.05
+			fuel_consumption = 0.05
+		
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_high_speed_operation_stores_no_mtg
+		name = generic_mio_trait_high_speed_operation_stores
+		icon = GFX_generic_mio_trait_icon_mines
+
+		position = { x=0 y=0 }
+		relative_position_id = generic_mio_trait_high_speed_operation_stores
+
+		any_parent = { generic_mio_trait_high_speed_raiding }
+
+		visible = {
+			NOT = { has_dlc = "Man the Guns" }
+		}
+
+		equipment_bonus = {
+			naval_speed = 0.05
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_raiding_capital_ships
+		name = generic_mio_trait_raiding_capital_ships
+		icon = GFX_generic_mio_department_icon_ship_capital_ship_weapons
+
+		position = { x=1 y=2 }
+		relative_position_id = generic_mio_trait_long_range_raiding
+
+		any_parent = { generic_mio_trait_long_range_raiding generic_mio_trait_high_speed_raiding }
+
+		limit_to_equipment_type = { capital_ship }
+
+		equipment_bonus = {
+			surface_visibility = -0.025
+			hg_attack = 0.05
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_long_range_engagement_ethos
+		name = generic_mio_trait_long_range_engagement_ethos
+		icon = GFX_generic_mio_department_icon_ship_capital_ship_weapons
+
+		position = { x=-1 y=1 }
+		relative_position_id = generic_mio_trait_raiding_capital_ships
+
+		any_parent = { generic_mio_trait_raiding_capital_ships }
+
+		limit_to_equipment_type = { capital_ship }
+
+		equipment_bonus = {
+			surface_visibility = -0.025
+			hg_attack = 0.05
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_high_quality_optics
+		name = generic_mio_trait_high_quality_optics
+		icon = GFX_generic_mio_trait_icon_surface_detection
+
+		position = { x=1 y=1 }
+		relative_position_id = generic_mio_trait_raiding_capital_ships
+
+		any_parent = { generic_mio_trait_raiding_capital_ships }
+
+		mutually_exclusive = { generic_mio_trait_spotting_tops }
+
+		equipment_bonus = {
+			surface_detection = 0.1
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_raider_escort_requirements
+		name = generic_mio_trait_raider_escort_requirements
+		icon = GFX_generic_mio_department_icon_ship_screen_ship_engine
+
+		position = { x=-1 y=1 }
+		relative_position_id = generic_mio_trait_long_range_engagement_ethos
+
+		any_parent = { generic_mio_trait_long_range_engagement_ethos }
+
+		limit_to_equipment_type = { screen_ship }
+
+		equipment_bonus = {
+			naval_range = 0.05
+			naval_speed = 0.05
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_unescorted_raider_requirements
+		name = generic_mio_trait_unescorted_raider_requirements
+		icon = GFX_generic_mio_trait_icon_lg_attack
+
+		position = { x=1 y=1 }
+		relative_position_id = generic_mio_trait_long_range_engagement_ethos
+
+		all_parents = { generic_mio_trait_long_range_engagement_ethos generic_mio_trait_high_quality_optics }
+
+		limit_to_equipment_type = { capital_ship }
+
+		equipment_bonus = {
+			lg_attack = 0.04
+		}
+	}
+
+
+	
+
+
+
+
+	trait = {
+		token = generic_mio_trait_raiding_cruisers
+		name = generic_mio_trait_raiding_cruisers
+		icon = GFX_generic_mio_trait_icon_surface_visibility
+
+		position = { x=-3 y=2 }
+		relative_position_id = generic_mio_trait_high_speed_raiding
+
+		any_parent = { generic_mio_trait_long_range_raiding generic_mio_trait_high_speed_raiding }
+
+		limit_to_equipment_type = { ship_hull_cruiser }
+
+		equipment_bonus = {
+			surface_visibility = -0.025
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_raiding_submarines
+		name = generic_mio_trait_raiding_submarines
+		icon = GFX_generic_mio_department_icon_ship_submarine_survivability
+
+		position = { x=2 y=0 }
+		relative_position_id = generic_mio_trait_raiding_cruisers
+
+		any_parent = { generic_mio_trait_high_speed_raiding generic_mio_trait_long_range_raiding }
+
+		limit_to_equipment_type = { submarine }
+
+		equipment_bonus = {
+			surface_visibility = -0.025
+			sub_visibility = -0.05
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_spotting_tops
+		name = generic_mio_trait_spotting_tops
+		icon = GFX_generic_mio_trait_icon_surface_visibility		
+
+		position = { x=1 y=1 }
+		relative_position_id = generic_mio_trait_raiding_cruisers
+
+		all_parents = { generic_mio_trait_raiding_cruisers generic_mio_trait_raiding_submarines }
+
+		mutually_exclusive = { generic_mio_trait_high_quality_optics }
+
+		limit_to_equipment_type = { capital_ship screen_ship }
+
+		equipment_bonus = {
+			surface_visibility = -0.025
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_large_torpedo_banks
+		name = generic_mio_trait_large_torpedo_banks
+		icon = GFX_generic_mio_trait_icon_torpedo_attack
+
+		position = { x=1 y=1 }
+		relative_position_id = generic_mio_trait_raiding_submarines
+
+		any_parent = { generic_mio_trait_raiding_submarines }
+
+		equipment_bonus = {
+			torpedo_attack = 0.02
+		}
+	}
+
+
+    trait = {
+		token = torp_wall
+		name = "Sea Wall"
+		icon = GFX_generic_mio_trait_icon_torpedo_attack
+
+		position = { x=2 y=0 }
+		relative_position_id = generic_mio_trait_raiding_submarines
+
+		
+		allowed = {	
+		tag = JAP	
+		    available = {
+		           JAP = {
+			       has_completed_focus = JAP_toyokawa_naval_arsenal
+		    }
+	    }
+	}
+
+		all_parents = { generic_mio_trait_raiding_submarines }
+
+		equipment_bonus = {
+			torpedo_attack = 0.08
+		}
+	}
+
+	trait = {
+		token = generic_mio_trait_mass_produced_raiders
+		name = generic_mio_trait_mass_produced_raiders
+		icon = GFX_generic_mio_department_icon_ship_general_production
+
+		position = { x=1 y=1 }
+		relative_position_id = generic_mio_trait_spotting_tops
+
+		all_parents = { generic_mio_trait_spotting_tops generic_mio_trait_large_torpedo_banks }
+
+		production_bonus = {
+			production_resource_penalty_factor = 0.05
+			production_resource_need_factor= 0.05
+			production_capacity_factor = 0.1
+		}
 	}
 }
+
+
+
+
+
 
 ###########################
 
@@ -1296,7 +1930,7 @@ trait = {
 	}
 
 		equipment_bonus = {
-		air_range = 0.35
+		air_range = 0.45
 		air_agility = 0.05
 		defense = -0.1
 
@@ -1418,7 +2052,7 @@ JAP_tokyo_gas = {
 		position = { x=4 y=0}
 		equipment_bonus = {
 			build_cost_ic = -0.1
-			reliability= -0.05
+			reliability= 0.05
 		}
 	}
 	trait = {
@@ -1430,7 +2064,7 @@ JAP_tokyo_gas = {
 		equipment_bonus = {
 			soft_attack = 0.6
 			hard_attack = 0.6
-			build_cost_ic = 0.05
+			build_cost_ic = 0.1
 			fuel_consumption_factor = 0.05
 		}
 	}
@@ -1446,9 +2080,10 @@ JAP_tokyo_gas = {
 		mutually_exclusive = { half_tracked }
 
 		equipment_bonus = {
-			breakthrough = 0.75
+			breakthrough = 0.55
 		}
 	}
+	
 
 	trait = {
 		token = half_tracked
@@ -1509,8 +2144,8 @@ JAP_tokyo_gas = {
 		any_parent = { half_tracked fully_tracked }
 
 		equipment_bonus = {
-			soft_attack = 0.75
-			hard_attack = 0.75
+			soft_attack = 0.80
+			hard_attack = 0.70
 		}
 	}
 	trait = {
@@ -1558,7 +2193,7 @@ JAP_tokyo_gas = {
 		any_parent = { better_drivetrain }
 
 		equipment_bonus = {
-			reliability = 0.075
+			reliability = 0.05
 		}
 	}
 	trait = {
@@ -1574,9 +2209,31 @@ JAP_tokyo_gas = {
 
 		equipment_bonus = {
 			breakthrough = 0.4
-			defense = 0.3
+			defense = 0.6
 		}
 	}
+	trait = {
+		token = mech_thug_hunter
+		name = "bulletproof glass"
+		icon = GFX_generic_mio_department_icon_mechanized_engine
+		tag = JAP	
+		    available = {
+		           JAP = {
+			       has_completed_focus = JAP_mechanization_program
+		    }
+	    }
+		position = { x=1 y=0 }
+		relative_position_id = reli
+
+		
+		limit_to_equipment_type = { mechanized_equipment }
+		any_parent = { reli }		
+
+		equipment_bonus = {
+			breakthrough = 0.70
+		}
+	}
+
 	trait = {
 		token = comms_eq
 		name = "Tank Standard Communication Equipment"
@@ -1624,7 +2281,7 @@ JAP_tokyo_gas = {
 
 		equipment_bonus = {
 			reliability = 0.1
-			
+			build_cost_ic =0.025
 		}
 	}
 	trait = {
@@ -1640,14 +2297,10 @@ JAP_tokyo_gas = {
 
 		equipment_bonus = {
 			build_cost_ic = -0.075
-			reliability = -0.025
+			reliability = -0.05
 		}
 	}
 }
-
-
-
-
 ishikawa = {
 	include = generic_armored_car_organization 
 	name = "Ishikawajima Heavy industries"
