@@ -18,6 +18,7 @@ NGame = {
 	MAX_SCRIPTED_LOC_RECURSION = 30,				-- max recursion for scripted localizations																				
 	HANDS_OFF_START_TAG = "BRA",					-- tag for player country for -hands_off runs. use an existing tag that is less likely to affect the game
 	ALERT_SFX_COOLDOWN_DAYS = 14,					-- After playing an alert sound, don't play the same sound for XXX days, even if it fires again.
+	MUSIC_PLAYER_RECENTLY_PLAYED_SIZE = 10,			-- The music player keeps track of recently played music to try and avoid playing the same songs too often. This determines the max number of songs in the recently played list.
 },
 
 NDiplomacy = {
@@ -625,6 +626,7 @@ NIndustrialOrganisation = {
 	DEFAULT_INITIAL_POLICY_ATTACH_COST = 50,		-- Default start attach cost in PP for policies
 	DEFAULT_INITIAL_ATTACH_POLICY_COOLDOWN = 180,	-- Default start cooldown in days after attaching a policy
 	LEGACY_COST_FACTOR_SCALE = 1.0,					-- Multiplier to use when legacy Designer cost factors is applied to MIOs (<IdeaGroup>_cost_factor)
+	FUNDS_FOR_SIZE_UP_LEVEL_POW = 1.8, 							-- the power we applie to the mio size when calculating funds to level up. 	
 },
 
 NProduction = {
@@ -2406,6 +2408,7 @@ NAITheatre = {
 NAI = {
 	--AAT
 	
+	EQUIPMENT_MARKET_WANTED_CONVOY_USAGE_RATIO = 0.3,               -- If the AI's available/free/unused convoys is reduced to this ratio (0.3 = 30 %), start buying convoys.
 
 	EQUIPMENT_MARKET_BASE_MARKET_RATIO = 0.2,                       -- The AI tries to keep ca this ratio of equipment surplus for sale on the market. Gets modified by equipment_market_for_sale_factor AI strategy.
 	DIPLOMACY_PURCHASE_EQUIPMENT_MONTHS = 2,    -- AI will not ask to purchase equipment more often than this
