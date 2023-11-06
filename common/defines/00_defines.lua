@@ -612,8 +612,8 @@ NMarket = {
 NIndustrialOrganisation = {
 	ASSIGN_DESIGN_TEAM_PP_COST_PER_DAY = 0.1,					-- Cost in Political Power daily generation when one MIO is assigned to a research slot
 	ASSIGN_INDUSTRIAL_MANUFACTURER_PP_COST_PER_DAY = 0.0,		-- Cost in Political Power daily generation when one MIO is assigned to a production line
-	FUNDS_FOR_SIZE_UP = 1000,					-- Funds needed for a MIO to increment its size and get points to unlock traits
-	FUNDS_FOR_SIZE_UP_LEVEL_FACTOR = 0.8, 			-- How much each level mutliplies the funds for size up 
+	FUNDS_FOR_SIZE_UP = 200,					-- Funds needed for a MIO to increment its size and get points to unlock traits
+	FUNDS_FOR_SIZE_UP_LEVEL_FACTOR = 800, 			-- How much each level mutliplies the funds for size up 
 	UNLOCKED_TRAITS_PER_SIZE_UP = 1,			-- Number of points for unlocking traits obtained when the MIO increments its size
 	DESIGN_TEAM_CHANGE_XP_COST = 1,				-- Flat cost added to the XP cost of a new equipment design
 	FUNDS_FOR_RESEARCH_COMPLETION_PER_RESEARCH_COST = 500,     -- Funds added to MIO when the Design Team has completed a research, multiplied by research_cost in technology template
@@ -626,7 +626,7 @@ NIndustrialOrganisation = {
 	DEFAULT_INITIAL_POLICY_ATTACH_COST = 50,		-- Default start attach cost in PP for policies
 	DEFAULT_INITIAL_ATTACH_POLICY_COOLDOWN = 180,	-- Default start cooldown in days after attaching a policy
 	LEGACY_COST_FACTOR_SCALE = 1.0,					-- Multiplier to use when legacy Designer cost factors is applied to MIOs (<IdeaGroup>_cost_factor)
-	FUNDS_FOR_SIZE_UP_LEVEL_POW = 1.8, 							-- the power we applie to the mio size when calculating funds to level up. 	
+	FUNDS_FOR_SIZE_UP_LEVEL_POW = 1					-- the power we applie to the mio size when calculating funds to level up. 	
 },
 
 NProduction = {
