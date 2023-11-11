@@ -4317,6 +4317,27 @@ foreign_politics = {
 
 		complete_effect = {
 			hidden_effect = {
+				ENG = {
+					USA = {
+						add_to_array = { ENG.faction_members_array = THIS.id }
+					}
+					if = {
+						limit = {
+							any_of_scopes={array=ENG.faction_members_array NOT={is_in_array= { GLOBAL.fuel_countries = THIS.id} } }
+						}
+						for_each_scope_loop = {
+							array = ENG.faction_members_array
+							if={limit={NOT={is_in_array= { GLOBAL.fuel_countries = THIS.id} } }
+								add_to_array= { GLOBAL.fuel_countries = THIS.id} }
+						}
+					}
+					set_variable= { send_fuel_enabled = 2 }
+					for_each_scope_loop = {
+						array = ENG.faction_members_array
+						set_variable= { send_fuel_enabled = 2 }
+					}
+				}
+				
 				
 				GER = {
 					country_event = { id = germany.320 days = 7 }
