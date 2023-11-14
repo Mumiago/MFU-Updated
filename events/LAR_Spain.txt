@@ -467,6 +467,13 @@ country_event = {
 					}
 				}
 				# If Negotiate Carlist Support has been taken, add Nationalist units in Navarra
+				if = {
+					limit = {
+						SPR = {
+							has_completed_focus = SPA_negotiate_carlist_support
+						}
+					}
+				
 					division_template = {
 						name = "Requeté Carlista"
 						template_counter = 8
@@ -495,6 +502,7 @@ country_event = {
 							count = 5
 						}
 					}
+				}
 			
 				# If Republicans secured the Guardia Civil, add Civil divisions to random states for the Republicans, and Asalto divisions to random states for the Nationalists
 				if = {
@@ -523,7 +531,7 @@ country_event = {
 							check_variable = { var = SPA_garrison_control value = 3 compare = greater_than_or_equals }
 						}
 						create_unit = {
-							division = "division_template = \"División de la Guardia de Asalto\" start_experience_factor = 0.3" 
+							division = "division_template = \"División de la Guardia de Asalto\" start_experience_factor = 0.1" 
 							owner = SPR
 							allow_spawning_on_enemy_provs = yes
 						}
@@ -533,7 +541,7 @@ country_event = {
 							check_variable = { var = SPA_garrison_control value = 3 compare = greater_than_or_equals }
 						}
 						create_unit = {
-							division = "division_template = \"División de la Guardia de Asalto\" start_experience_factor = 0.3" 
+							division = "division_template = \"División de la Guardia de Asalto\" start_experience_factor = 0.1" 
 							owner = SPR
 							allow_spawning_on_enemy_provs = yes
 						}
@@ -543,39 +551,42 @@ country_event = {
 							check_variable = { var = SPA_garrison_control value = 3 compare = greater_than_or_equals }
 						}
 						create_unit = {
-							division = "division_template = \"División de la Guardia de Asalto\" start_experience_factor = 0.3" 
+							division = "division_template = \"División de la Guardia de Asalto\" start_experience_factor = 0.1" 
 							owner = SPR
 							allow_spawning_on_enemy_provs = yes
 						}
 					}
-					if = {
+					random_state = {
 						limit = {
-							difficulty > 1
-							ROOT = {
-								is_ai = no
-							}
+							check_variable = { var = SPA_garrison_control value = 3 compare = greater_than_or_equals }
 						}
-						random_state = {
-							limit = {
-								check_variable = { var = SPA_garrison_control value = 3 compare = greater_than_or_equals }
-							}
-							create_unit = {
-								division = "division_template = \"División de la Guardia de Asalto\" start_experience_factor = 0.3" 
-								owner = SPR
-								allow_spawning_on_enemy_provs = yes
-							}
-						}
-						random_state = {
-							limit = {
-								check_variable = { var = SPA_garrison_control value = 3 compare = greater_than_or_equals }
-							}
-							create_unit = {
-								division = "division_template = \"División de la Guardia de Asalto\" start_experience_factor = 0.3" 
-								owner = SPR
-								allow_spawning_on_enemy_provs = yes
-							}
+						create_unit = {
+							division = "division_template = \"División de la Guardia de Asalto\" start_experience_factor = 0.1" 
+							owner = SPR
+							allow_spawning_on_enemy_provs = yes
 						}
 					}
+					random_state = {
+						limit = {
+							check_variable = { var = SPA_garrison_control value = 3 compare = greater_than_or_equals }
+						}
+						create_unit = {
+							division = "division_template = \"División de la Guardia de Asalto\" start_experience_factor = 0.1" 
+							owner = SPR
+							allow_spawning_on_enemy_provs = yes
+						}
+					}
+					random_state = {
+						limit = {
+							check_variable = { var = SPA_garrison_control value = 3 compare = greater_than_or_equals }
+						}
+						create_unit = {
+							division = "division_template = \"División de la Guardia de Asalto\" start_experience_factor = 0.1" 
+							owner = SPR
+							allow_spawning_on_enemy_provs = yes
+						}
+					}
+					
 					SPN = {
 						division_template = {
 							name = "Brigada de la Guardia Civil"
@@ -586,9 +597,7 @@ country_event = {
 								infantry_spain = { x = 0 y = 0 }
 								infantry_spain = { x = 0 y = 1 }
 								infantry_spain = { x = 0 y = 2 }
-								
 								infantry_spain = { x = 1 y = 0 }
-								infantry_spain = { x = 1 y = 1 }
 							}
 							support = {
 								anti_air_company = { x = 0 y = 0 }
@@ -615,7 +624,7 @@ country_event = {
 							division = "division_template = \"Brigada de la Guardia Civil\" start_experience_factor = 0.1" 
 							owner = SPN
 							allow_spawning_on_enemy_provs = yes
-							count = 1
+							count = 2
 						}
 					}
 					random_state = {
@@ -637,7 +646,7 @@ country_event = {
 							division = "division_template = \"Brigada de la Guardia Civil\" start_experience_factor = 0.1" 
 							owner = SPN
 							allow_spawning_on_enemy_provs = yes
-							count = 1
+							count = 2
 						}
 					}
 					random_state = {
@@ -660,7 +669,7 @@ country_event = {
 							division = "division_template = \"Brigada de la Guardia Civil\" start_experience_factor = 0.1" 
 							owner = SPN
 							allow_spawning_on_enemy_provs = yes
-							count = 1
+							count = 2
 						}
 					}
 					random_state = {
@@ -682,10 +691,56 @@ country_event = {
 							division = "division_template = \"Brigada de la Guardia Civil\" start_experience_factor = 0.1" 
 							owner = SPN
 							allow_spawning_on_enemy_provs = yes
-							count = 1
+							count = 2
 						}
 					}
 					random_state = {
+						limit = {
+							OR = {
+								is_core_of = SPR
+								is_core_of = SPN
+							}
+							check_variable = { var = SPA_garrison_control value = 2 compare = less_than_or_equals }
+							NOT = {
+								state = 790
+								state = 792
+								state = 177
+								state = 178
+								
+							}
+						}
+						create_unit = {
+							division = "division_template = \"Brigada de la Guardia Civil\" start_experience_factor = 0.1" 
+							owner = SPN
+							allow_spawning_on_enemy_provs = yes
+							count = 2
+						}
+					}
+					random_state = {
+						limit = {
+							OR = {
+								is_core_of = SPR
+								is_core_of = SPN
+							}
+							check_variable = { var = SPA_garrison_control value = 2 compare = less_than_or_equals }
+							NOT = {
+								state = 790
+								state = 792
+								state = 177
+								state = 178
+								
+							}
+						}
+						create_unit = {
+							division = "division_template = \"Brigada de la Guardia Civil\" start_experience_factor = 0.1" 
+							owner = SPN
+							allow_spawning_on_enemy_provs = yes
+							count = 2
+						}
+					}
+					
+					random_state = {
+						
 						limit = {
 							OR = {
 								is_core_of = SPR
@@ -708,6 +763,7 @@ country_event = {
 						}
 					}
 					random_state = {
+						
 						limit = {
 							OR = {
 								is_core_of = SPR
@@ -728,107 +784,7 @@ country_event = {
 							allow_spawning_on_enemy_provs = yes
 							count = 1
 						}
-					}
-					if = {
-						limit = {
-							difficulty > 1
-							ROOT = {
-								is_ai = no
-							}
-						}
-						random_state = {
-							
-							limit = {
-								OR = {
-									is_core_of = SPR
-									is_core_of = SPN
-								}
-								check_variable = { var = SPA_garrison_control value = 2 compare = less_than_or_equals }
-								NOT = {
-									state = 790
-									state = 792
-									state = 177
-									state = 178
-									
-								}
-							}
-							create_unit = {
-								division = "division_template = \"Brigada de la Guardia Civil\" start_experience_factor = 0.1" 
-								owner = SPN
-								allow_spawning_on_enemy_provs = yes
-								count = 1
-							}
-						}
-						random_state = {
-							
-							limit = {
-								OR = {
-									is_core_of = SPR
-									is_core_of = SPN
-								}
-								check_variable = { var = SPA_garrison_control value = 2 compare = less_than_or_equals }
-								NOT = {
-									state = 790
-									state = 792
-									state = 177
-									state = 178
-									
-								}
-							}
-							create_unit = {
-								division = "division_template = \"Brigada de la Guardia Civil\" start_experience_factor = 0.1" 
-								owner = SPN
-								allow_spawning_on_enemy_provs = yes
-								count = 1
-							}
-						}
-						random_state = {
-							
-							limit = {
-								OR = {
-									is_core_of = SPR
-									is_core_of = SPN
-								}
-								check_variable = { var = SPA_garrison_control value = 2 compare = less_than_or_equals }
-								NOT = {
-									state = 790
-									state = 792
-									state = 177
-									state = 178
-									
-								}
-							}
-							create_unit = {
-								division = "division_template = \"Brigada de la Guardia Civil\" start_experience_factor = 0.1" 
-								owner = SPN
-								allow_spawning_on_enemy_provs = yes
-								count = 1
-							}
-						}
-						random_state = {
-							
-							limit = {
-								OR = {
-									is_core_of = SPR
-									is_core_of = SPN
-								}
-								check_variable = { var = SPA_garrison_control value = 2 compare = less_than_or_equals }
-								NOT = {
-									state = 790
-									state = 792
-									state = 177
-									state = 178
-									
-								}
-							}
-							create_unit = {
-								division = "division_template = \"Brigada de la Guardia Civil\" start_experience_factor = 0.1" 
-								owner = SPN
-								allow_spawning_on_enemy_provs = yes
-								count = 1
-							}
-						}
-					}
+					}	
 				}
 				# If Republicans secured the Guardia de Asalto, do the opposite distribution
 				else_if = {
@@ -844,9 +800,9 @@ country_event = {
 							infantry_spain = { x = 0 y = 0 }
 							infantry_spain = { x = 0 y = 1 }
 							infantry_spain = { x = 0 y = 2 }
-							
 							infantry_spain = { x = 1 y = 0 }
 							infantry_spain = { x = 1 y = 1 }
+							infantry_spain = { x = 1 y = 2 }
 						}
 						support = {
 							anti_air_company = { x = 0 y = 0 }
@@ -942,74 +898,39 @@ country_event = {
 							count = 1
 						}
 					}
-					if = {
+					random_state = {
 						limit = {
-							difficulty > 1
-							ROOT = {
-								is_ai = no
+							check_variable = { var = SPA_garrison_control value = 3 compare = greater_than_or_equals }
+							NOT = {
+								state = 177
+								state = 178
 							}
 						}
-						random_state = {
-							limit = {
-								check_variable = { var = SPA_garrison_control value = 3 compare = greater_than_or_equals }
-								NOT = {
-									state = 177
-									state = 178
-								}
-							}
-							create_unit = {
-								division = "division_template = \"Brigada de la Guardia Civil\" start_experience_factor = 0.1" 
-								owner = SPR
-								allow_spawning_on_enemy_provs = yes
-								count = 1
-							}
-						}
-						random_state = {
-							limit = {
-								check_variable = { var = SPA_garrison_control value = 3 compare = greater_than_or_equals }
-								NOT = {
-									state = 177
-									state = 178
-								}
-							}
-							create_unit = {
-								division = "division_template = \"Brigada de la Guardia Civil\" start_experience_factor = 0.1" 
-								owner = SPR
-								allow_spawning_on_enemy_provs = yes
-								count = 1
-							}
-						}
-						random_state = {
-							limit = {
-								check_variable = { var = SPA_garrison_control value = 3 compare = greater_than_or_equals }
-								NOT = {
-									state = 177
-									state = 178
-								}
-							}
-							create_unit = {
-								division = "division_template = \"Brigada de la Guardia Civil\" start_experience_factor = 0.1" 
-								owner = SPR
-								allow_spawning_on_enemy_provs = yes
-								count = 1
-							}
-						}
-						random_state = {
-							limit = {
-								check_variable = { var = SPA_garrison_control value = 3 compare = greater_than_or_equals }
-								NOT = {
-									state = 177
-									state = 178
-								}
-							}
-							create_unit = {
-								division = "division_template = \"Brigada de la Guardia Civil\" start_experience_factor = 0.1" 
-								owner = SPR
-								allow_spawning_on_enemy_provs = yes
-								count = 1
-							}
+						create_unit = {
+							division = "division_template = \"Brigada de la Guardia Civil\" start_experience_factor = 0.1" 
+							owner = SPR
+							allow_spawning_on_enemy_provs = yes
+							count = 1
 						}
 					}
+					random_state = {
+						limit = {
+							check_variable = { var = SPA_garrison_control value = 3 compare = greater_than_or_equals }
+							NOT = {
+								state = 177
+								state = 178
+							}
+						}
+						create_unit = {
+							division = "division_template = \"Brigada de la Guardia Civil\" start_experience_factor = 0.1" 
+							owner = SPR
+							allow_spawning_on_enemy_provs = yes
+							count = 1
+						}
+					}
+					
+					
+				
 					SPN = {
 						division_template = {
 							name = "División de la Guardia de Asalto"
@@ -1022,7 +943,6 @@ country_event = {
 								infantry_spain = { x = 0 y = 2 }
 								infantry_spain = { x = 1 y = 0 }
 								infantry_spain = { x = 1 y = 1 }
-								infantry_spain = { x = 1 y = 2 }
 							}
 							support = {
 								anti_air_company = { x = 0 y = 0 }
@@ -1065,38 +985,6 @@ country_event = {
 							owner = SPN
 							allow_spawning_on_enemy_provs = yes
 						}
-					}
-					random_state = {
-						limit = {
-							check_variable = { var = SPA_garrison_control value = 2 compare = less_than_or_equals }
-							check_variable = { var = SPA_garrison_control value = 1 compare = greater_than_or_equals }
-							if = {
-								limit = {
-									ROOT = {
-										is_ai = yes
-										OR = {
-											AND = {
-												is_historical_focus_on = yes
-												has_game_rule = {
-													rule = SPR_ai_behavior 
-													option = DEFAULT
-												}
-											}
-											has_country_flag = SPR_AI_RANDOM_NATIONALIST_HISTORICAL
-											has_game_rule = {
-												rule = SPR_ai_behavior 
-												option = NATIONALIST_HISTORICAL
-											}
-										}
-									}
-								}
-								NOT = {
-									state = 790
-									state = 792
-									state = 177
-								}
-							}
-						}
 						create_unit = {
 							division = "division_template = \"División de la Guardia de Asalto\" start_experience_factor = 0.3" 
 							owner = SPN
@@ -1139,87 +1027,175 @@ country_event = {
 							owner = SPN
 							allow_spawning_on_enemy_provs = yes
 						}
+						create_unit = {
+							division = "division_template = \"División de la Guardia de Asalto\" start_experience_factor = 0.3" 
+							owner = SPN
+							allow_spawning_on_enemy_provs = yes
+						}
+
 					}
-					if = {
+					random_state = {
 						limit = {
-							difficulty > 1
-							ROOT = {
-								is_ai = no
-							}
-						}
-						random_state = {
-							limit = {
-								check_variable = { var = SPA_garrison_control value = 2 compare = less_than_or_equals }
-								check_variable = { var = SPA_garrison_control value = 1 compare = greater_than_or_equals }
-								if = {
-									limit = {
-										ROOT = {
-											is_ai = yes
-											OR = {
-												AND = {
-													is_historical_focus_on = yes
-													has_game_rule = {
-														rule = SPR_ai_behavior 
-														option = DEFAULT
-													}
-												}
-												has_country_flag = SPR_AI_RANDOM_NATIONALIST_HISTORICAL
+							check_variable = { var = SPA_garrison_control value = 2 compare = less_than_or_equals }
+							check_variable = { var = SPA_garrison_control value = 1 compare = greater_than_or_equals }
+							if = {
+								limit = {
+									ROOT = {
+										is_ai = yes
+										OR = {
+											AND = {
+												is_historical_focus_on = yes
 												has_game_rule = {
 													rule = SPR_ai_behavior 
-													option = NATIONALIST_HISTORICAL
+													option = DEFAULT
 												}
+											}
+											has_country_flag = SPR_AI_RANDOM_NATIONALIST_HISTORICAL
+											has_game_rule = {
+												rule = SPR_ai_behavior 
+												option = NATIONALIST_HISTORICAL
 											}
 										}
 									}
-									NOT = {
-										state = 790
-										state = 177
-										state = 792
-									}
+								}
+								NOT = {
+									state = 790
+									state = 792
+									state = 177
 								}
 							}
-							create_unit = {
-								division = "division_template = \"División de la Guardia de Asalto\" start_experience_factor = 0.3" 
-								owner = SPN
-								allow_spawning_on_enemy_provs = yes
-							}
 						}
-						random_state = {
-							limit = {
-								check_variable = { var = SPA_garrison_control value = 2 compare = less_than_or_equals }
-								check_variable = { var = SPA_garrison_control value = 1 compare = greater_than_or_equals }
-								if = {
-									limit = {
-										ROOT = {
-											is_ai = yes
-											OR = {
-												AND = {
-													is_historical_focus_on = yes
-													has_game_rule = {
-														rule = SPR_ai_behavior 
-														option = DEFAULT
-													}
-												}
-												has_country_flag = SPR_AI_RANDOM_NATIONALIST_HISTORICAL
+						create_unit = {
+							division = "division_template = \"División de la Guardia de Asalto\" start_experience_factor = 0.3" 
+							owner = SPN
+							allow_spawning_on_enemy_provs = yes
+						}
+						create_unit = {
+							division = "division_template = \"División de la Guardia de Asalto\" start_experience_factor = 0.3" 
+							owner = SPN
+							allow_spawning_on_enemy_provs = yes
+						}
+					}
+					random_state = {
+						limit = {
+							check_variable = { var = SPA_garrison_control value = 2 compare = less_than_or_equals }
+							check_variable = { var = SPA_garrison_control value = 1 compare = greater_than_or_equals }
+							if = {
+								limit = {
+									ROOT = {
+										is_ai = yes
+										OR = {
+											AND = {
+												is_historical_focus_on = yes
 												has_game_rule = {
 													rule = SPR_ai_behavior 
-													option = NATIONALIST_HISTORICAL
+													option = DEFAULT
 												}
+											}
+											has_country_flag = SPR_AI_RANDOM_NATIONALIST_HISTORICAL
+											has_game_rule = {
+												rule = SPR_ai_behavior 
+												option = NATIONALIST_HISTORICAL
 											}
 										}
 									}
-									NOT = {
-										state = 790
-										state = 177
-										state = 792
-									}
+								}
+								NOT = {
+									state = 790
+									state = 177
+									state = 792
 								}
 							}
-							create_unit = {
-								division = "division_template = \"División de la Guardia de Asalto\" start_experience_factor = 0.3" 
-								owner = SPN
-								allow_spawning_on_enemy_provs = yes
+						}
+						create_unit = {
+							division = "division_template = \"División de la Guardia de Asalto\" start_experience_factor = 0.3" 
+							owner = SPN
+							allow_spawning_on_enemy_provs = yes
+						}
+						create_unit = {
+							division = "division_template = \"División de la Guardia de Asalto\" start_experience_factor = 0.3" 
+							owner = SPN
+							allow_spawning_on_enemy_provs = yes
+						}
+					}
+					
+					random_state = {
+						limit = {
+							check_variable = { var = SPA_garrison_control value = 2 compare = less_than_or_equals }
+							check_variable = { var = SPA_garrison_control value = 1 compare = greater_than_or_equals }
+							if = {
+								limit = {
+									ROOT = {
+										is_ai = yes
+										OR = {
+											AND = {
+												is_historical_focus_on = yes
+												has_game_rule = {
+													rule = SPR_ai_behavior 
+													option = DEFAULT
+												}
+											}
+											has_country_flag = SPR_AI_RANDOM_NATIONALIST_HISTORICAL
+											has_game_rule = {
+												rule = SPR_ai_behavior 
+												option = NATIONALIST_HISTORICAL
+											}
+										}
+									}
+								}
+								NOT = {
+									state = 790
+									state = 177
+									state = 792
+								}
 							}
+						}
+						create_unit = {
+							division = "division_template = \"División de la Guardia de Asalto\" start_experience_factor = 0.3" 
+							owner = SPN
+							allow_spawning_on_enemy_provs = yes
+						}
+						create_unit = {
+							division = "division_template = \"División de la Guardia de Asalto\" start_experience_factor = 0.3" 
+							owner = SPN
+							allow_spawning_on_enemy_provs = yes
+						}
+					}
+					random_state = {
+						limit = {
+							check_variable = { var = SPA_garrison_control value = 2 compare = less_than_or_equals }
+							check_variable = { var = SPA_garrison_control value = 1 compare = greater_than_or_equals }
+							if = {
+								limit = {
+									ROOT = {
+										is_ai = yes
+										OR = {
+											AND = {
+												is_historical_focus_on = yes
+												has_game_rule = {
+													rule = SPR_ai_behavior 
+													option = DEFAULT
+												}
+											}
+											has_country_flag = SPR_AI_RANDOM_NATIONALIST_HISTORICAL
+											has_game_rule = {
+												rule = SPR_ai_behavior 
+												option = NATIONALIST_HISTORICAL
+											}
+										}
+									}
+								}
+								NOT = {
+									state = 790
+									state = 177
+									state = 792
+								}
+							}
+						}
+						create_unit = {
+							division = "division_template = \"División de la Guardia de Asalto\" start_experience_factor = 0.3" 
+							owner = SPN
+							allow_spawning_on_enemy_provs = yes
 						}
 					}
 				}
@@ -1499,20 +1475,14 @@ country_event = {
 							allow_spawning_on_enemy_provs = yes
 							count = 1
 						}
-						if = {
-							limit = {
-								difficulty > 1
-								ROOT = {
-									is_ai = no
-								}
-							}
-							create_unit = {
-								division = "division_template = \"Brigada de Juventudes Sindicales\" start_experience_factor = 0.2" 
-								owner = SPN
-								allow_spawning_on_enemy_provs = yes
-								count = 1
-							}
+						
+						create_unit = {
+							division = "division_template = \"Brigada de Juventudes Sindicales\" start_experience_factor = 0.2" 
+							owner = SPN
+							allow_spawning_on_enemy_provs = yes
+							count = 1
 						}
+						
 					}
 					random_state = {
 						limit = {
@@ -1551,58 +1521,14 @@ country_event = {
 							allow_spawning_on_enemy_provs = yes
 							count = 1
 						}
-						if = {
-							limit = {
-								difficulty > 1
-								ROOT = {
-									is_ai = no
-								}
-							}
-							create_unit = {
-								division = "division_template = \"Brigada de Juventudes Sindicales\" start_experience_factor = 0.2" 
-								owner = SPN
-								allow_spawning_on_enemy_provs = yes
-								count = 1
-							}
-						}
-					}
-					random_state = {
-						limit = {
-							check_variable = { var = SPA_garrison_control value = 2 compare = less_than_or_equals }
-							check_variable = { var = SPA_garrison_control value = 1 compare = greater_than_or_equals }
-							if = {
-								limit = {
-									ROOT = {
-										is_ai = yes
-										OR = {
-											AND = {
-												is_historical_focus_on = yes
-												has_game_rule = {
-													rule = SPR_ai_behavior 
-													option = DEFAULT
-												}
-											}
-											has_country_flag = SPR_AI_RANDOM_NATIONALIST_HISTORICAL
-											has_game_rule = {
-												rule = SPR_ai_behavior 
-												option = NATIONALIST_HISTORICAL
-											}
-										}
-									}
-								}
-								NOT = {
-									state = 790
-									state = 792
-									state = 177
-								}
-							}
-						}
+						
 						create_unit = {
 							division = "division_template = \"Brigada de Juventudes Sindicales\" start_experience_factor = 0.2" 
 							owner = SPN
 							allow_spawning_on_enemy_provs = yes
 							count = 1
 						}
+						
 					}	
 				}
 				# If Republicans had time to Distribute Arms to the People, add these divisions to random states that have at MOST WEAK Nationalist control
@@ -1626,82 +1552,6 @@ country_event = {
 							support = {
 								anti_air_company = { x = 0 y = 0 }
 							}
-						}
-					}
-					random_state = {
-						limit = {
-							check_variable = { var = SPA_garrison_control value = 2 compare = less_than_or_equals }
-							check_variable = { var = SPA_garrison_control value = 1 compare = greater_than_or_equals }
-							if = {
-								limit = {
-									ROOT = {
-										is_ai = yes
-										OR = {
-											AND = {
-												is_historical_focus_on = yes
-												has_game_rule = {
-													rule = SPR_ai_behavior 
-													option = DEFAULT
-												}
-											}
-											has_country_flag = SPR_AI_RANDOM_NATIONALIST_HISTORICAL
-											has_game_rule = {
-												rule = SPR_ai_behavior 
-												option = NATIONALIST_HISTORICAL
-											}
-										}
-									}
-								}
-								NOT = {
-									state = 790
-									state = 792
-									state = 177
-								}
-							}
-						}
-						create_unit = {
-							division = "division_template = \"Brigada Popular\" start_experience_factor = 0" 
-							owner = SPN
-							allow_spawning_on_enemy_provs = yes
-							count = 2
-						}
-					}
-					random_state = {
-						limit = {
-							check_variable = { var = SPA_garrison_control value = 2 compare = less_than_or_equals }
-							check_variable = { var = SPA_garrison_control value = 1 compare = greater_than_or_equals }
-							if = {
-								limit = {
-									ROOT = {
-										is_ai = yes
-										OR = {
-											AND = {
-												is_historical_focus_on = yes
-												has_game_rule = {
-													rule = SPR_ai_behavior 
-													option = DEFAULT
-												}
-											}
-											has_country_flag = SPR_AI_RANDOM_NATIONALIST_HISTORICAL
-											has_game_rule = {
-												rule = SPR_ai_behavior 
-												option = NATIONALIST_HISTORICAL
-											}
-										}
-									}
-								}
-								NOT = {
-									state = 790
-									state = 792
-									state = 177
-								}
-							}
-						}
-						create_unit = {
-							division = "division_template = \"Brigada Popular\" start_experience_factor = 0" 
-							owner = SPN
-							allow_spawning_on_enemy_provs = yes
-							count = 2
 						}
 					}
 					random_state = {
