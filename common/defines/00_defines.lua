@@ -636,7 +636,7 @@ NProduction = {
 	MINIMUM_NUMBER_OF_FACTORIES_TAKEN_BY_CONSUMER_GOODS_PERCENT = 0,	-- The minimum number of factories we have to put on consumer goods, in percent.
 	--BBA
 	LEND_LEASE_DELIVERY_TOTAL_DAYS = 30,                    -- Nr of days between lend lease deliveries
-	BASE_NAVAL_EQUIPMENT_CONVERSION_IC_COST_FACTOR = 0.0,       -- Fraction of the hull industry cost which is always included in the refitting cost.
+	BASE_NAVAL_EQUIPMENT_CONVERSION_IC_COST_FACTOR = 0.3,       -- Fraction of the hull industry cost which is always included in the refitting cost.
 	BASE_LAND_EQUIPMENT_CONVERSION_IC_COST_FACTOR = 0.0,        -- Fraction of the chassis industry cost which is always included in the conversion cost.
 
 	FLOATING_HARBOR_MAX_NAV_FACTORIES_PER_LINE = 5,
@@ -3205,7 +3205,7 @@ NAI = {
 	UPGRADE_DIVISION_RELUCTANCE = 7,					-- How often to consider upgrading to new templates for units in the field
 	UPGRADE_PERCENTAGE_OF_FORCES = 0.1,					-- How big part of the army that should be considered for upgrading
 
-    REFIT_SHIP_RELUCTANCE = 28,							-- How often to consider refitting to new equipment variants for ships in the field
+    REFIT_SHIP_RELUCTANCE = 12,							-- How often to consider refitting to new equipment variants for ships in the field
 	REFIT_SHIP_PERCENTAGE_OF_FORCES = 0.1,				-- How big part of the navy that should be considered for refitting
 	STRATEGIC_BOMBING_DEFENCE_IMPORTANCE = 500.0,
 	
