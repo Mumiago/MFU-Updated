@@ -1058,6 +1058,12 @@ PAR_instant_effect_decisions = {
 			base = 1000			
 		}
 		available = {
+			NOT = {
+				has_country_leader = {
+					name = "Karl Doenitz"
+					ruling_only = yes
+				}
+			}
 			date > 1942.1.1
 			GER = {
 				OR = {
@@ -1106,6 +1112,12 @@ PAR_instant_effect_decisions = {
 			base = 1000			
 		}
 		available = {
+			NOT = {
+				has_country_leader = {
+					name = "Karl Doenitz"
+					ruling_only = yes
+				}
+			}
 			date > 1942.1.1
 			OR = {
 				SOV = {
@@ -1156,6 +1168,12 @@ PAR_instant_effect_decisions = {
 			base = 1000			
 		}
 		available = {
+			NOT = {
+				has_country_leader = {
+					name = "Karl Doenitz"
+					ruling_only = yes
+				}
+			}
 			date > 1942.1.1
 			NOT = {
 				GER = {
@@ -2920,29 +2938,53 @@ PAR_instant_effect_decisions = {
 		fire_only_once = no
 
 		complete_effect = {
-			every_state = {
+			if = {
 				limit = {
-					has_state_flag = YUG_already_spawned
-					is_core_of = YUG
-					OR = {
-						is_fully_controlled_by = GER  
-						is_fully_controlled_by = ITA 
-						is_fully_controlled_by = HUN 
-						is_fully_controlled_by = BUL 
-						is_fully_controlled_by = ROM 
+					any_state  = {
+						is_core_of = YUG 
+						is_controlled_by = SOV
 					}
 				}
-				clr_state_flag = YUG_already_spawned 
-				remove_province_modifier = {
-					static_modifiers = { titov_modding }
-					province = {
-						all_provinces = yes
+				every_state = {
+					limit = {
+						has_state_flag = YUG_already_spawned
+						is_core_of = YUG
+						OR = {
+							is_fully_controlled_by = GER  
+							is_fully_controlled_by = ITA 
+							is_fully_controlled_by = HUN 
+							is_fully_controlled_by = BUL 
+							is_fully_controlled_by = ROM 
+						}
 					}
+					clr_state_flag = YUG_already_spawned 
+					add_resistance = -60
 				}
-				add_resistance = -60
 			}
-		}
+			else = {
+				every_state = {
+					limit = {
+						is_core_of = YUG
+						OR = {
+							is_fully_controlled_by = GER  
+							is_fully_controlled_by = ITA 
+							is_fully_controlled_by = HUN 
+							is_fully_controlled_by = BUL 
+							is_fully_controlled_by = ROM 
+						}
+					}
+					clr_state_flag = YUG_has_tito_modifier
+					remove_province_modifier = {
+						static_modifiers = { titov_modding }
+						province = {
+							all_provinces = yes
+						}
+					}
+				}
+			}
+		}	
 	}
+	
 
 	YUG_yugoslav_partisans_spawned_1 = {
 		allowed = { tag = PAR }
@@ -2989,6 +3031,24 @@ PAR_instant_effect_decisions = {
 			SOV = {
 				set_country_flag = SOV_its_tito_time
 			}
+			every_state = {
+				limit = {
+					NOT = {
+						has_state_flag = YUG_has_tito_modifier
+						state = 764
+						state = 45
+						state = 163
+					}
+					is_core_of = YUG
+				}
+				set_state_flag = YUG_has_tito_modifier
+				add_province_modifier = {
+					static_modifiers = { titov_modding }
+					province = {
+							all_provinces = yes
+					}
+				}
+			}
 			if = {
 				limit = {
 					105 = {
@@ -3000,12 +3060,7 @@ PAR_instant_effect_decisions = {
 				}
 				105 = {
 					set_state_flag = YUG_already_spawned 
-					add_province_modifier = {
-					static_modifiers = { titov_modding }
-					province = {
-							all_provinces = yes
-						}
-					}
+					
 					teleport_armies = {
 						to_state = 6
 					}
@@ -3120,12 +3175,7 @@ PAR_instant_effect_decisions = {
 				}
 				104 = {
 					set_state_flag = YUG_already_spawned 
-					add_province_modifier = {
-					static_modifiers = { titov_modding }
-					province = {
-							all_provinces = yes
-						}
-					}
+					
 					teleport_armies = {
 						to_state = 6
 					}
@@ -3266,12 +3316,7 @@ PAR_instant_effect_decisions = {
 				}
 				103 = {
 					set_state_flag = YUG_already_spawned 
-					add_province_modifier = {
-					static_modifiers = { titov_modding }
-					province = {
-							all_provinces = yes
-						}
-					}
+					
 					teleport_armies = {
 						to_state = 6
 					}
@@ -3368,12 +3413,7 @@ PAR_instant_effect_decisions = {
 				}
 				108 = {
 					set_state_flag = YUG_already_spawned 
-					add_province_modifier = {
-					static_modifiers = { titov_modding }
-					province = {
-							all_provinces = yes
-						}
-					}
+					
 					teleport_armies = {
 						to_state = 6
 					}
@@ -3491,12 +3531,7 @@ PAR_instant_effect_decisions = {
 				}
 				106 = {
 					set_state_flag = YUG_already_spawned 
-					add_province_modifier = {
-					static_modifiers = { titov_modding }
-					province = {
-							all_provinces = yes
-						}
-					}
+					
 					teleport_armies = {
 						to_state = 6
 					}
@@ -3603,12 +3638,7 @@ PAR_instant_effect_decisions = {
 				}
 				107 = {
 					set_state_flag = YUG_already_spawned 
-					add_province_modifier = {
-					static_modifiers = { titov_modding }
-					province = {
-							all_provinces = yes
-						}
-					}
+					
 					teleport_armies = {
 						to_state = 6
 					}
@@ -3715,12 +3745,7 @@ PAR_instant_effect_decisions = {
 				}
 				109 = {
 					set_state_flag = YUG_already_spawned 
-					add_province_modifier = {
-					static_modifiers = { titov_modding }
-					province = {
-							all_provinces = yes
-						}
-					}
+					
 					teleport_armies = {
 						to_state = 6
 					}
@@ -3845,12 +3870,7 @@ PAR_instant_effect_decisions = {
 				}
 				102 = {
 					set_state_flag = YUG_already_spawned 
-					add_province_modifier = {
-					static_modifiers = { titov_modding }
-					province = {
-							all_provinces = yes
-						}
-					}
+					
 					teleport_armies = {
 						to_state = 6
 					}

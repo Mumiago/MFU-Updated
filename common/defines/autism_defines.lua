@@ -1,7 +1,7 @@
 NDefines.NGame.LAG_DAYS_FOR_LOWER_SPEED = 250
 NDefines.NGame.LAG_DAYS_FOR_PAUSE = 200
 NDefines.NGame.COMBAT_LOG_MAX_MONTHS = 36
-NDefines.NCountry.EVENT_PROCESS_OFFSET = 40 -- Performance enhancer. --TW/WTT
+NDefines.NCountry.EVENT_PROCESS_OFFSET = 25 -- Performance enhancer. --TW/WTT
 NDefines.NGame.GAME_SPEED_SECONDS = { 600.0, 0.31 , 0.28, 0.21, 0.12 }
 ---Diplomacy
 NDefines.NDiplomacy.PEACE_SCORE_PER_PASS = 2.0
@@ -37,7 +37,7 @@ NDefines_Graphics.NGraphics.AIRBASE_ICON_DISTANCE_CUTOFF = 900
 NDefines_Graphics.NGraphics.NAVALBASE_ICON_DISTANCE_CUTOFF = 900
 NDefines_Graphics.NGraphics.RESISTANCE_COLOR_GOOD = {0.0, 0.65, 0, 1}
 
-NDefines.NCountry.INTERPOLATED_FRONT_STEPS_SHORT = 1				-- Performance optimization - The amount of steps for interpolated fronts. Non-AI countries got full interpolated fronts, the rest has optimized version of it.
+NDefines.NCountry.INTERPOLATED_FRONT_STEPS_SHORT = 2				-- Performance optimization - The amount of steps for interpolated fronts. Non-AI countries got full interpolated fronts, the rest has optimized version of it.
 
 NDefines_Graphics.NGraphics.CAPITAL_ICON_CUTOFF = 1000	-- At what camera distance capital icons disappears
 NDefines_Graphics.NGraphics.NAVAL_MINES_DISTANCE_CUTOFF = 250
