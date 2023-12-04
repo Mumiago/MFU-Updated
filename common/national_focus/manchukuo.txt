@@ -218,7 +218,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			
 			remove_ideas = {MAN_banditry}
 			hidden_effect ={
 				IF={
@@ -368,13 +368,14 @@ focus_tree = {
 		}
 	}
 
-#LEFT SIDE
+#POST BANDIT FOCUS'S
 	focus = {
-		id = MAN_one
+		id = MAN_the_law_on_zaibatsu_regulations
 		icon = GFX_goal_tfv_saf_anti_colonialist_crusade
 		mutually_exclusive = { focus = MAN_obedience focus = MAN_kwantung_army_takes_control }
 		x = -7
 		y = 3
+		#prerequisite = { focus = MAN_pacify_the_countryside }
 		cost = 5
 
 		relative_position_id = MAN_pacify_the_countryside
@@ -393,38 +394,23 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			#diff puppet level
-
-			random_core_state = {
-				prioritize = {328}
-				add_building_construction = {
-					type = industrial_complex
-					level = 2	
-				}
-				add_extra_state_shared_building_slots = 2
-
-				
+			set_power_balance = {
+				id = MAN_centralization_balance
+				left_side = MAN_zaibatsu_side
 			}
-			add_to_variable = {
-				MAN_stability_factor_var = 0.2
-			}
-			add_to_variable = {
-				MAN_political_power_gain_var = -0.2
-			}
-
 		}
 	}
 
 
-	focus = {
-		id = MAN_empower_the_russian_facist_organization
+	focus = { #20 construction speed spirit 
+		id = MAN_corporate_takeover
 		icon = GFX_focus_ETH_re-convene_the_parliament
-		prerequisite = { focus = MAN_one }
+		prerequisite = { focus = MAN_the_law_on_zaibatsu_regulations }
 		x = -1
 		y = 1
 		cost = 5
 
-		relative_position_id = MAN_one
+		relative_position_id = MAN_the_law_on_zaibatsu_regulations
 
 		ai_will_do = {
 			factor = 1
@@ -438,31 +424,34 @@ focus_tree = {
 
 		}
 
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
 		complete_tooltip = {
 
 		}
 
 		completion_reward = {
-
+			custom_effect_tooltip = MAN_modify_industry_dynamic_modifier_ns_intro
 			add_to_variable = {
-				MAN_stability_factor_var = -0.05
-				
+				var = MAN_military_industry_dm_production_speed_buildings_factor
+				value = 0.2 
+				tooltip = buildings_build_speed_factor_tooltip
 			}
-			recruit_character = MAN_vladimir_kislitsin
-
 		}
 	}
 
-	focus = {
-		id = MAN_three
+	focus = { #Adds Japanese designers to manchuria 
+		id = MAN_yuki_onna
 		icon = GFX_goal_generic_forceful_treaty
 		x = 1
 		y = 1
 
 		cost = 5
-		prerequisite = { focus = MAN_one }
+		prerequisite = { focus = MAN_the_law_on_zaibatsu_regulations }
 
-		relative_position_id = MAN_one
+		relative_position_id = MAN_the_law_on_zaibatsu_regulations
 
 		ai_will_do = {
 			factor = 1
@@ -476,26 +465,31 @@ focus_tree = {
 
 		}
 
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
 		complete_tooltip = {
 
 		}
 
 		completion_reward = {
-
+			add_political_power = 100
+			custom_effect_tooltip = MAN_enables_japanese_factories_kawaiii_tt
 		}
 	}
 
 	focus = { 
-		id = MAN_four
+		id = MAN_the_imperial_corporate_state
 		icon = GFX_focus_jap_zaibatsu
 		x = 0
 		y = 2
 
 		cost = 5
-		prerequisite = { focus = MAN_empower_the_russian_facist_organization }
-		prerequisite = { focus = MAN_three }
+		prerequisite = { focus = MAN_corporate_takeover }
+		prerequisite = { focus = MAN_yuki_onna }
 
-		relative_position_id = MAN_one
+		relative_position_id = MAN_the_law_on_zaibatsu_regulations
 
 		ai_will_do = {
 			factor = 1
@@ -509,25 +503,29 @@ focus_tree = {
 
 		}
 
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
 		complete_tooltip = {
 
 		}
 
 		completion_reward = {
-
+			JAP = { set_autonomy = { target = MAN autonomy_state = autonomy_wtt_imperial_subject } }	
 		}
 	}
 
 	focus = { 
-		id = MAN_five
+		id = MAN_modernizing_the_economy
 		icon = GFX_goal_generic_construction
 		x = 0
 		y = 1
 
 		cost = 5
-		prerequisite = { focus = MAN_four }
+		prerequisite = { focus = MAN_the_imperial_corporate_state }
 
-		relative_position_id = MAN_four
+		relative_position_id = MAN_the_imperial_corporate_state
 
 		ai_will_do = {
 			factor = 1
@@ -560,15 +558,15 @@ focus_tree = {
 	}
 
 	focus = { 
-		id = MAN_six
+		id = MAN_nothing_is_free
 		icon = GFX_goal_generic_construct_civ_factory
 		x = -1
 		y = 1
 
 		cost = 5
-		prerequisite = { focus = MAN_five }
+		prerequisite = { focus = MAN_modernizing_the_economy }
 
-		relative_position_id = MAN_five
+		relative_position_id = MAN_modernizing_the_economy
 
 		ai_will_do = {
 			factor = 1
@@ -582,25 +580,31 @@ focus_tree = {
 
 		}
 
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
 		complete_tooltip = {
 
 		}
 
 		completion_reward = {
-
+			remove_resource_rights = 716
+			remove_resource_rights = 328
+			add_stability = 0.1 
 		}
 	}	
 
 	focus = { 
-		id = MAN_seven
+		id = MAN_mukden_industrial_complex
 		icon = GFX_focus_generic_hydroelectric_energy
 		x = 1
 		y = 1
 
 		cost = 5
-		prerequisite = { focus = MAN_five }
+		prerequisite = { focus = MAN_modernizing_the_economy }
 
-		relative_position_id = MAN_five
+		relative_position_id = MAN_modernizing_the_economy
 
 		ai_will_do = {
 			factor = 1
@@ -614,25 +618,37 @@ focus_tree = {
 
 		}
 
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
 		complete_tooltip = {
 
 		}
 
 		completion_reward = {
+			random_core_state = {
+				add_extra_state_shared_building_slots = 4 
+				add_building_construction = {
+					type = arms_factory
+					level = 4
+					instant_build = yes 
+				}
+			}
 		}
 	}	
 
 	focus = { 
-		id = MAN_eight
+		id = MAN_strike_the_earth
 		icon = GFX_focus_generic_stockpile_fuel
 		x = -2
 		y = 2
 
 		cost = 5
-		prerequisite = { focus = MAN_six }
-		prerequisite = { focus = MAN_seven }
+		prerequisite = { focus = MAN_nothing_is_free }
+		prerequisite = { focus = MAN_mukden_industrial_complex }
 
-		relative_position_id = MAN_five
+		relative_position_id = MAN_modernizing_the_economy
 
 		ai_will_do = {
 			factor = 1
@@ -646,26 +662,52 @@ focus_tree = {
 
 		}
 
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
 		complete_tooltip = {
 
 		}
 
 		completion_reward = {
 
+			unlock_decision_tooltip = MAN_develop_kirin_aluminium_deposits
+			unlock_decision_tooltip = MAN_develop_liaotung_iron_ore_deposits
+
+			random_owned_state = {
+				limit = {
+					steel > 0 
+				}
+				add_extra_state_shared_building_slots = 2 
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes 
+				}
+				add_resource = {
+					type = tungsten 
+					amount = 5 
+				}
+				add_resource = {
+					type = steel 
+					amount = 20 
+				}
+			}
 		}
 	}	
 
 	focus = { 
-		id = MAN_nine
+		id = MAN_bleed_the_earth
 		icon = GFX_focus_generic_improve_roads
 		x = 0
 		y = 2
 
 		cost = 5
-		prerequisite = { focus = MAN_six }
-		prerequisite = { focus = MAN_seven }
+		prerequisite = { focus = MAN_nothing_is_free }
+		prerequisite = { focus = MAN_mukden_industrial_complex }
 
-		relative_position_id = MAN_five
+		relative_position_id = MAN_modernizing_the_economy
 
 		ai_will_do = {
 			factor = 1
@@ -678,26 +720,51 @@ focus_tree = {
 		bypass = {
 
 		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
 		complete_tooltip = {
 
 		}
 
 		completion_reward = {
-			
+			761 = {
+				add_extra_state_shared_building_slots = 2 
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes 
+				}
+				add_building_construction = {
+					type = fuel_silo
+					level = 2
+					instant_build = yes 
+				}
+				add_resource = {
+					type = aluminium 
+					amount = 5 
+				}
+				add_resource = {
+					type = oil 
+					amount = 20 
+				}
+			}
 		}
 	}	
 
 	focus = { 
-		id = MAN_ten
+		id = MAN_shape_the_earth
 		icon = GFX_focus_SOV_south_manchuria_railway
 		x = 2
 		y = 2
 
 		cost = 5
-		prerequisite = { focus = MAN_six }
-		prerequisite = { focus = MAN_seven }
+		prerequisite = { focus = MAN_nothing_is_free }
+		prerequisite = { focus = MAN_mukden_industrial_complex }
 
-		relative_position_id = MAN_five
+		relative_position_id = MAN_modernizing_the_economy
 
 		ai_will_do = {
 			factor = 1
@@ -711,25 +778,50 @@ focus_tree = {
 
 		}
 
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
 		complete_tooltip = {
 
 		}
 
 		completion_reward = {
+			random_core_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes 
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes 
+				}
+				add_resource = {
+					type = chromium 
+					amount = 5 
+				}
+				add_resource = {
+					type = aluminium 
+					amount = 20 
+				}
+			}
 
 		}
 	}	
 
 	focus = { 
-		id = MAN_eleven
+		id = MAN_all_in_the_name_of_profit
 		icon = GFX_focus_spa_the_spanish_miracle
 		x = 0
 		y = 3
 
 		cost = 5
-		prerequisite = { focus = MAN_eight focus = MAN_nine focus = MAN_ten }
+		prerequisite = { focus = MAN_strike_the_earth focus = MAN_bleed_the_earth focus = MAN_shape_the_earth }
 
-		relative_position_id = MAN_five
+		relative_position_id = MAN_modernizing_the_economy
 
 		ai_will_do = {
 			factor = 1
@@ -743,16 +835,23 @@ focus_tree = {
 
 		}
 
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
 		complete_tooltip = {
 
 		}
 
 		completion_reward = {
-
+			custom_effect_tooltip = MAN_modify_industry_dynamic_modifier_ns_intro
+			add_to_variable = {
+				var = MAN_military_industry_dm_industrial_capacity_factory_factor
+				value = 0.2 
+				tooltip = industrial_capacity_factory_tooltip
+			}
 		}
-	}
-	
-#OBEDIENCE
+	}	
 
 	focus = {
 		id = MAN_obedience
@@ -1264,8 +1363,6 @@ focus_tree = {
 		}
 	}
 
-#OPIUM FOCUS'S
-
 	focus = {
 		id = MAN_opium_trade
 		icon = GFX_focus_SOV_the_road_of_life
@@ -1273,9 +1370,9 @@ focus_tree = {
 		y = 1
 
 		cost = 5
-		prerequisite = { focus = MAN_one focus = MAN_obedience }
+		prerequisite = { focus = MAN_the_law_on_zaibatsu_regulations focus = MAN_obedience }
 
-		relative_position_id = MAN_one
+		relative_position_id = MAN_the_law_on_zaibatsu_regulations
 
 		ai_will_do = {
 			factor = 1
@@ -1433,7 +1530,6 @@ focus_tree = {
 		}
 	}
 
-#RIGHT SIDE
 	focus = {
 		id = MAN_kwantung_army_takes_control
 		icon = GFX_focus_ITA_banda_carita
@@ -2211,7 +2307,6 @@ focus_tree = {
 		}
 	}								
 
-#JAPAN SUPPORT FOCUS'S
 	focus = {
 		id = MAN_support_from_japan
 		icon = GFX_focus_spr_crush_the_revolution
@@ -2280,9 +2375,7 @@ focus_tree = {
 
 		completion_reward = {
 		}
-	}
-	
-#ARMY FOCUS'S
+	}															
 
 	focus = {
 		id = MAN_the_bear_never_sleeps
