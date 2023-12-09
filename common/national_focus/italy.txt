@@ -4182,12 +4182,17 @@ focus_tree = {
 						state = 160
 					}
 				}
+				add_building_construction  = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
 				add_building_construction = {
 					type = infrastructure
 					level = 2
 					instant_build = yes
 				}
-				add_extra_state_shared_building_slots = 10
+				add_extra_state_shared_building_slots = 4
 			}
 
 		}
@@ -4227,18 +4232,24 @@ focus_tree = {
 			#}
 			add_resource = {
 				type = steel
-				amount = 28
+				amount = 20
 				state = 158
 			}
 			add_resource = {
 				type = tungsten
-				amount = 8
+				amount = 6
 				state = 158
 			}
 			add_resource = {
 				type = chromium
-				amount = 18
+				amount = 12
 				state = 158
+			}
+			custom_effect_tooltip = ITA_modify_ricostruzione_industriale_dynamic_modifier_ns_intro
+			add_to_variable = { 
+				var = ITA_iri_production_speed_arms_factory_factor 
+				value = 0.1
+				tooltip = arms_factory_build_speed_factor_tooltip
 			}
 		}
 	}
@@ -4341,6 +4352,11 @@ focus_tree = {
 				value = 0.15 
 				tooltip = buildings_build_speed_factor_tooltip
 			}
+			add_to_variable = { 
+				var = ITA_iri_production_speed_arms_factory_factor 
+				value = -0.15
+				tooltip = arms_factory_build_speed_factor_tooltip
+			}
 		}
 	}
 ###cq to import new techs
@@ -4359,11 +4375,7 @@ focus_tree = {
 
 		completion_reward = {
 			custom_effect_tooltip = ITA_modify_ricostruzione_industriale_dynamic_modifier_ns_intro
-			add_to_variable = { 
-				var = ITA_industry_consumer_goods_modifier 
-				value = 0.03
-				tooltip = consumer_goods_tooltip
-			}
+		
 			add_tech_bonus = {
 				bonus = 2
 				uses = 2
@@ -4391,6 +4403,7 @@ focus_tree = {
 
 		completion_reward = {
 			add_offsite_building = { type = industrial_complex level = 5 }
+		
 			every_state = {
 				limit = {
 					OR = {
@@ -4405,12 +4418,12 @@ focus_tree = {
 						state = 162
 					}
 				}
+				add_extra_state_shared_building_slots = 5
 				set_building_level = {
 					type = infrastructure
 					level = 9
 					instant_build = yes
 				}
-				add_extra_state_shared_building_slots = 4
 			}
 			GER = {
 				52 = {
@@ -4678,21 +4691,48 @@ focus_tree = {
 		relative_position_id = ITA_redirect_alfa_romeo_production
 		cost = 5
 		available = { 
-			GER = {
-				has_completed_focus = GER_danzig_or_war
-			}		
+			has_war_with = ENG 		
 		}
 	
 		completion_reward = { 
 			#ITA_bop_low_increase_effect = yes
 			add_stability = -0.2
-
-			custom_effect_tooltip = ITA_modify_ricostruzione_industriale_dynamic_modifier_ns_intro
-            add_to_variable = { 
-				var = ITA_iri_production_speed_arms_factory_factor 
-				value = 0.3
-				tooltip = arms_factory_build_speed_factor_tooltip
+			if = {
+				limit = {
+					has_completed_focus = ITA_iri_ente_permanente
+				}
+				custom_effect_tooltip = ITA_modify_ricostruzione_industriale_dynamic_modifier_ns_intro
+				add_to_variable = { 
+					var = ITA_iri_production_speed_arms_factory_factor 
+					value = 0.3
+					tooltip = arms_factory_build_speed_factor_tooltip
+				}
+				add_to_variable = { 
+					var = ITA_global_building_slots_factor_var 
+					value = 0.3
+					tooltip = global_building_slots_factor_tooltip
+				}
 			}
+			else_if = {
+				limit = {
+					has_completed_focus = ITA_privatize_iri
+				}
+				custom_effect_tooltip = ITA_modify_ricostruzione_industriale_dynamic_modifier_ns_intro
+				add_to_variable = { 
+					var = ITA_iri_production_speed_arms_factory_factor 
+					value = 0.45
+					tooltip = arms_factory_build_speed_factor_tooltip
+				}
+				add_to_variable = { 
+					var = ITA_global_building_slots_factor_var 
+					value = 0.6
+					tooltip = global_building_slots_factor_tooltip
+				}
+			}
+			else = {
+				custom_effect_tooltip = ITA_late_game_bonus_tt
+			}
+			
 			
 		}
 	}
@@ -5237,8 +5277,8 @@ focus_tree = {
          	# ITA_bop_low_decrease_effect = yes
 			add_to_variable = { ITA_re_max_planning = 0.20 }
 			add_to_variable = { ITA_re_planning_speed = 0.25 }
-			add_to_variable = { ITA_re_army_attack_factor = 0.04 }
-			add_to_variable = { ITA_re_army_defence_factor = 0.04 }
+			add_to_variable = { ITA_re_army_attack_factor = 0.05 }
+			add_to_variable = { ITA_re_army_defence_factor = 0.05 }
 			custom_effect_tooltip = ITA_fight_corruption_tt
 			
 		}
