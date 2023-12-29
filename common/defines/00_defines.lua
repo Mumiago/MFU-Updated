@@ -1149,7 +1149,7 @@ NMilitary = {
 	STRATEGIC_INFRA_SPEED = 14.0,                   -- Max of additional speed gained trouh=gh level for strategic redeployment per infra
 	STRATEGIC_REDEPLOY_ORG_RATIO = 0.1,				-- Ratio of max org while strategic redeployment
 	BATALION_NOT_CHANGED_EXPERIENCE_DROP = 0.0,		-- Division experience drop if unit has same batalion
-	BATALION_CHANGED_EXPERIENCE_DROP = 0.6,			-- Division experience drop if unit has different batalion
+	BATALION_CHANGED_EXPERIENCE_DROP = 0.0,			-- Division experience drop if unit has different batalion
 	ARMOR_VS_AVERAGE = 0.05,			                -- how to weight in highest armor & pen vs the division average
 	PEN_VS_AVERAGE = 0.1,
 
@@ -2513,7 +2513,7 @@ NAI = {
 	AIR_DESIGN_DEMAND_MIN = 1,
 	AIR_DESIGN_DEMAND_ABSENT = 0,
 	AIR_DESIGN_CUTOFF_AS_PERCENTAGE_OF_MAX = 0.34,
-	CALL_ALLY_PUPPET_INVITE_OVERLORD = 1000,    -- Desire for a puppet to call its overlord into the war
+	CALL_ALLY_PUPPET_INVITE_OVERLORD = 999,    -- Desire for a puppet to call its overlord into the war
 	CALL_ALLY_OVERLORD_INVITE_PUPPET = 20,      -- Desire for an overlord to call its puppet into the war
 	CALL_ALLY_RELATIVE_INDUSTRY_STRENGTH_THRESHOLD = 1.5, -- If our relative industry strength ratio is less than this (compared to all enemies), increase desire to call allies
 	CALL_ALLY_RELATIVE_ARMY_STRENGTH_THRESHOLD = 1.5,     -- If our relative army strength ratio is less than this (compared to all enemies), increase desire to call allies
