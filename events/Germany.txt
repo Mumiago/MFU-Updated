@@ -343,6 +343,7 @@ country_event = {
 				96 = {
 					OR = {
 						is_controlled_by = GER
+						is_controlled_by = POL
 						any_other_country = {
 							controls_state = 96
 							is_in_faction_with = GER
@@ -358,6 +359,7 @@ country_event = {
 				95 = {
 					OR = {
 						is_controlled_by = GER
+						is_controlled_by = POL
 						any_other_country = {
 							controls_state = 95
 							is_in_faction_with = GER
@@ -373,6 +375,7 @@ country_event = {
 				94 = {
 					OR = {
 						is_controlled_by = GER
+						is_controlled_by = POL
 						any_other_country = {
 							controls_state = 94
 							is_in_faction_with = GER
@@ -388,6 +391,7 @@ country_event = {
 				93 = {
 					OR = {
 						is_controlled_by = GER
+						is_controlled_by = POL
 						any_other_country = {
 							controls_state = 93
 							is_in_faction_with = GER
@@ -403,6 +407,7 @@ country_event = {
 				91 = {
 					OR = {
 						is_controlled_by = GER
+						is_controlled_by = POL
 						any_other_country = {
 							controls_state = 91
 							is_in_faction_with = GER
@@ -418,6 +423,7 @@ country_event = {
 				97 = {
 					OR = {
 						is_controlled_by = GER
+						is_controlled_by = POL
 						any_other_country = {
 							controls_state = 97
 							is_in_faction_with = GER
@@ -433,6 +439,7 @@ country_event = {
 				89 = {
 					OR = {
 						is_controlled_by = GER
+						is_controlled_by = POL
 						any_other_country = {
 							controls_state = 89
 							is_in_faction_with = GER
@@ -448,6 +455,7 @@ country_event = {
 				784 = {
 					OR = {
 						is_controlled_by = GER
+						is_controlled_by = POL
 						any_other_country = {
 							controls_state = 784
 							is_in_faction_with = GER
@@ -463,6 +471,7 @@ country_event = {
 				827 = {
 					OR = {
 						is_controlled_by = GER
+						is_controlled_by = POL
 						any_other_country = {
 							controls_state = 827
 							is_in_faction_with = GER
@@ -545,10 +554,10 @@ country_event = {
 		ai_chance = { factor = 80 }
 
 		trigger = {
-			NOT = {
-				ROM = {
-					has_completed_focus = ROM_secure_our_territorial_integrity
-				}
+			ROM = {
+				controls_state = 76
+				controls_state = 83
+				controls_state = 84
 			}
 		}
 		add_named_threat = { threat = 3 name = GER_second_vienna_award_HUN_north }
@@ -567,11 +576,6 @@ country_event = {
 				controls_state = 76
 				controls_state = 83
 				controls_state = 84
-			}
-			NOT = {
-				ROM = {
-					has_completed_focus = ROM_secure_our_territorial_integrity
-				}
 			}
 		}
 		name = germany.20.b
@@ -593,6 +597,13 @@ country_event = {
 		}
 	}
 	option = { # Give Hungary nothing
+		trigger = {
+			ROM = {
+				NOT = {
+					has_completed_focus = ROM_institute_a_royal_dictatorship
+				}
+			}
+		}
 		name = germany.20.c
 		ai_chance = { 
 			factor = 10 
@@ -609,6 +620,11 @@ country_event = {
 			add_opinion_modifier = { target = GER modifier = GER_second_vienna_award_noland }
 			country_event = { id = hungary.1 }
 			complete_national_focus = HUN_the_return_of_transylvania
+		}
+		hidden_effect = {
+			GER = {
+			country_event = { id = germany.106 }
+			}
 		}
 	}
 }
@@ -1389,6 +1405,11 @@ country_event = {
 		if = {
 			limit = {
 				88 = { is_owned_by = POL }
+				POL = {
+					NOT = {
+						has_completed_focus = POL_embrace_dmowskis_thought
+					}
+				}
 			}
 			POL = { 
 				country_event = { hours = 6 id = germany.52 }
@@ -1445,8 +1466,6 @@ country_event = {
 		name = germany.52.a
 		72 = { add_core_of = POL }
 		POL = { transfer_state = 72 }
-		811 = { add_core_of = POL }
-		POL = { transfer_state = 811 }
 	}
 }
 
@@ -1764,6 +1783,23 @@ country_event = {
 						}
 					}
 				}
+				if = {
+					limit = {
+						CZE = {
+							has_completed_focus = CZE_bonus_research_slot_1
+						}
+					}
+					SLO = {
+						set_research_slots = 5
+					}
+					
+				}
+				else = {
+					SLO = {
+						set_research_slots = 4
+					}
+					
+				}
 				
 				annex_country = { 
 					target = CZE 
@@ -1832,13 +1868,13 @@ country_event = {
 			limit = {
 				72 = {
 					OR = {
+						is_owned_by = CZE
 						is_owned_by = SLO
-						is_owned_by = GER
 					}
 				}
-				country_exists = POL
+				country_exists = GER
 			}
-			POL = { transfer_state = 72 } # Give Poland Zaolzie
+			GER = { transfer_state = 72 }
 		}
 
 		if = {
@@ -1871,17 +1907,7 @@ country_event = {
 				inherit_technology = CZE
 				add_manpower = 50000
 				add_command_power = -50
-				if = {
-					limit = {
-						CZE = {
-							has_completed_focus = CZE_bonus_research_slot_1
-						}
-					}
-					set_research_slots = 5
-				}
-				else = {
-					set_research_slots = 4
-				}
+				
 				if = {
 					limit = {
 						CZE = {
@@ -2155,9 +2181,6 @@ country_event = {
 					add_ideas = operational_reserve_spirit
 				}
 				
-				else = {
-					set_research_slots = 4
-				}
 				
 				set_technology = {
 					slo_1940_light_tank_chassis = 1
@@ -2206,12 +2229,12 @@ country_event = {
 				72 = {
 					OR = {
 						is_owned_by = CZE
-						is_owned_by = GER
+						is_owned_by = SLO
 					}
 				}
-				country_exists = POL
+				country_exists = GER
 			}
-			POL = { transfer_state = 72 } # Give Poland Zaolzie
+			GER = { transfer_state = 72 }
 		}
 		custom_effect_tooltip = end_of_czechoslovakia_mefo_bills_tt
 		add_to_variable = { var = GER_mefo_bill_counter value = -5 }
@@ -2310,7 +2333,7 @@ country_event = {
 	picture = GFX_report_event_german_inspect_troops
 	
 	is_triggered_only = yes
-	
+
 	option = {
 		name = germany.56.a
 		ai_chance = { factor = 100 }
@@ -2318,6 +2341,7 @@ country_event = {
 		transfer_state = 71
 		transfer_state = 73
 		transfer_state = 809
+		transfer_state = 123
 		hidden_effect = {
 			GER = {
 				annex_country = { target = CZE }
@@ -2335,6 +2359,7 @@ country_event = {
 			country_event = { hours = 6 id = news.61 }
 		}
 	}
+	
 	option = {
 		name = germany.56.b
 		ai_chance = { factor = 0 }
@@ -2342,7 +2367,7 @@ country_event = {
 			NOT = { is_puppet_of = GER }
 		}
 		GER = { 
-			country_event = { hours = 6 id = germany.57 }
+			country_event = { hours = 6 id = germany.55 }
 		}
 	}
 }
@@ -4493,26 +4518,6 @@ country_event = {
 			country_event = { id = romania.5 hours = 3 }
 		}
 	}
-	option = { # Give Bulgaria nothing
-		name = germany.106.b
-		ai_chance = { 
-			factor = 10
-			modifier = {
-				factor = 0
-				is_historical_focus_on = yes
-				NOT = {
-					BUL = {
-						is_in_faction = yes
-						NOT = { is_in_faction_with = GER }
-					}
-				}
-			}
-		}
-		BUL = {
-			add_opinion_modifier = { target = GER modifier = GER_treaty_of_craiova_noland }
-			country_event = { id = bulgaria.5 hours = 4 }
-		}
-	}
 }
 
 # Flight of Rudolf No Hindenburg 
@@ -5833,10 +5838,14 @@ country_event = {
 		every_state = {
 			limit = {
 				is_core_of = YUG
+				NOT = {
+					state = 45
+					state = 764
+				}
 			}
 			add_resistance_target = {
 				amount = 5
-				tooltip = Yugoslav_Partisans_1941
+				tooltip = Increased_Yugoslav_resistance_1941
 			}
 			add_resistance = 10
 			add_compliance = -10 
@@ -5863,12 +5872,16 @@ country_event = {
 		every_state = {
 			limit = {
 				is_core_of = YUG
+				NOT = {
+					state = 45
+					state = 764
+				}
 			}
 			add_resistance_target = {
-				amount = 10
-				tooltip = Yugoslav_Partisans_1942
+				amount = 5
+				tooltip = Increased_Yugoslav_resistance_1942
 			}
-			add_resistance = 20
+			add_resistance = 10
 			add_compliance = -20
 		}
 	}	
@@ -5893,12 +5906,16 @@ country_event = {
 		every_state = {
 			limit = {
 				is_core_of = YUG
+				NOT = {
+					state = 45
+					state = 764
+				}
 			}
 			add_resistance_target = {
-				amount = 15
-				tooltip = Yugoslav_Partisans_1943
+				amount = 10
+				tooltip = Increased_Yugoslav_resistance_1943
 			}
-			add_resistance = 30
+			add_resistance = 15
 			add_compliance = -30
 		}
 	}	
@@ -5923,13 +5940,17 @@ country_event = {
 		every_state = {
 			limit = {
 				is_core_of = YUG
+				NOT = {
+					state = 45
+					state = 764
+				}
 			}
 			add_resistance_target = {
-				amount = 15
-				tooltip = Yugoslav_Partisans_1944
+				amount = 5
+				tooltip = Increased_Yugoslav_resistance_1944
 			}
-			add_resistance = 40 
-			add_compliance = -50
+			add_resistance = 20 
+			add_compliance = -30
 		}
 	}	
 	option = {
@@ -6054,6 +6075,12 @@ country_event = {
 				transfer_state = 142
 				transfer_state = 143
 				transfer_state = 144
+				transfer_state = 817
+				transfer_state = 816
+				transfer_state = 815
+				transfer_state = 814
+				transfer_state = 818
+				transfer_state = 819
 			}
 			ENG = {
 				transfer_state = 51
@@ -6069,6 +6096,8 @@ country_event = {
 				transfer_state = 662
 				transfer_state = 448
 				transfer_state = 661
+				transfer_state = 830
+				transfer_state = 831
 				annex_country = {
 					target = ITA
 				}
@@ -6095,6 +6124,7 @@ country_event = {
 				transfer_state = 108
 				transfer_state = 105
 				transfer_state = 106
+				transfer_state = 187
 			}
 			ALB = {
 				transfer_state = 44
@@ -6106,7 +6136,6 @@ country_event = {
 				transfer_state = 47
 				transfer_state = 186
 				transfer_state = 182
-				transfer_state = 187
 				transfer_state = 164
 			}
 			CZE = {
@@ -6116,9 +6145,19 @@ country_event = {
 				transfer_state = 75
 				transfer_state = 72
 				transfer_state = 70
-				transfer_state = 664
 				transfer_state = 809
 				transfer_state = 71
+				transfer_state = 123
+				transfer_state = 664
+			}
+			77 = {
+				remove_core_of = ROM
+			}
+			77 = {
+				add_core_of = BUL
+			}
+			664 = {
+				remove_core_of = HUN
 			}
 			766 = {
 				remove_core_of = ROM
@@ -6158,6 +6197,7 @@ country_event = {
 				transfer_state = 60
 				transfer_state = 4
 				transfer_state = 763
+				transfer_state = 188
 				annex_country = {
 					target = ROM
 				}
@@ -6201,6 +6241,52 @@ country_event = {
 				transfer_state = 68
 				transfer_state = 63
 				transfer_state = 97
+				transfer_state = 811
+				transfer_state = 826
+				transfer_state = 827
+				transfer_state = 828
+			}
+			BUL = {
+				transfer_state = 77
+			}
+			every_country = {
+					limit = { 
+						AND = {
+							check_variable= { 
+								speeches_enabled > 0
+							} 
+							check_variable= { 
+								music_enabled < 2
+							} 
+						}
+					}
+					scoped_sound_effect = "sp_ger_capitulation"
+			}
+			every_country = {
+				limit = { 
+					AND = {
+						check_variable= { 
+							music_enabled > 0
+						} 
+						check_variable= { 
+							speeches_enabled < 2
+						} 
+					}
+				}
+				scoped_sound_effect = "sp_ger_capitulation"
+			}
+			every_country = {
+				limit = { 
+					AND = {
+						check_variable= {
+							music_enabled > 0
+						} 
+						check_variable= { 
+							speeches_enabled > 0
+						} 
+					}
+				}
+				scoped_sound_effect = "sp_ger_capitulation"
 			}
 		}
 	}
@@ -6265,6 +6351,13 @@ country_event = {
 				transfer_state = 142
 				transfer_state = 143
 				transfer_state = 144
+				transfer_state = 817
+				transfer_state = 816
+				transfer_state = 815
+				transfer_state = 814
+				transfer_state = 818
+				transfer_state = 819
+
 			}
 			ENG = {
 				transfer_state = 51
@@ -6280,6 +6373,8 @@ country_event = {
 				transfer_state = 662
 				transfer_state = 448
 				transfer_state = 661
+				transfer_state = 830
+				transfer_state = 831
 				annex_country = {
 					target = ITA
 				}
@@ -6306,6 +6401,7 @@ country_event = {
 				transfer_state = 108
 				transfer_state = 105
 				transfer_state = 106
+				transfer_state = 187
 			}
 			ALB = {
 				transfer_state = 44
@@ -6317,7 +6413,6 @@ country_event = {
 				transfer_state = 47
 				transfer_state = 186
 				transfer_state = 182
-				transfer_state = 187
 				transfer_state = 164
 			}
 			CZE = {
@@ -6327,9 +6422,10 @@ country_event = {
 				transfer_state = 75
 				transfer_state = 72
 				transfer_state = 70
-				transfer_state = 664
 				transfer_state = 809
 				transfer_state = 71
+				transfer_state = 123
+				transfer_state = 664
 			}
 			SOV = {
 				transfer_state = 62
@@ -6339,6 +6435,7 @@ country_event = {
 				transfer_state = 60
 				transfer_state = 4
 				transfer_state = 763
+				transfer_state = 188
 				annex_country = {
 					target = ROM
 				}
@@ -6356,6 +6453,45 @@ country_event = {
 				}
 				annex_country = {
 					target = POL
+				}
+				77 = {
+					remove_core_of = ROM
+				}
+				77 = {
+					add_core_of = BUL
+				}
+				664 = {
+					remove_core_of = HUN
+				}
+				766 = {
+					remove_core_of = ROM
+				}
+				78 = {
+					remove_core_of = ROM
+				}
+				80 = {
+					remove_core_of = ROM
+				}
+				89 = {
+					remove_core_of = POL
+				}
+				91 = {
+					remove_core_of = POL
+				}
+				93 = {
+					remove_core_of = POL
+				}
+				94 = {
+					remove_core_of = POL
+				}
+				95 = {
+					remove_core_of = POL
+				}
+				96 = {
+					remove_core_of = POL
+				}
+				784 = {
+					remove_core_of = POL
 				}
 				release_puppet = ROM
 				release_puppet = BUL
@@ -6382,6 +6518,52 @@ country_event = {
 				transfer_state = 68
 				transfer_state = 63
 				transfer_state = 97
+				transfer_state = 811
+				transfer_state = 826
+				transfer_state = 827
+				transfer_state = 828
+			}
+			BUL = {
+				transfer_state = 77
+			}
+			every_country = {
+					limit = { 
+						AND = {
+							check_variable= { 
+								speeches_enabled > 0
+							} 
+							check_variable= { 
+								music_enabled < 2
+							} 
+						}
+					}
+					scoped_sound_effect = "sp_ger_capitulation"
+			}
+			every_country = {
+				limit = { 
+					AND = {
+						check_variable= { 
+							music_enabled > 0
+						} 
+						check_variable= { 
+							speeches_enabled < 2
+						} 
+					}
+				}
+				scoped_sound_effect = "sp_ger_capitulation"
+			}
+			every_country = {
+				limit = { 
+					AND = {
+						check_variable= {
+							music_enabled > 0
+						} 
+						check_variable= { 
+							speeches_enabled > 0
+						} 
+					}
+				}
+				scoped_sound_effect = "sp_ger_capitulation"
 			}
 		}
 	}
@@ -6434,6 +6616,7 @@ country_event = {
 			transfer_state = 108
 			transfer_state = 105
 			transfer_state = 106
+			transfer_state = 187
 		}
 		ALB = {
 			transfer_state = 44
@@ -6445,7 +6628,6 @@ country_event = {
 			transfer_state = 47
 			transfer_state = 186
 			transfer_state = 182
-			transfer_state = 187
 			transfer_state = 164
 		}
 		SOV = {
@@ -6489,6 +6671,8 @@ country_event = {
 			transfer_state = 662
 			transfer_state = 448
 			transfer_state = 661
+			transfer_state = 830
+			transfer_state = 831
 			annex_country = {
 				target = ITA
 			}
@@ -6522,22 +6706,7 @@ country_event = {
 					controls_state = 451
 				}
 			}
-			51 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					instant_build = yes
-					level = 2
-				}
-			}
-			64 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					instant_build = yes
-					level = 2
-				}
-			}
+			
 			54 = {
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
@@ -6578,22 +6747,7 @@ country_event = {
 					level = 2
 				}
 			}
-			54 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					instant_build = yes
-					level = 2
-				}
-			}
-			59 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					instant_build = yes
-					level = 2
-				}
-			}
+			
 		}
 		if = {
 			limit = {
@@ -6602,22 +6756,7 @@ country_event = {
 					controls_state = 450
 				}
 			}
-			51 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					instant_build = yes
-					level = 2
-				}
-			}
-			64 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					instant_build = yes
-					level = 2
-				}
-			}
+			
 			54 = {
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
@@ -6658,22 +6797,7 @@ country_event = {
 					level = 2
 				}
 			}
-			54 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					instant_build = yes
-					level = 2
-				}
-			}
-			59 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					instant_build = yes
-					level = 2
-				}
-			}
+			
 		}
 		if = {
 			limit = {
@@ -6682,22 +6806,7 @@ country_event = {
 					controls_state = 448
 				}
 			}
-			51 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					instant_build = yes
-					level = 2
-				}
-			}
-			64 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					instant_build = yes
-					level = 2
-				}
-			}
+			
 			54 = {
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
@@ -6782,6 +6891,22 @@ country_event = {
 			GER = {
 				retire_character = GER_friedrich_paulus
 			}
+		}
+	}
+}
+
+country_event = {
+	id = germany.1002
+	title = germany.1002.t
+	desc = germany.1002.d
+	picture = GFX_report_event_polish_tanks_01
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = germany.1002.a
+		72 = {
+			add_core_of = POL
 		}
 	}
 }

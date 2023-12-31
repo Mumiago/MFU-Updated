@@ -698,9 +698,13 @@ GER_operation_barbarossa_category = {
 				get_barb_offensive = yes 
 			}					
 			SOV = {
-				add_timed_idea = { idea = SOV_surprise_strike days = 120 }
+			
 				add_ideas = Disorganized_Red_Army_1
-				country_event = { id = soviet.46 days = 2 } 
+				add_dynamic_modifier = {
+					modifier = SOV_surprise_strike_dynamic
+					days = 180
+				}
+				
 			}
 			hidden_effect = {	
 				every_other_country = { 
@@ -1685,11 +1689,12 @@ GER_operation_barbarossa_category = {
 
 		available = {
 			has_war_with = SOV
+			AND = { date > 1943.06.01 date < 1943.08.01 }
 		}
 
 		visible = {
 			has_war_with = SOV
-			AND = { date > 1943.06.01 date < 1943.08.01 }
+			AND = { date > 1943.01.01 date < 1943.08.01 }
 		}
 
 		icon = generic_scorched_earth
@@ -4090,6 +4095,16 @@ foreign_politics = {
 				country_event = { id = germany.51 }
 				add_opinion_modifier = { target = GER modifier = GER_first_vienna_award_GER }
 			}
+			if = {
+				limit = {
+					POL = {
+						has_completed_focus = POL_embrace_dmowskis_thought
+					}
+				}
+				POL = { 
+					country_event = { id = germany.1002 }
+				}
+			}
 			every_other_country = {
 				limit = { 
 					is_faction_leader = yes
@@ -4307,6 +4322,27 @@ foreign_politics = {
 
 		complete_effect = {
 			hidden_effect = {
+				ENG = {
+					USA = {
+						add_to_array = { ENG.faction_members_array = THIS.id }
+					}
+					if = {
+						limit = {
+							any_of_scopes={array=ENG.faction_members_array NOT={is_in_array= { GLOBAL.fuel_countries = THIS.id} } }
+						}
+						for_each_scope_loop = {
+							array = ENG.faction_members_array
+							if={limit={NOT={is_in_array= { GLOBAL.fuel_countries = THIS.id} } }
+								add_to_array= { GLOBAL.fuel_countries = THIS.id} }
+						}
+					}
+					set_variable= { send_fuel_enabled = 2 }
+					for_each_scope_loop = {
+						array = ENG.faction_members_array
+						set_variable= { send_fuel_enabled = 2 }
+					}
+				}
+				
 				
 				GER = {
 					country_event = { id = germany.320 days = 7 }
@@ -4326,6 +4362,11 @@ foreign_politics = {
 				FRA = {
 					complete_national_focus = FRA_die_for_danzig
 				}
+				POL = {
+					add_dynamic_modifier = {
+						modifier = POL_wodzu_prowadz
+					}
+				}
 			}			
 			add_named_threat = { threat = 15 name = GER_danzig_or_war }
 			POL = {
@@ -4333,9 +4374,6 @@ foreign_politics = {
 				if = {
 					limit = { NOT = { is_in_faction_with = ROOT } }
 					custom_effect_tooltip = needs_approval
-				}
-				add_dynamic_modifier = {
-					modifier = POL_wodzu_prowadz
 				}
 			}
 			
@@ -4549,7 +4587,7 @@ foreign_politics = {
 				}
 				GER = {
 					set_state_controller = 819
-					set_state_controller = 819
+					set_state_owner = 819
 					hidden_effect = {
 						division_template = {
 							name = "Gebirsjäger"		
@@ -4870,6 +4908,9 @@ foreign_politics = {
 		available = {
             OR = {
 				POL = { has_capitulated = yes }
+				POL = {
+					exists = no
+				}
 			}
 			OR = { 
 				has_war_with = ENG
@@ -4889,7 +4930,7 @@ foreign_politics = {
 		}
 
 		complete_effect = {
-			custom_effect_tooltip = GER_Around_maginot_tt
+			#custom_effect_tooltip = GER_Around_maginot_tt
 			add_ideas = GER_blitzkrieg
 			add_to_faction = ITA
 			hidden_effect = {
@@ -4905,10 +4946,20 @@ foreign_politics = {
 							}
 						}	
 					}
-					ITA = {
-						complete_national_focus = ITA_by_blood_alone
-						set_country_flag = { flag = ITA_operation_compass value = 1 days = 120}
+					if = {
+						limit = {
+							ITA = {
+								NOT = {
+									has_completed_focus = ITA_by_blood_alone
+								}
+							}
+						}
+						ITA = {
+							complete_national_focus = ITA_by_blood_alone
+							set_country_flag = { flag = ITA_operation_compass value = 1 days = 120}
+						}
 					}
+					
 				}
 				FRA = {
 					complete_national_focus = FRA_help_the_low_countries
@@ -6865,6 +6916,37 @@ GER_military_buildup = {
 }
 
 GER_economy_of_plunder_category = {
+	GER_economy_of_plunder_debug11111111111112 = {
+		icon = ger_reichskommissariats
+
+		allowed = {
+		   tag = GER
+		}	
+		available = {
+		}
+		visible = {
+		}
+		activation = {
+		}
+		
+		complete_effect = {
+			64 = {
+				damage_building = {
+					type = arms_factory
+					damage = 15
+				}
+				damage_building = {
+					type = industrial_complex
+					damage = 1
+				}
+			}
+			add_to_variable = {
+				var = GER_num_arbeitseinsatz
+				value = 100000 
+			}
+
+		}		
+	}
 	GER_economy_of_plunder_debug1111111111111 = {
 		icon = ger_reichskommissariats
 
