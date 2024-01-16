@@ -31,7 +31,10 @@ MTG_naval_treaties = {
 		complete_effect = {
 			every_other_country = {
 				limit = {
-					has_naval_treaty_trigger = yes
+					OR = {
+						has_naval_treaty_trigger = yes
+						tag = ITA
+					}
 				}
 				country_event = MTG_naval_treaty.7
 			}
@@ -66,10 +69,35 @@ MTG_naval_treaties = {
 						}
 					}
 				}
-		
+
 				set_country_flag = FLG_treaty_already_gone
 				remove_ideas = MTG_naval_treaty_adherent
 				remove_ideas = MTG_naval_treaty_cheating
+				if = {
+					limit = {
+						JAP = {
+							has_idea = MTG_naval_treaty_adherent
+						}
+					}
+					JAP = {
+						set_country_flag = FLG_treaty_already_gone
+						remove_ideas = MTG_naval_treaty_adherent
+					}
+
+				}
+				if = {
+					limit = {
+						JAP = {
+							has_idea = MTG_naval_treaty_cheating
+						}
+					}
+					JAP = {
+						set_country_flag = FLG_treaty_already_gone
+						remove_ideas = MTG_naval_treaty_cheating
+					}
+
+				}
+
 				
 				
 			}
@@ -124,37 +152,49 @@ MTG_naval_treaties = {
 		complete_effect = {
 			every_other_country = {
 				limit = {
-					has_naval_treaty_trigger = yes
+					OR = {
+						has_naval_treaty_trigger = yes
+						tag = ITA
+					}
 				}
 				country_event = MTG_naval_treaty.7
 			}
 			if = {
 				limit = {
 					any_country = {
-						OR = {
-							tag = JAP
-							tag = ITA
-						}
+						tag = ITA
 					}
-					has_idea = MTG_naval_treaty_adherent
 				}
-				set_country_flag = FLG_treaty_already_gone
-				remove_ideas = MTG_naval_treaty_adherent
-				
+				ITA = {
+					set_country_flag = FLG_treaty_already_gone
+					set_variable = {
+						ITA_production_cost_max_ship_hull_cruiser_var = 0
+					}
+					set_variable = {
+						ITA_production_cost_max_ship_hull_heavy_var = 0
+					}
+					set_variable = {
+						ITA_production_cost_max_ship_hull_carrier_var = 0
+					}
+					set_variable = {
+						ITA_production_speed_dockyard_factor2_var = 0
+					}
+					
+				}
 			}
 			if = {
 				limit = {
 					any_country = {
 						OR = {
-							tag = ITA
 							tag = JAP
 						}
-						
 					}
-					has_idea = MTG_naval_treaty_cheating
 				}
+
 				set_country_flag = FLG_treaty_already_gone
+				remove_ideas = MTG_naval_treaty_adherent
 				remove_ideas = MTG_naval_treaty_cheating
+				
 			}
 			
 		}
@@ -195,7 +235,6 @@ MTG_naval_treaties = {
 					any_country = {
 						OR = {
 							tag = USA
-							tag = ITA
 							tag = JAP
 						}
 					}
@@ -203,6 +242,29 @@ MTG_naval_treaties = {
 				swap_ideas = {
 					remove_idea = MTG_naval_treaty_adherent
 					add_idea = MTG_naval_treaty_cheating
+				}
+			}
+			if = {
+				limit = {
+					any_country = {
+						tag = ITA
+					}
+				}
+				ITA = {
+					#set_country_flag = FLG_treaty_already_gone
+					set_variable = {
+						ITA_production_cost_max_ship_hull_cruiser_var = 5700
+					}
+					set_variable = {
+						ITA_production_cost_max_ship_hull_heavy_var = 11500
+					}
+					set_variable = {
+						ITA_production_cost_max_ship_hull_carrier_var = 11500
+					}
+					set_variable = {
+						ITA_production_speed_dockyard_factor2_var = -0.1
+					}
+					
 				}
 			}
 		}
@@ -219,12 +281,18 @@ MTG_naval_treaties = {
 		days_mission_timeout = 180
 		
 		activation = {
-			has_naval_treaty_trigger = yes
+			OR = {
+				has_naval_treaty_trigger = yes
+				tag = ITA
+			}
 			has_global_flag = MTG_second_london_conference
 		}
 
 		visible = {
-			has_naval_treaty_trigger = yes
+			OR = {
+				has_naval_treaty_trigger = yes
+				tag = ITA
+			}
 		}
 		timeout_effect = {
 			clr_global_flag = MTG_second_london_conference 

@@ -508,6 +508,20 @@
 		available_if_capitulated = yes
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 		completion_reward = {
+			
+			random_owned_controlled_state = {
+				prioritize = { 46 }
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes 
+				}
+				add_resource = {
+					type = steel
+					amount = 10 
+				}
+			}
 			add_tech_bonus = {
 				category = electronics
 				uses = 2
@@ -580,7 +594,7 @@
 		x = -2
 		y = 3
 		relative_position_id = ROM_bucharest_technical_institute
-		cost = 7.16
+		cost = 5
 
 		available_if_capitulated = yes
 
@@ -609,7 +623,7 @@
 		x = 0
 		y = 1
 		relative_position_id = ROM_expand_the_axis_oil_trade
-		cost = 7.16
+		cost = 5
 
 		available_if_capitulated = yes
 
@@ -638,7 +652,7 @@
 		x = -1
 		y = 1
 		relative_position_id = ROM_support_the_war_industry
-		cost = 7.16
+		cost = 5
 
 		available_if_capitulated = yes
 
@@ -711,7 +725,7 @@
 		x = 0
 		y = 2
 		relative_position_id = ROM_support_the_war_industry
-		cost = 7.16
+		cost = 5
 
 		available_if_capitulated = yes
 		search_filters = { FOCUS_FILTER_INDUSTRY }
@@ -746,7 +760,7 @@
 		x = 1
 		y = 1
 		relative_position_id = ROM_support_the_war_industry
-		cost = 7.16
+		cost = 5
 
 		available_if_capitulated = yes
 
@@ -811,7 +825,7 @@
 		x = 2
 		y = 0
 		relative_position_id = ROM_expand_the_axis_oil_trade
-		cost = 7.16
+		cost = 5
 
 		available_if_capitulated = yes
 
@@ -825,6 +839,11 @@
 					level = 2
 					instant_build = yes
 				}
+				add_resource = {
+					type = steel
+					amount = 2 
+				}
+				
 			}
 			82 = {
 				add_extra_state_shared_building_slots = 2
@@ -833,6 +852,10 @@
 					level = 2
 					instant_build = yes
 				}
+				add_resource = {
+					type = steel
+					amount = 2 
+				}
 			}
 			81 = {
 				add_extra_state_shared_building_slots = 2
@@ -840,6 +863,10 @@
 					type = industrial_complex
 					level = 2
 					instant_build = yes
+				}
+				add_resource = {
+					type = steel
+					amount = 2 
 				}
 			}
 		}
@@ -1064,47 +1091,7 @@
  		}
 	}
 
-	focus = {
-		id = ROM_Secure_African_Fuel
-		icon = GFX_GER_romanian_oil
-		bypass = {
-		}
-		prerequisite = { focus = ROM_the_romanian_miracle  focus = ROM_ensure_agricultural_self_sufficiency }
-		available = {
-			date > 1942.3.1
-			NOT = {
-				ENG = {
-					controls_state = 446
-				}
-			}
-			has_full_control_of_state = 46
-		}
-		icon = GFX_goal_generic_production
-		x = -2
-		y = 1
-		relative_position_id = ROM_the_romanian_miracle
-		cost = 1
-		completion_reward = {
-			46 = {
-				add_resource = {
-					type = oil
-					amount = 50
-				}
-			}
-			59 = {
-				add_resource = {
-					type = oil
-					amount = 20
-				}
-			}
-			4 = {
-				add_resource = {
-					type = oil
-					amount = 20
-				}
-			}
-		}
-	}
+	
 
 	focus = {
 		id = ROM_for_the_preservation_of_greater_romania 
@@ -1152,8 +1139,9 @@
 		}
 
 		available = {
-			SPA = {
-				has_civil_war = yes 
+			has_global_flag = spanish_civil_war
+			NOT = {
+				has_global_flag = scw_over
 			}
 		}
 
@@ -1180,7 +1168,7 @@
 				country_event = { id = romania.6 days = 1 }
 			}
 
-			SPA = {
+			SPR = {
 				add_manpower = 2000
 			}
 		}
@@ -1329,7 +1317,9 @@
 			set_politics = {
 				ruling_party = fascism
 				elections_allowed = no
-			}	
+			}
+			
+			remove_ideas = neutrality_idea 
 
 			news_event = { id = news.485 }
 		}
@@ -1552,7 +1542,6 @@
 					#
 				}
 			}	
-			remove_ideas = neutrality_idea 
 			news_event = { id = news.488 }
 			if = {
 				limit = {
@@ -1591,6 +1580,7 @@
 		available_if_capitulated = no
 
 		completion_reward = {
+			custom_effect_tooltip = ROM_yesking_tt
 			if = {
 				limit = {
 					has_idea = ROM_waning_influence_of_democracy
@@ -1620,37 +1610,6 @@
 			}
 			add_ideas = ROM_king_carol_ii_consumer_penalty
 			news_event = { id = news.484 }
-		}
-	}
-
-	focus = {
-		id = ROM_arrest_general_antonescu
-		icon = GFX_focus_rom_preserve_romania
-		relative_position_id = ROM_institute_a_royal_dictatorship
-		prerequisite = { focus = ROM_institute_a_royal_dictatorship }
-		x = 4
-		y = 1
-
-		cost = 5
-
-		ai_will_do = {
-			factor = 9
-		}
-
-		available = {
-			has_idea = ROM_army_tensions 
-		}
-
-		bypass = {
-
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		completion_reward = {
-			remove_ideas = ROM_army_tensions
 		}
 	}
 
@@ -1731,6 +1690,14 @@
 				popularity = 0.2 
 			}
 			add_stability = 0.1 
+			46 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes 
+				}
+			}
 		}
 	}
 
@@ -1890,67 +1857,9 @@
 			add_ideas = ROM_the_sentinel_of_the_motherland
 			add_doctrine_cost_reduction = {
 				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
+				cost_reduction = 0.35
+				uses = 2
 				category = land_doctrine
-			}
-		}
-	}
-
-	focus = {
-		id = ROM_antonescus_coup_detat
-		icon = GFX_focus_rom_preserve_romania
-		relative_position_id = ROM_arrest_general_antonescu
-		mutually_exclusive = { focus = ROM_pressure_antonescu_into_becoming_prime_minister }
-		prerequisite = { focus = ROM_arrest_general_antonescu }
-		x = 0
-		y = 2
-
-		cost = 5
-
-		ai_will_do = {
-			factor = 9
-		}
-
-		available = {
-			has_stability < 0.4
-			fascism > 0.3
-		}
-
-		bypass = {
-
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		complete_tooltip = {
-
-		}
-
-		completion_reward = {
-			create_country_leader = {
-				name = "Ion Antonescu"
-				desc = "POLITICS_ION_ANTONESCU_DESC"
-				picture = "Portrait_Romania_Ion_Antonescu.dds"
-				expire = "1965.1.1"
-				ideology = fascism_ideology
-				traits = {
-					#
-				}
-			}
-			set_politics = {
-				ruling_party = fascism
-				elections_allowed = no
-			}	
-			remove_ideas = neutrality_idea 
-			news_event = { id = news.487 }
-			if = {
-				limit = {
-					has_idea = ROM_army_tensions
-				}
-				remove_ideas = ROM_army_tensions
 			}
 		}
 	}
@@ -1959,7 +1868,6 @@
 		id = ROM_pressure_antonescu_into_becoming_prime_minister
 		icon = GFX_focus_rom_preserve_romania
 		relative_position_id = ROM_institute_a_royal_dictatorship
-		mutually_exclusive = { focus = ROM_antonescus_coup_detat }
 		prerequisite = { focus = ROM_sentinels_of_the_motherland focus = ROM_form_the_front_of_national_rebirth focus = ROM_fascist_economics }
 		x = 0
 		y = 3
@@ -2020,7 +1928,7 @@
 		id = ROM_force_the_king_to_abdicate
 		icon = GFX_focus_rom_coup
 		relative_position_id = ROM_institute_a_royal_dictatorship
-		prerequisite = { focus = ROM_pressure_antonescu_into_becoming_prime_minister focus = ROM_antonescus_coup_detat focus = ROM_co_conducator }
+		prerequisite = { focus = ROM_pressure_antonescu_into_becoming_prime_minister focus = ROM_co_conducator }
 		x = 4
 		y = 4
 
@@ -2297,7 +2205,76 @@
 			add_stability = 0.25
 			add_war_support = 0.25 
 		}
-	}		
+	}
+	
+	focus = {
+		id = ROM_trans
+		icon = GFX_focus_generic_black_sea_focus
+		relative_position_id = ROM_axis_friendly_government
+		prerequisite = { focus = ROM_axis_friendly_government }
+		x = 2
+		y = 1
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 9
+		}
+
+		available = {
+			NOT = {
+				ROM = {
+					controls_state = 76
+				}
+			}
+			ROM = {
+				controls_state = 80
+				controls_state = 78
+				controls_state = 766
+			}
+			OR ={
+				ROM = {
+					controls_state = 192
+				}
+				GER = {
+					controls_state = 192
+				}
+		    }
+			OR ={
+				ROM = {
+					controls_state = 198
+				}
+				GER = {
+					controls_state = 198
+				}
+		    }
+			
+			
+
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+			ROM = {
+				set_state_controller = 192
+			}
+			192 = {	
+				set_resistance = 5
+				set_compliance = 85
+			}
+		}
+	}	
 
 	focus = {
 		id = ROM_romanian_rearmament
@@ -2573,6 +2550,14 @@
 		}
 
 		completion_reward = {
+			46 = {
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = industrial_complex
+					level = 3
+					instant_build = yes 
+				}
+			}
 			show_ideas_tooltip = ROM_junkers
 			show_ideas_tooltip = ROM_messerschmitt
 			show_ideas_tooltip = ROM_focke_wulf
@@ -3524,9 +3509,15 @@
 		}
 
 		completion_reward = {
-			show_ideas_tooltip = ROM_lancia 
-			show_ideas_tooltip = ROM_opel 
-			show_ideas_tooltip = ROM_hanomag
+			mio:ROM_concordia = {
+				add_mio_funds = 2000
+			}
+			mio:GER_auto_union = {
+				add_mio_funds = 2000
+			}
+			mio:ROM_malaxa_organization = {
+				add_mio_funds = 2000
+			}
 		}
 	}	
 
@@ -3645,8 +3636,9 @@
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = available_designer
-			show_ideas_tooltip = ROM_leonidas_works
+			mio:Krupp = {
+				add_mio_funds = 500
+			}	
 			add_tech_bonus = {
 				category = cat_light_armor 
 				uses = 2
@@ -3846,9 +3838,10 @@
 				limit = {
 					has_state_flag = ROM_expand_the_galati_shipyards_AB
 				}
+				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
 					type = dockyard
-					level = 2
+					level = 4
 					instant_build = yes
 				}
 			}
@@ -3863,10 +3856,10 @@
 			}
 			navy_experience = 25
 			46 = {
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
 					type = dockyard
-					level = 2
+					level = 4
 					instant_build = yes
 				}
 				set_state_flag = ROM_expand_the_galati_shipyards_AB
@@ -3906,14 +3899,17 @@
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = available_designer
-			show_ideas_tooltip = ROM_coastal_defense_navy_designer
-
+			custom_effect_tooltip = available_mio_tt
+			show_mio_tooltip = ROM_galati_shipyard_organization
+			mio:ROM_galati_shipyard_organization = {
+				add_mio_funds = 2000
+			}
+			
 			46 = {
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
 					type = dockyard
-					level = 2
+					level = 4
 					instant_build = yes
 				}
 				set_state_flag = ROM_expand_the_galati_shipyards_AB
@@ -3956,10 +3952,10 @@
 			#custom_effect_tooltip = ROM_coastal_defense_ships_tech_tt
 			#hidden_effect = { set_technology = { coastal_defense_ships = 1 } }
 			46 = {
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
 					type = dockyard
-					level = 2
+					level = 4
 					instant_build = yes
 				}
 				set_state_flag = ROM_expand_the_galati_shipyards_AB
@@ -4001,7 +3997,7 @@
 		completion_reward = {
 			add_tech_bonus = {
 				name = ROM_torpedo_bombers
-				bonus = 0.4
+				bonus = 1
 				uses = 1
 				category = dd_tech
 			}
@@ -4048,7 +4044,7 @@
 
 	focus = {
 		id = ROM_modern_submarines
-		icon = GFX_goal_generic_navy_submarine
+		icon = GFX_focus_generic_steel
 		prerequisite = { focus = ROM_modern_destroyers }
 		x = 0
 		y = 2
@@ -4077,11 +4073,16 @@
 		}
 
 		completion_reward = {
-			add_tech_bonus = {
-				name = ROM_modern_submarines
-				bonus = 1
-				uses = 1
-				category = ss_tech
+		
+			add_resource = {
+				type = steel
+				amount = 15
+				state = 46
+			}
+			add_resource = {
+				type = chromium
+				amount = 5
+				state = 46
 			}
 		}
 	}
@@ -4117,9 +4118,21 @@
 
 		}
 
-		completion_reward = {			
-			custom_effect_tooltip = available_designer
-			show_ideas_tooltip = ROM_black_sea_dominance_designer
+		completion_reward = {	
+			46 = {
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = dockyard
+					level = 4
+					instant_build = yes
+				}
+				set_state_flag = ROM_expand_the_galati_shipyards_AB
+			}		
+			custom_effect_tooltip = available_mio_tt
+			show_mio_tooltip = ROM_Braila_organization
+			mio:ROM_Braila_organization = {
+				add_mio_funds = 2000
+			}
 		}
 	}
 
@@ -4154,6 +4167,15 @@
 		}
 
 		completion_reward = {
+			46 = {
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = dockyard
+					level = 4
+					instant_build = yes
+				}
+				set_state_flag = ROM_expand_the_galati_shipyards_AB
+			}
 			add_tech_bonus = {
 				name = ROM_capital_ships
 				bonus = 1
@@ -4201,6 +4223,15 @@
 				bonus = 1
 				uses = 1
 				category = naval_bomber
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = arms_factory
+					level = 4
+					instant_build = yes
+				}
+				set_state_flag = ROM_expand_the_galati_shipyards_AB
 			}
 		}
 	}
