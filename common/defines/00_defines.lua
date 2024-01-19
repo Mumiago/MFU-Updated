@@ -777,7 +777,6 @@ NMilitary = {
 		0.70, --there isn't much point setting this higher than 0
 		0.60,
 		0.50,
-		0.40,
 		0.00,
 	},
 	PIERCING_THRESHOLD_DAMAGE_VALUES = {	-- 0 armor will always receive maximum damage (so add overmatching at your own peril). the system expects at least 2 values, with no upper limit.
@@ -787,8 +786,7 @@ NMilitary = {
 		0.70,
 		0.60,
 		0.50,
-		0.40,
-		0.30,
+		0.50,
 	},
 	--NEW SHIT */
 	WAR_SCORE_STRATEGIC_BOMBING_FACTOR = 0.02,  				-- war score gained for every damage made to enemy's building with strategic bombing
@@ -975,8 +973,8 @@ NMilitary = {
 	ADDITIONAL_COMBAT_WIDTH = 30,                  -- more opened up by support attack
 	AMPHIBIOUS_INVADE_MOVEMENT_COST = 24.0,        -- total progress cost of movement while amphibious invading
 	LAND_SPEED_MODIFIER = 0.031,                    -- basic speed control
-	RIVER_CROSSING_PENALTY = -0.2,                 -- small river crossing
-	RIVER_CROSSING_PENALTY_LARGE = -0.325,           -- large river crossing
+	RIVER_CROSSING_PENALTY = -0.25,                 -- small river crossing
+	RIVER_CROSSING_PENALTY_LARGE = -0.35,           -- large river crossing
 	RIVER_CROSSING_SPEED_PENALTY = -0.15,          -- small river crossing
 	RIVER_CROSSING_SPEED_PENALTY_LARGE = -0.3,     -- large river crossing
 	RIVER_SMALL_START_INDEX = 0,                   -- color indices for rivers
