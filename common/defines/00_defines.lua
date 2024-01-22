@@ -1060,7 +1060,7 @@ NMilitary = {
 	UNIT_LEADER_MAX_SKILL_XP_BOOST_FACTOR = 2.0,   -- When a commander is at maximum level, he gains ranks faster.
 	BORDER_WAR_ATTRITION_FACTOR = 0.05,			   -- How much of borderwar balance of power makes it into attrition
 	BORDER_WAR_VICTORY = 0.92,					   -- At wich border war balance of power is victory declared
-	REINFORCE_CHANCE = 0.15,                 	   -- base chance to join combat from back line when empty
+	REINFORCE_CHANCE = 0.16,                 	   -- base chance to join combat from back line when empty
 	SPEED_REINFORCEMENT_BONUS = 0.0,              -- chance to join combat bonus by each 100% larger than infantry base (up to 200%)
 	OVERSEAS_LOSE_EQUIPMENT_FACTOR = 1.0,		   -- percentage of equipment lost disbanded overseas
 	ENCIRCLED_DISBAND_MANPOWER_FACTOR = 0.0,       -- percentage of manpower returned when an encircled unit is disbanded
@@ -1293,7 +1293,7 @@ NAir = {
 	--AAT
 	THRUST_WEIGHT_AGILITY_FACTOR = 0.5,								-- For plane designs, additive agility bonus per point of thrust exceeding weight
 
-	PORT_STRIKE_DAMAGE_FACTOR = 0.5,								-- How much damage is dealt to ports during a port strike (per plane damage [complex number] * num flying planes * define)
+	PORT_STRIKE_DAMAGE_FACTOR = 0.3,								-- How much damage is dealt to ports during a port strike (per plane damage [complex number] * num flying planes * define)
 
 	
 	--BBA*/
@@ -1611,7 +1611,7 @@ NSupply = {
 	-- used for calculating "flow" for railways.
 	RAILWAY_BASE_FLOW = 6, 		-- how much base flow railway gives when a node connected to its capital/a naval node by a railway
 	RAILWAY_FLOW_PER_LEVEL = 5, 	-- how much additional flow a railway level gives
-	RAILWAY_FLOW_PENALTY_PER_DAMAGED = 4.0, -- penalty to flow per damaged railway
+	RAILWAY_FLOW_PENALTY_PER_DAMAGED = 3.0, -- penalty to flow per damaged railway
 	RAILWAY_MIN_FLOW = 6.0, 		-- minimum railway flow can be reduced to
 
 	-- used for calculating "flow" from a naval node to another naval node when it is connected via a convoy route
