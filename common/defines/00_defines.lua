@@ -590,7 +590,7 @@ NResistance = {
 },
 NMarket = {
 	PURCHASE_CONTRACT_DELIVERY_TOTAL_DAYS = 30,                   	-- Number of days between purchase contract deliveries
-	IC_TO_CIC_FACTOR = 1.0,                    						-- The factor for mapping IC cost to CIC cost. Should be a positive number.
+	IC_TO_CIC_FACTOR = 2.0,                    						-- The factor for mapping IC cost to CIC cost. Should be a positive number.
 	MAX_CIV_FACTORIES_PER_CONTRACT = 30,							-- Max number of factories that can be assigned for paying single contract.
 	LOW_PRICE_LEVEL_FACTOR = 1,                    				-- The factor of base equipment price for low price level. Should be in range (0,1] 
 	HIGH_PRICE_LEVEL_FACTOR = 1,                    				-- The factor of base equipment price for high price level. Should be more than 1.
@@ -600,7 +600,7 @@ NMarket = {
 	REQUEST_AUTOMATION_AUTO_ACCEPT_MARKET_ACCESS_DEFAULT = true, 	-- Whether by default should accept market access requests from other countries.
 	REQUEST_AUTOMATION_AUTO_SEND_MARKET_ACCESS_DEFAULT = true,		-- Whether by default should send market access requests to other countries.
 	REQUEST_AUTOMATION_AUTO_ACCEPT_PURCHASE_DEFAULT = false,		-- Whether by default should accept purchase requests from other countries.
-	CONTRACT_ESTIMATE_AVERAGE_CONVOY_COUNT_ALPHA = 0.5,				-- How strong effect should have the daily convoy count on the average (1.0 means it will use only the new number as average)
+	CONTRACT_ESTIMATE_AVERAGE_CONVOY_COUNT_ALPHA = 0.5,				-- How	 strong effect should have the daily convoy count on the average (1.0 means it will use only the new number as average)
 	CONTRACT_ESTIMATE_AVERAGE_DAILY_PRODUCTION_ALPHA = 0.5, 		-- How strong effect should have the daily production on the average (1.0 means it will use only the new number as average)
 	CONTRACT_ESTIMATE_AVERAGE_CONVOY_COUNT_SNAP_LIMIT = 0.3,		-- If the difference between current and estimated available convoy count is smaller then this value, we will use the current value for calculations.
 	CONTRACT_ESTIMATE_AVERAGE_DAILY_PRODUCTION_SNAP_LIMIT = 1.5,	-- If the difference between current and estimated daily production is smaller then this value, we will use the current value for calculations.
@@ -1007,12 +1007,12 @@ NMilitary = {
 	UNIT_EXPERIENCE_PER_COMBAT_HOUR = 0.000175,
 	UNIT_EXPERIENCE_SCALE = 1.0,
 	UNIT_EXPERIENCE_PER_TRAINING_DAY = 0.0015,
-	TRAINING_MAX_LEVEL = 4,
+	TRAINING_MAX_LEVEL = 2,
 	DEPLOY_TRAINING_MAX_LEVEL = 2,
 	TRAINING_EXPERIENCE_SCALE = 62.0,				-- was 62.0 testing a bit more cause training needs so much more equipment than vanilla game
 	TRAINING_ORG = 0.2,
 	ARMY_EXP_BASE_LEVEL = 2,
-	UNIT_EXP_LEVELS = { 0.1, 0.2, 0.3, 0.4, 0.55, 0.7, 0.9 },		-- Experience needed to progress to the next level Changed vets to 0.55 instead 0.7 ***
+	UNIT_EXP_LEVELS = { 0.1, 0.2, 0.3, 0.4, 0.5, 0.65, 0.8 },		-- Experience needed to progress to the next level Changed vets to 0.55 instead 0.7 ***
 	FIELD_EXPERIENCE_SCALE = 0.001,
 	FIELD_EXPERIENCE_MAX_PER_DAY = 2,				-- Most xp you can gain per day
 	EXPEDITIONARY_FIELD_EXPERIENCE_SCALE = 0.5,		-- reduction factor in Xp from expeditionary forces
@@ -1021,7 +1021,7 @@ NMilitary = {
 	SLOWEST_SPEED = 1,
 	REINFORCEMENT_REQUEST_MAX_WAITING_DAYS = 10,   -- Every X days the equipment will be sent, regardless if still didn't produced all that has been requested.
 	REINFORCEMENT_REQUEST_DAYS_FREQUENCY = 5,	   -- How many days must pass until we may give another reinforcement request
-	EXPERIENCE_COMBAT_FACTOR = 0.06,
+	EXPERIENCE_COMBAT_FACTOR = 0.04,
 	ALERT_VERY_LOW_SUPPLY_LEVEL = 0.6,			   -- At which point we show up the low and very low supply level alert. Value is in % of supplies supported vs required.
 	ALERT_LOW_SUPPLY_LEVEL = 0.85,
 	UNIT_DIGIN_CAP = 3,                           -- how "deep" you can dig you can dig in until hitting max bonus
@@ -1169,7 +1169,7 @@ NMilitary = {
 	MIN_DIVISION_DEPLOYMENT_TRAINING = 0.3,			-- Min level of division training
 	
 	FRONT_MIN_PATH_TO_REDEPLOY = 4,					-- If a units path is at least this long to reach its front location, it will strategically redeploy.
-	ARMY_INITIATIVE_REINFORCE_FACTOR = 0.9,		-- scales initiative for reinforce chance
+	ARMY_INITIATIVE_REINFORCE_FACTOR = 1.1,		-- scales initiative for reinforce chance
 		
 	BASE_CAPTURE_EQUIPMENT_RATIO = 0.01,				-- after a successful land combat, ratio of the equipments that are being captured/salvaged from enemy's lost equipment
 
@@ -1611,7 +1611,7 @@ NSupply = {
 	-- used for calculating "flow" for railways.
 	RAILWAY_BASE_FLOW = 6, 		-- how much base flow railway gives when a node connected to its capital/a naval node by a railway
 	RAILWAY_FLOW_PER_LEVEL = 5, 	-- how much additional flow a railway level gives
-	RAILWAY_FLOW_PENALTY_PER_DAMAGED = 3.0, -- penalty to flow per damaged railway
+	RAILWAY_FLOW_PENALTY_PER_DAMAGED = 2.0, -- penalty to flow per damaged railway
 	RAILWAY_MIN_FLOW = 6.0, 		-- minimum railway flow can be reduced to
 
 	-- used for calculating "flow" from a naval node to another naval node when it is connected via a convoy route
