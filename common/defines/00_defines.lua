@@ -882,7 +882,7 @@ NMilitary = {
 
 	NAVAL_INVASION_PLANNING_BONUS_GAIN = 0.04,		-- Planning Bonus gain per day for naval invasions
 
-	TRAINING_MAX_DAILY_COUNTRY_EXP = 0.06,			-- Maximum army XP gained per day from training
+	TRAINING_MAX_DAILY_COUNTRY_EXP = 0,			-- Maximum army XP gained per day from training
 
 	SUPPLY_ORG_MAX_CAP = 0.1,                     -- Max organization is factored by this if completely out of supply
 
@@ -961,8 +961,8 @@ NMilitary = {
 	LAND_COMBAT_COLLATERAL_FACTOR = 0.002,		   -- Factor to scale collateral damage to infra and forts with.
 	LAND_COMBAT_FORT_DAMAGE_CHANCE = 13,		-- chance to get a hit to damage on forts. (out of 100)
 	ATTRITION_DAMAGE_ORG = 0.1,					   -- damage from attrition to Organisation
-	ATTRITION_EQUIPMENT_LOSS_CHANCE = 0.066,		   -- Chance for loosing equipment when suffer attrition. Scaled up the stronger attrition is. Then scaled down by equipment reliability.
-	ATTRITION_EQUIPMENT_PER_TYPE_LOSS_CHANCE = 0.066, -- Chance for loosing equipment when suffer attrition. Scaled up the stronger attrition is. Then scaled down by equipment reliability.
+	ATTRITION_EQUIPMENT_LOSS_CHANCE = 0.01,		   -- Chance for loosing equipment when suffer attrition. Scaled up the stronger attrition is. Then scaled down by equipment reliability.
+	ATTRITION_EQUIPMENT_PER_TYPE_LOSS_CHANCE = 0.44, -- Chance for loosing equipment when suffer attrition. Scaled up the stronger attrition is. Then scaled down by equipment reliability.
 	ATTRITION_WHILE_MOVING_FACTOR = 1,
 	BASE_CHANCE_TO_AVOID_HIT = 90,                 -- Base chance to avoid hit if defences left.
 	CHANCE_TO_AVOID_HIT_AT_NO_DEF = 66,	           -- chance to avoid hit if no defences left.
@@ -1009,7 +1009,7 @@ NMilitary = {
 	UNIT_EXPERIENCE_PER_TRAINING_DAY = 0.0015,
 	TRAINING_MAX_LEVEL = 2,
 	DEPLOY_TRAINING_MAX_LEVEL = 2,
-	TRAINING_EXPERIENCE_SCALE = 62.0,				-- was 62.0 testing a bit more cause training needs so much more equipment than vanilla game
+	TRAINING_EXPERIENCE_SCALE = 0,				-- was 62.0 testing a bit more cause training needs so much more equipment than vanilla game
 	TRAINING_ORG = 0.2,
 	ARMY_EXP_BASE_LEVEL = 2,
 	UNIT_EXP_LEVELS = { 0.1, 0.2, 0.3, 0.4, 0.5, 0.65, 0.8 },		-- Experience needed to progress to the next level Changed vets to 0.55 instead 0.7 ***
@@ -1053,7 +1053,7 @@ NMilitary = {
 	NON_CORE_SUPPLY_SPEED = -0.1,				   -- we are not running on our own VP supply so need to steal stuff along the way
 	NON_CORE_SUPPLY_AIR_SPEED = -0.05,			   -- we are not running on our own VP supply so need to steal stuff along the way, a bit less due to air supply
 	OUT_OF_SUPPLY_MORALE = -0.3,                   -- max org regain reduction from supply
-	TRAINING_ATTRITION = 0.0075,		  			   -- amount of extra attrition from being in training
+	TRAINING_ATTRITION = 0,		  			   -- amount of extra attrition from being in training
 	TRAINING_MIN_STRENGTH = 0.1,					-- if strength is less than this, the unit will pause training until it's been reinforced
 	AIR_SUPPORT_BASE = 0.10,                        -- base ground bonus to troops when active planes helping them
 	LOW_SUPPLY = 0.95,							   -- When the supply status of an unit becomes low.
@@ -1815,7 +1815,7 @@ NNavy = {
 		0.05  -- 5% for level two
 		      -- 0% for level three to ten
 	},
-	COMBAT_INITIAL_DURATION = 12,									-- Number of hours that is considered the "initial phase" of naval combat, used for modifiers like surprise attack during "initial combat"
+	COMBAT_INITIAL_DURATION = 72,									-- Number of hours that is considered the "initial phase" of naval combat, used for modifiers like surprise attack during "initial combat"
 	-- Convoy Priorities START
 	NAVAL_INVASION_PRIORITY = 1,									-- Default convoy priority for naval invasions
 	NAVAL_TRANSFER_PRIORITY = 1,									-- Default convoy priority for naval transports
