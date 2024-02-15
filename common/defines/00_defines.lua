@@ -2375,9 +2375,9 @@ NCharacter = {
 	COUNTRY_LEADER_BASE_EXPIRE_YEAR_LENGTH = 5, -- When creating a dynamic country leader if an expire date is not set it will have 5 years as a base expiration date
 	COUNTRY_LEADER_BASE_RANDOM_MAX_YEAR_LENGTH = 15, -- Max random value added to COUNTRY_LEADER_BASE_EXPIRE_YEAR_LENGTH
 
-	SPECIALIST_ADVISOR_MIN_RANK = 3,
-	EXPERT_ADVISOR_MIN_RANK = 5,
-	GENIUS_ADVISOR_MIN_RANK = 7,
+	SPECIALIST_ADVISOR_MIN_RANK = 2,
+	EXPERT_ADVISOR_MIN_RANK = 4,
+	GENIUS_ADVISOR_MIN_RANK = 6,
 },
 NAITheatre = {
 	AI_THEATRE_GENERATION_HOME_THEATRE_DEPTH_RESTRICTION = 2,			-- The home theatre is generated based off a initial depth restriction
