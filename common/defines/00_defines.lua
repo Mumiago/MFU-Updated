@@ -2333,7 +2333,7 @@ NNavy = {
 
 	NAVAL_COMBAT_AIR_SUB_TARGET_SCORE = 10,                             -- scoring for target picking for planes inside naval combat, one define per ship typ
 	NAVAL_COMBAT_AIR_CAPITAL_TARGET_SCORE = 500,
-	NAVAL_COMBAT_AIR_CARRIER_TARGET_SCORE = 100,
+	NAVAL_COMBAT_AIR_CARRIER_TARGET_SCORE = 200,
 	NAVAL_COMBAT_AIR_CONVOY_TARGET_SCORE = 1,
 	NAVAL_COMBAT_AIR_STRENGTH_TARGET_SCORE = 3,                         -- how much score factor from low health (scales between 0->this number)
 	NAVAL_COMBAT_AIR_LOW_AA_TARGET_SCORE = 15,                           -- how much score factor from low AA guns (scales between 0->this number)
