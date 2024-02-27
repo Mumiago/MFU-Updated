@@ -268,20 +268,38 @@ USA_td_board = {
 USA_detroit_arsenal_organization = {
 	name = detroit_arsenal
 	include = mass_production_facility
-	icon = GFX_idea_detroit_arsenal
+	icon = GFX_idea_chrysler
 	allowed = {	
 		tag = USA
 	}
-    name = "Detroit Arsenal"	
+    name = "Chrysler Corporation"	
+	
 	equipment_type = { armor }
+
 	research_categories = { armor }
+
+	tree_header_text = {
+		text = "Production"
+		x = 1
+	}
+
+	tree_header_text = {
+		text = "Quality Focus"
+		x = 4
+	}
+	
+	tree_header_text = {
+		text = "Tank Development"
+		x = 7
+	}
 
 
 	initial_trait = {
 		name = mass_production_facility
 
 		organization_modifier = {
-			military_industrial_organization_research_bonus = 0.05
+			military_industrial_organization_research_bonus = 0.1
+
 		}
 		
 		organization_modifier = {
@@ -291,8 +309,17 @@ USA_detroit_arsenal_organization = {
 
 		
 		equipment_bonus = {
-			build_cost_ic = -0.05
+
+			soft_attack = -0.05
+			hard_attack = -0.1
+
+			reliability = -0.0
+
+			build_cost_ic = 0.03
+
 		}
+
+		
 	}
 	trait = {
 		token = construct_the_niebelungenwerke
@@ -300,7 +327,7 @@ USA_detroit_arsenal_organization = {
 		special_trait_background = yes
 		icon = GFX_generic_mio_department_icon_facilities
 
-		position = { x=4 y=0}
+		position = { x=1 y=0}
 		production_bonus = {
 			production_capacity_factor = 0.05
 		}
@@ -310,11 +337,11 @@ USA_detroit_arsenal_organization = {
 		name = "Expand Manufacturing"
 		icon = GFX_generic_mio_department_icon_tank_general_line_efficiency
         mutually_exclusive = { expand_armor_steel_production }
-		position = { x=-4 y=1}
+		position = { x=-1 y=1}
 		relative_position_id = construct_the_niebelungenwerke
         any_parent = { construct_the_niebelungenwerke }
 		production_bonus = {
-			production_cost_factor = -0.04
+			production_cost_factor = -0.05
 		}
 		equipment_bonus = {
 			reliability = -0.1
@@ -325,7 +352,7 @@ USA_detroit_arsenal_organization = {
 		name = "Subcontract Steel Plants"
 		icon = GFX_generic_mio_department_icon_tank_general_armor
         mutually_exclusive = { expand_the_niebelungenwerke }
-		position = { x=-2 y=1}
+		position = { x=1 y=1}
 		relative_position_id = construct_the_niebelungenwerke
         any_parent = { construct_the_niebelungenwerke }
 		production_bonus = {
@@ -340,14 +367,18 @@ USA_detroit_arsenal_organization = {
 		name = "Two Shift Labour"
 		icon = GFX_generic_mio_department_icon_tank_general_line_efficiency
 		
-		position = { x=-1 y=1 }
+		position = { x=-2 y=1 }
 		relative_position_id = expand_armor_steel_production
 
 		any_parent = {expand_the_niebelungenwerke expand_armor_steel_production }
 
+		mutually_exclusive = {
+			production_line
+		}
+
 
 		production_bonus = {
-			production_efficiency_cap_factor = 0.05
+			production_efficiency_cap_factor = 0.03
 		}
 	}
 ###tank stats
@@ -355,16 +386,18 @@ USA_detroit_arsenal_organization = {
 		token = production_line
 		name = "Generously Specified Production line"
 		icon = GFX_generic_mio_department_icon_tank_general_production
-		relative_position_id = construct_the_niebelungenwerke
-		any_parent = { construct_the_niebelungenwerke }
+		relative_position_id = expand_armor_steel_production
+		any_parent = { expand_the_niebelungenwerke expand_armor_steel_production}
 		position = { x=0 y=1}
+
+		mutually_exclusive = {
+			volunteers
+		}
 		
-		equipment_bonus = {
-			reliability = 0.05
-		}
 		production_bonus = {
-			production_efficiency_cap_factor = -0.05
+			production_efficiency_gain_factor = 0.2
 		}
+		
 	}
 
 
@@ -373,115 +406,403 @@ USA_detroit_arsenal_organization = {
 		name = "Strict Standards"
 		icon = GFX_generic_mio_trait_icon_reliability
 		
-		position = { x=-1 y=1 }
-		relative_position_id = production_line
+		position = { x=3 y=2 }
+		relative_position_id = construct_the_niebelungenwerke
 
-		any_parent = { production_line }
+		special_trait_background = yes
 
+		any_parent = {
+			expand_the_niebelungenwerke
+			expand_armor_steel_production
+			W2
+			W3
+		}
+
+		
 		equipment_bonus = {
 			reliability = 0.1
 		}
+
 	}
 	trait = {
-		token = batch_production
+		token = HH223
+		name = "Relentless Process Optimization"
+		icon = GFX_generic_mio_trait_icon_build_cost_ic
+		
+		position = { x=-2 y=2 }
+		relative_position_id = production_line
+
+		any_parent = { production_line volunteers}
+
+		mutually_exclusive = {
+			PP223
+		}
+
+		production_bonus = {
+			production_resource_need_factor = 0.1
+			production_resource_penalty_factor = -0.1
+		}
+
+
+		equipment_bonus = {
+			reliability = -0.05
+			build_cost_ic = -0.03
+		}
+	}
+	trait = {
+		token = PP223
 		name = "Relentless Process Optimization"
 		icon = GFX_generic_mio_trait_icon_resources
 		
-		position = { x=1 y=1 }
+		position = { x=0 y=2 }
 		relative_position_id = production_line
 
-		any_parent = { production_line }
-		equipment_bonus = {
-			build_cost_ic = -0.025
+		any_parent = { production_line volunteers}
+
+		mutually_exclusive = {
+			HH223
+		}
+		
+		production_bonus = {
+			production_resource_need_factor = -0.1
 		}
 	}
+
+	trait = {
+		token = W1
+		name = "Wartime Production"
+		icon = GFX_generic_mio_department_icon_facilities
+	
+		position = { x=7 y=0}
+			production_bonus = {
+				production_efficiency_gain_factor = 0.1
+		}
+
+		available = {
+			USA = {
+				has_completed_focus = USA_detroit_vehicle_arsenal
+				
+				}
+			}
+
+		organization_modifier = {
+			military_industrial_organization_size_up_requirement = -0.3
+		}
+	}
+
+	trait = {
+		token = W2
+		name = "Production For Small Hulls"
+		icon = GFX_generic_mio_department_icon_tank_medium_tank_quality
+
+		limit_to_equipment_type = { 
+			mio_cat_eq_all_medium_tank
+			mio_cat_eq_all_light_tank
+		}
+		
+		relative_position_id = W1
+		position = { x=-1 y=1}
+			production_bonus = {
+				production_efficiency_gain_factor = 0.15
+			}
+
+			mutually_exclusive = {
+				W3
+			}
+
+		all_parents = {
+			construct_the_niebelungenwerke
+			W1
+	}
+	equipment_bonus = {
+		build_cost_ic = -0.03
+	}
+  }
+	trait = {
+			token = W3
+		name = "Production For Heavy Hulls"
+		icon = GFX_generic_mio_department_icon_tank_heavy_tank_quality
+		
+	relative_position_id = W1
+		 position = { x=1 y=1}
+
+	production_bonus = {
+		production_efficiency_gain_factor = 0.15
+	}
+	limit_to_equipment_type = { 
+			mio_cat_eq_all_heavy_tank
+	 }
+	 mutually_exclusive = {
+		W2
+	}
+	
+	
+	all_parents = {
+	construct_the_niebelungenwerke
+	W1
+		}
+
+	equipment_bonus = {
+		build_cost_ic = -0.03
+	}
+	}
+
+
 	trait = {
 		token = ample_capacity
 		name = "Quality and Quantity"
 		icon = GFX_generic_mio_trait_icon_production_capacity
 		
-		position = { x=0 y=2 }
-		relative_position_id = production_line
+		position = { x=0 y=3 }
+		relative_position_id = construct_the_niebelungenwerke
 
-		any_parent = { batch_production standardized_components }
+		special_trait_background = yes
+
+
+		available = {
+			USA = {
+				has_completed_focus = USA_quality_and_quantity
+				
+				}
+			}
+
+		
+
+		any_parent = { production_line volunteers}
 		equipment_bonus = {
 			soft_attack = 0.05
 			hard_attack = 0.05
-			build_cost_ic = -0.025
+			reliability = 0.05
+			build_cost_ic = -0.04
 		}
 
 	}
 
-	trait = {
-		token = lighter_vehicles
-		name = "Focus on Lighter Vehicles"
-		icon = GFX_generic_mio_department_icon_tank_light_tank_line_efficiency
-		position = { x=2 y=1}
-		relative_position_id = construct_the_niebelungenwerke
-        any_parent = { construct_the_niebelungenwerke }
-		mutually_exclusive = { heavier_vehicles }
-		limit_to_equipment_type = { 
-			mio_cat_eq_all_medium_tank
-			mio_cat_eq_all_light_tank
-		}
-		production_bonus = {
-			production_cost_factor = 0.05
-		}
-	}
-	trait = {
-		token = heavier_vehicles
-		name = "Focus on Heavier Vehicles"
-		icon = GFX_generic_mio_department_icon_tank_heavy_tank_line_efficiency
-		position = { x=4 y=1}
-		relative_position_id = construct_the_niebelungenwerke
-        any_parent = { construct_the_niebelungenwerke }
-		mutually_exclusive = { lighter_vehicles }
-		limit_to_equipment_type = { 
-			mio_cat_eq_all_medium_tank
-			mio_cat_eq_all_heavy_tank
-		}
-		production_bonus = {
-			production_cost_factor = 0.05
-		}
-	}
-	trait = {
-		token = drivetrain
-		name = "Improved Drivetrain"
-		icon = GFX_generic_mio_trait_icon_reliability
-		
-		position = { x=0 y=1 }
-		relative_position_id = heavier_vehicles
-		any_parent = { heavier_vehicles }
+	
 
-		limit_to_equipment_type = { 
-			mio_cat_eq_all_medium_tank
-			mio_cat_eq_all_heavy_tank
-		}
-		equipment_bonus = {
-			reliability = 0.1
-			defense = 0.1
-		}
-
-	}
 	trait = {
 		token = hull
 		name = "Improved Hull Construction"
 		icon = GFX_generic_mio_trait_icon_max_strength
 		
-		position = { x=0 y=1 }
-		relative_position_id = lighter_vehicles
-		any_parent = { lighter_vehicles }
+		position = { x=0 y=3 }
+		relative_position_id = W1
+		any_parent = {W2 W3}
+
+		equipment_bonus = {
+			armor_value = 0.1
+			hardness = 0.1
+		}
+
+	}
+
+	
+	add_trait = {
+		token = diditinator
+		name = "Improved Gun Stabilisation"
+		icon = GFX_generic_mio_department_icon_tank_medium_tank_weapons
+		
+		position = { x=-1 y=1 }
+		relative_position_id = hull
+		all_parents = {hull Q1 }
+
+
+		special_trait_background = yes
+
+
+		mutually_exclusive = {
+			pegging
+		}
+
+
 		limit_to_equipment_type = { 
 			mio_cat_eq_all_medium_tank
 			mio_cat_eq_all_light_tank
 		}
 
+		available = {
+			USA ={ 
+				has_completed_focus = USA_improve_teething
+			}
+		}
+
 		equipment_bonus = {
-			armor_value = 0.2
-			defense = 0.1
+			soft_attack = 0.05
+			hard_attack = 0.05
+			
+		}
+
+	
+
+
+	}
+	add_trait = {
+		token = pegging
+		name = "Improved Meiums Hulls"
+		icon = GFX_generic_mio_department_icon_tank_general_armor
+		
+		position = { x=-1 y=0 }
+		relative_position_id = diditinator
+		all_parents = {hull Q1 }
+
+
+		special_trait_background = yes
+
+		mutually_exclusive = {
+			diditinator
+		}
+
+
+		limit_to_equipment_type = { 
+			mio_cat_eq_all_medium_tank
+			mio_cat_eq_all_light_tank
+		}
+
+		available = {
+			USA = {
+				has_completed_focus = USA_improve_teething
+				
+				}
+			}
+
+		equipment_bonus = {
+			armor_value = 0.15
+			hardness = 0.1
 		}
 
 	}
+
+	add_trait = {
+		token = armor_cunts
+		name = "Improved Heavy Guns"
+		icon = GFX_generic_mio_department_icon_tank_heavy_tank_engine
+		
+		position = { x=1 y= 1 }
+		relative_position_id = hull
+		all_parents = {hull E1 }
+
+
+		special_trait_background = yes
+
+		mutually_exclusive = {
+			armor_cunts_omega
+		}
+
+
+		limit_to_equipment_type = { 
+			armor_cunts_omega
+		}
+
+		available = {
+			USA = {
+				
+				has_completed_focus = USA_improve_teething
+				
+				
+				}
+		}
+
+		equipment_bonus = {
+			soft_attack = 0.1
+			hard_attack = 0.1
+		}
+	}
+	
+
+	add_trait = {
+		token = armor_cunts_omega
+		name = "Heavy Tank Armor Casting"
+		icon = GFX_generic_mio_department_icon_tank_heavy_tank_armor
+		
+		position = { x=1 y=0 }
+		relative_position_id = armor_cunts
+		all_parents = {hull E1 }
+
+
+		special_trait_background = yes
+
+		mutually_exclusive = {
+			armor_cunts
+		}
+
+		limit_to_equipment_type = { 
+			armor_cunts_omega
+		}
+
+		available = {
+			USA = {
+				has_completed_focus = USA_improve_teething
+				
+				}
+		}
+
+		equipment_bonus = {
+			armor_value = 0.15
+			hardness = 0.05
+		}
+
+	}
+
+
+
+	trait = {
+		token = Q1
+		name = "Funding Main BattleTank Production"
+		icon = GFX_generic_mio_department_icon_facilities
+	
+		relative_position_id = W2
+		position = { x=0 y=1}	
+		all_parents = {
+			W2
+		}
+
+		limit_to_equipment_type = { 
+			mio_cat_eq_all_medium_tank
+			mio_cat_eq_all_light_tank
+		}
+
+	organization_modifier = {
+			military_industrial_organization_research_bonus = 0.1
+	}
+	production_bonus = {
+	    production_efficiency_gain_factor = 0.1
+	}
+	equipment_bonus = {
+		build_cost_ic = -0.07
+	}
+
+	
+   }
+		
+		trait = {
+			token = E1
+			name = "Funding Heavy TAnk Production"
+			icon = GFX_generic_mio_department_icon_facilities
+		
+			relative_position_id = W3
+			position = { x=0 y=1}
+
+			limit_to_equipment_type = { 
+				mio_cat_eq_all_heavy_tank
+			}
+			
+			all_parents = {
+				
+				W3
+			}
+	
+			organization_modifier = {
+				military_industrial_organization_research_bonus = 0.1
+			}
+			production_bonus = {
+			production_efficiency_gain_factor = 0.1
+		}
+		equipment_bonus = {
+		build_cost_ic = -0.05
+	}
+			
+	}
+	
 }
 
 USA_army_ordnance_department_organization = {
