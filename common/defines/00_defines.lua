@@ -1293,7 +1293,7 @@ NAir = {
 	--AAT
 	THRUST_WEIGHT_AGILITY_FACTOR = 0.5,								-- For plane designs, additive agility bonus per point of thrust exceeding weight
 
-	PORT_STRIKE_DAMAGE_FACTOR = 0.3,								-- How much damage is dealt to ports during a port strike (per plane damage [complex number] * num flying planes * define)
+	PORT_STRIKE_DAMAGE_FACTOR = 0.1,								-- How much damage is dealt to ports during a port strike (per plane damage [complex number] * num flying planes * define)
 
 	
 	--BBA*/
@@ -2159,8 +2159,8 @@ NNavy = {
 	BASE_NAVAL_INVASION_SPOTTING_SPEED = 0.0,						-- daily base spotting speed against unit transfers
 
 	CONVOY_SPOTTING_SPEED_MULT = 6.0,								-- spotting speed mult against convoys
-	UNIT_TRANSFER_SPOTTING_SPEED_MULT = 8,						-- spotting speed mult against unit transfers
-	NAVAL_INVASION_SPOTTING_SPEED_MULT = 20.0,						-- spotting speed mult against naval invasion armies
+	UNIT_TRANSFER_SPOTTING_SPEED_MULT = 12,						-- spotting speed mult against unit transfers
+	NAVAL_INVASION_SPOTTING_SPEED_MULT = 30.0,						-- spotting speed mult against naval invasion armies
 	
 	
 	CONVOY_DETECTION_CHANCE_BASE = 4.12,							-- regular convoy base chance detection percentage (if this fails, no detection is done on that tick)
