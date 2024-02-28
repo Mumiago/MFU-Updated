@@ -1735,7 +1735,7 @@ NNavy = {
 	--aat 
 	RESOURCE_PURCHASE_PRIORITY = 6,									-- Default convoy priority for export equipment purchase
 	NAVY_PIERCING_THRESHOLD_DAMAGE_VALUES = {	-- 0 armor will always receive maximum damage (so add overmatching at your own peril). the system expects at least 2 values, with no upper limit.
-		1.00,
+		1.3,
 		1.00,
 		0.70,
 		0.40,
@@ -1747,7 +1747,7 @@ NNavy = {
 	PEACE_ACTION_TRANSFER_NAVY_EXPERIENCE_RETAINED = 0.25,			-- % of experience to retain after being transferred in a peace conference
 	HIT_PROFILE_SPEED_BASE											= 20,		-- Base value added to hitprofile speed calulation
 	NAVY_PIERCING_THRESHOLDS = {					-- Our piercing / their armor must be this value to deal damage fraction equal to the index in the array below [higher number = higher penetration]. If armor is 0, 1.00 will be returned.
-		2.00,
+		1.35,
 		1.00,
 		0.75,
 		0.50,
@@ -2375,9 +2375,9 @@ NCharacter = {
 	COUNTRY_LEADER_BASE_EXPIRE_YEAR_LENGTH = 5, -- When creating a dynamic country leader if an expire date is not set it will have 5 years as a base expiration date
 	COUNTRY_LEADER_BASE_RANDOM_MAX_YEAR_LENGTH = 15, -- Max random value added to COUNTRY_LEADER_BASE_EXPIRE_YEAR_LENGTH
 
-	SPECIALIST_ADVISOR_MIN_RANK = 2,
-	EXPERT_ADVISOR_MIN_RANK = 4,
-	GENIUS_ADVISOR_MIN_RANK = 6,
+	SPECIALIST_ADVISOR_MIN_RANK = 3,
+	EXPERT_ADVISOR_MIN_RANK = 5,
+	GENIUS_ADVISOR_MIN_RANK = 7,
 },
 NAITheatre = {
 	AI_THEATRE_GENERATION_HOME_THEATRE_DEPTH_RESTRICTION = 2,			-- The home theatre is generated based off a initial depth restriction
