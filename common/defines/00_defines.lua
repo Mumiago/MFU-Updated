@@ -1828,8 +1828,8 @@ NNavy = {
 	ADMIRAL_TASKFORCE_CAP = 8,										-- admirals will start getting penalties after this amount of taskforces
 	
 	DETECTION_CHANCE_MULT_BASE = 0.1,								-- base multiplier value for detection chance. Later the chance is an average between our detection and enemy visibility, mult by surface/sub detection chance in the following defines.
-	DETECTION_CHANCE_MULT_RADAR_BONUS = 0.1,						-- detection chance bonus from radars. 
-	DETECTION_CHANCE_MULT_AIR_SUPERIORITY_BONUS = 0.375,			-- bonus from air superiority.
+	DETECTION_CHANCE_MULT_RADAR_BONUS = 0.15,						-- detection chance bonus from radars. 
+	DETECTION_CHANCE_MULT_AIR_SUPERIORITY_BONUS = 0.3,			-- bonus from air superiority.
 
 	MAX_CAPITALS_PER_AUTO_TASK_FORCE = 5,							-- maximum number of capital ships the auto-task force creation will put together when designing SurfaceActionGroup
 	MAX_SUBMARINES_PER_AUTO_TASK_FORCE = 30,						-- maximum number of submarines the auto-task force creation will put together when designing wolfpack
