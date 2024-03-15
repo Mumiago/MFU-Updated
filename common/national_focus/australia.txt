@@ -1175,18 +1175,29 @@ focus_tree = {
 		
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
 		completion_reward = {
-			custom_effect_tooltip = AST_modify_dep_tt
-			add_to_variable = {
-				AST_production_speed_industrial_complex_factor_var = 0.2
-				tooltip = AST_prod_speed_civ_tt3
+			if = {
+				limit = {
+					amount_taken_ideas = {
+						amount < 3
+						slots = {
+							political_advisor
+						}
+					}
+
+				}
+				add_ideas = AST_arthur_calwell
+
 			}
-			add_to_variable = {
-				AST_production_speed_infrastructure_factor_var = 0.1
-				tooltip = AST_prod_speed_infra_tt1
-			}
-			add_to_variable = {
-				AST_stability_factor_var = 0.1
-				tooltip = AST_stab_up_tt1
+			else_if ={
+				limit = {
+					amount_taken_ideas = {
+						amount > 2
+						slots = {
+							political_advisor
+						}
+					}
+				}
+				add_political_power = 150
 			}
 		}
 	}
@@ -1212,7 +1223,14 @@ focus_tree = {
 		
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
 		completion_reward = {
-			
+			add_to_variable = {
+				AST_political_power_factor_var = -0.2
+				tooltip = AST_pol_pow_fac_tt3
+			}
+			add_timed_idea = {
+				idea = ENG_prepare_for_the_inevitable_idea
+				days = 730
+			}			
 		}
 	}
 
@@ -1234,20 +1252,21 @@ focus_tree = {
 		
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
 		completion_reward = {
-			custom_effect_tooltip = AST_modify_dep_tt
-			add_to_variable = {
-				AST_production_speed_arms_factory_factor_var = 0.2
-				tooltip = AST_prod_speed_mil_tt4
-			}
-			add_to_variable = {
-				AST_industrial_capacity_dockyard_var = 0.1
-				tooltip = AST_doc_out_tt1
+			every_country = {
+				limit = {
+						tag = AST
 
+				}
+				send_embargo = JAP
+				send_embargo = MAN
+				send_embargo = GER
+				send_embargo = ITA
+				send_embargo = SPR		
+                send_embargo = HUN	
+                send_embargo = ROM					
+				custom_effect_tooltip = embargo_relation_tt
 			}
-			add_to_variable = {
-				AST_industrial_capacity_factory_var = 0.15
-				tooltip = AST_fac_out_tt2
-			}
+			add_political_power = 150
 		}
 	}
 
