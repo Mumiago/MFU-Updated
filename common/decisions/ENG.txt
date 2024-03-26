@@ -47,6 +47,130 @@ ENG_operation_compass = {
 	
 		complete_effect = {
 
+
+			
+		}
+	}
+	ENG_dig_in_Tobruk = {
+	
+		icon = generic_operation
+
+		allowed = {
+			original_tag = ENG
+		}
+
+	
+		available = {
+			OR = {
+				ITA = {
+					controls_province = 1130 
+				}
+				any_other_country = {
+					is_in_faction_with = GER
+					controls_province = 1130
+				}
+			}
+			
+		}
+
+		days_mission_timeout = 20
+
+		fire_only_once = yes
+
+		is_good = yes
+
+		activation = {
+			date < 1941.1.1
+			AND = {
+				OR = {
+					ENG = {
+						controls_province = 4136 
+					}
+					any_other_country = {
+						is_in_faction_with = ENG
+						controls_province = 4136
+					}
+				}
+				OR = {
+					ENG = {
+						controls_province = 9992 
+					}
+					any_other_country = {
+						is_in_faction_with = ENG
+						controls_province = 9992
+					}
+				}
+				OR = {
+					ENG = {
+						controls_province = 13078 
+					}
+					any_other_country = {
+						is_in_faction_with = ENG
+						controls_province = 13078
+					}
+				}
+				OR = {
+					ENG = {
+						controls_province = 1130 
+					}
+					any_other_country = {
+						is_in_faction_with = ENG
+						controls_province = 1130
+					}
+				}
+			}
+		}
+
+		modifier = {
+		}
+		cancel_trigger = {
+			OR = {
+				ITA = {
+					controls_province = 1130 
+				}
+				any_other_country = {
+					is_in_faction_with = GER
+					controls_state = 1130
+				}
+			}
+ 		}
+		
+		timeout_effect = {
+			451 = {
+				set_building_level = {
+					type = bunker
+					province = 9992
+					level = 8
+				}								
+			}
+			663 = {
+				set_building_level = {
+					type = bunker
+					province = 13078
+					level = 8
+				}								
+			}
+			451 = {
+				set_building_level = {
+					type = bunker
+					province = 4136
+					level = 8
+				}								
+			}
+			451 = {
+				set_building_level = {
+					type = bunker
+					province = 1130
+					level = 8
+				}								
+			}
+			
+		}
+			
+	
+		complete_effect = {
+			
+
 			
 		}
 	}
@@ -715,12 +839,17 @@ ENG_budget_decisions = {
 		is_good = no
 		fire_only_once = no
 
-		days_remove = 185
+		days_remove = 185	
 
 		activation = {
 			date > 1936.01.01
-			NOT = {
-				is_in_faction_with = USA
+			OR = {
+				NOT = {
+					JAP = {
+						has_war_with = USA
+					}
+				}
+				date < 1941.2.1
 			}
 		}
 
@@ -733,7 +862,14 @@ ENG_budget_decisions = {
 			}
 		}
 		cancel_trigger = {
-			is_in_faction_with = USA
+		
+		
+			JAP = {
+				has_war_with = USA
+			}
+			date > 1941.2.1
+			
+			
  		}
 		complete_effect = {
 			set_variable = {
@@ -744,7 +880,7 @@ ENG_budget_decisions = {
 				limit = {
 					has_idea = sir_john_simon
 				}
-				add_to_variable = { var = british_money value = 300 }
+				add_to_variable = { var = british_money value = 400 }
 			}
 
 			if = {
@@ -757,7 +893,7 @@ ENG_budget_decisions = {
 				}
 				multiply_variable = {
 					var = budget_income_1
-					value = 0.45 
+					value = 0.5
 				}
 			}
 			else_if = {
@@ -770,7 +906,7 @@ ENG_budget_decisions = {
 				}
 				multiply_variable = {
 					var = budget_income_1
-					value = 0.55 
+					value = 0.6
 				}
 			}
 			else_if = {
@@ -783,7 +919,7 @@ ENG_budget_decisions = {
 				}
 				multiply_variable = {
 					var = budget_income_1
-					value = 0.7
+					value = 0.75
 				}
 			}	
 			else_if = {
@@ -796,15 +932,15 @@ ENG_budget_decisions = {
 				}
 				multiply_variable = {
 					var = budget_income_1
-					value = 1.4
+					value = 1.05
 				}
 			}					
-			add_to_variable = { var = resource_income value = resource_imported@rubber }
-			add_to_variable = { var = resource_income value = resource_imported@chromium }
-			add_to_variable = { var = resource_income value = resource_imported@tungsten }
-			add_to_variable = { var = resource_income value = resource_imported@steel }
-			add_to_variable = { var = resource_income value = resource_imported@oil }
-			add_to_variable = { var = resource_income value = resource_imported@aluminium }
+			add_to_variable = { var = resource_income value = resource_exported@rubber }
+			add_to_variable = { var = resource_income value = resource_exported@chromium }
+			add_to_variable = { var = resource_income value = resource_exported@tungsten }
+			add_to_variable = { var = resource_income value = resource_exported@steel }
+			add_to_variable = { var = resource_income value = resource_exported@oil }
+			add_to_variable = { var = resource_income value = resource_exported@aluminium }
 			add_to_variable = { var = resource_expenses value = resource_imported@rubber }
 			add_to_variable = { var = resource_expenses value = resource_imported@chromium }
 			add_to_variable = { var = resource_expenses value = resource_imported@tungsten }
@@ -814,19 +950,19 @@ ENG_budget_decisions = {
 
 			if = {
 				limit = { has_idea = free_trade }
-				multiply_variable = { var = resource_income value = 1.5 }
+				multiply_variable = { var = resource_income value =  0.75 }
 				multiply_variable = { var = resource_expenses value = 0.75 }
 			}
 
 			else_if = {
 				limit = { has_idea = export_focus }
-				multiply_variable = { var = resource_income value = 1.25 }
+				multiply_variable = { var = resource_income value = 0.75 }
 				multiply_variable = { var = resource_expenses value = 0.75 }
 			} 
 
 			else_if = {
 				limit = { has_idea = limited_exports }
-				multiply_variable = { var = resource_income value = 1.0 }
+				multiply_variable = { var = resource_income value = 0.75 }
 				multiply_variable = { var = resource_expenses value = 1.25 }
 			} 
 
@@ -922,7 +1058,7 @@ ENG_budget_decisions = {
 				}
 			}
 
-			add_to_variable = { var = british_money value = resource_income }	
+			#add_to_variable = { var = british_money value = resource_income }	
 			add_to_variable = { var = british_money value = budget_income_1 }	
 			subtract_from_variable = { var = british_money value = budget_expenditure_1 }
 			subtract_from_variable = { var = british_money value = budget_expenditure_2 }
@@ -945,6 +1081,7 @@ ENG_budget_decisions = {
 
 		available = {
 			tag = ENG
+			has_stability > 0.2
 		}
 
 		visible = {
@@ -964,7 +1101,7 @@ ENG_budget_decisions = {
 		}
 		
 		complete_effect = {
-			add_stability = -0.025
+			add_stability = -0.04
 			add_to_variable = {
 				var = british_money
 				value = 400
@@ -2570,21 +2707,53 @@ ENG_budget_decisions = {
 			USA = {
 				USA_armor_industry_level_up = yes 
 			}
-			add_equipment_to_stockpile = {
-				type = light_tank_chassis
-				producer = ENG 
-				amount = 300
+
+			if = {
+				limit = {
+					ENG = {
+						has_country_flag = ENG_chose_tank_type_flag
+					}
+				}
+				if = {
+					limit = {
+						ENG = {
+							has_country_flag = ENG_chose_light_tank_flag
+						}
+					}
+					add_equipment_to_stockpile = {
+						type = light_tank_chassis 
+						producer = ENG 
+						amount = 1100 #300
+					}
+				}
+				if = {
+					limit = {
+						ENG = {
+							has_country_flag = ENG_chose_medium_tank_flag
+						}
+					}
+					add_equipment_to_stockpile = {
+						type = medium_tank_chassis
+						producer = ENG 
+						amount = 800 #300
+					}
+				}
+				if = {
+					limit = {
+						ENG = {
+							has_country_flag = ENG_chose_heavy_tank_flag
+						}
+					}
+					add_equipment_to_stockpile = {
+						type = heavy_tank_chassis
+						producer = ENG 
+						amount = 450 #200
+					}
+				}
 			}
-			add_equipment_to_stockpile = {
-				type = medium_tank_chassis
-				producer = ENG 
-				amount = 300
-			}
-			add_equipment_to_stockpile = {
-				type = heavy_tank_chassis
-				producer = ENG 
-				amount = 200
-			}
+			else = {
+				country_event = { id = britain.51 }
+			}	
 		}
 	}
 
@@ -2644,10 +2813,10 @@ ENG_budget_decisions = {
 	ENG_order_heavy_fighters_in_USA = {
 		icon = generic_air
 		available = {
-			
+			has_completed_focus = ENG_arms_purchases_in_the_us
 		}
 		visible = {
-			always = no
+			#always = no
 		}
 
 		days_remove = 120
@@ -2667,12 +2836,12 @@ ENG_budget_decisions = {
 		}
 		modifier = {
 		}
-		custom_cost_text = ENG_400_british_money 
+		custom_cost_text = ENG_600_british_money 
 
 		custom_cost_trigger = {
 			check_variable = {
     			var = british_money
-   				value = 400
+   				value = 600
     			compare = greater_than_or_equals
 			}
 		}
@@ -2681,7 +2850,7 @@ ENG_budget_decisions = {
 		complete_effect = {
 			subtract_from_variable = { 
 				var = british_money 
-				value = 400 
+				value = 600 
 			}
 		}
 		remove_effect = {
@@ -2721,18 +2890,18 @@ ENG_budget_decisions = {
 		modifier = {
 			
 		}
-		custom_cost_text = ENG_400_british_money 
+		custom_cost_text = ENG_600_british_money 
 
 		custom_cost_trigger = {
 			check_variable = {
     			var = british_money
-   				value = 400
+   				value = 600
     			compare = greater_than_or_equals
 			}
 		}
 
 		complete_effect = {
-			subtract_from_variable = { var = british_money value = 400 }
+			subtract_from_variable = { var = british_money value = 600 }
 				 
 		}
 		remove_effect = {
@@ -2741,7 +2910,7 @@ ENG_budget_decisions = {
 			}
 			add_equipment_to_stockpile = {
 				type = medium_plane_airframe
-				amount = 100
+				amount = 150
 			}
 		}
 	}
@@ -3017,10 +3186,11 @@ operations = {
 			}
 		}
 		remove_effect = {
-			declare_war_on = {
+			declare_war_on = {	
 				target = IRQ
 				type = annex_everything
 			}
+			GER = { add_to_faction = IRQ }
 			IRQ = { 
 				add_to_war = { 
 					targeted_alliance = GER

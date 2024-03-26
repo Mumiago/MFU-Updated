@@ -1043,6 +1043,7 @@ focus_tree = {
 			add_to_variable = {
 				ENG_political_power_cost_var = -0.1
 			}
+			
 		}
 	}
 	focus = {
@@ -1235,7 +1236,13 @@ focus_tree = {
 		cost = 5
 
 		completion_reward = {
+			custom_effect_tooltip = ENG_output_upgrade_tt
+
+			add_to_variable = {
+				ENG_industrial_capacity_factory_var = 0.10
+			}
 			add_political_power = 100
+			
 		}
 	}
 	focus = {
@@ -1303,6 +1310,15 @@ focus_tree = {
 		continue_if_invalid = yes
 		completion_reward = {
 			custom_effect_tooltip = ENG_debuffs_removal_tt
+			if = {
+				limit = {
+					has_completed_focus = ENG_appeasement
+				}
+				add_to_variable = { 
+					var = ENG_global_building_slots_factor_var 
+					value = 0.5
+				}
+			}
 			
 			ENG = {
 				every_owned_state = {
@@ -1435,8 +1451,12 @@ focus_tree = {
 		cost = 5
 		completion_reward = {
 			add_political_power = 200
-			custom_effect_tooltip = ENG_churchill_ministry_tt
-		    hidden_effect = { retire_character = ENG_Viscount_Swinton retire_character = ENG_ernest_brown}
+			#custom_effect_tooltip = ENG_churchill_ministry_tt
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = lord_swinton
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = Ernest_Bevin
+		   
 		}
 			
 		                   
@@ -1524,33 +1544,7 @@ focus_tree = {
 				days = 365
 			}
 			add_political_power = 200
-			133 = {
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = arms_factory
-					level = 3
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-
-			}
-			120 = {
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = arms_factory
-					level = 3
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
+			
 		}
 	}
 	focus = {
@@ -1611,36 +1605,36 @@ focus_tree = {
 
 		completion_reward = {
 			126 = {
-			    add_extra_state_shared_building_slots = 4
+			    add_extra_state_shared_building_slots = 6
 				set_building_level = {
 					type = infrastructure
 					level = 10
 				}
 			}
 			128 = { 
-			    add_extra_state_shared_building_slots = 4
+			    add_extra_state_shared_building_slots = 6
 				set_building_level = {
 					type = infrastructure
 					level = 10
 				}
 			}
 			132 = {
-			    add_extra_state_shared_building_slots = 4
+			    add_extra_state_shared_building_slots = 6
 				set_building_level = {
 					type = infrastructure
 					level = 10
 				}
 			}
 			125 = {
-                add_extra_state_shared_building_slots = 2
+                add_extra_state_shared_building_slots = 6
 			}
 			127 = {
-			    add_extra_state_shared_building_slots = 2
+			    add_extra_state_shared_building_slots = 6
 
 			}
 
 			810 = {
-               add_extra_state_shared_building_slots = 2
+               add_extra_state_shared_building_slots = 6
 			}
 		}
 	}
@@ -2594,13 +2588,13 @@ focus_tree = {
 			add_tech_bonus = {
 				name = ENG_artillery_focus
 				bonus = 0.5
-				uses = 1
+				uses = 2
 				category = artillery
 			}
 			add_tech_bonus = {
 				name = ENG_artillery_focus
 				bonus = 0.5
-				uses = 2
+				uses = 1
 				category = cat_anti_tank
 			}
 			add_tech_bonus = {
@@ -2672,7 +2666,7 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			army_experience = 20
+			army_experience = 40
 			custom_effect_tooltip = ENG_form_tank_board_tt
 			add_to_variable = {
 				ENG_army_armor_attack_factor_var = 0.05
@@ -2710,60 +2704,10 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			army_experience = 20
+			army_experience = 40
 
-			if = {
-				limit = {
-					NOT = {
-						has_tech = eng_1937_light_tank_chassis
-					}
-				}
-				set_technology = {
-					eng_1937_light_tank_chassis = 1
-				}
-			}
-			add_equipment_to_stockpile = {
-				type = light_tank_chassis_1937
-				amount = 300
-				producer = ENG 
-			}
 			custom_effect_tooltip = ENG_tank_spawn_in
-			if = {
-				limit = {
-					    has_tech = eng_1936_medium_tank_chassis
-					NOT = {
-					    has_tech = eng_1939_heavy_tank_chassis	
-					}
-			    }				
-				hidden_effect = {
-					load_oob = ENG_7_armoured_div
-				}
-			}					
-			else_if = {
-				limit = {
-					    has_tech = eng_1939_heavy_tank_chassis					
-				
-					NOT = {
-					    has_tech = eng_1936_medium_tank_chassis
-					}
-			    }
-				hidden_effect = {	
-					load_oob = ENG_7_heavy_armoured_div
-			    }					
-		   	}
-			else_if = {
-				limit = {
-					    has_tech = eng_1939_heavy_tank_chassis					
-
-					AND = {
-					    has_tech = eng_1936_medium_tank_chassis
-
-					}
-			    }
-				hidden_effect = {	
-					load_oob = ENG_7_heavy_medium_div
-			    }					
-		   	}
+			country_event = { id = britain.50 }
 			
 		}
 	}
@@ -2787,7 +2731,7 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			army_experience = 20
+			army_experience = 40
 			custom_effect_tooltip = ENG_form_tank_board_tt
 			add_to_variable = {
 				ENG_army_armor_attack_factor_var = 0.05
@@ -2969,7 +2913,7 @@ focus_tree = {
 		relative_position_id = ENG_blood_toil_tears_sweat
         x = -8
         y = 2
-        cost = 2
+        cost = 5
         ai_will_do = {
             factor = 1
         }
@@ -2978,7 +2922,15 @@ focus_tree = {
 			422 = {
 				set_building_level = {
 					type = air_base
-					level = 6
+					level = 8
+				}
+				set_building_level = {
+					type = coastal_bunker
+					level = 3
+					province = {
+						all_provinces = yes
+						limit_to_coastal  = yes	
+					}
 				}
 			}
         }
@@ -2992,7 +2944,7 @@ focus_tree = {
 		relative_position_id = ENG_crimson_sun
         x = 0
         y = 1
-        cost = 2
+        cost = 5
         ai_will_do = {
             factor = 1
         }
@@ -3001,13 +2953,13 @@ focus_tree = {
 			430 = {
 				set_building_level = {
 					type = air_base
-					level = 6
+					level = 8
 				}
 			}
 			432 = {
 				set_building_level = {
 					type = air_base
-					level = 6
+					level = 8
 				}
 			}
         }
@@ -3071,7 +3023,29 @@ focus_tree = {
 			333 = {
 				set_building_level = {
 					type = air_base
-					level = 6
+					level = 8
+				}
+				set_building_level = {
+					type = coastal_bunker
+					level = 3
+					province = {
+						all_provinces = yes
+						limit_to_naval_base  = yes	
+					}
+				}
+			}
+			672 = {
+				set_building_level = {
+					type = air_base
+					level = 8
+				}
+				set_building_level = {
+					type = coastal_bunker
+					level = 3
+					province = {
+						all_provinces = yes
+						limit_to_naval_base  = yes	
+					}
 				}
 			}
         }
@@ -3422,13 +3396,13 @@ focus_tree = {
 			USA = {
 				add_tech_bonus = {
 					name = anglo_burger
-					bonus = 1.0
+					bonus = 2.0
 					uses = 1
 					technology = usa_fighter_1944
 				}
 				add_tech_bonus = {
 					name = anglo_burger
-					bonus = 1.0
+					bonus = 2.0
 					uses = 1
 					technology = jet_engines
 				}
@@ -3537,13 +3511,82 @@ focus_tree = {
 		}
 		available = {
 			OR = {
-				ENG = {
-					NOT = {
-						has_full_control_of_state = 452
-					}
+				AND = {
+					OR = {
+						GER = {
+							controls_state = 446
+						}
+						any_other_country = {
+							is_in_faction_with = GER
+							controls_state = 446
+						}
+					}	
+					date > 1940.7.1
 				}
-				date > 1941.11.3
+				AND = {
+					OR = {
+						GER = {
+							controls_state = 447 
+						}
+						any_other_country = {
+							is_in_faction_with = GER
+							controls_state = 447
+						}
+					}	
+					date > 1940.8.1
+				}
+				AND = {
+					OR = {
+						GER = {
+							controls_state = 452 
+						}
+						any_other_country = {
+							is_in_faction_with = GER
+							controls_state = 452
+						}
+					}	
+					date > 1940.9.1
+				}
+				AND = {
+					OR = {
+						GER = {
+							controls_state = 451 
+						}
+						any_other_country = {
+							is_in_faction_with = GER
+							controls_state = 451
+						}
+					}	
+					date > 1940.12.1
+				}
+				AND = {
+					OR = {
+						GER = {
+							controls_state = 450 
+						}
+						any_other_country = {
+							is_in_faction_with = GER
+							controls_state = 450
+						}
+					}	
+					date > 1941.2.1
+				}
+				AND = {
+					OR = {
+						GER = {
+							controls_state = 449 
+						}
+						any_other_country = {
+							is_in_faction_with = GER
+							controls_state = 449
+						}
+					}	
+					date > 1941.4.1
+				}
+				date > 1941.6.1
+				
 			}
+				
 		}
 		relative_position_id = ENG_battle_of_med
         x = -1
@@ -3554,6 +3597,86 @@ focus_tree = {
         }
 
         completion_reward = {
+			#custom_effect_tooltip = ENG_spawn_tobruk_forts_tt
+			
+			hidden_effect = {
+					
+				every_state = {
+					limit = {
+						OR = {
+							state = 452
+							state = 447
+							state = 446
+							state = 454
+							state = 553
+							state = 677
+							state = 453
+							state = 451
+							state = 450
+							state = 449
+							state = 661
+							state = 448
+							state = 665
+							state = 458
+							state = 460
+							state = 459
+							state = 461
+							state = 462
+							state = 824
+							state = 813
+							state = 679
+							state = 457
+							state = 550
+							state = 772
+							state = 812
+							state = 539
+							state = 297
+							state = 773
+							state = 558
+							state = 776
+							state = 777
+							state = 274
+							state = 779
+							state = 780
+							state = 700
+							state = 272
+							state = 701
+							state = 557
+							state = 295
+							state = 541
+							state = 681
+							state = 719
+							state = 546
+							state = 547
+							state = 559
+							state = 269
+							state = 268
+						}
+					}
+					set_building_level = {
+						type = naval_base
+						level = 5
+						province = {
+							all_provinces = yes
+							limit_to_naval_base  = yes
+							level > 5	
+						}
+					}
+					add_dynamic_modifier = {
+						modifier = Supply_limit_africa
+						#days = 365
+					}
+				}
+				812 = {
+					set_building_level = {
+						type = naval_base
+						level = 6
+						province = 12725
+					}
+				}
+			}
+				
+				
 			every_country = {
 				limit = {
 					OR = {
@@ -3563,12 +3686,27 @@ focus_tree = {
 				}
 				add_timed_idea = {
 					idea = ENG_battleaxe
-					days = 45
+					days = 400
 				}
 			}
-			
+			hidden_effect = {
+				every_country = {
+					limit = {
+						OR = {
+							is_in_faction_with = ENG 
+							tag = ENG 
+						}
+					}
+					add_timed_idea = {
+						idea = ENG_battleaxe2
+						days = 400
+					}
+				}
+				
+			}
         }
 	}
+	
 ##########gives montgomery
 	focus = {
 		id = ENG_lessons_of_africa 
@@ -3677,7 +3815,6 @@ focus_tree = {
 		}
 		relative_position_id = ENG_hit_taranto
 		available = {
-			controls_state = 812
 			OR = {
 				AND = {
 					ITA = {
@@ -3710,13 +3847,8 @@ focus_tree = {
 				days = 180
 				idea = ENG_battle_of_mediterranian
 			}
-			812 = {
-				set_building_level = {
-					type = air_base
-					level = 20
-					instant_build = yes
-				}
-			}
+			
+			
         }
 	}
 	focus = {

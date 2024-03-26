@@ -1,0 +1,805 @@
+#####################
+
+###  ##  #  # # #  ## 
+ #  #  # ## # # # #   
+ #  #### # ## ##   #  
+ #  #  # #  # # #   # 
+ #  #  # #  # # # ## 
+
+ #################### 
+  CZE_praga_armor = {
+	name = "Praga"
+	icon = 	GFX_idea_CZE_praga
+	
+	allowed = {	
+				OR = {
+					original_tag = CZE
+					original_TAG = SLO
+				}
+			}
+	equipment_type = { armor }
+	research_categories = { armor }
+
+	initial_trait = {
+		name = refit_plant
+		
+		organization_modifier = {
+			military_industrial_organization_design_team_change_cost = -1.0
+		}
+		
+		equipment_bonus = {
+					build_cost_ic = 0.05
+		}
+	}
+	trait = {
+		token = conversion_of_captures
+		name = "Prepare Conversion of Captured Vehicles"
+		icon = GFX_generic_mio_department_icon_tank_general_conversion
+		position = { x=1 y=1 }
+		
+		production_bonus = {
+			production_efficiency_gain_factor = 0.1
+			production_resource_need_factor = -0.1
+			production_resource_penalty_factor = -0.1
+		}
+	}
+
+	trait = {
+		token = spiggies
+		name = "To SPGs"
+		icon = GFX_generic_mio_department_icon_tank_general_spg
+
+		position = { x=-1 y=1 }
+		relative_position_id = conversion_of_captures
+
+		all_parents = { conversion_of_captures }
+
+		mutually_exclusive = { tiddies }
+		limit_to_equipment_type = { mio_cat_eq_all_spg }
+
+		equipment_bonus = {
+					reliability = -0.1
+					build_cost_ic = -0.075
+		}
+	}
+
+	trait = {
+		token = tiddies
+		name = "To Tank Destroyers"
+		icon = GFX_generic_mio_department_icon_tank_general_at
+
+		position = { x=1 y=1 }
+		relative_position_id = conversion_of_captures
+
+		all_parents = { conversion_of_captures streamlined_comp }
+
+		mutually_exclusive = { spiggies }
+		limit_to_equipment_type = { mio_cat_eq_all_tank_destroyers }
+		equipment_bonus = {
+			breakthrough = 0.3
+		}
+		production_bonus = {
+			production_capacity_factor = 0.05
+		}
+	}
+	trait = {
+		token = generic_mio_improved_ventilation
+		name = "Oversized Weaponry"
+		icon = GFX_generic_mio_trait_icon_hg_attack
+
+		position = { x=1 y=1 }
+		relative_position_id = spiggies
+
+		any_parent = { spiggies tiddies }
+		
+		equipment_bonus = {
+			hard_attack = 0.07
+			soft_attack = 0.07
+			build_cost_ic = 0.05
+		}
+	}
+
+	trait = {
+		token = generic_mio_improved_tracks_and_suspension
+		name = "Minimize Requirements for Heavy Tooling"
+		icon = GFX_generic_mio_trait_icon_build_cost_ic
+
+		position = { x=0 y=1 }
+		relative_position_id = generic_mio_improved_ventilation
+
+		all_parents = { generic_mio_improved_ventilation }
+		
+		equipment_bonus = {		
+			breakthrough = -0.05
+			hardness = -0.1
+			build_cost_ic = -0.05
+		}
+	}
+	trait = {
+		token = heavy_components
+		name = "Blackmail Government Officials for Labor"	
+		icon = GFX_generic_mio_department_icon_facilities
+
+		position = { x=4 y=0 }
+		
+		production_bonus = {
+			production_capacity_factor = 0.05
+		}
+	}
+	trait = {
+		token = streamlined_comp
+		name = "Steal and Reverse-Engineer German Components"
+		icon = GFX_generic_mio_department_icon_tank_general_technology
+
+		position = { x=3 y=1 }
+		mutually_exclusive = { final_ass }
+		any_parent = { heavy_components }		
+		equipment_bonus = {
+			soft_attack =0.05
+			hard_attack = 0.05
+			reliability = -0.05
+			build_cost_ic = 0.05
+		}
+		organization_modifier = {
+              military_industrial_organization_funds_gain  = 0.1
+		}
+	}
+	trait = {
+		token = final_ass
+		name = "Purchase Components from Abroad"
+		icon = GFX_generic_mio_department_icon_tank_general_line_efficiency
+
+		position = { x=5 y=1 }
+		mutually_exclusive = { streamlined_comp }
+		any_parent = { heavy_components  }		
+		equipment_bonus = {
+			reliability = -0.05
+			build_cost_ic = -0.05
+		}
+		organization_modifier = {
+              military_industrial_organization_funds_gain  = -0.1
+		}
+	}
+	trait = {
+		token = naval_weapns
+		name = "Prioritize Countering Enemy Aircraft"
+		icon = GFX_generic_mio_department_icon_tank_general_aa
+
+		position = { x=1 y=1 }
+		relative_position_id = streamlined_comp
+		any_parent = { streamlined_comp final_ass }	
+		
+		limit_to_equipment_type = { mio_cat_eq_all_spaa }
+
+		equipment_bonus = {
+			air_attack = 0.1
+			build_cost_ic = 0.05
+		}
+	}
+	trait = {
+		token = hull_production_experts
+		name = "Innovative Crew Layouts"
+		icon = GFX_generic_mio_trait_icon_defense
+
+		position = { x=1 y=1 }
+		relative_position_id = final_ass
+		any_parent = { final_ass streamlined_comp }		
+		equipment_bonus = {
+			reliability = -0.1
+			build_cost_ic = -0.05
+		}
+	}
+	trait = {
+		token = overhardened
+		name = "Ultra-Compact Designs"
+		icon = GFX_generic_mio_trait_icon_hardness
+
+		position = { x=1 y=1 }
+		relative_position_id = hull_production_experts
+		mutually_exclusive = { cemented }
+		any_parent = { hull_production_experts }		
+		equipment_bonus = {
+			hardness = 0.15
+			armor_value = 0.4
+			build_cost_ic = -0.05
+			reliability = -0.3
+		}
+	}
+	trait = {
+		token = cemented
+		name = "Maximize Firepower"
+		icon = GFX_generic_mio_department_icon_tank_general_weapons
+
+		position = { x=-1 y=1 }
+		relative_position_id = hull_production_experts
+		mutually_exclusive = { overhardened }
+		any_parent = { hull_production_experts  }		
+		equipment_bonus = {
+			reliability = -0.3
+			soft_attack = 0.14
+			hard_attack =  0.07
+			build_cost_ic = 0.05
+		}
+	}
+
+
+
+}
+  CZE_tatra_armor = {
+	name = "Tatra"
+	icon = 	GFX_idea_CZE_tatra
+	
+	allowed = {	
+				OR = {
+					original_tag = CZE
+					original_TAG = SLO
+				}
+			}
+	equipment_type = { armor }
+	research_categories = { armor }
+
+	initial_trait = {
+		name = industrial_conglomerate
+		
+		organization_modifier = {
+			military_industrial_organization_design_team_change_cost = -1.0
+		}
+		
+		equipment_bonus = {
+					soft_attack = -0.035
+					hard_attack = -0.035
+                    breakthrough = 0.1
+					reliability = -0.1
+		}
+	}
+	trait = {
+		token = supp_tank
+		name = "Batch Production of Support Tanks"
+		icon = GFX_generic_mio_department_icon_tank_general_conversion
+		all_parents = { subcontract }
+		position = { x=1 y=1 }
+		limit_to_equipment_type = { mio_cat_eq_all_support_tanks }	
+		production_bonus = {
+			production_efficiency_gain_factor = 0.15
+		}
+	}
+
+	trait = {
+		token = td
+		name = "Focus on Tank Destroyers"
+		icon = GFX_generic_mio_trait_icon_hard_attack
+
+		position = { x=-1 y=1 }
+		relative_position_id = supp_tank
+
+		all_parents = { supp_tank }
+
+		mutually_exclusive = { ag }
+		limit_to_equipment_type = { mio_cat_eq_all_tank_destroyers }
+
+		production_bonus = {
+			production_efficiency_cap_factor = 0.05
+		}
+	}
+
+	trait = {
+		token = ag
+		name = "Focus on Assault Guns"
+		icon = GFX_generic_mio_trait_icon_soft_attack
+
+		position = { x=1 y=1 }
+		relative_position_id = supp_tank
+
+		all_parents = { supp_tank }
+
+		mutually_exclusive = { td }
+		limit_to_equipment_type = { mio_cat_eq_all_assault_guns }
+		equipment_bonus = {
+			soft_attack = 0.035
+		}
+		production_bonus = {
+			production_efficiency_cap_factor = 0.05
+		}
+	}
+	trait = {
+		token = tooling
+		name = "Acquire Heavier Tooling"
+		icon = GFX_generic_mio_trait_icon_defense
+
+		position = { x=1 y=1 }
+		relative_position_id = td
+
+		any_parent = { ag td }
+		limit_to_equipment_type = { mio_cat_eq_all_support_tanks }
+		equipment_bonus = {
+			maximum_speed = 0.05
+			reliability = 0.05
+		}		
+
+	}
+
+	trait = {
+		token = expansion
+		name = "Expanded Facilities"
+		icon = GFX_generic_mio_department_icon_tank_general_engine
+
+		position = { x=0 y=1 }
+		relative_position_id = tooling
+
+		all_parents = { tooling }
+		limit_to_equipment_type = { mio_cat_eq_all_support_tanks }		
+		production_bonus = {
+			production_efficiency_cap_factor = 0.02
+		}
+	}
+
+	trait = {
+		token = subcontract
+		name = "Subcontract Tank Production"
+		special_trait_background = yes
+		icon = GFX_generic_mio_trait_icon_production_capacity
+
+		position = { x=2 y=-1 }
+		relative_position_id = supp_tank
+
+		production_bonus = {
+			production_capacity_factor = 0.05
+		}
+	}
+
+	trait = {
+		token = break_though
+		name = "Common Spares"
+		icon = GFX_generic_mio_trait_icon_reliability
+
+		position = { x=2 y=1 }
+		relative_position_id = subcontract
+
+		all_parents = { subcontract }
+		equipment_bonus = {
+			reliability = 0.1
+		}		
+
+	}
+	trait = {
+		token = prot_fire
+		name = "Purchase German Armor Plating"
+		icon = GFX_generic_mio_trait_icon_armor_value
+
+		position = { x=-1 y=1 }
+		relative_position_id = break_though
+
+		all_parents = { break_though }
+
+		mutually_exclusive = { armored_cav }
+		
+		production_bonus = {
+			production_capacity_factor = 0.05
+			production_efficiency_gain_factor = -0.15
+		}
+	}
+	trait = {
+		token = armored_cav
+		name = "Mester-type Steel"
+		icon = GFX_generic_mio_trait_icon_resources
+
+		position = { x=1 y=1 }
+		relative_position_id = break_though
+
+		all_parents = { break_though }
+
+		mutually_exclusive = { prot_fire }
+		equipment_bonus = {
+			hardness = -0.1
+		}
+		production_bonus = {
+			production_resource_need_factor = -0.2
+		}		
+
+	}
+	trait = {
+		token = destroyer
+		name = "Copy Advanced German Designs"
+		icon = GFX_generic_mio_department_icon_tank_general_technology
+
+		position = { x=-1 y=1 }
+		relative_position_id = prot_fire
+		mutually_exclusive = { advanced_internals }
+		any_parent = { prot_fire armored_cav }
+		
+		equipment_bonus = {
+			ap_attack = 0.1
+			hard_attack = 0.07
+			build_cost_ic =0.05
+		}
+	}
+
+	trait = {
+		token = advanced_internals
+		name = "Copy Advanced Allied Designs"
+		icon = GFX_generic_mio_department_icon_tank_general_line_efficiency
+
+		position = { x=1 y=1 }
+		relative_position_id = armored_cav
+		mutually_exclusive = { destroyer }
+		any_parent = { prot_fire armored_cav }
+		equipment_bonus = {
+			breakthrough = 0.1
+			reliability = 0.1
+			build_cost_ic =0.025
+		}
+	}
+
+	trait = {
+		token = improved_prod
+		name = "Automate Key Processes"
+		icon = GFX_generic_mio_trait_icon_efficiency_cap
+
+		position = { x=1 y=1 }
+		relative_position_id = destroyer
+		mutually_exclusive = { improved_crew }
+		any_parent = { advanced_internals destroyer}
+		
+		production_bonus = {
+			production_capacity_factor = 0.05
+			production_efficiency_gain_factor = -0.25
+		}
+	}
+
+	trait = {
+		token = improved_crew
+		name = "Flexible Factory Organization"
+		icon = GFX_generic_mio_trait_icon_efficiency_gain	
+
+		position = { x=-1 y=1 }
+		relative_position_id = advanced_internals
+		mutually_exclusive = { improved_prod }
+		any_parent = { advanced_internals destroyer}
+		organization_modifier = {
+              military_industrial_organization_size_up_requirement  = -0.5
+		}
+	}
+}
+CZE_skoda = {
+    name = "Škoda"
+	include = medium_tank_designer
+	icon = GFX_idea_HUN_skoda_works
+	
+	allowed = {	
+				OR = {
+					original_tag = CZE
+					original_TAG = SLO
+				}
+			}
+	equipment_type = { armor }
+	research_categories = { armor }
+
+	initial_trait = {
+		name = medium_tank_designer
+		organization_modifier = {
+			military_industrial_organization_funds_gain = 1
+			military_industrial_organization_design_team_change_cost = -1.0
+		}
+		
+		equipment_bonus = {
+			reliability = -0.25		
+					maximum_speed = 0.1
+		}
+	}
+	trait = {
+		token = skoda_art
+		name = "Co-operation with Škoda Artillery"
+		icon = GFX_generic_mio_department_icon_facilities
+		position = { x=5 y=0}
+		equipment_bonus = {
+			soft_attack = 0.02
+			hard_attack = 0.02
+		}
+	}
+	trait = {
+		token = agile_td
+		name = "Prioritize Gun Depression"
+		icon = GFX_generic_mio_trait_icon_hard_attack
+		position = { x=4 y=1}
+	    any_parent = { skoda_art }
+				mutually_exclusive = { flex_for_fire mob_art }
+		equipment_bonus = {
+			hard_attack = 0.035
+		}
+	}
+	trait = {
+		token = flex_for_fire
+		name = "Sacrifice Flexibility for Firepower"
+		icon = GFX_generic_mio_department_icon_tank_general_at
+		position = { x=5 y=1}
+	    any_parent = { skoda_art }
+				mutually_exclusive = { agile_td mob_art }
+		equipment_bonus = {
+			maximum_speed = -0.15
+			hard_attack = 0.035
+			soft_attack = 0.035
+		}
+	}
+	trait = {
+		token = mob_art
+		name = "Mobile Artillery"
+		icon = GFX_generic_mio_department_icon_tank_general_spg
+		position = { x=6 y=1}
+	    any_parent = { skoda_art }
+		mutually_exclusive = { flex_for_fire agile_td }
+		equipment_bonus = {
+			soft_attack = 0.035
+		}
+	}
+	trait = {
+		token = spaa
+		name = "Armoured Air Defence"
+		icon = GFX_generic_mio_department_icon_tank_general_spg
+		position = { x=5 y=2}
+	    any_parent = { mob_art flex_for_fire agile_td }
+		limit_to_equipment_type = { mio_cat_eq_all_spaa }
+
+		equipment_bonus = {
+			air_attack = 0.1
+			build_cost_ic = 0.05
+		}
+	}
+	trait = {
+		token = optimized_production
+		name = "Optimized Gun Production Methods"
+		icon = GFX_generic_mio_trait_icon_production_capacity
+		position = { x=5 y=3}
+	    any_parent = { spaa }
+		equipment_bonus = {
+			build_cost_ic = -0.05
+		}
+	}
+	trait = {
+		token = czech
+		name = "Expertise from Exporting Arms"
+		icon = GFX_generic_mio_trait_icon_reliability
+
+		position = { x=1 y=0 }
+		
+		production_bonus = {
+			production_efficiency_cap_factor = 0.02
+		}
+		equipment_bonus = {
+			reliability = 0.05
+		}
+	}
+	trait = {
+		token = state_growth
+		name = "State Sponsored Growth"
+		icon = GFX_generic_mio_department_icon_facilities		
+
+		position = { x=0 y=1 }
+		relative_position_id = czech
+		all_parents = { czech }
+		
+
+		organization_modifier = {
+			military_industrial_organization_size_up_requirement = -0.15
+		}
+	}
+	trait = {
+		token = cap
+		name = "High Capacity Facilities"
+		icon = GFX_generic_mio_trait_icon_efficiency_cap
+
+		position = { x=-1 y=1 }
+		relative_position_id = state_growth
+		all_parents = { state_growth }
+		mutually_exclusive = { flexible_line }		
+
+		production_bonus = {
+			production_efficiency_cap_factor = 0.03
+			production_efficiency_gain_factor = -0.3
+		}
+	}
+	trait = {
+		token = flexible_line
+		name = "Flexible Facilities"
+		icon = GFX_generic_mio_trait_icon_efficiency_gain
+
+		position = { x=1 y=1 }
+		relative_position_id = state_growth
+		mutually_exclusive = { cap }
+		all_parents = { state_growth }
+		
+		production_bonus = {
+			production_efficiency_gain_factor = 0.25
+		}
+	}
+
+	trait = {
+		token = improved_fightingcompartment
+		name = "Improved Fighting Compartment"
+		icon = GFX_generic_mio_trait_icon_max_strength
+
+		position = { x=3 y=0 }
+
+		
+		equipment_bonus = {
+			build_cost_ic =0.025
+			soft_attack = 0.02
+			hard_attack = 0.02
+		}
+	}
+	trait = {
+		token = generic_mio_gunner_sight_improvements
+		name = generic_mio_gunner_sight_improvements
+		icon = GFX_generic_mio_trait_icon_hard_attack
+
+		position = { x=0 y=1 }
+		relative_position_id = improved_fightingcompartment
+		all_parents = { improved_fightingcompartment }		
+		equipment_bonus = {
+			build_cost_ic =0.025
+			soft_attack = 0.025
+			hard_attack = 0.025
+		}
+	}
+	trait = {
+		token = pneumatic
+		name = "Pneumatic Controls"
+		icon = GFX_generic_mio_trait_icon_naval_strike_targetting
+
+		position = { x= 8 y=0 }
+	
+		equipment_bonus = {
+			soft_attack = 0.035
+			hard_attack = 0.035
+			reliability = -0.1
+		}
+	}
+	trait = {
+		token = cylinders
+		name = "Advanced Cylinder Heads"
+		icon = GFX_generic_mio_department_icon_tank_general_engine
+
+		position = { x=1 y=1 }
+		mutually_exclusive = { cooling }
+		relative_position_id = pneumatic		
+		all_parents = { pneumatic }	
+		equipment_bonus = {
+			maximum_speed = 0.15
+		}
+	}
+	trait = {
+		token = cooling
+		name = "Improved Engine Cooling"
+		icon = GFX_generic_mio_trait_icon_reliability
+
+		position = { x=-1 y=1 }
+		relative_position_id = pneumatic
+		mutually_exclusive = { cylinders }
+		all_parents = { pneumatic }			
+		equipment_bonus = {
+			reliability = 0.1
+
+		}
+	}
+}
+
+
+
+#####################
+
+ ## #  # ### ###   ## 
+#   #  #  #  #  # #   
+ #  ####  #  ###   #  
+  # #  #  #  #      # 
+##  #  # ### #    ##  
+ 
+#####################
+
+CZE_skoda_shipyards_organization = {
+	include = generic_escort_ship_organization
+	icon = GFX_idea_CZE_skoda_shipyards
+	allowed = {	
+				OR = {
+					original_tag = CZE
+					original_TAG = SLO
+				}
+			}
+}
+
+###########################
+
+###  #    ##  #  # ###  ## 
+#  # #   #  # ## # #   #   
+###  #   #### # ## ##   #  
+#    #   #  # #  # #     # 
+#    ### #  # #  # ### ##  
+
+###########################
+
+CZE_ckd_praga_organization = {
+	include = generic_naval_aircraft_organization
+	icon = GFX_idea_CZE_ckd_praga
+	allowed = {	
+				OR = {
+					original_tag = CZE
+					original_TAG = SLO
+				}
+			}
+}
+
+CZE_aero_organization = {
+	include = generic_medium_aircraft_organization
+	icon = GFX_idea_CZE_aero
+	allowed = {	
+				OR = {
+					original_tag = CZE
+					original_TAG = SLO
+				}
+			}
+}
+
+CZE_letov_organization = {
+	include = generic_heavy_aircraft_organization
+	icon = GFX_idea_CZE_letov
+	allowed = {	
+				OR = {
+					original_tag = CZE
+					original_TAG = SLO
+				}
+			}
+}
+
+CZE_avia_organization = {
+name = CZE_avia
+	include = generic_light_aircraft_organization
+	icon = GFX_idea_CZE_avia
+	allowed = {	
+				OR = {
+					original_tag = CZE
+					original_TAG = SLO
+				}
+			}
+}
+
+################################### 
+
+#   #  ##  ### ### ###  ### ### #   
+## ## #  #  #  #   #  #  #  #   #   
+# # # ####  #  ##  ###   #  ##  #   
+#   # #  #  #  #   #  #  #  #   #   
+#   # #  #  #  ### #  # ### ### ### 
+
+
+###################################
+
+CZE_zbrojovka_brno_organization = {
+	include = generic_infantry_equipment_organization
+	icon = GFX_idea_CZE_zbrojovka_brno
+	allowed = {	
+				OR = {
+					original_tag = CZE
+					original_TAG = SLO
+				}
+			}
+}
+
+CZE_skoda_artillery_organization = {
+	include = generic_heavy_artillery_organization
+	icon = GFX_idea_CZE_skoda_artillery
+	allowed = {	
+				OR = {
+					original_tag = CZE
+					original_TAG = SLO
+				}
+			}
+}
+
+CZE_praga_organization = {
+	include = generic_motorized_mechanized_organization
+	icon = GFX_idea_CZE_praga
+	allowed = {	
+				OR = {
+					original_tag = CZE
+					original_TAG = SLO
+				}
+			}
+}
