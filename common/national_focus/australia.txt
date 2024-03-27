@@ -460,7 +460,10 @@ focus_tree = {
 			add_to_variable = {
 				AST_political_power_cost_var = -0.15
 				tooltip = AST_pol_pow_cost_tt2
-			}			
+			}	
+			add_political_power = 50
+			add_war_support = 0.10
+			add_stability = 0.1			
 		}
 	}
 
@@ -469,7 +472,7 @@ focus_tree = {
 
 		prerequisite = { focus = ast_white_policy }
 		relative_position_id = ast_white_policy
-		icon = GFX_goal_medicine
+		icon = GFX_AST_insurance
 		mutually_exclusive = {
 			focus = ast_divert_funding
 		}
@@ -521,7 +524,7 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = ast_insurance_scheme
 		}
-		icon = GFX_goal_equpiment
+		icon = GFX_AST_divert_funding
 		x = 1
 		y = 1
 		cost = 5
@@ -582,12 +585,34 @@ focus_tree = {
 		
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
 		completion_reward = {
+			hidden_effect = {
+				remove_dynamic_modifier = { modifier = AST_great_depression_modifier }
+				add_dynamic_modifier = { modifier = AST_war_eco_modifier }
+			}			
+			add_ideas = partial_economic_mobilisation
 			
-			add_ideas = war_economy
-			custom_effect_tooltip = AST_modify_dep_tt
-			add_to_variable = {
-				AST_production_speed_arms_factory_factor_var = 0.1
-				tooltip = AST_prod_speed_mil_tt1
+			custom_effect_tooltip = AST_war_eco_tt
+
+			if = {
+				limit = {
+					has_completed_focus = ast_stability
+				}
+			    add_to_variable = {
+		           AST2_consumer_goods_factor_var = -0.5
+				   AST2_production_speed_arms_factory_factor_var = 0.2
+
+			    }
+				tooltip = AST_war_eco_stab_tt
+			}
+			else_if = {
+				limit = {
+					has_completed_focus = ast_steadfast
+				}
+		        add_to_variable = {
+		           AST2_industrial_capacity_factory_var = 0.01
+
+			    }
+				tooltip = AST_war_eco_prod_tt
 			}
 		}
 	}
@@ -597,7 +622,7 @@ focus_tree = {
 
 		prerequisite = { focus = ast_australia_arms }
 		relative_position_id = ast_australia_arms
-		icon = GFX_focus_generic_industrialists
+		icon = GFX_AST_war_council
 		x = 2
 		y = 1
 		cost = 5
@@ -657,7 +682,31 @@ focus_tree = {
 
 		completion_reward = {
 
-			add_political_power = -50 
+			add_political_power = -50
+			285 = {
+			    add_resource = {
+				    type = aluminium
+			        amount = 9
+			  	}	
+		        add_resource = {
+			       	type = oil
+	    		    amount = 8
+	         	}
+			}
+			517 = {
+				add_resource = {
+			       	type = tungsten
+	    		    amount = 4
+	         	}
+				add_resource = {
+			       	type = chromium
+	    		    amount = 4
+	         	}
+                add_resource = {
+			       	type = steel
+	    		    amount = 5
+	         	}					
+		    }
 		}
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
 
@@ -691,7 +740,7 @@ focus_tree = {
 
 		prerequisite = { focus = ast_australia_arms }
 		relative_position_id = ast_australia_arms
-		icon = GFX_goal_generic_democratic_army
+		icon = GFX_AST_civil_construction
 		x = -2
 		y = 1
 		cost = 5
@@ -704,16 +753,20 @@ focus_tree = {
 		
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
 		completion_reward = {
-			
+			custom_effect_tooltip = AST_modify_dep_tt
+			add_to_variable = {
+				AST_industry_construction_speed_modifier = 0.1
+				tooltip = AST_industry_construction_speed_modifier_tt1
+			}			
 		}
 	}
-
+#volunteer defense corps
 	focus = {
 		id = ast_citizen_force
 
 		prerequisite = { focus = ast_civil_corps }
 		relative_position_id = ast_civil_corps
-		icon = GFX_goal_generic_democratic_army
+		icon = GFX_AST_home_guard
 		x = -1
 		y = 1
 		cost = 5
@@ -726,7 +779,92 @@ focus_tree = {
 		
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
 		completion_reward = {
-			
+			army_experience = 25
+
+			custom_effect_tooltip = AST_home_guard_tt
+			hidden_effect = {	
+
+				add_manpower = -40000
+
+				division_template = {
+					name = "Volunteer Defence Corps"
+					priority = 2
+
+					regiments = {
+						volkssturm_infantry  = { x = 0 y = 0 }
+						volkssturm_infantry  = { x = 0 y = 1 }
+						volkssturm_infantry  = { x = 0 y = 2 }
+						volkssturm_infantry  = { x = 0 y = 3 }
+						
+						volkssturm_infantry  = { x = 1 y = 0 }
+						volkssturm_infantry  = { x = 1 y = 1 }
+						volkssturm_infantry  = { x = 1 y = 2 }
+						volkssturm_infantry  = { x = 1 y = 3 }
+							
+						volkssturm_infantry  = { x = 2 y = 0 }
+						volkssturm_infantry  = { x = 2 y = 1 }
+						volkssturm_infantry  = { x = 2 y = 2 }
+
+						volkssturm_infantry  = { x = 3 y = 0 }		
+						volkssturm_infantry  = { x = 3 y = 1 }
+						pack_artillery_brigade = { x = 3 y = 2 }
+						pack_artillery_brigade = { x = 3 y = 3 }
+						
+					}
+
+					support = {
+						DIV_HQ = { x = 0 y = 0 }
+					   	construction_engineer = { x = 0 y = 1 }
+					   	anti_air_company = { x = 0 y = 2 }
+						military_police = { x = 1 y = 0 }
+						logistics_company = { x = 1 y = 1 }
+					}
+				}	
+
+				every_state = {
+					limit = { state = 285 }
+					create_unit = {
+						division = "name = \"1. Volunteer Defence Division\" division_template = \"Volunteer Defence Corps\" start_experience_factor = 0.0 start_equipment_factor = 1" 
+						owner = AST
+					}	
+					create_unit = {
+						division = "name = \"2. Volunteer Defence Division\" division_template = \"Volunteer Defence Corps\" start_experience_factor = 0.0 start_equipment_factor = 1" 
+						owner = AST
+					}	
+					create_unit = {
+						division = "name = \"3. Volunteer Defence Division\" division_template = \"Volunteer Defence Corps\" start_experience_factor = 0.0 start_equipment_factor = 1" 
+						owner = AST
+					}	
+					create_unit = {
+						division = "name = \"4. Volunteer Defence Division\" division_template = \"Volunteer Defence Corps\" start_experience_factor = 0.0 start_equipment_factor = 1" 
+						owner = AST
+					}	
+					create_unit = {
+						division = "name = \"5. Volunteer Defence Division\" division_template = \"Volunteer Defence Corps\" start_experience_factor = 0.0 start_equipment_factor = 1" 
+						owner = AST
+					}	
+					create_unit = {
+						division = "name = \"6. Volunteer Defence Division\" division_template = \"Volunteer Defence Corps\" start_experience_factor = 0.0 start_equipment_factor = 1" 
+						owner = AST
+					}	
+					create_unit = {
+						division = "name = \"7. Volunteer Defence Division\" division_template = \"Volunteer Defence Corps\" start_experience_factor = 0.0 start_equipment_factor = 1" 
+						owner = AST
+					}	
+					create_unit = {
+						division = "name = \"8. Volunteer Defence Division\" division_template = \"Volunteer Defence Corps\" start_experience_factor = 0.0 start_equipment_factor = 1" 
+						owner = AST
+					}	
+					create_unit = {
+						division = "name = \"9. Volunteer Defence Division\" division_template = \"Volunteer Defence Corps\" start_experience_factor = 0.0 start_equipment_factor = 1" 
+						owner = AST
+					}		
+					create_unit = {
+						division = "name = \"10. Volunteer Defence Division\" division_template = \"Volunteer Defence Corps\" start_experience_factor = 0.0 start_equipment_factor = 1" 
+						owner = AST
+					}	
+				}
+			}						
 		}
 	}
 
@@ -751,13 +889,13 @@ focus_tree = {
 			add_ideas = AST_australian_womens_army_service			
 		}
 	}
-
+###gains unique allied works construction concern +20% build speed
 	focus = {
 		id = ast_allied_council
 
 		prerequisite = { focus = ast_citizen_force focus = ast_women_corps }
 		relative_position_id = ast_civil_corps
-		icon = GFX_ENG_general_rearmament
+		icon = GFX_AST_allied_works
 		x = 0
 		y = 2
 		cost = 5
@@ -770,7 +908,8 @@ focus_tree = {
 		
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
 		completion_reward = {
-			
+			custom_effect_tooltip = available_industrial_concern
+			show_ideas_tooltip = AST_allied_works_council		
 		}
 	}
 
@@ -807,7 +946,7 @@ focus_tree = {
 
 		prerequisite = { focus = AST_fight_work_or_perish }
 		relative_position_id = AST_fight_work_or_perish
-		icon = GFX_goal_generic_production2
+		icon = GFX_AST_jungle_warfare
 		x = 3
 		y = 1
 		cost = 5
@@ -829,7 +968,7 @@ focus_tree = {
 
 		prerequisite = { focus = AST_swpa_protector }
 		relative_position_id = AST_swpa_protector
-		icon = GFX_goal_generic_production2
+		icon = GFX_AST_secure_papua
 		x = -2
 		y = 1
 		cost = 5
@@ -892,7 +1031,7 @@ focus_tree = {
 
 		prerequisite = { focus = AST_secure_papuan_front }
 		relative_position_id = AST_secure_papuan_front
-		icon = GFX_goal_war_infrastructure
+		icon = GFX_AST_DC3
 		x = 0
 		y = 1
 		cost = 5
@@ -905,7 +1044,10 @@ focus_tree = {
 		
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
 		completion_reward = {
-			
+			add_equipment_to_stockpile = { type = transport_plane_equipment amount = 150 producer = USA }		
+			add_equipment_to_stockpile = { type = motorized_equipment amount = 1500 producer = USA }
+			add_equipment_to_stockpile = { type = train_equipment amount = 25 producer = USA }	
+			add_equipment_to_stockpile = { type = convoy amount = 75 producer = USA }				
 		}
 	}
 	focus = {
@@ -996,7 +1138,8 @@ focus_tree = {
 		
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
 		completion_reward = {
-			
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = AST_eddie_ward		
 		}
 	}
 
@@ -1005,7 +1148,7 @@ focus_tree = {
 
 		prerequisite = { focus = AST_curtins_war_cabinet }
 		relative_position_id = AST_curtins_war_cabinet
-		icon = GFX_focus_chi_mission_to_the_us
+		icon = GFX_AST_us_aid
 		x = -2
 		y = 1
 		cost = 5
@@ -1066,7 +1209,7 @@ focus_tree = {
 
 		prerequisite = { focus = AST_curtins_war_cabinet }
 		relative_position_id = AST_curtins_war_cabinet
-		icon = GFX_goal_generic_production2
+		icon = GFX_AST_victory
 		x = 2
 		y = 1
 		cost = 5
@@ -1111,7 +1254,7 @@ focus_tree = {
 
 		prerequisite = { focus = ast_australia_arms }
 		relative_position_id = ast_australia_arms
-		icon = GFX_goal_generic_censorship
+		icon = GFX_r56_goal_generic_Controlled_Economy
 		x = 0
 		y = 1
 		cost = 5
@@ -1128,6 +1271,7 @@ focus_tree = {
 		completion_reward = {
 
 			add_political_power = -50 
+			add_ideas = war_economy
 		}
 		
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
@@ -1139,7 +1283,7 @@ focus_tree = {
 
 		prerequisite = { focus = ast_national_security_act }
 		relative_position_id = ast_national_security_act
-		icon = GFX_goal_crush_resistance2
+		icon = GFX_goal_generic_censorship
 		x = 0
 		y = 2
 		cost = 5
@@ -1281,7 +1425,9 @@ focus_tree = {
 						level = 3
 						instant_build = yes
 					}
-			}			
+			}
+			add_equipment_to_stockpile = { type = transport_plane_equipment amount = 100 producer = AST }			
+			add_equipment_to_stockpile = { type = scout_plane_equipment amount = 50 producer = AST }	
 		}
 	}
 
@@ -1442,7 +1588,7 @@ focus_tree = {
 			}			
 		}
 	}
-
+###after japan controls nanjing
 	focus = {
 		id = ast_embargo_axis
 
@@ -1783,7 +1929,7 @@ focus_tree = {
 			focus = AST_restablish_anzac
 		}
 		relative_position_id = AST_restablish_anzac
-		icon = GFX_goal_generic_production2
+		icon = GFX_AST_lessons_from_the_desert
 		x = 1
 		y = 1
 		cost = 5
@@ -2178,7 +2324,7 @@ focus_tree = {
 			focus = ast_sentinel_project
 		}
 		relative_position_id = ast_queen_of_desert
-		icon = GFX_goal_generic_production2
+		icon = GFX_AST_sentinel_tank
 		x = 1
 		y = 1
 		cost = 5
