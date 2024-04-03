@@ -18,7 +18,7 @@ focus_tree = {
 	
 	default = no
 	
-	continuous_focus_position = { x = 1650 y = 1150 }
+	continuous_focus_position = { x = 1850 y = 1150 }
 
 
 	############################
@@ -65,7 +65,7 @@ focus_tree = {
 		icon = GFX_AST_shift_to_manufacturing
 		x = -2
 		y = 1
-		cost = 5
+		cost = 10
 		ai_will_do = {
 			factor = 200			
 		}
@@ -82,9 +82,10 @@ focus_tree = {
 			}
 			add_tech_bonus = {
 				bonus = 0.5
-				uses = 3
+				uses = 1
 				category = industry
 			}
+			custom_effect_tooltip = AST_output_path_tt
 		}
 	}
 
@@ -93,8 +94,8 @@ focus_tree = {
 
 		prerequisite = { focus = ast_steadfast }
 		relative_position_id = ast_steadfast
-		icon = GFX_goal_generic_light_industry
-		x = -2
+		icon = GFX_focus_generic_industry_2
+		x = -1
 		y = 1
 		cost = 5
 		ai_will_do = {
@@ -122,14 +123,116 @@ focus_tree = {
 			}
 		}
 	}
+	focus = {
+		id = ast_support_machine_building_industries
 
+		prerequisite = { focus = ast_steadfast }
+		relative_position_id = ast_steadfast
+		icon = GFX_goal_r56_CAN_industry
+		x = -3
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 200			
+		}
+		available = {
+
+		}
+		
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				category = industry
+			}
+            add_ideas = AST_arty_idea
+		}
+	}
+##2 70 day focuses which boost built in australia by 5% output each
+	focus = {
+		id = ast_underwater_cable_connections
+
+		prerequisite = { focus = ast_steadfast }
+		relative_position_id = ast_steadfast
+		icon = GFX_goal_generic_radio_development_2
+		x = -5
+		y = 1
+		cost = 10
+		ai_will_do = {
+			factor = 200			
+		}
+		available = {
+
+		}
+		
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+			custom_effect_tooltip = ast_underwater_cable_connections_tt
+			add_tech_bonus = {
+				name = AST_electronics_1
+				bonus = 0.5
+				uses = 1
+				category = electronics		
+			}
+		}
+	}
+
+	focus = {
+		id = ast_diversify_australian_electronics_production
+
+		prerequisite = { focus = ast_underwater_cable_connections }
+		relative_position_id = ast_underwater_cable_connections
+		icon = GFX_goal_generic_control_the_radio
+		x = 0
+		y = 1
+		cost = 10
+		ai_will_do = {
+			factor = 200			
+		}
+		available = {
+
+		}
+		
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+			custom_effect_tooltip = ast_underwater_cable_connections_tt
+			custom_effect_tooltip = ast_diversify_australian_electronics_production_tt
+			add_tech_bonus = {
+				name = AST_electronics_1
+				bonus = 0.5
+				uses = 1
+				category = electronics		
+			}
+
+			hidden_effect = {
+			 if = {
+				limit = {
+		        	has_tech = support_radio
+				}
+				set_technology = {
+					artillery_radio = 1
+				}
+			 }
+			}
+			517 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
 	focus = {
 		id = ast_built_australia
 
 		prerequisite = { focus = ast_development_board }
+		prerequisite = { focus = ast_support_machine_building_industries }
 		relative_position_id = ast_development_board
 		icon = GFX_AST_build_in_australia
-		x = 0
+		x = -1
 		y = 1
 		cost = 5
 		ai_will_do = {
@@ -150,6 +253,27 @@ focus_tree = {
 				bonus = 0.5 
 				name = SOV_simplify_the_schematics
 			}
+			if = {
+				limit = {
+					has_completed_focus = ast_underwater_cable_connections
+				}
+			    add_to_variable = {
+		           AST2_consumer_goods_factor_var = -0.5
+				   AST2_production_speed_arms_factory_factor_var = 0.2
+
+			    }
+				tooltip = AST_war_eco_stab_tt
+			}
+			else_if = {
+				limit = {
+					has_completed_focus = ast_steadfast
+				}
+		        add_to_variable = {
+		           AST2_industrial_capacity_factory_var = 0.01
+
+			    }
+				tooltip = AST_war_eco_prod_tt
+			}
 			custom_effect_tooltip = AST_modify_dep_tt
 
 			add_to_variable = {
@@ -169,7 +293,7 @@ focus_tree = {
 
 		prerequisite = { focus = ast_steadfast }
 		relative_position_id = ast_steadfast
-		icon = GFX_goal_generic_excavation_equipment
+		icon = GFX_goal_excavation
 		x = 0
 		y = 2
 		cost = 5
@@ -225,7 +349,7 @@ focus_tree = {
 		icon = GFX_AST_stab_and_growth
 		x = 2
 		y = 1
-		cost = 5
+		cost = 10
 		ai_will_do = {
 			factor = 200			
 		}
@@ -244,26 +368,101 @@ focus_tree = {
 				AST_stability_weekly_modifier = 0.002
 				tooltip = AST_stability_weekly_modifier_tt1
 			}
-			add_tech_bonus = {
-				name = AST_industry_1
-				technology = improved_machine_tools
-				technology = advanced_machine_tools
-				technology = assembly_line_production
-
-				bonus = 1
-				ahead_reduction = 0.3
-			}
-
+			custom_effect_tooltip = AST_greed_path_tt
 		}
 	}
+	focus = {
+		id = ast_australian_wool_board
 
+		prerequisite = { focus = ast_stability }
+		relative_position_id = ast_stability
+		icon = GFX_goal_generic_positive_trade_relations
+		x = 3
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 200			
+		}
+		available = {
+		}
+		
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+			custom_effect_tooltip = AST_modify_dep_tt
+			add_to_variable = {
+				AST_production_speed_industrial_complex_factor_var = 0.1
+				tooltip = AST_prod_speed_civ_tt1
+
+			}
+		}
+	}
+	focus = {
+		id = ast_foreign_workers_for_papuan_plantations
+
+		prerequisite = { focus = ast_stability }
+		relative_position_id = ast_stability
+		icon = GFX_focus_generic_rubber
+		x = 1
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 200			
+		}
+		available = {
+			has_political_power > 75
+		}
+		
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+			add_political_power = -75
+			523 = {
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = industrial_complex
+					level = 5
+					instant_build = yes
+				}
+			    add_resource = {
+				type = rubber
+				amount = 20
+				}
+		    }  
+	    }
+	}
+	focus = {
+		id = ast_supply_the_empire
+
+		prerequisite = { focus = ast_foreign_workers_for_papuan_plantations }
+		prerequisite = { focus = ast_australian_wool_board }
+		relative_position_id = ast_foreign_workers_for_papuan_plantations
+		icon = GFX_generic_shipyard
+		x = 1
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 200			
+		}
+		available = {
+		}
+		
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+			custom_effect_tooltip = AST_modify_dep_tt
+			add_to_variable = {
+				AST_production_speed_industrial_complex_factor_var = 0.2
+				tooltip = AST_prod_speed_civ_tt3
+
+			}
+		    add_ideas = free_trade
+		}
+	}
 	focus = {
 		id = ast_overhaul_tax
 
 		prerequisite = { focus = ast_stability }
 		relative_position_id = ast_stability
 		icon = GFX_goal_generic_economics_reform
-		x = 2
+		x = 5
 		y = 1
 		cost = 5
 		ai_will_do = {
@@ -300,12 +499,7 @@ focus_tree = {
 		
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
 		completion_reward = {
-			custom_effect_tooltip = AST_modify_dep_tt
-			add_to_variable = {
-				AST_production_speed_industrial_complex_factor_var = 0.2
-				tooltip = AST_prod_speed_civ_tt3
 
-			}
 			add_tech_bonus = {
 				bonus = 0.5
 				uses = 1
@@ -513,6 +707,10 @@ focus_tree = {
 				AST_industrial_capacity_dockyard_var = 0.1
 				tooltip = AST_doc_out_tt1
 			}
+			custom_effect_tooltip = AST_war_eco_insurance2_tt
+			set_technology = { tech_field_hospital1  = 1 }
+			set_technology = { tech_field_hospital2  = 1 }
+			set_technology = { tech_field_hospital3  = 1 }
 		}
 	}
 
@@ -1606,7 +1804,7 @@ focus_tree = {
 		
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
 		completion_reward = {
-			
+				AST = { country_event = { id = australia.18 days = 0 } }			
 		}
 	}
 
@@ -1637,6 +1835,7 @@ focus_tree = {
 					}
 			}
 			set_technology = { paratroopers = 1 }
+			set_technology = { scout_plane1  = 1 }
 			add_equipment_to_stockpile = { type = transport_plane_equipment amount = 100 producer = AST }			
 			add_equipment_to_stockpile = { type = scout_plane_equipment amount = 50 producer = AST }	
 		}
@@ -1648,7 +1847,7 @@ focus_tree = {
 
 		icon = GFX_AAST_commonwealth_ties
 		prerequisite = { focus = ast_premiers_plan }
-		x = 2
+		x = -1
 		y = 1
 		cost = 5
 		ai_will_do = {
@@ -1848,7 +2047,7 @@ focus_tree = {
 		}
 		relative_position_id = ast_premiers_plan
 		icon = GFX_AST_backbone_of_australia
-		x = 10
+		x = 11
 		y = 1
 		cost = 5
 		ai_will_do = {
@@ -2230,7 +2429,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
 		completion_reward = {
 			add_ideas = AST_infantry_forces_idea
-			mio:ENG_rsaf_enfield_organization = {
+			mio:AST_lithgow_saf_organization = {
 				add_mio_funds = 1000
 			}
 		}
