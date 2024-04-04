@@ -47,8 +47,8 @@ focus_tree = {
 				tooltip = AST_con_good_fac_tt1
 			}
 			add_to_variable = {
-				AST_production_speed_industrial_complex_factor_var = -0.05
-				tooltip = AST_fac_out_tt3
+				AST_industrial_capacity_factory_var = -0.05
+				tooltip = industrial_capacity_factory_tooltip
 
 			}
 		}
@@ -249,36 +249,57 @@ focus_tree = {
 			}
 			if = {
 				limit = {
-					has_completed_focus = ast_underwater_cable_connections
+					NOT = {
+						has_completed_focus = ast_diversify_australian_electronics_production
+						has_completed_focus = ast_underwater_cable_connections
+					}
+					
 				}
-			    add_to_variable = {
-		           AST2_consumer_goods_factor_var = -0.5
-				   AST2_production_speed_arms_factory_factor_var = 0.2
+			   custom_effect_tooltip = AST_modify_dep_tt
+				add_to_variable = {
+					AST_industrial_capacity_factory_var = 0.2
+					tooltip = industrial_capacity_factory_tooltip
+				}
+				add_to_variable = {
+					AST_industrial_capacity_dockyard_var = 0.2
+					tooltip = industrial_dockyard_capacity_factory_tooltip
 
-			    }
-				custom_effect_tooltip = AST_war_eco_stab_tt
+				}
 			}
 			else_if = {
 				limit = {
-					has_completed_focus = ast_steadfast
+					NOT = {
+						has_completed_focus = ast_diversify_australian_electronics_production
+					}
+					has_completed_focus = ast_underwater_cable_connections
 				}
-		        add_to_variable = {
-		           AST2_industrial_capacity_factory_var = 0.01
-
-			    }
-				custom_effect_tooltip = AST_war_eco_prod_tt
+			    custom_effect_tooltip = AST_modify_dep_tt
+				add_to_variable = {
+					AST_industrial_capacity_factory_var = 0.25
+					tooltip = industrial_capacity_factory_tooltip
+				}
+				add_to_variable = {
+					AST_industrial_capacity_dockyard_var = 0.2
+					tooltip = industrial_dockyard_capacity_factory_tooltip
+				}
 			}
-			custom_effect_tooltip = AST_modify_dep_tt
-
-			add_to_variable = {
-				AST_industrial_capacity_factory_var = 0.2
-				tooltip = AST_fac_out_tt2
+			else_if = {
+				limit = {
+					has_completed_focus = ast_diversify_australian_electronics_production
+					has_completed_focus = ast_underwater_cable_connections
+				}
+			    custom_effect_tooltip = AST_modify_dep_tt
+				add_to_variable = {
+					AST_industrial_capacity_factory_var = 0.3
+					tooltip = industrial_capacity_factory_tooltip
+				}
+				add_to_variable = {
+					AST_industrial_capacity_dockyard_var = 0.2
+					tooltip = industrial_dockyard_capacity_factory_tooltip
+				}
 			}
-			add_to_variable = {
-				AST_industrial_capacity_dockyard_var = 0.2
-				tooltip = AST_doc_out_tt1
-
-			}
+			
+			
 		}
 	}
 
@@ -399,7 +420,7 @@ focus_tree = {
 			factor = 200			
 		}
 		available = {
-			has_political_power > 55
+			has_political_power > 75
 		}
 		
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
@@ -688,7 +709,7 @@ focus_tree = {
 				tooltip = AST_doc_out_tt1
 			}
 			custom_effect_tooltip = AST_war_eco_insurance2_tt
-			set_technology = { tech_field_hospital1  = 1 }
+			set_technology = { tech_field_hospital  = 1 }
 			set_technology = { tech_field_hospital2  = 1 }
 			set_technology = { tech_field_hospital3  = 1 }
 		}
@@ -774,33 +795,64 @@ focus_tree = {
 			if = {
 				limit = {
 					has_completed_focus = ast_stability
+					NOT = {
+						has_completed_focus = ast_insurance_scheme
+					}
 				}
 			    add_to_variable = {
-		           AST2_consumer_goods_factor_var = -0.5
+		           AST2_consumer_goods_factor_var = -0.05
+			    }
+				add_to_variable = {
 				   AST2_production_speed_arms_factory_factor_var = 0.2
-
 			    }
 				custom_effect_tooltip = AST_war_eco_stab_tt
 			}
 			else_if = {
 				limit = {
+					has_completed_focus = ast_stability
+					has_completed_focus = ast_insurance_scheme
+					
+				}
+			    add_to_variable = {
+		           AST2_consumer_goods_factor_var = -0.05
+			    }
+				add_to_variable = {
+		          
+				   AST2_production_speed_arms_factory_factor_var = 0.2
+		
+			    }
+				add_to_variable = {
+				   AST2_industrial_capacity_factory_var = 0.05
+			    }
+				custom_effect_tooltip = AST_war_eco_stab_tt2
+			}
+			else_if = {
+				limit = {
 					has_completed_focus = ast_steadfast
+					NOT = {
+						has_completed_focus = ast_insurance_scheme
+					}
 				}
 		        add_to_variable = {
 		           AST2_industrial_capacity_factory_var = 0.1
-
+			    }
+				add_to_variable = {
+		           AST2_local_resources_factor_modifier = 0.2
 			    }
 				custom_effect_tooltip = AST_war_eco_prod_tt
 			}
 			else_if = {
 				limit = {
+					has_completed_focus = ast_steadfast
 					has_completed_focus = ast_insurance_scheme
 				}
-		        add_to_variable = {
-		           AST2_industrial_capacity_factory_var = 0.05
-
+		       add_to_variable = {
+		           AST2_industrial_capacity_factory_var = 0.15
 			    }
-				custom_effect_tooltip = AST_war_eco_insurance_tt
+				add_to_variable = {
+		           AST2_local_resources_factor_modifier = 0.2
+			    }
+				custom_effect_tooltip = AST_war_eco_prod_tt2
 			}
 		}
 	}
@@ -1252,24 +1304,15 @@ focus_tree = {
 		completion_reward = {
 
 
-			333 = {
+			523 = {
 				#Fortify entire coastline
-				set_building_level = {
-					type = bunker
-					province = {
-						all_provinces = yes
-						limit_to_coastal = yes
-					}
-					level = 5
-					instant_build = yes
-				}
 				set_building_level = {
 					type = coastal_bunker
 					province = {
 						all_provinces = yes
 						limit_to_coastal = yes
 					}
-					level = 4
+					level = 2
 					instant_build = yes
 				}
 
@@ -1316,7 +1359,8 @@ focus_tree = {
 			add_equipment_to_stockpile = { type = transport_plane_equipment amount = 150 producer = USA }		
 			add_equipment_to_stockpile = { type = motorized_equipment amount = 1500 producer = USA }
 			add_equipment_to_stockpile = { type = train_equipment amount = 25 producer = USA }	
-			add_equipment_to_stockpile = { type = convoy amount = 75 producer = USA }				
+			add_equipment_to_stockpile = { type = convoy amount = 75 producer = USA }	
+			add_equipment_to_stockpile = { type = scout_plane_equipment amount = 50 producer = AST }				
 		}
 	}
 	focus = {
@@ -1459,7 +1503,7 @@ focus_tree = {
 			335 = {
 				set_building_level  = {
 					type = air_base
-					level = 2
+					level = 8
 					instant_build = yes
 				}
 				set_building_level  = {
@@ -1467,18 +1511,8 @@ focus_tree = {
 					level = 2
 					instant_build = yes
 				}
-
 				#Fortify entire coastline
-				add_building_construction = {
-					type = bunker
-					province = {
-						all_provinces = yes
-						limit_to_coastal = yes
-					}
-					level = 2
-					instant_build = yes
-				}
-				add_building_construction = {
+				set_building_level = {
 					type = coastal_bunker
 					province = {
 						all_provinces = yes
@@ -1489,17 +1523,29 @@ focus_tree = {
 				}
 
 				# Batavia extra forts
-				add_building_construction = {
-					type = bunker
+				set_building_level = {
+					type = coastal_bunker
 					province = 7381
-					level = 2
+					level = 4
 					instant_build = yes
 				}
 				### Soerabaja extra forts
-				add_building_construction = {
+				set_building_level = {
+					type = coastal_bunker
+					province = 4608
+					level = 4
+					instant_build = yes
+				}
+				set_building_level = {
 					type = bunker
 					province = 4608
-					level = 2
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = bunker
+					province = 7381
+					level = 3
 					instant_build = yes
 				}
 
@@ -1530,20 +1576,12 @@ focus_tree = {
 			336 = {
 				set_building_level  = {
 					type = air_base
-					level = 5
+					level = 8
 					instant_build = yes
 				}
 
 				#Fortify entire coastline
-				add_building_construction = {
-					type = bunker
-					province = {
-						all_provinces = yes
-						limit_to_coastal = yes
-					}
-					level = 2
-					instant_build = yes
-				}
+				
 				add_building_construction = {
 					type = coastal_bunker
 					province = {
@@ -1558,13 +1596,19 @@ focus_tree = {
 				add_building_construction = {
 					type = bunker
 					province = 4310
-					level = 4
+					level = 2
 					instant_build = yes
 				}
 
 				add_building_construction = {
 					type = bunker
 					province = 7342
+					level = 2
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = bunker
+					province = 7329
 					level = 2
 					instant_build = yes
 				}
@@ -1767,12 +1811,7 @@ focus_tree = {
 					level = 2
 				}
 			}
-			random_owned_controlled_state = {
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-				}
-			}
+			
 			custom_effect_tooltip = AST_modify_dep_tt
 			add_to_variable = {
 				AST_production_speed_arms_factory_factor_var = 0.2
@@ -2178,12 +2217,27 @@ focus_tree = {
 				AST_army_org_factor_var = 0.2
 				tooltip = AST_orkorg_tt1
 			}
+			
+			
+		
 
 			add_doctrine_cost_reduction = {
 				name = land_doc_bonus
 				cost_reduction = 0.5
 				uses = 1
 				category = land_doctrine
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_war_with = GER 
+					}
+				}
+				custom_effect_tooltip = AST_modify_army_spirit_tt2
+				add_to_variable = {
+					AST_experience_gain_army_var = 0.03
+					tooltip = AST_xp_gain_flat
+				}
 			}
 			
 		}
@@ -2209,6 +2263,7 @@ focus_tree = {
 		
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
 		completion_reward = {
+			
 			custom_effect_tooltip = sons_of_the_outback_tt
 			hidden_effect = {
 				set_technology = { sons_of_the_outback = 1 }
@@ -2227,6 +2282,19 @@ focus_tree = {
 				technology = field_equipment_3
 				technology = field_equipment_4
 			}
+			if = {
+				limit = {
+					NOT = {
+						has_war_with = GER 
+					}
+				}
+				custom_effect_tooltip = AST_modify_army_spirit_tt2
+				add_to_variable = {
+					AST_experience_gain_army_var = 0.03
+					tooltip = AST_xp_gain_flat
+				}
+			}
+			
 			
 		}
 	}
@@ -2251,7 +2319,16 @@ focus_tree = {
 		
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
 		completion_reward = {
-		 	add_ideas = anzac_spirit		
+			custom_effect_tooltip = AST_modify_army_spirit_tt
+			add_to_variable = {
+				AST_amphibious_invasion_var = 0.1
+				tooltip = amphb_invasion_speed_tt
+			}
+			add_to_variable = {
+				AST_amphibious_invasion_defence_var = 0.1
+				tooltip = amphb_invasion_defence_tt
+			}
+		 	
 		}
 	}
 	focus = {
@@ -2377,6 +2454,12 @@ focus_tree = {
 		
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
 		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 2
+				category = land_doctrine
+			}
 		}
 	}
 
@@ -2439,6 +2522,18 @@ focus_tree = {
 			mio:AST_lithgow_saf_organization = {
 				add_mio_funds = 1000
 			}
+			if = {
+				limit = {
+					NOT = {
+						has_war_with = GER 
+					}
+				}
+				custom_effect_tooltip = AST_modify_army_spirit_tt2
+				add_to_variable = {
+					AST_experience_gain_army_var = 0.03
+					tooltip = AST_xp_gain_flat
+				}
+			}
 		}
 	}
 
@@ -2467,6 +2562,18 @@ focus_tree = {
 				bonus = 0.5
 				uses = 2
 				category = artillery
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_war_with = GER 
+					}
+				}
+				custom_effect_tooltip = AST_modify_army_spirit_tt2
+				add_to_variable = {
+					AST_experience_gain_army_var = 0.03
+					tooltip = AST_xp_gain_flat
+				}
 			}
 			
 		}
@@ -2497,6 +2604,18 @@ focus_tree = {
 				bonus = 1
 				uses = 2
 				category = infantry_weapons
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_war_with = GER 
+					}
+				}
+				custom_effect_tooltip = AST_modify_army_spirit_tt2
+				add_to_variable = {
+					AST_experience_gain_army_var = 0.03
+					tooltip = AST_xp_gain_flat
+				}
 			}
 			
 		}
@@ -2534,6 +2653,18 @@ focus_tree = {
 				uses = 2
 				category = support_tech
 			}
+			if = {
+				limit = {
+					NOT = {
+						has_war_with = GER 
+					}
+				}
+				custom_effect_tooltip = AST_modify_army_spirit_tt2
+				add_to_variable = {
+					AST_experience_gain_army_var = 0.03
+					tooltip = AST_xp_gain_flat
+				}
+			}
 			
 		}
 	}
@@ -2565,6 +2696,7 @@ focus_tree = {
 				set_technology = { AST_orkbonus = 1 }
 			}	
 			
+			
 		}
 	}
 
@@ -2595,6 +2727,18 @@ focus_tree = {
 				uses = 2
 				category = armor 
 			}
+			if = {
+				limit = {
+					NOT = {
+						has_war_with = GER 
+					}
+				}
+				custom_effect_tooltip = AST_modify_army_spirit_tt2
+				add_to_variable = {
+					AST_experience_gain_army_var = 0.03
+					tooltip = AST_xp_gain_flat
+				}
+			}
 			
 		}
 	}
@@ -2623,6 +2767,19 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
 		completion_reward = {
 			set_technology = { eng_nsb_tech_armored_cars3  = 1  }
+			if = {
+				limit = {
+					NOT = {
+						has_war_with = GER 
+					}
+				}
+				custom_effect_tooltip = AST_modify_army_spirit_tt2
+				add_to_variable = {
+					AST_experience_gain_army_var = 0.03
+					tooltip = AST_xp_gain_flat
+				}
+			}
+			
 			
 		}
 	}
@@ -2647,7 +2804,30 @@ focus_tree = {
 		
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
 		completion_reward = {
-		   	set_technology = { eng_nsb_mechanised_infantry2  = 1  }
+			custom_effect_tooltip = AST_uni_carrier_for_free_tt
+			if = {
+				limit = {
+					has_tech = eng_mechanised_infantry1
+				}
+				set_technology = { eng_nsb_mechanised_infantry2  = 1  }
+			}
+			else = {
+				
+				set_technology = { eng_mechanised_infantry1  = 1  }
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_war_with = GER 
+					}
+				}
+				custom_effect_tooltip = AST_modify_army_spirit_tt2
+				add_to_variable = {
+					AST_experience_gain_army_var = 0.03
+					tooltip = AST_xp_gain_flat
+				}
+			}
+		   
 			
 		}
 	}
@@ -2676,12 +2856,19 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
 		completion_reward = {
 			set_technology = { eng_1939_heavy_tank_chassis  = 1  }
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = land_doctrine
-			}			
+			if = {
+				limit = {
+					NOT = {
+						has_war_with = GER 
+					}
+				}
+				custom_effect_tooltip = AST_modify_army_spirit_tt2
+				add_to_variable = {
+					AST_experience_gain_army_var = 0.03
+					tooltip = AST_xp_gain_flat
+				}
+			}
+					
 		}
 	}
 	focus = {
@@ -2713,12 +2900,19 @@ focus_tree = {
 				bonus = 1.25
 				name = ENG_mobile_fortresses 
 			}
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = land_doctrine
-			}			
+			if = {
+				limit = {
+					NOT = {
+						has_war_with = GER 
+					}
+				}
+				custom_effect_tooltip = AST_modify_army_spirit_tt2
+				add_to_variable = {
+					AST_experience_gain_army_var = 0.03
+					tooltip = AST_xp_gain_flat
+				}
+			}
+					
 		}
 	}
 	focus = {
@@ -2761,6 +2955,18 @@ focus_tree = {
 					level = 1
 					instant_build = yes
 				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_war_with = GER 
+					}
+				}
+				custom_effect_tooltip = AST_modify_army_spirit_tt2
+				add_to_variable = {
+					AST_experience_gain_army_var = 0.03
+					tooltip = AST_xp_gain_flat
+				}
 			}			
 		}
 	}
@@ -2788,6 +2994,18 @@ focus_tree = {
 			custom_effect_tooltip = AST_heavychuj_tt
 			hidden_effect = {
 				set_technology = { AST_heavy_bonus = 1 }
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_war_with = GER 
+					}
+				}
+				custom_effect_tooltip = AST_modify_army_spirit_tt2
+				add_to_variable = {
+					AST_experience_gain_army_var = 0.03
+					tooltip = AST_xp_gain_flat
+				}
 			}
 			
 		}
@@ -2993,7 +3211,6 @@ focus_tree = {
 				}
 				set_state_flag = AST_cockatoo_island_shipyards_DY
 			}
-			custom_effect_tooltip = AST_Perth_tt
 		}
 	}
 
@@ -3025,7 +3242,7 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			navy_experience = 10
+			navy_experience = 30
 			add_ideas = AST_cruiser_expansion
 			add_doctrine_cost_reduction = {
                 name = naval_doc_bonus
@@ -3033,6 +3250,23 @@ focus_tree = {
                 uses = 2
                 category = naval_doctrine
             }
+			random_owned_controlled_state = {
+				prioritize = { 521 }
+				limit = {
+					is_coastal = yes
+					free_building_slots = {
+						building = dockyard
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
 		}
 	}
 
@@ -3064,7 +3298,7 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			navy_experience = 10
+			navy_experience = 30
 			add_ideas = AST_sub_construction
 			add_doctrine_cost_reduction = {
                 name = naval_doc_bonus
@@ -3072,6 +3306,23 @@ focus_tree = {
                 uses = 2
                 category = naval_doctrine
             }
+			random_owned_controlled_state = {
+				prioritize = { 521 }
+				limit = {
+					is_coastal = yes
+					free_building_slots = {
+						building = dockyard
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
 		}
 	}
 
@@ -3110,6 +3361,23 @@ focus_tree = {
 				uses = 1
 				category = dd_tech
 			}
+			random_owned_controlled_state = {
+				prioritize = { 517 }
+				limit = {
+					is_coastal = yes
+					free_building_slots = {
+						building = dockyard
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
 		}
 	}
 
@@ -3146,6 +3414,23 @@ focus_tree = {
 				uses = 1
 				category = ss_tech
 			}
+			random_owned_controlled_state = {
+				prioritize = { 517 }
+				limit = {
+					is_coastal = yes
+					free_building_slots = {
+						building = dockyard
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
 		}
 	}
 
@@ -3176,20 +3461,21 @@ focus_tree = {
 		available_if_capitulated = no
 
 		complete_tooltip = {
-			add_ideas = AST_naval_auxiliary_patrol
 			
-			517 = { add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = dockyard
-					level = 3
-					instant_build = yes
-				}
-			}
 		}
 
 		completion_reward = {
-			add_ideas = AST_naval_auxiliary_patrol
-			
+			custom_effect_tooltip = AST_modify_war_eco_tt
+			add_to_variable = {
+				AST2_production_speed_coastal_bunker_factor_modifier = 0.5
+				tooltip = coastal_fort_construction_tooltip
+			}
+			custom_effect_tooltip = AST_modify_army_spirit_tt
+			add_to_variable = {
+				AST_army_core_defence_factor = 0.1
+				tooltip = core_defense_increase_tt
+			}
+
 			517 = { add_extra_state_shared_building_slots = 3
 				add_building_construction = {
 					type = dockyard
@@ -3197,6 +3483,8 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
+			
+			
 		}
 	}
 
@@ -3227,7 +3515,7 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			navy_experience = 10
+			navy_experience = 30
 			add_tech_bonus = {
 				name = AST_cruisers
 				bonus = 1.0
