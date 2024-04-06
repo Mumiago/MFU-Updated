@@ -1759,7 +1759,7 @@ focus_tree = {
 					level = 2
 					instant_build = yes
 				}
-				set_state_flag = MAN_invite_japanese_investors_IC
+				
 			}
 		}
 	}
@@ -1965,12 +1965,12 @@ focus_tree = {
 	focus = {
 		id = JAP_light_industry_development
 		icon = GFX_goal_generic_construct_mil_factory
-		prerequisite = { focus = JAP_expand_manchurian_railways }
-		prerequisite = { focus = JAP_pacify_the_countryside2 }
-		prerequisite = { focus = JAP_expand_the_showa_steel_works }
-		x = 1
+
+		prerequisite = { focus = JAP_the_manchurian_project }
+
+		x = -1
 		y = 1
-		relative_position_id = JAP_expand_manchurian_railways
+		relative_position_id = JAP_pacify_the_countryside2
 
 		cost = 5
 
@@ -1983,6 +1983,10 @@ focus_tree = {
 				is_subject_of = ROOT
 				has_full_control_of_state = 715
 			}
+		}
+
+		mutually_exclusive = {
+			focus = JAP_Steal
 		}
 
 		bypass = {
@@ -2009,12 +2013,12 @@ focus_tree = {
 	focus = {
 		id = JAP_heavy_industry_development
 		icon = GFX_goal_generic_build_tank
-		prerequisite = { focus = JAP_expand_manchurian_railways }
-		prerequisite = { focus = JAP_expand_the_showa_steel_works }
-		prerequisite = { focus = JAP_pacify_the_countryside2 }
-		x = 3
+		prerequisite = { focus = JAP_light_industry_development }
+
+
+		x = -1
 		y = 1
-		relative_position_id = JAP_expand_manchurian_railways
+		relative_position_id = JAP_light_industry_development
 
 		cost = 5
 
@@ -2051,7 +2055,7 @@ focus_tree = {
 				add_tech_bonus = {
 					category = industry
 					bonus = 1
-					uses = 2 
+					uses = 1
 					name = JAP_heavy_industry_development
 				}
 			}
@@ -2059,10 +2063,52 @@ focus_tree = {
 	}
 
 	focus = {
+		id = JAP_csg
+		icon = GFX_JAP_expand_military_factories
+		prerequisite = { focus = JAP_heavy_industry_development }
+		prerequisite = { focus = JAP_japanese_settlement }
+
+		x = 1
+		y = 1
+		relative_position_id = JAP_heavy_industry_development
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 2
+		}
+
+		available = {
+			MAN = {
+				is_subject_of = ROOT
+				has_full_control_of_state = 716				
+			}
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+
+		completion_reward = {
+			MAN={
+				add_ideas = JAP_workers
+			
+
+
+			}
+		}
+	}
+
+	focus = {
 		id = JAP_japanese_settlement
 		icon = GFX_goal_generic_construct_civ_factory
-		prerequisite = { focus = JAP_heavy_industry_development }
-		prerequisite = { focus = JAP_light_industry_development }
+		prerequisite = { focus = JAP_expand_manchurian_railways focus = JAP_expand_the_showa_steel_works}
+
 		x = 2
 		y = 2
 		relative_position_id = JAP_expand_manchurian_railways
@@ -2075,7 +2121,7 @@ focus_tree = {
 
 		available = {
 			MAN = {
-				NOT = { has_idea = MAN_banditry }
+
 				is_subject_of = ROOT
 				has_full_control_of_state = 715
 				has_full_control_of_state = 610
@@ -2096,8 +2142,153 @@ focus_tree = {
 			715 = { add_extra_state_shared_building_slots = 5 }
 			610 = { add_extra_state_shared_building_slots = 5 }
 			328 = { add_extra_state_shared_building_slots = 5 }
+
+			MAN = {every_owned_state = {
+				add_manpower = 34721
+			}
+		}
 		}
 	}
+	focus = {
+		id = JAP_Steal
+		icon = GFX_focus_hol_the_foundations_of_defense
+		prerequisite = { focus = JAP_the_manchurian_project }
+
+
+
+		x = 1
+		y = 1
+		relative_position_id = JAP_pacify_the_countryside2
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 2
+		}
+
+		available = {
+			MAN = {
+				is_subject_of = ROOT
+				has_full_control_of_state = 715
+			}
+		}
+
+		mutually_exclusive = {
+			focus = JAP_light_industry_development
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+
+		completion_reward = {
+
+				give_resource_rights = {
+					receiver = JAP
+					state = 761
+				}
+			531={
+			add_extra_state_shared_building_slots=1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+			}
+		}
+		}
+	}
+
+	focus = {
+		id = JAP_take
+		icon = GFX_goal_generic_construct_civilian
+		prerequisite = { focus = JAP_Steal }
+
+
+		x = 1
+		y = 1
+		relative_position_id = JAP_Steal
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 2
+		}
+
+		available = {
+			MAN = {
+				is_subject_of = ROOT
+				has_full_control_of_state = 716				
+			}
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+
+		completion_reward = {
+			716 = {
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = JAP_resource_man
+		icon = GFX_JAP_logistics
+		prerequisite = { focus = JAP_take }
+		prerequisite = { focus = JAP_japanese_settlement }
+
+		x = -1
+		y = 1
+		relative_position_id = JAP_take
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 2
+		}
+
+		available = {
+			MAN = {
+				is_subject_of = ROOT
+				has_full_control_of_state = 716				
+			}
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+
+		completion_reward = {
+			MAN={
+				add_ideas = JAP_miners
+			}
+		}
+	}
+
 
 	
 
@@ -2135,8 +2326,24 @@ focus_tree = {
 
 
 		completion_reward = {
-			add_political_power = 100 
-			MAN = { remove_ideas = MAN_banditry }
+			add_political_power = 150
+			
+	MAN={add_equipment_to_stockpile = {
+				type = infantry_equipment_1
+				amount = 1500
+			}
+			add_equipment_to_stockpile = {
+				type = support_equipment
+				amount = 500
+			}
+		
+		add_equipment_to_stockpile = {
+			type = convoy
+			amount = 100
+		}
+	}
+	
+		
 			MAN = {
 				every_owned_state = {
 					limit = {
