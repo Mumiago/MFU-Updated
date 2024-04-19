@@ -66,6 +66,7 @@ focus_tree = {
 				FRA_democratic_drift_modifier = 0.05
 			}
 			custom_effect_tooltip = FRA_pol_chaos1_tt
+			custom_effect_tooltip = FRA_left_side_tt
 		}
 	}
 
@@ -216,17 +217,8 @@ focus_tree = {
 						has_completed_focus = FRA_settlements_with_right_wing_leagues
 					}
 				}
-				set_rule = { can_send_volunteers = yes }
-				custom_effect_tooltip = FRA_can_volunteers_tt
-				add_to_variable = {
-					FRA_experience_gain_army_var = 0.07
-				}
-				add_to_variable = {
-					FRA_send_volunteers_tension_var = -0.5
-				}
-				add_to_variable = {
-					FRA_send_volunteer_divisions_required_var = -1
-				}
+				add_command_power = 50
+				army_experience = 150
 					
 				SPN = {
 					add_equipment_to_stockpile = { type = fighter_equipment_1934 amount = 50 producer = FRA }
@@ -297,13 +289,21 @@ focus_tree = {
 						has_completed_focus = FRA_rally_behind_the_popular_front
 					}
 				}
-				army_experience = 75
 				add_political_power = -50
+
+				set_rule = { can_send_volunteers = yes }
+				custom_effect_tooltip = FRA_can_volunteerscope_tt
+				add_to_variable = {
+					FRA_send_volunteers_tension_var = -0.5
+				}
+				add_to_variable = {
+					FRA_send_volunteer_divisions_required_var = -1
+				}
 	
 				SPN = {
 					add_equipment_to_stockpile = {
 						type = infantry_equipment_0
-						amount = 10000
+						amount = 7000
 						producer = FRA
 					}	
 					add_equipment_to_stockpile = {
@@ -320,13 +320,24 @@ focus_tree = {
 						has_completed_focus = FRA_settlements_with_right_wing_leagues
 					}
 				}
-				army_experience = 75
 				add_political_power = -50
+
+				set_rule = { can_send_volunteers = yes }
+				custom_effect_tooltip = FRA_can_volunteers_tt
+				add_to_variable = {
+					FRA_experience_gain_army_var = 0.07
+				}
+				add_to_variable = {
+					FRA_send_volunteers_tension_var = -0.5
+				}
+				add_to_variable = {
+					FRA_send_volunteer_divisions_required_var = -1
+				}
 				
 				SPN = {
 					add_equipment_to_stockpile = {
 						type = infantry_equipment_0
-						amount = 6000
+						amount = 3000
 						producer = FRA
 					}	
 					add_equipment_to_stockpile = {
@@ -362,6 +373,7 @@ focus_tree = {
 
 		completion_reward = {
 			add_political_power = 100
+			army_experience = 100
 		}
 	}
 
@@ -954,8 +966,8 @@ focus_tree = {
 
 		completion_reward = {
 			add_stability = 0.1
+			custom_effect_tooltip = FRA_right_side_tt
 
-			custom_effect_tooltip = FRA_rightspain_tt
 		}
 	}
 
@@ -2439,10 +2451,14 @@ focus_tree = {
 		completion_reward = {
 			add_war_support = -0.2
 			FRA = { country_event = { id = france.54 days = 1 } }
-			add_dynamic_modifier = {
-				modifier = FRA_initial_war_euthasium
-				scope = ROOT
+			hidden_effect = {
+				add_dynamic_modifier = {
+					modifier = FRA_initial_war_euthasium
+					scope = ROOT
+				}
+
 			}
+			
 			custom_effect_tooltip = FRA_die_for_danzig_tt
 			
 		}
@@ -3668,16 +3684,40 @@ focus_tree = {
 				}
 			}			
 			hidden_effect = {
-				news_event = { id = news.342 hours = 12 } 
+				news_event = { id = news.342 hours = 12 }
+				every_country = {limit = { check_variable= { speeches_enabled > 0}  }
+					scoped_sound_effect = "sp_fra_appel"
+				}
 			}
-			
-			add_offsite_building = {
-				type = industrial_complex
-				level = 13
+			if = {
+				limit = {
+					FRA = {
+						has_completed_focus = FRA_rally_behind_the_popular_front
+					}
+				}
+				add_offsite_building = {
+					type = industrial_complex
+					level = 13
+				}
+				add_offsite_building = {
+					type = arms_factory
+					level = 13
+				}
 			}
-			add_offsite_building = {
-				type = arms_factory
-				level = 13
+			if = {
+				limit = {
+					FRA = {
+						has_completed_focus = FRA_settlements_with_right_wing_leagues
+					}
+				}
+				add_offsite_building = {
+					type = industrial_complex
+					level = 18
+				}
+				add_offsite_building = {
+					type = arms_factory
+					level = 18
+				}
 			}
 			set_variable = { var = FRA_real_france_legitimacy value = 0 }
 			set_variable = { var = FRA_vichy_legitimacy value = 0 }
@@ -4872,6 +4912,7 @@ focus_tree = {
 		
 		available_if_capitulated = no
 		completion_reward = {
+			army_experience = 80
 			custom_effect_tooltip = available_manpower_law
 			show_ideas_tooltip = levee_en_massee
 		}
@@ -5230,10 +5271,7 @@ focus_tree = {
 				idea = FRA_reforms
 				days = 730
 			}
-			custom_effect_tooltip = FRA_pol_chaos22_tt	
-			add_to_variable = {
-				FRA_industry_consumer_goods_modifier = 0.015
-			}
+			
 
 		}
 	}

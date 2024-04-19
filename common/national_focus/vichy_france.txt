@@ -33,7 +33,12 @@
 		completion_reward = { 
 		 	add_political_power = 400
 			add_equipment_to_stockpile = { type = train_equipment amount = 200 producer = GER } 
-			
+			hidden_effect = {
+				set_victory_points = {
+					province = 3594
+					value = 16
+				}
+			}
 			add_offsite_building = {
 				type = arms_factory
 				level = 5
@@ -3012,14 +3017,14 @@
 			date > 1942.6.1
 			OR = {
 		AND = {
-			any_allied_country = { controls_state = 23}		
-			any_allied_country = { controls_state = 19}
+			any_allied_country = { has_full_control_of_state = 23}		
+			any_allied_country = { has_full_control_of_state = 19}
 			casualties > 100000
 		}	
 		AND = {
 
-			EFR = { controls_state = 23}		
-			EFR = { controls_state = 19}
+			EFR = { has_full_control_of_state = 23}		
+			EFR = { has_full_control_of_state = 19}
 			
 			has_manpower > 100000
 		}
@@ -3064,8 +3069,8 @@
 		available = {
 			date > 1942.6.1
 		AND = {	
-			any_allied_country = { controls_state = 24}
-			any_allied_country = { controls_state = 27}
+			any_allied_country = { has_full_control_of_state = 24}
+			any_allied_country = { has_full_control_of_state = 27}
 			casualties > 100000
 		}	
 		}
@@ -3304,19 +3309,19 @@
 			OR = {
 		AND = {
 
-			any_allied_country = { controls_state = 16}
-			any_allied_country = { controls_state = 15}
-			any_allied_country = { controls_state = 14}
-			any_allied_country = { controls_state = 29}
+			any_allied_country = { has_full_control_of_state = 16}
+			any_allied_country = { has_full_control_of_state = 15}
+			any_allied_country = { has_full_control_of_state = 14}
+			any_allied_country = { has_full_control_of_state = 29}
 			
 			has_manpower > 100000
 		}	
 		AND = {
 
-			EFR = { controls_state = 16}
-			EFR = { controls_state = 15}
-			EFR = { controls_state = 14}
-			EFR = { controls_state = 29}
+			EFR = { has_full_control_of_state = 16}
+			EFR = { has_full_control_of_state = 15}
+			EFR = { has_full_control_of_state = 14}
+			EFR = { has_full_control_of_state = 29}
 			
 			has_manpower > 100000
 			}
@@ -4010,46 +4015,12 @@
 			factor = 5 
 		}
 	}
-	
-	focus = {
-		id = EFR_round_up_the_middle_east
-		icon = GFX_goal_decryption
-		x = 0
-		y = 1
-		relative_position_id = EFR_round_up_undesirables
-		prerequisite = { focus = EFR_round_up_undesirables }
-		available = {
-			divisions_in_state = {
-				type = infantry
-				size > 5
-				state = 553
-			}
-		}
-		
-		cost = 3
 
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		
-		completion_reward = { 
-			custom_effect_tooltip = EFR_guest_workers_10k_add_tt
-			add_to_variable = {
-				var = EFR_guest_workers
-				value = 1000
-			}		
-		}
-		
-		ai_will_do = {
-			factor = 5 
-		}
-	}
 	
 	focus = {
 		id = EFR_round_up_africa
 		icon = GFX_goal_generic_secret_police_2
-		x = -2
+		x = 0
 		y = 1
 		relative_position_id = EFR_round_up_undesirables
 		prerequisite = { focus = EFR_round_up_undesirables }
@@ -4504,13 +4475,28 @@
 
 		
 		completion_reward = { 
-				GER = { 
-					country_event = { 
-						id = generic.2 
-						days = 1 
+			hidden_effect = {
+				if = {
+					limit = {
+						EFR = {
+							controls_state = 553
+						}
+					}
+					FRA = {
+						transfer_state = 553
+						transfer_state = 677
+						transfer_state = 680
+						transfer_state = 554
 					}
 				}
-				remove_ideas = neutrality_idea		
+			}
+			GER = { 
+				country_event = { 
+					id = generic.2 
+					days = 1 
+				}
+			}
+			remove_ideas = neutrality_idea		
 		}
 		
 		ai_will_do = {

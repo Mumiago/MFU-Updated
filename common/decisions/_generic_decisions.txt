@@ -26,6 +26,9 @@ ai_decision_2 = {
 
 		available = {		
 			NOT = { has_idea = ai_equipment_idea }
+			#NOT = {
+			#	tag = SOV
+			#}
 		}
 		
 		cost = 0
@@ -38,6 +41,26 @@ ai_decision_2 = {
 			base = 5000		
 		}
 	}
+#	equipment_decision_ai_sov_add = {
+#
+#		icon = generic_megaphone
+#
+#		available = {		
+#			NOT = { has_idea = ai_equipment_idea_sov }
+#			tag = SOV
+#		}
+#		
+#		cost = 0
+#
+#		complete_effect = {
+#			add_ideas = ai_equipment_idea_sov
+#		}
+#
+	#	ai_will_do = {
+	#		base = 5000		
+	#	}
+	#}
+	
 	
 }
 political_actions = {
@@ -223,7 +246,6 @@ economy_decisions = {
 
 		modifier = {
 			production_speed_dockyard_factor = 0.5
-			consumer_goods_expected_value = -0.02
 		}
 
 		days_remove = 200
@@ -273,26 +295,26 @@ economy_decisions = {
 
 			set_country_flag = ITA_chose_decision
 			158 = {
-				add_extra_state_shared_building_slots = 4
+				add_extra_state_shared_building_slots = 3
 				add_building_construction = {
 					type = dockyard
-					level = 4
+					level = 3
 					instant_build = yes
 				}
 			}
 			162 = {
-				add_extra_state_shared_building_slots = 4
+				add_extra_state_shared_building_slots = 3
 				add_building_construction = {
 					type = dockyard
-					level = 4
+					level = 3
 					instant_build = yes
 				}
 			}
 			157 = {
-				add_extra_state_shared_building_slots = 4
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
-					type = dockyard
-					level = 4
+					type = industrial_complex
+					level = 2
 					instant_build = yes
 				}
 			}
@@ -654,6 +676,13 @@ economy_decisions = {
 						size > 5
 						include_locked = yes
 					}
+					NOT = {
+						state = 448
+						state = 449
+						state = 450
+						state = 451
+
+					}
 					NOT = { has_state_flag = infrastructure_building_slot_flag }
 				}
 				add_extra_state_shared_building_slots = 5
@@ -667,6 +696,13 @@ economy_decisions = {
 						building = industrial_complex
 						size > 5
 						include_locked = yes
+					}
+					NOT = {
+						state = 448
+						state = 449
+						state = 450
+						state = 451
+
 					}
 					NOT = { has_state_flag = infrastructure_building_slot_flag }
 				}
@@ -744,6 +780,324 @@ propaganda_efforts = {
 }
 
 operations = {
+	adapt_milita = {
+		icon = generic_prepare_civil_war
+
+		available = {
+			tag = ITA 
+			OR = {
+				AND = {
+					NOT = {
+						has_country_flag = ITA_bigger_milita_flag
+					}
+					has_tech = large_front_operations
+				}
+				AND = {
+					has_country_flag = ITA_bigger_milita_flag
+					NOT = {
+						has_tech = large_front_operations
+					}
+					
+				}
+
+			}
+		}
+
+		visible = {
+			tag = ITA 
+			OR = {
+				AND = {
+					NOT = {
+						has_country_flag = ITA_bigger_milita_flag
+					}
+					has_tech = large_front_operations
+				}
+				AND = {
+					has_country_flag = ITA_bigger_milita_flag
+					NOT = {
+						has_tech = large_front_operations
+					}
+					
+				}
+
+			}
+		}
+
+		fire_only_once = no
+
+		days_re_enable = 2
+		cost = 0
+
+		ai_will_do = {
+			factor = 0
+		}
+
+		modifier = {
+			
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = ITA_change_milita_template_tt
+			if = {
+				limit = {
+					ITA = {
+						AND = {
+							NOT = {
+								has_country_flag = ITA_bigger_milita_flag
+							}
+							has_tech = large_front_operations
+							has_completed_focus = ITA_CC.NN_division_primacy
+						}
+
+					}
+				}
+				ITA = {
+					delete_unit_template_and_units = {
+						division_template = "Camicia Nera"
+						disband = yes #will refund equipment and manpower
+					}
+					division_template = { #Blackshirts
+						name = "Camicia Nera" 
+						division_names_group = ITA_INF_02
+						template_counter = 68
+						is_locked = yes
+						force_allow_recruiting = yes
+						division_cap = 24 
+						template_counter = 137
+						support = {
+							DIV_HQ = { x = 0 y = 0 }
+							engineer = { x = 0 y = 1 }
+							recon = { x = 0 y = 2 }
+							pack_artillery = { x = 0 y = 3 }
+							anti_air_company = { x = 1 y = 0 }
+							logistics_company = { x = 1 y = 1 }
+							field_hospital = { x = 1 y = 2 }
+							anti_tank  = { x = 1 y = 3 }
+						}
+
+						regiments = {
+							militia = { x = 0 y = 0 }
+							militia = { x = 0 y = 1 }
+							militia = { x = 0 y = 2 }
+
+							militia = { x = 1 y = 0 }
+							militia = { x = 1 y = 1 }
+							militia = { x = 1 y = 2 }
+							
+
+							militia = { x = 2 y = 0 }
+							militia = { x = 2 y = 1 }
+							militia = { x = 2 y = 2 }
+							
+							artillery_brigade = { x = 3 y = 0 }
+							artillery_brigade = { x = 3 y = 1 }	
+							artillery_brigade = { x = 3 y = 2 }
+							artillery_brigade = { x = 3 y = 3 }
+							
+							anti_air = { x = 4 y = 0 }	
+							anti_tank_brigade = { x = 4 y = 1 }	
+							artillery_brigade = { x = 4 y = 2 }				
+						}
+					}
+					set_country_flag = ITA_bigger_milita_flag
+
+				}
+				
+			}
+			if = {
+				limit = {
+					ITA = {
+						AND = {
+							NOT = {
+								has_country_flag = ITA_bigger_milita_flag
+								has_completed_focus = ITA_CC.NN_division_primacy
+							}
+							has_tech = large_front_operations
+						}
+					}
+				}
+				ITA = {
+					delete_unit_template_and_units = {
+						division_template = "Camicia Nera"
+						disband = yes #will refund equipment and manpower
+					}
+					division_template = { #Blackshirts
+						name = "Camicia Nera" 
+						division_names_group = ITA_INF_02
+						template_counter = 68
+						is_locked = yes
+						force_allow_recruiting = yes
+						division_cap = 12 
+						template_counter = 137
+						support = {
+							DIV_HQ = { x = 0 y = 0 }
+							engineer = { x = 0 y = 1 }
+							recon = { x = 0 y = 2 }
+							pack_artillery = { x = 0 y = 3 }
+							anti_air_company = { x = 1 y = 0 }
+							logistics_company = { x = 1 y = 1 }
+							field_hospital = { x = 1 y = 2 }
+							anti_tank  = { x = 1 y = 3 }
+						}
+
+						regiments = {
+							militia = { x = 0 y = 0 }
+							militia = { x = 0 y = 1 }
+							militia = { x = 0 y = 2 }
+
+							militia = { x = 1 y = 0 }
+							militia = { x = 1 y = 1 }
+							militia = { x = 1 y = 2 }
+							
+
+							militia = { x = 2 y = 0 }
+							militia = { x = 2 y = 1 }
+							militia = { x = 2 y = 2 }
+							
+							artillery_brigade = { x = 3 y = 0 }
+							artillery_brigade = { x = 3 y = 1 }	
+							artillery_brigade = { x = 3 y = 2 }
+							artillery_brigade = { x = 3 y = 3 }
+							
+							anti_air = { x = 4 y = 0 }	
+							anti_tank_brigade = { x = 4 y = 1 }	
+							artillery_brigade = { x = 4 y = 2 }				
+						}
+					}
+					set_country_flag = ITA_bigger_milita_flag
+
+				}
+				
+			}
+			if = {
+				limit = {
+					ITA = {
+						AND = {
+							has_country_flag = ITA_bigger_milita_flag
+							NOT = {
+								has_tech = large_front_operations
+								has_completed_focus = ITA_CC.NN_division_primacy
+							}
+						}
+					}
+				}
+				ITA = {
+					delete_unit_template_and_units = {
+						division_template = "Camicia Nera"
+						disband = yes #will refund equipment and manpower
+					}
+					division_template = { #Blackshirts
+						name = "Camicia Nera" 
+						division_names_group = ITA_INF_02
+						template_counter = 68
+						is_locked = yes
+						force_allow_recruiting = yes
+						division_cap = 12 
+						template_counter = 137
+						support = {
+							DIV_HQ = { x = 0 y = 0 }
+							engineer = { x = 0 y = 1 }
+							recon = { x = 0 y = 2 }
+							pack_artillery = { x = 0 y = 3 }
+							anti_air_company = { x = 1 y = 0 }
+							logistics_company = { x = 1 y = 1 }
+							field_hospital = { x = 1 y = 2 }
+							anti_tank  = { x = 1 y = 3 }
+						}
+
+						regiments = {
+							militia = { x = 0 y = 0 }
+							militia = { x = 0 y = 1 }
+							militia = { x = 0 y = 2 }
+
+							militia = { x = 1 y = 0 }
+							militia = { x = 1 y = 1 }
+							militia = { x = 1 y = 2 }
+							
+
+							militia = { x = 2 y = 0 }
+							militia = { x = 2 y = 1 }
+							militia = { x = 2 y = 2 }
+							
+							artillery_brigade = { x = 3 y = 0 }
+							artillery_brigade = { x = 3 y = 1 }	
+							artillery_brigade = { x = 3 y = 2 }
+							artillery_brigade = { x = 3 y = 3 }
+							
+							anti_air = { x = 4 y = 0 }	
+							anti_tank_brigade = { x = 4 y = 1 }				
+						}
+					}
+					clr_country_flag = ITA_bigger_milita_flag
+				}
+				
+			}
+			if = {
+				limit = {
+					ITA = {
+						AND = {
+							has_country_flag = ITA_bigger_milita_flag
+							NOT = {
+								has_tech = large_front_operations
+								
+							}
+							has_completed_focus = ITA_CC.NN_division_primacy
+						}
+					}
+				}
+				ITA = {
+					delete_unit_template_and_units = {
+						division_template = "Camicia Nera"
+						disband = yes #will refund equipment and manpower
+					}
+					division_template = { #Blackshirts
+						name = "Camicia Nera" 
+						division_names_group = ITA_INF_02
+						template_counter = 68
+						is_locked = yes
+						force_allow_recruiting = yes
+						division_cap = 24 
+						template_counter = 137
+						support = {
+							DIV_HQ = { x = 0 y = 0 }
+							engineer = { x = 0 y = 1 }
+							recon = { x = 0 y = 2 }
+							pack_artillery = { x = 0 y = 3 }
+							anti_air_company = { x = 1 y = 0 }
+							logistics_company = { x = 1 y = 1 }
+							field_hospital = { x = 1 y = 2 }
+							anti_tank  = { x = 1 y = 3 }
+						}
+
+						regiments = {
+							militia = { x = 0 y = 0 }
+							militia = { x = 0 y = 1 }
+							militia = { x = 0 y = 2 }
+
+							militia = { x = 1 y = 0 }
+							militia = { x = 1 y = 1 }
+							militia = { x = 1 y = 2 }
+							
+
+							militia = { x = 2 y = 0 }
+							militia = { x = 2 y = 1 }
+							militia = { x = 2 y = 2 }
+							
+							artillery_brigade = { x = 3 y = 0 }
+							artillery_brigade = { x = 3 y = 1 }	
+							artillery_brigade = { x = 3 y = 2 }
+							artillery_brigade = { x = 3 y = 3 }
+							
+							anti_air = { x = 4 y = 0 }	
+							anti_tank_brigade = { x = 4 y = 1 }				
+						}
+					}
+					clr_country_flag = ITA_bigger_milita_flag
+				}
+				
+			}
+		}
+	}
 	supply_buildup_cancel = {
 		icon = generic_construction
 		available = {
@@ -1440,6 +1794,13 @@ economy_decisions = {
 						size < 1
 					}
 					NOT = { has_state_flag = infrastructure_building_slot_flag }
+					NOT = {
+						state = 448
+						state = 449
+						state = 450
+						state = 451
+
+					}
 				}
 				add_extra_state_shared_building_slots = 5
 				set_state_flag = infrastructure_building_slot_flag

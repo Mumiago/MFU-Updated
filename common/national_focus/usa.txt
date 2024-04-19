@@ -44,7 +44,7 @@ focus_tree = {
 		completion_reward = {
 			add_to_variable = {
 				var = USA_consumer_goods_factor_var
-				value = -0.025
+				value = -0.04
 			}
 			custom_effect_tooltip = USA_fdr_tt
 			
@@ -65,11 +65,11 @@ focus_tree = {
 			retire_country_leader = yes 
 			add_to_variable = {
 				var = USA_production_speed_arms_factory_factor_var
-				value = 0.15
+				value = 0.2
 			}
 			add_to_variable = {
 				var = USA_production_speed_dockyard_factor_var
-				value = 0.15
+				value = 0.2
 			}
 			custom_effect_tooltip = USA_landon_tt
 			
@@ -93,7 +93,12 @@ focus_tree = {
 				var = USA_voter_var
 				value = 0.25
 			}
-			add_stability = USA_voter_var
+		
+			add_to_variable = {
+				var = USA_stability_factor_var
+				value = 0.15
+				tooltip = stability_factor_tooltip
+			}
 			
 		}
 	}
@@ -159,9 +164,8 @@ focus_tree = {
 		y = 3
 		prerequisite = { focus = USA_new_government }
 		relative_position_id = USA_1
-		available = {
-			has_completed_focus = USA_fdr
-		}
+		mutually_exclusive = {focus = USA_44 } 
+		
 		completion_reward = {
 			add_to_variable = {
 				var = USA_production_speed_industrial_complex_factor_var
@@ -182,9 +186,7 @@ focus_tree = {
 		y = 3
 		prerequisite = { focus = USA_new_government }
 		relative_position_id = USA_1
-		available = {
-			has_completed_focus = USA_landon
-		}
+		mutually_exclusive = {focus = USA_4 } 
 		completion_reward = {
 			add_research_slot = -1
 			every_state = {
@@ -280,9 +282,7 @@ focus_tree = {
 		y = 3
 		prerequisite = { focus = USA_new_government }
 		relative_position_id = USA_1
-		available = {
-			has_completed_focus = USA_fdr
-		}
+		mutually_exclusive = {focus = USA_6 } 
 		completion_reward = {
 			add_to_variable = {
 				var = USA_stability_factor_var
@@ -320,9 +320,7 @@ focus_tree = {
 		y = 3
 		prerequisite = { focus = USA_new_government }
 		relative_position_id = USA_1
-		available = {
-			has_completed_focus = USA_landon
-		}
+		mutually_exclusive = {focus = USA_5 } 
 		completion_reward = {
 			add_tech_bonus = {
 				name = USA_100_industry_bonus
@@ -536,24 +534,28 @@ focus_tree = {
 			focus = USA_40
 		}
 		completion_reward = {
-	
-			every_state = {
-				limit = {
-					OR = {
-						state = 391
-						state = 392
-						state = 394
-						state = 395
-						state = 396
-						state = 261
-						state = 393
+			custom_effect_tooltip = USA_infra_arsenal_tt
+			hidden_effect = {
+				every_state = {
+					limit = {
+						OR = {
+							state = 391
+							state = 392
+							state = 394
+							state = 395
+							state = 396
+							state = 261
+							state = 393
+						}
+					}
+					set_building_level = {
+						type = infrastructure
+						level = 10
 					}
 				}
-				set_building_level = {
-					type = infrastructure
-					level = 10
-				}
+
 			}
+			
 			every_state = {
 				limit = {
 					OR = {
@@ -576,6 +578,10 @@ focus_tree = {
 			add_to_variable = {
 				var = USA_production_speed_arms_factory_factor_var
 				value = 0.1
+			}
+			add_to_variable = {
+				var = USA_research_speed_factor_var
+				value = 0.05
 			}
 			add_days_mission_timeout = {
 				mission = USA_social_security_act_mission
@@ -755,7 +761,9 @@ focus_tree = {
 		completion_reward = {
 	
 			add_ideas = annapolis_academy
-			every_state = {
+			custom_effect_tooltip = USA_infra_shipbuilding_tt
+			hidden_effect = {
+				every_state = {
 				limit = {
 					OR = {
 						state = 357
@@ -777,6 +785,9 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
+
+			}
+			
 			every_state = {
 				limit = {
 					OR = {
@@ -798,6 +809,10 @@ focus_tree = {
 			add_to_variable = {
 				var = USA_production_speed_dockyard_factor_var
 				value = 0.15
+			}
+			add_to_variable = {
+				var = USA_research_speed_factor_var
+				value = 0.05
 			}
 			add_to_variable = {
 				var = USA_industrial_capacity_dockyard_var
@@ -901,9 +916,6 @@ focus_tree = {
 				USA_armor_industry_level_up = yes 
 				USA_aircraft_industry_level_up = yes
 				USA_infantry_industry_level_up = yes 
-				every_country = {limit = { check_variable= { speeches_enabled > 0}  }
-					scoped_sound_effect = "sp_usa_democracy"
-				}
 		
 			}
 		}
@@ -971,21 +983,120 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			
-			every_country = {
-				limit = {
-					NOT = {
-						OR = {
-							tag = ENG
-							tag = CAN
+			hidden_effect = {
+				if = {
+					limit = {
+						CAN = {
+							NOT = {
+								has_completed_focus = CAN_trade_agreements_with_UK
+							}
 						}
 					}
-					is_in_faction_with = ENG
+					CAN = {
+						complete_national_focus = CAN_trade_agreements_with_UK
+					}
+					
 				}
-				add_ideas = USA_cash_and_carry_foreign_idea 
+				if = {
+					limit = {
+						AST = {
+							NOT = {
+								has_completed_focus = ast_commonwealth_ties
+							}
+						}
+					}
+					AST = {
+						complete_national_focus = ast_commonwealth_ties
+					}
+					
+				}
+				every_country = {
+					limit = {
+						NOT = {
+							OR = {
+								tag = ENG
+								tag = CAN
+							}
+						}
+						is_in_faction_with = ENG
+					}
+					add_ideas = USA_cash_and_carry_foreign_idea 
+					
+				}
+				
+				
+				CAN = {
+					swap_ideas = {
+						remove_idea = ENG_commonwealth_trading_idea_2
+						add_idea = ENG_commonwealth_trading_idea_3
+					}	
+				}
+				ENG = {
+					swap_ideas = {
+						remove_idea = ENG_commonwealth_trading_idea_2
+						add_idea = ENG_commonwealth_trading_idea_3
+					}	
+				}
+				IRE = {
+					swap_ideas = {
+						remove_idea = ENG_commonwealth_trading_idea_2
+						add_idea = ENG_commonwealth_trading_idea_3
+					}	
+				}
+				BRA = {
+					swap_ideas = {
+						remove_idea = ENG_commonwealth_trading_idea_2
+						add_idea = ENG_commonwealth_trading_idea_3
+					}	
+				}
+				MEX = {
+					swap_ideas = {
+						remove_idea = ENG_commonwealth_trading_idea_2
+						add_idea = ENG_commonwealth_trading_idea_3
+					}	
+				}
+				AST = {
+					swap_ideas = {
+						remove_idea = ENG_commonwealth_trading_idea_2
+						add_idea = ENG_commonwealth_trading_idea_3
+					}	
+				}
+				RAJ = {
+					swap_ideas = {
+						remove_idea = RAJ_commonwealth_trading_idea_2
+						add_idea = RAJ_commonwealth_trading_idea_3
+					}	
+				}
+				NZL = {
+					swap_ideas = {
+						remove_idea = ENG_commonwealth_trading_idea_2
+						add_idea = ENG_commonwealth_trading_idea_3
+					}	
+				}
+				POL = {
+					swap_ideas = {
+						remove_idea = ENG_commonwealth_trading_idea_2
+						add_idea = ENG_commonwealth_trading_idea_3
+					}	
+				}
+				SAF = {
+					swap_ideas = {
+						remove_idea = ENG_commonwealth_trading_idea_2
+						add_idea = ENG_commonwealth_trading_idea_3
+					}	
+				}
+				FRA = {
+					swap_ideas = {
+						remove_idea = ENG_commonwealth_trading_idea_2
+						add_idea = ENG_commonwealth_trading_idea_3
+					}	
+				}
+				
 			}
+			custom_effect_tooltip = USA_give_all_allies_buff_tt
+			
 			ENG = {
-				custom_effect_tooltip = ENG_usa_help_tt
+				
 				add_to_variable = {
 					ENG_production_factory_max_efficiency_factor_var = 0.025
 				}
@@ -1000,7 +1111,7 @@ focus_tree = {
 				}
 			}
 			CAN = {
-				custom_effect_tooltip = CAN_usa_help_tt
+				
 				add_to_variable = {
 					CAN_production_factory_max_efficiency_factor_var = 0.025
 				}
@@ -1014,7 +1125,17 @@ focus_tree = {
 					CAN_industrial_capacity_factory_var = 0.05
 				}
 			}
-			add_ideas = USA_cash_and_carry_idea
+		
+			add_to_variable = {
+				var = USA_political_power_gain_var
+				value = 0.25
+			}
+			add_to_variable = {
+				var = USA_consumer_goods_factor_var
+				value = 0.02
+			}
+			custom_effect_tooltip = USA_cash_nd_carry_tt
+			
 			add_ideas = USA_arsenal_trading_idea
 			remove_ideas = USA_reciprocal_trade_1
 		}
@@ -1034,6 +1155,9 @@ focus_tree = {
 						tag = INS
 						is_in_faction_with = ENG
 					}
+					NOT = {
+						tag = ENG 
+					}
 					
 				}
 				give_military_access = USA
@@ -1041,24 +1165,23 @@ focus_tree = {
 			
 		
 
+			
+			custom_effect_tooltip = USA_give_all_allies_buff_tt2
 			hidden_effect = {
-				add_to_variable = {
-					var = USA_popular_support_var
-					value = 0.05
+				every_country = {
+					limit = {
+						has_idea = USA_cash_and_carry_foreign_idea
+					}
+					swap_ideas = {
+						remove_idea = USA_cash_and_carry_foreign_idea
+						add_idea = USA_lend_lease_foreign 
+					}
 				}
+
 			}
-			custom_effect_tooltip = USA_voter_support_5_tt
-			every_country = {
-				limit = {
-					has_idea = USA_cash_and_carry_foreign_idea
-				}
-				swap_ideas = {
-					remove_idea = USA_cash_and_carry_foreign_idea
-					add_idea = USA_lend_lease_foreign 
-				}
-			}
+			
 			ENG = {
-				custom_effect_tooltip = ENG_usa_help2_tt
+				#custom_effect_tooltip = ENG_usa_help2_tt
 				add_to_variable = {
 					ENG_production_factory_max_efficiency_factor_var = 0.025
 				}
@@ -1070,7 +1193,7 @@ focus_tree = {
 				}
 			}
 			CAN = {
-				custom_effect_tooltip = CAN_usa_help2_tt
+				#custom_effect_tooltip = CAN_usa_help2_tt
 				add_to_variable = {
 					CAN_production_factory_max_efficiency_factor_var = 0.025
 				}
@@ -1084,10 +1207,16 @@ focus_tree = {
 					CAN_industrial_capacity_factory_var = 0.05
 				}
 			}
-			swap_ideas = {
-				remove_idea = USA_cash_and_carry_idea
-				add_idea = USA_lend_lease_idea
+			
+			add_to_variable = {
+				var = USA_political_power_gain_var
+				value = 0.25
 			}
+			add_to_variable = {
+				var = USA_consumer_goods_factor_var
+				value = 0.02
+			}
+			custom_effect_tooltip = USA_cash_nd_carry_tt
 
 			custom_effect_tooltip = USA_will_upgrade_all_one_step_tt
 			
@@ -1102,6 +1231,13 @@ focus_tree = {
 
 			custom_effect_tooltip = USA_dont_send_our_boys_to_war_tt
 			USA_we_dont_want_to_send_our_boys_away = yes
+			hidden_effect = {
+				add_to_variable = {
+					var = USA_popular_support_var
+					value = 0.05
+				}
+			}
+			custom_effect_tooltip = USA_voter_support_5_tt
 		}
 	}
 	focus = {
@@ -1126,15 +1262,7 @@ focus_tree = {
 				}
 				
 			}
-			if = {
-				limit = {
-					has_completed_focus = USA_defend_philippines
-				}
-				swap_ideas = {
-					remove_idea = USA_no_refs
-					add_idea = USA_better_refs
-				}
-			}
+			
 			
 			add_to_variable = {
 				var = USA_consumer_goods_factor_var
@@ -1216,7 +1344,13 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			add_ideas = USA_magic
+			
+			custom_effect_tooltip = USA_command_post_modification_intro
+			add_to_variable = { 
+				var = USA_spotting_chance_var 
+				value = 0.2
+				tooltip = spotting_tt
+			}
 		}
 	}
 
@@ -1316,7 +1450,16 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			add_ideas = USA_rationing_and_war_bonds
+			
+			add_to_variable = {
+				var = USA_political_power_cost_var
+				value = 0.2
+			}
+			add_to_variable = {
+				var = USA_consumer_goods_factor_var
+				value = -0.05
+			}
+			custom_effect_tooltip = USA_war_bonds_tt
 		}
 	}		
 
@@ -1804,7 +1947,288 @@ focus_tree = {
 			}
 		}
 	}
+	focus = {
+		id = USA_islands
+		cost = 3
+		
+		icon = GFX_USA_fortify_our_islands
+		relative_position_id = USA_focus_on_asia
+		prerequisite = {
+			focus = USA_focus_on_asia
+		}
+		x = 10
+		y = 1
+		completion_reward = {
+			custom_effect_tooltip = USA_build_islands_tt
+			hidden_effect = {
+				638 = {
+				set_building_level = {
+					type = coastal_bunker
+					province = 13023
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 13307
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 13308
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 13312
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 12140
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 13309
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = bunker
+					province = 13309
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 13310
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 13311
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = bunker
+					province = 13311
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = bunker
+					province = 13309
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = air_base
+					level = 6
+				}
+			}
+			632 = {
+				set_building_level = {
+					type = coastal_bunker
+					province = 13300
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 13302
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 13299
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 13298
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 13047
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = bunker
+					province = 13047
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = bunker
+					province = 13301
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 13301
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 13302
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = air_base
+					level = 6
+				}
+			}
+			631 = {
+				set_building_level = {
+					type = coastal_bunker
+					province = 13052
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = bunker
+					province = 13052
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 13306
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 13304
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 13305
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = air_base
+					level = 6
+				}
+			}
+			639 = {
+				
+				set_building_level = {
+					type = coastal_bunker
+					province = 7393
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 13022
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 13021
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 4387
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 13020
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = bunker
+					province = 13021
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = bunker
+					province = 7393
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = air_base
+					level = 6
+				}
+			}
+			639 = {
+				
+				set_building_level = {
+					type = coastal_bunker
+					province = 4180	
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 7112
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 7195
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 10048
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 12021
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = bunker
+					province = 12021
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = bunker
+					province = 4180
+					level = 3
+					instant_build = yes
+				}
+				
+			}
 
+			}
+			
+		}
+	}
 	focus = {
 		id = USA_embargo_japan
 		cost = 3
@@ -1815,11 +2239,11 @@ focus_tree = {
 		bypass = {
 			has_war_with = JAP
 		}
-		relative_position_id = USA_focus_on_asia
+		relative_position_id = USA_islands
 		prerequisite = {
-			focus = USA_focus_on_asia
+			focus = USA_islands
 		}
-		x = 10
+		x = 0
 		y = 1
 		completion_reward = {
 			
@@ -1885,150 +2309,14 @@ focus_tree = {
 			
 		}
 	}
-	focus = {
-		id = USA_islands
-		cost = 3
-		x = 0
-		y = 1
-		icon = GFX_USA_fortify_our_islands
-		prerequisite = { focus = USA_embargo_japan }
-		relative_position_id = USA_embargo_japan
-		completion_reward = {
-			638 = {
-				set_building_level = {
-					type = coastal_bunker
-					province = 12140
-					level = 3
-					instant_build = yes
-				}
-				set_building_level = {
-					type = coastal_bunker
-					province = 13309
-					level = 3
-					instant_build = yes
-				}
-				set_building_level = {
-					type = bunker
-					province = 13309
-					level = 3
-					instant_build = yes
-				}
-				set_building_level = {
-					type = coastal_bunker
-					province = 13310
-					level = 3
-					instant_build = yes
-				}
-				set_building_level = {
-					type = coastal_bunker
-					province = 13311
-					level = 3
-					instant_build = yes
-				}
-				set_building_level = {
-					type = bunker
-					province = 13311
-					level = 3
-					instant_build = yes
-				}
-				set_building_level = {
-					type = air_base
-					level = 6
-				}
-			}
-			632 = {
-				set_building_level = {
-					type = coastal_bunker
-					province = 13302
-					level = 3
-					instant_build = yes
-				}
-				set_building_level = {
-					type = coastal_bunker
-					province = 13299
-					level = 3
-					instant_build = yes
-				}
-				set_building_level = {
-					type = coastal_bunker
-					province = 13298
-					level = 3
-					instant_build = yes
-				}
-				set_building_level = {
-					type = coastal_bunker
-					province = 13047
-					level = 3
-					instant_build = yes
-				}
-				set_building_level = {
-					type = bunker
-					province = 13047
-					level = 3
-					instant_build = yes
-				}
-				set_building_level = {
-					type = coastal_bunker
-					province = 13301
-					level = 3
-					instant_build = yes
-				}
-				set_building_level = {
-					type = coastal_bunker
-					province = 13302
-					level = 3
-					instant_build = yes
-				}
-				set_building_level = {
-					type = air_base
-					level = 6
-				}
-			}
-			631 = {
-				set_building_level = {
-					type = coastal_bunker
-					province = 13052
-					level = 3
-					instant_build = yes
-				}
-				set_building_level = {
-					type = bunker
-					province = 13052
-					level = 3
-					instant_build = yes
-				}
-				set_building_level = {
-					type = coastal_bunker
-					province = 13306
-					level = 3
-					instant_build = yes
-				}
-				set_building_level = {
-					type = coastal_bunker
-					province = 13304
-					level = 3
-					instant_build = yes
-				}
-				set_building_level = {
-					type = coastal_bunker
-					province = 13305
-					level = 3
-					instant_build = yes
-				}
-				set_building_level = {
-					type = air_base
-					level = 6
-				}
-			}
-		}
-	}
+	
 	focus = {
 		id = USA_philippines_1
 		cost = 3
 		x = -2
 		y = 1
-		prerequisite = { focus = USA_embargo_japan }
-		relative_position_id = USA_embargo_japan
+		prerequisite = { focus = USA_islands }
+		relative_position_id = USA_islands
 		icon = GFX_USA_fortify_our_holdings
 		completion_reward = {
 			623 = {
@@ -2040,13 +2328,44 @@ focus_tree = {
 				}
 				set_building_level = {
 					type = coastal_bunker
+					province = 10241
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 4101
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
 					province = 1415
 					level = 3
 					instant_build = yes
 				}
 				set_building_level = {
+					type = coastal_bunker
+					province = 10280
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = bunker
+					province = 1415
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = bunker
+					province = 12213
+					level = 3
+					instant_build = yes
+				}
+				
+				set_building_level = {
 					type = air_base
-					level = 4
+					level = 6
 				}
 			}
 			327 = {
@@ -2056,14 +2375,48 @@ focus_tree = {
 					level = 3
 					instant_build = yes
 				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 7323
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 1221
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = bunker
+					province = 10265
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = air_base
+					level = 6
+				}
 			}
 			627 = {
 				set_building_level = {
 					type = air_base
-					level = 4
+					level = 6
 				}
 				set_building_level = {
 					type = coastal_bunker
+					province = 4241
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = coastal_bunker
+					province = 1234
+					level = 3
+					instant_build = yes
+				}
+				set_building_level = {
+					type = bunker
 					province = 4241
 					level = 3
 					instant_build = yes
@@ -2072,7 +2425,7 @@ focus_tree = {
 			628 = {
 				set_building_level = {
 					type = air_base
-					level = 4
+					level = 6
 				}
 				set_building_level = {
 					type = coastal_bunker
@@ -2089,8 +2442,8 @@ focus_tree = {
 		x = 2
 		y = 1
 		icon = GFX_USA_heavy_public_works_spending
-		prerequisite = { focus = USA_embargo_japan }
-		relative_position_id = USA_embargo_japan
+		prerequisite = { focus = USA_islands }
+		relative_position_id = USA_islands
 		completion_reward = {
 			623 = {
 				add_building_construction = {
@@ -2118,32 +2471,32 @@ focus_tree = {
 			}
 			add_resource = {
 				type = chromium
-				amount = 30
-				state = 623
-			}
-			add_resource = {
-				type = rubber
-				amount = 15
-				state = 623
-			}
-			add_resource = {
-				type = rubber
 				amount = 10
+				state = 623
+			}
+			add_resource = {
+				type = rubber
+				amount = 5
+				state = 623
+			}
+			add_resource = {
+				type = rubber
+				amount = 5
 				state = 327
 			}
 			add_resource = {
 				type = rubber
-				amount = 10
+				amount = 5
 				state = 627
 			}
 			add_resource = {
 				type = rubber
-				amount = 10
+				amount = 5
 				state = 628
 			}
 			add_resource = {
 				type = chromium
-				amount = 10
+				amount = 5
 				state = 624
 			}
 		}
@@ -2152,11 +2505,11 @@ focus_tree = {
 		id = USA_pacific_war
 		cost = 1
 		x = 0
-		y = 1
+		y = 2
 		available = {
 			has_war_with = JAP
 		}
-		prerequisite = { focus = USA_islands }
+		prerequisite = { focus = USA_embargo_japan }
 		prerequisite = { focus = USA_philippines_1 }
 		prerequisite = { focus = USA_philippines_2 }
 		icon = GFX_USA_the_island_hopping_campaign
@@ -2446,7 +2799,7 @@ focus_tree = {
 				}
 				add_equipment_to_stockpile = {
 					type = special_equipment_1
-					amount = 1000
+					amount = 3000
 				}
 			}
 			add_resource = {
@@ -2555,6 +2908,7 @@ focus_tree = {
 				planning_skill = 4
 				logistics_skill = 4
 			} 
+			custom_effect_tooltip = USA_macarthur3_tt
 		}
 	}
 	focus = {
@@ -2719,8 +3073,8 @@ focus_tree = {
 				}
 
 			}
-			custom_effect_tooltip = USA_macarthur2_tt
-			hidden_effect = {
+			
+	
 				create_field_marshal = {
 					name = "Douglas MacArthur"
 					id =56
@@ -2732,8 +3086,9 @@ focus_tree = {
 					planning_skill = 4
 					logistics_skill = 4
 				}
-			}
+			
 			custom_effect_tooltip = USA_macarthur_tt
+			custom_effect_tooltip = USA_macarthur2_tt
 		}
 	}
 	focus = {
@@ -2802,10 +3157,37 @@ focus_tree = {
 
 		completion_reward = {
 			army_experience = 75
-			
-			swap_ideas = {
-				remove_idea = USA_the_poor_command_post
-				add_idea = USA_the_poor_command_post_2
+		
+			custom_effect_tooltip = USA_command_post_modification_intro
+			add_to_variable = { 
+				var = USA_air_doctrine_cost_factor_var 
+				value = -0.1 
+				tooltip = air_doc_tp
+			}
+			add_to_variable = { 
+				var = USA_land_doctrine_cost_factor_var 
+				value = -0.1 
+				tooltip = land_doc_tp
+			}
+			add_to_variable = { 
+				var = USA_experience_gain_army_factor_var 
+				value = 0.25
+				tooltip = army_xp_tp
+			}
+			add_to_variable = { 
+				var = USA_experience_gain_navy_factor_var 
+				value = 0.25
+				tooltip = navy_xp_tp
+			}
+			add_to_variable = { 
+				var = USA_experience_gain_air_factor_var 
+				value = 0.25
+				tooltip = air_xp_tp
+			}
+			add_to_variable = { 
+				var = USA_fuel_gain_factor_var 
+				value = 0.2 
+				tooltip = fuel_gain_tp
 			}
 		}
 	}
@@ -2868,17 +3250,20 @@ focus_tree = {
 				}
 			}
 			custom_effect_tooltip = USA_voter_support_5_tt
-			if = {
-				limit = {
-					NOT = {
-						has_dlc = "La Resistance"
-					}
-				}
-				add_ideas = office_of_strategic_services
+			
+			custom_effect_tooltip = USA_command_post_modification_intro
+			add_to_variable = { 
+				var = USA_operation_infiltrate_outcome_var 
+				value = 0.25
+				tooltip = agency_1_tt
 			}
-			else = {
-				add_ideas = office_of_strategic_services_lar
+			add_to_variable = { 
+				var = USA_boost_resistance_factor_var 
+				value = 0.25
+				tooltip = agency_2_tt
 			}
+			
+
 		}
 	}
 
@@ -2904,25 +3289,12 @@ focus_tree = {
 				}
 			}
 			custom_effect_tooltip = USA_voter_support_5_tt
-			if = {
-				limit = {
-					NOT = {
-						has_dlc = "La Resistance"
-					}
-				}
-				add_tech_bonus = {
-					name = USA_black_chamber
-					bonus = 1.0
-					uses = 2
-					category = encryption_tech
-					category = decryption_tech
-				}
-			}
-			else = {
-				swap_ideas = {
-					remove_idea = office_of_strategic_services_lar
-					add_idea = USA_black_chamber
-				}
+			
+			custom_effect_tooltip = USA_command_post_modification_intro
+			add_to_variable = { 
+				var = USA_operative_slot_var 
+				value = 1
+				tooltip = agency_3_tt
 			}
 		}
 	}
@@ -2943,7 +3315,7 @@ focus_tree = {
 		available = { 
 			OR = {
 				date > 1941.1.1
-				has_war = yes
+				has_completed_focus = USA_embargo_japan
 				
 			}
 			has_army_experience < 100
@@ -2955,9 +3327,40 @@ focus_tree = {
 		completion_reward = {
 			
 			add_ideas = unprepared_for_war
-			remove_ideas = USA_the_poor_command_post_2 
 			add_command_power = 100 
-			army_experience = 50
+			army_experience = 150
+			custom_effect_tooltip = USA_command_post_modification_intro
+			add_to_variable = { 
+				var = USA_air_doctrine_cost_factor_var 
+				value = -0.3 
+				tooltip = air_doc_tp
+			}
+			add_to_variable = { 
+				var = USA_land_doctrine_cost_factor_var 
+				value = -0.3
+				tooltip = land_doc_tp
+			}
+			add_to_variable = { 
+				var = USA_experience_gain_army_factor_var 
+				value = 0.25
+				tooltip = army_xp_tp
+			}
+			add_to_variable = { 
+				var = USA_experience_gain_navy_factor_var 
+				value = 0.25
+				tooltip = navy_xp_tp
+			}
+			add_to_variable = { 
+				var = USA_experience_gain_air_factor_var 
+				value = 0.25
+				tooltip = air_xp_tp
+			}
+			add_to_variable = { 
+				var = USA_fuel_gain_factor_var 
+				value = 0.2 
+				tooltip = fuel_gain_tp
+			}
+
 		}
 	}
 
@@ -3028,7 +3431,17 @@ focus_tree = {
 				add_logistics = 1
 				add_planning = 1 
 			}
-			add_ideas = USA_the_pentagon
+			custom_effect_tooltip = USA_command_post_modification_intro
+			add_to_variable = { 
+				var = USA_planning_speed_var 
+				value = 0.1 
+				tooltip = planning_speed_tooltip
+			}
+			add_to_variable = { 
+				var = USA_max_command_power_var 
+				value = 50
+				tooltip = command_power_tt
+			}
 
 		}
 	}
@@ -3061,44 +3474,80 @@ focus_tree = {
 		}
 		completion_reward = {
 			
-			
-
-			custom_effect_tooltip = USA_spawn_in_china_5
+		
 
 			CHI = {
 				add_opinion_modifier = { target = USA modifier = offered_support }
 				add_offsite_building = { type = arms_factory level = 4 }
 			}
 			if = {
-                limit = {
-                    check_variable = {
-                        var = global.CHI_chi_weapon_clicks
-                        value = 0 
-                        compare = less_than_or_equals
-                        
-                    }
-                }
-                set_variable = { global.CHI_chi_weapon_clicks = 5 }
-            }
-            else_if = {
-                limit = {
-                    check_variable = {
-                        var = global.CHI_chi_weapon_clicks
-                        value = 0 
-                        compare = greater_than_or_equals
-                    }
-                }
-                add_to_variable = { global.CHI_chi_weapon_clicks = 5 }
-            }
+				limit = {
+					NOT = {
+						JAP = {
+							has_war_with = CHI
+						}
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							var = global.CHI_chi_weapon_clicks
+							value = 0 
+							compare = less_than_or_equals
+							
+						}
+					}
+					set_variable = { global.CHI_chi_weapon_clicks = 5 }
+				}
+				else_if = {
+					limit = {
+						check_variable = {
+							var = global.CHI_chi_weapon_clicks
+							value = 0 
+							compare = greater_than_or_equals
+						}
+					}
+					add_to_variable = { global.CHI_chi_weapon_clicks = 5 }
+				}
+				custom_effect_tooltip = USA_spawn_in_china_5
+				add_to_variable = {
+					var = global.china_spawn_in_boost
+					value = 5
+				}
+			}
+			if = {
+				limit = {
+					JAP = {
+						has_war_with = CHI
+					}
+				}
+				custom_effect_tooltip = "Spawns 5 Juntuan units for China"
+				hidden_effect = {
+					CHI = {
+						random_owned_controlled_state  = {
+						
+							prioritize = { 
+								605	
+							}
+							
+							for_loop_effect = {
+								end = 5
+								
+								create_unit = {
+									division = "division_template = \"Juntuan\" start_experience_factor = 0.2 start_equipment_factor = 1"
+									owner = CHI
+								}
+							}
+						}
+					}
+				}
+			}
 
 			army_experience = 50
 
 	
 			
-			add_to_variable = {
-				var = global.china_spawn_in_boost
-				value = 5  
-			}
+			
 			JAP = {
 					add_to_variable = { JAP_needed_inf_equipment = 1600 }
 					add_to_variable = { JAP_needed_horse_equipment = 500 }
@@ -3137,7 +3586,7 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			custom_effect_tooltip = USA_spawn_in_china_5
+		
 			
 			CHI = {
 				add_timed_idea = { 
@@ -3148,10 +3597,7 @@ focus_tree = {
 			}
 			army_experience = 50
 			add_political_power = 50
-			add_to_variable = {
-				var = global.china_spawn_in_boost
-				value = 5  
-			}
+			
 			JAP = {
 					add_to_variable = { JAP_needed_inf_equipment = 1600 }
 					add_to_variable = { JAP_needed_horse_equipment = 500 }
@@ -3167,26 +3613,67 @@ focus_tree = {
 					add_to_variable = { JAP_needed_manpower = 32000 }
 				}
 			if = {
-                limit = {
-                    check_variable = {
-                        var = global.CHI_chi_weapon_clicks
-                        value = 0 
-                        compare = less_than_or_equals
-                        
-                    }
-                }
-                set_variable = { global.CHI_chi_weapon_clicks = 5 }
-            }
-            else_if = {
-                limit = {
-                    check_variable = {
-                        var = global.CHI_chi_weapon_clicks
-                        value = 0 
-                        compare = greater_than_or_equals
-                    }
-                }
-                add_to_variable = { global.CHI_chi_weapon_clicks = 5 }
-            }
+				limit = {
+					NOT = {
+						JAP = {
+							has_war_with = CHI
+						}
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							var = global.CHI_chi_weapon_clicks
+							value = 0 
+							compare = less_than_or_equals
+							
+						}
+					}
+					set_variable = { global.CHI_chi_weapon_clicks = 5 }
+				}
+				else_if = {
+					limit = {
+						check_variable = {
+							var = global.CHI_chi_weapon_clicks
+							value = 0 
+							compare = greater_than_or_equals
+						}
+					}
+					add_to_variable = { global.CHI_chi_weapon_clicks = 5 }
+				}
+				custom_effect_tooltip = USA_spawn_in_china_5
+				add_to_variable = {
+					var = global.china_spawn_in_boost
+					value = 5
+				}
+			}
+			if = {
+				limit = {
+					JAP = {
+						has_war_with = CHI
+					}
+				}
+				custom_effect_tooltip = "Spawns 5 Juntuan units for China"
+				hidden_effect = {
+					CHI = {
+						random_owned_controlled_state  = {
+						
+							prioritize = { 
+								605	
+							}
+							
+							for_loop_effect = {
+								end = 5
+								
+								create_unit = {
+									division = "division_template = \"Juntuan\" start_experience_factor = 0.2 start_equipment_factor = 1"
+									owner = CHI
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	}	
 
@@ -3211,7 +3698,7 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			custom_effect_tooltip = USA_spawn_in_china_10
+		
 
 			CHI = {
 				add_timed_idea = { 
@@ -3222,10 +3709,7 @@ focus_tree = {
 			}
 			army_experience = 50
 
-			add_to_variable = {
-				var = global.china_spawn_in_boost
-				value = 10
-			}
+			
 			JAP = {
 					add_to_variable = { JAP_needed_inf_equipment = 1600 }
 					add_to_variable = { JAP_needed_horse_equipment = 500 }
@@ -3241,26 +3725,67 @@ focus_tree = {
 					add_to_variable = { JAP_needed_manpower = 32000 }
 				}
 			if = {
-                limit = {
-                    check_variable = {
-                        var = global.CHI_chi_weapon_clicks
-                        value = 0 
-                        compare = less_than_or_equals
-                        
-                    }
-                }
-                set_variable = { global.CHI_chi_weapon_clicks = 10 }
-            }
-            else_if = {
-                limit = {
-                    check_variable = {
-                        var = global.CHI_chi_weapon_clicks
-                        value = 0 
-                        compare = greater_than_or_equals
-                    }
-                }
-                add_to_variable = { global.CHI_chi_weapon_clicks = 10 }
-            }
+				limit = {
+					NOT = {
+						JAP = {
+							has_war_with = CHI
+						}
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							var = global.CHI_chi_weapon_clicks
+							value = 0 
+							compare = less_than_or_equals
+							
+						}
+					}
+					set_variable = { global.CHI_chi_weapon_clicks = 10 }
+				}
+				else_if = {
+					limit = {
+						check_variable = {
+							var = global.CHI_chi_weapon_clicks
+							value = 0 
+							compare = greater_than_or_equals
+						}
+					}
+					add_to_variable = { global.CHI_chi_weapon_clicks = 10 }
+				}
+				custom_effect_tooltip = USA_spawn_in_china_10
+				add_to_variable = {
+					var = global.china_spawn_in_boost
+					value = 10
+				}
+			}
+			if = {
+				limit = {
+					JAP = {
+						has_war_with = CHI
+					}
+				}
+				custom_effect_tooltip = "Spawns 10 Juntuan units for China"
+				hidden_effect = {
+					CHI = {
+						random_owned_controlled_state  = {
+						
+							prioritize = { 
+								605	
+							}
+							
+							for_loop_effect = {
+								end = 10
+								
+								create_unit = {
+									division = "division_template = \"Juntuan\" start_experience_factor = 0.2 start_equipment_factor = 1"
+									owner = CHI
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	}	
 
@@ -3291,15 +3816,16 @@ focus_tree = {
 				}
 			}
 			custom_effect_tooltip = USA_voter_support_5_tt
-			custom_effect_tooltip = USA_spawn_in_china_5
 
-			add_stability = 0.1
-			add_political_power = 150
 
 			add_to_variable = {
-				var = global.china_spawn_in_boost
-				value = 5  
+				var = USA_stability_factor_var
+				value = 0.1
+				tooltip = stability_factor_tooltip
 			}
+			add_political_power = 150
+
+			
 			JAP = {
 					add_to_variable = { JAP_needed_inf_equipment = 1600 }
 					add_to_variable = { JAP_needed_horse_equipment = 500 }
@@ -3315,26 +3841,67 @@ focus_tree = {
 					add_to_variable = { JAP_needed_manpower = 32000 }
 				}
 			if = {
-                limit = {
-                    check_variable = {
-                        var = global.CHI_chi_weapon_clicks
-                        value = 0 
-                        compare = less_than_or_equals
-                        
-                    }
-                }
-                set_variable = { global.CHI_chi_weapon_clicks = 5 }
-            }
-            else_if = {
-                limit = {
-                    check_variable = {
-                        var = global.CHI_chi_weapon_clicks
-                        value = 0 
-                        compare = greater_than_or_equals
-                    }
-                }
-                add_to_variable = { global.CHI_chi_weapon_clicks = 5 }
-            }
+				limit = {
+					NOT = {
+						JAP = {
+							has_war_with = CHI
+						}
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							var = global.CHI_chi_weapon_clicks
+							value = 0 
+							compare = less_than_or_equals
+							
+						}
+					}
+					set_variable = { global.CHI_chi_weapon_clicks = 5 }
+				}
+				else_if = {
+					limit = {
+						check_variable = {
+							var = global.CHI_chi_weapon_clicks
+							value = 0 
+							compare = greater_than_or_equals
+						}
+					}
+					add_to_variable = { global.CHI_chi_weapon_clicks = 5 }
+				}
+				custom_effect_tooltip = USA_spawn_in_china_5
+				add_to_variable = {
+					var = global.china_spawn_in_boost
+					value = 5
+				}
+			}
+			if = {
+				limit = {
+					JAP = {
+						has_war_with = CHI
+					}
+				}
+				custom_effect_tooltip = "Spawns 5 Juntuan units for China"
+				hidden_effect = {
+					CHI = {
+						random_owned_controlled_state  = {
+						
+							prioritize = { 
+								605	
+							}
+							
+							for_loop_effect = {
+								end = 5
+								
+								create_unit = {
+									division = "division_template = \"Juntuan\" start_experience_factor = 0.2 start_equipment_factor = 1"
+									owner = CHI
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	}	
 
@@ -3363,7 +3930,7 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			custom_effect_tooltip = USA_spawn_in_china_5
+			
 
 			CHI = {
 				set_technology = { fighter_1938 = 1 }
@@ -3386,10 +3953,6 @@ focus_tree = {
 			air_experience = 50	
 			army_experience = 50
 
-			add_to_variable = {
-				var = global.china_spawn_in_boost
-				value = 5  
-			}
 			JAP = {
 					add_to_variable = { JAP_needed_inf_equipment = 1600 }
 					add_to_variable = { JAP_needed_horse_equipment = 500 }
@@ -3405,26 +3968,67 @@ focus_tree = {
 					add_to_variable = { JAP_needed_manpower = 32000 }
 				}
 			if = {
-                limit = {
-                    check_variable = {
-                        var = global.CHI_chi_weapon_clicks
-                        value = 0 
-                        compare = less_than_or_equals
-                        
-                    }
-                }
-                set_variable = { global.CHI_chi_weapon_clicks = 5 }
-            }
-            else_if = {
-                limit = {
-                    check_variable = {
-                        var = global.CHI_chi_weapon_clicks
-                        value = 0 
-                        compare = greater_than_or_equals
-                    }
-                }
-                add_to_variable = { global.CHI_chi_weapon_clicks = 5 }
-            }
+				limit = {
+					NOT = {
+						JAP = {
+							has_war_with = CHI
+						}
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							var = global.CHI_chi_weapon_clicks
+							value = 0 
+							compare = less_than_or_equals
+							
+						}
+					}
+					set_variable = { global.CHI_chi_weapon_clicks = 5 }
+				}
+				else_if = {
+					limit = {
+						check_variable = {
+							var = global.CHI_chi_weapon_clicks
+							value = 0 
+							compare = greater_than_or_equals
+						}
+					}
+					add_to_variable = { global.CHI_chi_weapon_clicks = 5 }
+				}
+				custom_effect_tooltip = USA_spawn_in_china_5
+				add_to_variable = {
+					var = global.china_spawn_in_boost
+					value = 5
+				}
+			}
+			if = {
+				limit = {
+					JAP = {
+						has_war_with = CHI
+					}
+				}
+				custom_effect_tooltip = "Spawns 5 Juntuan units for China"
+				hidden_effect = {
+					CHI = {
+						random_owned_controlled_state  = {
+						
+							prioritize = { 
+								605	
+							}
+							
+							for_loop_effect = {
+								end = 5
+								
+								create_unit = {
+									division = "division_template = \"Juntuan\" start_experience_factor = 0.2 start_equipment_factor = 1"
+									owner = CHI
+								}
+							}
+						}
+					}
+				}
+			}
 
 		}
 	}		
@@ -3450,7 +4054,7 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			custom_effect_tooltip = USA_spawn_in_china_5
+			
 
 			CHI = {
 				add_equipment_to_stockpile = { type = infantry_equipment_1 amount = 2000 producer = USA }
@@ -3461,10 +4065,7 @@ focus_tree = {
 			army_experience = 50
 			air_experience = 50
 
-			add_to_variable = {
-				var = global.china_spawn_in_boost
-				value = 5  
-			}
+		
 			JAP = {
 					add_to_variable = { JAP_needed_inf_equipment = 1600 }
 					add_to_variable = { JAP_needed_horse_equipment = 500 }
@@ -3480,26 +4081,67 @@ focus_tree = {
 					add_to_variable = { JAP_needed_manpower = 32000 }
 				}
 			if = {
-                limit = {
-                    check_variable = {
-                        var = global.CHI_chi_weapon_clicks
-                        value = 0 
-                        compare = less_than_or_equals
-                        
-                    }
-                }
-                set_variable = { global.CHI_chi_weapon_clicks = 5 }
-            }
-            else_if = {
-                limit = {
-                    check_variable = {
-                        var = global.CHI_chi_weapon_clicks
-                        value = 0 
-                        compare = greater_than_or_equals
-                    }
-                }
-                add_to_variable = { global.CHI_chi_weapon_clicks = 5 }
-            }
+				limit = {
+					NOT = {
+						JAP = {
+							has_war_with = CHI
+						}
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							var = global.CHI_chi_weapon_clicks
+							value = 0 
+							compare = less_than_or_equals
+							
+						}
+					}
+					set_variable = { global.CHI_chi_weapon_clicks = 5 }
+				}
+				else_if = {
+					limit = {
+						check_variable = {
+							var = global.CHI_chi_weapon_clicks
+							value = 0 
+							compare = greater_than_or_equals
+						}
+					}
+					add_to_variable = { global.CHI_chi_weapon_clicks = 5 }
+				}
+				custom_effect_tooltip = USA_spawn_in_china_5
+				add_to_variable = {
+					var = global.china_spawn_in_boost
+					value = 5
+				}
+			}
+			if = {
+				limit = {
+					JAP = {
+						has_war_with = CHI
+					}
+				}
+				custom_effect_tooltip = "Spawns 5 Juntuan units for China"
+				hidden_effect = {
+					CHI = {
+						random_owned_controlled_state  = {
+						
+							prioritize = { 
+								605	
+							}
+							
+							for_loop_effect = {
+								end = 5
+								
+								create_unit = {
+									division = "division_template = \"Juntuan\" start_experience_factor = 0.2 start_equipment_factor = 1"
+									owner = CHI
+								}
+							}
+						}
+					}
+				}
+			}
 
 		}
 	}		
@@ -3518,10 +4160,7 @@ focus_tree = {
 		available_if_capitulated = yes		
 		
 		available = { 
-			OR = {
-				has_global_flag = scw_over
-				date > 1939.05.15
-			}
+			
 		}
 
 		bypass = {
@@ -3618,14 +4257,10 @@ focus_tree = {
 				}
 			}
 
-			custom_effect_tooltip = USA_spawn_in_china_10
-
+			
 			army_experience = 25
 			
-			add_to_variable = {
-				var = global.china_spawn_in_boost
-				value = 10
-			}
+			
 			JAP = {
 					add_to_variable = { JAP_needed_inf_equipment = 2400 }
 					add_to_variable = { JAP_needed_horse_equipment = 750 }
@@ -3641,26 +4276,67 @@ focus_tree = {
 					add_to_variable = { JAP_needed_manpower = 48000 }
 				}
 			if = {
-                limit = {
-                    check_variable = {
-                        var = global.CHI_chi_weapon_clicks
-                        value = 0 
-                        compare = less_than_or_equals
-                        
-                    }
-                }
-                set_variable = { global.CHI_chi_weapon_clicks = 10 }
-            }
-            else_if = {
-                limit = {
-                    check_variable = {
-                        var = global.CHI_chi_weapon_clicks
-                        value = 0 
-                        compare = greater_than_or_equals
-                    }
-                }
-                add_to_variable = { global.CHI_chi_weapon_clicks = 10 }
-            }
+				limit = {
+					NOT = {
+						JAP = {
+							has_war_with = CHI
+						}
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							var = global.CHI_chi_weapon_clicks
+							value = 0 
+							compare = less_than_or_equals
+							
+						}
+					}
+					set_variable = { global.CHI_chi_weapon_clicks = 10 }
+				}
+				else_if = {
+					limit = {
+						check_variable = {
+							var = global.CHI_chi_weapon_clicks
+							value = 0 
+							compare = greater_than_or_equals
+						}
+					}
+					add_to_variable = { global.CHI_chi_weapon_clicks = 10 }
+				}
+				custom_effect_tooltip = USA_spawn_in_china_10
+				add_to_variable = {
+					var = global.china_spawn_in_boost
+					value = 10
+				}
+			}
+			if = {
+				limit = {
+					JAP = {
+						has_war_with = CHI
+					}
+				}
+				custom_effect_tooltip = "Spawns 10 Juntuan units for China"
+				hidden_effect = {
+					CHI = {
+						random_owned_controlled_state  = {
+						
+							prioritize = { 
+								605	
+							}
+							
+							for_loop_effect = {
+								end = 10
+								
+								create_unit = {
+									division = "division_template = \"Juntuan\" start_experience_factor = 0.2 start_equipment_factor = 1"
+									owner = CHI
+								}
+							}
+						}
+					}
+				}
+			}
 
 		}
 	}			
@@ -3680,18 +4356,14 @@ focus_tree = {
 		available_if_capitulated = yes		
 		
 		available = { 
-			NOT = {
-				CHI = {
-					has_war_with = JAP 
-				}
-			}
+			
 		}
 
 		bypass = {
 		}
 		
 		completion_reward = {
-			custom_effect_tooltip = USA_spawn_in_china_10
+			
 
 			army_experience = 50
 			
@@ -3702,9 +4374,68 @@ focus_tree = {
 				category = land_doctrine
 			}
 			
-			add_to_variable = {
-				var = global.china_spawn_in_boost
-				value = 10
+			
+			if = {
+				limit = {
+					NOT = {
+						JAP = {
+							has_war_with = CHI
+						}
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							var = global.CHI_chi_weapon_clicks
+							value = 0 
+							compare = less_than_or_equals
+							
+						}
+					}
+					set_variable = { global.CHI_chi_weapon_clicks = 10 }
+				}
+				else_if = {
+					limit = {
+						check_variable = {
+							var = global.CHI_chi_weapon_clicks
+							value = 0 
+							compare = greater_than_or_equals
+						}
+					}
+					add_to_variable = { global.CHI_chi_weapon_clicks = 10 }
+				}
+				custom_effect_tooltip = USA_spawn_in_china_10
+				add_to_variable = {
+					var = global.china_spawn_in_boost
+					value = 10
+				}
+			}
+			if = {
+				limit = {
+					JAP = {
+						has_war_with = CHI
+					}
+				}
+				custom_effect_tooltip = "Spawns 10 Juntuan units for China"
+				hidden_effect = {
+					CHI = {
+						random_owned_controlled_state  = {
+						
+							prioritize = { 
+								605	
+							}
+							
+							for_loop_effect = {
+								end = 10
+								
+								create_unit = {
+									division = "division_template = \"Juntuan\" start_experience_factor = 0.2 start_equipment_factor = 1"
+									owner = CHI
+								}
+							}
+						}
+					}
+				}
 			}
 			JAP = {
 					add_to_variable = { JAP_needed_inf_equipment = 2400 }
@@ -3900,7 +4631,8 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			add_ideas = USA_ONI 
+			#add_ideas = USA_ONI 
+
 			navy_experience = 25 
 			add_war_support = 0.05
 			add_to_variable = {
@@ -3913,6 +4645,17 @@ focus_tree = {
 			}
 			custom_effect_tooltip = USA_5_dock_speed_tt
 			custom_effect_tooltip = USA_enlarge_tt
+			custom_effect_tooltip = USA_command_post_modification_intro
+			add_to_variable = { 
+				var = USA_navy_intel_factor_var 
+				value = 0.15
+				tooltip = navy_intel_tt
+			}
+			add_to_variable = { 
+				var = USA_operative_slot_var 
+				value = 1
+				tooltip = agency_3_tt
+			}
 		}
 	}					
 
@@ -4193,7 +4936,7 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			add_ideas = USA_aircraft_carrier_tactics_1 
+			
 			navy_experience = 25 
 			add_to_variable = {
 				var = USA_production_speed_dockyard_factor_var
@@ -4205,6 +4948,22 @@ focus_tree = {
 			}
 			custom_effect_tooltip = USA_5_dock_speed_tt
 			custom_effect_tooltip = USA_enlarge_tt
+			custom_effect_tooltip = USA_command_post_modification_intro
+			add_to_variable = { 
+				var = USA_sortie_efficiency_var 
+				value = 0.05
+				tooltip = sortie_eff_tt
+			}
+			add_to_variable = { 
+				var = USA_naval_strike_attack_factor_var 
+				value = 0.05
+				tooltip = nav_strike_tt
+			}
+			add_to_variable = { 
+				var = USA_naval_strike_targetting_factor_var 
+				value = 0.05
+				tooltip = nav_targetting_tt
+			}
 		}
 	}
 	focus = {
@@ -4226,11 +4985,8 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			navy_experience = -50 
-			swap_ideas = {
-				remove_idea = USA_aircraft_carrier_tactics_1 
-				add_idea = USA_aircraft_carrier_tactics_2 
-			}
+			
+			
 			add_to_variable = {
 				var = USA_production_speed_dockyard_factor_var
 				value = 0.05
@@ -4241,6 +4997,22 @@ focus_tree = {
 			}
 			custom_effect_tooltip = USA_5_dock_speed_tt
 			custom_effect_tooltip = USA_enlarge_tt
+			custom_effect_tooltip = USA_command_post_modification_intro
+			add_to_variable = { 
+				var = USA_sortie_efficiency_var 
+				value = 0.05
+				tooltip = sortie_eff_tt
+			}
+			add_to_variable = { 
+				var = USA_naval_strike_attack_factor_var 
+				value = 0.05
+				tooltip = nav_strike_tt
+			}
+			add_to_variable = { 
+				var = USA_naval_strike_targetting_factor_var 
+				value = 0.05
+				tooltip = nav_targetting_tt
+			}
 		}
 	}
 	focus = {
@@ -4616,7 +5388,7 @@ focus_tree = {
 		icon = GFX_USA_improve_teething
 		prerequisite = { focus = USA_quality_and_quantity }
 		relative_position_id = USA_quality_and_quantity
-		mutually_exclusive = { focus = USA_improve_armour }
+		
 		x = -1
 		y = 2
 		cost = 5
@@ -4635,12 +5407,12 @@ focus_tree = {
 			custom_effect_tooltip = available_mio_tt
 			show_mio_tooltip = USA_army_ordnance_department_organization
 			mio:USA_army_ordnance_department_organization = {
-				add_mio_funds = 800
+				add_mio_funds = 1200
 			}
 			USA_armor_industry_level_up = yes 
 			add_tech_bonus = {
 				category = cat_medium_armor
-				uses = 2 
+				uses = 1
 				bonus = 0.75
 				name = USA_improve_teething
 			}
@@ -4652,7 +5424,7 @@ focus_tree = {
 		icon = GFX_USA_improve_armour
 		prerequisite = { focus = USA_quality_and_quantity }
 		relative_position_id = USA_quality_and_quantity
-		mutually_exclusive = { focus = USA_improve_teething }
+		
 		x = 1
 		y = 2
 		cost = 5
@@ -4671,12 +5443,12 @@ focus_tree = {
 			custom_effect_tooltip = available_mio_tt
 			show_mio_tooltip = USA_Fisher_armaments
 			mio:USA_Fisher_armaments = {
-				add_mio_funds = 800
+				add_mio_funds = 1200
 			}	
 			USA_armor_industry_level_up = yes 
 			add_tech_bonus = {
 				category = cat_heavy_armor
-				uses = 2 
+				uses = 1
 				bonus = 0.75
 				name = USA_improve_armour
 			}
@@ -4782,7 +5554,10 @@ focus_tree = {
 		}
 		
 		completion_reward = {
-			set_technology = { USA_artillery_radio_2 = 1 }
+			hidden_effect = {
+					set_technology = { USA_artillery_radio_2 = 1 }
+			}
+			
 			custom_effect_tooltip = USA_artillery_radios_2_tech_tt
 		}
 	}
@@ -4812,7 +5587,7 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			add_ideas = USA_paratrooper_school
+			
 			create_corps_commander ={
 				name="James Gavin"
 				picture = "r56_portrait_USA_james_gavin.dds"
@@ -4832,6 +5607,17 @@ focus_tree = {
 				Bonus = 0.5
 				uses = 2
 				category = support_tech
+			}
+			custom_effect_tooltip = USA_command_post_modification_intro
+			add_to_variable = { 
+				var = USA_air_paradrop_attack_factor_var 
+				value = 0.2 
+				tooltip = paradrop_attack_tt
+			}
+			add_to_variable = { 
+				var = USA_no_supply_grace_var 
+				value = 24
+				tooltip = supply_grace_tt
 			}
 		}
 	}					
@@ -4927,7 +5713,7 @@ focus_tree = {
 		}
 				
 		completion_reward = {
-			air_experience = 30
+			air_experience = 50
 			add_tech_bonus = {
 				category = heavy_air
 				category = tactical_bomber
@@ -5482,6 +6268,7 @@ focus_tree = {
 				type = annex_everything
 			}
 			hidden_effect = {
+				
 				every_state = {
 					limit={OR={state = 461 state = 462 state = 459 state = 460 state = 513 state = 118 }}
 					add_dynamic_modifier = { modifier = USA_bombardment days = 180 }
@@ -5628,6 +6415,7 @@ focus_tree = {
 			custom_effect_tooltip = "We will level the Axis defenses in Tunisia, Gabes."
 			custom_effect_tooltip = Allied_bombardment
 			custom_effect_tooltip = USA_patton_tt 
+			
 			hidden_effect = {
 				add_to_variable = {
 					var = USA_popular_support_var
@@ -5664,8 +6452,16 @@ focus_tree = {
 			every_country = {
 				limit = {
 					is_in_faction_with = ENG
+					NOT = {
+						tag = USA
+					}
 				}
 				add_stability = 0.1 
+			}
+			add_to_variable = {
+				var = USA_stability_factor_var
+				value = 0.1
+				tooltip = stability_factor_tooltip
 			}
 		}
 	}
@@ -5976,8 +6772,16 @@ focus_tree = {
 			every_country = {
 				limit = {
 					is_in_faction_with = ENG
+					NOT = {
+						tag = USA
+					}
 				}
 				add_stability = 0.1 
+			}
+			add_to_variable = {
+				var = USA_stability_factor_var
+				value = 0.1
+				tooltip = stability_factor_tooltip
 			}
 		}
 	}

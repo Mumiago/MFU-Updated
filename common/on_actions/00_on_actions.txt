@@ -1,6 +1,8 @@
 on_actions = {
 	on_daily_SOV = {
 		effect = {
+			
+			
 			if = {
 				limit = {
 					
@@ -201,9 +203,11 @@ on_actions = {
 	}
 	on_startup = {
 		effect = {
+			
 			every_country = {
 				limit = { 
 					OR ={
+						tag = ETH
 						tag = CHI
 						tag = SWE
 						tag = NOR
@@ -240,6 +244,7 @@ on_actions = {
 					is_in_faction_with = ENG
 					NOT = {
 						tag = ENG
+						tag = AST 
 					}
 					
 				}
@@ -437,18 +442,13 @@ on_actions = {
 				}
 				AST = {
 					add_offsite_building = {
-						type = arms_factory 
-						level = 2
-					}
-					add_offsite_building = {
 						type = industrial_complex
-						level = 5
+						level = 6
 					}
 					add_offsite_building = {
 						type = dockyard
 						level = 5
 					}
-					add_ideas = AST_heavy_artillery 
 				}
 				ENG = {
 					add_offsite_building = {
@@ -515,18 +515,13 @@ on_actions = {
 				}
 				AST = {
 					add_offsite_building = {
-						type = arms_factory 
-						level = 2
-					}
-					add_offsite_building = {
 						type = industrial_complex
-						level = 5
+						level = 6
 					}
 					add_offsite_building = {
 						type = dockyard
 						level = 5
 					}
-					add_ideas = AST_heavy_artillery 
 				}
 				ENG = {
 					add_offsite_building = {
@@ -714,6 +709,18 @@ on_actions = {
 				}
 				ROM = {
 					give_resource_rights = { receiver = GER state = 46 }
+				}
+			}
+
+			if = {
+				limit = { 
+					POL = { is_ai = no }
+				}
+				830 = {
+					set_building_level = {
+						type = infrastructure
+						level = 9
+					}
 				}
 			}
 			
@@ -1326,6 +1333,7 @@ on_actions = {
 					}
 				}
 			}
+		
 			if = {
 				limit = {
 					FROM = { tag = POL }
@@ -1643,30 +1651,9 @@ on_actions = {
 						is_in_faction_with = GER 
 					} 
 				}
-				ROOT = { tag = POL }
-			}
-			POL = {
-				
-				set_variable = { var = POL_air_strategic_bomber_bombing_factor value = 0 }
-			}
-		}
-		if = {
-			limit = {
-				FROM = {
-					OR = {
-						tag = GER
-						is_in_faction_with = GER 
-					} 
-				}
 				ROOT = { tag = GRE }
 			}
-			ENG = {
-				set_autonomy = {
-					target = GRE
-					autonomous_state = autonomy_puppet
-					freedom_level = 0.4
-				}
-			}
+			
 			GRE = {
 		   		transfer_navy = {
 					target = ENG
@@ -1691,6 +1678,9 @@ on_actions = {
 					transfer_state = 184
 				}
 			}
+			ENG = {
+				transfer_state = 182
+			}
 			ITA = {
 				transfer_state = 47
 				transfer_state = 185
@@ -1698,6 +1688,9 @@ on_actions = {
 			}	
 			GER = {
 				transfer_state = 731
+				transfer_state = 829
+				transfer_state = 832
+
 			}				
 			if = {
 	   			limit = {
@@ -1711,14 +1704,54 @@ on_actions = {
 			}
 			if = {
 	   			limit = {
-	   				182 = {
-						is_fully_controlled_by = GRE
-					}
+					NOT = {
+	   				    182 = {
+						    is_fully_controlled_by = ENG
+					    }
+				    }
 	   			}
-	   			ENG = {
+	   			GER = {
 					transfer_state = 182
 				}
 			}			
+		}
+		if = {
+			limit = {
+				FROM = {
+					OR = {
+						tag = SOV
+						is_in_faction_with = SOV
+					} 
+				}
+				ROOT = { tag = GER }
+				
+			}
+			every_state = {
+				limit = {		
+					is_core_of = SOV
+				}
+				remove_core_of = POL
+				
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					OR = {
+						tag = ENG
+						is_in_faction_with = ENG
+					} 
+				}
+				ROOT = { tag = GER }
+				
+			}
+			every_state = {
+				limit = {		
+					is_core_of = SOV
+				}
+				remove_core_of = POL
+				
+			}
 		}
 		if = {
 			limit = {
@@ -1741,6 +1774,7 @@ on_actions = {
 				}	
 				GER = {
 					transfer_state = 102
+					add_state_core = 102
 					transfer_state = 109	
 					transfer_state = 104
 					transfer_state = 107
@@ -1760,6 +1794,7 @@ on_actions = {
 				}	
 				GER = {
 					transfer_state = 102
+					add_state_core = 102
 					transfer_state = 109	
 					transfer_state = 104
 					transfer_state = 107
@@ -1771,6 +1806,7 @@ on_actions = {
 			}	
 			ITA = {
 				transfer_state = 187
+				add_state_core = 187
 				transfer_state = 105
 				transfer_state = 103
 			}
@@ -1889,16 +1925,11 @@ on_actions = {
 					is_ai = no
 				}
 			}
-			ENG = {
-				
-				set_autonomy = {
-					target = POL
-					autonomous_state = autonomy_puppet
-					freedom_level = 0.4
-				}
-				
-			}
+			
 			POL = {
+				set_politics = {
+					ruling_party = democratic
+				}
 				set_party_name = { 
 					ideology = democratic 
 					long_name = POL_cap_name_long
@@ -1916,9 +1947,9 @@ on_actions = {
 				}
 	            transfer_state = 830
 				transfer_state = 831
+				add_manpower = -2000000
 			}
             GER = {
-			    set_state_controller = 828
 				set_state_controller = 85
 				set_state_controller = 86
 				set_state_controller = 87
@@ -1962,7 +1993,6 @@ on_actions = {
 			    }
 		    }
             GER = {
-				transfer_state = 828
 				transfer_state = 85
 				transfer_state = 86
 				transfer_state = 87
@@ -1988,7 +2018,11 @@ on_actions = {
 			}
 			ENG = {
 				transfer_state = 830
-			}	
+				transfer_state = 831
+			}
+			830 = {
+				set_state_category = megalopolis
+			}
 		}
 		if = {
 			limit = {		
@@ -2005,7 +2039,7 @@ on_actions = {
 					set_variable = { var = super_event value = 7 }			
 				}
 				ITA = {
-					add_to_variable = { ITA_re_experience_gain_army_factor = 0.4 }
+					add_to_variable = { ITA_re_experience_gain_army_factor = 0.3 }
 				}
 				if = {
 					limit = {
@@ -2236,11 +2270,12 @@ on_actions = {
 				}
 			}
 			hidden_effect = { 
+				add_named_threat = { threat = 5 name = RepublicanVictory }
 				every_country = {
 					set_variable = { var = super_event value = 6 }			
 				}
 				ITA = {
-					add_to_variable = { ITA_re_experience_gain_army_factor = 0.4 }
+					add_to_variable = { ITA_re_experience_gain_army_factor = 0.3 }
 				}
 				if = {
 					limit = {
@@ -2712,24 +2747,6 @@ on_actions = {
 			}
 			SOV = { add_to_faction = FIN }	
 		}
-		if = {
-			limit = {
-				FROM = { tag = GER }
-				ROOT = { tag = FRA }
-				FRA = {
-					NOT = { 
-						has_completed_focus = FRA_refus_absurde
-					}
-				}
-			}	
-			
-			
-			hidden_effect = {
-				every_country = {limit = { check_variable= { speeches_enabled > 0}  }
-					scoped_sound_effect = "sp_fra_appel"
-				}
-			}
-		} 
 		if = {
 			limit = {
 				FROM = { tag = GER }
@@ -3211,6 +3228,20 @@ on_actions = {
 					ROOT = { original_tag = "JAP" }
 					FROM = { is_in_faction_with = ENG }
 				}
+				
+				FRA = {
+					transfer_state = 671
+					transfer_state = 670
+					transfer_state = 741
+					transfer_state = 286
+				}
+
+				USA = {
+					transfer_state = 647
+					transfer_state = 684
+					transfer_state = 633
+				}
+				
 
 				JAP = {
 					white_peace = ENG
@@ -3226,6 +3257,14 @@ on_actions = {
 						target = JAP
 						autonomous_state = autonomy_puppet
 						freedom_level = 0.4
+					}
+					if = {
+						limit = {
+							USA = {
+								has_country_flag = USA_alf_landon_in_charge_flag
+							}
+						}
+						remove_country_leader_trait = dislikes_japan
 					}
 					transfer_state = 526
 					transfer_state = 646
@@ -3323,6 +3362,15 @@ on_actions = {
 					transfer_state = 226
 					transfer_state = 418
 					transfer_state = 416 
+					transfer_state = 266
+				}
+
+				every_state = {
+					limit = {		
+						is_core_of = SOV
+					}
+					remove_core_of = POL
+					
 				}
 
 				if = {
@@ -3332,7 +3380,8 @@ on_actions = {
 					ROM = {
 						transfer_state = 80
 						transfer_state = 78 
-						transfer_state = 766 
+						transfer_state = 766
+						transfer_state = 192 
 					}
 					else = {
 						GER = {
@@ -3414,7 +3463,6 @@ on_actions = {
 					transfer_state = 198
 					transfer_state = 202
 					transfer_state = 193
-					transfer_state = 192
 					transfer_state = 203
 					transfer_state = 197
 					transfer_state = 225
@@ -3507,22 +3555,6 @@ on_actions = {
 				ENG = {				
 					load_oob = ENG_France_Merchant_fleet 
 					news_event = { id = news.44 }	
-					if = {
-						limit = {
-							OR = {
-								has_dlc = "Together for Victory"
-								has_dlc = "Man the Guns"
-							}
-						}
-						set_autonomy = {
-							target = FRA
-							autonomous_state = autonomy_puppet
-							freedom_level = 0.4
-						}
-						else = {
-							puppet = FRA
-						}
-					}
 				}
 						
 				# German Occupation Zone
@@ -3900,7 +3932,8 @@ on_actions = {
 					set_state_controller = 14
 					set_state_controller = 23
 					set_state_controller = 19
-					set_state_controller = 785		
+					set_state_controller = 785	
+					transfer_state = 29	
 					country_event = { days = 7 id = germany.236 }
 					country_event = { days = 7 id = germany.107 }
 				}		
@@ -3917,6 +3950,7 @@ on_actions = {
 					transfer_state = 21
 					transfer_state = 735
 					transfer_state = 32
+					transfer_state = 514
 
 					transfer_state = 677
 					transfer_state = 680
@@ -3961,6 +3995,18 @@ on_actions = {
 					28 = {
 						remove_core_of = EFR
 					}
+				}
+				553 = {	
+					set_demilitarized_zone = yes
+				}
+				677 = {	
+					set_demilitarized_zone = yes
+				}
+				554 = {	
+					set_demilitarized_zone = yes
+				}
+				680 = {	
+					set_demilitarized_zone = yes
 				}
 				set_variable = {
 					var = EFR_volunteer_soldiers
@@ -4566,9 +4612,402 @@ on_actions = {
 					FROM.FROM = {
 						state = 217
 					}
+					SOV = {
+						has_capitulated = no
+					}
 				}
 				GER = {
 					country_event = { id = germany.1001 days = 1 }
+				}	
+			}
+			if = {
+				limit = {
+					ROOT = { 
+						OR = { 
+							is_in_faction_with = SOV
+							tag = SOV
+						}
+					}
+					FROM = { 
+						OR = { 
+							is_in_faction_with = GER
+							tag = GER
+						}
+					}
+					FROM.FROM = {
+						state = 96
+					}
+					SOV = {
+						has_capitulated = no
+					}
+					POL = {
+						has_completed_focus = POL_akcja_burza
+					}
+				}
+				96 = {
+					remove_dynamic_modifier = {
+						modifier = POL_war_zone_modifier
+					}
+				}	
+			}
+			if = {
+				limit = {
+					ROOT = { 
+						OR = { 
+							is_in_faction_with = SOV
+							tag = SOV
+						}
+					}
+					FROM = { 
+						OR = { 
+							is_in_faction_with = GER
+							tag = GER
+						}
+					}
+					FROM.FROM = {
+						state = 784
+					}
+					SOV = {
+						has_capitulated = no
+					}
+					POL = {
+						has_completed_focus = POL_akcja_burza
+					}
+				}
+				784 = {
+					remove_dynamic_modifier = {
+						modifier = POL_war_zone_modifier
+					}
+				}	
+			}
+			if = {
+				limit = {
+					ROOT = { 
+						OR = { 
+							is_in_faction_with = SOV
+							tag = SOV
+						}
+					}
+					FROM = { 
+						OR = { 
+							is_in_faction_with = GER
+							tag = GER
+						}
+					}
+					FROM.FROM = {
+						state = 95
+					}
+					SOV = {
+						has_capitulated = no
+					}
+					POL = {
+						has_completed_focus = POL_akcja_burza
+					}
+				}
+				95 = {
+					remove_dynamic_modifier = {
+						modifier = POL_war_zone_modifier
+					}
+				}	
+			}
+			if = {
+				limit = {
+					ROOT = { 
+						OR = { 
+							is_in_faction_with = SOV
+							tag = SOV
+						}
+					}
+					FROM = { 
+						OR = { 
+							is_in_faction_with = GER
+							tag = GER
+						}
+					}
+					FROM.FROM = {
+						state = 94
+					}
+					SOV = {
+						has_capitulated = no
+					}
+					POL = {
+						has_completed_focus = POL_akcja_burza
+					}
+				}
+				94 = {
+					remove_dynamic_modifier = {
+						modifier = POL_war_zone_modifier
+					}
+				}	
+			}
+			if = {
+				limit = {
+					ROOT = { 
+						OR = { 
+							is_in_faction_with = SOV
+							tag = SOV
+						}
+					}
+					FROM = { 
+						OR = { 
+							is_in_faction_with = GER
+							tag = GER
+						}
+					}
+					FROM.FROM = {
+						state = 93
+					}
+					SOV = {
+						has_capitulated = no
+					}
+					POL = {
+						has_completed_focus = POL_akcja_burza
+					}
+				}
+				93 = {
+					remove_dynamic_modifier = {
+						modifier = POL_war_zone_modifier
+					}
+				}	
+			}
+			if = {
+				limit = {
+					ROOT = { 
+						OR = { 
+							is_in_faction_with = SOV
+							tag = SOV
+						}
+					}
+					FROM = { 
+						OR = { 
+							is_in_faction_with = GER
+							tag = GER
+						}
+					}
+					FROM.FROM = {
+						state = 91
+					}
+					SOV = {
+						has_capitulated = no
+					}
+					POL = {
+						has_completed_focus = POL_akcja_burza
+					}
+				}
+				91 = {
+					remove_dynamic_modifier = {
+						modifier = POL_war_zone_modifier
+					}
+				}	
+			}
+			if = {
+				limit = {
+					ROOT = { 
+						OR = { 
+							is_in_faction_with = SOV
+							tag = SOV
+						}
+					}
+					FROM = { 
+						OR = { 
+							is_in_faction_with = GER
+							tag = GER
+						}
+					}
+					FROM.FROM = {
+						state = 89
+					}
+					SOV = {
+						has_capitulated = no
+					}
+					POL = {
+						has_completed_focus = POL_akcja_burza
+					}
+				}
+				89 = {
+					remove_dynamic_modifier = {
+						modifier = POL_war_zone_modifier
+					}
+				}	
+			}
+			if = {
+				limit = {
+					ROOT = { 
+						OR = { 
+							is_in_faction_with = SOV
+							tag = SOV
+						}
+					}
+					FROM = { 
+						OR = { 
+							is_in_faction_with = GER
+							tag = GER
+						}
+					}
+					FROM.FROM = {
+						state = 827
+					}
+					SOV = {
+						has_capitulated = no
+					}
+					POL = {
+						has_completed_focus = POL_akcja_burza
+					}
+				}
+				827 = {
+					remove_dynamic_modifier = {
+						modifier = POL_war_zone_modifier
+					}
+				}	
+			}
+			if = {
+				limit = {
+					ROOT = { 
+						OR = { 
+							is_in_faction_with = SOV
+							tag = SOV
+						}
+					}
+					FROM = { 
+						OR = { 
+							is_in_faction_with = GER
+							tag = GER
+						}
+					}
+					FROM.FROM = {
+						state = 97
+					}
+					SOV = {
+						has_capitulated = no
+					}
+					POL = {
+						has_completed_focus = POL_akcja_burza
+					}
+				}
+				97 = {
+					remove_dynamic_modifier = {
+						modifier = POL_war_zone_modifier
+					}
+				}	
+			}
+			if = {
+				limit = {
+					ROOT = { 
+						OR = { 
+							is_in_faction_with = SOV
+							tag = SOV
+						}
+					}
+					FROM = { 
+						OR = { 
+							is_in_faction_with = GER
+							tag = GER
+						}
+					}
+					FROM.FROM = {
+						state = 88
+					}
+					SOV = {
+						has_capitulated = no
+					}
+					POL = {
+						has_completed_focus = POL_akcja_burza
+					}
+				}
+				88 = {
+					remove_dynamic_modifier = {
+						modifier = POL_war_zone_modifier
+					}
+				}	
+			}
+			if = {
+				limit = {
+					ROOT = { 
+						OR = { 
+							is_in_faction_with = SOV
+							tag = SOV
+						}
+					}
+					FROM = { 
+						OR = { 
+							is_in_faction_with = GER
+							tag = GER
+						}
+					}
+					FROM.FROM = {
+						state = 90
+					}
+					SOV = {
+						has_capitulated = no
+					}
+					POL = {
+						has_completed_focus = POL_akcja_burza
+					}
+				}
+				90 = {
+					remove_dynamic_modifier = {
+						modifier = POL_war_zone_modifier
+					}
+				}	
+			}
+			if = {
+				limit = {
+					ROOT = { 
+						OR = { 
+							is_in_faction_with = SOV
+							tag = SOV
+						}
+					}
+					FROM = { 
+						OR = { 
+							is_in_faction_with = GER
+							tag = GER
+						}
+					}
+					FROM.FROM = {
+						state = 92
+					}
+					SOV = {
+						has_capitulated = no
+					}
+					POL = {
+						has_completed_focus = POL_akcja_burza
+					}
+				}
+				92 = {
+					remove_dynamic_modifier = {
+						modifier = POL_war_zone_modifier
+					}
+				}	
+			}
+			if = {
+				limit = {
+					ROOT = { 
+						OR = { 
+							is_in_faction_with = SOV
+							tag = SOV
+						}
+					}
+					FROM = { 
+						OR = { 
+							is_in_faction_with = GER
+							tag = GER
+						}
+					}
+					FROM.FROM = {
+						state = 10
+					}
+					SOV = {
+						has_capitulated = no
+					}
+					POL = {
+						has_completed_focus = POL_akcja_burza
+					}
+				}
+				10 = {
+					remove_dynamic_modifier = {
+						modifier = POL_war_zone_modifier
+					}
 				}	
 			}
 		}
