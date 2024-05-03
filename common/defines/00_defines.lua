@@ -1169,7 +1169,7 @@ NMilitary = {
 	MIN_DIVISION_DEPLOYMENT_TRAINING = 0.3,			-- Min level of division training
 	
 	FRONT_MIN_PATH_TO_REDEPLOY = 4,					-- If a units path is at least this long to reach its front location, it will strategically redeploy.
-	ARMY_INITIATIVE_REINFORCE_FACTOR = 1.05,		-- scales initiative for reinforce chance
+	ARMY_INITIATIVE_REINFORCE_FACTOR = 1,		-- scales initiative for reinforce chance
 		
 	BASE_CAPTURE_EQUIPMENT_RATIO = 0.01,				-- after a successful land combat, ratio of the equipments that are being captured/salvaged from enemy's lost equipment
 
