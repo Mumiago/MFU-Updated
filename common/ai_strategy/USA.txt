@@ -31,7 +31,7 @@ USA_gang_up_GER_with_ENG = {
 	allowed = {
 		tag = USA
 	}
-	abort = { always = no }
+	abort = { always = no }					
 	enable = {
 		tag = USA
 		date > 1941.6.1
@@ -106,75 +106,6 @@ USA_ENG_launch_sync_invasions_on_europe = {
 	}
 }
 
-USA_unit_buffer_for_africa = {
-	allowed = {
-		tag = USA
-	}
-	enable = {
-		tag = USA
-		date > 1941.1.1
-		
-		should_USA_invade_europe_or_africa = yes
-		
-		all_state = {
-			OR = {
-				is_on_continent = africa
-				AND = {
-					GER = {
-						divisions_in_state = { state = PREV size < 1 }
-					}
-					ITA = {
-						divisions_in_state = { state = PREV size < 1 }
-					}
-				}
-			}
-		}
-	}
-	
-	abort_when_not_enabled = yes
-	
-	ai_strategy = {
-		type = put_unit_buffers
-		
-		order_id = 1
-		
-		# west africa
-		states = { 
-			699
-			557
-			272
-			792
-			700
-		}
-		
-		ratio = 0.1
-		
-		area = africa
-		
-		subtract_invasions_from_need = no
-		subtract_fronts_from_need = no
-	}
-	
-	ai_strategy = {
-		type = put_unit_buffers
-		
-		order_id = 1
-		
-		# south africa
-		states = {
-			541
-			681
-			719
-		}
-		
-		ratio = 0.1
-		
-		area = africa
-		
-		subtract_invasions_from_need = no
-		subtract_fronts_from_need = no
-	}
-}
 
 # USA should put some buffer units in africa and ENG to help with invasions
 USA_unit_buffer_for_europe = {
@@ -203,10 +134,11 @@ USA_unit_buffer_for_europe = {
 			128
 			129
 			338
+			123
 			122 
 		}
 		
-		ratio = 0.1
+		ratio = 0.01
 		
 		area = europe
 		
@@ -214,30 +146,7 @@ USA_unit_buffer_for_europe = {
 		subtract_fronts_from_need = no
 	}
 	
-	#ai_strategy = {
-	#	type = put_unit_buffers
-	#	
-	#	order_id = 2
-	#	
-	#	# spain
-	#	states = { 
-	#		171
-	#		180
-	#		112
-	#		179
-	#		795
-	#		169
-	#		173
-	#		167
-	#	}
-	#	
-	#	ratio = 0.4
-	#	area = europe
-	#	
-	#	subtract_invasions_from_need = no
-	#}
-	
-	ai_strategy = {
+		ai_strategy = {
 		type = put_unit_buffers
 		
 		order_id = 1
@@ -301,6 +210,12 @@ USA_industrialized = {
 		value = 300
 	}
 
+ai_strategy = {
+		type = factory_build_score_factor
+		target = 26
+		value = 300
+	}
+	
 	ai_strategy = {
 		type = factory_build_score_factor
 		target = 378
@@ -319,6 +234,12 @@ USA_industrialized = {
 		value = 300
 	}
 
+ai_strategy = {
+		type = factory_build_score_factor
+		target = 391
+		value = 300
+	}
+
 	ai_strategy = {
 		type = factory_build_score_factor
 		target = 261
@@ -328,6 +249,12 @@ USA_industrialized = {
 	ai_strategy = {
 		type = factory_build_score_factor
 		target = 375
+		value = 300
+	}
+
+	ai_strategy = {
+		type = factory_build_score_factor
+		target = 392
 		value = 300
 	}
 
@@ -346,12 +273,12 @@ USA_wants_infra = {
 		tag = USA
 	}
 	abort = {
-		date > 1939.1.1
+		date > 1939.3.3
 	}
 	ai_strategy = {
 		type = building_target
 		id = industrial_complex
-		value = 175
+		value = 190
 	}
 	ai_strategy = {
 		type = building_target
@@ -364,7 +291,7 @@ USA_wants_mils = {
 		tag = USA
 	}
 	enable = {
-		date > 1939.3.2
+		date > 1939.3.3
 	}
 
 	abort_when_not_enabled = yes
@@ -376,7 +303,7 @@ USA_wants_mils = {
 	ai_strategy = {
 		type = building_target
 		id = arms_factory
-		value = 2000
+		value = 5000
 	}
 	ai_strategy = {
 		type = building_target
@@ -397,7 +324,7 @@ USA_wants_docks = {
 	ai_strategy = {
 		type = building_target
 		id = dockyard
-		value = 10
+		value = -5000
 	}
 }
 USA_save_the_aussies = {
@@ -406,19 +333,7 @@ USA_save_the_aussies = {
 	}
 	enable = {
 		tag = USA
-		has_government = democratic
-		is_in_faction = no
-		has_war = no
 
-		JAP = {	has_war_with = AST }
-		AST = {
-			has_government = democratic			
-			surrender_progress > 0.15
-		}
-		has_opinion = {
-			target = AST
-			value > 0 # not if we hate AST
-		}
 	}
 	abort = {
 		OR = {
@@ -431,20 +346,24 @@ USA_save_the_aussies = {
 	}
 	
 	ai_strategy = {
-		type = contain
+		type = invade
+		id = "JAP"
+		value = -9999
+	}
+	ai_strategy = {
+		type = conquer
+		id = "JAP"
+		value = -9999
+	}
+	ai_strategy = {
+		type = ignore
+		id = "JAP"
+		value = 9999
+	}
+	ai_strategy = {
+		type = antagonize
 		id = "JAP"			
-		value = 200
-	}
-	
-	ai_strategy = {
-		type = protect
-		id = "AST"			
-		value = 200
-	}
-	ai_strategy = {
-		type = support
-		id = "AST"			
-		value = 100
+		value = -9999
 	}			
 }
 
@@ -464,55 +383,6 @@ USA_help_ENG = {
 	ai_strategy = { type = send_lend_lease_desire id = "ENG" value = 5000 } 
 	ai_strategy = { type = support id = "ENG" value = 5000 } 
 	ai_strategy = { type = diplo_action_desire id = "ENG" target = lend_lease value = 2000 }
-}
-
-USA_save_india = { # in the case where japan has beaten china and is moving on india we should step up
-	allowed = {
-		tag = USA
-	}
-	enable = {
-		tag = USA
-		has_government = democratic
-		is_in_faction = no
-		has_war = no
-
-		JAP = {	
-			has_war_with = RAJ 
-			NOT = { has_war_with = CHI }
-		}
-		RAJ = {
-			is_in_faction_with = ENG
-			surrender_progress > 0.15
-		}
-	}
-	abort = {
-		OR = {
-			has_war_with = RAJ
-			is_in_faction_with = JAP
-			JAP = {	
-				NOT = { has_war_with = RAJ } 
-			}
-		}
-	}
-	
-	ai_strategy = {
-		type = contain
-		id = "JAP"			
-		value = 200
-	}
-	
-	ai_strategy = {
-		type = protect
-		id = "RAJ"			
-		value = 200
-	}
-
-	ai_strategy = { 
-		type = diplo_action_desire 
-		id = "RAJ"
-		target = lend_lease 
-		value = 200
-	}
 }
 
 USA_stop_soviet_from_falling = {
@@ -562,41 +432,41 @@ USA_template_design_1 = {
 	ai_strategy = {
 		type = template_prio
 		id = light_armor
-		value = 50
+		value = -100
 	}
 
 	ai_strategy = {
 		type = template_prio
 		id = medium_armor
-		value = -10
+		value = -100
 	}
 
 	ai_strategy = {
 		type = template_prio
 		id = heavy_armor
-		value = -50
+		value = -100
 	}
 
 	ai_strategy = {
 		type = template_prio
 		id = paratroopers
-		value = -50
+		value = -100
 	}
 	
 	ai_strategy = {
 		type = template_prio
 		id = infantry
-		value = 60
+		value = 600
 	}
 	ai_strategy = {
 		type = template_prio
 		id = marines
-		value = 10
+		value = 1
 	}
 }
 
 USA_template_design_2 = {
-	abort = { always = no }
+	abort = { always = no }					
 	allowed = {
 		tag = USA
 	}
@@ -620,7 +490,7 @@ USA_template_design_2 = {
 	ai_strategy = {
 		type = template_prio
 		id = light_armor
-		value = 10
+		value = -100
 	}
 
 	ai_strategy = {
@@ -638,19 +508,19 @@ USA_template_design_2 = {
 	ai_strategy = {
 		type = template_prio
 		id = heavy_armor
-		value = -20
+		value = -100
 	}
 
 	ai_strategy = {
 		type = template_prio
 		id = paratroopers
-		value = -50
+		value = -100
 	}
 	
 	ai_strategy = {
 		type = template_prio
 		id = infantry
-		value = 40
+		value = 200
 	}
 	
 	ai_strategy = {
@@ -706,15 +576,11 @@ GER_is_bad = {
 		id = GER
 		value = 100
 	}
-	ai_strategy = {
-		type = prepare_for_war
-		id = JAP
-		value = 100
-	}
+	
 }
 
 USA_naval_role_ratios_historical = {
-	abort = { always = no }
+	abort = { always = no }					
 	allowed = {
 		tag = USA
 	}
@@ -744,7 +610,7 @@ USA_naval_role_ratios_historical = {
 	ai_strategy = {
 		type = role_ratio
 		id = naval_submarine
-		value = 25
+		value = 1
 	}
 
 	ai_strategy = {
@@ -774,13 +640,13 @@ USA_naval_role_ratios_historical = {
 	ai_strategy = {
 		type = role_ratio
 		id = naval_mine_sweeper
-		value = 15
+		value = 0
 	}
 
 	ai_strategy = {
 		type = role_ratio
 		id = naval_mine_layer
-		value = 10
+		value = 0
 	}
 
 	ai_strategy = {
@@ -870,7 +736,7 @@ USA_semper_fi = {
 }
 
 USA_home_land_is_safe = {
-	abort = { always = no }
+	abort = { always = no }					
 	allowed = {
 		tag = USA
 	}
@@ -889,7 +755,7 @@ USA_home_land_is_safe = {
 	
 	ai_strategy = {
 		type = garrison
-		value = -175
+		value = -5000
 	}
 
 	ai_strategy = {
@@ -904,52 +770,50 @@ USA_home_land_is_safe = {
 	}
 }
 
-USA_democracy_on_JAP = {
+
+
+USA_help_waters_around_GER = {
 	allowed = {
-		tag = USA
+	tag = USA
 	}
 	enable = {
 		original_tag = USA
-		has_war_with = JAP
+
+		has_war_with = GER
+
 	}
 	abort = {
-		JAP = {
+		GER = {
 			has_capitulated = yes
 		}
 	}
-
+	ai_strategy = { type = naval_mission_threshold id = "MISSION_PATROL" value = 20000 }
+	ai_strategy = { type = area_priority id = 69 value = 100 } 
+	ai_strategy = { type = area_priority id = 68 value = 100 } 
+	ai_strategy = { type = area_priority id = 29 value = 100 } 
 	ai_strategy = {
 		type = strike_force_home_base
-		id = 89 # CALI
+		id = 68 
+		
 	}
 	ai_strategy = {
 		type = strike_force_home_base
-		id = 105 # perl harbor
+		id = 69 
+		
+	}
+	
+	ai_strategy = {
+		type = strike_force_home_base
+		id = 29
+		
+	}
+	
+	ai_strategy = {
+		type = strike_force_home_base
+		id = 18 # channel
+		value = 100
 	}
 }
-
-#USA_help_waters_around_GER = {
-#	allowed = {
-#		tag = USA
-#	}
-#	enable = {
-#		original_tag = USA
-#		is_in_faction_with = ENG
-#		NOT = { has_war_with = JAP }
-#		has_war_with = GER
-#		ENG = { has_war_with = GER }
-#	}
-#	abort = {
-#		GER = {
-#			has_capitulated = yes
-#		}
-#	}
-#
-#	ai_strategy = {
-#		type = strike_force_home_base
-#		id = 18 # channel
-#	}
-#}
 
 USA_stock_up_on_trains = {
 	allowed = {
@@ -979,7 +843,7 @@ USA_onto_the_beaches = {
 
 	ai_strategy = {
 		type = naval_invasion_focus
-		value = 150
+		value = 200
 	}
 }
 
@@ -1010,37 +874,47 @@ USA_think_about_retaliation = {
 	ai_strategy = {
 		type = invade
 		id = "JAP"
+		value = -250
+	}
+	ai_strategy = {
+		type = invade
+		id = "EFR"
+		value = 250
+	}
+	ai_strategy = {
+		type = invade
+		id = "GER"
 		value = 250
 	}
 	ai_strategy = {
 		type = area_priority
 		id = home_islands
-		value = 25
+		value = -250
 	}
 	ai_strategy = {
 		type = area_priority
 		id = oceania
-		value = 30
+		value = -250
 	}
 	ai_strategy = {
 		type = area_priority
 		id = asia
-		value = 200
+		value = -250
 	}
 	ai_strategy = {
 		type = area_priority
 		id = pacific
-		value = 220
+		value = -250
 	}
 	ai_strategy = {
 		type = area_priority
 		id = just_philippines
-		value = 50
+		value = -250
 	}
 	ai_strategy = {
 		type = area_priority
 		id = east_indies
-		value = 150
+		value = -250
 	}
 	ai_strategy = {
 		type = area_priority
@@ -1053,11 +927,15 @@ USA_think_about_retaliation = {
 		id = mainland_europe
 		value = 170
 	}
-
+	ai_strategy = { type = area_priority id = normandy_landing_zone value = 100000 } 
 	ai_strategy = {
 		type = naval_invasion_supremacy_weight
 		value = 30
 	}
+	
+	subtract_fronts_from_need = no
+	subtract_invasions_from_need = no
+	
 }
 
 USA_go_time = {
@@ -1066,26 +944,20 @@ USA_go_time = {
 	}
 	enable = {
 		has_war_with = JAP
-		date > 1942.1.1
+		date > 1942.6.1
 	}
 	abort_when_not_enabled = yes
 
 	ai_strategy = {
 		type = invade
 		id = "JAP"
-		value = 200
+		value = -200
 	}
 
 	ai_strategy = {
 		type = front_unit_request
 		area = home_islands
-		value = 100
-	}
-
-	ai_strategy = {
-		type = consider_weak
-		id = "JAP"
-		value = 75
+		value = -250
 	}
 	
 	ai_strategy = {
@@ -1095,173 +967,165 @@ USA_go_time = {
 
 }
 
-USA_Defends_australia_new_zealand = {
-	allowed = {
-		tag = USA
-	}
 
+USA_ignore_scandinavia = {
+allowed = {
+		original_tag = USA
+	}
 	enable = {
-		AST = {
-			exists = yes
+		tag = USA
+		date > 1941.6.6
+	}
+	abort = {
+		date > 1943.9.9
 		}
-		is_ally_with = USA
+ai_strategy = {
+		type = area_priority
+		id = scandinavia
+		value = -9999
 	}
-
-	abort_when_not_enabled = yes
-
-	# northen territory
-	ai_strategy = {
-		type = theatre_distribution_demand_increase
-		id = 520
-		value = 10
-	}
-
-	#papua
-	ai_strategy = {
-		type = theatre_distribution_demand_increase
-		id = 523
-		value = 10
-	}
-
-	#marshall islands
-	ai_strategy = {
-		type = theatre_distribution_demand_increase
-		id = 633
-		value = 10
+ai_strategy = {
+		type = invade
+		id = "ROM"			
+		value = -9999
 	}
 }
 
-USA_end_japan_after_ger = {
+USA_dont_invade_BUL = {
 	allowed = {
 		original_tag = USA
 	}
 	enable = {
-		has_war_with = JAP
-		GER = { surrender_progress > 0.15 }
-		OR = {
-			NOT = { ITA = { has_full_control_of_state = 2 } }
-			NOT = { GER = { has_full_control_of_state = 15 } }
-			NOT = { GER = { has_full_control_of_state = 14 } }
-		}
+		tag = USA
+		date > 1936.1.1
 	}
 
-	abort_when_not_enabled = yes
+	
+	abort = { always = no }	
+	
 
 	ai_strategy = {
 		type = invade
-		id = "JAP"
-		value = 2000
+		id = "BUL"			
+		value = -9999
 	}
+
 	ai_strategy = {
-		type = area_priority
-		id = home_islands
-		value = 2000
+		type = invade
+		id = "ROM"			
+		value = -9999
+	}	
+}					  
+
+english_be_careful = {
+	allowed = {
+		
+		tag = USA
+		
 	}
-	ai_strategy = {
-		type = area_priority
-		id = asia
-		value = 2000
+	enable = {
+		tag = USA
+		date > 1936.1.1
+		
+		
 	}
+	
+			abort = { always = no }	
+		
+		
 	ai_strategy = {
-		type = area_priority
-		id = pacific
-		value = 2000
+		type = naval_avoid_region
+		id = 53
+		value = 100
 	}
+	
 	ai_strategy = {
-		type = area_priority
-		id = east_indies
-		value = 2000
+		type = naval_avoid_region
+		id = 59
+		value = 100
 	}
+	
 	ai_strategy = {
-		type = area_priority
-		id = oceania
+		type = naval_avoid_region
+		id = 173
+		value = 50
+	}
+	
+	ai_strategy = {
+		type = naval_avoid_region
+		id = 57
+		value = 100
+	}
+	
+	ai_strategy = {
+		type = naval_avoid_region
+		id = 56
+		value = 100
+	}
+	
+	ai_strategy = {
+		type = naval_avoid_region
+		id = 206
 		value = 500
 	}
+	ai_strategy = {
+		type = naval_avoid_region
+		id = 207
+		value = 500
+	}
+	ai_strategy = {
+		type = naval_avoid_region
+		id = 173
+		value = 1000
+	}
+	
+	ai_strategy = {
+		type = naval_avoid_region
+		id = 44
+		value = 100
+	}
+	
+	ai_strategy = {
+		type = naval_avoid_region
+		id = 51
+		value = 100
+	}
+	
+	ai_strategy = {
+		type = naval_avoid_region
+		id = 49
+		value = 100
+	}
+	
+	ai_strategy = {
+		type = naval_avoid_region
+		id = 43
+		value = 100
+	}
+	
+	ai_strategy = {
+		type = naval_avoid_region
+		id = 174
+		value = 100
+	}
+	
 
 	ai_strategy = {
-		type = area_priority
-		id = mainland_europe
-		value = -2000
+		type = naval_avoid_region
+		id = 61
+		value = 100
 	}
+	
+	
+
+	
 	ai_strategy = {
-		type = area_priority
-		id = europe
-		value = -2000
-	}
-}
-
-USA_buffering_in_pacific = {
-	abort = { always = no }
-	allowed = {
-		original_tag = USA
-	}
-	enable = {
-		tag = USA
+		type = theatre_distribution_demand_increase
+		id = 29
+		value = 100
 	}
 
-	ai_strategy = {
-		type = put_unit_buffers
-
-		# pacific islands
-		states = {
-			629 #Pearl Harbor
-			727 #Line Islands
-			631 #Midway
-			633 #Marshall
-			632 #Wake
-			684 #Caroline
-			645 #Iwo Jima
-			638 #Guam
-			646 #Saipan
-			639 #Gilbert
-
-			523 #Australian Papua
-		}
-
-		order_id = 1
-
-		ratio = 0.85
-
-		area = pacific
-
-		subtract_invasions_from_need = yes
-		subtract_fronts_from_need = no
-	}
-}
-
-USA_filipino = {
-	abort = { always = no }
-	allowed = {
-		original_tag = USA
-	}
-	enable = {
-		tag = USA
-	}
-
-	ai_strategy = {
-		type = put_unit_buffers
-
-		# pacific islands
-		states = {
-			629 #Pearl Harbor
-			631 #Midway
-			638 #Guam
-			632 #Wake
-
-			623 
-			327 
-			624 
-			627 
-			628 
-		}
-
-		order_id = 1
-
-		ratio = 0.3
-
-		area = pacific
-
-		subtract_invasions_from_need = yes
-		subtract_fronts_from_need = no
-	}
+	
+	
+	
 }
