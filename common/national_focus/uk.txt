@@ -168,7 +168,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = ENG_secure_the_imperial_shipping_routes
 
-		cost = 5
+		cost = 2.9
 
 		ai_will_do = {
 			factor = 1
@@ -189,11 +189,7 @@ focus_tree = {
 		completion_reward = {
 			add_timed_idea = { idea = JAP_modernize_the_fleet days = 365 }
 			navy_experience = 50
-			add_tech_bonus = {
-				uses = 2
-				bonus = 1
-				category = naval_equipment
-			}
+			
 		}
 	}
 	focus = {
@@ -226,6 +222,11 @@ focus_tree = {
 			}
 			add_to_variable = {
 				ENG_experience_gain_navy_factor_var = 0.05
+			}
+			add_tech_bonus = {
+				uses = 2
+				bonus = 0.5
+				category = naval_equipment
 			}
 		}
 	}
@@ -764,9 +765,6 @@ focus_tree = {
 				ENG_war_support_factor_var = 0.2
 			}
 			add_to_variable = {
-				ENG_political_power_factor_var = 0.1
-			}
-			add_to_variable = {
 				ENG_political_power_cost_var = -0.1
 			}
 		}
@@ -1038,7 +1036,7 @@ focus_tree = {
 			custom_effect_tooltip = ENG_appeasement_tt
 
 			add_to_variable = {
-				ENG_political_power_factor_var = 0.2
+				ENG_political_power_factor_var = 0.1
 			}
 			add_to_variable = {
 				ENG_political_power_cost_var = -0.1
@@ -1671,7 +1669,21 @@ focus_tree = {
 			custom_effect_tooltip = ENG_appeasment_civs_speed
 
 			add_to_variable = {
-				ENG_production_speed_industrial_complex_factor_var = 0.1
+				ENG_production_speed_industrial_complex_factor_var = 0.15
+			}
+			random_owned_state = {
+				limit = {
+						is_core_of = ENG  
+						NOT = {
+						state = 118
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex 
+					level = 2
+					instant_build = yes 
+				}
 			}
 		}
 	}
@@ -1709,7 +1721,7 @@ focus_tree = {
 		relative_position_id = ENG_start_rearmament
 		x = -1
 		y = 1
-		cost = 5
+		cost = 2.9
 		completion_reward = {
 			custom_effect_tooltip = ENG_rearmament_tt
 			unlock_decision_tooltip = ENG_long_term_rearmament
@@ -1725,7 +1737,7 @@ focus_tree = {
 		relative_position_id = ENG_start_rearmament
 		x = 1
 		y = 1
-		cost = 5
+		cost = 2.9
 		completion_reward = {
 			custom_effect_tooltip = ENG_rearmament_tt
 			unlock_decision_tooltip = ENG_short_term_rearmament
@@ -2159,13 +2171,7 @@ focus_tree = {
 			}
 			add_tech_bonus = {
 				name = fighter_command_focus
-				bonus = 0.5
-				uses = 1
-				category = light_fighter
-			}
-			add_tech_bonus = {
-				name = fighter_command_focus
-				bonus = 0.5
+				bonus = 0.75
 				uses = 1
 				category = light_fighter
 			}
@@ -2472,11 +2478,84 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = ENG_royal_ordinance_factories
+		id = ENG_artillery_focus
+		icon = GFX_arty
 		prerequisite = { focus = uk_small_arms_focus }
-		relative_position_id = uk_small_arms_focus
-		icon = GFX_ordnance
 		x = 0
+		y = 1
+		cost = 5
+		available_if_capitulated = yes
+		relative_position_id = uk_small_arms_focus
+		available = {
+				
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			army_experience = 50
+			add_tech_bonus = {
+				name = ENG_artillery_focus
+				bonus = 0.5
+				uses = 2
+				category = artillery
+			}
+			add_tech_bonus = {
+				name = ENG_artillery_focus
+				bonus = 0.5
+				uses = 1
+				category = cat_anti_tank
+			}
+			add_tech_bonus = {
+				name = ENG_artillery_focus
+				bonus = 1
+				ahead_reduction = 1
+				uses = 1
+				technology = antitank6_1
+			}
+		}
+	}
+	
+	focus = {
+		id = ENG_infantry_tank
+		icon = GFX_matilda
+		prerequisite = { focus = uk_small_arms_focus }
+		x = -2
+		y = 1
+		cost = 5
+		available_if_capitulated = yes
+		relative_position_id = uk_small_arms_focus
+
+		available = {
+				
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			army_experience = 40
+			custom_effect_tooltip = ENG_form_tank_board_tt
+			add_to_variable = {
+				ENG_army_armor_attack_factor_var = 0.05
+			}
+			add_to_variable = {
+				ENG_army_armor_defence_factor_var = 0.05
+			}
+			add_tech_bonus = {
+				category = cat_heavy_armor
+				uses = 2
+				bonus = 0.9
+				name = GER_mobile_fortresses 
+			}
+	
+		}
+	}
+	focus = {
+		id = ENG_royal_ordinance_factories
+		prerequisite = { focus = ENG_infantry_tank focus = ENG_artillery_focus }
+		relative_position_id = ENG_infantry_tank
+		icon = GFX_ordnance
+		x = 1
 		y = 1
 
 		cost = 5
@@ -2535,13 +2614,12 @@ focus_tree = {
 				}
 			}
 		}
-
 	focus = {
 		id = ENG_motorized_focus
-		prerequisite = { focus = uk_small_arms_focus }
-		relative_position_id = uk_small_arms_focus
+		prerequisite = { focus = ENG_infantry_tank }
+		relative_position_id = ENG_infantry_tank
 		icon = GFX_mot
-		x = -2
+		x = -1
 		y = 1
 		cost = 5
 		ai_will_do = {
@@ -2571,49 +2649,12 @@ focus_tree = {
 				}
 		}
 	}
-	focus = {
-		id = ENG_artillery_focus
-		icon = GFX_arty
-		prerequisite = { focus = ENG_motorized_focus }
-		x = -1
-		y = 1
-		cost = 5
-		available_if_capitulated = yes
-		relative_position_id = ENG_motorized_focus
-		available = {
-				
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			army_experience = 50
-			add_tech_bonus = {
-				name = ENG_artillery_focus
-				bonus = 0.5
-				uses = 2
-				category = artillery
-			}
-			add_tech_bonus = {
-				name = ENG_artillery_focus
-				bonus = 0.5
-				uses = 1
-				category = cat_anti_tank
-			}
-			add_tech_bonus = {
-				name = ENG_artillery_focus
-				bonus = 1
-				ahead_reduction = 1
-				uses = 1
-				technology = antitank6_1
-			}
-		}
-	}
+	
 	focus = {
 		id = ENG_special_forces
 		icon = GFX_ENG_special_forces
-		prerequisite = { focus = ENG_artillery_focus focus= ENG_infantry_tank}
-		relative_position_id = ENG_artillery_focus
+		prerequisite = { focus = ENG_motorized_focus focus= ENG_royal_ordinance_factories}
+		relative_position_id = ENG_motorized_focus
 		x = 1
 		y = 1
 		cost = 5
@@ -2652,80 +2693,21 @@ focus_tree = {
 			}
 		}
 	}
-	focus = {
-		id = ENG_infantry_tank
-		icon = GFX_matilda
-		prerequisite = { focus = ENG_motorized_focus focus = ENG_royal_ordinance_factories }
-		x = 1
-		y = 1
-		cost = 5
-		available_if_capitulated = yes
-		relative_position_id = ENG_motorized_focus
-
-		available = {
-				
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			army_experience = 40
-			custom_effect_tooltip = ENG_form_tank_board_tt
-			add_to_variable = {
-				ENG_army_armor_attack_factor_var = 0.05
-			}
-			add_to_variable = {
-				ENG_army_armor_defence_factor_var = 0.05
-			}
-			add_tech_bonus = {
-				category = cat_heavy_armor
-				uses = 2
-				bonus = 0.9
-				name = GER_mobile_fortresses 
-			}
 	
-		}
-	}
 	
-	focus = {
-		id = ENG_form_mobile_forces
-		prerequisite = { focus = uk_small_arms_focus }
-		relative_position_id = uk_small_arms_focus
-		icon = GFX_mobile_forces
-		x = 2
-		y = 1
-		cost = 5
-		ai_will_do = {
-			factor = 1
-		}
-
-		available = {
-			controls_state = 446
-				
-		}	
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			army_experience = 40
-
-			custom_effect_tooltip = ENG_tank_spawn_in
-			country_event = { id = britain.50 }
-			
-		}
-	}
+	
 
 	
 
 	focus = {
 		id = ENG_cruiser_tank
 		icon = GFX_crusader
-		prerequisite = { focus = ENG_form_mobile_forces focus = ENG_royal_ordinance_factories }
-		x = -1
+		prerequisite = { focus = uk_small_arms_focus }
+		x = 2
 		y = 1
 		cost = 5
 		available_if_capitulated = yes
-		relative_position_id =  ENG_form_mobile_forces
+		relative_position_id =  uk_small_arms_focus
 
 		available = {
 				
@@ -2759,12 +2741,39 @@ focus_tree = {
 			}
 		}
 	}
+	focus = {
+		id = ENG_form_mobile_forces
+		prerequisite = { focus = ENG_cruiser_tank  focus = ENG_artillery_focus }
+		relative_position_id = ENG_cruiser_tank
+		icon = GFX_mobile_forces
+		x = -1
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			controls_state = 446
+				
+		}	
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			army_experience = 40
+
+			custom_effect_tooltip = ENG_tank_spawn_in
+			country_event = { id = britain.50 }
+			
+		}
+	}
 
 
 	focus = {
 		id = ENG_machine_gun_carrier
-		prerequisite = { focus = ENG_form_mobile_forces}
-		relative_position_id = ENG_form_mobile_forces
+		prerequisite = { focus = ENG_cruiser_tank}
+		relative_position_id = ENG_cruiser_tank
 		icon = GFX_universal
 		x = 1
 		y = 1
@@ -2795,7 +2804,7 @@ focus_tree = {
 ####should give percy hobbart as tank expert	
 	focus = {
 		id = ENG_support_tanks 
-		prerequisite = { focus = ENG_machine_gun_carrier focus = ENG_cruiser_tank}
+		prerequisite = { focus = ENG_machine_gun_carrier focus = ENG_form_mobile_forces }
 		relative_position_id = ENG_machine_gun_carrier
 		icon = GFX_hobart
 		x = -1
@@ -2822,7 +2831,7 @@ focus_tree = {
 				technology = fording_equipment_eng
 			}
 			add_tech_bonus = {
-				bonus = 0.5
+				bonus = 9.99
 				uses = 2
 				technology = support_gun2
 				technology = tech_flamer
@@ -2834,14 +2843,14 @@ focus_tree = {
 
 	focus = {
 		id = ENG_form_tank_board
-		prerequisite = { focus = ENG_infantry_tank }
-		prerequisite = { focus = ENG_cruiser_tank }
+		
+		prerequisite = { focus = ENG_form_mobile_forces  focus = ENG_royal_ordinance_factories }
 		continue_if_invalid = yes
 
 		icon = GFX_tank_board
 		x = 0
 		y = 2
-		relative_position_id = ENG_royal_ordinance_factories
+		relative_position_id = ENG_artillery_focus
 		cost = 5
 		ai_will_do = {
 			factor = 1
