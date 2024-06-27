@@ -1134,8 +1134,8 @@ focus_tree = {
 	}
 
 	focus = {
-		id = JAP_send_japanese_investors
-		icon = GFX_goal_generic_business_bills
+		id = JAP_new_mantetsu_subsidiaries
+		icon = GFX_smr
 		prerequisite = { focus = JAP_the_manchurian_project }
 		x = 2
 		y = 1
@@ -1148,7 +1148,7 @@ focus_tree = {
 		}
 
 		available = {
-			NOT = { has_war_with = JAP }
+			MAN = { is_subject_of = ROOT }
 		}
 
 		bypass = {
@@ -1160,7 +1160,7 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			show_ideas_tooltip = MAN_yoshisuke_ayu
+			custom_effect_tooltip = JAP_manchukuo
 			328 = {
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
@@ -1173,13 +1173,14 @@ focus_tree = {
 		}
 	}
 
+##aa to protect the steelworks from air raids
 	focus = {
 		id = JAP_expand_the_showa_steel_works
-		icon = GFX_focus_generic_steel
-		prerequisite = { focus = JAP_send_japanese_investors }
-		x = 2
-		y = 2
-		relative_position_id = JAP_the_manchurian_project
+		icon = GFX_showa_steel
+		prerequisite = { focus = JAP_new_mantetsu_subsidiaries }
+		x = 0
+		y = 1
+		relative_position_id = JAP_new_mantetsu_subsidiaries
 
 		cost = 5
 
@@ -1202,6 +1203,7 @@ focus_tree = {
 
 
 		completion_reward = {
+			custom_effect_tooltip = JAP_manchukuo
 			716 = {
 				if = {
 					limit = {
@@ -1223,14 +1225,19 @@ focus_tree = {
 					level = 3
 					instant_build = yes
 				}
+				add_building_construction = {
+					type = anti_air_building
+					level = 3
+					instant_build = yes
+				}
 			}
 		}
 	}
 
 
 	focus = {
-		id = JAP_invite_japanese_settlers
-		icon = GFX_goal_generic_citizens
+		id = JAP_found_mangyo
+		icon = GFX_mangyo
 		prerequisite = { focus = JAP_the_manchurian_project }
 		x = -2
 		y = 1
@@ -1256,33 +1263,32 @@ focus_tree = {
 
 
 		completion_reward = {
+			custom_effect_tooltip = JAP_manchukuo		
+			show_ideas_tooltip = MAN_yoshisuke_ayu
 			715 = {
-				add_manpower = 25417
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
 					level = 1
 					instant_build = yes
 				}
-				set_state_flag = MAN_invite_japanese_settlers_2IC
 			}
 			714 = {
-				add_manpower = 33846
+
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
 					level = 2
 					instant_build = yes
 				}
-				set_state_flag = MAN_invite_japanese_settlers_2IC
 			}
 		}
 	}
 
 	focus = {
-		id = JAP_expand_manchurian_railways
-		icon = GFX_focus_SOV_south_manchuria_railway
-		prerequisite = { focus = JAP_invite_japanese_settlers }
+		id = JAP_rapid_development_of_strategic_industries
+		icon = GFX_sstrategic_industries
+		prerequisite = { focus = JAP_found_mangyo }
 		x = -2
 		y = 2
 		relative_position_id = JAP_the_manchurian_project
@@ -1306,25 +1312,16 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			every_state = {
-				limit = {
-					is_core_of = MAN 
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes 
-				}
-			}
+			custom_effect_tooltip = JAP_manchukuo
 		}
 	}
 
 	focus = {
-		id = JAP_light_industry_development
-		icon = GFX_goal_generic_land_seizure
+		id = JAP_focus_investments_on_machine_building
+		icon = GFX_invest_machines
 
-		prerequisite = { focus = JAP_the_manchurian_project }
-
+		prerequisite = { focus = JAP_rapid_development_of_strategic_industries } 
+		
 		x = -1
 		y = 3
 		relative_position_id = JAP_the_manchurian_project
@@ -1349,7 +1346,7 @@ focus_tree = {
 		}
 
 		mutually_exclusive = {
-			focus = JAP_Steal
+			focus = JAP_focus_investments_on_resource_extraction
 		}
 
 		bypass = {
@@ -1362,6 +1359,14 @@ focus_tree = {
 
 
 		completion_reward = {
+			MAN = {
+				add_tech_bonus = {
+					category = industry
+					bonus = 1
+					uses = 1
+					name = JAP_dowa_automobile_company
+				}
+			}
 			715 = {
 				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
@@ -1374,14 +1379,14 @@ focus_tree = {
 	}
 
 	focus = {
-		id = JAP_heavy_industry_development
-		icon = GFX_munitions_factories
-		prerequisite = { focus = JAP_invite_japanese_settlers }
+		id = JAP_factories_along_transport_routes
+		icon = GFX_factories_along_routes
+		prerequisite = { focus = JAP_rapid_development_of_strategic_industries }
 
 
 		x = -1
 		y = 2
-		relative_position_id = JAP_invite_japanese_settlers
+		relative_position_id = JAP_found_mangyo
 
 		cost = 5
 
@@ -1406,6 +1411,17 @@ focus_tree = {
 
 
 		completion_reward = {
+			custom_effect_tooltip = JAP_manchukuo
+			every_state = {
+				limit = {
+					is_core_of = MAN 
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes 
+				}
+			}
 			716 = {
 				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
@@ -1414,25 +1430,18 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
-			MAN = {
-				add_tech_bonus = {
-					category = industry
-					bonus = 1
-					uses = 1
-					name = JAP_heavy_industry_development
-				}
-			}
+
 		}
 	}
 
 	focus = {
-		id = JAP_csg
-		icon = GFX_goal_generic_consumer_goods
-		prerequisite = { focus = JAP_light_industry_development }
+		id = JAP_dowa_automobile_company
+		icon = GFX_Dowa_Automobile_Company
+		prerequisite = { focus = JAP_focus_investments_on_machine_building }
 
 		x = 0
 		y = 1
-		relative_position_id = JAP_light_industry_development
+		relative_position_id = JAP_focus_investments_on_machine_building
 
 		cost = 5
 
@@ -1462,10 +1471,10 @@ focus_tree = {
 			}
 		}
 	}
-
+###icon japan flag struk on manchu
 	focus = {
-		id = JAP_japanese_settlement
-		icon = GFX_metropolis_projects
+		id = JAP_jap_settlement
+		icon = GFX_japanese_settlement
 		prerequisite = { focus = JAP_the_manchurian_project }
 
 		x = 0
@@ -1498,13 +1507,14 @@ focus_tree = {
 
 
 		completion_reward = {
+			MAN = {every_owned_state = {
+				add_manpower = 34721
+			}
 			715 = { add_extra_state_shared_building_slots = 5 }
 			610 = { add_extra_state_shared_building_slots = 5 }
 			328 = { add_extra_state_shared_building_slots = 5 }
 
-			MAN = {every_owned_state = {
-				add_manpower = 34721
-			}
+
 
 			716 = {
 				add_extra_state_shared_building_slots = 1
@@ -1518,9 +1528,9 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = JAP_Steal
-		icon = GFX_focus_hol_the_foundations_of_defense
-		prerequisite = { focus = JAP_the_manchurian_project }
+		id = JAP_focus_investments_on_resource_extraction
+		icon = GFX_invest_excav
+		prerequisite = { focus = JAP_expand_the_showa_steel_works }
 
 
 
@@ -1548,7 +1558,7 @@ focus_tree = {
 		}
 
 		mutually_exclusive = {
-			focus = JAP_light_industry_development
+			focus = JAP_focus_investments_on_machine_building
 		}
 
 		bypass = {
@@ -1561,7 +1571,9 @@ focus_tree = {
 
 
 		completion_reward = {
-
+			MAN={
+				add_ideas = JAP_miners
+			}
 				give_resource_rights = {
 					receiver = JAP
 					state = 761
@@ -1577,14 +1589,14 @@ focus_tree = {
 	}
 
 	focus = {
-		id = JAP_take
-		icon = GFX_goal_generic_construct_civilian
-		prerequisite = { focus = JAP_Steal }
+		id = JAP_exploit_iron_and_coal_of_mengjiang
+		icon = GFX_mengjiang_mining
+		prerequisite = { focus = JAP_focus_investments_on_resource_extraction }
 
 
 		x = 0
 		y = 1
-		relative_position_id = JAP_Steal
+		relative_position_id = JAP_focus_investments_on_resource_extraction
 
 		cost = 5
 
@@ -1625,9 +1637,9 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = JAP_resource_man
-		icon = GFX_goal_generic_mining_iron
-		prerequisite = { focus = JAP_send_japanese_investors }
+		id = JAP_japanese_settlement
+		icon = GFX_metropolis_projects
+		prerequisite = { focus = JAP_expand_the_showa_steel_works }
 
 
 		x = 1
@@ -1657,9 +1669,7 @@ focus_tree = {
 
 
 		completion_reward = {
-			MAN={
-				add_ideas = JAP_miners
-			}
+
 		}
 	}
 
@@ -3105,11 +3115,11 @@ focus_tree = {
 		id = JAP_co_prosperity_sphere
 		icon = GFX_JAP_r56_goal_JAP_co_prosperity_sphere
 		prerequisite = { focus = JAP_intervene_in_china}
-		prerequisite = { focus = JAP_japanese_settlement}
+		prerequisite = { focus = JAP_jap_settlement}
 		prerequisite = { focus = JAP_national_mobilization_law}
 		x = 0
 		y = 4
-		relative_position_id = JAP_japanese_settlement
+		relative_position_id = JAP_jap_settlement
 
 		cost = 7.16
 
