@@ -1,5 +1,858 @@
 #Category only allowed for CHI
 
+CHI_roads_of_life = {
+	CHI_purchase_german_equipment = {
+
+		icon = generic_prepare_civil_war
+
+		available = {
+			date < 1939.1.1
+			NOT = {
+				has_idea = CHI_hyper_inflation_5
+			}	
+		}
+
+		visible = {
+			date < 1939.1.1
+
+			
+		}
+		ai_will_do = {
+			factor = 12
+			
+		}
+		fire_only_once = no
+
+		days_remove = 90
+		days_re_enable = 1
+
+		complete_effect = {
+			CHI_hyper_inflation_level_up = yes
+			
+		}
+		
+		remove_effect = {
+			
+			
+			CHI = {
+				add_equipment_to_stockpile = { type = infantry_equipment_1 amount = 5500 producer = GER }
+				add_equipment_to_stockpile = { type = horse_equipment amount = 1500 producer = GER }
+				add_equipment_to_stockpile = { type = artillery_equipment_1 amount = 250 producer = GER }
+				add_equipment_to_stockpile = { type = support_equipment amount = 250 producer = GER }
+				add_equipment_to_stockpile = { type = radio_equipment amount = 200 producer = GER }
+				add_equipment_to_stockpile = { type = anti_air_equipment_1 amount = 60 producer = GER }
+				add_equipment_to_stockpile = { type = motorized_equipment amount = 200 producer = GER }
+				add_equipment_to_stockpile = { type = light_tank_chassis_1936 amount = 100	 producer = CHI }
+			}
+			GER = {
+				add_offsite_building = {
+					type = industrial_complex
+					level = 1
+				}
+			}
+		}
+	}
+	CHI_overseas_imports_placeholder = {
+
+		icon = ger_military_buildup
+
+		available = {
+			always = no 
+			
+		}
+		
+
+		visible = {
+			has_completed_focus = CHI_approach_the_allies
+			has_country_flag = CHI_informed_about_losing_port_lend_lease_flag
+
+			
+		}
+		ai_will_do = {
+			factor = 12
+			
+		}
+		fire_only_once = no
+
+		days_remove = 90
+		days_re_enable = 1
+		complete_effect = {
+			custom_effect_tooltip = CHI_how_to_restart_overseas_aid_tt
+			
+		}
+		
+		remove_effect = {
+			
+			
+		}
+	}
+	CHI_overseas_imports_decision = {
+
+		icon = ger_military_buildup
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = CHI_has_to_control_coast_tt2
+				NOT = {
+					any_core_state = {
+						NOT = {
+							state = 609
+							state = 610
+							state = 716
+							state = 745
+							state = 608
+							state = 614
+							state = 597
+							state = 743
+							state = 598
+						}
+						is_fully_controlled_by = CHI
+						any_province_building_level = {
+							province = {
+								all_provinces = yes
+								limit_to_naval_base = yes
+							}
+							building = naval_base
+							level > 4
+						}
+					}
+
+				}
+			}
+		}
+		
+		activation = {
+			has_completed_focus = CHI_approach_the_allies
+			any_core_state = {
+				NOT = {
+					state = 609
+					state = 610
+					state = 716
+					state = 745
+					state = 608
+					state = 614
+					state = 597
+					state = 743
+					state = 598
+				}
+				is_fully_controlled_by = CHI
+				any_province_building_level = {
+					province = {
+						all_provinces = yes
+						limit_to_naval_base = yes
+					}
+					building = naval_base
+					level > 4
+				}
+			}		
+		}
+
+		visible = {
+			tag = CHI
+		}
+		ai_will_do = {
+			factor = 100
+			
+		}
+		fire_only_once = no
+		days_mission_timeout = 120
+		selectable_mission = no
+		is_good = yes
+		complete_effect = {
+			country_event = { id = china.207 }
+		}
+		timeout_effect = {
+			custom_effect_tooltip = CHI_more_coastal_state_is_more_tt
+
+			hidden_effect = {
+				if = {
+					limit = {
+						any_core_state = {
+							NOT = {
+								state = 609
+								state = 610
+								state = 716
+								state = 745
+								state = 608
+								state = 614
+								state = 597
+								state = 743
+								state = 598
+							}
+							is_fully_controlled_by = CHI
+							any_province_building_level = {
+								province = {
+									all_provinces = yes
+									limit_to_naval_base = yes
+								}
+								building = naval_base
+								level > 4
+							}
+						}
+					}
+					activate_mission = CHI_overseas_imports_decision
+				}
+				
+			}
+			CHI = {
+				set_temp_variable = {
+					var = CHI_coastal_state_counter_var 
+					value = 0
+				}
+
+			}
+			if = {
+				limit = {
+					613 = {
+						is_fully_controlled_by = CHI 
+						naval_base > 4
+					}
+				}
+				add_to_temp_variable = {
+					var = CHI_coastal_state_counter_var 
+					value = 1
+				}
+			}
+			if = {
+				limit = {
+					596 = {
+						is_fully_controlled_by = CHI 
+						naval_base > 4
+					}
+				}
+				add_to_temp_variable = {
+					var = CHI_coastal_state_counter_var 
+					value = 1
+				}
+			}
+			if = {
+				limit = {
+					595 = {
+						is_fully_controlled_by = CHI 
+						naval_base > 4
+					}
+				}
+				add_to_temp_variable = {
+					var = CHI_coastal_state_counter_var 
+					value = 1
+				}
+			}
+			if = {
+				limit = {
+					822 = {
+						is_fully_controlled_by = CHI 
+						naval_base > 4
+					}
+				}
+				add_to_temp_variable = {
+					var = CHI_coastal_state_counter_var 
+					value = 1
+				}
+			}
+			if = {
+				limit = {
+					593 = {
+						is_fully_controlled_by = CHI 
+						naval_base > 4
+					}
+				}
+				add_to_temp_variable = {
+					var = CHI_coastal_state_counter_var 
+					value = 1
+				}
+			}
+			if = {
+				limit = {
+					592 = {
+						is_fully_controlled_by = CHI 
+						naval_base > 4
+					}
+				}
+				add_to_temp_variable = {
+					var = CHI_coastal_state_counter_var 
+					value = 1
+				}
+			}
+			if = {
+				limit = {
+					594 = {
+						is_fully_controlled_by = CHI 
+						naval_base > 4
+					}
+				}
+				add_to_temp_variable = {
+					var = CHI_coastal_state_counter_var 
+					value = 1
+				}
+			}
+			if = {
+				limit = {
+					591 = {
+						is_fully_controlled_by = CHI 
+						naval_base > 4
+					}
+				}
+				add_to_temp_variable = {
+					var = CHI_coastal_state_counter_var 
+					value = 1
+				}
+			}
+			if = {
+				limit = {
+					check_variable = {
+						var = CHI_coastal_state_counter_var
+						value = 8
+						compare = greater_than_or_equals
+					}
+				}
+				CHI = {
+					add_equipment_to_stockpile = { type = infantry_equipment amount = 10000 producer = USA }
+					add_equipment_to_stockpile = { type = horse_equipment amount = 900 producer = USA }
+					add_equipment_to_stockpile = { type = artillery_equipment amount = 150 producer = USA }
+					add_equipment_to_stockpile = { type = support_equipment amount = 150 producer = USA }
+					add_equipment_to_stockpile = { type = motorized_equipment amount = 100 producer = USA }
+					add_equipment_to_stockpile = { type = radio_equipment amount = 60 producer = USA }
+					add_equipment_to_stockpile = { type = anti_air_equipment_1 amount = 30 producer = USA }
+				}
+				custom_effect_tooltip = CHI_modify_industry_spriti_intro
+				add_to_variable = { 
+					var = CHI_research_speed_factor_var 
+					value = 0.005
+					tooltip = research_speed_factor_tooltip
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						var = CHI_coastal_state_counter_var
+						value = 7
+						compare = greater_than_or_equals
+					}
+				}
+				CHI = {
+					add_equipment_to_stockpile = { type = infantry_equipment amount = 9000 producer = USA }
+					add_equipment_to_stockpile = { type = horse_equipment amount = 900 producer = USA }
+					add_equipment_to_stockpile = { type = artillery_equipment amount = 150 producer = USA }
+					add_equipment_to_stockpile = { type = support_equipment amount = 150 producer = USA }
+					add_equipment_to_stockpile = { type = motorized_equipment amount = 100 producer = USA }
+					add_equipment_to_stockpile = { type = radio_equipment amount = 60 producer = USA }
+					add_equipment_to_stockpile = { type = anti_air_equipment_1 amount = 30 producer = USA }
+				}
+				custom_effect_tooltip = CHI_modify_industry_spriti_intro
+				add_to_variable = { 
+					var = CHI_research_speed_factor_var 
+					value = 0.005
+					tooltip = research_speed_factor_tooltip
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						var = CHI_coastal_state_counter_var
+						value = 6
+						compare = greater_than_or_equals
+					}
+				}
+				CHI = {
+					add_equipment_to_stockpile = { type = infantry_equipment amount = 8000 producer = USA }
+					add_equipment_to_stockpile = { type = horse_equipment amount = 900 producer = USA }
+					add_equipment_to_stockpile = { type = artillery_equipment amount = 150 producer = USA }
+					add_equipment_to_stockpile = { type = support_equipment amount = 150 producer = USA }
+					add_equipment_to_stockpile = { type = motorized_equipment amount = 100 producer = USA }
+					add_equipment_to_stockpile = { type = radio_equipment amount = 60 producer = USA }
+					add_equipment_to_stockpile = { type = anti_air_equipment_1 amount = 30 producer = USA }
+				}
+				custom_effect_tooltip = CHI_modify_industry_spriti_intro
+				add_to_variable = { 
+					var = CHI_research_speed_factor_var 
+					value = 0.005
+					tooltip = research_speed_factor_tooltip
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						var = CHI_coastal_state_counter_var
+						value = 5
+						compare = greater_than_or_equals
+					}
+				}
+				CHI = {
+					add_equipment_to_stockpile = { type = infantry_equipment amount = 7000 producer = USA }
+					add_equipment_to_stockpile = { type = horse_equipment amount = 900 producer = USA }
+					add_equipment_to_stockpile = { type = artillery_equipment amount = 150 producer = USA }
+					add_equipment_to_stockpile = { type = support_equipment amount = 150 producer = USA }
+					add_equipment_to_stockpile = { type = motorized_equipment amount = 100 producer = USA }
+					add_equipment_to_stockpile = { type = radio_equipment amount = 60 producer = USA }
+					add_equipment_to_stockpile = { type = anti_air_equipment_1 amount = 30 producer = USA }
+				}
+				custom_effect_tooltip = CHI_modify_industry_spriti_intro
+				add_to_variable = { 
+					var = CHI_research_speed_factor_var 
+					value = 0.005
+					tooltip = research_speed_factor_tooltip
+				}
+			}
+
+			else_if = {
+				limit = {
+					check_variable = {
+						var = CHI_coastal_state_counter_var
+						value = 4
+						compare = greater_than_or_equals
+					}
+				}
+				CHI = {
+					add_equipment_to_stockpile = { type = infantry_equipment amount = 6000 producer = USA }
+					add_equipment_to_stockpile = { type = horse_equipment amount = 900 producer = USA }
+					add_equipment_to_stockpile = { type = artillery_equipment amount = 150 producer = USA }
+					add_equipment_to_stockpile = { type = support_equipment amount = 150 producer = USA }
+					add_equipment_to_stockpile = { type = motorized_equipment amount = 100 producer = USA }
+					add_equipment_to_stockpile = { type = radio_equipment amount = 60 producer = USA }
+					add_equipment_to_stockpile = { type = anti_air_equipment_1 amount = 30 producer = USA }
+				}
+				custom_effect_tooltip = CHI_modify_industry_spriti_intro
+				add_to_variable = { 
+					var = CHI_research_speed_factor_var 
+					value = 0.005
+					tooltip = research_speed_factor_tooltip
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						var = CHI_coastal_state_counter_var
+						value = 3
+						compare = greater_than_or_equals
+					}
+				}
+				CHI = {
+					add_equipment_to_stockpile = { type = infantry_equipment amount = 5000 producer = USA }
+					add_equipment_to_stockpile = { type = horse_equipment amount = 900 producer = USA }
+					add_equipment_to_stockpile = { type = artillery_equipment amount = 150 producer = USA }
+					add_equipment_to_stockpile = { type = support_equipment amount = 150 producer = USA }
+					add_equipment_to_stockpile = { type = motorized_equipment amount = 100 producer = USA }
+					add_equipment_to_stockpile = { type = radio_equipment amount = 60 producer = USA }
+					add_equipment_to_stockpile = { type = anti_air_equipment_1 amount = 30 producer = USA }
+				}
+				custom_effect_tooltip = CHI_modify_industry_spriti_intro
+				add_to_variable = { 
+					var = CHI_research_speed_factor_var 
+					value = 0.005
+					tooltip = research_speed_factor_tooltip
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						var = CHI_coastal_state_counter_var
+						value = 2
+						compare = greater_than_or_equals
+					}
+				}
+				CHI = {
+					add_equipment_to_stockpile = { type = infantry_equipment amount = 4000 producer = USA }
+					add_equipment_to_stockpile = { type = horse_equipment amount = 900 producer = USA }
+					add_equipment_to_stockpile = { type = artillery_equipment amount = 150 producer = USA }
+					add_equipment_to_stockpile = { type = support_equipment amount = 150 producer = USA }
+					add_equipment_to_stockpile = { type = motorized_equipment amount = 100 producer = USA }
+					add_equipment_to_stockpile = { type = radio_equipment amount = 60 producer = USA }
+					add_equipment_to_stockpile = { type = anti_air_equipment_1 amount = 30 producer = USA }
+				}
+				custom_effect_tooltip = CHI_modify_industry_spriti_intro
+				add_to_variable = { 
+					var = CHI_research_speed_factor_var 
+					value = 0.005
+					tooltip = research_speed_factor_tooltip
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						var = CHI_coastal_state_counter_var
+						value = 1
+						compare = greater_than_or_equals
+					}
+				}
+				CHI = {
+					add_equipment_to_stockpile = { type = infantry_equipment amount = 3000 producer = USA }
+					add_equipment_to_stockpile = { type = horse_equipment amount = 900 producer = USA }
+					add_equipment_to_stockpile = { type = artillery_equipment amount = 150 producer = USA }
+					add_equipment_to_stockpile = { type = support_equipment amount = 150 producer = USA }
+					add_equipment_to_stockpile = { type = motorized_equipment amount = 100 producer = USA }
+					add_equipment_to_stockpile = { type = radio_equipment amount = 60 producer = USA }
+					add_equipment_to_stockpile = { type = anti_air_equipment_1 amount = 30 producer = USA }
+				}
+				custom_effect_tooltip = CHI_modify_industry_spriti_intro
+				add_to_variable = { 
+					var = CHI_research_speed_factor_var 
+					value = 0.005
+					tooltip = research_speed_factor_tooltip
+				}
+			}
+			
+			
+			if = {
+				limit = {
+					check_variable = { CHI_next_research_bonus = 1 }
+				}
+				
+				add_tech_bonus = {
+					name = CHI_infantry
+					bonus = 0.5
+					uses = 1
+					category = infantry_weapons
+				}
+				add_to_variable = { var = CHI_next_research_bonus value =  1 }
+			}
+			else_if = {
+				limit = {
+					check_variable = { CHI_next_research_bonus = 2 }
+				}
+				add_tech_bonus = {
+					name = CHI_industry_electronics
+					bonus = 0.5
+					uses = 1
+					category = industry
+					category = electronics
+				}
+				
+				add_to_variable = { var = CHI_next_research_bonus value =  1 }
+			}
+			else_if = {
+				limit = {
+					check_variable = { CHI_next_research_bonus = 3 }
+				}
+				add_tech_bonus = {
+					name = CHI_arty
+					bonus = 0.5
+					uses = 1
+					category = artillery
+				}
+				add_to_variable = { var = CHI_next_research_bonus value =  1 }
+			}
+			else_if = {
+				limit = {
+					check_variable = { CHI_next_research_bonus = 4 }
+				}
+				random_list = {
+					50 = { 
+						add_tech_bonus = {
+							name = CHI_infantry
+							bonus = 0.5
+							uses = 1
+							category = armor
+						}
+					}
+					50 = {
+						add_tech_bonus = {
+							name = CHI_air
+							bonus = 0.5
+							uses = 1
+							category = air_equipment
+						}
+					}
+
+				}
+				set_variable = { var = CHI_next_research_bonus value =  1 }
+			}
+			
+			
+		}
+	}
+
+	CHI_gansu_roads_decision = {
+
+		icon = ger_military_buildup
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = CHI_gansu_road_closes_tt	
+				has_global_flag = fake_flag
+					
+			}
+			
+			
+		}
+		activation = {
+			has_completed_focus = CHI_expand_the_gansu_road
+			NOT = {
+				SOV = {
+					has_war_with = GER 
+				}
+			}
+						
+		}
+
+		visible = {
+			tag = CHI
+		}
+		ai_will_do = {
+			factor = 100
+			
+		}
+		fire_only_once = no
+		days_mission_timeout = 120
+		selectable_mission = no
+		is_good = yes
+
+		timeout_effect = {
+
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							SOV = {
+								has_war_with = GER 
+							}
+						}
+
+					}
+					activate_mission = CHI_gansu_roads_decision
+				}
+				
+			}
+			CHI = {
+				add_equipment_to_stockpile = { type = infantry_equipment amount = 3500 producer = SOV }
+				add_equipment_to_stockpile = { type = horse_equipment amount = 900 producer = SOV }
+				add_equipment_to_stockpile = { type = artillery_equipment amount = 150 producer = SOV }
+				add_equipment_to_stockpile = { type = support_equipment amount = 150 producer = SOV }
+				add_equipment_to_stockpile = { type = motorized_equipment amount = 100 producer = SOV }
+				add_equipment_to_stockpile = { type = radio_equipment amount = 60 producer = SOV }
+				add_equipment_to_stockpile = { type = anti_air_equipment_1 amount = 30 producer = SOV }
+
+				
+			}
+			custom_effect_tooltip = CHI_in_addition_we_receive_tt
+			CHI = {
+				add_equipment_to_stockpile = { type = infantry_equipment amount = CHI_SOV_extra_guns producer = SOV }
+				add_equipment_to_stockpile = { type = artillery_equipment amount = CHI_SOV_extra_guns producer = SOV }
+				add_equipment_to_stockpile = { type = fighter_equipment amount = CHI_SOV_extra_guns producer = SOV }
+				add_equipment_to_stockpile = { type = CAS_equipment amount = CHI_SOV_extra_guns producer = SOV }
+				add_equipment_to_stockpile = { type = light_tank_chassis amount = CHI_SOV_extra_guns producer = SOV }
+			}
+			set_variable = { var = CHI_SOV_extra_guns value = 0 }
+			custom_effect_tooltip = CHI_modify_industry_spriti_intro
+			add_to_variable = { 
+				var = CHI_research_speed_factor_var 
+				value = 0.01
+				tooltip = research_speed_factor_tooltip
+			}
+			if = {
+				limit = {
+					check_variable = { CHI_next_research_bonus = 1 }
+				}
+				
+				add_tech_bonus = {
+					name = CHI_infantry
+					bonus = 0.5
+					uses = 1
+					category = infantry_weapons
+				}
+				add_to_variable = { var = CHI_next_research_bonus value =  1 }
+			}
+			else_if = {
+				limit = {
+					check_variable = { CHI_next_research_bonus = 2 }
+				}
+				add_tech_bonus = {
+					name = CHI_industry_electronics
+					bonus = 0.5
+					uses = 1
+					category = industry
+					category = electronics
+				}
+				
+				add_to_variable = { var = CHI_next_research_bonus value =  1 }
+			}
+			else_if = {
+				limit = {
+					check_variable = { CHI_next_research_bonus = 3 }
+				}
+				add_tech_bonus = {
+					name = CHI_arty
+					bonus = 0.5
+					uses = 1
+					category = artillery
+				}
+				add_to_variable = { var = CHI_next_research_bonus value =  1 }
+			}
+			else_if = {
+				limit = {
+					check_variable = { CHI_next_research_bonus = 4 }
+				}
+				random_list = {
+					50 = { 
+						add_tech_bonus = {
+							name = CHI_infantry
+							bonus = 0.5
+							uses = 1
+							category = armor
+						}
+					}
+					50 = {
+						add_tech_bonus = {
+							name = CHI_air
+							bonus = 0.5
+							uses = 1
+							category = air_equipment
+						}
+					}
+
+				}
+				set_variable = { var = CHI_next_research_bonus value =  1 }
+			}
+			
+			
+		}
+	}
+	CHI_hanoi_route_decision = {
+
+		icon = ger_military_buildup
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = CHI_gansu_road_closes_tt	
+				has_global_flag = fake_flag
+					
+			}
+			
+			
+		}
+		activation = {
+			has_completed_focus = CHI_expand_the_gansu_road
+			NOT = {
+				SOV = {
+					has_war_with = GER 
+				}
+			}
+						
+		}
+
+		visible = {
+			tag = CHI
+		}
+		ai_will_do = {
+			factor = 100
+			
+		}
+		fire_only_once = no
+		days_mission_timeout = 120
+		selectable_mission = no
+		is_good = yes
+
+		timeout_effect = {
+
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							SOV = {
+								has_war_with = GER 
+							}
+						}
+
+					}
+					activate_mission = CHI_gansu_roads_decision
+				}
+				
+			}
+			CHI = {
+				add_equipment_to_stockpile = { type = infantry_equipment amount = 3500 producer = SOV }
+				add_equipment_to_stockpile = { type = horse_equipment amount = 900 producer = SOV }
+				add_equipment_to_stockpile = { type = artillery_equipment amount = 150 producer = SOV }
+				add_equipment_to_stockpile = { type = support_equipment amount = 150 producer = SOV }
+				add_equipment_to_stockpile = { type = motorized_equipment amount = 100 producer = SOV }
+				add_equipment_to_stockpile = { type = radio_equipment amount = 60 producer = SOV }
+				add_equipment_to_stockpile = { type = anti_air_equipment_1 amount = 30 producer = SOV }
+
+				
+			}
+			custom_effect_tooltip = CHI_in_addition_we_receive_tt
+			CHI = {
+				add_equipment_to_stockpile = { type = infantry_equipment amount = CHI_SOV_extra_guns producer = SOV }
+				add_equipment_to_stockpile = { type = artillery_equipment amount = CHI_SOV_extra_guns producer = SOV }
+				add_equipment_to_stockpile = { type = fighter_equipment amount = CHI_SOV_extra_guns producer = SOV }
+				add_equipment_to_stockpile = { type = CAS_equipment amount = CHI_SOV_extra_guns producer = SOV }
+				add_equipment_to_stockpile = { type = light_tank_chassis amount = CHI_SOV_extra_guns producer = SOV }
+			}
+			set_variable = { var = CHI_SOV_extra_guns value = 0 }
+			custom_effect_tooltip = CHI_modify_industry_spriti_intro
+			add_to_variable = { 
+				var = CHI_research_speed_factor_var 
+				value = 0.01
+				tooltip = research_speed_factor_tooltip
+			}
+			if = {
+				limit = {
+					check_variable = { CHI_next_research_bonus = 1 }
+				}
+				
+				add_tech_bonus = {
+					name = CHI_infantry
+					bonus = 0.5
+					uses = 1
+					category = infantry_weapons
+				}
+				add_to_variable = { var = CHI_next_research_bonus value =  1 }
+			}
+			else_if = {
+				limit = {
+					check_variable = { CHI_next_research_bonus = 2 }
+				}
+				add_tech_bonus = {
+					name = CHI_industry_electronics
+					bonus = 0.5
+					uses = 1
+					category = industry
+					category = electronics
+				}
+				
+				add_to_variable = { var = CHI_next_research_bonus value =  1 }
+			}
+			else_if = {
+				limit = {
+					check_variable = { CHI_next_research_bonus = 3 }
+				}
+				add_tech_bonus = {
+					name = CHI_arty
+					bonus = 0.5
+					uses = 1
+					category = artillery
+				}
+				add_to_variable = { var = CHI_next_research_bonus value =  1 }
+			}
+			else_if = {
+				limit = {
+					check_variable = { CHI_next_research_bonus = 4 }
+				}
+				random_list = {
+					50 = { 
+						add_tech_bonus = {
+							name = CHI_infantry
+							bonus = 0.5
+							uses = 1
+							category = armor
+						}
+					}
+					50 = {
+						add_tech_bonus = {
+							name = CHI_air
+							bonus = 0.5
+							uses = 1
+							category = air_equipment
+						}
+					}
+
+				}
+				set_variable = { var = CHI_next_research_bonus value =  1 }
+			}
+			
+			
+		}
+	}
+}
+
 CHI_anti_imperialism = {
 	CHI_reignite_war = {
 
@@ -665,7 +1518,7 @@ CHI_fortify_the_burma_road = {
 						id = 1319
 						id = 12282 #Shanghai
 					}
-					level = 2
+					level = 3
 					instant_build = yes
 				}
 			}
@@ -728,310 +1581,4 @@ economy_decisions = {
 	}	
 }
 
-CHI_integrate_warlords = {
-	CHI_intergrate_warlords_mission = {
 
-		icon = generic_construction
-
-		available = {
-			OR = {
-				NOT = { tag = CHI }
-				has_war = yes
-				controls_state = 594
-			}					
-		}
-
-		days_mission_timeout = 395
-		fire_only_once = yes
-		is_good = yes
-
-		activation = {
-			date > 1936.1.1
-			tag = CHI
-		}
-
-		visible = {
-			tag = CHI
-			NOT = { controls_state = 594 }
-		}
-
-		timeout_effect = {
-			custom_effect_tooltip = CHI_integrate_warlords_tt
-				CHI = {
-					add_to_faction = PRC
-				}			
-			if = {
-				limit = {
-					CHI = { #if CHI owns one of these states, they get the event
-						OR = {
-							controls_state = 608
-							controls_state = 597
-							controls_state = 614
-						}
-					}
-				}
-				CHI = {
-					country_event = china.100
-				}
-				PRC = {
-					country_event = china.104
-				}	
-			}
-			if = {
-				limit = {
-					PRC = { #only fires the event for PRC if they control ALL of the states (to ensure that only one of them gets it, to avoid issues when one selects to turn over the states and the other doesn't)
-						AND = {
-							controls_state = 608
-							controls_state = 597
-							controls_state = 614
-						}
-					}
-				}
-				CHI = {
-				}
-
-				PRC = {
-					country_event = china.104
-				}
-						
-			}	
-		}
-
-		complete_effect = {
-		}		
-	}
-
-
-	CHI_secure_weapon_stockpiles = {
-
-		icon = jap_conquer_china
-
-		available = {
-			has_war_with = JAP	
-		}
-
-		visible = {
-			any_country = {
-				is_literally_china = yes
-			}
-			has_war_with = JAP
-		}
-
-		fire_only_once = no
-		
-		cost = 15
-		
-		ai_will_do = {
-			factor = 0
-		}
-
-		days_remove = 60
-
-		remove_effect = {
-			add_stability = -0.05
-			add_equipment_to_stockpile = { type = infantry_equipment_0 amount = 2500 producer = CHI }
-			add_equipment_to_stockpile = { type = horse_equipment_0 amount = 500 producer = CHI }			
-		}
-		complete_effect = {	
-			add_days_mission_timeout = {
-				mission = CHI_intergrate_warlords_mission
-				days = 30
-			}		
-		}
-	}
-
-	CHI_purchase_german_equipment = {
-
-		icon = jap_conquer_china
-
-		available = {
-			has_war_with = JAP	
-		}
-
-		visible = {
-			any_country = {
-				is_literally_china = yes
-			}
-			NOT = { controls_state = 594 }
-		}
-
-		fire_only_once = no
-		
-		cost = 30
-		
-		ai_will_do = {
-			factor = 0
-		}
-
-		days_remove = 120
-
-		remove_effect = {
-
-			add_stability = -0.05
-			add_equipment_to_stockpile = { type = infantry_equipment_1 amount = 2500 producer = GER }
-			add_equipment_to_stockpile = { type = pack_artillery_equipment_1 amount = 50 producer = GER }
-			add_equipment_to_stockpile = { type = support_equipment_1 amount = 500 producer = GER }
-		
-		}
-		complete_effect = {
-			CHI_hyper_inflation_level_up = yes		
-		}
-	}
-
-	CHI_purchase_american_goods_with_silver = {
-
-		icon = jap_conquer_china
-
-		available = {
-			NOT = { has_war = yes }	
-		}
-
-		visible = {
-			any_country = {
-				is_literally_china = yes
-			}
-			has_war_with = JAP
-		}
-
-		fire_only_once = no
-		
-		cost = 30
-		
-		ai_will_do = {
-			factor = 0
-		}
-
-		days_remove = 120
-
-		remove_effect = {
-
-			add_stability = -0.05
-			add_equipment_to_stockpile = { type = radio_equipment_1 amount = 500 producer = USA }
-			add_equipment_to_stockpile = { type = motorized_equipment_1 amount = 500 producer = USA }
-		}
-		modifier = {
-			consumer_goods_expected_value = 0.04
-		}		
-		complete_effect = {			
-		}
-	}
-
-	CHI_attract_foreign_investors = {
-
-		icon = jap_conquer_china
-
-		available = {
-			has_war_with = JAP
-		}
-
-		visible = {
-			any_country = {
-				is_literally_china = yes
-			}
-			has_war_with = JAP
-		}
-
-		fire_only_once = no
-		
-		cost = 15
-		
-		ai_will_do = {
-			factor = 0
-		}
-
-		days_remove = 90
-
-		remove_effect = {
-			add_offsite_building = { type = industrial_complex level = 2 }
-		}
-		complete_effect = {
-			add_days_mission_timeout = {
-				mission = CHI_intergrate_warlords_mission
-				days = 30
-			}		
-		}		
-	}
-
-	CHI_the_nanjing_decade = {
-
-		icon = jap_conquer_china
-
-		available = {
-			NOT = { has_war = yes }
-			NOT = { controls_state = 594 }
-		}
-
-		visible = {
-			any_country = {
-				is_literally_china = yes
-			}
-			NOT = { controls_state = 594 }
-		}
-
-		fire_only_once = no
-		
-		cost = 50
-		
-		ai_will_do = {
-			factor = 0
-		}
-
-		days_remove = 150
-		remove_effect = {
-		}
-
-		modifier = {
-			production_speed_industrial_complex_factor = 0.5
-			consumer_goods_expected_value = -0.03
-		}		
-		complete_effect = {
-		}
-	}
-
-
-
-
-	CHI_move_the_capital = {
-		allowed = {
-			is_literally_china = yes
-			has_dlc = "Waking the Tiger"
-		}
-		available = {
-			has_war = no
-			OR = {
-				has_full_control_of_state = 608
-				has_full_control_of_state = 613
-			}
-			capital_scope = {
-				NOT = {
-					OR = {
-						state = 608
-						state = 613
-					}
-				}
-			}
-		}
-		visible = {
-			has_war = no
-			OR = {
-				has_full_control_of_state = 608
-				has_full_control_of_state = 613
-			}
-			capital_scope = {
-				NOT = {
-					OR = {
-						state = 608
-						state = 613
-					}
-				}
-			}
-		}
-		cost = 50
-		ai_will_do = {
-			factor = 1
-		}
-		complete_effect = {
-			country_event = wtt_china.204
-		}
-	}
-}
