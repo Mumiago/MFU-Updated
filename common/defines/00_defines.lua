@@ -880,7 +880,7 @@ NMilitary = {
 
 	PLAN_PROVINCE_VP_PORT_FACTOR = 0.25,
 
-	NAVAL_INVASION_PLANNING_BONUS_MALUS = -1,		-- Malus in percentage for the planning bonus gain for naval invasions
+	NAVAL_INVASION_PLANNING_BONUS_MALUS = -0.9,		-- Malus in percentage for the planning bonus gain for naval invasions
 
 	NAVAL_INVASION_PLANNING_BONUS_GAIN = 0.04,		-- Planning Bonus gain per day for naval invasions
 
@@ -961,7 +961,7 @@ NMilitary = {
 	LAND_COMBAT_STR_ARMOR_DEFLECTION_FACTOR = 0.60, -- damage reduction if armor outclassing enemy
 	LAND_COMBAT_ORG_ARMOR_DEFLECTION_FACTOR = 0.60, -- damage reduction if armor outclassing enemy
 	LAND_COMBAT_COLLATERAL_FACTOR = 0.002,		   -- Factor to scale collateral damage to infra and forts with.
-	LAND_COMBAT_FORT_DAMAGE_CHANCE = 13,		-- chance to get a hit to damage on forts. (out of 100)
+	LAND_COMBAT_FORT_DAMAGE_CHANCE = 15,		-- chance to get a hit to damage on forts. (out of 100)
 	ATTRITION_DAMAGE_ORG = 0.1,					   -- damage from attrition to Organisation
 	ATTRITION_EQUIPMENT_LOSS_CHANCE = 0.01,		   -- Chance for loosing equipment when suffer attrition. Scaled up the stronger attrition is. Then scaled down by equipment reliability.
 	ATTRITION_EQUIPMENT_PER_TYPE_LOSS_CHANCE = 0.35, -- Chance for loosing equipment when suffer attrition. Scaled up the stronger attrition is. Then scaled down by equipment reliability.
@@ -1135,7 +1135,7 @@ NMilitary = {
 	NUKE_MAX_DAMAGE_PERCENT = 0.9,					-- Minimum damage from nukes as a percentage of current strength/organisation
 	EQUIPMENT_REPLACEMENT_RATIO = 0.1,				-- Equipment min ratio after blocking the equipment type
 	NUKE_DELAY_HOURS = 12,							-- How many hours does it take for the nuclear drop to happen
-	PARADROP_PENALTY = -0.5, 						-- Combat penalty when recently paradropped
+	PARADROP_PENALTY = -0.3, 						-- Combat penalty when recently paradropped
 	PARADROP_HOURS = 48,							-- time paratroopers suffer penalties in combat
 	COMBAT_SUPPLY_LACK_IMPACT = -0.4,				-- combat penalty if out of supply
 	COMBAT_STACKING_START = 5,						-- at what nr of divisions stacking penalty starts
@@ -1896,7 +1896,7 @@ NNavy = {
 	LEADER_EXPERIENCE_SCALE = 1.0,
 	BATTLE_NAME_VP_FACTOR = 100,									-- Name is given by ((VP value) * BATTLE_NAME_VP_FACTOR) / (Distance VP -> battle)
 	BATTLE_NAME_VP_CUTOFF = 1.0,									-- If best score of above calculation is below this, name will be that of region.
-	AMPHIBIOUS_LANDING_PENALTY = -0.65,								-- amphibious landing penalty
+	AMPHIBIOUS_LANDING_PENALTY = -0.7,								-- amphibious landing penalty
 	AMPHIBIOUS_INVADE_SPEED_BASE = 0.5, 							-- every hour movement progress on amphibious invasion
 	AMPHIBIOUS_INVADE_MOVEMENT_COST = 24.0, 						-- total progress cost of movement while amphibious invading
 	AMPHIBIOUS_INVADE_ATTACK_LOW = 0.2, 							-- low and high cap of attack modifier scale. Scale interpolated by invasion progress.
@@ -1908,7 +1908,7 @@ NNavy = {
 	CONVOY_ATTACK_BASE_FACTOR = 0.15,                               -- base % of convoys that get intercepted
 	NAVAL_SPEED_MODIFIER = 0.1,	                    				-- basic speed control
 	NAVAL_RANGE_TO_INGAME_DISTANCE = 0.12,							-- Scale the ship stats "naval_range" to the ingame distance
-	NAVAL_INVASION_PREPARE_HOURS = 168,								-- base hours needed to prepare an invasion
+	NAVAL_INVASION_PREPARE_HOURS = 12,								-- base hours needed to prepare an invasion
 	NAVAL_COMBAT_RESULT_TIMEOUT_YEARS = 2,							-- after that many years, we clear the naval combat results, so they don't get stuck forever in the memory.
 	CONVOY_LOSS_HISTORY_TIMEOUT_MONTHS = 12,						-- after this many months remove the history of lost convoys to not bloat savegames and memory since there is no way to see them anyway
 	NAVAL_TRANSFER_BASE_SPEED = 12,                                  -- base speed of units on water being transported
