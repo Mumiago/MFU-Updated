@@ -4142,7 +4142,10 @@ foreign_support = {
 
 		days_re_enable = 60
 		days_remove = 60
-		civilian_factory_use = 15
+		modifier = {
+			civilian_factory_use = 15
+		}
+		
 
 		remove_effect = {
 			custom_effect_tooltip = USA_expanded_hanoi_route_tt
@@ -4197,7 +4200,130 @@ foreign_support = {
 				controls_state = 432
 				controls_state = 823
 			}
+			USA = {
+				NOT = {
+					has_country_flag = USA_ledo_starting
+				}
+			}
+
 		}
+
+		cost = 0
+
+		ai_will_do = {
+			factor = 25
+		}
+		priority = 94
+		fire_only_once = no	
+
+		complete_effect = {
+			USA = {
+				set_country_flag = USA_ledo_starting
+			}
+			
+			if = {
+				limit = {
+					USA = {
+						has_country_flag = USA_ledo_first_phase_done
+					}
+				}
+				activate_decision = USA_build_ledo_road_phase2
+			}
+			else = {
+				activate_decision = USA_build_ledo_road_phase1
+			}
+			
+		}
+	}
+	USA_stop_ledo_road = {
+		name = "Stop Construction of Ledo Road"
+		icon = generic_construction
+
+		allowed = {
+			tag = USA
+		}
+
+		available = {
+			USA = {
+				has_country_flag = USA_ledo_starting
+			}
+			RAJ = {
+				controls_state = 432
+				controls_state = 823
+			} 
+		}
+
+		visible = {
+			RAJ = {
+				controls_state = 432
+				controls_state = 823
+			}
+			USA = {
+				has_country_flag = USA_ledo_starting
+			}
+
+		}
+
+		cost = 0
+
+		ai_will_do = {
+			factor = 25
+		}
+		priority = 93
+		fire_only_once = yes	
+
+		complete_effect = {
+			USA = {
+				set_country_flag = USA_cancel_ledo_flag
+				clr_country_flag = USA_ledo_starting
+			}
+			
+			
+		}
+	}
+	USA_build_ledo_road_phase1 = {
+		name = "Clearing the Path"
+		icon = generic_construction
+
+		allowed = {
+			tag = USA
+		}
+
+		available = {
+			USA = {
+				has_country_flag = USA_ledo_starting
+			} 
+		}
+
+
+
+		visible = {
+			USA = {
+				has_country_flag = USA_ledo_starting
+			}
+
+		}
+
+		cancel_trigger = {
+			OR = {
+				USA = {
+					has_country_flag = USA_cancel_ledo_flag
+				}
+				RAJ = {
+					NOT = {
+						controls_state = 432
+						controls_state = 823
+					}
+					
+				} 
+			}
+		}
+		cancel_effect = {
+           USA = {
+				set_country_flag = USA_cancel_ledo_flag
+				clr_country_flag = USA_ledo_starting
+		   }
+        }
 
 		cost = 0
 
@@ -4206,19 +4332,23 @@ foreign_support = {
 		}
 		priority = 95
 
-		fire_only_once = no	
-
-		days_re_enable = 60
-		days_remove = 60
-		civilian_factory_use = 15
+		fire_only_once = yes	
+		days_remove = 5
+		modifier = {
+			civilian_factory_use = 20
+		}
 
 		remove_effect = {
+			USA = {
+				set_country_flag = USA_ledo_first_phase_done
+			}
 			
+			activate_decision = USA_build_ledo_road_phase2
 			
 		}
 	}
-	USA_build_ledo_road_first_phase = {
-		name = "Clearing the Path"
+	USA_build_ledo_road_phase2 = {
+		name = "Grading the Roadbed"
 		icon = generic_construction
 
 		allowed = {
@@ -4237,27 +4367,33 @@ foreign_support = {
 				controls_state = 823
 			} 
 		}
-		activation = {
-					
-		}
-
-		highlight_states = {
-			highlight_state_targets = {
-				state = 671
-			}
-			
-			
-		}
 
 		visible = {
-			#CHI = {
-				#has_completed_focus = CHI_the_ledo_road
-			#}
-			RAJ = {
-				controls_state = 432
-				controls_state = 823
+			USA = {
+				has_country_flag = USA_ledo_first_phase_done
+				has_country_flag = USA_ledo_starting
 			}
 		}
+		cancel_trigger = {
+			OR = {
+				USA = {
+					has_country_flag = USA_cancel_ledo_flag
+				}
+				RAJ = {
+					NOT = {
+						controls_state = 432
+						controls_state = 823
+					}
+					
+				} 
+			}
+		}
+		cancel_effect = {
+           USA = {
+				set_country_flag = USA_cancel_ledo_flag
+				clr_country_flag = USA_ledo_starting
+		   }
+        }
 
 		cost = 0
 
@@ -4266,20 +4402,21 @@ foreign_support = {
 		}
 		priority = 95
 
-		fire_only_once = no	
-
-		days_mission_timeout = 120
-		selectable_mission = no
-		civilian_factory_use = 15
+		fire_only_once = yes	
+		days_remove = 60
 		modifier = {
-			consumer_goods_expected_value = -0.05
+			civilian_factory_use = 20
 		}
 
-		timeout_effect = {
-			
+		remove_effect = {
+			USA = {
+				set_country_flag = USA_ledo_second_phase_done
+			}
+			#activate_decision = my_decision
 			
 		}
 	}
+	
 	
 	guns_for_spain = {
 
