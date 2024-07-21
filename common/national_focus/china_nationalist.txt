@@ -3040,6 +3040,7 @@ focus = {
 			has_war = yes
 		}
 
+
 		completion_reward = {
 			
 			add_ideas = tot_economic_mobilisation
@@ -3062,7 +3063,13 @@ focus = {
 		}
 
 		available = {
-			has_war = yes
+			custom_trigger_tooltip = {
+				tooltip = CHI_need_research_speed
+				CHI = {
+					check_variable = { var = CHI_research_speed_factor_var value = -0.3 compare = greater_than_or_equals }
+				}
+			}
+			
 		}
 
 		bypass = {
@@ -3074,10 +3081,21 @@ focus = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			add_equipment_to_stockpile = { type = infantry_equipment_1 amount = 1500 producer = CHI }
-			swap_ideas = {
-				remove_idea = CHI_unprofessional_army_1
-				add_idea = CHI_unprofessional_army_2
+			custom_effect_tooltip = CHI_modify_army_intro
+			add_to_variable = { 
+				var = CHI_land_doctrine_cost_factor_var 
+				value = -0.15
+				tooltip = land_doc_tp
+			}
+			add_to_variable = { 
+				var = CHI_army_attack_factor_var 
+				value = 0.05
+				tooltip = army_attack_factor_tooltip
+			}
+			add_to_variable = { 
+				var = CHI_army_defence_factor_var 
+				value = 0.05
+				tooltip = army_defense_factor_tooltip
 			}
 		}
 	}
@@ -3621,15 +3639,16 @@ focus = {
 		y = 1
 		relative_position_id = CHI_war_of_resistance
 
-		cost = 3
+		cost = 5
 
 		ai_will_do = {
 			factor = 1
 		}
 
 		available = {
-			NOT = { has_idea = volunteer_only }
-			has_idea = tot_economic_mobilisation
+			casualties > 1200000
+			surrender_progress > 0.4
+			date < 1941.1.1
 		}
 
 		bypass = {
@@ -3641,24 +3660,9 @@ focus = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			add_ideas = conscript_men_into_the_factories
-			if = {
-				limit = {
-					has_idea = incentivise_employability_oppertunities
-				}
-				remove_ideas = incentivise_employability_oppertunities
-			}
-			if = {
-				limit = {
-					has_idea = mandatory_army_service
-				}
-				remove_ideas = mandatory_army_service
-			}
-			if = {
-				limit = {
-					has_idea = offer_better_wages
-				}
-				remove_ideas = offer_better_wages
+			add_timed_idea = {
+				idea = CHI_emergency_production
+				days = 120
 			}
 		}
 	}
@@ -3670,7 +3674,7 @@ focus = {
 		y = 1
 		relative_position_id = CHI_military_affairs_commission
 
-		cost = 3
+		cost = 5
 
 		ai_will_do = {
 			factor = 1
@@ -3680,8 +3684,9 @@ focus = {
 		}
 
 		bypass = {
-			#NOT = { has_full_control_of_state = 598 }
-			#NOT = { has_full_control_of_state = 613 }
+			NOT = {
+				controls_state = 598
+			}
 		}
 
 		cancel_if_invalid = yes
@@ -3696,39 +3701,14 @@ focus = {
 					set_building_level = {
 						type = bunker
 						province = {
+							id = 7014 
 							id = 11913 #Nanjing
 							id = 11982
-							id = 13370
 							id = 10076
 							id = 12052
-							id = 13369
 						}
-						level = 2
+						level = 3
 						instant_build = yes
-					}
-				}
-			}
-			if = {
-				limit = { has_full_control_of_state = 613 }
-				613 = { # Shanghai
-					if = {
-						limit = {
-							any_province_building_level = {
-								province = {
-									id = 7014
-								}
-								level < 8
-								building = bunker
-							}
-						}
-						set_building_level = {
-							type = bunker
-							province = {
-								id = 7014
-							}
-							level = 3
-							instant_build = yes
-						}
 					}
 				}
 			}
@@ -3819,8 +3799,7 @@ focus = {
 		y = 1
 		relative_position_id = CHI_the_wufu_line
 
-		cost = 3
-
+		cost = 5
 		ai_will_do = {
 			factor = 1
 		}
@@ -3835,6 +3814,13 @@ focus = {
 		}
 
 		bypass = {
+			NOT = {
+				controls_state = 620
+				controls_state = 602
+				controls_state = 820
+				controls_state = 750
+
+			}
 		}
 
 		cancel_if_invalid = yes
@@ -3850,20 +3836,22 @@ focus = {
 						type = bunker
 						province = {
 							id = 1036
-							id = 13929
+							id = 4619
 							id = 12467
-							id = 13691
-							id = 13692
 						}
 						level = 3
 						instant_build = yes
 					}
 				}
-				600 = { # Jiangxi
+			}
+			if = {
+				limit = { controls_state = 820 }
+				820 = { # Jiangxi
 					set_building_level = {
 						type = bunker
 						province = {
-							id = 1628
+							id = 4130
+							id = 1612
 						}
 						level = 3
 						instant_build = yes
@@ -3877,7 +3865,7 @@ focus = {
 						type = bunker
 						province = {
 							id = 7097
-							id = 13733
+							id = 10517
 							id = 12483
 							id = 7502
 						}
@@ -3893,8 +3881,6 @@ focus = {
 						type = bunker
 						province = {
 							id = 7101
-							id = 13724
-							id = 13557
 							id = 12086
 						}
 						level = 3
@@ -3913,7 +3899,7 @@ focus = {
 		y = 1
 		relative_position_id = CHI_the_huoshan_line
 
-		cost = 3
+		cost = 5
 
 		ai_will_do = {
 			factor = 1
@@ -3925,6 +3911,9 @@ focus = {
 		}
 
 		bypass = {
+			NOT = {
+				controls_state = 605
+			}
 		}
 
 		cancel_if_invalid = yes
@@ -3932,44 +3921,60 @@ focus = {
 		available_if_capitulated = no
 
 		completion_reward = {
+			if = {
+				limit = {
+					controls_state = 650
+				}
+				605 = {	#Chongqing
+					set_building_level = {
+						type = bunker
+						province = {
+							id = 10144
+							id = 11865
+							id = 1893
+							id = 6999
+						}
+						level = 3
+						instant_build = yes
+					}
+				}
+			}
+			if = {
+				limit = {
+					controls_state = 750
+				}
+				750 = {	
+					set_building_level = {
+						type = bunker
+						province = {
+							id = 4041
+							id = 10304
+							id = 4141
+							id = 4431
+							id = 11972
+							
+						}
+						level = 3
+						instant_build = yes
+					}
+				}
+			}
+			if = {
+				limit = {
+					controls_state = 820
+				}
+				820 = {	
+					set_building_level = {
+						type = bunker
+						province = {
+							id = 7948	
+						}
+						level = 3
+						instant_build = yes
+					}
+				}
+			}
 			
-			605 = {	#Chongqing
-				set_building_level = {
-					type = bunker
-					province = {
-						id = 13708
-						id = 11865
-						id = 13551
-						id = 1893
-						id = 13547
-						id = 6999
-						id = 13709
-						id = 12705
-					}
-					level = 3
-					instant_build = yes
-				}
-			}
-			928 = {	#South Sichuan
-				set_building_level = {
-					type = bunker
-					province = {
-						id = 7948
-						id = 10304
-						id = 4141
-						id = 13545
-						id = 4431
-						id = 11972
-						id = 13677
-						id = 4041
-						id = 13548
-						id = 13711
-						id = 13710
-					}
-					level = 3
-					instant_build = yes
-				}
-			}
 		}
 	}
 	focus = {
@@ -3980,41 +3985,7 @@ focus = {
 		y = 1
 		relative_position_id = CHI_war_of_resistance
 
-		cost = 3
-
-		ai_will_do = {
-			factor = 1
-		}
-
-		available = {
-
-		}
-
-		bypass = {
-
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		completion_reward = 
-			########avoid large scale battles
-			hidden_effect = {
-				set_technology = { fabian_strategy = 1 }
-			}
-			custom_effect_tooltip = fabian_strategy_tt
-		
-	}
-	focus = {
-		id = CHI_100_regiments_offensive
-		icon = GFX_focus_chinese_red_soldier
-		prerequisite = { focus = CHI_war_of_resistance }
-		x = -2
-		y = 1
-		relative_position_id = CHI_war_of_resistance
-
-		cost = 3
+		cost = 5
 
 		ai_will_do = {
 			factor = 1
@@ -4033,7 +4004,55 @@ focus = {
 		available_if_capitulated = no
 
 		completion_reward = {
+			add_ideas = CHI_fabian_strategy
+		}
 			
+		
+	}
+	focus = {
+		id = CHI_100_regiments_offensive
+		icon = GFX_focus_chinese_red_soldier
+		prerequisite = { focus = CHI_war_of_resistance }
+		x = -2
+		y = 1
+		relative_position_id = CHI_war_of_resistance
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			has_equipment = { infantry_equipment > 9999 }
+			has_manpower > 400000
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_equipment_to_stockpile = { type = infantry_equipment amount = -10000 producer = CHI } 
+			add_manpower = -400000
+			every_state = {
+				limit = {
+					is_core_of = CHI 
+					NOT = {
+						is_core_of = MAN 
+						state = 745
+						state = 524
+					}
+					OR = {
+						is_controlled_by = JAP 
+					}
+				}
+				add_dynamic_modifier = { modifier = CHI_100_regiments_offensive_modifier days = 120 }
+			}
 		}
 	}
 	focus = {
@@ -4135,7 +4154,7 @@ focus = {
 		available = {
 			casualties > 1000000
 			surrender_progress > 0.35
-			
+			date < 1941.1.1
 		}
 
 		bypass = { 
@@ -4271,6 +4290,7 @@ focus = {
 		available = {
 			casualties > 1000000
 			surrender_progress > 0.35
+			date < 1941.1.1
 		}
 
 		bypass = { 
@@ -4376,6 +4396,7 @@ focus = {
 		available = {
 			casualties > 2000000
 			surrender_progress > 0.55
+			date < 1941.1.1
 		}
 
 		bypass = { 
