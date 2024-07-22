@@ -1292,7 +1292,7 @@ NMilitary = {
 
 
 NAir = {
-	ACCIDENT_CHANCE_RELIABILITY_MULT = 1.5,				-- Multiplier to accident chance per point of missing reliability.
+	ACCIDENT_CHANCE_RELIABILITY_MULT = 1,				-- Multiplier to accident chance per point of missing reliability.
 	--AAT
 	THRUST_WEIGHT_AGILITY_FACTOR = 0.5,								-- For plane designs, additive agility bonus per point of thrust exceeding weight
 
@@ -2187,7 +2187,7 @@ NNavy = {
 	BASE_JOIN_COMBAT_HOURS						= 12,				-- the taskforces that wants to join existing combats will wait for at least this amount
 	LOW_ORG_FACTOR_ON_JOIN_COMBAT_DURATION		= 4.0,				-- low org of the ships will be factored in when a taskforce wants to join combat
 		
-	BASE_POSITIONING												= 0.8,	-- base value for positioning
+	BASE_POSITIONING												= 0.9,	-- base value for positioning
 	
 	RELATIVE_SURFACE_DETECTION_TO_POSITIONING_FACTOR				= 0.08,	-- multiples the surface detection difference between two sides. the side with higher detection will get a bonus of this value
 	MAX_POSITIONING_BONUS_FROM_SURFACE_DETECTION					= 0.15,  -- will clamp the bonus that you get from detection
