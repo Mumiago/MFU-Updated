@@ -417,11 +417,55 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = CHI_unify_china
+		icon = GFX_focus_prc_social_democracy
+		#prerequisite = { focus = CHI_a_party_with_an_army }
+		mutually_exclusive = {
+			focus = CHI_solidify_control_over_the_kmt
+		}
+		x = 1
+		y = 3
+		#relative_position_id = CHI_a_party_with_an_army
+
+		cost = 14.3
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+			
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+			hidden_effect = {
+				PRC = {
+					country_event = china.104
+				}
+			}
+			
+			CHI = {
+				add_to_faction = PRC
+			}
+		}
+	}
+	focus = {
 		id = CHI_solidify_control_over_the_kmt
 		icon = GFX_CHI_Chiang_Cult
 		#prerequisite = { focus = CHI_dang_guo }
 		#prerequisite = { focus = CHI_bureau_of_investigation_and_statistics }
-		x = 0
+		mutually_exclusive = {
+			focus = CHI_unify_china
+		}
+		x = -1
 		y = 3
 		#relative_position_id = CHI_dang_guo
 		
@@ -444,15 +488,19 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			
+			add_stability = -0.05
+			annex_country = {
+				target = PRC
+				transfer_troops = yes
+			}
 		}
 	}
 
 	focus = {
 		id = CHI_wartime_measures
 		icon = GFX_focus_chi_indoctrination
-		prerequisite = { focus = CHI_solidify_control_over_the_kmt }
-		x = -2
+		prerequisite = { focus = CHI_solidify_control_over_the_kmt focus = CHI_unify_china }
+		x = -1
 		y = 1
 		relative_position_id = CHI_solidify_control_over_the_kmt
 		
@@ -558,8 +606,8 @@ focus_tree = {
 	focus = {
 		id = CHI_ensure_total_army_loyalty
 		icon = GFX_CHI_Military_Junta
-		prerequisite = { focus = CHI_solidify_control_over_the_kmt }
-		x = 0
+		prerequisite = { focus = CHI_solidify_control_over_the_kmt focus = CHI_unify_china}
+		x = 1
 		y = 1
 		relative_position_id = CHI_solidify_control_over_the_kmt
 		
@@ -620,8 +668,8 @@ focus_tree = {
 	focus = {
 		id = CHI_nationalize_key_industries
 		icon = GFX_CHI_Eternal_President
-		prerequisite = { focus = CHI_solidify_control_over_the_kmt }
-		x = 2
+		prerequisite = { focus = CHI_solidify_control_over_the_kmt focus = CHI_unify_china }
+		x = 3
 		y = 1
 		relative_position_id = CHI_solidify_control_over_the_kmt
 		
@@ -783,77 +831,9 @@ focus_tree = {
 			}
 		}
 	}
-	focus = {
-		id = CHI_unify_china
-		icon = GFX_focus_prc_social_democracy
-		prerequisite = { focus = CHI_a_party_with_an_army }
-		x = 0
-		y = 1
-		relative_position_id = CHI_a_party_with_an_army
-
-		cost = 14.3
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-			has_war = yes
-		}
-
-		bypass = {
-
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		completion_reward = {
-			annex_country = {
-				target = PRC
-				transfer_troops = yes
-			}
-		}
-	}
+	
 
 
-	focus = {
-		id = CHI_three_principles_of_the_people
-		icon = GFX_CHI_defence_of_china
-		x = 60
-		y = 0
-
-		cost = 5
-
-		ai_will_do = {
-			factor = 4
-		}
-
-		available = {
-		
-		}
-
-		bypass = {
-
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		complete_tooltip = {
-
-		}
-
-
-		completion_reward = {
-			add_political_power = 150
-			hidden_effect = {
-				country_event = { id = china.6 days = 70 }
-			}
-		}
-	}
 
 	
 	
@@ -1116,7 +1096,10 @@ focus_tree = {
 		}
 
 		bypass = {
-
+			NOT = {
+				controls_state = 613
+				controls_state = 597
+			}
 		}
 
 		cancel_if_invalid = yes
@@ -1125,86 +1108,115 @@ focus_tree = {
 
 		completion_reward = {
 			CHI_hyper_inflation_level_down = yes
-			random_owned_controlled_state = {
-				prioritize = {
-					613
+			if = {
+				limit = {
+					controls_state = 613
 				}
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-				}
-			}
-			random_owned_controlled_state = {
-				prioritize = {
-					606
-				}
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
+				random_owned_controlled_state = {
+					prioritize = {
+						613
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
 				}
 			}
-			random_owned_controlled_state = {
-				prioritize = {
-					620
+			if = {
+				limit = {
+					controls_state = 606
 				}
-				add_extra_state_shared_building_slots = 4
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes
+				random_owned_controlled_state = {
+					prioritize = {
+						606
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
 				}
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
+			
+			}
+			if = {
+				limit = {
+					controls_state = 620
+				}
+				random_owned_controlled_state = {
+					prioritize = {
+						620
+					}
+					add_extra_state_shared_building_slots = 4
+					add_building_construction = {
+						type = arms_factory
+						level = 2
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
 				}
 			}
-			random_owned_controlled_state = {
-				prioritize = {
-					597
+			
+			if = {
+				limit = {
+					controls_state = 597
 				}
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-				}
-			}
-			random_owned_controlled_state = {
-				prioritize = {
-					598
-				}
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
+				random_owned_controlled_state = {
+					prioritize = {
+						597
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
 				}
 			}
+			
+			if = {
+				limit = {
+					controls_state = 598
+				}
+				random_owned_controlled_state = {
+					prioritize = {
+						598
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			
 
 		}
 	}
@@ -1519,17 +1531,26 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
+			add_stability = 0.2
 			if = {
 				limit = {
 					has_idea = CHI_agrarian_society
 				}
-				remove_ideas = CHI_agrarian_society
+				swap_ideas = {
+					remove_idea = CHI_agrarian_society
+					add_idea = CHI_agrarian_society3
+				}
+				
 			}
 			if = {
 				limit = {
 					has_idea = CHI_agrarian_society2
 				}
-				remove_ideas = CHI_agrarian_society2
+				swap_ideas = {
+					remove_idea = CHI_agrarian_society2
+					add_idea = CHI_agrarian_society3
+				}
+				
 			}
 			
 		}
@@ -2781,7 +2802,7 @@ focus = {
 		y = 1
 		relative_position_id = CHI_establish_burma_road
 
-		cost = 3
+		cost = 5
 
 		ai_will_do = {
 			factor = 1
@@ -2931,7 +2952,7 @@ focus = {
 			custom_effect_tooltip = CHI_modify_army_intro
 			add_to_variable = { 
 				var = CHI_experience_gain_army_var 
-				value = 0.1
+				value = 0.15
 				tooltip = army_xp_tp2
 			}
 		}
@@ -3096,6 +3117,16 @@ focus = {
 				var = CHI_army_defence_factor_var 
 				value = 0.05
 				tooltip = army_defense_factor_tooltip
+			}
+			add_to_variable = { 
+				var = CHI_army_spirit_category_type_cost_factor_var 
+				value = -0.15
+				tooltip = army_spirit_cost_tt
+			}
+			add_to_variable = { 
+				var = CHI_air_spirit_category_type_cost_factor_var 
+				value = -0.15
+				tooltip = air_spirit_cost_tt
 			}
 		}
 	}

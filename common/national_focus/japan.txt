@@ -589,7 +589,25 @@ focus_tree = {
 		}
 
 		available = {
-			date > 1937.6.1
+			if = { 
+				limit = {
+					has_game_rule = {
+						rule = script_china_war
+						option = DEFAULT
+					}
+				}
+				date > 1937.6.1
+			}
+			
+			if = {
+				limit = {
+					has_game_rule = {
+                        rule = script_china_war
+                        option = HISTORICAL
+                    }
+				}
+				has_war_with = CHI 
+			}
 		}
 
 		bypass = {
@@ -602,6 +620,19 @@ focus_tree = {
 
 
 		completion_reward = {
+			if = {
+				limit = {
+					has_game_rule = {
+                        rule = script_china_war
+                        option = HISTORICAL
+                    }
+				}
+				custom_effect_tooltip = JAP_war_escalation_tt
+				add_to_variable = {
+					var = JAP_war_escalation_var
+					value = 1
+				}
+			}
 		custom_effect_tooltip = JAP_modify_dep_tt
 			add_to_variable = {
 				JAP_production_speed_arms_factory_factor_var = 0.10
@@ -612,6 +643,7 @@ focus_tree = {
 				tooltip = JAP_prod_speed_civ_tt1
 			}
 			add_ideas = war_economy
+			
 		}
 	}
 	focus = {
@@ -2957,33 +2989,20 @@ focus_tree = {
 						}
 					}
 				}
+				
 				CHI = {
-					add_to_faction = PRC
+					country_event = china.1
 				}
-				if = {
-					CHI = {
-						country_event = china.100
-					}	
-					PRC = {
-						country_event = china.104
-					}	
-				}
-				if = {
-					CHI = {
-						country_event = china.1
-					}
-					PRC = {
-						country_event = china.104
-					}
+					
 							
-				}	
+					
 				hidden_effect = {
 					CHI = {
 						country_event = { id = china.216 days = 2 }
 					}
 				}
 				add_named_threat = { threat = 1 name = JAP_intervene_in_china }
-				add_dynamic_modifier = { modifier = JAP_macro_polo }
+				
 			}
 		}
 	}
