@@ -2,6 +2,46 @@
 operations = { 
 	
 }
+CHI_usa_airforce_in_china = {
+	CHI_show_airfields_decision = {
+
+		icon = generic_air
+
+		available = {
+			always = no 
+			
+		}
+		highlight_states = {
+		
+			highlight_provinces = { 11947 1038 1597 12023 1187 4207 7182 1193 4185 10044 11982  }
+		}
+
+		visible = {
+			CHI = {
+				has_completed_focus = CHI_14th_airforce_in_china
+			}
+			
+	
+		}
+		ai_will_do = {
+			factor = 12
+			
+		}
+		fire_only_once = no
+
+		
+		days_re_enable = 1
+		complete_effect = {
+			#custom_effect_tooltip = CHI_airfields_cause_harm_tt
+			
+		}
+		
+		remove_effect = {
+			
+			
+		}
+	}
+}
 CHI_roads_of_life = {
 	CHI_evacuate_beijing = {
 		name = "Beijing Evacuation"
@@ -896,7 +936,12 @@ CHI_roads_of_life = {
 			always = no 
 			
 		}
-		
+		highlight_states = {
+			highlight_state_targets = {
+				state = 823
+				state = 432
+			}
+		}
 
 		visible = {
 			has_country_flag = CHI_ledo_road_closed
@@ -977,6 +1022,12 @@ CHI_roads_of_life = {
 			}
 	
 		}
+		highlight_states = {
+			highlight_state_targets = {
+				state = 288
+				state = 823
+			}
+		}
 		ai_will_do = {
 			factor = 12
 			
@@ -1010,6 +1061,36 @@ CHI_roads_of_life = {
 			has_country_flag = CHI_informed_about_losing_port_lend_lease_flag
 
 			
+		}
+		highlight_states = {
+			highlight_states_trigger = { 
+			
+				is_core_of = CHI
+				NOT = {
+					state = 609
+					state = 610
+					state = 716
+					state = 745
+					state = 608
+					state = 614
+					state = 597
+					state = 743
+					state = 598
+				}
+				NOT = {
+					is_fully_controlled_by = CHI
+				}
+				
+				any_province_building_level = {
+					province = {
+						all_provinces = yes
+						limit_to_naval_base = yes
+					}
+					building = naval_base
+					level > 4
+				}
+			
+			}
 		}
 		ai_will_do = {
 			factor = 12
@@ -1216,6 +1297,7 @@ CHI_roads_of_life = {
 				}
 				
 			}
+			
 			CHI = {
 				add_equipment_to_stockpile = { type = infantry_equipment amount = CHI_oversees_inf_equip_lend_lease producer = USA }
 				add_equipment_to_stockpile = { type = horse_equipment amount = CHI_oversees_horse_equip_lend_lease producer = USA }
@@ -1262,6 +1344,76 @@ CHI_roads_of_life = {
 			set_variable = { 
 				var = CHI_research_equip_lend_lease 
 				value = 0
+			}
+			if = {
+				limit = {
+					check_variable = {
+						var = CHI_coastal_state_counter_var
+						value = 1 
+						compare = greater_than_or_equals
+					}
+				}
+				custom_effect_tooltip = CHI_in_addition_we_receive_tt
+				CHI = {
+					add_equipment_to_stockpile = { type = infantry_equipment amount = CHI_USA_extra_guns producer = USA }
+					if = {
+						limit = {
+							check_variable = { CHI_USA_extra_arty = 1 }
+						}
+						if = {
+							limit = {
+								has_tech = artillery8_2
+							}
+							add_equipment_to_stockpile = { type = artillery_equipment amount = 360 producer = USA }
+						}
+						else_if = {
+							limit = {
+								has_tech = heavy_artillery6_1
+							}
+							add_equipment_to_stockpile = { type = heavy_artillery_equipment amount = 175 producer = USA }
+						}
+
+						else_if = {
+							limit = {
+								has_tech = pack_artillery4
+							}
+							add_equipment_to_stockpile = { type = pack_artillery_equipment amount = 660 producer = USA }
+						}
+						
+						else_if = {
+							limit = {
+								has_tech = artillery4
+							}
+							add_equipment_to_stockpile = { type = artillery_equipment amount = 360 producer = USA }
+						}
+						else_if = {
+							limit = {
+								has_tech = heavy_artillery2
+							}
+							add_equipment_to_stockpile = { type = heavy_artillery_equipment amount = 175 producer = USA }
+						}
+						else_if = {
+							limit = {
+								has_tech = field_gun3
+							}
+							add_equipment_to_stockpile = { type = field_gun_equipment amount = 440 producer = USA }
+						}
+						else_if = {
+							add_equipment_to_stockpile = { type = field_gun_equipment amount = 440 producer = USA }
+						}
+
+					}
+					add_equipment_to_stockpile = { type = small_plane_airframe amount = CHI_USA_extra_fighters producer = USA }
+					add_equipment_to_stockpile = { type = small_plane_cas_airframe amount = CHI_USA_extra_cas producer = USA }
+					add_equipment_to_stockpile = { type = light_tank_chassis amount = CHI_USA_extra_light_tanks producer = USA }
+					add_equipment_to_stockpile = { type = motorized_equipment amount = CHI_USA_extra_mot producer = USA }
+				}
+				set_variable = { var = CHI_USA_extra_guns value = 0 }
+				set_variable = { var = CHI_USA_extra_fighters value = 0 }
+				set_variable = { var = CHI_USA_extra_cas value = 0 }
+				set_variable = { var = CHI_USA_extra_light_tanks value = 0 }
+				set_variable = { var = CHI_USA_extra_mot value = 0 }
+				set_variable = { var = CHI_USA_extra_arty value = 0 }
 			}
 			if = {
 				limit = {
@@ -1437,14 +1589,13 @@ CHI_roads_of_life = {
 						limit = {
 							has_tech = field_gun3
 						}
-						add_equipment_to_stockpile = { type = field_equipment amount = 440 producer = SOV }
+						add_equipment_to_stockpile = { type = field_gun_equipment amount = 440 producer = SOV }
 					}
 					else_if = {
-						add_equipment_to_stockpile = { type = artillery_equipment amount = 360 producer = SOV }
+						add_equipment_to_stockpile = { type = field_gun_equipment amount = 440 producer = SOV }
 					}
 
 				}
-				add_equipment_to_stockpile = { type = artillery_equipment amount = CHI_SOV_extra_guns producer = SOV }
 				add_equipment_to_stockpile = { type = small_plane_airframe amount = CHI_SOV_extra_fighters producer = SOV }
 				add_equipment_to_stockpile = { type = small_plane_cas_airframe amount = CHI_SOV_extra_cas producer = SOV }
 				add_equipment_to_stockpile = { type = light_tank_chassis amount = CHI_SOV_extra_light_tanks producer = SOV }
@@ -1851,6 +2002,79 @@ CHI_roads_of_life = {
 			}
 			if = {
 				limit = {
+					check_variable = {
+						var = CHI_coastal_state_counter_var
+						value = 0 
+						compare = less_than_or_equals
+					}
+					NOT = {
+						has_global_flag = CHI_ledo_road_built
+					}
+				}
+				custom_effect_tooltip = CHI_in_addition_we_receive_tt
+				CHI = {
+					add_equipment_to_stockpile = { type = infantry_equipment amount = CHI_USA_extra_guns producer = USA }
+					if = {
+						limit = {
+							check_variable = { CHI_USA_extra_arty = 1 }
+						}
+						if = {
+							limit = {
+								has_tech = artillery8_2
+							}
+							add_equipment_to_stockpile = { type = artillery_equipment amount = 360 producer = USA }
+						}
+						else_if = {
+							limit = {
+								has_tech = heavy_artillery6_1
+							}
+							add_equipment_to_stockpile = { type = heavy_artillery_equipment amount = 175 producer = USA }
+						}
+
+						else_if = {
+							limit = {
+								has_tech = pack_artillery4
+							}
+							add_equipment_to_stockpile = { type = pack_artillery_equipment amount = 660 producer = USA }
+						}
+						
+						else_if = {
+							limit = {
+								has_tech = artillery4
+							}
+							add_equipment_to_stockpile = { type = artillery_equipment amount = 360 producer = USA }
+						}
+						else_if = {
+							limit = {
+								has_tech = heavy_artillery2
+							}
+							add_equipment_to_stockpile = { type = heavy_artillery_equipment amount = 175 producer = USA }
+						}
+						else_if = {
+							limit = {
+								has_tech = field_gun3
+							}
+							add_equipment_to_stockpile = { type = field_gun_equipment amount = 440 producer = USA }
+						}
+						else_if = {
+							add_equipment_to_stockpile = { type = field_gun_equipment amount = 440 producer = USA }
+						}
+
+					}
+					add_equipment_to_stockpile = { type = small_plane_airframe amount = CHI_USA_extra_fighters producer = USA }
+					add_equipment_to_stockpile = { type = small_plane_cas_airframe amount = CHI_USA_extra_cas producer = USA }
+					add_equipment_to_stockpile = { type = light_tank_chassis amount = CHI_USA_extra_light_tanks producer = USA }
+					add_equipment_to_stockpile = { type = motorized_equipment amount = CHI_USA_extra_mot producer = USA }
+				}
+				set_variable = { var = CHI_USA_extra_guns value = 0 }
+				set_variable = { var = CHI_USA_extra_fighters value = 0 }
+				set_variable = { var = CHI_USA_extra_cas value = 0 }
+				set_variable = { var = CHI_USA_extra_light_tanks value = 0 }
+				set_variable = { var = CHI_USA_extra_mot value = 0 }
+				set_variable = { var = CHI_USA_extra_arty value = 0 }
+			}
+			if = {
+				limit = {
 					check_variable = { CHI_next_research_bonus = 1 }
 				}
 				
@@ -2097,6 +2321,78 @@ CHI_roads_of_life = {
 			set_variable = {
 				var = CHI_ledo_routes_used 
 				value = 0
+			}
+			if = {
+				limit = {
+					check_variable = {
+						var = CHI_coastal_state_counter_var
+						value = 0 
+						compare = less_than_or_equals
+					}
+					has_global_flag = CHI_ledo_road_built
+					
+				}
+				custom_effect_tooltip = CHI_in_addition_we_receive_tt
+				CHI = {
+					add_equipment_to_stockpile = { type = infantry_equipment amount = CHI_USA_extra_guns producer = USA }
+					if = {
+						limit = {
+							check_variable = { CHI_USA_extra_arty = 1 }
+						}
+						if = {
+							limit = {
+								has_tech = artillery8_2
+							}
+							add_equipment_to_stockpile = { type = artillery_equipment amount = 360 producer = USA }
+						}
+						else_if = {
+							limit = {
+								has_tech = heavy_artillery6_1
+							}
+							add_equipment_to_stockpile = { type = heavy_artillery_equipment amount = 175 producer = USA }
+						}
+
+						else_if = {
+							limit = {
+								has_tech = pack_artillery4
+							}
+							add_equipment_to_stockpile = { type = pack_artillery_equipment amount = 660 producer = USA }
+						}
+						
+						else_if = {
+							limit = {
+								has_tech = artillery4
+							}
+							add_equipment_to_stockpile = { type = artillery_equipment amount = 360 producer = USA }
+						}
+						else_if = {
+							limit = {
+								has_tech = heavy_artillery2
+							}
+							add_equipment_to_stockpile = { type = heavy_artillery_equipment amount = 175 producer = USA }
+						}
+						else_if = {
+							limit = {
+								has_tech = field_gun3
+							}
+							add_equipment_to_stockpile = { type = field_gun_equipment amount = 440 producer = USA }
+						}
+						else_if = {
+							add_equipment_to_stockpile = { type = field_gun_equipment amount = 440 producer = USA }
+						}
+
+					}
+					add_equipment_to_stockpile = { type = small_plane_airframe amount = CHI_USA_extra_fighters producer = USA }
+					add_equipment_to_stockpile = { type = small_plane_cas_airframe amount = CHI_USA_extra_cas producer = USA }
+					add_equipment_to_stockpile = { type = light_tank_chassis amount = CHI_USA_extra_light_tanks producer = USA }
+					add_equipment_to_stockpile = { type = motorized_equipment amount = CHI_USA_extra_mot producer = USA }
+				}
+				set_variable = { var = CHI_USA_extra_guns value = 0 }
+				set_variable = { var = CHI_USA_extra_fighters value = 0 }
+				set_variable = { var = CHI_USA_extra_cas value = 0 }
+				set_variable = { var = CHI_USA_extra_light_tanks value = 0 }
+				set_variable = { var = CHI_USA_extra_mot value = 0 }
+				set_variable = { var = CHI_USA_extra_arty value = 0 }
 			}
 			if = {
 				limit = {
