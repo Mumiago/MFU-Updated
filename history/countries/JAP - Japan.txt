@@ -1,15 +1,21 @@
 ﻿capital = 282
 
 oob = "JAP_1936"
-
-set_stability = 0.95
-set_war_support = 0.9
+set_rule = { can_create_factions = no }
+set_stability = 0.1
+set_war_support = 0.5
 set_fuel_ratio = 0.75
 set_research_slots = 6
 starting_train_buffer = 2
 set_country_flag = fuel_system_enabled
 set_country_flag = JAP_subs1_flag
 set_country_flag = JAP_no_grinding_flag
+
+
+
+set_variable = { JAP_army_attack_factor_polo_var = 0 }
+set_variable = { JAP_army_defense_factor_polo_var = 0 }
+set_variable = { JAP_war_escalation_var = 0 }
 
 set_variable = { JAP_factory_output_modifier = 0.3 }
 set_variable = { JAP_dockyard_output_modifier = 0.25 }
@@ -49,21 +55,61 @@ set_variable = { JAP_needed_motorized_equipment = 1999 }
 set_variable = { JAP_needed_manpower = 800000 }
 
 
-add_ideas = {
-	limited_exports
-	limited_conscription
-	partial_economic_mobilisation
-	JAP_zaibatsus
-	JAP_subs_1
-	jap_man_trade
-	MTG_naval_treaty_adherent
+set_variable = {
+	JAP_production_factory_max_efficiency_factor_var = 0.08
 }
+set_variable = {
+	JAP_production_speed_dockyard_factor_var = -0.2
+}
+set_variable = {
+	JAP_production_speed_arms_factory_factor_var = -0.4
+}
+set_variable = {
+	JAP_production_speed_industrial_complex_factor_var = 0.25
+}
+
 add_dynamic_modifier = {
-	modifier = JAP_china_war_bonus
+	modifier = JAP_eco_and_politics
 }
 add_dynamic_modifier = {
 	modifier = JAP_ija_general_staff_original
 }	
+if = {
+	limit = {
+		has_game_rule = {
+			rule = script_china_war
+			option = HISTORICAL
+		}
+	}
+	add_dynamic_modifier = { 
+		modifier = JAP_macro_polo
+	}
+}
+if = {
+	limit = {
+		has_game_rule = {
+			rule = script_china_war
+			option = DEFAULT
+		}
+	}
+	add_dynamic_modifier = {
+		modifier = JAP_china_war_bonus
+	}
+}
+
+
+add_ideas = {
+     JAP_kodoha_plot
+     JAP_hirohito
+	limited_exports
+	limited_conscription
+	low_economic_mobilisation 
+	JAP_subs_1
+	jap_man_trade
+	MTG_naval_treaty_adherent
+    JAP_starting_research_debuff	
+}
+
 
 create_faction = "Dai Tōa Kyōeiken"
 add_to_faction = JAP 
@@ -73,7 +119,8 @@ set_autonomy = {
 	target = RCC
 	autonomous_state = autonomy_colony
 	freedom_level = 0.5
-}
+
+
 
 609 = {
 	start_resistance = yes
@@ -137,7 +184,8 @@ if = {
 		JAP_interservice_rivalry_balanced		
 	}
 }
-recruit_character = JAP_hirohito
+recruit_character = JAP_Okada_Keisuke
+recruit_character = JAP_fumimaro_konoe
 recruit_character = JAP_sanzō_nosaka
 recruit_character = JAP_tetsu_katayama
 recruit_character = JAP_hisaichi_terauchi
@@ -190,11 +238,8 @@ recruit_character = JAP_mitsuo_fuchida
 recruit_character = JAP_osami_nagano
 recruit_character = JAP_torashiro_kawabe
 recruit_character = JAP_shigetaro_shimada
-recruit_character = JAP_naoki_hoshino
 recruit_character = JAP_okinori_kaya
 recruit_character = JAP_kanin_kotohito
-recruit_character = JAP_hajime_sugiyama_advisor
-recruit_character = JAP_fumimaro_konoe
 recruit_character = JAP_sanzo_nosaka
 recruit_character = JAP_nishizo_tsukahara
 recruit_character = JAP_chuichi_nagumo
@@ -210,8 +255,11 @@ recruit_character = JAP_matome_ugaki
 recruit_character = JAP_intelligence_advisor
 recruit_character = JAP_hajime_sugiyama
 recruit_character = JAP_douglas_macarthur
+recruit_character = JAP_tsuji_masanobu
+recruit_character = JAP_bose
 
-
+country_event = { id = japan.26 days = 57 } #february 26th incident
+country_event = { id = japan.32 days = 900 } #battle of lake khasan
 set_technology = { #player 
 	basic_train = 1
 
@@ -231,6 +279,7 @@ set_technology = { #player
 	electronic_mechanical_engineering = 1
 	radio = 1
 	paratroopers = 1
+	landing_craft = 1
 	################# support ###############
 	tech_recon = 1
 	tech_support = 1
@@ -268,13 +317,14 @@ set_technology = { #player
 	fighter_1936 = 1
 	cv_fighter_1934 = 1
 	cv_CAS_1937 = 1
+	strategic_bomber_1937 = 1
 	######  doctrines #####
 	trench_warfare = 1
 	base_strike = 1
 	######  economic ######
 	basic_machine_tools = 1
 	starting_industry = 1
-	
+	mtg_landing_craft = 1
 	JAP_ija_base = 1
 }
    
@@ -459,6 +509,7 @@ if = {
 		mtg_transport = 1 	
 		magnetic_detonator = 1
 		improved_airplane_launcher = 1
+
 	}
 	set_naval_oob = "JAP_1936_naval"
 }
@@ -495,10 +546,10 @@ set_politics = {
 	elections_allowed = no
 }
 set_popularities = {
-	democratic = 0
-	fascism = 70
-	communism = 1
-	neutrality = 29
+	democratic = 40
+	fascism = 45
+	communism = 3
+	neutrality = 12
 }
 
 if = {
@@ -1006,9 +1057,9 @@ if = {
 			modules = {
 				fixed_ship_torpedo_slot = ship_torpedo_sub_2
 				fixed_ship_engine_slot = sub_ship_engine_2
-				front_1_custom_slot = ship_airplane_launcher_1
+				front_1_custom_slot = ship_extra_fuel_tank
 				mid_1_custom_slot = empty
-				rear_1_custom_slot = ship_extra_fuel_tank
+				rear_1_custom_slot = ship_airplane_launcher_1
 			}
 		}
 }
