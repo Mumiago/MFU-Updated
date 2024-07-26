@@ -23,14 +23,9 @@ danzig_of_war_preparation = {
 	}
 	
 	abort = {
-		OR = {
-			NOT = { country_exists = POL }
-			
-			AND = {
-				GER = { has_war_with = POL }
-			}
-			owns_state = 85 
-		}
+
+			owns_state = 10
+
 	}
 	ai_strategy = {
 		type = antagonize
@@ -47,6 +42,12 @@ danzig_of_war_preparation = {
 		id = "POL"
 		value = 100
 	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 38 #Strategic Region ID - Poland
+		value = 5000 #value of stocked main front in active combat is usually around 35,000
+	}
+	ai_strategy = { type = front_armor_score id = "POL" value = 50000 }	
 }
 
 dont_die_in_mountains = {
@@ -98,7 +99,33 @@ dont_die_in_mountains = {
 		id = "JAP"
 		value = 500
 	}
+		ai_strategy = {
+		type = conquer
+		id = "FIN"
+		value = -500
+	}
+	
 
+	ai_strategy = {
+		type = ignore
+		id = "FIN"
+		value = 500
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = FIN
+		value = -200
+	}
+	ai_strategy = {
+		type = ignore
+		id = "ITA"
+		value = 500
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = ITA
+		value = -200
+	}
 	ai_strategy = {
 		type = front_unit_request
 		tag = SWI
@@ -160,6 +187,16 @@ soviet_ally = {
 		type = alliance
 		id = "SOV"			
 		value = 200
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = SOV
+		value = -220
+	}
+	ai_strategy = {
+		type = ignore
+		id = "SOV"
+		value = 2000
 	}	
 }
 
@@ -221,6 +258,21 @@ GER_scandinavia = {
 	ai_strategy = {
 		type = area_priority
 		id = scandinavia
+		value = -100
+	}
+}
+GER_scandinavia = {
+	abort = { always = no }
+	allowed = {
+		tag = GER
+	}
+	enable = {
+		original_tag = GER
+		NOR = {	has_capitulated = yes }
+	}
+
+	ai_strategy = {
+		type = garrison
 		value = -100
 	}
 }
@@ -527,7 +579,7 @@ war_with_yugoslavia = {
 	ai_strategy = {
 		type = front_unit_request
 		tag = YUG
-		value = 200
+		value = 100
 	}
 }
 
@@ -540,6 +592,7 @@ war_with_greece = {
 		NOR = { has_capitulated = yes }
 		FRA = { has_capitulated = yes }
 		country_exists = GRE
+		date > 1941.2.2
 	}
 	abort = {
 		NOT = { country_exists = GRE }
@@ -557,7 +610,7 @@ war_with_greece = {
 	ai_strategy = {
 		type = front_unit_request
 		tag = GRE
-		value = 200
+		value = 100
 	}
 }
 
@@ -567,7 +620,7 @@ war_with_soviets = {
 	}
 	enable = {
 		tag = GER
-		date > 1941.1.1
+		date > 1941.6.6
 		country_exists = SOV
 	}
 	abort = {
@@ -801,19 +854,42 @@ GER_prepare_to_conquer_scandinavia = {
 	}
 	
 	enable = {
-		date > 1940.1.1 
+		POL = { has_capitulated = yes }
 	}
 
 	abort_when_not_enabled = yes 
 
-	ai_strategy = { type = conquer id = "DEN" value = 200 }
+	ai_strategy = { type = conquer id = "DEN" value = 2000 }
 	ai_strategy = { type = conquer id = "NOR" value = 200 }
 	ai_strategy = { type = garrison value = -200 }
 	
 	ai_strategy = {
 		type = conquer
 		id = "NOR"
-		value = 100
+		value = 300
+	}
+	
+	ai_strategy = {
+		type = conquer
+		id = "DEN"
+		value = 300
+	}
+	
+	ai_strategy = {
+		type = front_control
+		state = 37
+		priority = 100
+		ordertype = front
+		ratio = 0.6
+		execution_type = rush
+		manual_attack = yes
+		execute_order = yes
+	}
+	
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 6 #Strategic Region ID - Denmark
+		value = 5000 #value of stocked main front in active combat is usually around 35,000
 	}
 	ai_strategy = {
 		type = front_control
@@ -822,20 +898,7 @@ GER_prepare_to_conquer_scandinavia = {
 		manual_attack = yes
 		execute_order = yes
 	}
-	ai_strategy = {
-		type = conquer
-		id = "DEN"
-		value = 100
-	}
-	ai_strategy = {
-		type = front_control
-		tag = DEN
-		execution_type = rush
-		manual_attack = yes
-		execute_order = yes
-	}
-
-	ai_strategy = { type = front_armor_score id = "DEN" value = 50000 }
+	ai_strategy = { type = front_armor_score id = "DEN" value = -50000 }
 	ai_strategy = { type = front_armor_score id = "NOR" value = -50000 }
 }
 
@@ -847,6 +910,7 @@ GER_prepare_to_fuck_the_benelux = {
 	
 	enable = {
 		POL = { has_capitulated = yes }
+		
 	}
 
 	abort_when_not_enabled = yes 
@@ -872,8 +936,20 @@ GER_prepare_to_fuck_the_benelux = {
 		tag = LUX  
 		value = 25
 	}
+	
+	ai_strategy = {
+		type = front_control
 
+		tag = BEL
 
+		ratio = 0.5
+
+		priority = 100
+		ordertype = front
+		execution_type = rush
+		execute_order = yes
+	}
+	ai_strategy = { type = front_armor_score id = "FRA" value = -50000 }
 	ai_strategy = { type = front_armor_score id = "BEL" value = 50000 }
 	ai_strategy = { type = front_armor_score id = "HOL" value = 50000 }
 }
@@ -1039,7 +1115,7 @@ GER_fuck_over_low_countries = {
 	ai_strategy = {
 		type = front_control
 		tag = HOL
-		execution_type = balanced
+		execution_type = rush
 		manual_attack = yes
 		execute_order = yes
 	}
@@ -1051,7 +1127,7 @@ GER_fuck_over_low_countries = {
 	ai_strategy = {
 		type = front_control
 		tag = BEL
-		execution_type = balanced
+		execution_type = rush
 		manual_attack = yes
 		execute_order = yes
 		value = 1000
@@ -1083,7 +1159,26 @@ GER_fuck_over_low_countries = {
 		tag = BEL
 		value = 5000
 	}	
-	
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 5 #Strategic Region ID - Benelux
+		value = 5000 #value of stocked main front in active combat is usually around 35,000
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 1 #Strategic Region ID - Southern England
+		value = -5000 #value of stocked main front in active combat is usually around 35,000
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 2 #Strategic Region ID - North England
+		value = -5000 #value of stocked main front in active combat is usually around 35,000
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 208 #Strategic Region ID -  France
+		value = -5000 #value of stocked main front in active combat is usually around 35,000
+	}
 }
 
 GER_finish_france = {
@@ -1112,6 +1207,11 @@ GER_finish_france = {
 	}	
 
 	ai_strategy = { type = front_armor_score id = "FRA" value = 50000 }
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 208 #Strategic Region ID -  France
+		value = 5000 #value of stocked main front in active combat is usually around 35,000
+	}
 }
 
 GER_defence_of_europe = {
@@ -1334,7 +1434,7 @@ GER_defend_heavy_water = {
 
 	ai_strategy = {
 		type = put_unit_buffers
-		ratio = 0.15
+		ratio = 0.1
 		states = { 
 			110
 			142
@@ -1550,7 +1650,7 @@ GER_start_the_blitz = {
 	}
 	enable = {
 		has_war_with = ENG
-		ENG = { controls_state = 1 }
+		ENG = { controls_state = 126 }
 		FRA = { has_capitulated = yes }
 		NOT = { has_war_with = SOV }
 		date > 1940.1.1
@@ -1561,12 +1661,32 @@ GER_start_the_blitz = {
 	ai_strategy = {
 		type = strategic_air_importance
 		id = 1 #Strategic Region ID - Southern England
-		value = 5000 #value of stocked main front in active combat is usually around 35,000
+		value = -5000 #value of stocked main front in active combat is usually around 35,000
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 2 #Strategic Region ID - North England
+		value = -5000 #value of stocked main front in active combat is usually around 35,000
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 3 #Strategic Region ID - Scotland
+		value = -30000 #value of stocked main front in active combat is usually around 35,000
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 4 #Strategic Region ID - Ireland
+		value = -30000 #value of stocked main front in active combat is usually around 35,000
 	}
 
 	ai_strategy = {
 		type = strategic_air_importance
 		id = 18 #Strategic Region ID - English Channel
+		value = -20000 #Too easy to lose planes here
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 42 #Strategic Region ID - Bay of Biscay
 		value = -20000 #Too easy to lose planes here
 	}
 }
@@ -1577,7 +1697,7 @@ GER_upgrade_the_blitz = {
 	}
 	enable = {
 		has_war_with = ENG
-		ENG = { controls_state = 1 }
+		ENG = { controls_state = 126 }
 		FRA = { has_capitulated = yes }
 		NOT = { has_war_with = SOV }
 		date > 1940.3.1
@@ -1588,7 +1708,27 @@ GER_upgrade_the_blitz = {
 	ai_strategy = {
 		type = strategic_air_importance
 		id = 1 #Strategic Region ID - Southern England
-		value = 10000 #value of stocked main front in active combat is usually around 35,000
+		value = -10000 #value of stocked main front in active combat is usually around 35,000
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 2 #Strategic Region ID - North England
+		value = -10000 #value of stocked main front in active combat is usually around 35,000
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 3 #Strategic Region ID - Scotland
+		value = -30000 #value of stocked main front in active combat is usually around 35,000
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 4 #Strategic Region ID - Ireland
+		value = -30000 #value of stocked main front in active combat is usually around 35,000
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 42 #Strategic Region ID - Bay of Biscay
+		value = -20000 #Too easy to lose planes here
 	}
 }
 
@@ -1598,7 +1738,7 @@ GER_upgrade_the_blitz_again = {
 	}
 	enable = {
 		has_war_with = ENG
-		ENG = { controls_state = 1 }
+		ENG = { controls_state = 126 }
 		FRA = { has_capitulated = yes }
 		NOT = { has_war_with = SOV }
 		date > 1940.6.1
@@ -1609,7 +1749,27 @@ GER_upgrade_the_blitz_again = {
 	ai_strategy = {
 		type = strategic_air_importance
 		id = 1 #Strategic Region ID - Southern England
-		value = 10000 #value of stocked main front in active combat is usually around 35,000
+		value = -10000 #value of stocked main front in active combat is usually around 35,000
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 2 #Strategic Region ID - North England
+		value = -10000 #value of stocked main front in active combat is usually around 35,000
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 3 #Strategic Region ID - Scotland
+		value = -30000 #value of stocked main front in active combat is usually around 35,000
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 4 #Strategic Region ID - Ireland
+		value = -30000 #value of stocked main front in active combat is usually around 35,000
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 42 #Strategic Region ID - Bay of Biscay
+		value = -20000 #Too easy to lose planes here
 	}
 }
 
@@ -1627,6 +1787,7 @@ GER_focus_yugo = {
 	}
 }
 
+
 GER_barb_assignments = {
 	enable = {
 		has_war_with = GER
@@ -1637,5 +1798,143 @@ GER_barb_assignments = {
 		type = front_armor_score
 		id = "SOV"
 		value = 50000
+	}
+}
+
+GER_focus_greece = {
+	allowed = {
+		tag = GER
+	}
+	enable = {
+		tag = GER
+		country_exists = GRE
+		owns_state = 108
+	}
+	
+	abort = {
+			owns_state = 829
+	}
+	ai_strategy = { type = front_armor_score id = "GRE" value = -50000 }
+	
+	ai_strategy = {
+		type = antagonize
+		id = "GRE"
+		value = 200
+	}
+	ai_strategy = {
+		type = prepare_for_war
+		id = "GRE"
+		value = 200
+	}
+	ai_strategy = {
+		type = conquer
+		id = "GRE"
+		value = 100
+	}
+	
+	
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 25 #Strategic Region ID - Greece
+		value = 30000 #value of stocked main front in active combat is usually around 35,000
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 1 #Strategic Region ID - Southern England
+		value = -10000 #value of stocked main front in active combat is usually around 35,000
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 2 #Strategic Region ID - North England
+		value = -10000 #value of stocked main front in active combat is usually around 35,000
+	}
+}
+
+GER_dont_waste_bombers_before_fra_exist = {
+	allowed = {
+		tag = GER
+	}
+	enable = {
+		tag = GER
+		date > 1939.6.1
+	}
+	abort = {
+		owns_state = 7
+		owns_state = 6
+	}
+
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 1 
+		value = -10000 
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 2 
+		value = -10000 
+	}	
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 3
+		value = -10000 
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 5
+		value = -10000 
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 20
+		value = -10000 
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 169
+		value = -10000 
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 208
+		value = -10000 
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 202
+		value = -10000 
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 209
+		value = -10000 
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 19
+		value = -10000 
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 18
+		value = -10000 
+	}
+}
+
+GER_dont_waste_bombers_before_fra_exist2 = {
+	allowed = {
+		tag = GER
+	}
+	enable = {
+		tag = GER
+		has_war_with = ENG
+	}
+	abort = {
+		owns_state = 219
+	}
+
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 18
+		value = -50000 
 	}
 }
