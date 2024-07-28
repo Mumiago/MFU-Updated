@@ -33,6 +33,8 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
+			
+			
 		hidden_effect = {
 		retire_country_leader = yes
 		}
@@ -589,7 +591,25 @@ focus_tree = {
 		}
 
 		available = {
-			date > 1937.6.1
+			if = { 
+				limit = {
+					has_game_rule = {
+						rule = script_china_war
+						option = DEFAULT
+					}
+				}
+				date > 1937.6.1
+			}
+			
+			if = {
+				limit = {
+					has_game_rule = {
+                        rule = script_china_war
+                        option = HISTORICAL
+                    }
+				}
+				has_war_with = CHI 
+			}
 		}
 
 		bypass = {
@@ -602,6 +622,19 @@ focus_tree = {
 
 
 		completion_reward = {
+			if = {
+				limit = {
+					has_game_rule = {
+                        rule = script_china_war
+                        option = HISTORICAL
+                    }
+				}
+				custom_effect_tooltip = JAP_war_escalation_tt
+				add_to_variable = {
+					var = JAP_war_escalation_var
+					value = 1
+				}
+			}
 		custom_effect_tooltip = JAP_modify_dep_tt
 			add_to_variable = {
 				JAP_production_speed_arms_factory_factor_var = 0.10
@@ -612,6 +645,7 @@ focus_tree = {
 				tooltip = JAP_prod_speed_civ_tt1
 			}
 			add_ideas = war_economy
+			
 		}
 	}
 	focus = {
@@ -1069,10 +1103,22 @@ focus_tree = {
 			factor = 10
 		}
 		available = {
-        OR = {
-			has_idea = USA_embargo
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = script_china_war
+						option = DEFAULT
+					}
+				}
+				OR = {
+					has_idea = USA_embargo
+					date > 1941.1.1
+				}
+			}
+			else = {
 				date > 1941.1.1
 			}
+			
 		}
 
 		cancel_if_invalid = yes
@@ -2891,6 +2937,11 @@ focus_tree = {
 						option = HISTORICAL 
 					}
 				}
+				custom_effect_tooltip = JAP_war_escalation_tt
+				add_to_variable = {
+					var = JAP_war_escalation_var
+					value = 1
+				}
 				MAN = {
 					add_ideas = jap_kwantung_army
 				}
@@ -2951,28 +3002,21 @@ focus_tree = {
 						}
 					}
 				}
+				
 				CHI = {
-					add_to_faction = PRC
+					country_event = china.1
 				}
-				if = {
-					CHI = {
-						country_event = china.100
-					}	
-					PRC = {
-						country_event = china.104
-					}	
-				}
-				if = {
-					CHI = {
-						country_event = china.1
-					}
-					PRC = {
-						country_event = china.104
-					}
+					
 							
-				}	
-				add_named_threat = { threat = 1 name = JAP_intervene_in_china }
-				#add_dynamic_modifier = { modifier = JAP_macro_polo }
+					
+				hidden_effect = {
+					CHI = {
+						country_event = { id = china.216 days = 2 }
+						country_event = { id = china.218 days = 60 }
+					}
+				}
+				
+				
 			}
 		}
 	}
@@ -3028,7 +3072,10 @@ focus_tree = {
 							state = 524
 						}
 					}
-					is_controlled_by = JAP 
+					OR = {
+						is_controlled_by = JAP 
+						is_controlled_by = RCC 
+					}
 				}
 				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
@@ -3047,7 +3094,11 @@ focus_tree = {
 							state = 524
 						}
 					}
-					is_controlled_by = JAP 
+					OR = {
+						is_controlled_by = JAP 
+						is_controlled_by = RCC 
+					}
+					
 				}
 				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
@@ -3075,8 +3126,8 @@ focus_tree = {
 
 		available = {
 			has_full_control_of_state = 615
-			has_full_control_of_state = 606
-			has_full_control_of_state = 592
+			has_full_control_of_state = 597
+			has_full_control_of_state = 598
 		}
 
 		bypass = {
@@ -3094,13 +3145,13 @@ focus_tree = {
 					amount = 3
 				}
 			}
-			606 = {
+			597 = {
 				add_resource = {
 					type = steel
 					amount = 3
 				}
 			}
-			592 = {
+			598 = {
 				add_resource = {
 					type = steel
 					amount = 3
@@ -3116,7 +3167,11 @@ focus_tree = {
 							state = 524
 						}
 					}
-					is_controlled_by = JAP 
+					OR = {
+						is_controlled_by = JAP 
+						is_controlled_by = RCC 
+					}
+					
 				}
 				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
@@ -3135,7 +3190,11 @@ focus_tree = {
 							state = 524
 						}
 					}
-					is_controlled_by = JAP 
+					OR = {
+						is_controlled_by = JAP
+						is_controlled_by = RCC
+					}
+					
 				}
 				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
@@ -3283,6 +3342,7 @@ focus_tree = {
 							is_controlled_by = ROOT
 							is_controlled_by = JAP
 							is_controlled_by = MAN
+							is_controlled_by = RCC
 						}
 					}
 				}
@@ -3561,6 +3621,7 @@ focus_tree = {
 								is_controlled_by = ROOT
 								is_controlled_by = JAP
 								is_controlled_by = MAN
+								is_controlled_by = RCC
 							}
 						}
 					}
@@ -3621,6 +3682,7 @@ focus_tree = {
 							is_controlled_by = ROOT
 							is_controlled_by = JAP
 							is_controlled_by = MAN
+							is_controlled_by = RCC
 						}
 					}
 				}
@@ -3909,7 +3971,11 @@ focus_tree = {
 						is_core_of = MAN
 					}
 					is_core_of = CHI 
-					is_fully_controlled_by = JAP 
+					OR = {
+						is_fully_controlled_by = JAP 
+						is_fully_controlled_by = RCC 
+					}
+					
 				}
 				add_compliance = 10
 				}			
@@ -3936,6 +4002,7 @@ focus_tree = {
 
 		available = {
 			has_war_with = CHI
+			has_war_with = USA	
 		
 		}
 
@@ -3943,10 +4010,26 @@ focus_tree = {
 
 		}
 		completion_reward = {
-			custom_effect_tooltip = "We will plan offensives in the following states:"
-			every_state = {
-				limit={ state = 821}
-				add_dynamic_modifier = { modifier = JAP_ichi_go days = 120 }
+			set_country_flag = { flag = JAP_offensive_going_on value = 1 days = 120 }
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = script_china_war
+						option = DEFAULT
+					}
+				}
+				custom_effect_tooltip = "We will plan offensives in the following states:"
+				every_state = {
+					limit={ state = 821}
+					add_dynamic_modifier = { modifier = JAP_ichi_go days = 120 }
+				}
+			}
+			else = {
+				custom_effect_tooltip = "We will plan offensives in the following states:"
+				every_state = {
+					limit={ OR = {state = 608 state = 614 state = 597 state = 743 state = 613 }}
+					add_dynamic_modifier = { modifier = JAP_ichi_go days = 120 }
+				}
 			}
 		}
 
@@ -3970,6 +4053,7 @@ focus_tree = {
 		available = {
 			NOT = {
 				has_country_flag = JAP_offensive_going_on
+				has_war_with = USA	
 			}
 
 		
@@ -3980,10 +4064,26 @@ focus_tree = {
 		}
 		completion_reward = {
 			set_country_flag = { flag = JAP_offensive_going_on value = 1 days = 120 }
-			custom_effect_tooltip = "We will plan offensives in the following states:"
-			every_state = {
-				limit={OR={state = 749 state = 596 state = 595 state = 593 state = 600}}
-				add_dynamic_modifier = { modifier = JAP_ichi_go days = 120 }
+			
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = script_china_war
+						option = DEFAULT
+					}
+				}
+				custom_effect_tooltip = "We will plan offensives in the following states:"
+				every_state = {
+					limit={OR={state = 749 state = 596 state = 595 state = 593 state = 600}}
+					add_dynamic_modifier = { modifier = JAP_ichi_go days = 120 }
+				}
+			}
+			else = {
+				custom_effect_tooltip = "We will plan offensives in all the Southern China coastal states:"
+				every_state = {
+					limit={OR={state = 596 state = 595 state = 822 state = 593 state = 592 state = 594 state = 591 }}
+					add_dynamic_modifier = { modifier = JAP_ichi_go days = 120 }
+				}
 			}
 		}
 
@@ -4007,6 +4107,7 @@ focus_tree = {
 		available = {
 			NOT = {
 				has_country_flag = JAP_offensive_going_on
+				has_war_with = USA	
 			}	
 
 		
@@ -4017,10 +4118,26 @@ focus_tree = {
 		}
 		completion_reward = {
 			set_country_flag = { flag = JAP_offensive_going_on value = 1 days = 120 }
-			custom_effect_tooltip = "We will plan offensives in the following states:"
-			every_state = {
-				limit={OR={state = 622 state = 746 state = 744}}
-				add_dynamic_modifier = { modifier = JAP_ichi_go days = 120 }
+			
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = script_china_war
+						option = DEFAULT
+					}
+				}
+				custom_effect_tooltip = "We will plan offensives in the following states:"
+				every_state = {
+					limit={OR={state = 622 state = 746 state = 744}}
+					add_dynamic_modifier = { modifier = JAP_ichi_go days = 120 }
+				}
+			}
+			else = {
+				custom_effect_tooltip = "We will plan offensives in the following states:"
+				every_state = {
+					limit={OR={state = 621 state = 615 state = 622 state = 746  }}
+					add_dynamic_modifier = { modifier = JAP_ichi_go days = 120 }
+				}
 			}
 		}
 
@@ -4044,6 +4161,7 @@ focus_tree = {
 		available = {
 			NOT = {
 				has_country_flag = JAP_offensive_going_on
+				has_war_with = USA	
 			}
 
 		
@@ -4054,10 +4172,26 @@ focus_tree = {
 		}
 		completion_reward = {
 			set_country_flag = { flag = JAP_offensive_going_on value = 1 days = 120 }
-			custom_effect_tooltip = "We will plan offensives in the following states:"
-			every_state = {
-				limit={OR={state = 747 state = 603 state = 599 state = 325}}
-				add_dynamic_modifier = { modifier = JAP_ichi_go days = 120 }
+			
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = script_china_war
+						option = DEFAULT
+					}
+				}
+				custom_effect_tooltip = "We will plan offensives in the following states:"
+				every_state = {
+					limit={OR={state = 747 state = 603 state = 599 state = 325}}
+					add_dynamic_modifier = { modifier = JAP_ichi_go days = 120 }
+				}
+			}
+			else = {
+				custom_effect_tooltip = "We will plan offensives in the following states:"
+				every_state = {
+					limit={OR={state = 602 state = 600 state = 599 state = 325}}
+					add_dynamic_modifier = { modifier = JAP_ichi_go days = 120 }
+				}
 			}
 		}
 
@@ -4081,6 +4215,7 @@ focus_tree = {
 		available = {
 			NOT = {
 				has_country_flag = JAP_offensive_going_on
+				has_war_with = USA	
 			}
 
 		
@@ -4091,10 +4226,26 @@ focus_tree = {
 		}
 		completion_reward = {
 			set_country_flag = { flag = JAP_offensive_going_on value = 1 days = 120 }
-			custom_effect_tooltip = "We will plan offensives in the following states:"
-			every_state = {
-				limit={OR={state = 605 state = 750 state = 602 state = 748}}
-				add_dynamic_modifier = { modifier = JAP_ichi_go days = 120 }
+			
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = script_china_war
+						option = DEFAULT
+					}
+				}
+				custom_effect_tooltip = "We will plan offensives in the following states:"
+				every_state = {
+					limit={OR={state = 605 state = 750 state = 602 state = 748}}
+					add_dynamic_modifier = { modifier = JAP_ichi_go days = 120 }
+				}
+			}
+			else = {
+				custom_effect_tooltip = "We will plan offensives in the following states:"
+				every_state = {
+					limit={OR={state = 620 state = 820 state = 750 state = 744}}
+					add_dynamic_modifier = { modifier = JAP_ichi_go days = 120 }
+				}
 			}
 		}
 
@@ -4117,6 +4268,7 @@ focus_tree = {
 
 		available = {
 			date > 1942.1.1
+			has_war_with = USA
 
 		}
 
@@ -4124,30 +4276,75 @@ focus_tree = {
 
 		}
 		completion_reward = {
-			hidden_effect = {
-				every_state = {
-					limit = {
-						is_core_of = CHI
-						NOT = {
-							state = 747
-							state = 745
-							state = 524
-							is_core_of = MAN
-							
-						}
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = script_china_war
+						option = DEFAULT
 					}
-					remove_province_modifier = {
-						static_modifiers = { CHI_frontline_modifier0 }
-						province = {
-							all_provinces = yes
+				}
+				hidden_effect = {
+					every_state = {
+						limit = {
+							is_core_of = CHI
+							NOT = {
+								state = 747
+								state = 745
+								state = 524
+								is_core_of = MAN
+								
+							}
+						}
+						remove_province_modifier = {
+							static_modifiers = { CHI_frontline_modifier0 }
+							province = {
+								all_provinces = yes
+							}
 						}
 					}
 				}
+				custom_effect_tooltip = JAP_final_china_offensive_tt
+				add_timed_idea = {
+					idea = JAP_china_bonus
+					days = 180
+				}
 			}
-			custom_effect_tooltip = JAP_final_china_offensive_tt
-			add_timed_idea = {
-				idea = JAP_china_bonus
-				days = 180
+			else = {
+				hidden_effect = {
+					every_state = {
+						limit = {
+							is_core_of = CHI
+							NOT = {
+								state = 747
+								state = 745
+								state = 524
+								is_core_of = MAN
+								
+							}
+						}
+						remove_province_modifier = {
+							static_modifiers = { china_speed2 }
+							province = {
+								all_provinces = yes
+							}
+						}
+					}
+				}
+				custom_effect_tooltip = JAP_final_china_offensive_tt
+				every_country ={
+					limit = {
+						OR = {
+							tag = RCC 
+							tag = MAN 
+							tag = JAP 
+						}
+					}
+					add_timed_idea = {
+						idea = JAP_china_bonus2
+						days = 180
+					}
+				}
+				
 			}
 			
 		}
@@ -4179,10 +4376,49 @@ focus_tree = {
 
 	}
 	completion_reward = {
-		#custom_effect_tooltip = JAP_north_states_tt
+		custom_effect_tooltip = JAP_north_states_tt
+		hidden_effect = {
+			MAN = {
+				remove_state_core = 612
+				remove_state_core = 611
+			}
+		}
+		RCC = {
+			RCC = {
+				set_cosmetic_tag = RCC_wang_jingwei
+				create_country_leader = {
+					name = "Wang Jingwei"
+					desc = ""
+					picture = "gfx/leaders/JAP/portrait_chi_wang_jingwei.dds"
+					expire = "1965.1.1"
+					ideology = rexism
+					traits = {
+						RCC_wang_9
+					}
+				}
+			}
+			transfer_state = 612
+			transfer_state = 611
+			add_state_core = 612
+			add_state_core = 611
+			add_state_core = 621
+			add_state_core = 746
+			show_unit_leaders_tooltip = MAN_demchugdongrub
+			show_unit_leaders_tooltip = MAN_li_shouxin
+			show_unit_leaders_tooltip = MAN_altanochir
+			show_unit_leaders_tooltip = MAN_jodubjab
+		}
 		if = {
 			limit = {
-				controls_state = 608
+				OR = {
+					JAP = {
+						controls_state = 608
+					}
+					RCC = {
+						controls_state = 608
+					}
+				}
+				
 			}
 			608 = {
 				add_compliance = 10
@@ -4190,7 +4426,15 @@ focus_tree = {
 		}
 		if = {
 			limit = {
-				controls_state = 614
+				OR = {
+					JAP = {
+						controls_state = 614
+					}
+					RCC = {
+						controls_state = 614
+					}
+				}
+			
 			}
 			614 = {
 				add_compliance = 10
@@ -4198,7 +4442,14 @@ focus_tree = {
 		}
 		if = {
 			limit = {
-				controls_state = 598
+				OR = {
+					JAP = {
+						controls_state = 598
+					}
+					RCC = {
+						controls_state = 598
+					}
+				}
 			}
 			598 = {
 				add_compliance = 10
@@ -4206,7 +4457,15 @@ focus_tree = {
 		}
 		if = {
 			limit = {
-				controls_state = 613
+
+				OR = {
+					JAP = {
+						controls_state = 613
+					}
+					RCC = {
+						controls_state = 613
+					}
+				}
 			}
 			613 = {
 				add_compliance = 10
@@ -4214,7 +4473,14 @@ focus_tree = {
 		}
 		if = {
 			limit = {
-				controls_state = 597
+				OR = {
+					JAP = {
+						controls_state = 597
+					}
+					RCC = {
+						controls_state = 597
+					}
+				}
 			}
 			597 = {
 				add_compliance = 10
@@ -4222,7 +4488,14 @@ focus_tree = {
 		}
 		if = {
 			limit = {
-				controls_state = 743
+				OR = {
+					JAP = {
+						controls_state = 743
+					}
+					RCC = {
+						controls_state = 743
+					}
+				}
 			}
 			743 = {
 				add_compliance = 10
@@ -4256,60 +4529,100 @@ focus_tree = {
 	}
 	
 		completion_reward = {
-
-			every_state = {
+			if = {
 				limit = {
-					NOT = {	
-						state = 746
-						state = 622
-						state = 744
-						state = 605
-						state = 620
-						state = 750
-						state = 748
-						state = 602
-						state = 600
-						state = 595
-						state = 593
-						state = 599
-						state = 603
-						state = 325
-						state = 747
-						state = 751
-						state = 752
-						state = 601
-						state = 753
-						state = 604
-						state = 754
-						state = 283
-						state = 616
-						state = 756
-						state = 755
-						state = 759
-						state = 760
-						state = 618
-						state = 617
-						state = 287
-						state = 619
-						state = 609
-						state = 524
-						state = 596
-						state = 749
-						is_core_of = MAN
+					has_game_rule = {
+						rule = script_china_war
+						option = DEFAULT
 					}
-					is_core_of = CHI 
-					is_fully_controlled_by = JAP 
 				}
-				add_resistance_target = {
-					amount = 7
-				}			
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
+				every_state = {
+					limit = {
+						NOT = {	
+							state = 746
+							state = 622
+							state = 744
+							state = 605
+							state = 620
+							state = 750
+							state = 748
+							state = 602
+							state = 600
+							state = 595
+							state = 593
+							state = 599
+							state = 603
+							state = 325
+							state = 747
+							state = 751
+							state = 752
+							state = 601
+							state = 753
+							state = 604
+							state = 754
+							state = 283
+							state = 616
+							state = 756
+							state = 755
+							state = 759
+							state = 760
+							state = 618
+							state = 617
+							state = 287
+							state = 619
+							state = 609
+							state = 524
+							state = 596
+							state = 749
+							is_core_of = MAN
+						}
+						is_core_of = CHI 
+						OR = {
+							is_controlled_by = RCC 
+							is_controlled_by = JAP 
+						}
+						
+					}
+					add_resistance_target = {
+						amount = 7
+					}			
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
 
+
+				}
+			}
+			else = {
+				every_state = {
+					limit = {
+						NOT = {	
+							state = 745
+							state = 524
+							is_core_of = MAN
+						}
+						is_core_of = CHI 
+						OR = {
+							is_controlled_by = RCC 
+							is_controlled_by = JAP 
+						}
+						
+					}
+					add_resistance_target = {
+						amount = 7
+					}			
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+
+
+				}
 
 			}
 
@@ -4341,37 +4654,159 @@ focus_tree = {
 
 	}
 	completion_reward = {
-		custom_effect_tooltip = JAP_north_states_tt3
 		if = {
 			limit = {
-				controls_state = 744
+				has_game_rule = {
+					rule = script_china_war
+					option = DEFAULT
+				}
 			}
-			add_manpower = 200000
-			622 = {
-				add_resistance_target = {
-					amount = 5
+			custom_effect_tooltip = JAP_north_states_tt3
+			if = {
+				limit = {
+					controls_state = 746
+				}
+				add_manpower = 200000
+				746 = {
+					add_resistance_target = {
+						amount = 5
+					}
+				}
+			}
+			if = {
+				limit = {
+					controls_state = 622
+				}
+				add_manpower = 200000
+				622 = {
+					add_resistance_target = {
+						amount = 5
+					}
+				}
+			}
+			if = {
+				limit = {
+					controls_state = 744
+				}
+				add_manpower = 200000
+				744 = {
+					add_resistance_target = {
+						amount = 5
+					}
 				}
 			}
 		}
-		if = {
-			limit = {
-				controls_state = 622
-			}
-			add_manpower = 200000
-			622 = {
-				add_resistance_target = {
-					amount = 5
+		else = {
+			custom_effect_tooltip = JAP_recruit_manpower_tt
+			if = {
+				limit = {
+					OR = {
+						JAP = {
+							controls_state = 608
+						}
+						RCC = {
+							controls_state = 608
+						}
+					}
+					
+				}
+				add_manpower = 200000
+				608 = {
+					add_resistance_target = {
+						amount = 5
+					}
 				}
 			}
-		}
-		if = {
-			limit = {
-				controls_state = 744
+			if = {
+				limit = {
+					OR = {
+						JAP = {
+							controls_state = 614
+						}
+						RCC = {
+							controls_state = 614
+						}
+					}
+				
+				}
+				add_manpower = 200000
+				614 = {
+					add_resistance_target = {
+						amount = 5
+					}
+				}
 			}
-			add_manpower = 200000
-			744 = {
-				add_resistance_target = {
-					amount = 5
+			if = {
+				limit = {
+					OR = {
+						JAP = {
+							controls_state = 598
+						}
+						RCC = {
+							controls_state = 598
+						}
+					}
+				}
+				add_manpower = 200000
+				598 = {
+					add_resistance_target = {
+						amount = 5
+					}
+				}
+			}
+			if = {
+				limit = {
+
+					OR = {
+						JAP = {
+							controls_state = 613
+						}
+						RCC = {
+							controls_state = 613
+						}
+					}
+				}
+				add_manpower = 200000
+				613 = {
+					add_resistance_target = {
+						amount = 5
+					}
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						JAP = {
+							controls_state = 597
+						}
+						RCC = {
+							controls_state = 597
+						}
+					}
+				}
+				add_manpower = 200000
+				597 = {
+					add_resistance_target = {
+						amount = 5
+					}
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						JAP = {
+							controls_state = 743
+						}
+						RCC = {
+							controls_state = 743
+						}
+					}
+				}
+				add_manpower = 200000
+				743 = {
+					add_resistance_target = {
+						amount = 5
+					}
 				}
 			}
 		}
@@ -4397,130 +4832,239 @@ focus_tree = {
 	}
 
 	available = {
-		OR={
-			JAP = {
-			controls_state = 620
-			controls_state = 606
-			controls_state = 607
+		if = {
+			limit = {
+				has_game_rule = {
+					rule = script_china_war
+					option = DEFAULT
+				}
+			}
+				OR={
+					JAP = {
+					controls_state = 620
+					controls_state = 606
+					controls_state = 607
+				}
+				MAN={
+					controls_state = 620
+					controls_state = 606
+					controls_state = 607
+				}
+			}
 		}
-		MAN={
-			controls_state = 620
-			controls_state = 606
-			controls_state = 607
-		}
+		else = {
+			any_state = {
+				NOT = {	
+					state = 745
+					state = 524
+					is_core_of = MAN
+				}
+				is_core_of = CHI 
+				OR = {
+					is_controlled_by = RCC 
+					is_controlled_by = JAP 
+				}
+				arms_factory > 1
+
+			}
+			any_state = {
+				NOT = {	
+					state = 745
+					state = 524
+					is_core_of = MAN
+				}
+				is_core_of = CHI 
+				OR = {
+					is_controlled_by = RCC 
+					is_controlled_by = JAP 
+				}
+				industrial_complex > 1
+			}
 		}
 	}
 
 	bypass = {
 	}
 	completion_reward = {
-		620 = {
-			add_resistance_target = {
-				amount = 7
-			}	
-			
-			if = {
-				limit = {
-					620 = {
-						arms_factory > 2
-					}
-				}
-				remove_building = {
-					type = arms_factory
-					level = 3
+		if = {
+			limit = {
+				has_game_rule = {
+					rule = script_china_war
+					option = DEFAULT
 				}
 			}
-			else_if = {
-				limit = {
-					620 = {
-						industrial_complex > 2
-					}
-				}
-				remove_building = {
-					type = industrial_complex
-					level = 2
-				}
-			}	
-
-		}
-		606 = {
-			add_resistance_target = {
-				amount = 7
-			}
-			if = {
-				limit = {
-					606 = {
-						arms_factory > 2
-					}
-				}
-				remove_building = {
-					type = arms_factory
-					level = 3
-				}
-			}
-			else_if = {
-				limit = {
-					606 = {
-						industrial_complex > 2
-					}
-				}
-				remove_building = {
-					type = industrial_complex
-					level = 2
-				}
-			}			
-
-		}
-		607 = {
-			add_resistance_target = {
+			620 = {
+				add_resistance_target = {
 					amount = 7
-			}
-			if = {
-				limit = {
-					607 = {
-						arms_factory > 2
+				}	
+				
+				if = {
+					limit = {
+						620 = {
+							arms_factory > 2
+						}
+					}
+					remove_building = {
+						type = arms_factory
+						level = 3
 					}
 				}
-				remove_building = {
-					type = arms_factory
-					level = 3
-				}
+				else_if = {
+					limit = {
+						620 = {
+							industrial_complex > 2
+						}
+					}
+					remove_building = {
+						type = industrial_complex
+						level = 2
+					}
+				}	
+
 			}
-			else_if = {
-				limit = {
-					607 = {
-						industrial_complex > 2
+			606 = {
+				add_resistance_target = {
+					amount = 7
+				}
+				if = {
+					limit = {
+						606 = {
+							arms_factory > 2
+						}
+					}
+					remove_building = {
+						type = arms_factory
+						level = 3
 					}
 				}
-				remove_building = {
-					type = industrial_complex
-					level = 2
+				else_if = {
+					limit = {
+						606 = {
+							industrial_complex > 2
+						}
+					}
+					remove_building = {
+						type = industrial_complex
+						level = 2
+					}
+				}			
+
+			}
+			607 = {
+				add_resistance_target = {
+						amount = 7
+				}
+				if = {
+					limit = {
+						607 = {
+							arms_factory > 2
+						}
+					}
+					remove_building = {
+						type = arms_factory
+						level = 3
+					}
+				}
+				else_if = {
+					limit = {
+						607 = {
+							industrial_complex > 2
+						}
+					}
+					remove_building = {
+						type = industrial_complex
+						level = 2
+					}
+				}
+								
+			}
+				805 = {
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = arms_factory
+						level = 3
+						instant_build = yes
+					}
+				}
+				799 = {
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = arms_factory
+						level = 3
+						instant_build = yes
+					}
+				}
+				533 = {
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = arms_factory
+						level = 3
+						instant_build = yes
+					}
 				}
 			}
-							
-		}
-			805 = {
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = arms_factory
-					level = 3
-					instant_build = yes
+			else = {
+				random_state = {
+					limit = {
+						NOT = {	
+							state = 745
+							state = 524
+							is_core_of = MAN
+						}
+						is_core_of = CHI 
+						OR = {
+							is_controlled_by = RCC 
+							is_controlled_by = JAP 
+						}
+						industrial_complex > 1
+					}
+					remove_building = {
+						type = industrial_complex
+						level = 2
+					}
 				}
-			}
-			799 = {
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = arms_factory
-					level = 3
-					instant_build = yes
+				random_state = {
+					limit = {
+						NOT = {	
+							state = 745
+							state = 524
+							is_core_of = MAN
+						}
+						is_core_of = CHI 
+						OR = {
+							is_controlled_by = RCC 
+							is_controlled_by = JAP 
+						}
+						arms_factory > 1
+					}
+					remove_building = {
+						type = arms_factory
+						level = 2
+					}
 				}
-			}
-			533 = {
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = arms_factory
-					level = 3
-					instant_build = yes
+				805 = {
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = arms_factory
+						level = 3
+						instant_build = yes
+					}
+				}
+				799 = {
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = arms_factory
+						level = 3
+						instant_build = yes
+					}
+				}
+				533 = {
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = arms_factory
+						level = 3
+						instant_build = yes
+					}
 				}
 			}
 		}
@@ -4542,16 +5086,24 @@ focus_tree = {
 	}
 
 	available = {
-		OR={JAP = {
-			controls_state = 615
-			controls_state = 621
-			controls_state = 614
-		}
-		MAN={
-			controls_state = 615
-			controls_state = 621
-			controls_state = 614
-		}
+		if = {
+			limit = {
+				has_game_rule = {
+					rule = script_china_war
+					option = DEFAULT
+				}
+			}
+			OR={JAP = {
+				controls_state = 615
+				controls_state = 621
+				controls_state = 614
+			}
+			MAN={
+				controls_state = 615
+				controls_state = 621
+				controls_state = 614
+			}
+			}
 		}
 	}
 
@@ -4559,55 +5111,123 @@ focus_tree = {
 
 	}
 	completion_reward = {
-		615 = {
-			add_resistance_target = {
-				amount = 7
-			}			
-			add_extra_state_shared_building_slots = 2
-			add_building_construction = {
-				type = industrial_complex
-				level = 2
-				instant_build = yes	
+		if = {
+			limit = {
+				has_game_rule = {
+					rule = script_china_war
+					option = DEFAULT
+				}
 			}
-			add_extra_state_shared_building_slots = 2
-			add_building_construction = {
-				type = arms_factory
-				level = 2
-				instant_build = yes	
+			615 = {
+				add_resistance_target = {
+					amount = 7
+				}			
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes	
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes	
+				}
+			}
+			621 = {
+				add_resistance_target = {
+					amount = 7
+				}			
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes	
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes	
+				}
+			}
+			614 = {
+				add_resistance_target = {
+					amount = 7
+				}			
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes	
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes	
+				}
 			}
 		}
-		621 = {
-			add_resistance_target = {
-				amount = 7
-			}			
-			add_extra_state_shared_building_slots = 2
-			add_building_construction = {
-				type = industrial_complex
-				level = 2
-				instant_build = yes	
+		else = {
+			random_state = {
+				limit = {
+					NOT = {	
+						state = 745
+						state = 524
+						is_core_of = MAN
+					}
+					is_core_of = CHI 
+					OR = {
+						is_controlled_by = RCC 
+						is_controlled_by = JAP 
+					}
+				}
+				add_resistance_target = {
+					amount = 7
+				}			
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes	
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = arms_factory
+					level = 3
+					instant_build = yes	
+				}
 			}
-			add_extra_state_shared_building_slots = 2
-			add_building_construction = {
-				type = arms_factory
-				level = 2
-				instant_build = yes	
-			}
-		}
-		614 = {
-			add_resistance_target = {
-				amount = 7
-			}			
-			add_extra_state_shared_building_slots = 2
-			add_building_construction = {
-				type = industrial_complex
-				level = 2
-				instant_build = yes	
-			}
-			add_extra_state_shared_building_slots = 2
-			add_building_construction = {
-				type = arms_factory
-				level = 2
-				instant_build = yes	
+			random_state = {
+				limit = {
+					NOT = {	
+						state = 745
+						state = 524
+						is_core_of = MAN
+					}
+					is_core_of = CHI 
+					OR = {
+						is_controlled_by = RCC 
+						is_controlled_by = JAP 
+					}
+				}
+				add_resistance_target = {
+					amount = 7
+				}			
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = industrial_complex
+					level = 3
+					instant_build = yes	
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes	
+				}
 			}
 		}
 	}
@@ -4630,41 +5250,122 @@ focus_tree = {
 	}
 
 	available = {
-		OR={JAP = {
-			controls_state = 613
-			controls_state = 743
+		if = {
+			limit = {
+				has_game_rule = {
+					rule = script_china_war
+					option = DEFAULT
+				}
+			}
+			OR={JAP = {
+				controls_state = 613
+				controls_state = 743
+			}
+			MAN ={
+				controls_state = 613
+				controls_state = 743
+			}
+			}
 		}
-		MAN ={
-			controls_state = 613
-			controls_state = 743
-		}
+		else = {
+			any_state = {
+				NOT = {	
+					state = 745
+					state = 524
+					is_core_of = MAN
+				}
+				is_core_of = CHI 
+				OR = {
+					is_controlled_by = RCC 
+					is_controlled_by = JAP 
+				}
+				is_coastal = yes
+			}
 		}
 	}
 
 	bypass = {
 	}
 	completion_reward = {
-		613 = {
-			add_resistance_target = {
-				amount = 7
-			}			
-			add_extra_state_shared_building_slots = 4
-			add_building_construction = {
-				type = dockyard
-				level = 4
-				instant_build = yes	
+		if = {
+			limit = {
+				has_game_rule = {
+					rule = script_china_war
+					option = DEFAULT
+				}
 			}
+			613 = {
+				add_resistance_target = {
+					amount = 7
+				}			
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = dockyard
+					level = 4
+					instant_build = yes	
+				}
 
+				}
+			743 = {
+				add_resistance_target = {
+					amount = 7
+				}			
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = dockyard
+					level = 4
+					instant_build = yes	
+				}
 			}
-		743 = {
-			add_resistance_target = {
-				amount = 7
-			}			
-			add_extra_state_shared_building_slots = 4
-			add_building_construction = {
-				type = dockyard
-				level = 4
-				instant_build = yes	
+			
+		}
+		else = {
+			
+			random_state = {
+				limit = {
+					NOT = {	
+						state = 745
+						state = 524
+						is_core_of = MAN
+					}
+					is_core_of = CHI 
+					OR = {
+						is_controlled_by = RCC 
+						is_controlled_by = JAP 
+					}
+				}
+				add_resistance_target = {
+					amount = 2
+				}			
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = dockyard
+					level = 5
+					instant_build = yes	
+				}
+			}
+			random_state = {
+				limit = {
+					NOT = {	
+						state = 745
+						state = 524
+						is_core_of = MAN
+					}
+					is_core_of = CHI 
+					OR = {
+						is_controlled_by = RCC 
+						is_controlled_by = JAP 
+					}
+				}
+				add_resistance_target = {
+					amount = 2
+				}			
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = dockyard
+					level = 5
+					instant_build = yes	
+				}
 			}
 		}
 	}
@@ -4687,171 +5388,349 @@ focus_tree = {
 	}
 
 	available = {
-		OR={JAP = {
-			controls_state = 594
-			controls_state = 592
-			controls_state = 591
-		}
-		MAN = {
-			controls_state = 594
-			controls_state = 592
-			controls_state = 591
-		}
+		if = {
+			limit = {
+				has_game_rule = {
+					rule = script_china_war
+					option = DEFAULT
+				}
+			}
+			OR={JAP = {
+				controls_state = 594
+				controls_state = 592
+				controls_state = 591
+			}
+			MAN = {
+				controls_state = 594
+				controls_state = 592
+				controls_state = 591
+			}
+			}
 		}
 	}
 
 	bypass = {
 	}
 	completion_reward = {
-		custom_effect_tooltip = JAP_north_states_tt2
 		if = {
 			limit = {
-				controls_state = 746
+				has_game_rule = {
+					rule = script_china_war
+					option = DEFAULT
+				}
 			}
-			746 = {
+			custom_effect_tooltip = JAP_north_states_tt2
+			if = {
+				limit = {
+					controls_state = 746
+				}
+				746 = {
+					add_resistance_target = {
+						amount = 3
+					}
+					add_resource = {
+						type = aluminium
+						amount = 3
+					}
+					add_resource = {
+						type = oil
+						amount = 3
+					}
+					add_resource = {
+						type = tungsten
+						amount = 4
+					}
+					add_resource = {
+						type = steel
+						amount = 3
+					}
+					add_resource = {
+						type = chromium
+						amount = 2
+					}
+				}
+			}
+			if = {
+				limit = {
+					controls_state = 622
+				}
+				622 = {
+					add_resistance_target = {
+						amount = 3
+					}
+					add_resource = {
+						type = aluminium
+						amount = 3
+					}
+					add_resource = {
+						type = oil
+						amount = 3
+					}
+					add_resource = {
+						type = tungsten
+						amount = 4
+					}
+					add_resource = {
+						type = steel
+						amount = 3
+					}
+					add_resource = {
+						type = chromium
+						amount = 2
+					}
+				}
+			}
+			if = {
+				limit = {
+					controls_state = 744
+				}
+				744 = {
+					add_resistance_target = {
+						amount = 3
+					}
+					add_resource = {
+						type = aluminium
+						amount = 3
+					}
+					add_resource = {
+						type = oil
+						amount = 3
+					}
+					add_resource = {
+						type = tungsten
+						amount = 3
+					}
+					add_resource = {
+						type = steel
+						amount = 3
+					}
+					add_resource = {
+						type = chromium
+						amount = 2
+					}
+				}
+			}
+			594 = {
 				add_resistance_target = {
-					amount = 3
+					amount = 7
+				}	
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+
 				}
-				add_resource = {
-					type = aluminium
-					amount = 3
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+
+				}		
+
+			}
+			592 = {
+				add_resistance_target = {
+					amount = 7
 				}
-				add_resource = {
-					type = oil
-					amount = 3
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+
+				}	
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+
+				}			
+
+			}
+			591 = {
+				add_resistance_target = {
+					amount = 7
 				}
-				add_resource = {
-					type = tungsten
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+
+				}			
+		
+			}
+		}
+		else = {
+			custom_effect_tooltip = JAP_north_states_tt4
+			if = {
+				limit = {
+					615 = {
+						OR = {
+							is_controlled_by = JAP 
+							is_controlled_by = RCC
+							is_controlled_by = MAN
+						}
+					}
+				}
+				615 = {
+					add_resistance_target = {
+						amount = 3
+					}
+					add_resource = {
+						type = aluminium
+						amount = 3
+					}
+					add_resource = {
+						type = oil
+						amount = 3
+					}
+					add_resource = {
+						type = tungsten
+						amount = 4
+					}
+					add_resource = {
+						type = steel
+						amount = 3
+					}
+					add_resource = {
+						type = chromium
+						amount = 2
+					}
+				}
+			}
+			if = {
+				limit = {
+					621 = {
+						OR = {
+							is_controlled_by = JAP 
+							is_controlled_by = RCC
+							is_controlled_by = MAN
+						}
+					}
+				}
+				621 = {
+					add_resistance_target = {
+						amount = 3
+					}
+					add_resource = {
+						type = aluminium
+						amount = 2
+					}
+					add_resource = {
+						type = oil
+						amount = 2
+					}
+					add_resource = {
+						type = tungsten
+						amount = 3
+					}
+					add_resource = {
+						type = steel
+						amount = 2
+					}
+					add_resource = {
+						type = chromium
+						amount = 2
+					}
+				}
+			}
+			random_state = {
+				limit = {
+					NOT = {	
+						state = 745
+						state = 524
+						is_core_of = MAN
+					}
+					is_core_of = CHI 
+					OR = {
+						is_controlled_by = RCC 
+						is_controlled_by = JAP 
+					}
+				}
+				add_resistance_target = {
 					amount = 4
+				}			
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes	
 				}
-				add_resource = {
-					type = steel
-					amount = 3
-				}
-				add_resource = {
-					type = chromium
-					amount = 2
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes	
 				}
 			}
-		}
-		if = {
-			limit = {
-				controls_state = 622
-			}
-			622 = {
+			random_state = {
+				limit = {
+					NOT = {	
+						state = 745
+						state = 524
+						is_core_of = MAN
+					}
+					is_core_of = CHI 
+					OR = {
+						is_controlled_by = RCC 
+						is_controlled_by = JAP 
+					}
+				}
 				add_resistance_target = {
-					amount = 3
-				}
-				add_resource = {
-					type = aluminium
-					amount = 3
-				}
-				add_resource = {
-					type = oil
-					amount = 3
-				}
-				add_resource = {
-					type = tungsten
 					amount = 4
+				}			
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes	
 				}
-				add_resource = {
-					type = steel
-					amount = 3
-				}
-				add_resource = {
-					type = chromium
-					amount = 2
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes	
 				}
 			}
-		}
-		if = {
-			limit = {
-				controls_state = 744
-			}
-			744 = {
+			random_state = {
+				limit = {
+					NOT = {	
+						state = 745
+						state = 524
+						is_core_of = MAN
+					}
+					is_core_of = CHI 
+					OR = {
+						is_controlled_by = RCC 
+						is_controlled_by = JAP 
+					}
+				}
 				add_resistance_target = {
-					amount = 3
+					amount = 4
+				}			
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes	
 				}
-				add_resource = {
-					type = aluminium
-					amount = 3
-				}
-				add_resource = {
-					type = oil
-					amount = 3
-				}
-				add_resource = {
-					type = tungsten
-					amount = 3
-				}
-				add_resource = {
-					type = steel
-					amount = 3
-				}
-				add_resource = {
-					type = chromium
-					amount = 2
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes	
 				}
 			}
-		}
-		594 = {
-			add_resistance_target = {
-				amount = 7
-			}	
-			add_building_construction = {
-				type = industrial_complex
-				level = 2
-				instant_build = yes
-
-			}
-			add_building_construction = {
-				type = arms_factory
-				level = 2
-				instant_build = yes
-
-			}		
-
-		}
-		592 = {
-			add_resistance_target = {
-				amount = 7
-			}
-			add_building_construction = {
-				type = industrial_complex
-				level = 2
-				instant_build = yes
-
-			}	
-			add_building_construction = {
-				type = arms_factory
-				level = 2
-				instant_build = yes
-
-			}			
-
-		}
-		591 = {
-			add_resistance_target = {
-				amount = 7
-			}
-			add_building_construction = {
-				type = industrial_complex
-				level = 2
-				instant_build = yes
-
-			}
-			add_building_construction = {
-				type = arms_factory
-				level = 2
-				instant_build = yes
-
-			}			
-	
 		}
 			
 	}
 	}
-	focus = {
+focus = {
 	id = JAP_the_spoils_of_china
 	icon = GFX_JAP_spoils
 	prerequisite = {
@@ -4874,45 +5753,93 @@ focus_tree = {
 	bypass = {
 	}
 	completion_reward = {
-		custom_effect_tooltip = JAP_spoils_tt
-		hidden_effect = {
-			every_state = {
-				limit = {
-					NOT = {
-						state = 621
-						state = 608	
-						state = 615
-						state = 609
-						state = 614
-						state = 597
-						state = 743
-						state = 607
-						state = 606
-						state = 598
-						state = 613
-						state = 620
-						state = 822
-						state = 594
-						state = 592
-						state = 591
-						state = 524
-						is_core_of = MAN
+		if = {
+			limit = {
+				has_game_rule = {
+					rule = script_china_war
+					option = DEFAULT
+				}
+			}
+			custom_effect_tooltip = JAP_spoils_tt
+			hidden_effect = {
+				every_state = {
+					limit = {
+						NOT = {
+							state = 621
+							state = 608	
+							state = 615
+							state = 609
+							state = 614
+							state = 597
+							state = 743
+							state = 607
+							state = 606
+							state = 598
+							state = 613
+							state = 620
+							state = 822
+							state = 594
+							state = 592
+							state = 591
+							state = 524
+							is_core_of = MAN
+						}
+						is_core_of = CHI
+						OR = {
+							is_controlled_by = JAP
+							is_controlled_by = RCC
+						}
+
 					}
-					is_core_of = CHI
-					is_controlled_by = JAP
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = arms_factory
+						level = 2
+						instant_build = yes
+					}
+						
 				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes
+			}
+		}
+		else = {
+			custom_effect_tooltip = JAP_spoils_tt2
+			hidden_effect = {
+				every_state = {
+					limit = {
+						NOT = {
+							state = 609
+							state = 745
+							state = 524
+							is_core_of = MAN
+						}
+						is_core_of = CHI
+						OR = {
+							is_controlled_by = JAP
+							is_controlled_by = RCC
+						}
+						
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					add_resource = {
+						type = aluminium
+						amount = 1
+					}
+						
 				}
-	
-				
-			}			
+			}
+
 		}
 	}
-	}
+}
 
 
 
@@ -4944,29 +5871,131 @@ focus_tree = {
 
 	}
 	completion_reward = {
-		custom_effect_tooltip = JAP_coastal_states_tt
 		if = {
 			limit = {
-				controls_state = 596
+				has_game_rule = {
+					rule = script_china_war
+					option = DEFAULT
+				}
 			}
-			596 = {
-				add_compliance = 10
+			custom_effect_tooltip = JAP_coastal_states_tt
+			if = {
+				limit = {
+					controls_state = 596
+				}
+				596 = {
+					add_compliance = 10
+				}
+			}
+			if = {
+				limit = {
+					controls_state = 595
+				}
+				595 = {
+					add_compliance = 10
+				}
+			}
+			if = {
+				limit = {
+					controls_state = 593
+				}
+				593 = {
+					add_compliance = 10
+				}
 			}
 		}
-		if = {
-			limit = {
-				controls_state = 595
+		else = {
+			custom_effect_tooltip = JAP_coastal_states_tt3
+			if = {
+				limit = {
+					596 = {
+						OR = {
+							is_controlled_by = JAP
+							is_controlled_by = RCC
+						}
+					}
+				}
+				596 = {
+					add_compliance = 10
+				}
 			}
-			595 = {
-				add_compliance = 10
+			if = {
+				limit = {
+					595 = {
+						OR = {
+							is_controlled_by = JAP
+							is_controlled_by = RCC
+						}
+					}
+				}
+				595 = {
+					add_compliance = 10
+				}
 			}
-		}
-		if = {
-			limit = {
-				controls_state = 593
+			if = {
+				limit = {
+					593 = {
+						OR = {
+							is_controlled_by = JAP
+							is_controlled_by = RCC
+						}
+					}
+				}
+				593 = {
+					add_compliance = 10
+				}
 			}
-			593 = {
-				add_compliance = 10
+			if = {
+				limit = {
+					822 = {
+						OR = {
+							is_controlled_by = JAP
+							is_controlled_by = RCC
+						}
+					}
+				}
+				822 = {
+					add_compliance = 10
+				}
+			}
+			if = {
+				limit = {
+					592 = {
+						OR = {
+							is_controlled_by = JAP
+							is_controlled_by = RCC
+						}
+					}
+				}
+				592 = {
+					add_compliance = 10
+				}
+			}
+			if = {
+				limit = {
+					594 = {
+						OR = {
+							is_controlled_by = JAP
+							is_controlled_by = RCC
+						}
+					}
+				}
+				594 = {
+					add_compliance = 10
+				}
+			}
+			if = {
+				limit = {
+					591 = {
+						OR = {
+							is_controlled_by = JAP
+							is_controlled_by = RCC
+						}
+					}
+				}
+				591 = {
+					add_compliance = 10
+				}
 			}
 		}
 	}
@@ -4999,7 +6028,12 @@ focus_tree = {
 		custom_effect_tooltip = JAP_coastal_states_tt2
 		if = {
 			limit = {
-				controls_state = 822
+				822 = {
+					OR = {
+						is_controlled_by = JAP
+						is_controlled_by = RCC
+					}
+				}
 			}
 			822 = {
 				add_extra_state_shared_building_slots = 2
@@ -5023,7 +6057,12 @@ focus_tree = {
 		}
 		if = {
 			limit = {
-				controls_state = 595
+				595 = {
+					OR = {
+						is_controlled_by = JAP
+						is_controlled_by = RCC
+					}
+				}
 			}
 			595 = {
 				add_extra_state_shared_building_slots = 2
@@ -5042,7 +6081,12 @@ focus_tree = {
 		}
 		if = {
 			limit = {
-				controls_state = 593
+				593 = {
+					OR = {
+						is_controlled_by = JAP
+						is_controlled_by = RCC
+					}
+				}
 			}
 			593 = {
 				add_extra_state_shared_building_slots = 2
@@ -5060,7 +6104,12 @@ focus_tree = {
 		}
 		if = {
 			limit = {
-				controls_state = 596
+				596 = {
+					OR = {
+						is_controlled_by = JAP
+						is_controlled_by = RCC
+					}
+				}
 			}
 			596 = {
 				add_extra_state_shared_building_slots = 2
@@ -5085,7 +6134,12 @@ focus_tree = {
 		
 		if = {
 			limit = {
-				controls_state = 594
+				594 = {
+					OR = {
+						is_controlled_by = JAP
+						is_controlled_by = RCC
+					}
+				}
 			}
 			594 = {
 				set_building_level = {
@@ -5102,7 +6156,12 @@ focus_tree = {
 		}
 		if = {
 			limit = {
-				controls_state = 591
+				591 = {
+					OR = {
+						is_controlled_by = JAP
+						is_controlled_by = RCC
+					}
+				}
 			}
 			591 = {
 				set_building_level = {
@@ -5124,7 +6183,12 @@ focus_tree = {
 		}
 		if = {
 			limit = {
-				controls_state = 592
+				592 = {
+					OR = {
+						is_controlled_by = JAP
+						is_controlled_by = RCC
+					}
+				}
 			}
 			592 = {
 				add_building_construction = {
@@ -5180,12 +6244,30 @@ focus_tree = {
 	}
 
 	available = {
-		JAP = {
-			OR = {
-				controls_state = 325
-				controls_state = 599
-				controls_state = 603
-				controls_state = 747
+		OR = {
+			325 = {
+				OR = {
+					is_controlled_by = JAP 
+					is_controlled_by = RCC
+				}
+			}
+			599 = {
+				OR = {
+					is_controlled_by = JAP 
+					is_controlled_by = RCC
+				}
+			}
+			603 = {
+				OR = {
+					is_controlled_by = JAP 
+					is_controlled_by = RCC
+				}
+			}
+			747 = {
+				OR = {
+					is_controlled_by = JAP 
+					is_controlled_by = RCC
+				}
 			}
 		}
 	
@@ -5198,34 +6280,54 @@ focus_tree = {
 		custom_effect_tooltip = JAP_further_expansion_tt
 		if = {
 			limit = {
-				controls_state = 325
+				325 = {
+					OR = {
+						is_controlled_by = JAP 
+						is_controlled_by = RCC
+					}
+				}
 			}
 			325 = {
-				add_compliance = 10
+				add_compliance = 15
 			}
 		}
 		if = {
 			limit = {
-				controls_state = 599
+				599 = {
+					OR = {
+						is_controlled_by = JAP 
+						is_controlled_by = RCC
+					}
+				}
 			}
 			599 = {
-				add_compliance = 10
+				add_compliance = 15
 			}
 		}
 		if = {
 			limit = {
-				controls_state = 603
+				603 = {
+					OR = {
+						is_controlled_by = JAP 
+						is_controlled_by = RCC
+					}
+				}
 			}
 			603 = {
-				add_compliance = 10
+				add_compliance = 15
 			}
 		}
 		if = {
 			limit = {
-				controls_state = 747
+				747 = {
+					OR = {
+						is_controlled_by = JAP 
+						is_controlled_by = RCC
+					}
+				}
 			}
 			747 = {
-				add_compliance = 10
+				add_compliance = 15
 			}
 		}
 	}
@@ -5281,7 +6383,12 @@ focus_tree = {
 		}
 		if = {
 			limit = {
-				controls_state = 325
+				325 = {
+					OR = {
+						is_controlled_by = JAP 
+						is_controlled_by = RCC
+					}
+				}
 			}
 			325 = {
 				set_building_level = {
@@ -5293,7 +6400,12 @@ focus_tree = {
 		}
 		if = {
 			limit = {
-				controls_state = 599
+				599 = {
+					OR = {
+						is_controlled_by = JAP 
+						is_controlled_by = RCC
+					}
+				}
 			}
 			599 = {
 				set_building_level = {
@@ -5305,7 +6417,12 @@ focus_tree = {
 		}
 		if = {
 			limit = {
-				controls_state = 747
+				747 = {
+					OR = {
+						is_controlled_by = JAP 
+						is_controlled_by = RCC
+					}
+				}
 			}
 			747 = {
 				set_building_level = {
@@ -5488,13 +6605,37 @@ focus_tree = {
 	}
 
 	available = {
-		JAP = {
-			OR = {
-				controls_state =  605
-				controls_state =  750
-				controls_state =  820
-				controls_state =  602
-				controls_state =  748
+		
+		OR = {
+			605 = {
+				OR = {
+					is_controlled_by = JAP 
+					is_controlled_by = RCC
+				}
+			}
+			750 = {
+				OR = {
+					is_controlled_by = JAP 
+					is_controlled_by = RCC
+				}
+			}
+			820 = {
+				OR = {
+					is_controlled_by = JAP 
+					is_controlled_by = RCC
+				}
+			}
+			602 = {
+				OR = {
+					is_controlled_by = JAP 
+					is_controlled_by = RCC
+				}
+			}
+			748 = {
+				OR = {
+					is_controlled_by = JAP 
+					is_controlled_by = RCC
+				}
 			}
 		}
 	}
@@ -5506,7 +6647,12 @@ focus_tree = {
 		custom_effect_tooltip = JAP_interior_expansion_tt
 		if = {
 			limit = {
-				controls_state = 605
+				605 = {
+					OR = {
+						is_controlled_by = JAP 
+						is_controlled_by = RCC
+					}
+				}
 			}
 			605 = {
 				add_compliance = 10
@@ -5514,7 +6660,12 @@ focus_tree = {
 		}
 		if = {
 			limit = {
-				controls_state = 750
+				750 = {
+					OR = {
+						is_controlled_by = JAP 
+						is_controlled_by = RCC
+					}
+				}
 			}
 			750 = {
 				add_compliance = 10
@@ -5522,7 +6673,12 @@ focus_tree = {
 		}
 		if = {
 			limit = {
-				controls_state = 820
+				820 = {
+					OR = {
+						is_controlled_by = JAP 
+						is_controlled_by = RCC
+					}
+				}
 			}
 			820 = {
 				add_compliance = 10
@@ -5530,7 +6686,12 @@ focus_tree = {
 		}
 		if = {
 			limit = {
-				controls_state = 602
+				602 = {
+					OR = {
+						is_controlled_by = JAP 
+						is_controlled_by = RCC
+					}
+				}
 			}
 			602 = {
 				add_compliance = 10
@@ -5538,7 +6699,12 @@ focus_tree = {
 		}
 		if = {
 			limit = {
-				controls_state = 748
+				748 = {
+					OR = {
+						is_controlled_by = JAP 
+						is_controlled_by = RCC
+					}
+				}
 			}
 			748 = {
 				add_compliance = 10
@@ -5579,10 +6745,19 @@ focus_tree = {
 					compare = equals
 				}
 			}
-			add_timed_idea = { 
-				idea = JAP_plunder
-				days = 30
+			every_country = {
+				limit = {
+					OR = {
+						tag = JAP 
+						tag = RCC
+					}
+				}
+				add_timed_idea = { 
+					idea = JAP_plunder
+					days = 30
+				}
 			}
+			
 		}
 
 		else_if = {
@@ -5593,9 +6768,17 @@ focus_tree = {
 					compare = equals
 				}
 			}
-			add_timed_idea = { 
-				idea = JAP_plunder
-				days = 90
+			every_country = {
+				limit = {
+					OR = {
+						tag = JAP 
+						tag = RCC
+					}
+				}
+				add_timed_idea = { 
+					idea = JAP_plunder
+					days = 90
+				}
 			}
 		}
 		else_if = {
@@ -5606,9 +6789,17 @@ focus_tree = {
 					compare = equals
 				}
 			}
-			add_timed_idea = { 
-				idea = JAP_plunder
-				days = 180
+			every_country = {
+				limit = {
+					OR = {
+						tag = JAP 
+						tag = RCC
+					}
+				}
+				add_timed_idea = { 
+					idea = JAP_plunder
+					days = 180
+				}
 			}
 		}
 
@@ -5620,9 +6811,17 @@ focus_tree = {
 					compare = equals
 				}
 			}
-			add_timed_idea = { 
-				idea = JAP_plunder
-				days = 270
+			every_country = {
+				limit = {
+					OR = {
+						tag = JAP 
+						tag = RCC
+					}
+				}
+				add_timed_idea = { 
+					idea = JAP_plunder
+					days = 270
+				}
 			}
 		}
 		else_if = {
@@ -5633,9 +6832,17 @@ focus_tree = {
 					compare = equals
 				}
 			}
-			add_timed_idea = { 
-				idea = JAP_plunder
-				days = 360
+			every_country = {
+				limit = {
+					OR = {
+						tag = JAP 
+						tag = RCC
+					}
+				}
+				add_timed_idea = { 
+					idea = JAP_plunder
+					days = 360
+				}
 			}
 		}
 		else_if = {
@@ -5646,9 +6853,17 @@ focus_tree = {
 					compare = equals
 				}
 			}
-			add_timed_idea = { 
-				idea = JAP_plunder
-				days = 450
+			every_country = {
+				limit = {
+					OR = {
+						tag = JAP 
+						tag = RCC
+					}
+				}
+				add_timed_idea = { 
+					idea = JAP_plunder
+					days = 450
+				}
 			}
 		}
 		
@@ -6097,7 +7312,12 @@ focus_tree = {
 			}
 			if = {
 				limit = {
-					609 = { is_controlled_by = JAP }
+					609 = { 
+						OR = {
+							is_controlled_by = JAP
+							is_controlled_by = RCC
+						}
+					}
 				}
 				609 = {
 					add_building_construction = {
