@@ -77,7 +77,7 @@ political_actions = {
 			always = yes
 			NOT = {
 				tag = FRA
-				#tag = JAP
+				tag = JAP
 			}
 		}
 
@@ -133,7 +133,7 @@ political_actions = {
 			always = yes
 			NOT = {
 				tag = FRA
-				#tag = JAP
+				tag = JAP
 			}	
 			NOT = {
 				has_completed_focus = RAJ_side_with_princes
@@ -721,6 +721,56 @@ economy_decisions = {
 }
 
 propaganda_efforts = {
+	test_2 = {
+		
+		icon = generic_megaphone
+
+		available = {
+			is_debug = yes
+			
+		}
+
+		visible = {	
+			is_debug = yes		
+		}
+
+		fire_only_once = no
+
+		days_re_enable = 1
+
+		cost = 0
+
+
+		complete_effect = {
+			CZE = {
+				set_temp_variable={czearmyxp=CZE.army_experience}
+				mio:CZE_praga_armor = {
+					set_temp_variable={miofundsvar1=funds}
+				}
+				mio:CZE_praga_armor = {
+					set_temp_variable={miosizevar1=size}
+				}
+
+			}
+			
+			SLO = {
+				mio:CZE_praga_armor = {
+					add_mio_funds = miofundsvar1
+				}
+				mio:CZE_praga_armor = {
+					add_mio_size = miosizevar1
+				}
+			}
+			add_equipment_to_stockpile = {
+				type = convoy_1
+				amount = czearmyxp
+			}
+			
+		}
+		
+
+		
+	}
 	decrease_stats = {
 		
 		icon = generic_megaphone
@@ -755,7 +805,8 @@ propaganda_efforts = {
 		available = {
 			NOT = { has_country_flag = war_propaganda_campaign_running }
 			OR = {
-			threat > 0.4
+			threat > 0.35
+			has_global_flag = sudetenland_taken
 			has_war = yes
 			}		
 			has_war_support < 0.9
@@ -806,6 +857,34 @@ propaganda_efforts = {
 }
 
 operations = {
+	add_convoy = {
+		name = "Fix Convoy Bug"
+        icon = generic_naval
+        allowed = {
+             always =yes
+         }
+        days_remove = 10
+        cost = 0
+		priority = 100
+        complete_effect = {
+            add_manpower = 1
+            add_equipment_to_stockpile = {
+                type = convoy_1
+                amount = 1
+            }
+        }
+        
+         remove_effect = {
+            add_manpower = -1
+            add_equipment_to_stockpile = {
+                type = convoy_1
+                amount = -1
+            }
+         }
+        ai_will_do = {
+            factor = 0
+        }
+    }
 	adapt_milita = {
 		icon = generic_prepare_civil_war
 
@@ -891,7 +970,7 @@ operations = {
 						division_cap = 24 
 						template_counter = 137
 						support = {
-							DIV_HQ = { x = 0 y = 0 }
+							artillery = { x = 0 y = 0 }
 							engineer = { x = 0 y = 1 }
 							recon = { x = 0 y = 2 }
 							pack_artillery = { x = 0 y = 3 }
@@ -956,7 +1035,7 @@ operations = {
 						division_cap = 12 
 						template_counter = 137
 						support = {
-							DIV_HQ = { x = 0 y = 0 }
+							artillery = { x = 0 y = 0 }
 							engineer = { x = 0 y = 1 }
 							recon = { x = 0 y = 2 }
 							pack_artillery = { x = 0 y = 3 }
@@ -1021,7 +1100,7 @@ operations = {
 						division_cap = 12 
 						template_counter = 137
 						support = {
-							DIV_HQ = { x = 0 y = 0 }
+							artillery = { x = 0 y = 0 }
 							engineer = { x = 0 y = 1 }
 							recon = { x = 0 y = 2 }
 							pack_artillery = { x = 0 y = 3 }
@@ -1085,7 +1164,7 @@ operations = {
 						division_cap = 24 
 						template_counter = 137
 						support = {
-							DIV_HQ = { x = 0 y = 0 }
+							artillery = { x = 0 y = 0 }
 							engineer = { x = 0 y = 1 }
 							recon = { x = 0 y = 2 }
 							pack_artillery = { x = 0 y = 3 }
@@ -1188,8 +1267,7 @@ operations = {
 
 		remove_effect = {
 			organize_air_defence = yes
-			add_war_support = 0.025
-			add_stability = 0.025
+			add_stability = 0.02
 		}
 		ai_will_do = {
 			base = 0
@@ -1644,6 +1722,7 @@ war_measures = {
 				has_idea = war_economy
 				has_idea = GER_war_economy
 				has_idea = tot_economic_mobilisation
+				has_idea = AST_war_economy
 			}
 			OR = {
 				AND = {

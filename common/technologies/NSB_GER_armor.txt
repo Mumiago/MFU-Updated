@@ -349,6 +349,8 @@ technologies = {
 			tank_light_two_man_tank_turret
 			tank_light_opentop_turret
 			tank_light_casemate_turret
+			tank_medium_cannon_2_for_lights
+			tank_medium_close_support_gun_for_lights
 		}
 	
 		enable_subunits = {
@@ -360,7 +362,7 @@ technologies = {
 			research_cost_coeff = 1
 		}
 
-		research_cost = 2
+		research_cost = 1
 		start_year = 1934
 		folder = {
 			name = nsb_ger_armor_folder
@@ -394,7 +396,7 @@ technologies = {
 			research_cost_coeff = 1
 		}
 
-		research_cost = 2
+		research_cost = 1
 		start_year = 1936
 
 		folder = {
@@ -429,7 +431,7 @@ technologies = {
 			leads_to_tech = ger_1943_light_tank_chassis
 			research_cost_coeff = 1
 		}
-		research_cost = 2
+		research_cost = 1
 		start_year = 1940
 
 		folder = {
@@ -508,7 +510,7 @@ technologies = {
 			tank_light_three_man_tank_turret
 		}
 		
-		research_cost = 2
+		research_cost = 1
 		start_year = 1943
 
 		folder = {
@@ -630,9 +632,7 @@ technologies = {
 			medium_tank_flame_chassis_1946
 		}
 
-		dependencies = {
-			advanced_machine_tools = 1
-		}
+		
 
 		path = {
 			leads_to_tech = ger_1942_medium_tank_chassis
@@ -656,7 +656,7 @@ technologies = {
 			cat_medium_armor
 		}
     	on_research_complete = {
-           	create_equipment_variant = {
+		 	create_equipment_variant = {
 				name = "Panzer IV"
 				type = medium_tank_chassis_1946
 				parent_version = 0
@@ -679,6 +679,7 @@ technologies = {
 				icon = "gfx/interface/technologies/land/ger/panzer4b.tga"
 				
 			}
+			
 		}
 	}	
 
@@ -693,15 +694,13 @@ technologies = {
 			medium_tank_rocket_chassis_1940
 			medium_tank_flame_chassis_1940
 		}
-		dependencies = {
-			advanced_machine_tools = 1
-		}	
+			
 		path = {
-			leads_to_tech = ger_1943_medium_tank_chassis
+			leads_to_tech = ger_spaced_armor
 			research_cost_coeff = 1
 		}
 		path = {
-			leads_to_tech = ger_1942_medium_tank_chassis	
+			leads_to_tech = ger_advanced_turret
 			research_cost_coeff = 1
 		}
 
@@ -742,14 +741,129 @@ technologies = {
 					tank_nsb_armor_upgrade = 6
 				}
 				icon = "gfx/interface/technologies/land/ger/panzer 3h.tga"
-				
-			}
+			 }
+			
 			set_technology = {
 				small_gun2 = 1
 			}
 		}
+	 
 	}	
+	ger_advanced_turret = { 
 
+		path = {
+			leads_to_tech = ger_1943_medium_tank_chassis
+			research_cost_coeff = 1
+		}
+
+		XOR = {
+			ger_spaced_armor 
+		}
+	    enable_equipment_modules = {
+			tank_medium_improved_three_man_tank_turret
+		}
+	
+		research_cost = 2
+		start_year = 1941
+
+		folder = {
+			name = nsb_ger_armor_folder
+			position = { x = 3 y = @1941 }
+		}
+		ai_will_do = {
+			factor = 6
+
+		}
+
+		categories = {
+          tank_upgrade
+		}
+    	on_research_complete = {
+			set_technology = {
+				medium_gun3 = 1
+			}	
+           	create_equipment_variant = {
+				name = "Panzer III Ausf.K"
+				type = medium_tank_chassis_1940
+				parent_version = 0
+				modules = {
+				main_armament_slot = tank_high_velocity_cannon_2
+				turret_type_slot = tank_medium_improved_three_man_tank_turret
+				suspension_type_slot = tank_torsion_bar_suspension
+				armor_type_slot = tank_welded_armor
+				armor_sloping_slot = unsloped_armor
+				engine_type_slot = tank_gasoline_engine
+				radio_slot = tank_radio_1
+				special_type_slot_1 = basket
+				special_type_slot_2 = cupola
+				}
+				upgrades = {
+					tank_nsb_engine_upgrade = 6
+					tank_nsb_armor_upgrade = 6
+				}
+				icon = "gfx/interface/technologies/land/ger/3k_long.tga"
+				
+			}
+			
+	 }	
+	}
+
+	ger_spaced_armor = { 
+
+		path = {
+			leads_to_tech = ger_1943_medium_tank_chassis
+			research_cost_coeff = 1
+		}
+		XOR = {
+			ger_advanced_turret 
+		}
+	    enable_equipment_modules = {
+			spaced_armor
+		}
+	
+		research_cost = 2
+		start_year = 1941
+
+		folder = {
+			name = nsb_ger_armor_folder
+			position = { x = 5 y = @1941 }
+		}
+		ai_will_do = {
+			factor = 0
+
+		}
+
+		categories = {
+          tank_upgrade
+		}
+    	on_research_complete = {
+			set_technology = {
+				small_gun3 = 1
+			}	
+           	create_equipment_variant = {
+				name = "Panzer III Ausf.M"
+				type = medium_tank_chassis_1940
+				parent_version = 0
+				modules = {
+				main_armament_slot = tank_high_velocity_cannon
+				turret_type_slot = tank_medium_three_man_tank_turret
+				suspension_type_slot = tank_torsion_bar_suspension
+				armor_type_slot = tank_welded_armor
+				armor_sloping_slot = unsloped_armor
+				engine_type_slot = tank_gasoline_engine
+				radio_slot = tank_radio_1
+				special_type_slot_1 = basket
+				special_type_slot_2 = spaced_armor
+				}
+				upgrades = {
+					tank_nsb_engine_upgrade = 8
+					tank_nsb_armor_upgrade = 6
+				}
+				icon = "gfx/interface/technologies/land/ger/3k.tga"
+			}
+			
+		}
+	}
 	ger_1942_medium_tank_chassis = { 
 
 		enable_equipments = {
@@ -760,9 +874,7 @@ technologies = {
 			medium_tank_rocket_chassis_1942
 			medium_tank_flame_chassis_1942
 		}
-		dependencies = {
-			advanced_machine_tools = 1
-		}
+		
 		path = {
 			leads_to_tech = ger_1943_medium_tank_chassis
 			research_cost_coeff = 1
@@ -811,8 +923,9 @@ technologies = {
 			set_technology = {
 				medium_gun3 = 1
 			}
-		}
-	}	
+			
+		}  
+	 }
 
 	ger_1943_medium_tank_chassis = {
 
@@ -823,9 +936,6 @@ technologies = {
 			medium_tank_aa_chassis_1943
 			medium_tank_rocket_chassis_1943
 			medium_tank_flame_chassis_1943
-		}
-		dependencies = {
-			assembly_line_production = 1
 		}
 		path = {
 			leads_to_tech = ger_1945_medium_tank_chassis
@@ -878,6 +988,8 @@ technologies = {
 				icon = "gfx/interface/technologies/land/ger/panther_d.tga"
 				
 			}
+			
+			
 			set_technology = {
 				medium_gun4 = 1
 				armour_sloping3 = 1
@@ -955,6 +1067,7 @@ technologies = {
 				icon = "gfx/interface/technologies/land/ger/panther2.tga"
 				
 			}
+			   
 			set_technology = {
 				optical_rangefinder = 1
 
@@ -976,6 +1089,7 @@ technologies = {
 			tank_heavy_three_man_tank_turret
             tank_heavy_casemate_turret
 			tank_heavy_opentop_turret
+			
 		}
 		enable_subunits = {
 			heavy_armor
@@ -1014,9 +1128,7 @@ technologies = {
 			heavy_tank_rocket_chassis_1940
 			heavy_tank_flame_chassis_1940
 		}
-		dependencies = {
-			advanced_machine_tools = 1
-		}
+		
 
     	on_research_complete = {
            	create_equipment_variant = {
@@ -1076,9 +1188,7 @@ technologies = {
 			heavy_tank_rocket_chassis_1942
 			heavy_tank_flame_chassis_1942
 		}
-		dependencies = {
-			assembly_line_production = 1
-		}
+		
 		enable_equipment_modules = {
 			tank_heavy_four_man_tank_turret
 		}
@@ -1317,12 +1427,12 @@ technologies = {
 			research_cost_coeff = 1
 		}
 
-		research_cost = 1
-		start_year = 1942
+		research_cost = 0.8
+		start_year = 1941
 
 		folder = {
 			name = nsb_ger_armor_folder
-			position = { x = 8 y = @1942 }
+			position = { x = 8 y = @1941 }
 		}
 
 		ai_will_do = {

@@ -1,5 +1,350 @@
 
 PAR_instant_effect_decisions = {
+	PAR_remove_usa_bonus_when_it_owns_the_island = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 10000			
+		}
+		available = {
+			any_state = {
+				has_dynamic_modifier = {
+					modifier = USA_bombardment
+				}
+				is_controlled_by = USA
+
+			}
+		}	
+		fire_only_once = no
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					OR = {
+						has_dynamic_modifier = {
+							modifier = USA_bombardment
+						}
+						has_dynamic_modifier = {
+							modifier = USA_bombardment2
+						}
+
+					}
+					
+					is_controlled_by = USA
+				}
+				remove_dynamic_modifier = { modifier = USA_bombardment  }
+				remove_dynamic_modifier = { modifier = USA_bombardment2  }
+				remove_province_modifier = {
+					static_modifiers = { USA_bombardment_static_one }
+					province = {
+						all_provinces = yes
+					}
+				}
+				remove_province_modifier = {
+					static_modifiers = { USA_bombardment2_static_one }
+					province = {
+						all_provinces = yes
+					}
+				}
+			}
+		}	
+	}
+	PAR_paulus_defected = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 5000			
+		}
+		available = {
+			GER = {
+				has_country_flag = GER_paulus_encircled_in_stalingrad_flag
+			}
+			217 = {
+				all_neighbor_state  = {
+					is_controlled_by = SOV
+				}
+			}
+			217 = {
+				is_fully_controlled_by = SOV  
+			}
+		}	
+		fire_only_once = yes
+
+		complete_effect = {
+			GER = {
+				country_event = { id = germany.1001 days = 1 }
+				set_country_flag = GER_paulus_gone_flag
+			}
+			
+			
+		}	
+	}
+	PAR_germans_got_out = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 5000			
+		}
+		available = {
+			GER = {
+				has_country_flag = GER_paulus_encircled_in_stalingrad_flag
+				NOT = {
+					has_country_flag = GER_paulus_gone_flag
+				}
+			}
+			217 = {
+				any_neighbor_state  = {
+					is_controlled_by = GER
+				}
+			}
+		}	
+		fire_only_once = no
+
+		complete_effect = {
+			GER = {
+				clr_country_flag = GER_paulus_encircled_in_stalingrad_flag
+			}
+			
+			
+		}	
+	}
+	PAR_paulus_encircled = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 5000			
+		}
+		available = {
+			GER = {
+				NOT = {
+
+				has_country_flag = GER_paulus_encircled_in_stalingrad_flag
+				has_country_flag = GER_paulus_gone_flag
+			}
+
+			}
+			
+			GER = {
+				has_country_flag = GER_axis_inside_of_stalingrad_flag
+			}
+			217 = {
+				all_neighbor_state  = {
+					is_controlled_by = SOV
+				}
+			}
+			OR = {
+				OR = {
+					GER = {
+						controls_province = 3529
+					}
+					any_other_country = {
+						is_in_faction_with = GER
+						controls_state = 3529
+					}
+				}
+				OR = {
+					GER = {
+						controls_province = 13254
+					}
+					any_other_country = {
+						is_in_faction_with = GER
+						controls_state = 13254
+					}
+				}
+				OR = {
+					GER = {
+						controls_province = 13253
+					}
+					any_other_country = {
+						is_in_faction_with = GER
+						controls_state = 13253
+					}
+				}
+				OR = {
+					GER = {
+						controls_province = 13252
+					}
+					any_other_country = {
+						is_in_faction_with = GER
+						controls_state = 13252
+					}
+				}
+				OR = {
+					GER = {
+						controls_province = 13255
+					}
+					any_other_country = {
+						is_in_faction_with = GER
+						controls_state = 13255
+					}
+				}
+				OR = {
+					GER = {
+						controls_province = 11474
+					}
+					any_other_country = {
+						is_in_faction_with = GER
+						controls_state = 11474
+					}
+				}
+				OR = {
+					GER = {
+						controls_province = 13256
+					}
+					any_other_country = {
+						is_in_faction_with = GER
+						controls_state = 13256
+					}
+				}
+			}
+			
+		}
+		fire_only_once = no
+
+		complete_effect = {
+			GER = {
+				set_country_flag = GER_paulus_encircled_in_stalingrad_flag
+			}
+			
+			
+		}	
+	}
+	PAR_fix_spain_bug = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 1000			
+		}
+		available = {
+			OR = {
+				AND = {
+					SPR = {
+						has_idea = SPA_awaiting_the_rebellion
+					}
+					has_global_flag = spanish_civil_war
+				}
+				AND = {
+					SPR = {
+						has_idea = SPA_a_methodical_approach
+					}
+					has_global_flag = scw_over
+				}
+			}	
+		}
+		fire_only_once = no
+
+		complete_effect = {
+			if = {
+				limit = {
+					SPR = {
+						has_idea = SPA_awaiting_the_rebellion
+					}
+					has_global_flag = spanish_civil_war
+				}
+				SPR = {
+					remove_ideas = SPA_awaiting_the_rebellion
+				}
+				
+			}
+			if = {
+				limit = {
+					SPR = {
+						has_idea = SPA_a_methodical_approach
+					}
+					has_global_flag = scw_over
+				}
+				SPR = {
+					remove_ideas = SPA_a_methodical_approach
+				}
+				
+			}
+			
+		}	
+	}
+	PAR_fra_reinforcerate = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 10000			
+		}
+		available = {
+			OR = {
+				AND = {
+					FRA = {
+						check_variable = {
+							var = FRA_initial_war_euthasium_army_core_attack_factor_modifier
+							value = 0.2
+							compare = less_than_or_equals
+						}
+						check_variable = {
+							var = FRA_land_reinforce_rate_modifier
+							value = 0.01
+							compare = less_than
+						}
+					}
+				}
+				AND = {
+					FRA = {
+						check_variable = {
+							var = FRA_initial_war_euthasium_army_core_attack_factor_modifier
+							value = 0.1
+							compare = less_than_or_equals
+						}
+						check_variable = {
+							var = FRA_land_reinforce_rate_modifier
+							value = 0.02
+							compare = less_than
+						}
+					}
+				}
+				AND = {
+					FRA = {
+						check_variable = {
+							var = FRA_initial_war_euthasium_army_core_attack_factor_modifier
+							value = 0
+							compare = less_than_or_equals
+						}
+						check_variable = {
+							var = FRA_land_reinforce_rate_modifier
+							value = 0.03
+							compare = less_than
+						}
+					}
+				}
+				AND = {
+					FRA = {
+						check_variable = {
+							var = FRA_initial_war_euthasium_army_attack_factor_modifier
+							value = -0.1
+							compare = less_than_or_equals
+						}
+						check_variable = {
+							var = FRA_land_reinforce_rate_modifier
+							value = 0.04
+							compare = less_than
+						}
+					}
+				}
+				AND = {
+					FRA = {
+						check_variable = {
+							var = FRA_initial_war_euthasium_army_attack_factor_modifier
+							value = -0.2
+							compare = less_than_or_equals
+						}
+						check_variable = {
+							var = FRA_land_reinforce_rate_modifier
+							value = 0.05
+							compare = less_than
+						}
+					}
+				}
+				
+			}
+		}
+		fire_only_once = no
+
+		complete_effect = {
+			FRA = {
+				add_to_variable = { var = FRA_land_reinforce_rate_modifier value = 0.01 }
+			}
+			
+		}	
+	}
 	PAR_saarbrucken_offensive_too_far = {
 		allowed = { tag = PAR }
 		ai_will_do = {
@@ -10,370 +355,11 @@ PAR_instant_effect_decisions = {
 				has_capitulated = no
 			}
 			date < 1941.9.1
+			date > 1940.6.1
 			
 			GER = { 
 				NOT = {
 					has_war_with = BEL
-				}
-			}
-			OR = {
-				AND = {
-					GER = {
-						casualties_inflicted_by = {
-							opponent = FRA
-							thousands > 120 	
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 11470
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 11470
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 3423
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 3423
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 11547
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 11547
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 3558
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 3558
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 3692
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 3692
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 3530
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 3530
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 11486
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 11486
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 3679
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 3679
-						}
-					}
-				}
-				AND = {
-					GER = {
-						casualties_inflicted_by = {
-							opponent = FRA
-							thousands > 80 	
-						}
-					}
-					date > 1940.2.1
-					OR = {
-						ENG = {
-							controls_province = 11470
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 11470
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 3423
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 3423
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 11547
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 11547
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 3558
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 3558
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 3692
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 3692
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 3530
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 3530
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 11486
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 11486
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 3679
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 3679
-						}
-					}
-				}
-				AND = {
-					GER = {
-						casualties_inflicted_by = {
-							opponent = FRA
-							thousands > 100 	
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 3547
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 3547
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 11494
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 11494
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 6444
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 6444
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 6488
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 6488
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 589
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 589
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 6568
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 6568
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 9517
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 9517
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 11499
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 11499
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 708
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 708
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 9666
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 9666
-						}
-					}
-				}
-				AND = {
-					date > 1940.2.1
-					GER = {
-						casualties_inflicted_by = {
-							opponent = FRA
-							thousands > 60 	
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 3547
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 3547
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 11494
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 11494
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 6444
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 6444
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 6488
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 6488
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 589
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 589
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 6568
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 6568
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 9517
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 9517
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 11499
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 11499
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 708
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 708
-						}
-					}
-					OR = {
-						ENG = {
-							controls_province = 9666
-						}
-						any_other_country = {
-							is_in_faction_with = ENG
-							controls_province = 9666
-						}
-					}
 				}
 			}
 			
@@ -964,7 +950,7 @@ PAR_instant_effect_decisions = {
 			base = 9000			
 		}
 		available = {
-			date > 1938.6.1
+			date > 1939.5.1
 		}
 		fire_only_once = yes
 
@@ -1044,6 +1030,10 @@ PAR_instant_effect_decisions = {
 			JAP = {
 				has_war_with = USA
 			}	
+			has_game_rule = {
+				rule = script_china_war
+				option = DEFAULT
+			}
 		}
 		cost = 0
 		fire_only_once = yes
@@ -1427,6 +1417,9 @@ PAR_instant_effect_decisions = {
 						controls_state = 41
 					}			
 				}
+				SPN = {
+					set_equipment_fraction = 0
+				}
 				hidden_effect = { 
 					set_global_flag = scw_over
 					every_country = {
@@ -1526,10 +1519,15 @@ PAR_instant_effect_decisions = {
 						set_rule = {
 							can_access_market = yes
 						}
-						annex_country = { target = SPN transfer_troops = yes }
+						annex_country = { target = SPN transfer_troops = no }
 						add_ideas = SPA_recovering_from_civil_war
+						remove_ideas = SPR_death_before_surrender
 						delete_unit_template_and_units = {
 							division_template = "Guarnición Republicana"
+							disband = yes
+						}
+						delete_unit_template_and_units = {
+							division_template = "Northern Garrison"
 							disband = yes
 						}
 						delete_unit_template_and_units = {
@@ -1590,6 +1588,9 @@ PAR_instant_effect_decisions = {
 					SPN = {
 						controls_state = 41
 					}			
+				}
+				SPN = {
+					set_equipment_fraction = 0
 				}
 				hidden_effect = { 
 					add_named_threat = { threat = 5 name = RepublicanVictory }
@@ -1693,8 +1694,13 @@ PAR_instant_effect_decisions = {
 					set_rule = {
 						can_access_market = yes
 					}
-					annex_country = { target = SPN transfer_troops = yes }
+					annex_country = { target = SPN transfer_troops = no }
 					add_ideas = SPA_recovering_from_civil_war
+					remove_ideas = SPR_death_before_surrender
+					delete_unit_template_and_units = {
+						division_template = "Northern Garrison"
+						disband = yes
+					}
 					delete_unit_template_and_units = {
 						division_template = "Guarnición Republicana"
 						disband = yes
@@ -3572,6 +3578,10 @@ PAR_instant_effect_decisions = {
 			base = 1000			
 		}
 		available = {
+			has_game_rule = {
+				rule = script_china_war
+				option = DEFAULT
+			}
 			JAP = {
 				OR = {
 					controls_state = 752
@@ -4894,6 +4904,9 @@ PAR_instant_effect_decisions = {
 				}
 				white_peace = JAP
 			}
+			CHI = {
+				set_country_flag = CHI_jap_about_to_cap
+			}
 			FRA = {
 				transfer_state = 671
 				transfer_state = 670
@@ -4912,11 +4925,88 @@ PAR_instant_effect_decisions = {
 				white_peace = ENG
 				white_peace = USA
 			}
-
+			set_global_flag = JAP_china_war_over_flag
+			#custom_effect_tooltip = JAP_peaceout_tt
 			CHI = {
-				complete_national_focus = CHI_peace_out_Japan
-				transfer_state = 524
+				transfer_state = 621
+				transfer_state = 746
+				transfer_state = 622
+				transfer_state = 615
+				transfer_state = 614
+				transfer_state = 608
+				transfer_state = 609
+				transfer_state = 597
+				transfer_state = 743
+				transfer_state = 598
+				transfer_state = 613
+				transfer_state = 606
+				transfer_state = 607
+				transfer_state = 744
+				transfer_state = 821
+				transfer_state = 820
+				transfer_state = 620
+				transfer_state = 602
+				transfer_state = 600
+				transfer_state = 749
+				transfer_state = 596
+				transfer_state = 595
+				transfer_state = 822
+				transfer_state = 593
+				transfer_state = 592
+				transfer_state = 594
+				transfer_state = 591
+				transfer_state = 605
+				transfer_state = 750
+				transfer_state = 599
+				transfer_state = 603
+				transfer_state = 748
 			}
+			SOV = {
+				transfer_state = 745
+				transfer_state = 527
+				transfer_state = 611
+				transfer_state = 612
+				transfer_state = 716
+				transfer_state = 610
+				transfer_state = 715
+				transfer_state = 761
+				transfer_state = 714
+				transfer_state = 328
+				transfer_state = 717
+			}
+			USA = {
+				transfer_state = 525
+			}
+			SIA = {
+				transfer_state = 724
+				transfer_state = 289
+			}
+			FRA = {
+				transfer_state = 728
+			}
+			remove_ideas = JAP_no_grinding
+	
+			JAP = {
+				every_army_leader = {
+					remove_unit_leader_trait = jap_kwantung_veto
+				}
+				
+			}
+			MAN = {
+				every_army_leader = {
+					remove_unit_leader_trait = jap_kwantung_veto
+				}
+				
+			}
+			MAN = {
+				remove_ideas = JAP_no_grinding
+			}
+			JAP = { change_tag_from = MAN }
+			CHI = {
+				add_ideas = neutrality_idea
+				add_ideas = developing_country
+			}
+
 			USA = {
 				set_autonomy = {
 					target = JAP
@@ -5249,30 +5339,6 @@ PAR_instant_effect_decisions = {
 				every_country = {limit = { check_variable= { music_enabled > 0}  }
 					scoped_sound_effect = "se_nuclear_siren"
 				}
-			}
-		}	
-	}
-	PAR_jap_focus_dec = {
-		allowed = { tag = PAR }
-		ai_will_do = {
-			base = 1000			
-		}
-		available = {
-			date > 1941.1.1
-			JAP = {
-				AND = {
-					has_completed_focus = JAP_challenge_the_zaibatsus
-					NOT = {
-						has_completed_focus = JAP_material_mobilization_plan
-					}
-				}
-			}
-		}
-		fire_only_once = yes
-
-		complete_effect = {
-			JAP = {
-				complete_national_focus = JAP_material_mobilization_plan	
 			}
 		}	
 	}
@@ -5609,36 +5675,7 @@ PAR_instant_effect_decisions = {
 			}
 		}	
 	}
-	SP_givechinamils = {
-		icon = generic_megaphone
-   
-		allowed = {
-		   tag = PAR
-		}
-		
-		fire_only_once = yes
-		
-		available = {
-			has_global_flag = SP_start_bm
-			CHI = {
-				is_ai = yes
-			}
-		}
-
-		cost = 0
-
-
-
-		complete_effect = {
-        	CHI = {
-				add_offsite_building = { type = arms_factory level = 8 }
-			}			
-		}
-
-		ai_will_do = {
-			base = 1000			
-		}
-	}
+	
 
 	SP_give_uk_mils = {
 		icon = generic_megaphone
@@ -5704,116 +5741,7 @@ PAR_instant_effect_decisions = {
 		}
 	}
 
-	SP_JAP_equipment_wave_40 = {
 
-		icon = generic_prepare_civil_war
-
-		allowed = {
-		   tag = PAR
-		}
-
-		available = {
-			CHI = {
-				has_war_with = JAP
-			}			
-			has_global_flag = SP_start_bm
-			OR = {
-				date > 1941.1.1
-				AND = {
-					CHI = {
-						surrender_progress < 0.25
-						date > 1940.1.1
-					}
-				}									
-			}											
-		}
-
-
-
-		cost = 0
-		ai_will_do = {
-			factor = 1000
-		}
-
-		fire_only_once = yes
-
-		complete_effect = {
-			JAP = {
-				add_equipment_to_stockpile = {
-					type = horse_equipment_0
-						amount = 2000
-						producer = JAP
-				}
-				add_equipment_to_stockpile = {
-					type = infantry_equipment_0
-						amount = 1000
-						producer = JAP
-				}
-				add_equipment_to_stockpile = {
-					type = artillery_equipment_1
-						amount = 1000
-						producer = JAP
-				}		
-			}
-		}				
-	}
-
-	SP_JAP_equipment_wave_39 = {
-
-		icon = generic_prepare_civil_war
-
-		allowed = {
-		   tag = PAR
-		}
-
-		available = {
-			CHI = {
-				has_war_with = JAP
-			}			
-			JAP = {
-				is_ai = yes
-			}			
-			has_global_flag = SP_start_bm
-			OR = {
-				date > 1940.1.1
-				AND = {
-					CHI = {
-						surrender_progress < 0.45
-						date > 1939.1.1
-					}
-				}									
-			}											
-		}
-
-
-
-		cost = 0
-		ai_will_do = {
-			factor = 1000
-		}
-
-		fire_only_once = yes
-
-		complete_effect = {
-			JAP = {
-				add_equipment_to_stockpile = {
-					type = horse_equipment_0
-						amount = 3000
-						producer = JAP
-				}
-				add_equipment_to_stockpile = {
-					type = infantry_equipment_1
-						amount = 7500
-						producer = JAP
-				}
-				add_equipment_to_stockpile = {
-					type = artillery_equipment_1
-						amount = 1500
-						producer = JAP
-				}		
-			}
-		}				
-	}
 
 ############################################################################################################	
 ################################# Brick Unplayable Nations #################################################
@@ -6158,337 +6086,7 @@ PAR_instant_effect_decisions = {
 ################################# DELETE  CHINA'S STOCKPILE/ ARMY ##########################################
 ############################################################################################################
 
-	CHI_delete_stockpiles_and_army_in_china = {
-		icon = generic_megaphone
-   
-		allowed = {
-		   tag = PAR
-		}
 
-		available = {
-			NOT = {
-				has_game_rule = {
-					rule = script_china_war
-					option = DEFAULT  
-				}
-			}
-		}
-		
-		fire_only_once = yes
-		
-		available = {
-			CHI = {
-				has_war_with = JAP
-			}
-			OR = { ### Chonqing
-				JAP = { controls_state = 605 }
-				any_other_country = {
-					is_in_faction_with = JAP
-					controls_state = 605
-				}
-			}
-			OR = { ### Naning
-				JAP = { controls_state = 594 }
-				any_other_country = {
-					is_in_faction_with = JAP
-					controls_state = 594
-				}
-			}
-			OR = { ### Nanjing
-				JAP = { controls_state = 613 }
-				any_other_country = {
-					is_in_faction_with = JAP
-					controls_state = 613
-				}
-			}
-			OR = { ### Hubei
-				JAP = { controls_state = 620 }
-				any_other_country = {
-					is_in_faction_with = JAP
-					controls_state = 620
-				}
-			}
-			OR = { ### Jian
-				JAP = { controls_state = 600 }
-				any_other_country = {
-					is_in_faction_with = JAP
-					controls_state = 600
-				}
-			}			
-			OR = { ### Hunan
-				JAP = { controls_state = 602 }
-				any_other_country = {
-					is_in_faction_with = JAP
-					controls_state = 602
-				}
-			}	
-			OR = { ### Bejing
-				JAP = { controls_state = 608 }
-				any_other_country = {
-					is_in_faction_with = JAP
-					controls_state = 608
-				}
-			}
-			OR = { ### Shangdong
-				JAP = { controls_state = 597 }
-				any_other_country = {
-					is_in_faction_with = JAP
-					controls_state = 597
-				}
-			}			
-		}
-
-		cost = 0
-
-
-
-		complete_effect = {
-			CHI = {
-				add_timed_idea = {
-					idea = CHI_breaking_point_idea
-					days = 10
-				}
-				delete_unit = { state = 761 disband = no }
-				delete_unit = { state = 714 disband = no }
-				delete_unit = { state = 717 disband = no }
-				delete_unit = { state = 328 disband = no }
-				delete_unit = { state = 716 disband = no }
-				delete_unit = { state = 715 disband = no }
-				delete_unit = { state = 745 disband = no }
-				delete_unit = { state = 610 disband = no }
-				delete_unit = { state = 612 disband = no }
-				delete_unit = { state = 611 disband = no }
-				delete_unit = { state = 609 disband = no }
-				delete_unit = { state = 621 disband = no }
-				delete_unit = { state = 615 disband = no }
-				delete_unit = { state = 746 disband = no }
-				delete_unit = { state = 618 disband = no }
-				delete_unit = { state = 617 disband = no }
-				delete_unit = { state = 619 disband = no }
-				delete_unit = { state = 622 disband = no }
-				delete_unit = { state = 756 disband = no }
-				delete_unit = { state = 616 disband = no }
-				delete_unit = { state = 283 disband = no }
-				delete_unit = { state = 755 disband = no }
-				delete_unit = { state = 753 disband = no }
-				delete_unit = { state = 754 disband = no }
-				delete_unit = { state = 604 disband = no }
-				delete_unit = { state = 760 disband = no }
-				delete_unit = { state = 287 disband = no }
-				delete_unit = { state = 759 disband = no }
-				delete_unit = { state = 322 disband = no }
-				delete_unit = { state = 758 disband = no }
-				delete_unit = { state = 757 disband = no }
-				delete_unit = { state = 325 disband = no }
-				delete_unit = { state = 747 disband = no }
-				delete_unit = { state = 322 disband = no }
-				delete_unit = { state = 591 disband = no }
-				delete_unit = { state = 594 disband = no }
-				delete_unit = { state = 592 disband = no }
-				delete_unit = { state = 593 disband = no }
-				delete_unit = { state = 599 disband = no }
-				delete_unit = { state = 608 disband = no }
-				delete_unit = { state = 614 disband = no }
-				delete_unit = { state = 597 disband = no }
-				delete_unit = { state = 607 disband = no }
-				delete_unit = { state = 598 disband = no }
-				delete_unit = { state = 606 disband = no }
-				delete_unit = { state = 598 disband = no }
-				delete_unit = { state = 613 disband = no }
-				delete_unit = { state = 749 disband = no }
-				delete_unit = { state = 596 disband = no }
-				delete_unit = { state = 744 disband = no }
-				delete_unit = { state = 605 disband = no }
-				delete_unit = { state = 751 disband = no }
-				delete_unit = { state = 752 disband = no }
-				delete_unit = { state = 601 disband = no }
-				delete_unit = { state = 748 disband = no }
-				delete_unit = { state = 603 disband = no }
-				delete_unit = { state = 620 disband = no }
-				delete_unit = { state = 750 disband = no }
-				delete_unit = { state = 602 disband = no }
-				delete_unit = { state = 600 disband = no }
-				delete_unit = { state = 595 disband = no }
-				delete_unit = { state = 596 disband = no }
-				delete_unit = { state = 749 disband = no }
-				delete_unit = { state = 524 disband = no }			
-			}
-		}
-
-		ai_will_do = {
-			base = 1000			
-		}
-	}
-
-	PRC_delete_stockpiles_and_army_in_china = {
-		icon = generic_megaphone
-   
-		allowed = {
-		   tag = PAR
-		}
-
-		available = {
-			NOT = {
-				has_game_rule = {
-					rule = script_china_war
-					option = DEFAULT  
-				}
-			}
-		}
-		
-		fire_only_once = yes
-		
-		available = {
-			PRC = {
-				has_war_with = JAP
-			}
-			OR = { ### Chonqing
-				JAP = { controls_state = 605 }
-				PRC = { surrender_progress > 0.85 }
-				any_other_country = {
-					is_in_faction_with = JAP
-					controls_state = 605
-				}
-			}
-			OR = { ### Naning
-				JAP = { controls_state = 594 }
-				PRC = { surrender_progress > 0.85 }
-				any_other_country = {
-					is_in_faction_with = JAP
-					controls_state = 594
-				}
-			}
-			OR = { ### Nanjing
-				JAP = { controls_state = 613 }
-				PRC = { surrender_progress > 0.85 }
-				any_other_country = {
-					is_in_faction_with = JAP
-					controls_state = 613
-				}
-			}
-			OR = { ### Hubei
-				JAP = { controls_state = 620 }
-				PRC = { surrender_progress > 0.85 }
-				any_other_country = {
-					is_in_faction_with = JAP
-					controls_state = 620
-				}
-			}
-			OR = { ### Jian
-				JAP = { controls_state = 600 }
-				PRC = { surrender_progress > 0.85 }
-				any_other_country = {
-					is_in_faction_with = JAP
-					controls_state = 600
-				}
-			}			
-			OR = { ### Hunan
-				JAP = { controls_state = 602 }
-				PRC = { surrender_progress > 0.85 }
-				any_other_country = {
-					is_in_faction_with = JAP
-					controls_state = 602
-				}
-			}	
-			OR = { ### Bejing
-				JAP = { controls_state = 608 }
-				PRC = { surrender_progress > 0.85 }
-				any_other_country = {
-					is_in_faction_with = JAP
-					controls_state = 608
-				}
-			}
-			OR = { ### Shangdong
-				JAP = { controls_state = 597 }
-				PRC = { surrender_progress > 0.85 }
-				any_other_country = {
-					is_in_faction_with = JAP
-					controls_state = 597
-				}
-			}			
-		}
-
-		cost = 0
-
-
-
-		complete_effect = {
-			PRC = {
-				add_timed_idea = {
-					idea = CHI_breaking_point_idea
-					days = 10
-				}				
-				delete_unit = { state = 761 disband = no }
-				delete_unit = { state = 714 disband = no }
-				delete_unit = { state = 717 disband = no }
-				delete_unit = { state = 328 disband = no }
-				delete_unit = { state = 716 disband = no }
-				delete_unit = { state = 715 disband = no }
-				delete_unit = { state = 745 disband = no }
-				delete_unit = { state = 610 disband = no }
-				delete_unit = { state = 612 disband = no }
-				delete_unit = { state = 611 disband = no }
-				delete_unit = { state = 609 disband = no }
-				delete_unit = { state = 621 disband = no }
-				delete_unit = { state = 615 disband = no }
-				delete_unit = { state = 746 disband = no }
-				delete_unit = { state = 618 disband = no }
-				delete_unit = { state = 617 disband = no }
-				delete_unit = { state = 619 disband = no }
-				delete_unit = { state = 622 disband = no }
-				delete_unit = { state = 756 disband = no }
-				delete_unit = { state = 616 disband = no }
-				delete_unit = { state = 283 disband = no }
-				delete_unit = { state = 755 disband = no }
-				delete_unit = { state = 753 disband = no }
-				delete_unit = { state = 754 disband = no }
-				delete_unit = { state = 604 disband = no }
-				delete_unit = { state = 760 disband = no }
-				delete_unit = { state = 287 disband = no }
-				delete_unit = { state = 759 disband = no }
-				delete_unit = { state = 322 disband = no }
-				delete_unit = { state = 758 disband = no }
-				delete_unit = { state = 757 disband = no }
-				delete_unit = { state = 325 disband = no }
-				delete_unit = { state = 747 disband = no }
-				delete_unit = { state = 322 disband = no }
-				delete_unit = { state = 591 disband = no }
-				delete_unit = { state = 594 disband = no }
-				delete_unit = { state = 592 disband = no }
-				delete_unit = { state = 593 disband = no }
-				delete_unit = { state = 599 disband = no }
-				delete_unit = { state = 608 disband = no }
-				delete_unit = { state = 614 disband = no }
-				delete_unit = { state = 597 disband = no }
-				delete_unit = { state = 607 disband = no }
-				delete_unit = { state = 598 disband = no }
-				delete_unit = { state = 606 disband = no }
-				delete_unit = { state = 598 disband = no }
-				delete_unit = { state = 613 disband = no }
-				delete_unit = { state = 749 disband = no }
-				delete_unit = { state = 596 disband = no }
-				delete_unit = { state = 744 disband = no }
-				delete_unit = { state = 605 disband = no }
-				delete_unit = { state = 751 disband = no }
-				delete_unit = { state = 752 disband = no }
-				delete_unit = { state = 601 disband = no }
-				delete_unit = { state = 748 disband = no }
-				delete_unit = { state = 603 disband = no }
-				delete_unit = { state = 620 disband = no }
-				delete_unit = { state = 750 disband = no }
-				delete_unit = { state = 602 disband = no }
-				delete_unit = { state = 600 disband = no }
-				delete_unit = { state = 595 disband = no }
-				delete_unit = { state = 596 disband = no }
-				delete_unit = { state = 749 disband = no }
-				delete_unit = { state = 524 disband = no }			
-			}
-		}
-
-		ai_will_do = {
-			base = 1000			
-		}
-	}
 
 ############################################################################################################	
 ################################# GÖMBÖS WILD RIDE BEGINS AND ENDS #########################################
@@ -7602,34 +7200,6 @@ PAR_instant_effect_decisions = {
 		}
 	}
 
-	JAP_zaibatsus_golden_bat_cigarettes = {
-		icon = generic_megaphone
-   
-		allowed = {
-		   tag = PAR
-		}
-
-		fire_only_once = yes
-
-		available = {
-			JAP = {
-				has_completed_focus = JAP_zaibatsus_dominance
-			}
-		}
-
-		cost = 0
-		
-		days_remove = 90
-		
-		remove_effect = {
-           JAP = { country_event = { id = japan.24 } }
-		}
-
-		ai_will_do = {
-			base = 1000			
-		}
-	}
-
 	USA_killer_tornado = {
 		icon = generic_megaphone
    
@@ -8677,6 +8247,37 @@ PAR_instant_effect_decisions = {
 			base = 1000
 			
 		}
+	}
+	
+	RCC_giga_mines = {
+		fire_only_once = yes
+		
+		icon = generic_megaphone
+   
+		allowed = {
+		   tag = PAR
+		}
+		
+		available = {
+			RCC = {
+				controls_state = 611
+			}
+
+		}
+		complete_effect = {
+			RCC = {
+				give_resource_rights = { receiver = MAN state = 612 }
+			}
+
+		}
+
+		cost = 0
+
+
+		ai_will_do = {
+			base = 1000
+			
+		}
 	}	
 
 
@@ -8781,7 +8382,7 @@ PAR_instant_effect_decisions = {
 		complete_effect = {
            hidden_effect = {
 				every_country = {limit = { check_variable= { speeches_enabled > 0}  }
-					scoped_sound_effect = "sp_eng_fight_them"
+					play_song = "sp_eng_fight_them"
 				}
 
 		    }
@@ -8828,7 +8429,7 @@ PAR_instant_effect_decisions = {
 		complete_effect = {
            hidden_effect = {
 				every_country = {limit = { check_variable= { speeches_enabled > 0}  }
-					scoped_sound_effect = "sp_dday"
+					play_song = "sp_dday"
 				}
 		    }
 		    GER = {
@@ -8877,7 +8478,7 @@ PAR_instant_effect_decisions = {
 		complete_effect = {
            hidden_effect = {
 				every_country = {limit = { check_variable= { speeches_enabled > 0}  }
-					scoped_sound_effect = "sp_dday"
+					play_song = "sp_dday"
 				}
 		    }
 		    GER = {
@@ -8926,7 +8527,7 @@ PAR_instant_effect_decisions = {
 		complete_effect = {
            hidden_effect = {
 				every_country = {limit = { check_variable= { speeches_enabled > 0}  }
-					scoped_sound_effect = "sp_dday"
+					play_song = "sp_dday"
 				}
 		    }
 		    GER = {
@@ -8975,7 +8576,7 @@ PAR_instant_effect_decisions = {
 		complete_effect = {
            hidden_effect = {
 				every_country = {limit = { check_variable= { speeches_enabled > 0}  }
-					scoped_sound_effect = "sp_dday"
+					play_song = "sp_dday"
 				}
 		    }
 		    GER = {
@@ -9024,7 +8625,7 @@ PAR_instant_effect_decisions = {
 		complete_effect = {
            hidden_effect = {
 				every_country = {limit = { check_variable= { speeches_enabled > 0}  }
-					scoped_sound_effect = "sp_dday"
+					play_song = "sp_dday"
 				}
 		    }
 		    GER = {
@@ -9073,7 +8674,7 @@ PAR_instant_effect_decisions = {
 		complete_effect = {
            hidden_effect = {
 				every_country = {limit = { check_variable= { speeches_enabled > 0}  }
-					scoped_sound_effect = "sp_dday"
+					play_song = "sp_dday"
 				}
 		    }
 		    GER = {
