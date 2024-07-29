@@ -69,6 +69,16 @@ dont_die_in_mountains = {
 	}
 	ai_strategy = {
 		type = ignore
+		id = "TUR"
+		value = 500
+	}
+	ai_strategy = {
+		type = ignore
+		id = "IRQ"
+		value = 600
+	}
+	ai_strategy = {
+		type = ignore
 		id = "SWE"
 		value = 500
 	}
@@ -77,7 +87,17 @@ dont_die_in_mountains = {
 		id = "SWI"
 		value = -500
 	}
-
+	ai_strategy = {
+		type = antagonize
+		id = "TUR"
+		value = -500
+	}
+	
+	ai_strategy = {
+		type = conquer
+		id = "TUR"
+		value = -500
+	}
 	ai_strategy = {
 		type = conquer
 		id = "SWI"
@@ -125,6 +145,16 @@ dont_die_in_mountains = {
 		type = front_unit_request
 		tag = ITA
 		value = -200
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = TUR
+		value = -200
+	}
+	ai_strategy = {
+		type = front_unit_request
+		tag = IRQ
+		value = -250
 	}
 	ai_strategy = {
 		type = front_unit_request
@@ -313,19 +343,19 @@ GER_area_priority = {
 	ai_strategy = {
 		type = area_priority
 		id = middle_east
-		value = 0
+		value = -10
 	}
 
 	ai_strategy = {
 		type = area_priority
 		id = suez
-		value = 5
+		value = 1
 	}			
 	
 	ai_strategy = {
 		type = area_priority
 		id = africa
-		value = -90
+		value = -100
 	}
 	
 	ai_strategy = {
@@ -364,12 +394,12 @@ worry_about_barbarossa_before_africa = {
 	ai_strategy = {
 		type = area_priority
 		id = middle_east
-		value = -150
+		value = -200
 	}
 	ai_strategy = {
 		type = area_priority
 		id = suez
-		value = -150
+		value = -200
 	}
 }	
 
@@ -507,50 +537,7 @@ axis_dont_mess_with_volunteers = {
 	}
 }
 
-play_nice_with_benelux = {
-	allowed = {
-		tag = GER
-	}
-	enable = {
-		tag = GER
-		date < 1940.3.1	
-	}
-	abort = {
-		date > 1940.3.1
-	}
-	
-	# leave britney alone!
-	ai_strategy = {
-		type = antagonize
-		id = "BEL"
-		value = -100
-	}
-	ai_strategy = {
-		type = ignore
-		id = "BEL"
-		value = 200
-	}
-	ai_strategy = {
-		type = antagonize
-		id = "HOL"
-		value = -100
-	}
-	ai_strategy = {
-		type = ignore
-		id = "HOL"
-		value = 200
-	}
-	ai_strategy = {
-		type = antagonize
-		id = "LUX"
-		value = -100
-	}
-	ai_strategy = {
-		type = ignore
-		id = "LUX"
-		value = 200
-	}
-}
+
 
 war_with_yugoslavia = {
 	allowed = {
@@ -620,8 +607,9 @@ war_with_soviets = {
 	}
 	enable = {
 		tag = GER
-		date > 1941.6.6
+		date > 1941.5.5
 		country_exists = SOV
+		GRE = { has_capitulated = yes }
 	}
 	abort = {
 		NOT = { country_exists = SOV }
@@ -805,49 +793,6 @@ GER_let_italy_handle_french_front_alone = {
 	}
 }
 
-GER_ITA_close_up_maginot_line_after_FRA_falls = {
-	allowed = {
-		OR = {
-			tag = GER
-			tag = FRA
-		}
-	}
-	
-	enable = {
-		date < 1941.3.3
-		has_war_with = FRA
-		FRA = {
-			has_capitulated = yes
-			days_since_capitulated > 7 # let's give a week before things settle
-			days_since_capitulated < 90
-		}
-		NOT = { has_full_control_of_state = 28 }
-	}
-	
-	abort_when_not_enabled = yes
-	
-	ai_strategy = {
-		type = front_control
-	
-		state = 28 # close up maginot line
-		
-		ratio = 0.6
-		
-		priority = 100
-		ordertype = front
-		execution_type = rush
-		execute_order = yes
-	}
-	
-	ai_strategy = {
-		type = front_unit_request
-	
-		state = 28 
-		
-		value = 50 # lets put more units, should be safe
-	}
-}
-
 GER_prepare_to_conquer_scandinavia = {
 	allowed = {
 		original_tag = GER 
@@ -902,6 +847,94 @@ GER_prepare_to_conquer_scandinavia = {
 	ai_strategy = { type = front_armor_score id = "NOR" value = -50000 }
 }
 
+play_nice_with_benelux = {
+	allowed = {
+		tag = GER
+	}
+	enable = {
+		tag = GER
+		date < 1940.3.1	
+	}
+	abort = {
+		date > 1940.3.1
+	}
+	
+	# leave britney alone!
+	ai_strategy = {
+		type = antagonize
+		id = "BEL"
+		value = -100
+	}
+	ai_strategy = {
+		type = ignore
+		id = "BEL"
+		value = 200
+	}
+	ai_strategy = {
+		type = antagonize
+		id = "HOL"
+		value = -100
+	}
+	ai_strategy = {
+		type = ignore
+		id = "HOL"
+		value = 200
+	}
+	ai_strategy = {
+		type = antagonize
+		id = "LUX"
+		value = -100
+	}
+	ai_strategy = {
+		type = ignore
+		id = "LUX"
+		value = 200
+	}
+}
+
+GER_ITA_close_up_maginot_line_after_FRA_falls = {
+	allowed = {
+		OR = {
+			tag = GER
+			tag = FRA
+		}
+	}
+	
+	enable = {
+		date < 1941.3.3
+		has_war_with = FRA
+		FRA = {
+			has_capitulated = yes
+			days_since_capitulated > 7 # let's give a week before things settle
+			days_since_capitulated < 90
+		}
+		NOT = { has_full_control_of_state = 28 }
+	}
+	
+	abort_when_not_enabled = yes
+	
+	ai_strategy = {
+		type = front_control
+	
+		state = 28 # close up maginot line
+		
+		ratio = 0.6
+		
+		priority = 100
+		ordertype = front
+		execution_type = rush
+		execute_order = yes
+	}
+	
+	ai_strategy = {
+		type = front_unit_request
+	
+		state = 28 
+		
+		value = 50 # lets put more units, should be safe
+	}
+}
+
 GER_prepare_to_fuck_the_benelux = {
 	
 	allowed = {
@@ -913,7 +946,10 @@ GER_prepare_to_fuck_the_benelux = {
 		
 	}
 
-	abort_when_not_enabled = yes 
+	abort = {
+		HOL = { has_capitulated = yes }
+		BEL = { has_capitulated = yes }
+	}
 
 	ai_strategy = { type = conquer id = "BEL" value = 200 }
 
@@ -929,7 +965,7 @@ GER_prepare_to_fuck_the_benelux = {
 	ai_strategy = {
 		type = front_unit_request
 		tag = BEL  
-		value = 25
+		value = 100
 	}
 	ai_strategy = {
 		type = front_unit_request
@@ -949,6 +985,20 @@ GER_prepare_to_fuck_the_benelux = {
 		execution_type = rush
 		execute_order = yes
 	}
+	
+	ai_strategy = {
+		type = front_control
+
+		tag = HOL
+
+		ratio = 0.5
+
+		priority = 100
+		ordertype = front
+		execution_type = rush
+		execute_order = yes
+	}
+	
 	ai_strategy = { type = front_armor_score id = "FRA" value = -50000 }
 	ai_strategy = { type = front_armor_score id = "BEL" value = 50000 }
 	ai_strategy = { type = front_armor_score id = "HOL" value = 50000 }
@@ -1078,11 +1128,7 @@ kill_benelux = {
 		manual_attack = no
 		execute_order = no
 	}
-	ai_strategy = {
-		type = front_unit_request
-		tag = BEL
-		value = 100
-	}	
+		
 }
 
 GER_fuck_over_low_countries = {
@@ -1162,7 +1208,7 @@ GER_fuck_over_low_countries = {
 	ai_strategy = {
 		type = strategic_air_importance
 		id = 5 #Strategic Region ID - Benelux
-		value = 5000 #value of stocked main front in active combat is usually around 35,000
+		value = 15000 #value of stocked main front in active combat is usually around 35,000
 	}
 	ai_strategy = {
 		type = strategic_air_importance
@@ -1172,6 +1218,11 @@ GER_fuck_over_low_countries = {
 	ai_strategy = {
 		type = strategic_air_importance
 		id = 2 #Strategic Region ID - North England
+		value = -5000 #value of stocked main front in active combat is usually around 35,000
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 18 #Strategic Region ID - channel
 		value = -5000 #value of stocked main front in active combat is usually around 35,000
 	}
 	ai_strategy = {
@@ -1201,7 +1252,7 @@ GER_finish_france = {
 	ai_strategy = {
 		type = front_control
 		tag = FRA
-		execution_type = balanced
+		execution_type = rush
 		manual_attack = yes
 		execute_order = yes
 	}	
@@ -1210,7 +1261,22 @@ GER_finish_france = {
 	ai_strategy = {
 		type = strategic_air_importance
 		id = 208 #Strategic Region ID -  France
-		value = 5000 #value of stocked main front in active combat is usually around 35,000
+		value = 30000 #value of stocked main front in active combat is usually around 35,000
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 1 #Strategic Region ID - Southern England
+		value = -5000 #value of stocked main front in active combat is usually around 35,000
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 2 #Strategic Region ID - North England
+		value = -5000 #value of stocked main front in active combat is usually around 35,000
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 18 #Strategic Region ID - North England
+		value = -5000 #value of stocked main front in active combat is usually around 35,000
 	}
 }
 
@@ -1227,7 +1293,22 @@ GER_defence_of_europe = {
 	}
 
 	abort_when_not_enabled = yes
-
+	
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 5
+		value = 15000 
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 6
+		value = 15000 
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 8
+		value = 15000 
+	}
 	ai_strategy = {
 		type = put_unit_buffers
 		ratio = 0.2
@@ -1250,6 +1331,7 @@ GER_defence_of_europe = {
 		subtract_invasions_from_need = no
 		subtract_fronts_from_need = yes
 	}
+
 }
 
 CZE_help_germany = {
@@ -1935,6 +2017,16 @@ GER_dont_waste_bombers_before_fra_exist2 = {
 	ai_strategy = {
 		type = strategic_air_importance
 		id = 18
+		value = -50000 
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 127
+		value = -50000 
+	}
+	ai_strategy = {
+		type = strategic_air_importance
+		id = 219
 		value = -50000 
 	}
 }
