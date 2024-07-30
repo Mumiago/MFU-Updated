@@ -1286,6 +1286,36 @@ JAP_pacific_war_explanation_category = {
 						}
 					}
 					CHI = {
+						set_variable = { 
+							var = CHI_experience_gain_factor_var 
+							value = 0
+						}
+						set_variable = { 
+							var = CHI_experience_gain_army_factor_var 
+							value = 0
+						}
+					}
+					if = {
+						limit = {
+							MAN = {
+								has_idea = jap_kwantung_army_3
+							}
+						}
+						MAN = {
+							remove_ideas = jap_kwantung_army_3
+						}
+					}
+					if = {
+						limit = {
+							JAP = {
+								has_idea = jap_kwantung_army_4
+							}
+						}
+						JAP = {
+							remove_ideas = jap_kwantung_army_4
+						}
+					}
+					CHI = {
 						dismantle_faction = yes
 					}
 					ENG = {
@@ -1863,6 +1893,38 @@ JAP_pacific_war_explanation_category = {
 						country_exists = MAN
 					}
 					MAN = { 
+						if = {
+							limit = { 
+								any_army_leader = {
+									has_trait = jap_kwantung_veto
+								} 
+							}
+							every_army_leader = {
+								remove_unit_leader_trait = jap_kwantung_veto
+							}
+						}
+						if = {
+							limit ={
+								has_idea = JAP_no_grinding
+							}
+							remove_ideas = JAP_no_grinding
+						}
+						
+						add_to_war = { 
+							targeted_alliance = JAP
+							enemy = ENG
+						}
+						add_to_war = { 
+							targeted_alliance = JAP
+							enemy = USA
+						}
+					}
+				}
+				if = {
+					limit = {
+						country_exists = RCC
+					}
+					RCC = { 
 						if = {
 							limit = { 
 								any_army_leader = {
@@ -3044,14 +3106,21 @@ JAP_intervene_in_china_decision = {
 
 		available = {
 			controls_state = 613
-			613 = {
-				resistance_target > 1
+			OR = {
+				613 = {
+					resistance_target > 1
+				}
+				840 = {
+					resistance_target > 1
+				}
 			}
+			
 		}
 
 		highlight_states = {
  			highlight_state_targets = { 
 				 state = 613
+				 state = 840
 			}
 		}
 
@@ -3069,8 +3138,13 @@ JAP_intervene_in_china_decision = {
 			}
 			
 			controls_state = 613
-			613 = {
-				resistance_target > 1
+			OR = {
+				613 = {
+					resistance_target > 1
+				}
+				840 = {
+					resistance_target > 1
+				}
 			}
 		}
 
@@ -3079,6 +3153,11 @@ JAP_intervene_in_china_decision = {
 
 		remove_effect = {
 			613 = {
+				add_resistance_target = -5 
+				add_resistance = -10
+				add_compliance = 5
+			}
+			840 = {
 				add_resistance_target = -5 
 				add_resistance = -10
 				add_compliance = 5

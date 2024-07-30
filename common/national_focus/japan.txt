@@ -786,27 +786,35 @@ focus_tree = {
 
 		completion_reward = {
 			add_ideas = JAP_naoki_hoshino
-
 			if = {
 				limit = {
+					has_game_rule = {
+						rule = script_china_war
+						option = DEFAULT
+					}
+				}
+				if = {
+					limit = {
+						MAN = {
+							has_idea = jap_kwantung_army
+						}
+					}
 					MAN = {
-						has_idea = jap_kwantung_army
+						remove_ideas = jap_kwantung_army
 					}
 				}
-				MAN = {
-					remove_ideas = jap_kwantung_army
-				}
-			}
-			if = {
-				limit = {
+				if = {
+					limit = {
+						JAP = {
+							has_idea = jap_kwantung_army_2
+						}
+					}
 					JAP = {
-						has_idea = jap_kwantung_army_2
+						remove_ideas = jap_kwantung_army_2
 					}
 				}
-				JAP = {
-					remove_ideas = jap_kwantung_army_2
-				}
 			}
+			
 			add_tech_bonus = {
 				category = industry 
 				name = JAP_outline_of_the_new_economic_order
@@ -2937,17 +2945,17 @@ focus_tree = {
 						option = HISTORICAL 
 					}
 				}
+				country_event = { id = japan.1 }
 				custom_effect_tooltip = JAP_war_escalation_tt
 				add_to_variable = {
 					var = JAP_war_escalation_var
 					value = 1
 				}
 				MAN = {
-					add_ideas = jap_kwantung_army
+					add_ideas = jap_kwantung_army_3
 				}
-				swap_ideas = {
-					remove_idea = jap_kwantung_army
-					add_idea = jap_kwantung_army_2
+				JAP = {
+					add_ideas = jap_kwantung_army_4
 				}
 				hidden_effect = {
 					every_state = {
@@ -3003,22 +3011,7 @@ focus_tree = {
 							}
 						}
 					}
-				}
-				
-				CHI = {
-					country_event = china.1
-				}
-					
-							
-					
-				hidden_effect = {
-					CHI = {
-						country_event = { id = china.216 days = 2 }
-						country_event = { id = china.218 days = 30 }
-					}
-				}
-				
-				
+				}	
 			}
 		}
 	}
@@ -6509,10 +6502,31 @@ focus = {
 		}
 		if = {
 			limit = {
-				controls_state = 822
-				controls_state = 593
-				controls_state = 595
-				controls_state = 596
+				822 = {
+					OR = {
+						is_controlled_by = JAP 
+						is_controlled_by = RCC 
+					}
+				}
+				593 = {
+					OR = {
+						is_controlled_by = JAP 
+						is_controlled_by = RCC 
+					}
+				}
+				595 = {
+					OR = {
+						is_controlled_by = JAP 
+						is_controlled_by = RCC 
+					}
+				}
+				596 = {
+					OR = {
+						is_controlled_by = JAP 
+						is_controlled_by = RCC 
+					}
+				}
+				
 			}
 			build_railway = {
 				level = 4
@@ -7520,8 +7534,18 @@ focus = {
 				category = naval_doctrine
 			}
 			navy_experience = 50
-
-			add_timed_idea = { idea = JAP_short_term_military_production_idea days = 500 }
+			if = {
+				limit = {
+					JAP = {
+						is_ai = no
+					}
+				}
+				add_timed_idea = { idea = JAP_short_term_military_production_idea days = 500 }
+			}
+			else ={
+				add_timed_idea = { idea = JAP_short_term_military_production_idea2 days = 500 }
+			}
+			
 
 		}
 	}
