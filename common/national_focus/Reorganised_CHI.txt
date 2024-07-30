@@ -1405,6 +1405,345 @@ focus_tree = {
 			add_ideas = war_economy
 		}
 	}
+	focus = {
+		id = RCC_reformed
+		icon = GFX_hungarian_military_goverment
+		x = -1
+		y = 1
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+		relative_position_id = RCC_city
+		prerequisite = {	focus = RCC_city focus = RCC_rural	}
+		bypass = {
+
+		}
+
+		completion_reward = {
+		if = {
+			limit ={ NOT ={has_completed_focus = RCC_recognised_at_once}}
+		 custom_effect_tooltip = RCC_torn_industry_tt
+
+		 add_to_variable = {
+			var = RCC_military_industry_dm_production_speed_arms_factory_factor
+			value = 0.1
+			tooltip = arms_factory_build_speed_factor_tooltip
+		}
+		608 = {
+			remove_building = {
+				type = infrastructure
+				level = 2
+			}
+			add_building_construction = {
+				type = arms_factory
+				level = 3
+			}
+		}
+	 }
+		if = {
+			limit ={has_completed_focus = RCC_recognised_at_once}
+		
+			608 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 3
+				}
+			}
+		}
+		custom_effect_tooltip = MANspace
+		custom_effect_tooltip = RCC_mils_plus5
+		}
+	}
+	focus = {
+		id = RCC_recognised_at_once
+		icon = GFX_z_goal_ehb_goverment
+		x = -3
+		y = 0
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+		relative_position_id = RCC_reformed
+		prerequisite = {
+			focus = RCC_constitution
+		}
+		available = {
+			has_full_control_of_state = 608
+			has_full_control_of_state = 614
+			has_full_control_of_state = 597
+			has_full_control_of_state = 743
+		}
+
+		bypass = {
+
+		}
+
+
+		completion_reward = {
+			custom_effect_tooltip = RCC_legitimacy_reformtt0
+			if ={
+				limit = { NOT = {has_completed_focus = RCC_reorganise_conscription} }
+				set_variable = {
+					RCC_stab_leg = -0.35
+					tooltip = stability_leg_tooltip
+				}
+			 else_if = {
+				limit = { has_completed_focus = RCC_reorganise_conscription }
+				set_variable = {
+					RCC_stab_leg = -0.25
+					tooltip = stability_leg_tooltip
+				}
+			 }
+			}
+			set_variable = {
+				RCC_pp_gain = -0.15
+				tooltip = political_power_gain_modifier_tooltip
+			}
+			custom_effect_tooltip = MANspace
+
+			custom_effect_tooltip = RCC_torn_industry_reformtt
+
+		######		industrial complex bonuses
+		if ={
+			limit = { NOT = {has_completed_focus = RCC_new_japanese_planifify} NOT = {has_completed_focus = RCC_citisens_of_the_new_china} NOT = {has_completed_focus = RCC_new_infra_reloc} }
+			set_variable = {
+				var = RCC_military_industry_dm_production_speed_industrial_complex_factor
+				value = 0
+				tooltip = industrial_complex_build_speed_factor_tooltip	
+			}
+			else_if = {
+				limit = {NOT = {has_completed_focus = RCC_new_japanese_planifify}   NOT = {has_completed_focus = RCC_citisens_of_the_new_china} has_completed_focus = RCC_new_infra_reloc }
+				set_variable = {
+					var = RCC_military_industry_dm_production_speed_industrial_complex_factor
+					value = 0.05
+					tooltip = industrial_complex_build_speed_factor_tooltip	
+				}
+			 }
+		 else_if = {
+			limit = { has_completed_focus = RCC_new_japanese_planifify   NOT = {has_completed_focus = RCC_citisens_of_the_new_china} NOT = {has_completed_focus = RCC_new_infra_reloc} }
+			set_variable = {
+				var = RCC_military_industry_dm_production_speed_industrial_complex_factor
+				value = 0.1
+				tooltip = industrial_complex_build_speed_factor_tooltip	
+			}
+		 }
+		 else_if = {
+			limit = {  NOT = {has_completed_focus = RCC_new_japanese_planifify} has_completed_focus = RCC_citisens_of_the_new_china NOT = {has_completed_focus = RCC_new_infra_reloc} }
+			set_variable = {
+				var = RCC_military_industry_dm_production_speed_industrial_complex_factor
+				value = 0.1
+				tooltip = industrial_complex_build_speed_factor_tooltip	
+			}
+		 }
+		 else_if = {
+			limit = {  NOT = {has_completed_focus = RCC_new_japanese_planifify} has_completed_focus = RCC_citisens_of_the_new_china has_completed_focus = RCC_new_infra_reloc }
+			set_variable = {
+				var = RCC_military_industry_dm_production_speed_industrial_complex_factor
+				value = 0.15
+				tooltip = industrial_complex_build_speed_factor_tooltip	
+			}
+		 }
+		 else_if = {
+			limit = {  NOT = {has_completed_focus = RCC_citisens_of_the_new_china} has_completed_focus = RCC_new_japanese_planifify has_completed_focus = RCC_new_infra_reloc }
+			set_variable = {
+				var = RCC_military_industry_dm_production_speed_industrial_complex_factor
+				value = 0.15
+				tooltip = industrial_complex_build_speed_factor_tooltip	
+			}
+		 }
+		 else_if = {
+			limit = { has_completed_focus = RCC_new_japanese_planifify has_completed_focus = RCC_citisens_of_the_new_china has_completed_focus = RCC_new_infra_reloc }
+			set_variable = {
+				var = RCC_military_industry_dm_production_speed_industrial_complex_factor
+				value = 0.25
+				tooltip = industrial_complex_build_speed_factor_tooltip	
+			}
+		 }
+	}
+	######		arms industry bonuses
+		if ={
+			limit = { NOT = {has_completed_focus = RCC_new_war_pains} NOT = {has_completed_focus = RCC_reformed} NOT = {has_completed_focus = RCC_new_choise} }
+			set_variable = {
+				var = RCC_military_industry_dm_production_speed_arms_factory_factor
+				value = -0.05
+				tooltip = arms_factory_build_speed_factor_tooltip
+			}
+		 else_if = {
+			limit = { has_completed_focus = RCC_new_war_pains  NOT = {has_completed_focus = RCC_reformed} NOT = {has_completed_focus = RCC_new_choise} }
+			set_variable = {
+				var = RCC_military_industry_dm_production_speed_arms_factory_factor
+				value = 0
+				tooltip = arms_factory_build_speed_factor_tooltip
+			}
+		 }
+		 else_if = {
+			limit = { has_completed_focus = RCC_reformed NOT = {has_completed_focus = RCC_new_war_pains} NOT = {has_completed_focus = RCC_new_choise} }
+			set_variable = {
+				var = RCC_military_industry_dm_production_speed_arms_factory_factor
+				value = 0
+				tooltip = arms_factory_build_speed_factor_tooltip
+			}
+		 }
+		 else_if = {
+			limit = { has_completed_focus = RCC_new_choise NOT = {has_completed_focus = RCC_new_war_pains} NOT = {has_completed_focus = RCC_reformed} }
+			set_variable = {
+				var = RCC_military_industry_dm_production_speed_arms_factory_factor
+				value = 0
+				tooltip = arms_factory_build_speed_factor_tooltip
+			}
+		 }
+		 else_if = {
+			limit = { has_completed_focus = RCC_new_choise has_completed_focus = RCC_new_war_pains NOT = {has_completed_focus = RCC_reformed} }
+			set_variable = {
+				var = RCC_military_industry_dm_production_speed_arms_factory_factor
+				value = 0.05
+				tooltip = arms_factory_build_speed_factor_tooltip
+			}
+		 }
+		 else_if = {
+			limit = { has_completed_focus = RCC_reformed has_completed_focus = RCC_new_choise NOT = {has_completed_focus = RCC_new_war_pains} }
+			set_variable = {
+				var = RCC_military_industry_dm_production_speed_arms_factory_factor
+				value = 0.05
+				tooltip = arms_factory_build_speed_factor_tooltip
+			}
+		 }
+		 else_if = {
+			limit = { has_completed_focus = RCC_reformed has_completed_focus = RCC_new_war_pains NOT = {has_completed_focus = RCC_new_choise} }
+			set_variable = {
+				var = RCC_military_industry_dm_production_speed_arms_factory_factor
+				value = 0.05
+				tooltip = arms_factory_build_speed_factor_tooltip
+			}
+		 }
+		 else_if = {
+			limit = { has_completed_focus = RCC_reformed has_completed_focus = RCC_new_war_pains has_completed_focus = RCC_new_choise }
+			set_variable = {
+				var = RCC_military_industry_dm_production_speed_arms_factory_factor
+				value = 0.10
+				tooltip = arms_factory_build_speed_factor_tooltip
+			}
+		 }
+	}
+	######		infra bonuses
+		if ={
+			limit = { NOT = {has_completed_focus = RCC_new_infra_reloc} NOT = {has_completed_focus = RCC_infra_1} }
+			set_variable = {
+				var = RCC_military_industry_dm_production_speed_infrastructure_factor	
+				value = -0.075
+				tooltip = infrastructure_build_speed_factor_tooltip
+			}
+		 else_if = {
+			limit = { has_completed_focus = RCC_new_infra_reloc  NOT = {has_completed_focus = RCC_infra_1} }
+			set_variable = {
+				var = RCC_military_industry_dm_production_speed_infrastructure_factor	
+				value = 0.00
+				tooltip = infrastructure_build_speed_factor_tooltip
+			}
+		 }
+		 else_if = {
+			limit = { has_completed_focus = RCC_infra_1 NOT = {has_completed_focus = RCC_new_infra_reloc} }
+			set_variable = {
+				var = RCC_military_industry_dm_production_speed_infrastructure_factor	
+				value = 0.00
+				tooltip = infrastructure_build_speed_factor_tooltip
+			}
+		 }
+		 else_if = {
+			limit = { has_completed_focus = RCC_infra_1 has_completed_focus = RCC_new_infra_reloc }
+			set_variable = {
+				var = RCC_military_industry_dm_production_speed_infrastructure_factor	
+				value = 0.075
+				tooltip = infrastructure_build_speed_factor_tooltip
+			}
+		 }
+	}
+	######		resoursed extr
+			if ={
+				limit = { NOT = {has_completed_focus = RCC_new_infra_reloc} NOT = {has_completed_focus = RCC_infra_3} NOT = {has_completed_focus = RCC_infra}}
+				set_variable = {
+					var = RCC_locals_ext
+					value = -0.05
+					tooltip = MAN_resorse_2_fix
+				}
+			else_if = {
+				limit = { has_completed_focus = RCC_new_infra_reloc  NOT = {has_completed_focus = RCC_infra_3} NOT = {has_completed_focus = RCC_infra}}
+				set_variable = {
+					var = RCC_locals_ext
+					value = 0.00
+					tooltip = MAN_resorse_2_fix
+				}
+			}
+			else_if = {
+				limit = { has_completed_focus = RCC_infra_3 NOT = {has_completed_focus = RCC_new_infra_reloc} NOT = {has_completed_focus = RCC_infra}}
+				set_variable = {
+					var = RCC_locals_ext
+					value = 0.00
+					tooltip = MAN_resorse_2_fix
+				}
+			}
+			else_if = {
+				limit = { has_completed_focus = RCC_infra NOT = {has_completed_focus = RCC_new_infra_reloc} NOT = {has_completed_focus = RCC_infra_3}}
+				set_variable = {
+					var = RCC_locals_ext
+					value = 0.00
+					tooltip = MAN_resorse_2_fix
+				}
+			}
+			else_if = {
+				limit = { has_completed_focus = RCC_infra has_completed_focus = RCC_new_infra_reloc NOT = {has_completed_focus = RCC_infra_3} }
+				set_variable = {
+					var = RCC_locals_ext
+					value = 0.05
+					tooltip = MAN_resorse_2_fix
+				}
+			}
+			else_if = {
+				limit = { has_completed_focus = RCC_infra has_completed_focus = RCC_infra_3 NOT = {has_completed_focus = RCC_new_infra_reloc} }
+				set_variable = {
+					var = RCC_locals_ext
+					value = 0.05
+					tooltip = MAN_resorse_2_fix
+				}
+			}
+			else_if = {
+				limit = { has_completed_focus = RCC_infra_3 has_completed_focus = RCC_new_infra_reloc NOT = {has_completed_focus = RCC_infra} }
+				set_variable = {
+					var = RCC_locals_ext
+					value = 0.05
+					tooltip = MAN_resorse_2_fix
+				}
+			}
+			else_if = {
+				limit = { has_completed_focus = RCC_infra_3 has_completed_focus = RCC_new_infra_reloc has_completed_focus = RCC_infra }
+				set_variable = {
+					var = RCC_locals_ext
+					value = 0.10
+					tooltip = MAN_resorse_2_fix
+				}
+			}
+			custom_effect_tooltip = MANspace
+			608 = {add_extra_state_shared_building_slots = 3
+			add_building_construction = {
+				type = industrial_complex
+				level = 3
+			}
+			
+		 }
+		}
+		country_event = wtt_reorgchi.3
+			
+		}
+	}
 
 	focus = {
 		id = RCC_economical_planing
@@ -3727,347 +4066,10 @@ focus_tree = {
 		}
 		}
 	}
-	focus = {
-		id = RCC_reformed
-		icon = GFX_hungarian_military_goverment
-		x = -1
-		y = 1
-
-		cost = 5
-
-		ai_will_do = {
-			factor = 1
-		}
-		relative_position_id = RCC_city
-		prerequisite = {	focus = RCC_city focus = RCC_rural	}
-		bypass = {
-
-		}
-
-		completion_reward = {
-		if = {
-			limit ={ NOT ={has_completed_focus = RCC_recognised_at_once}}
-		 custom_effect_tooltip = RCC_torn_industry_tt
-
-		 add_to_variable = {
-			var = RCC_military_industry_dm_production_speed_arms_factory_factor
-			value = 0.1
-			tooltip = arms_factory_build_speed_factor_tooltip
-		}
-		608 = {
-			remove_building = {
-				type = infrastructure
-				level = 2
-			}
-			add_building_construction = {
-				type = arms_factory
-				level = 3
-			}
-		}
-	 }
-		if = {
-			limit ={has_completed_focus = RCC_recognised_at_once}
-		
-			608 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-				}
-				add_building_construction = {
-					type = arms_factory
-					level = 3
-				}
-			}
-		}
-		custom_effect_tooltip = MANspace
-		custom_effect_tooltip = RCC_mils_plus5
-		}
-	}
+	
 
 
-	focus = {
-		id = RCC_recognised_at_once
-		icon = GFX_z_goal_ehb_goverment
-		x = -3
-		y = 0
-
-		cost = 5
-
-		ai_will_do = {
-			factor = 1
-		}
-		relative_position_id = RCC_reformed
-		prerequisite = {
-			focus = RCC_constitution
-		}
-		available = {
-			has_full_control_of_state = 608
-			has_full_control_of_state = 614
-			has_full_control_of_state = 597
-			has_full_control_of_state = 743
-		}
-
-		bypass = {
-
-		}
-
-
-		completion_reward = {
-			custom_effect_tooltip = RCC_legitimacy_reformtt0
-			if ={
-				limit = { NOT = {has_completed_focus = RCC_reorganise_conscription} }
-				set_variable = {
-					RCC_stab_leg = -0.35
-					tooltip = stability_leg_tooltip
-				}
-			 else_if = {
-				limit = { has_completed_focus = RCC_reorganise_conscription }
-				set_variable = {
-					RCC_stab_leg = -0.25
-					tooltip = stability_leg_tooltip
-				}
-			 }
-			}
-			set_variable = {
-				RCC_pp_gain = -0.15
-				tooltip = political_power_gain_modifier_tooltip
-			}
-			custom_effect_tooltip = MANspace
-
-			custom_effect_tooltip = RCC_torn_industry_reformtt
-
-		######		industrial complex bonuses
-		if ={
-			limit = { NOT = {has_completed_focus = RCC_new_japanese_planifify} NOT = {has_completed_focus = RCC_citisens_of_the_new_china} NOT = {has_completed_focus = RCC_new_infra_reloc} }
-			set_variable = {
-				var = RCC_military_industry_dm_production_speed_industrial_complex_factor
-				value = 0
-				tooltip = industrial_complex_build_speed_factor_tooltip	
-			}
-			else_if = {
-				limit = {NOT = {has_completed_focus = RCC_new_japanese_planifify}   NOT = {has_completed_focus = RCC_citisens_of_the_new_china} has_completed_focus = RCC_new_infra_reloc }
-				set_variable = {
-					var = RCC_military_industry_dm_production_speed_industrial_complex_factor
-					value = 0.05
-					tooltip = industrial_complex_build_speed_factor_tooltip	
-				}
-			 }
-		 else_if = {
-			limit = { has_completed_focus = RCC_new_japanese_planifify   NOT = {has_completed_focus = RCC_citisens_of_the_new_china} NOT = {has_completed_focus = RCC_new_infra_reloc} }
-			set_variable = {
-				var = RCC_military_industry_dm_production_speed_industrial_complex_factor
-				value = 0.1
-				tooltip = industrial_complex_build_speed_factor_tooltip	
-			}
-		 }
-		 else_if = {
-			limit = {  NOT = {has_completed_focus = RCC_new_japanese_planifify} has_completed_focus = RCC_citisens_of_the_new_china NOT = {has_completed_focus = RCC_new_infra_reloc} }
-			set_variable = {
-				var = RCC_military_industry_dm_production_speed_industrial_complex_factor
-				value = 0.1
-				tooltip = industrial_complex_build_speed_factor_tooltip	
-			}
-		 }
-		 else_if = {
-			limit = {  NOT = {has_completed_focus = RCC_new_japanese_planifify} has_completed_focus = RCC_citisens_of_the_new_china has_completed_focus = RCC_new_infra_reloc }
-			set_variable = {
-				var = RCC_military_industry_dm_production_speed_industrial_complex_factor
-				value = 0.15
-				tooltip = industrial_complex_build_speed_factor_tooltip	
-			}
-		 }
-		 else_if = {
-			limit = {  NOT = {has_completed_focus = RCC_citisens_of_the_new_china} has_completed_focus = RCC_new_japanese_planifify has_completed_focus = RCC_new_infra_reloc }
-			set_variable = {
-				var = RCC_military_industry_dm_production_speed_industrial_complex_factor
-				value = 0.15
-				tooltip = industrial_complex_build_speed_factor_tooltip	
-			}
-		 }
-		 else_if = {
-			limit = { has_completed_focus = RCC_new_japanese_planifify has_completed_focus = RCC_citisens_of_the_new_china has_completed_focus = RCC_new_infra_reloc }
-			set_variable = {
-				var = RCC_military_industry_dm_production_speed_industrial_complex_factor
-				value = 0.25
-				tooltip = industrial_complex_build_speed_factor_tooltip	
-			}
-		 }
-	}
-	######		arms industry bonuses
-		if ={
-			limit = { NOT = {has_completed_focus = RCC_new_war_pains} NOT = {has_completed_focus = RCC_reformed} NOT = {has_completed_focus = RCC_new_choise} }
-			set_variable = {
-				var = RCC_military_industry_dm_production_speed_arms_factory_factor
-				value = -0.05
-				tooltip = arms_factory_build_speed_factor_tooltip
-			}
-		 else_if = {
-			limit = { has_completed_focus = RCC_new_war_pains  NOT = {has_completed_focus = RCC_reformed} NOT = {has_completed_focus = RCC_new_choise} }
-			set_variable = {
-				var = RCC_military_industry_dm_production_speed_arms_factory_factor
-				value = 0
-				tooltip = arms_factory_build_speed_factor_tooltip
-			}
-		 }
-		 else_if = {
-			limit = { has_completed_focus = RCC_reformed NOT = {has_completed_focus = RCC_new_war_pains} NOT = {has_completed_focus = RCC_new_choise} }
-			set_variable = {
-				var = RCC_military_industry_dm_production_speed_arms_factory_factor
-				value = 0
-				tooltip = arms_factory_build_speed_factor_tooltip
-			}
-		 }
-		 else_if = {
-			limit = { has_completed_focus = RCC_new_choise NOT = {has_completed_focus = RCC_new_war_pains} NOT = {has_completed_focus = RCC_reformed} }
-			set_variable = {
-				var = RCC_military_industry_dm_production_speed_arms_factory_factor
-				value = 0
-				tooltip = arms_factory_build_speed_factor_tooltip
-			}
-		 }
-		 else_if = {
-			limit = { has_completed_focus = RCC_new_choise has_completed_focus = RCC_new_war_pains NOT = {has_completed_focus = RCC_reformed} }
-			set_variable = {
-				var = RCC_military_industry_dm_production_speed_arms_factory_factor
-				value = 0.05
-				tooltip = arms_factory_build_speed_factor_tooltip
-			}
-		 }
-		 else_if = {
-			limit = { has_completed_focus = RCC_reformed has_completed_focus = RCC_new_choise NOT = {has_completed_focus = RCC_new_war_pains} }
-			set_variable = {
-				var = RCC_military_industry_dm_production_speed_arms_factory_factor
-				value = 0.05
-				tooltip = arms_factory_build_speed_factor_tooltip
-			}
-		 }
-		 else_if = {
-			limit = { has_completed_focus = RCC_reformed has_completed_focus = RCC_new_war_pains NOT = {has_completed_focus = RCC_new_choise} }
-			set_variable = {
-				var = RCC_military_industry_dm_production_speed_arms_factory_factor
-				value = 0.05
-				tooltip = arms_factory_build_speed_factor_tooltip
-			}
-		 }
-		 else_if = {
-			limit = { has_completed_focus = RCC_reformed has_completed_focus = RCC_new_war_pains has_completed_focus = RCC_new_choise }
-			set_variable = {
-				var = RCC_military_industry_dm_production_speed_arms_factory_factor
-				value = 0.10
-				tooltip = arms_factory_build_speed_factor_tooltip
-			}
-		 }
-	}
-	######		infra bonuses
-		if ={
-			limit = { NOT = {has_completed_focus = RCC_new_infra_reloc} NOT = {has_completed_focus = RCC_infra_1} }
-			set_variable = {
-				var = RCC_military_industry_dm_production_speed_infrastructure_factor	
-				value = -0.075
-				tooltip = infrastructure_build_speed_factor_tooltip
-			}
-		 else_if = {
-			limit = { has_completed_focus = RCC_new_infra_reloc  NOT = {has_completed_focus = RCC_infra_1} }
-			set_variable = {
-				var = RCC_military_industry_dm_production_speed_infrastructure_factor	
-				value = 0.00
-				tooltip = infrastructure_build_speed_factor_tooltip
-			}
-		 }
-		 else_if = {
-			limit = { has_completed_focus = RCC_infra_1 NOT = {has_completed_focus = RCC_new_infra_reloc} }
-			set_variable = {
-				var = RCC_military_industry_dm_production_speed_infrastructure_factor	
-				value = 0.00
-				tooltip = infrastructure_build_speed_factor_tooltip
-			}
-		 }
-		 else_if = {
-			limit = { has_completed_focus = RCC_infra_1 has_completed_focus = RCC_new_infra_reloc }
-			set_variable = {
-				var = RCC_military_industry_dm_production_speed_infrastructure_factor	
-				value = 0.075
-				tooltip = infrastructure_build_speed_factor_tooltip
-			}
-		 }
-	}
-	######		resoursed extr
-			if ={
-				limit = { NOT = {has_completed_focus = RCC_new_infra_reloc} NOT = {has_completed_focus = RCC_infra_3} NOT = {has_completed_focus = RCC_infra}}
-				set_variable = {
-					var = RCC_locals_ext
-					value = -0.05
-					tooltip = MAN_resorse_2_fix
-				}
-			else_if = {
-				limit = { has_completed_focus = RCC_new_infra_reloc  NOT = {has_completed_focus = RCC_infra_3} NOT = {has_completed_focus = RCC_infra}}
-				set_variable = {
-					var = RCC_locals_ext
-					value = 0.00
-					tooltip = MAN_resorse_2_fix
-				}
-			}
-			else_if = {
-				limit = { has_completed_focus = RCC_infra_3 NOT = {has_completed_focus = RCC_new_infra_reloc} NOT = {has_completed_focus = RCC_infra}}
-				set_variable = {
-					var = RCC_locals_ext
-					value = 0.00
-					tooltip = MAN_resorse_2_fix
-				}
-			}
-			else_if = {
-				limit = { has_completed_focus = RCC_infra NOT = {has_completed_focus = RCC_new_infra_reloc} NOT = {has_completed_focus = RCC_infra_3}}
-				set_variable = {
-					var = RCC_locals_ext
-					value = 0.00
-					tooltip = MAN_resorse_2_fix
-				}
-			}
-			else_if = {
-				limit = { has_completed_focus = RCC_infra has_completed_focus = RCC_new_infra_reloc NOT = {has_completed_focus = RCC_infra_3} }
-				set_variable = {
-					var = RCC_locals_ext
-					value = 0.05
-					tooltip = MAN_resorse_2_fix
-				}
-			}
-			else_if = {
-				limit = { has_completed_focus = RCC_infra has_completed_focus = RCC_infra_3 NOT = {has_completed_focus = RCC_new_infra_reloc} }
-				set_variable = {
-					var = RCC_locals_ext
-					value = 0.05
-					tooltip = MAN_resorse_2_fix
-				}
-			}
-			else_if = {
-				limit = { has_completed_focus = RCC_infra_3 has_completed_focus = RCC_new_infra_reloc NOT = {has_completed_focus = RCC_infra} }
-				set_variable = {
-					var = RCC_locals_ext
-					value = 0.05
-					tooltip = MAN_resorse_2_fix
-				}
-			}
-			else_if = {
-				limit = { has_completed_focus = RCC_infra_3 has_completed_focus = RCC_new_infra_reloc has_completed_focus = RCC_infra }
-				set_variable = {
-					var = RCC_locals_ext
-					value = 0.10
-					tooltip = MAN_resorse_2_fix
-				}
-			}
-			custom_effect_tooltip = MANspace
-			608 = {add_extra_state_shared_building_slots = 3
-			add_building_construction = {
-				type = industrial_complex
-				level = 3
-			}
-			
-		 }
-		}
-		country_event = wtt_reorgchi.3
-			
-		}
-	}
+	
 	focus = {
 		id = RCC_aside_with_japan
 		icon = GFX_COOP_align_japan
