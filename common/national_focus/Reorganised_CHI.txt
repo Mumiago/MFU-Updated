@@ -220,6 +220,15 @@ focus_tree = {
 				value = 0.1
 				tooltip = arms_factory_build_speed_factor_tooltip
 			}
+
+			add_to_variable = {
+				RCC_effic_gain = 0.1
+				tooltip = production_factory_efficiency_gain_factor_tooltip
+			}
+			add_to_variable = {
+				RCC_change_eff = 0.2
+				tooltip = efficiency_change_tooltip
+			}
 			custom_effect_tooltip = MANspace
 
 		609 = {add_extra_state_shared_building_slots = 5
@@ -366,7 +375,7 @@ focus_tree = {
 				tooltip = stability_leg_tooltip
 			}
 			add_to_variable = {
-				RCC_manpower_trust = 0.05
+				RCC_manpower_trust = 0.025
 				tooltip = CAN_recruitable_tt1
 			}
 		}
@@ -538,10 +547,7 @@ focus_tree = {
 		}
 		relative_position_id = RCC_new_war_heroes
 		prerequisite = {
-			focus = RCC_new_war_heroes
-		}
-		prerequisite = {
-			focus = RCC_new_nation_identity
+			focus = RCC_new_war_heroes	focus = RCC_new_nation_identity
 		}
 
 		available = {
@@ -567,7 +573,9 @@ focus_tree = {
 			modify_tech_sharing_bonus = {
 				id = japanese_research
 				bonus = 0.05
-		   }				
+		   }
+		   custom_effect_tooltip = MANspace
+		   custom_effect_tooltip = RCC_reser_plus1
 
 		}
 	}
@@ -861,7 +869,7 @@ focus_tree = {
 			custom_effect_tooltip = RCC_torn_industry_tt
 			add_to_variable = {
 				var = RCC_locals_ext
-				value = 0.10
+				value = 0.05
 				tooltip = MAN_resorse_2_fix
 			}
 			add_to_variable = {
@@ -966,7 +974,7 @@ focus_tree = {
 			custom_effect_tooltip = RCC_torn_industry_tt
 			add_to_variable = {
 				var = RCC_locals_ext
-				value = 0.1
+				value = 0.05
 				tooltip = MAN_resorse_2_fix
 			}
 			custom_effect_tooltip = MANspace
@@ -1034,10 +1042,11 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = RCC_legitimacy_tt0
+			custom_effect_tooltip = RCC_torn_industry_tt
+
 			add_to_variable = {
-				RCC_manpower_trust = 0.025
-				tooltip = CAN_recruitable_tt1
+				RCC_cope_resources = -0.10
+				tooltip = Production_lacking_MAN_tooltip
 			}
 			custom_effect_tooltip = MANspace
 			add_offsite_building = {
@@ -1077,17 +1086,18 @@ focus_tree = {
 
 		completion_reward = {
 			add_offsite_building = {
-				type = arms_factory
-				level = 2
-			}
-			add_offsite_building = {
 				type = industrial_complex
 				level = 3
 			}
+			add_offsite_building = {
+				type = arms_factory
+				level = 2
+			}
+
 			610 = {			
 				add_building_construction = {
 					type = industrial_complex
-					level = 1
+					level = 2
 				}
 				add_building_construction = {
 					type = arms_factory
@@ -1208,19 +1218,14 @@ focus_tree = {
 
 			add_to_variable = {
 				var = RCC_locals_ext
-				value = 0.10
+				value = 0.05
 				tooltip = MAN_resorse_2_fix
 			}
 
 			add_to_variable = {
 				var = RCC_military_industry_dm_production_speed_industrial_complex_factor
-				value = 0.1
+				value = 0.05
 				tooltip = industrial_complex_build_speed_factor_tooltip
-			}
-			add_to_variable = {
-				var = RCC_military_industry_dm_production_speed_infrastructure_factor	
-				value = 0.1
-				tooltip = infrastructure_build_speed_factor_tooltip
 			}
 			custom_effect_tooltip = MANspace
 			609 = {			
@@ -1228,6 +1233,11 @@ focus_tree = {
 					type = infrastructure
 					level = 1
 				} 
+			}			add_tech_bonus = {
+				name = industry
+				bonus = 0.5
+				uses = 1
+				category = industry
 			}
 			add_offsite_building = {
 				type = industrial_complex
@@ -1277,7 +1287,7 @@ focus_tree = {
 			}
 			add_to_variable = {
 				var = RCC_military_industry_dm_production_speed_industrial_complex_factor
-				value = 0.10
+				value = 0.05
 				tooltip = industrial_complex_build_speed_factor_tooltip
 			}
 			custom_effect_tooltip = MANspace
@@ -1324,7 +1334,7 @@ focus_tree = {
 			}
 
 			add_to_variable = {
-				RCC_manpower_trust = 0.05
+				RCC_manpower_trust = 0.025
 				tooltip = CAN_recruitable_tt1
 			}
 			custom_effect_tooltip = MANspace
@@ -1459,7 +1469,7 @@ focus_tree = {
 
 			 add_to_variable = {
 				var = RCC_military_industry_dm_production_speed_industrial_complex_factor
-				value = 0.1
+				value = 0.05
 				tooltip = industrial_complex_build_speed_factor_tooltip
 			}
 			608 = {
@@ -1556,7 +1566,7 @@ focus_tree = {
 
 		 add_to_variable = {
 			var = RCC_military_industry_dm_production_speed_arms_factory_factor
-			value = 0.1
+			value = 0.05
 			tooltip = arms_factory_build_speed_factor_tooltip
 		}
 		608 = {
@@ -1636,6 +1646,23 @@ focus_tree = {
 				RCC_pp_gain = -0.15
 				tooltip = political_power_gain_modifier_tooltip
 			}
+			if ={
+				limit = { NOT = {has_completed_focus = RCC_new_tech} }
+				set_variable = {
+					var = research_speed_rcc
+					value = -0.25
+					tooltip = research_speed_factor_tooltip
+				}
+			 else_if = {
+				limit = { has_completed_focus = RCC_new_tech }
+				set_variable = {
+					var = research_speed_rcc
+					value = -0.15
+					tooltip = research_speed_factor_tooltip
+				}
+			 }
+			}
+
 			custom_effect_tooltip = MANspace
 
 			custom_effect_tooltip = RCC_torn_industry_reformtt
@@ -1937,19 +1964,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-		custom_effect_tooltip = RCC_torn_industry_tt
-		add_to_variable = {
-			RCC_effic_gain = 0.2
-			tooltip = production_factory_efficiency_gain_factor_tooltip
-		}
-		add_to_variable = {
-			RCC_change_eff = 0.2
-			tooltip = efficiency_change_tooltip
-		}
-		add_to_variable = {
-			RCC_cope_resources = -0.10
-			tooltip = Production_lacking_MAN_tooltip
-		}
+
 		609 = {
 		remove_building = {
 			type = industrial_complex
@@ -1957,7 +1972,7 @@ focus_tree = {
 		}
 		add_building_construction = {
 			type = arms_factory
-			level = 2
+			level = 3
 		}
 		
 
@@ -1989,7 +2004,7 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = RCC_torn_industry_tt
 			add_to_variable = {
-				RCC_output = 0.1
+				RCC_output = 0.05
 				tooltip = industrial_capacity_factory_tooltip
 			}
 			add_to_variable = {
@@ -2002,6 +2017,13 @@ focus_tree = {
 				level = 2
 			}
 		}
+		custom_effect_tooltip = MANspace
+		add_tech_bonus = {
+			name = industry
+			bonus = 0.75
+			uses = 1
+			category = industry
+		}
 		}
 	}
 	focus = {
@@ -2010,7 +2032,7 @@ focus_tree = {
 		x = -1
 		y = -2
 
-		cost = 7.16
+		cost = 5
 
 		ai_will_do = {
 			factor = 1
@@ -2031,7 +2053,7 @@ focus_tree = {
 				tooltip = production_factory_max_efficiency_tooltip
 			}
 			add_to_variable = {
-				RCC_output = 0.1
+				RCC_output = 0.05
 				tooltip = industrial_capacity_factory_tooltip
 			}
 		}
@@ -2133,8 +2155,16 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = RCC_torn_industry_tt
 			add_to_variable = {
-				RCC_output = 0.1
-				tooltip = industrial_capacity_factory_tooltip
+				var = RCC_military_industry_dm_production_speed_arms_factory_factor
+				value = 0.1
+				tooltip = arms_factory_build_speed_factor_tooltip
+			}
+			custom_effect_tooltip = MANspace
+			add_tech_bonus = {
+				name = industry
+				bonus = 1
+				uses = 1
+				category = industry
 			}
 		}
 	}
@@ -2145,7 +2175,7 @@ focus_tree = {
 		x = 25
 		y = 0
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -2180,7 +2210,7 @@ focus_tree = {
 		x = -1
 		y = 1
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -2236,7 +2266,7 @@ focus_tree = {
 		x = 1
 		y = 1
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -2292,7 +2322,7 @@ focus_tree = {
 		x = 25
 		y = 2
 
-		cost = 2.9
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -2338,7 +2368,7 @@ focus_tree = {
 		x = -4
 		y = 1
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -2469,7 +2499,7 @@ focus_tree = {
 		x = 4
 		y = 1
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -2615,13 +2645,14 @@ focus_tree = {
 			add_equipment_to_stockpile = { type = artillery_equipment_1 amount = 100 producer = MAN }
 		}
 	}
+	
 	focus = {
 		id = RCC_recon_and_flank_the_enemy
 		icon = GFX_goal_small_infantry
 		x = -1
 		y = 1
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -2668,7 +2699,7 @@ focus_tree = {
 		x = 0
 		y = 2
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -2711,7 +2742,7 @@ focus_tree = {
 		x = -7
 		y = 1
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -2759,7 +2790,7 @@ focus_tree = {
 		x = 0
 		y = 1
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -2794,7 +2825,7 @@ focus_tree = {
 		x = 0
 		y = 2
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -2825,7 +2856,7 @@ focus_tree = {
 		x = -1
 		y = 1
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -2860,7 +2891,7 @@ focus_tree = {
 		x = -1
 		y = 1
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -2922,7 +2953,7 @@ focus_tree = {
 		x = 4
 		y = 1
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -2944,11 +2975,11 @@ focus_tree = {
 				limit = { has_war = no}
 			custom_effect_tooltip = RCC_a_army_of_criminals_tt
 			add_to_variable = {
-				RCC_army_morale = 0.125
+				RCC_army_morale = 0.10
 				tooltip = army_morale_factor_tooltip
 			}
 			add_to_variable = {
-				RCC_army_org = 0.125
+				RCC_army_org = 0.10
 				tooltip = army_org_factor_tooltip
 			}
 
@@ -2967,7 +2998,7 @@ focus_tree = {
 			}
 		}
 		custom_effect_tooltip = MANspace
-		custom_effect_tooltip = RCC_post_war
+		custom_effect_tooltip = RCC_post_war_2
 		custom_effect_tooltip = MANspace
 		custom_effect_tooltip = RCC_org_10
 		custom_effect_tooltip = RCC_morale_10
@@ -2978,8 +3009,8 @@ focus_tree = {
 		icon = GFX_focus_SMB_special_forces_option_1
 		x = -1
 		y = 1
-
-		cost = 5
+		
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -3041,7 +3072,7 @@ focus_tree = {
 		x = 0
 		y = 2
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -3074,7 +3105,7 @@ focus_tree = {
 		x = -2
 		y = 1
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -3096,7 +3127,7 @@ focus_tree = {
 				tooltip = planning_speed_tooltip
 			}
 			add_to_variable = {
-				RCC_max_planning = 0.05
+				RCC_max_planning = 0.075
 				tooltip = max_planning_tooltip
 			}
 		}
@@ -3108,7 +3139,7 @@ focus_tree = {
 		x = 1
 		y = 1
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -3183,7 +3214,7 @@ focus_tree = {
 		x = 1
 		y = 2
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -3206,7 +3237,7 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = RCC_a_army_of_criminals_tt
 			add_to_variable = {
-				RCC_panning_speed = -0.05
+				RCC_panning_speed = -0.15
 				tooltip = planning_speed_tooltip
 			}
 			add_to_variable = {
@@ -3221,7 +3252,7 @@ focus_tree = {
 		x = -1
 		y = 2
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -3259,7 +3290,7 @@ focus_tree = {
 		x = 6
 		y = 1
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -3282,11 +3313,11 @@ focus_tree = {
 				limit = { has_war = no}
 			custom_effect_tooltip = RCC_a_army_of_criminals_tt
 			add_to_variable = {
-				RCC_army_attack = 0.06
+				RCC_army_attack = 0.05
 				tooltip = army_attack_factor_tooltip
 			}
 			add_to_variable = {
-				RCC_army_defence = 0.06
+				RCC_army_defence = 0.05
 				tooltip = army_defense_factor_tooltip
 			}
 		}
@@ -3303,7 +3334,7 @@ focus_tree = {
 			}
 		}
 		custom_effect_tooltip = MANspace
-		custom_effect_tooltip = RCC_post_war
+		custom_effect_tooltip = RCC_post_war_2
 		custom_effect_tooltip = MANspace
 		custom_effect_tooltip = RCC_attack5
 		custom_effect_tooltip = RCC_defence5
@@ -3315,7 +3346,7 @@ focus_tree = {
 		x = 1
 		y = 1
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -3375,7 +3406,7 @@ focus_tree = {
 		x = 0
 		y = 2
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -3392,9 +3423,9 @@ focus_tree = {
 
 		completion_reward = {
 			add_tech_bonus = {
-				name = ilovesaruei
+				name = infantry_weapons
 				bonus = 0.75
-				uses = 2
+				uses = 1
 				category = infantry_weapons
 			}
 			add_doctrine_cost_reduction = {
@@ -3411,7 +3442,7 @@ focus_tree = {
 		x = -2
 		y = 2
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -3445,7 +3476,7 @@ focus_tree = {
 		x = 6
 		y = 1
 
-		cost = 5
+		cost = 1
 
 		ai_will_do = {
 			factor = 1
@@ -3531,7 +3562,7 @@ focus_tree = {
 		x = 0
 		y = 1
 
-		cost = 10
+		cost = 5
 
 		ai_will_do = {
 			factor = 1
@@ -3549,11 +3580,11 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = RCC_a_army_of_criminals_tt
 			add_to_variable = {
-				RCC_army_attack = 0.05
+				RCC_army_attack = 0.03
 				tooltip = army_attack_factor_tooltip
 			}
 			add_to_variable = {
-				RCC_army_defence = 0.05
+				RCC_army_defence = 0.03
 				tooltip = army_defense_factor_tooltip
 			}
 			add_to_variable = {
@@ -3600,7 +3631,7 @@ focus_tree = {
 
 			add_to_variable = {
 				var = research_speed_rcc
-				value = 0.05
+				value = 0.025
 				tooltip = research_speed_factor_tooltip
 			}
 			custom_effect_tooltip = MANspace
@@ -3778,7 +3809,7 @@ focus_tree = {
 
 			add_to_variable = {
 				var = research_speed_rcc
-				value = 0.05
+				value = 0.025
 				tooltip = research_speed_factor_tooltip
 			}
 			custom_effect_tooltip = MANspace
@@ -3959,7 +3990,7 @@ focus_tree = {
 		x =40
 		y = 0
 
-		cost = 5
+		cost = 2
 
 		ai_will_do = {
 			factor = 1
@@ -4335,7 +4366,16 @@ focus_tree = {
 				RCC_cope_resources = -0.15
 				tooltip = Production_lacking_MAN_tooltip
 			}
-
+			
+			custom_effect_tooltip = MANspace
+			add_research_slot = 1
+			custom_effect_tooltip = MANspace
+			add_tech_bonus = {
+			   name = electronics
+			   bonus = 0.75
+			   uses = 1
+			   category = electronics
+		   }
 		}
 	}
 	
@@ -4373,8 +4413,6 @@ focus_tree = {
 				value = 0.10
 				tooltip = research_speed_factor_tooltip
 			}
-			custom_effect_tooltip = MANspace
-			add_research_slot = 1
 		}
 	}
 	focus = {
@@ -4459,7 +4497,7 @@ focus_tree = {
 				value = 0.05
 				tooltip = arms_factory_build_speed_factor_tooltip
 			}
-		
+			
 		}
 	}
 	focus = {
@@ -4489,6 +4527,7 @@ focus_tree = {
 					controls_state = 614
 					}
 				RCC = {
+					controls_state = 614
 					controls_state = 614
 					}
 				}
@@ -4538,7 +4577,7 @@ focus_tree = {
 		x = 7
 		y = -2
 
-		cost = 7.16
+		cost = 5
 
 		ai_will_do = {
 			factor = 1
@@ -4623,6 +4662,13 @@ focus_tree = {
 					level = 1
 				}
 			}
+		 }
+		 custom_effect_tooltip = MANspace
+		 add_tech_bonus = {
+			 name = industry
+			 bonus = 1
+			 uses = 1
+			 category = industry
 		 }
 		}
 
@@ -4801,7 +4847,7 @@ focus_tree = {
 		x = 0
 		y = -8
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -4832,7 +4878,7 @@ focus_tree = {
 		x = 1
 		y = 1
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -4902,7 +4948,7 @@ focus_tree = {
 		x = -1
 		y = 1
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 1
@@ -4951,7 +4997,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_political_power = 100
+			add_political_power = 150
 		}
 	}
 
@@ -4978,9 +5024,6 @@ focus_tree = {
 			add_stability = 0.02
 			add_political_power = 10
 
-			set_capital = {
-				state = 613
-			}
 		}
 	}
 	focus = {
@@ -4989,7 +5032,7 @@ focus_tree = {
 		x = 0
 		y = 1
 
-		cost = 7.16
+		cost = 5
 
 		ai_will_do = {
 			factor = 1
@@ -5000,7 +5043,8 @@ focus_tree = {
 		}
 
 		available = {
-
+			has_full_control_of_state = 840
+			has_full_control_of_state = 613
 		}
 		bypass = {
 
@@ -5012,6 +5056,17 @@ focus_tree = {
 				add = RCC_wang_8
 			}
 			add_political_power = 50
+			custom_effect_tooltip = MANspace
+			840 ={
+				add_core_of = RCC
+			}
+			613 ={
+				add_core_of = RCC
+			}
+			set_capital = {
+				state = 613
+			}
+
 		}
 	}
 	focus = {
@@ -5039,6 +5094,10 @@ focus_tree = {
 				RCC_mao_followers = -0.04
 				tooltip = commie_drift_red
 			}
+			add_to_variable = {
+				RCC_patriots = 0.02
+				tooltip = fascism_drift_man
+			}
 		}
 	}
 	focus = {
@@ -5047,7 +5106,7 @@ focus_tree = {
 		x = -1
 		y = 2
 
-		cost = 7.16
+		cost = 5
 
 		ai_will_do = {
 			factor = 1
@@ -5065,7 +5124,7 @@ focus_tree = {
 
 			add_to_variable = {
 				var = research_speed_rcc
-				value = 0.10
+				value = 0.05
 				tooltip = research_speed_factor_tooltip
 			}
 		}
@@ -5076,7 +5135,7 @@ focus_tree = {
 		x = 1
 		y = 1
 
-		cost = 7.16
+		cost = 5
 
 		ai_will_do = {
 			factor = 1
