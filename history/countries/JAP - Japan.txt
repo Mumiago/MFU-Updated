@@ -11,6 +11,12 @@ set_country_flag = fuel_system_enabled
 set_country_flag = JAP_subs1_flag
 set_country_flag = JAP_no_grinding_flag
 
+
+
+set_variable = { JAP_army_attack_factor_polo_var = 0 }
+set_variable = { JAP_army_defense_factor_polo_var = 0 }
+set_variable = { JAP_war_escalation_var = 0 }
+
 set_variable = { JAP_factory_output_modifier = 0.3 }
 set_variable = { JAP_dockyard_output_modifier = 0.25 }
 set_variable = { JAP_interior_counter_var = 0 }
@@ -33,6 +39,8 @@ set_variable = { JAP_out_of_supply_factor_var = 0 }
 set_variable = { JAP_army_morale_factor_var = 0 }
 set_variable = { JAP_org_loss_when_moving_var = 0 }
 set_variable = { JAP_amphibious_invasion_defence_var = 0 }
+set_variable = { JAP_political_power_cost_var = 0.1 }
+
 
 set_variable = { JAP_needed_inf_equipment = 39999 }
 set_variable = { JAP_needed_horse_equipment = 12299 }
@@ -67,9 +75,30 @@ add_dynamic_modifier = {
 add_dynamic_modifier = {
 	modifier = JAP_ija_general_staff_original
 }	
-add_dynamic_modifier = {
-	modifier = JAP_china_war_bonus
+if = {
+	limit = {
+		has_game_rule = {
+			rule = script_china_war
+			option = HISTORICAL
+		}
+	}
+	add_dynamic_modifier = { 
+		modifier = JAP_macro_polo
+	}
 }
+if = {
+	limit = {
+		has_game_rule = {
+			rule = script_china_war
+			option = DEFAULT
+		}
+	}
+	add_dynamic_modifier = {
+		modifier = JAP_china_war_bonus
+	}
+}
+
+
 add_ideas = {
      JAP_kodoha_plot
      JAP_hirohito
@@ -80,6 +109,17 @@ add_ideas = {
 	jap_man_trade
 	MTG_naval_treaty_adherent
     JAP_starting_research_debuff	
+}
+
+
+create_faction = "Dai Tōa Kyōeiken"
+add_to_faction = JAP 
+add_to_faction = MAN
+
+set_autonomy = {
+	target = RCC
+	autonomous_state = autonomy_colony
+	freedom_level = 0.5
 }
 
 
@@ -240,7 +280,6 @@ set_technology = { #player
 	electronic_mechanical_engineering = 1
 	radio = 1
 	paratroopers = 1
-	landing_craft = 1
 	################# support ###############
 	tech_recon = 1
 	tech_support = 1
