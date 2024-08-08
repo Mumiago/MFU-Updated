@@ -559,7 +559,16 @@ focus_tree = {
 		}
 
 		available = {
-
+			OR = {
+				CZE = {
+					NOT = {
+						has_government = democratic
+					}
+				}
+				NOT = {
+					country_exists = CZE	
+				}
+			}
 		}
 		
 		bypass = {
@@ -1062,7 +1071,11 @@ focus_tree = {
 
 
 		completion_reward = {
-        ###output and tools
+			add_tech_bonus = {
+				bonus = 2
+				uses = 1
+				category = industry
+			}
 		}
 	}
 
@@ -1091,7 +1104,16 @@ focus_tree = {
 
 
 		completion_reward = {
-        ###cap, lose cap retention, lose pp gain
+			custom_effect_tooltip = SAF_modify_dep_tt
+			add_to_variable = {
+				SAF_gd_production_factory_efficiency_gain_factor_var = 0.25
+				tooltip = AST_prod_eff_gain_tt2
+			}
+			add_to_variable = {
+				SAF_gd_production_factory_efficiency_base_factor = 0.1
+				tooltip = AST_prod_eff_base_tt2
+			}
+		add_timed_idea = { idea = SAF_emergency_workers days = 170 }
 		}
 	}
 
@@ -1121,6 +1143,11 @@ focus_tree = {
 
 		completion_reward = {
 #mills+resource gain
+			custom_effect_tooltip = SAF_modify_dep_tt
+			add_to_variable = {
+				SAF_local_resources_factor_var = 0.1
+				tooltip = man_resource_gain
+			}
 			random_owned_controlled_state = {
 				prioritize = { 681 }
 				add_extra_state_shared_building_slots = 2
@@ -1271,6 +1298,7 @@ focus_tree = {
 
 
 		completion_reward = {
+			add_stability = 0.2		
 			custom_effect_tooltip = SAF_modify_g_d_tt
 			add_to_variable = {
 				SAF_gd_production_speed_infrastructure_factor_var = 0.2
@@ -1279,10 +1307,10 @@ focus_tree = {
 
 			random_owned_controlled_state = {
 				prioritize = { 681 }
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = arms_factory
-					level = 2
+					level = 1
 					instant_build = yes
 				}
 			} 
@@ -1819,7 +1847,7 @@ focus_tree = {
 
 
 		completion_reward = {
-
+          ##3 millies+eq bonus
 		}
 	}
 
@@ -1912,7 +1940,13 @@ focus_tree = {
 
 
 		completion_reward = {
-
+			army_experience = 40
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine
+			}
 		}
 	}
 
@@ -2472,47 +2506,192 @@ focus_tree = {
 	}
 
 	focus = {
-		id = SAF_saf_air
-		icon = GFX_goal_unknown
+		id = SAF_commit_to_the_five_year_plan
+		icon = GFX_focus_FIN_expand_air_force_academy
 		prerequisite = {
 			focus = SAF_begin_the_rearm
 		}
-		x = 25
+		x = 24
 		y = 1
 
-		cost = 5
+		cost = 10
 
 		ai_will_do = {
-			factor = 10
+			factor = 1
 		}
 
 		available = {
-
+			OR = {
+				has_completed_focus = SAF_support_the_policy_of_appeasement
+				has_completed_focus = SAF_abandon_westminster
+			}
+			has_war = no
 		}
 		
 		bypass = {
-
+			has_war = yes
 		}
 
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
 
-		completion_reward = {
+		complete_tooltip = {
+			air_experience = 25
+			random_state = {				
+				limit = {
+					has_state_flag = SAF_commit_to_the_five_year_plan_AB
+				}
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
 
+		complete_tooltip = {
+			unlock_decision_tooltip = SAF_purchase_hawker_fury
+			unlock_decision_tooltip = SAF_purchase_gloster_gladiators
+		}
+		completion_reward = {			
+			unlock_decision_tooltip = SAF_purchase_hawker_fury
+			unlock_decision_tooltip = SAF_purchase_gloster_gladiators
 		}
 	}
 
 	focus = {
-		id = SAF_saf_navy
-		icon = GFX_goal_unknown
-		prerequisite = {
-			focus = SAF_begin_the_rearm
-		}
-		x = 41
+		id = SAF_improve_the_hawker_hartbees
+		icon = GFX_goal_ELS_Basic_Fighter_Development
+		prerequisite = { focus = SAF_commit_to_the_five_year_plan }
+		x = -1
 		y = 1
-
-		cost = 5
+		relative_position_id = SAF_commit_to_the_five_year_plan
+		cost = 10
 
 		ai_will_do = {
-			factor = 10
+			factor = 0.4
+		}
+		available = { has_war = no	}
+		bypass = {	has_war = yes	}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		complete_tooltip = {
+			unlock_decision_tooltip = SAF_prepare_for_hawker_hartebeest_production
+			add_tech_bonus = {
+				name = SAF_improve_the_hawker_hartbees
+				bonus = 1.0
+				uses = 2
+				technology = fighter1
+				technology = CAS1
+				technology = CAS2
+			}
+		}
+		completion_reward = {
+			unlock_decision_tooltip = SAF_prepare_for_hawker_hartebeest_production
+			add_tech_bonus = {
+				name = SAF_improve_the_hawker_hartbees
+				bonus = 1.0
+				uses = 2
+				technology = fighter1
+				technology = CAS1
+				technology = CAS2
+			}
+		}
+	}
+
+	focus = {
+		id = SAF_replace_the_blenheim #Doctrine of the SAAF
+		icon = GFX_focus_SOV_flying_clubs #GFX_goal_generic_air_doctrine #GFX_goal_generic_occupy_start_war
+		prerequisite = { focus = SAF_commit_to_the_five_year_plan }
+		x = 1
+		y = 1
+		relative_position_id = SAF_commit_to_the_five_year_plan
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+		}
+		
+		bypass = {
+		}
+
+		cancel_if_invalid = no
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		complete_tooltip = {
+			unlock_decision_tooltip = SAF_form_transvaal_training_squadrons
+		}
+		completion_reward = {
+			unlock_decision_tooltip = SAF_form_transvaal_training_squadrons
+			if = {
+				limit = {
+					NOT = {
+						OR = {
+							has_tech = air_superiority
+							has_tech = formation_flying
+							has_tech = force_rotation
+						}
+					}
+				}
+				country_event = {	id = tfv_south_africa.134	}
+			}
+		}
+	}
+
+	focus = {
+		id = SAF_joint_air_training_scheme
+		icon = GFX_goal_SAF_airforce	#GFX_goal_generic_air_fighter2
+		prerequisite = { 
+			focus = SAF_improve_the_hawker_hartbees 
+			focus = SAF_replace_the_blenheim 
+		}
+		x = 0
+		y = 2
+		relative_position_id = SAF_commit_to_the_five_year_plan
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+
+		completion_reward = {
+        ###autocompletes when uk clicks air train scheme
+		}
+	}
+
+	focus = {
+		id = SAF_desert_air_force
+		icon = GFX_GBR_royal_air_force #GFX_goal_generic_CAS
+		prerequisite = { focus = SAF_joint_air_training_scheme }
+		x = -1
+		y = 3
+		relative_position_id = SAF_commit_to_the_five_year_plan
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
 		}
 
 		available = {
@@ -2523,9 +2702,784 @@ focus_tree = {
 
 		}
 
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		complete_tooltip = {
+			add_ideas = SAF_desert_air_force
+			TBE_tomahawk_deliveries = yes
+		}
+		completion_reward = {
+			add_ideas = SAF_desert_air_force
+			TBE_tomahawk_deliveries = yes
+		}
+	}
+
+	focus = {
+		id = SAF_purchase_the_hurricanes
+		icon = GFX_GBR_hawker
+		prerequisite = { focus = SAF_desert_air_force }
+		x = -1
+		y = 1
+		relative_position_id = SAF_desert_air_force
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			ENG = {
+				OR = {	
+					has_country_flag = GBR_britain_developed_hurricane
+					has_country_flag = GBR_britain_developed_hurricane_cas
+				}
+				is_in_faction_with = ROOT
+			}
+		}
+		
+		bypass = {
+			NOT = {
+				is_in_faction_with = ENG
+			}
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		complete_tooltip = {
+			country_event = {	id = tfv_south_africa.135 }
+		}
+		completion_reward = {
+			country_event = {	id = tfv_south_africa.135 }
+		}
+	}
+
+	focus = {
+		id = SAF_retain_experienced_pilots
+		icon = GFX_TBE_focus_SAF_saaf_roundel #GFX_goal_generic_air_doctrine
+		prerequisite = { focus = SAF_joint_air_training_scheme }
+		x = 1
+		y = 3
+		relative_position_id = SAF_commit_to_the_five_year_plan
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			has_capitulated = no
+		}
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		complete_tooltip = {
+			air_experience = 30
+			add_doctrine_cost_reduction = {
+				name = SAF_desert_air_force
+				cost_reduction = 0.5
+				uses = 2
+				category = cat_battlefield_support
+			}
+		}
+		completion_reward = {
+			air_experience = 30
+			add_doctrine_cost_reduction = {
+				name = SAF_desert_air_force
+				cost_reduction = 0.5
+				uses = 2
+				category = cat_battlefield_support
+			}
+		}
+	}
+
+	focus = {
+		id = SAF_perfect_the_cab_rank_technique
+		icon = GFX_focus_generic_armored_air_support #GFX_goal_generic_air_doctrine
+		prerequisite = { focus = SAF_retain_experienced_pilots }
+		prerequisite = { focus = SAF_desert_air_force }
+		x = -1
+		y = 1
+		relative_position_id = SAF_retain_experienced_pilots
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			has_completed_focus = SAF_desert_air_force
+		}
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		complete_tooltip = {
+			swap_ideas = {
+				remove_idea = SAF_desert_air_force
+				add_idea = SAF_desert_air_force_cab_rank
+			}
+		}
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = SAF_desert_air_force
+				add_idea = SAF_desert_air_force_cab_rank
+			}
+		}
+	}
+
+	focus = {
+		id = SAF_rule_the_skies
+		icon = GFX_goal_generic_air_fighter2
+		prerequisite = { focus = SAF_perfect_the_cab_rank_technique }
+		mutually_exclusive = { focus = SAF_death_from_above }
+		x = -1
+		y = 1
+		relative_position_id = SAF_perfect_the_cab_rank_technique
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		complete_tooltip = {
+			swap_ideas = {
+				remove_idea = SAF_desert_air_force_cab_rank
+				add_idea = SAF_desert_air_force_rule_the_skies
+			}
+		}
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = SAF_desert_air_force_cab_rank
+				add_idea = SAF_desert_air_force_rule_the_skies
+			}
+		}
+	}
+
+	focus = {
+		id = SAF_death_from_above
+		icon = GFX_focus_chi_flying_tigers
+		prerequisite = { focus = SAF_perfect_the_cab_rank_technique }
+		mutually_exclusive = { focus = SAF_rule_the_skies }
+		x = 1
+		y = 1
+		relative_position_id = SAF_perfect_the_cab_rank_technique
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		complete_tooltip = {
+			swap_ideas = {
+				remove_idea = SAF_desert_air_force_cab_rank
+				add_idea = SAF_desert_air_force_death_from_above
+			}
+		}
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = SAF_desert_air_force_cab_rank
+				add_idea = SAF_desert_air_force_death_from_above
+			}
+		}
+	}
+
+	focus = {
+		id = SAF_secure_the_cape_sea_route
+		icon = GFX_focus_generic_multi_role_aircraft #GFX_focus_usa_escort_fighters
+		prerequisite = { focus = SAF_retain_experienced_pilots	}
+		x = 1
+		y = 1
+		relative_position_id = SAF_retain_experienced_pilots
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {	}
+		bypass = {	}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		complete_tooltip = {
+			add_ideas = SAF_secure_the_cape_sea_route
+		}
+		completion_reward = {
+			add_ideas = SAF_secure_the_cape_sea_route
+		}
+	}
+
+	focus = {
+		id = SAF_seaward_defence_force #Durban Dry Dock
+		icon = GFX_focus_generic_refit_civilian_ships #GFX_goal_generic_construct_naval_dockyard
+		prerequisite = {
+			focus = SAF_begin_the_rearm
+		}
+		x = 42
+		y = 1
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			OR = {
+				has_completed_focus = SAF_support_the_policy_of_appeasement
+				has_completed_focus = SAF_abandon_westminster
+			}
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		complete_tooltip = {
+			random_state = {
+				limit = {
+					has_state_flag = SAF_seaward_defence_force_DY
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
 
 		completion_reward = {
+			random_owned_controlled_state = {
+				prioritize = { 719 }
+				limit = {
+					is_coastal = yes
+					is_core_of = ROOT
+					free_building_slots = {
+						building = dockyard
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = SAF_seaward_defence_force_DY
+			}
+			add_ideas = ENG_expand_the_repair_yards
+		}
+	}
 
+	focus = {
+		id = SAF_east_london_dry_dock
+		icon = GFX_goal_generic_construct_naval_dockyard
+		prerequisite = { focus = SAF_seaward_defence_force }
+		x = 2
+		y = 1
+		relative_position_id = SAF_seaward_defence_force		
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			controls_state = 719
+		}		
+		bypass = {		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		complete_tooltip = {
+			random_state = {
+				limit = {
+					has_state_flag = SAF_seaward_defence_force_DY
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				prioritize = { 817 719 }
+				limit = {
+					is_coastal = yes
+					is_core_of = ROOT
+					free_building_slots = {
+						building = dockyard
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = SAF_seaward_defence_force_DY
+			}
+		}
+	}
+
+	focus = {
+		id = SAF_sturmock_dry_dock
+		icon = GFX_goal_generic_construct_naval_dockyard
+		prerequisite = { focus = SAF_seaward_defence_force }
+		x = -2
+		y = 1
+		relative_position_id = SAF_seaward_defence_force
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {	}
+		bypass = {	}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		complete_tooltip = {
+			random_state = {
+				limit = {
+					has_state_flag = SAF_seaward_defence_force_DY
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				prioritize = { 681 }
+				limit = {
+					is_coastal = yes
+					is_core_of = ROOT
+					free_building_slots = {
+						building = dockyard
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = SAF_seaward_defence_force_DY
+			}
+		}
+	}
+
+	focus = {
+		id = SAF_expand_the_simons_town_base
+		icon = GFX_goal_generic_construct_naval_dockyard
+		prerequisite = { focus = SAF_seaward_defence_force }
+		x = 0
+		y = 1
+		relative_position_id = SAF_seaward_defence_force
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			is_in_faction_with = ENG
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		complete_tooltip = {
+			navy_experience = 30
+			random_state = {
+				limit = {
+					has_state_flag = SAF_expand_the_simons_town_base_DY
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+
+		completion_reward = {
+			navy_experience = 30
+			random_owned_controlled_state = {
+				prioritize = { 681 }
+				limit = {
+					is_coastal = yes
+					is_core_of = ROOT
+					free_building_slots = {
+						building = dockyard
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = naval_base
+					level = 2
+					province = 12589
+					instant_build = yes
+				}
+				set_state_flag = SAF_expand_the_simons_town_base_DY
+			}
+		}
+	}
+
+	focus = {
+		id = SAF_integrate_with_royal_navy
+		icon = GFX_GBR_royal_navy
+		prerequisite = { focus = SAF_expand_the_simons_town_base }
+		mutually_exclusive = { focus = SAF_south_african_naval_force }
+		x = -1
+		y = 1
+		relative_position_id = SAF_expand_the_simons_town_base
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			is_in_faction_with = ENG
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = ENG_expand_the_repair_yards
+				add_idea = SAF_integrate_with_royal_navy
+			}
+		}
+	}
+
+	focus = {
+		id = SAF_south_african_naval_force
+		icon = GFX_goal_SAF_navy
+		prerequisite = { focus = SAF_expand_the_simons_town_base }
+		mutually_exclusive = { focus = SAF_integrate_with_royal_navy }
+		x = 1
+		y = 1
+		relative_position_id = SAF_expand_the_simons_town_base
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			is_in_faction_with = ENG
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = ENG_expand_the_repair_yards
+				add_idea = SAF_south_african_naval_force
+			}
+		}
+	}
+
+	focus = {
+		id = SAF_hms_cumberland
+		icon = GFX_focus_generic_navy_battleship3alt
+		prerequisite = { 
+			focus = SAF_integrate_with_royal_navy
+			focus = SAF_south_african_naval_force
+		}
+		x = 0
+		y = 3
+		relative_position_id = SAF_seaward_defence_force
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			is_in_faction_with = ENG
+			ENG = {
+				has_government = democratic
+			}
+			has_tech = improved_decimetric_radar
+			has_tech = basic_medium_battery
+			has_tech = basic_ship_hull_cruiser
+			has_tech = interwar_antiair
+			has_war = yes
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		completion_reward = {
+			ENG = {
+				country_event = {
+					id = tfv_south_africa.130 days = 4
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SAF_protect_the_trade
+		icon = GFX_focus_generic_africa_naval #GFX_goal_generic_navy_cruiser
+		prerequisite = { 
+			focus = SAF_integrate_with_royal_navy
+			focus = SAF_south_african_naval_force
+		}
+		x = -1
+		y = 1
+		relative_position_id = SAF_integrate_with_royal_navy
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 0.8
+		}
+
+		available = {
+			is_in_faction_with = ENG
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = ENG_secure_the_imperial_shipping_routes
+			add_tech_bonus = {
+				name = SAF_protect_the_trade
+				bonus = 1.0
+				uses = 2
+				category = convoy_defense_tree
+			}
+		}
+	}
+
+	focus = {
+		id = SAF_disrupt_the_trade
+		icon = GFX_goal_generic_occupy_states_coastal
+		prerequisite = { 
+			focus = SAF_integrate_with_royal_navy
+			focus = SAF_south_african_naval_force
+		}
+		x = 1
+		y = 1
+		relative_position_id = SAF_south_african_naval_force
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 0.2
+			modifier = {
+				has_war_with = ENG
+				factor = 10
+			}
+		}
+
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = SAF_submarine_warfare
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = ss_tech
+			}
+		}
+	}
+
+
+
+	focus = {
+		id = SAF_prepare_overseas_offensive
+		icon = GFX_goal_generic_amphibious_assault
+		prerequisite = { 
+			focus = SAF_protect_the_trade
+			focus = SAF_disrupt_the_trade
+		}
+		mutually_exclusive = { focus = SAF_cape_garrison_artillery }
+		x = 1
+		y = 1
+		relative_position_id = SAF_protect_the_trade
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			is_in_faction_with = ENG
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = SAF_prepare_overseas_offensive
+				bonus = 1.0
+				uses = 2i
+				category = marine_tech
+				category = tp_tech
+			}
+		}
+	}
+
+	focus = {
+		id = SAF_cape_garrison_artillery
+		icon = GFX_focus_generic_africa_defense #GFX_goal_generic_construct_military
+		prerequisite = { 
+			focus = SAF_protect_the_trade
+			focus = SAF_disrupt_the_trade
+		}
+		mutually_exclusive = { focus = SAF_prepare_overseas_offensive }
+		x = -1
+		y = 1
+		relative_position_id = SAF_disrupt_the_trade
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+			every_owned_state = {
+				limit = {
+					is_controlled_by = ROOT
+					is_in_home_area = yes
+					is_coastal = yes
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					province = {
+						all_provinces = yes							
+						limit_to_naval_base = yes
+					}
+					level = 2
+					instant_build = yes
+				}
+			}
+			add_ideas = AST_naval_auxiliary_patrol
 		}
 	}
 }		
