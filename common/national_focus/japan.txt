@@ -638,10 +638,7 @@ focus_tree = {
 			add_ideas = war_economy
 		custom_effect_tooltip = JAP_modify_dep_tt
 	
-			add_to_variable = {
-				JAP_production_speed_industrial_complex_factor_var = -0.2
-				tooltip = industrial_complex_build_speed_factor_tooltip
-			}
+			
 			add_to_variable = {
 				JAP_production_speed_arms_factory_factor_var = 0.1
 				tooltip = arms_factory_build_speed_factor_tooltip
@@ -7924,110 +7921,45 @@ focus = {
 
 
 		completion_reward = {
-			if = {
-				limit = {
-					has_game_rule = {
-						rule = script_china_war
-						option = HISTORICAL
-					}
+			#if = {
+			#	limit = {
+				#	has_game_rule = {
+				#		rule = script_china_war
+				#		option = HISTORICAL
+				#	}
+			#	}
+			#custom_effect_tooltip = JAP_factory_for_each_china_state_tt
+			#}
+				custom_effect_tooltip = JAP_modify_army_spirit_tt
+				custom_effect_tooltip = JAP_kempeitai_bonus
+				add_to_variable = {
+					JAP_compliance_gain = 0.01
 				}
-				custom_effect_tooltip = JAP_factory_for_each_china_state_tt
-			}
-			custom_effect_tooltip = JAP_modify_army_spirit_tt
-			custom_effect_tooltip = JAP_kempeitai_bonus
-			add_to_variable = {
-				JAP_compliance_gain = 0.01
-			}
-			if = {
-				limit = {
-					has_game_rule = {
-						rule = script_china_war
-						option = HISTORICAL
-					}
-				}
-
-				custom_effect_tooltip = JAP_kempeitai_bonus2
-				
-				RCC = {
-					add_to_variable = {
-						RCC_compliance_gain = 0.01
-					}
-				
-				}
-			
-			while_loop_effect = {
-				limit = {
-					any_state = {
-						NOT = {	
-							state = 745
-							state = 524
-							state = 839
-								state = 609
-								is_core_of = MAN
-								has_state_flag = already_counter_flag
-							}
-							is_core_of = CHI 
-							OR = {
-								is_controlled_by = RCC 
-								is_controlled_by = JAP 
-							}
-						}
-					}
-					random_state = {
-						limit = {
-							NOT = {	
-								state = 745
-								state = 524
-								state = 839
-								is_core_of = MAN
-								has_state_flag = already_counter_flag
-							}
-							is_core_of = CHI 
-							OR = {
-								is_controlled_by = RCC 
-								is_controlled_by = JAP 
-							}
-						}
-						
-						set_state_flag = already_counter_flag
-					}
-					
-					add_to_temp_variable = {
-						var = counting_chinese_states 
-						value = 1
-					}
-				}
-			
-				while_loop_effect = {
+				if = {
 					limit = {
-						check_variable = {
-							var = counting_chinese_states
-							value = 1
-							compare = greater_than_or_equals
+						has_game_rule = {
+							rule = script_china_war
+							option = HISTORICAL
 						}
 					}
-					subtract_from_temp_variable  = {
-						var = counting_chinese_states 
-						value = 1
-					}	
 
-					random_core_state = {
-						add_extra_state_shared_building_slots = 1
-						add_building_construction = {
-							type = arms_factory
-							level = 1
-							instant_build = yes
+					custom_effect_tooltip = JAP_kempeitai_bonus2
+					
+					RCC = {
+						add_to_variable = {
+							RCC_compliance_gain = 0.01
 						}
+					
 					}
-				}
+				
+				
+				
+
+
+				add_equipment_to_stockpile = { type = infantry_equipment_0 amount = 10000 producer = JAP }
+				add_equipment_to_stockpile = { type = horse_equipment amount = 1000 producer = JAP }
 			}
-			
-
-
-			add_equipment_to_stockpile = { type = infantry_equipment_0 amount = 10000 producer = JAP }
-			add_equipment_to_stockpile = { type = horse_equipment amount = 1000 producer = JAP }
 		}
-		
 	}
 	focus = {
 		id = JAP_anti_armor_effort
@@ -8242,7 +8174,7 @@ focus = {
 		}
 
 		bypass = {
-			has_tech = cv_fighter_1940
+			
 		}
 
 		cancel_if_invalid = yes
@@ -8253,13 +8185,21 @@ focus = {
 	
 			custom_effect_tooltip = JAP_the_zero_tt
 			hidden_effect = { set_technology = { cv_fighter_1940 = 1 }  }
+				
+			add_tech_bonus = {
+				name = JAP_fighter_modernization
+				bonus = 1
+				ahead_reduction = 1
+				uses = 1
+				category = light_fighter		
+			}	
 			add_tech_bonus = {
 				name = JAP_fighter_modernization
 				bonus = 1
 				uses = 2
 				technology = cv_fighter_1942
 				technology = cv_fighter_1944
-			}		
+			}
 
 
 		}
