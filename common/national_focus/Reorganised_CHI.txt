@@ -348,6 +348,7 @@ focus_tree = {
 
 		completion_reward = {
 			add_war_support = 0.1
+			add_stability = 0.1
 			add_ideas = partial_economic_mobilisation
 		}
 	}
@@ -378,13 +379,17 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = RCC_legitimacy_tt0
 			add_to_variable = {
-				RCC_stab_leg = 0.15
+				RCC_stab_leg = 0.1
 				tooltip = stability_leg_tooltip
 			}
 			add_to_variable = {
 				RCC_manpower_trust = 0.025
 				tooltip = CAN_recruitable_tt1
 			}
+			custom_effect_tooltip = MANspace
+			add_stability = 0.05
+			custom_effect_tooltip = MANspace
+			custom_effect_tooltip = RCC_reform_stab
 		}
 	}
 	focus = {
@@ -495,6 +500,8 @@ focus_tree = {
 			
 			set_technology = { tech_light_infantry = 1 }
 			custom_effect_tooltip = MANspace
+			army_experience = 100
+			custom_effect_tooltip = MANspace
 			custom_effect_tooltip = RCC_spawnins_explodanto
 			hidden_effect = {
 				division_template = {
@@ -547,8 +554,6 @@ focus_tree = {
 								}
 							} 
 		}
-		custom_effect_tooltip = MANspace
-			army_experience = 50
 		}
 	}
 	focus = {
@@ -633,7 +638,7 @@ focus_tree = {
 			custom_effect_tooltip = MANspace
 			add_offsite_building = {
 				type = arms_factory
-				level = 3
+				level = 2
 			}
 			custom_effect_tooltip = MANspace
 			army_experience = 50
@@ -670,12 +675,6 @@ focus_tree = {
 		completion_reward = {
 
 			custom_effect_tooltip = RCC_spawnins_explodanto	
-			custom_effect_tooltip = MANspace		
-			add_to_variable = {
-				var = RCC_military_industry_dm_production_speed_arms_factory_factor
-				value = 0.05
-				tooltip = arms_factory_build_speed_factor_tooltip
-			}
 
 			hidden_effect = {
 				division_template = {
@@ -884,7 +883,7 @@ focus_tree = {
 			add_tech_bonus = {
 				name = marine_tech
 				bonus = 1
-				uses = 3
+				uses = 2
 				category = marine_tech
 				category = special_tech
 			}
@@ -1201,7 +1200,7 @@ focus_tree = {
 		x = 1
 		y = 2
 
-		cost = 5
+		cost = 4
 
 		ai_will_do = {
 			factor = 1
@@ -1246,7 +1245,7 @@ focus_tree = {
 		x = -1
 		y = 2
 
-		cost = 5
+		cost = 4
 
 		ai_will_do = {
 			factor = 1
@@ -1533,7 +1532,7 @@ focus_tree = {
 
 		completion_reward = {
 			add_political_power = 100
-			add_stability = 0.25
+			add_stability = 0.15
 			add_war_support = 0.1
 			add_ideas = war_economy
 		}
@@ -1731,29 +1730,57 @@ focus_tree = {
 			set_cosmetic_tag = RCC_beiping
 			custom_effect_tooltip = RCC_legitimacy_reformtt0
 			if ={
-				limit = { NOT = {has_completed_focus = RCC_reorganise_conscription} NOT = {has_completed_focus = RCC_with_the_secret_agreement}}
+				limit = { NOT = {has_completed_focus = RCC_reorganise_conscription} NOT = {has_completed_focus = RCC_with_the_secret_agreement} NOT = {has_completed_focus = RCC_new_nation_identity}}
 				set_variable = {
 					RCC_stab_leg = -0.35
 					tooltip = stability_leg_tooltip
 				}
 			 else_if = {
-				limit = { has_completed_focus = RCC_reorganise_conscription NOT = {has_completed_focus = RCC_with_the_secret_agreement} }
+				limit = { has_completed_focus = RCC_reorganise_conscription NOT = {has_completed_focus = RCC_with_the_secret_agreement}  NOT = {has_completed_focus = RCC_new_nation_identity}}
 				set_variable = {
 					RCC_stab_leg = -0.25
 					tooltip = stability_leg_tooltip
 				}
 			 }
 			 else_if = {
-				limit = { has_completed_focus = RCC_with_the_secret_agreement NOT = {has_completed_focus = RCC_reorganise_conscription} }
+				limit = { has_completed_focus = RCC_new_nation_identity NOT = {has_completed_focus = RCC_reorganise_conscription}  NOT = {has_completed_focus = RCC_with_the_secret_agreement}}
 				set_variable = {
 					RCC_stab_leg = -0.25
 					tooltip = stability_leg_tooltip
 				}
 			 }
 			 else_if = {
-				limit = { has_completed_focus = RCC_with_the_secret_agreement has_completed_focus = RCC_with_the_secret_agreement }
+				limit = { has_completed_focus = RCC_with_the_secret_agreement NOT = {has_completed_focus = RCC_reorganise_conscription}  NOT = {has_completed_focus = RCC_new_nation_identity}}
 				set_variable = {
-					RCC_stab_leg = 0.15
+					RCC_stab_leg = -0.25
+					tooltip = stability_leg_tooltip
+				}
+			 }
+			 else_if = {
+				limit = { has_completed_focus = RCC_with_the_secret_agreement has_completed_focus = RCC_new_nation_identity NOT = {has_completed_focus = RCC_reorganise_conscription} }
+				set_variable = {
+					RCC_stab_leg = -0.15
+					tooltip = stability_leg_tooltip
+				}
+			 }
+			 else_if = {
+				limit = { has_completed_focus = RCC_reorganise_conscription has_completed_focus = RCC_new_nation_identity NOT = {has_completed_focus = RCC_with_the_secret_agreement} }
+				set_variable = {
+					RCC_stab_leg = -0.15
+					tooltip = stability_leg_tooltip
+				}
+			 }
+			 else_if = {
+				limit = { has_completed_focus = RCC_with_the_secret_agreement has_completed_focus = RCC_reorganise_conscription NOT = {has_completed_focus = RCC_new_nation_identity}}
+				set_variable = {
+					RCC_stab_leg = -0.15
+					tooltip = stability_leg_tooltip
+				}
+			 }
+			 else_if = {
+				limit = { has_completed_focus = RCC_with_the_secret_agreement has_completed_focus = RCC_with_the_secret_agreement has_completed_focus = RCC_new_nation_identity }
+				set_variable = {
+					RCC_stab_leg = -0.05
 					tooltip = stability_leg_tooltip
 				}
 			 }
@@ -4793,6 +4820,12 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			custom_effect_tooltip = RCC_legitimacy_tt0
+			add_to_variable = {
+				RCC_stab_leg = 0.05
+				tooltip = stability_leg_tooltip
+			}
+			custom_effect_tooltip = MANspace
 			custom_effect_tooltip = RCC_torn_industry_tt
 
 			add_to_variable = {
