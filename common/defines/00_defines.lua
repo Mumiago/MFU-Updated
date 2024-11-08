@@ -2439,7 +2439,7 @@ NAI = {
 	AI_WANTED_CARRIER_BASED_PLANES_FACTOR = 1.0,	-- Factor applied to desire for carrier based planes (total carrier space * define)
 
 	-- <start> construction prioritization
-	CONSTRUCTION_PRIO_INFRASTRUCTURE = 0.21,                                    -- base prio for infrastructure in the construction queue
+	CONSTRUCTION_PRIO_INFRASTRUCTURE = 0.2,                                    -- base prio for infrastructure in the construction queue
 	CONSTRUCTION_PRIO_CIV_FACTORY = 0.80,                                       -- base prio for civilian factories in the construction queue
 	CONSTRUCTION_PRIO_MIL_FACTORY = 0.70,                                       -- base prio for military factories in the construction queue
 	CONSTRUCTION_PRIO_RAILWAY = 4.00,                                           -- base prio for railways in the construction queue
