@@ -57,69 +57,69 @@ foreign_support = {
 		}
 	}
 	
-	SOV_gansu_mission_placeholder = {
+	#SOV_gansu_mission_placeholder = {
 
-		icon = ger_military_buildup
+	#	icon = ger_military_buildup
 
-		allowed = {
-			tag = SOV
-		}
+		#allowed = {
+		#	tag = SOV
+		#}
 
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = CHI_gansu_road_closes_tt	
-				has_global_flag = fake_flag
+		#available = {
+			#custom_trigger_tooltip = {
+			#	tooltip = CHI_gansu_road_closes_tt	
+				#has_global_flag = fake_flag
 					
-			}
+			#}
             
-		}
-		activation = {
-			CHI = {
-				has_completed_focus = CHI_expand_the_gansu_road
-			}
-			NOT = {
-				SOV = {
-					has_war_with = GER 
-				}
-			}
+		#}
+		#activation = {
+			#CHI = {
+			#	has_completed_focus = CHI_expand_the_gansu_road
+			#}
+			#NOT = {
+			#	SOV = {
+			#		has_war_with = GER 
+			#	}
+			#}
 		
-		}
+		#}
 
-		visible = {
+		#visible = {
 			
-		}
+		#}
 
 
-		ai_will_do = {
-			factor = 25
-		}
+		#ai_will_do = {
+			#factor = 25
+		#}
 
-		fire_only_once = no	
-		selectable_mission = no
-		days_mission_timeout = 120
+		#fire_only_once = no	
+		#selectable_mission = no
+		#days_mission_timeout = 120
 
-		complete_effect = {
+		#complete_effect = {
 			
-		}
-		timeout_effect = {
-			custom_effect_tooltip = SOV_extra_lend_lease_explained_tt
-			hidden_effect = {
-				if = {
-					limit = {
-						NOT = {
-							SOV = {
-								has_war_with = GER 
-							}
-						}
+		#}
+		#timeout_effect = {
+		#	custom_effect_tooltip = SOV_extra_lend_lease_explained_tt
+			#hidden_effect = {
+			#	if = {
+				#	limit = {
+					#	NOT = {
+						#	SOV = {
+						#		has_war_with = GER 
+							#}
+					#	}
 
-					}
-					activate_mission = SOV_gansu_mission_placeholder
-				}
+					#}
+				#	activate_mission = SOV_gansu_mission_placeholder
+				#}
 				
-			}
+			#}
 
-		}
-	}
+		#}
+	#}
 
 	SOV_guns_for_china_pre_war = {
 
@@ -247,7 +247,18 @@ foreign_support = {
 			}
 			else = {
 				SOV = {
+					if = {
+						limit = {
+							SOV = {
+								has_equipment = { infantry_equipment > 2999 }
+
+							}
+						}
+						army_experience = 10
+					}
 					add_equipment_to_stockpile = { type = infantry_equipment amount = -3000 producer = SOV } 
+					
+					
 				}
 				CHI = {
 					add_to_variable = { var = CHI_SOV_extra_guns value = 2400 }
@@ -392,7 +403,7 @@ foreign_support = {
 			
 		}
 
-		cost = 25
+		cost = 0
 
 		ai_will_do = {
 			factor = 25
@@ -403,7 +414,7 @@ foreign_support = {
 		days_re_enable = 120
 		days_remove = 120
 		modifier = {
-			civilian_factory_use = 3			
+			civilian_factory_use = 4			
 		}
 
 		complete_effect = {
@@ -439,6 +450,9 @@ foreign_support = {
 			else = {
 				CHI = {
 					add_offsite_building = { type = arms_factory level = 2 }
+				}
+				SOV = {
+					add_political_power = 15 
 				}
 			}
 			
@@ -599,7 +613,7 @@ foreign_support = {
 			
 		}
 
-		cost = 25
+		cost = 0
 
 		ai_will_do = {
 			factor = 25
@@ -607,9 +621,10 @@ foreign_support = {
 
 		fire_only_once = no	
 
-		days_re_enable = 60
+		days_re_enable = 1
+		days_remove = 60
 
-		complete_effect = {
+		remove_effect = {
 				if = {
 					limit = {
 						has_game_rule = {
@@ -728,13 +743,32 @@ foreign_support = {
 					}
 				}
 				else = {
+					
 					SOV = {
-						add_equipment_to_stockpile = { type = infantry_equipment amount = -3000 producer = SOV } 
+						if = {
+							limit = {
+								SOV = {
+									has_equipment = { infantry_equipment > 2999 }
+								}
+							}
+							army_experience = 10
+						}
+						send_equipment = {
+							equipment = infantry_equipment
+							amount = 3000
+							target = CHI
+							new_prioritised = yes
+						}
+					#	add_equipment_to_stockpile = { type = infantry_equipment amount = -3000 producer = SOV } 
+	
+						
+						
+				
 					}
-					CHI = {
-						add_to_variable = { var = CHI_SOV_extra_guns value = 2400 }
-					}
-					custom_effect_tooltip = SOV_chi_send_equipment5_tt 
+					#CHI = {
+						#add_to_variable = { var = CHI_SOV_extra_guns value = 2400 }
+					#}
+					#custom_effect_tooltip = SOV_chi_send_equipment5_tt 
 					
 				}	
 			}
@@ -941,7 +975,7 @@ foreign_support = {
 			
 		}
 
-		cost = 25
+		cost = 0
 
 		ai_will_do = {
 			factor = 25
@@ -949,9 +983,10 @@ foreign_support = {
 
 		fire_only_once = no	
 
-		days_re_enable = 61
+		days_re_enable = 1
+		days_remove = 60
 
-		complete_effect = {
+		remove_effect = {
 			
 			if = {
 				limit = {
@@ -1101,8 +1136,67 @@ foreign_support = {
 					if = {
 						limit = {
 							has_tech = artillery8_2
+							has_equipment = { artillery_equipment > 449 }
 						}
-						add_equipment_to_stockpile = { type = artillery_equipment amount = -450 producer = SOV } 
+						
+						army_experience = 10
+					}
+					else_if = {
+						limit = {
+							has_tech = heavy_artillery6_1
+							has_equipment = { heavy_artillery_equipment > 219 }
+						}
+						
+						army_experience = 10
+					}
+
+					else_if = {
+						limit = {
+							has_tech = pack_artillery4
+							has_equipment = { pack_artillery_equipment > 819 }
+						}
+					
+						army_experience = 10
+					}
+					
+					else_if = {
+						limit = {
+							has_tech = artillery4
+							has_equipment = { artillery_equipment> 449 }
+						}
+					
+						army_experience = 10
+					}
+					else_if = {
+						limit = {
+							has_tech = heavy_artillery2
+							has_equipment = { heavy_artillery_equipment > 219 }
+						}
+						
+						army_experience = 10
+					}
+					else_if = {
+						limit = {
+							has_tech = field_gun3
+							has_equipment = { field_gun_equipment > 549 }
+						}
+						
+						army_experience = 10
+					}
+						
+				
+					
+					if = {
+						limit = {
+							has_tech = artillery8_2
+						}
+						#add_equipment_to_stockpile = { type = artillery_equipment amount = -450 producer = SOV } 
+						send_equipment = {
+							equipment = artillery_equipment
+							amount = 450
+							target = CHI
+							new_prioritised = yes
+						}
 						
 					}
 					
@@ -1110,7 +1204,13 @@ foreign_support = {
 						limit = {
 							has_tech = heavy_artillery6_1
 						}
-						add_equipment_to_stockpile = { type = heavy_artillery_equipment amount = -220 producer = SOV } 
+						#add_equipment_to_stockpile = { type = heavy_artillery_equipment amount = -220 producer = SOV } 
+						send_equipment = {
+							equipment = heavy_artillery_equipment
+							amount = 220
+							target = CHI
+							new_prioritised = yes
+						}
 							
 						
 					}
@@ -1119,7 +1219,13 @@ foreign_support = {
 						limit = {
 							has_tech = pack_artillery4
 						}
-						add_equipment_to_stockpile = { type = pack_artillery_equipment amount = -820 producer = SOV } 
+						#add_equipment_to_stockpile = { type = pack_artillery_equipment amount = -820 producer = SOV } 
+						send_equipment = {
+							equipment = pack_artillery_equipment
+							amount = 820
+							target = CHI
+							new_prioritised = yes
+						}
 						
 						
 					}
@@ -1128,30 +1234,48 @@ foreign_support = {
 						limit = {
 							has_tech = artillery4
 						}
-						add_equipment_to_stockpile = { type = artillery_equipment amount = -450 producer = SOV } 
+						#add_equipment_to_stockpile = { type = artillery_equipment amount = -450 producer = SOV } 
+						send_equipment = {
+							equipment = artillery_equipment
+							amount = 450
+							target = CHI
+							new_prioritised = yes
+						}
 						
 					}
 					else_if = {
 						limit = {
 							has_tech = heavy_artillery2
 						}
-						add_equipment_to_stockpile = { type = heavy_artillery_equipment amount = -220 producer = SOV } 
+						#add_equipment_to_stockpile = { type = heavy_artillery_equipment amount = -220 producer = SOV } 
+						send_equipment = {
+							equipment = heavy_artillery_equipment
+							amount = 220
+							target = CHI
+							new_prioritised = yes
+						}
 						
 					}
 					else_if = {
 						limit = {
 							has_tech = field_gun3
 						}
-						add_equipment_to_stockpile = { type = field_gun_equipment amount = -550 producer = SOV } 
+						#add_equipment_to_stockpile = { type = field_gun_equipment amount = -550 producer = SOV } 
+						send_equipment = {
+							equipment = field_gun_equipment
+							amount = 220
+							target = CHI
+							new_prioritised = yes
+						}
 						
 					}
 				}
-				CHI = {
-					add_to_variable = { var = CHI_SOV_extra_arty value = 1 }
-					add_to_variable = { var = CHI_SOV_extra_arty_for_tooltip value = 440 }
-				}
+				#CHI = {
+					#add_to_variable = { var = CHI_SOV_extra_arty value = 1 }
+					#add_to_variable = { var = CHI_SOV_extra_arty_for_tooltip value = 440 }
+				#}
 
-				custom_effect_tooltip = SOV_chi_send_equipment4_tt 
+				#custom_effect_tooltip = SOV_chi_send_equipment4_tt 
 			}
 		}
 	}
@@ -1315,7 +1439,7 @@ foreign_support = {
 			
 		}
 
-		cost = 25
+		cost = 0
 
 		ai_will_do = {
 			factor = 25
@@ -1323,9 +1447,10 @@ foreign_support = {
 
 		fire_only_once = no	
 
-		days_re_enable = 61
+		days_re_enable = 1
+		days_remove = 60
 
-		complete_effect = {
+		remove_effect = {
 			if = {
 				limit = {
 					has_game_rule = {
@@ -1562,13 +1687,30 @@ foreign_support = {
 				}
 			}
 			else = {
+				
 				SOV = {
-					add_equipment_to_stockpile = { type = small_plane_airframe amount = -100 producer = SOV } 
+					if = {
+						limit = {
+							SOV = {
+								has_equipment = { small_plane_airframe > 99 }
+							}
+						}
+						army_experience = 10
+					}
+					#add_equipment_to_stockpile = { type = small_plane_airframe amount = -100 producer = SOV } 
+					send_equipment = {
+						equipment = small_plane_airframe
+						amount = 100
+						target = CHI
+						new_prioritised = yes
+					}
+					
+					
 				}
-				CHI = {
-					set_variable = { var = CHI_SOV_extra_fighters value = 80 }
-				}
-				custom_effect_tooltip = SOV_chi_send_equipment3_tt 
+				#CHI = {
+				#	add_to_variable = { var = CHI_SOV_extra_fighters value = 80 }
+				#}
+				#custom_effect_tooltip = SOV_chi_send_equipment3_tt 
 
 
 			}
@@ -1738,7 +1880,7 @@ foreign_support = {
 			
 		}
 
-		cost = 25
+		cost = 0
 
 		ai_will_do = {
 			factor = 25
@@ -1746,9 +1888,10 @@ foreign_support = {
 
 		fire_only_once = no	
 
-		days_re_enable = 61
+		days_re_enable = 1
+		days_remove = 60
 
-		complete_effect = {
+		remove_effect = {
 			if = {
 				limit = {
 					has_game_rule = {
@@ -1906,13 +2049,30 @@ foreign_support = {
 				}
 			}
 			else = {
+				
 				SOV = {
-					add_equipment_to_stockpile = { type = small_plane_cas_airframe amount = -100 producer = SOV } 
+					if = {
+						limit = {
+							SOV = {
+								has_equipment = { small_plane_cas_airframe > 99 }
+							}
+						}
+						army_experience = 10
+					}
+					#add_equipment_to_stockpile = { type = small_plane_cas_airframe amount = -100 producer = SOV } 
+					send_equipment = {
+						equipment = small_plane_cas_airframe
+						amount = 100
+						target = CHI
+						new_prioritised = yes
+					}
+					
+					
 				}
-				CHI = {
-					set_variable = { var = CHI_SOV_extra_cas value = 80 }
-				}
-				custom_effect_tooltip = SOV_chi_send_equipment2_tt 
+				#CHI = {
+					#add_to_variable = { var = CHI_SOV_extra_cas value = 80 }
+				#}
+				#custom_effect_tooltip = SOV_chi_send_equipment2_tt 
 
 
 			}
@@ -2078,7 +2238,7 @@ foreign_support = {
 			
 		}
 
-		cost = 25
+		cost = 0
 
 		ai_will_do = {
 			factor = 25
@@ -2086,9 +2246,10 @@ foreign_support = {
 
 		fire_only_once = no	
 
-		days_re_enable = 61
+		days_re_enable = 1
+		days_remove = 60
 
-		complete_effect = {
+		remove_effect = {
 			if = {
 				limit = {
 					has_game_rule = {
@@ -2203,14 +2364,37 @@ foreign_support = {
 			}
 			else = {
 				SOV = {
-					add_equipment_to_stockpile = { type = light_tank_chassis amount = -150 producer = SOV } 
-					add_equipment_to_stockpile = { type = motorized_equipment amount = -100 producer = SOV } 
+					if = {
+						limit = {
+							SOV = {
+								has_equipment = { light_tank_chassis > 149 }
+								has_equipment = { motorized_equipment > 99 }
+							}
+						}
+						army_experience = 10
+					}
+				
+					
+					#add_equipment_to_stockpile = { type = light_tank_chassis amount = -150 producer = SOV } 
+					#add_equipment_to_stockpile = { type = motorized_equipment amount = -100 producer = SOV } 
+					send_equipment = {
+						equipment = light_tank_chassis
+						amount = 150
+						target = CHI
+						new_prioritised = yes
+					}
+					send_equipment = {
+						equipment = motorized_equipment
+						amount = 100
+						target = CHI
+						new_prioritised = yes
+					}
 				}
-				CHI = {
-					set_variable = { var = CHI_SOV_extra_light_tanks value = 120 }
-					set_variable = { var = CHI_SOV_extra_mot value = 100 }
-				}
-				custom_effect_tooltip = SOV_chi_send_equipment1_tt 
+				#CHI = {
+					#add_to_variable = { var = CHI_SOV_extra_light_tanks value = 120 }
+					#add_to_variable = { var = CHI_SOV_extra_mot value = 100 }
+				#}
+				#custom_effect_tooltip = SOV_chi_send_equipment1_tt 
 
 			}
 			
@@ -2569,7 +2753,7 @@ foreign_support = {
 		fire_only_once = no
 
 		modifier = {
-			civilian_factory_use = 4			
+			civilian_factory_use = 5			
 		}
 		days_re_enable = 120
 		days_remove = 120
@@ -2750,11 +2934,14 @@ foreign_support = {
 				custom_trigger_tooltip = {
 					tooltip = CHI_needs_at_least_one_lend_lease_path
 					OR = {
-						check_variable = {
-							var = CHI_overall_available_routes
-							value = 1 
-							compare = greater_than_or_equals
+						CHI = {
+							check_variable = {
+								var = CHI_overall_available_routes
+								value = 1 
+								compare = greater_than_or_equals
+							}
 						}
+						
 					}
 				}
 				
@@ -2788,9 +2975,10 @@ foreign_support = {
 
 		fire_only_once = no	
 
-		days_re_enable = 61
+		days_re_enable = 1
+		days_remove = 30
 
-		complete_effect = {
+		remove_effect = {
 			
 			if = {
 				limit = {
@@ -2924,13 +3112,19 @@ foreign_support = {
 				}
 			}
 			else = {
-				USA = {
-					add_equipment_to_stockpile = { type = infantry_equipment amount = -3000 producer = USA } 
+				send_equipment = {
+					equipment = infantry_equipment
+					amount = 3000
+					target = CHI
+					new_prioritised = yes
 				}
-				CHI = {
-					add_to_variable = { var = CHI_USA_extra_guns value = 2400 }
-				}
-				custom_effect_tooltip = SOV_chi_send_equipment5_tt 
+			#	USA = {
+				#	add_equipment_to_stockpile = { type = infantry_equipment amount = -3000 producer = USA } 
+				#}
+				#CHI = {
+				#	add_to_variable = { var = CHI_USA_extra_guns value = 2400 }
+				#}
+				#custom_effect_tooltip = SOV_chi_send_equipment5_tt 
 				
 			}
 		}
@@ -3064,23 +3258,25 @@ foreign_support = {
 				custom_trigger_tooltip = {
 					tooltip = CHI_needs_at_least_one_lend_lease_path
 					OR = {
-						check_variable = {
-							var = CHI_overall_available_routes
-							value = 1 
-							compare = greater_than_or_equals
+						CHI = {
+							check_variable = {
+								var = CHI_overall_available_routes
+								value = 1 
+								compare = greater_than_or_equals
+							}
 						}
 					}
 
 				}
-				custom_trigger_tooltip = {
-					tooltip = CHI_too_much_arty
-					check_variable = {
-						var = CHI_USA_extra_arty
-						value = 2 
-						compare = less_than_or_equals
-					}
+				#custom_trigger_tooltip = {
+				#	tooltip = CHI_too_much_arty
+					#check_variable = {
+					#	var = CHI_USA_extra_arty
+					#	value = 5
+					#	compare = less_than_or_equals
+					#}
 					
-				}
+				#}
 
 			}
 			
@@ -3159,9 +3355,10 @@ foreign_support = {
 
 		fire_only_once = no	
 
-		days_re_enable = 61
+		days_re_enable = 1
+		days_remove = 30
 
-		complete_effect = {
+		remove_effect = {
 			
 			if = {
 				limit = {
@@ -3315,7 +3512,12 @@ foreign_support = {
 						limit = {
 							has_tech = artillery8_2
 						}
-						add_equipment_to_stockpile = { type = artillery_equipment amount = -450 producer = USA } 
+						send_equipment = {
+							equipment = artillery_equipment
+							amount = 450
+							target = CHI
+							new_prioritised = yes
+						}
 						
 					}
 					
@@ -3323,7 +3525,13 @@ foreign_support = {
 						limit = {
 							has_tech = heavy_artillery6_1
 						}
-						add_equipment_to_stockpile = { type = heavy_artillery_equipment amount = -220 producer = USA } 
+		
+						send_equipment = {
+							equipment = heavy_artillery_equipment
+							amount = 220
+							target = CHI
+							new_prioritised = yes
+						}
 							
 						
 					}
@@ -3332,7 +3540,13 @@ foreign_support = {
 						limit = {
 							has_tech = pack_artillery4
 						}
-						add_equipment_to_stockpile = { type = pack_artillery_equipment amount = -820 producer = USA } 
+
+						send_equipment = {
+							equipment = pack_artillery_equipment
+							amount = 820
+							target = CHI
+							new_prioritised = yes
+						}
 						
 						
 					}
@@ -3341,29 +3555,44 @@ foreign_support = {
 						limit = {
 							has_tech = artillery4
 						}
-						add_equipment_to_stockpile = { type = artillery_equipment amount = -450 producer = USA } 
+						send_equipment = {
+							equipment = artillery_equipment
+							amount = 450
+							target = CHI
+							new_prioritised = yes
+						} 
 						
 					}
 					else_if = {
 						limit = {
 							has_tech = heavy_artillery2
 						}
-						add_equipment_to_stockpile = { type = heavy_artillery_equipment amount = -220 producer = USA } 
+						send_equipment = {
+							equipment = heavy_artillery_equipment
+							amount = 220
+							target = CHI
+							new_prioritised = yes
+						}
 						
 					}
 					else_if = {
 						limit = {
 							has_tech = field_gun3
 						}
-						add_equipment_to_stockpile = { type = field_gun_equipment amount = -550 producer = USA } 
+						send_equipment = {
+							equipment = field_gun_equipment
+							amount = 550
+							target = CHI
+							new_prioritised = yes
+						}
 						
 					}
 				}
-				CHI = {
-					add_to_variable = { var = CHI_USA_extra_arty value = 1 }
-					add_to_variable = { var = CHI_USA_extra_arty_for_tooltip value = 440 }
-				}
-				custom_effect_tooltip = SOV_chi_send_equipment4_tt 
+				#CHI = {
+				#	add_to_variable = { var = CHI_USA_extra_arty value = 1 }
+				#	add_to_variable = { var = CHI_USA_extra_arty_for_tooltip value = 440 }
+				#}
+				#custom_effect_tooltip = SOV_chi_send_equipment4_tt 
 			}
 		}
 	}
@@ -3496,10 +3725,12 @@ foreign_support = {
 				custom_trigger_tooltip = {
 					tooltip = CHI_needs_at_least_one_lend_lease_path
 					OR = {
-						check_variable = {
-							var = CHI_overall_available_routes
-							value = 1 
-							compare = greater_than_or_equals
+						CHI = {
+							check_variable = {
+								var = CHI_overall_available_routes
+								value = 1 
+								compare = greater_than_or_equals
+							}
 						}
 					}
 
@@ -3539,9 +3770,10 @@ foreign_support = {
 
 		fire_only_once = no	
 
-		days_re_enable = 61
+		days_re_enable = 1
+		days_remove = 30
 
-		complete_effect = {
+		remove_effect = {
 			if = {
 				limit = {
 					has_game_rule = {
@@ -3697,12 +3929,20 @@ foreign_support = {
 			}
 			else = {
 				USA = {
-					add_equipment_to_stockpile = { type = small_plane_airframe amount = -100 producer = USA } 
+					send_equipment = {
+						equipment = small_plane_airframe
+						amount = 100
+						target = CHI
+						new_prioritised = yes
+					}
 				}
-				CHI = {
-					set_variable = { var = CHI_USA_extra_fighters value = 80 }
-				}
-				custom_effect_tooltip = SOV_chi_send_equipment3_tt 
+				#USA = {
+					#add_equipment_to_stockpile = { type = small_plane_airframe amount = -100 producer = USA } 
+				#}
+				#CHI = {
+				#	add_to_variable = { var = CHI_USA_extra_fighters value = 80 }
+				#}
+				#custom_effect_tooltip = SOV_chi_send_equipment3_tt 
 
 
 			}
@@ -3838,10 +4078,12 @@ foreign_support = {
 				custom_trigger_tooltip = {
 					tooltip = CHI_needs_at_least_one_lend_lease_path
 					OR = {
-						check_variable = {
-							var = CHI_overall_available_routes
-							value = 1 
-							compare = greater_than_or_equals
+						CHI = {
+							check_variable = {
+								var = CHI_overall_available_routes
+								value = 1 
+								compare = greater_than_or_equals
+							}
 						}
 					}
 
@@ -3882,9 +4124,10 @@ foreign_support = {
 
 		fire_only_once = no	
 
-		days_re_enable = 61
+		days_re_enable = 1
+		days_remove = 30
 
-		complete_effect = {
+		remove_effect = {
 			if = {
 				limit = {
 					has_game_rule = {
@@ -4047,12 +4290,20 @@ foreign_support = {
 			}
 			else = {
 				USA = {
-					add_equipment_to_stockpile = { type = small_plane_cas_airframe amount = -100 producer = USA } 
+					send_equipment = {
+						equipment = small_plane_cas_airframe
+						amount = 100
+						target = CHI
+						new_prioritised = yes
+					}
 				}
-				CHI = {
-					set_variable = { var = CHI_USA_extra_cas value = 80 }
-				}
-				custom_effect_tooltip = SOV_chi_send_equipment2_tt 
+				#USA = {
+				#	add_equipment_to_stockpile = { type = small_plane_cas_airframe amount = -100 producer = USA } 
+				#}
+				#CHI = {
+					#add_to_variable = { var = CHI_USA_extra_cas value = 80 }
+				#}
+				#custom_effect_tooltip = SOV_chi_send_equipment2_tt 
 
 
 			}
@@ -4187,10 +4438,12 @@ foreign_support = {
 				custom_trigger_tooltip = {
 					tooltip = CHI_needs_at_least_one_lend_lease_path
 					OR = {
-						check_variable = {
-							var = CHI_overall_available_routes
-							value = 1 
-							compare = greater_than_or_equals
+						CHI = {
+							check_variable = {
+								var = CHI_overall_available_routes
+								value = 1 
+								compare = greater_than_or_equals
+							}
 						}
 					}
 
@@ -4229,9 +4482,10 @@ foreign_support = {
 
 		fire_only_once = no	
 
-		days_re_enable = 61
+		days_re_enable = 1
+		days_remove = 30
 
-		complete_effect = {
+		remove_effect = {
 			if = {
 				limit = {
 					has_game_rule = {
@@ -4365,14 +4619,28 @@ foreign_support = {
 			}
 			else = {
 				USA = {
-					add_equipment_to_stockpile = { type = light_tank_chassis amount = -150 producer = USA } 
-					add_equipment_to_stockpile = { type = motorized_equipment amount = -100 producer = USA } 
+					send_equipment = {
+						equipment = light_tank_chassis
+						amount = 150
+						target = CHI
+						new_prioritised = yes
+					}
+					send_equipment = {
+						equipment = motorized_equipment
+						amount = 100
+						target = CHI
+						new_prioritised = yes
+					}
 				}
-				CHI = {
-					set_variable = { var = CHI_USA_extra_light_tanks value = 120 }
-					set_variable = { var = CHI_USA_extra_mot value = 100 }
-				}
-				custom_effect_tooltip = SOV_chi_send_equipment1_tt 
+				#USA = {
+				#	add_equipment_to_stockpile = { type = light_tank_chassis amount = -150 producer = USA } 
+				#	add_equipment_to_stockpile = { type = motorized_equipment amount = -100 producer = USA } 
+			#	}
+				#CHI = {
+				#	add_to_variable = { var = CHI_USA_extra_light_tanks value = 120 }
+				#	add_to_variable = { var = CHI_USA_extra_mot value = 100 }
+				#}
+				#custom_effect_tooltip = SOV_chi_send_equipment1_tt 
 
 			}
 			
@@ -4433,7 +4701,7 @@ foreign_support = {
 		days_re_enable = 60
 		days_remove = 60
 		modifier = {
-			civilian_factory_use = 15
+			civilian_factory_use = 18
 		}
 		
 
@@ -5340,44 +5608,44 @@ foreign_support = {
 			
 		}
 	}
-	USA_sends_lend_lease_placeholder = {
+	#USA_sends_lend_lease_placeholder = {
 
-		icon = ger_military_buildup
+	#	icon = ger_military_buildup
 
-		allowed = {
-			tag = USA
-		}
+	#	allowed = {
+		#	tag = USA
+	#	}
 
-		available = {
-			always = no
-            
-		}
-		priority = 0
+	#	available = {
+		#	always = no
+       #     
+		#}
+	#	priority = 0
 		
 
-		visible = {
-			JAP = {
-				has_completed_focus = JAP_intervene_in_china
-			}
-			has_game_rule = {
-				rule = script_china_war
-				option = HISTORICAL
-			}
-		}
+		#visible = {
+	#		JAP = {
+			#	has_completed_focus = JAP_intervene_in_china
+			#}
+		#	has_game_rule = {
+			#	rule = script_china_war
+			#	option = HISTORICAL
+		#	}
+		#}#
 
-		cost = 0
+		#cost = 0
 
-		ai_will_do = {
-			factor = 25
-		}
+		#ai_will_do = {
+		#	factor = 25
+		#}
 
-		fire_only_once = no	
+		#fire_only_once = no	
 
-		complete_effect = {
-			custom_effect_tooltip = USA_extra_lend_lease_explained_tt
-		}
+		#complete_effect = {
+		#	custom_effect_tooltip = USA_extra_lend_lease_explained_tt
+		#}
 		
-	}
+	#}
 	
 	
 	guns_for_spain = {
