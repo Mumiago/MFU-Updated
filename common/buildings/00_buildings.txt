@@ -1,9 +1,39 @@
 buildings = {
 
 	# show_on_map:
-	#	if provincial = yes, then show_on_map = X is amount per each province
-	#	if provincial = no, then show_on_map = X is amount per state
-	# State buildings
+	#    if provincial = yes, then show_on_map = X is amount per each province
+	#    if provincial = no, then show_on_map = X is amount per state
+
+	supply_node = {
+		show_on_map = 1
+		base_cost = 14000
+	
+		disabled_in_dmz = yes
+		icon_frame = 15
+		
+		centered = yes
+		supply_node = yes
+		infrastructure_construction_effect = yes
+		damage_factor = 0.1
+		allied_build = yes
+		always_shown = yes
+		level_cap = {
+			province_max = 1
+		}
+	}
+	rail_way = {
+		base_cost = 600
+		per_level_extra_cost = 150
+		damage_factor = 0.05
+		
+		disabled_in_dmz = yes
+		infrastructure_construction_effect = yes
+		icon_frame = 16
+		level_cap = {
+			province_max = 1
+		}
+	}
+
 	infrastructure = {
 		base_cost = 1600
 		per_level_extra_cost = 200
@@ -23,7 +53,6 @@ buildings = {
 		}
 	}
 	
-	# Shared buildings
 	arms_factory = {
 		show_on_map = 6
 		base_cost = 8400
@@ -55,6 +84,7 @@ buildings = {
 			state_max = 60
 		}
 	}
+
 	air_base = {
 		show_on_map = 1
 		base_cost = 2000
@@ -69,7 +99,7 @@ buildings = {
 			state_max = 25
 		}
 	}
-	# Province buildings
+	
 	naval_base = {
 		show_on_map = 1
 		show_on_map_meshes = 3
@@ -88,6 +118,7 @@ buildings = {
 			province_max = 15
 		}
 	}
+
 	bunker = {
 		show_on_map = 1
 		has_destroyed_mesh = yes
@@ -104,6 +135,7 @@ buildings = {
 			province_max = 15
 		}
 	}
+
 	coastal_bunker = {
 		show_on_map = 1
 		has_destroyed_mesh = yes
@@ -141,6 +173,7 @@ buildings = {
 			state_max = 60
 		}
 	}
+	
 	anti_air_building = {
 		show_on_map = 3
 		base_cost = 2000
@@ -157,7 +190,7 @@ buildings = {
 			state_max = 10
 		}
 	}
-
+	
 	synthetic_refinery = {
 		show_on_map = 1
 	    base_cost = 16000
@@ -179,10 +212,11 @@ buildings = {
 			}
 		}
 	}
+
 	fuel_silo = {
 		show_on_map = 1
 		base_cost = 3000
-		icon_frame = 15				 
+		icon_frame = 14				 
 		#max_level = 1
 		
 		value = 5
@@ -200,27 +234,12 @@ buildings = {
 			shares_slots = yes
 		}
 	}
-	synthetic_rubber_refinery = {
-		show_on_map = 1
-		base_cost = 14000
-		icon_frame = 11
-		refinery = yes
-		local_resources_rubber = 15	 
-		value = 5
-		infrastructure_construction_effect = yes
-		damage_factor = 0.05
-		level_cap = {
-			shares_slots = no
-			state_max = 3
-		}
 	
-	}
-
 	radar_station = {
 		show_on_map = 1
 		base_cost = 2800
 		per_level_extra_cost = 500
-		icon_frame = 12
+		icon_frame = 11
 		radar = yes
 	
 		damage_factor = 0.5
@@ -231,21 +250,24 @@ buildings = {
 			state_max = 5
 		}
 	}
+
 	rocket_site = {
 		show_on_map = 1
-		base_cost = 3000
+		base_cost = 8000
 		icon_frame = 12
 		rocket_production = 0
 		rocket_launch_capacity = 1
+		hide_if_missing_tech = yes
 		value = 1
 		tags = {}
+		
 		infrastructure_construction_effect = yes
 		disabled_in_dmz = yes
 		spawn_point = rocket_site_spawn
 		level_cap = {
-			state_max = 5
-			shares_slots = yes
-			exclusive_with = mega_gun_emplacement
+			state_max = 3
+			shares_slots = no
+			
 		}
 	}
 
@@ -257,7 +279,7 @@ buildings = {
 		}
 		spawn_point = nuclear_reactor_spawn
 		show_on_map = 1
-		base_cost = 60000
+		base_cost = 50000
 		icon_frame = 13
 		nuclear_reactor = yes
 		value = 10
@@ -279,36 +301,75 @@ buildings = {
 			group_by = reactors
 		}
 	}
-	nuclear_reactor_heavy_water = {
-		hide_if_missing_tech = yes
-		missing_tech_loc = { 
-			localization_key = SP_BUILDING_MISSING_PROJECT
-			PROJECT = sp_nuclear_reactor
-		}
-		spawn_point = nuclear_reactor_spawn
+	naval_facility = {
 		show_on_map = 1
-		base_cost = 40000
-		icon_frame = 13
-		nuclear_reactor = yes
-		value = 10
+		base_cost = 25000
+		per_controlled_building_extra_cost = 10000
+		damage_factor = 0 # This building can't be damaged by regular strat bombing
+		icon_frame = 18
+		value = 1
+		spawn_point = naval_base_spawn 
+		specialization = { specialization_naval }
+		tags = { facility }
+		disabled_in_dmz = yes
+		need_supply = yes
+		need_detection = yes
+		detecting_intel_type = navy
+		only_display_if_exists = yes
+		special_icon = GFX_specialization_naval
 		infrastructure_construction_effect = yes
-
-		country_modifiers = {
-			modifiers = {
-				nuclear_production_factor = 2
-				sp_nuclear_bomb_speed_factor = 0.03
-				sp_thermo_nuclear_bomb_speed_factor = 0.03
-				thermonuclear_production_factor = 1
-			}
+		level_cap = {
+			province_max = 1
+			state_max = 1
+			group_by = special_project_facility
 		}
-
+		only_costal = yes
+	}
+	stronghold_network = {
+		show_on_map = 1
+		has_destroyed_mesh = yes
+		base_cost = 5000
+		disabled_in_dmz = yes
+		icon_frame = 23
+		value = 1
+		infrastructure_construction_effect = yes
 		level_cap = {
 			state_max = 1
 			shares_slots = yes
-			group_by = reactors
 		}
+		hide_if_missing_tech = yes
+		show_modifier = yes
+		state_modifiers = {
+			local_supplies_for_controller = 0.25
+			enemy_attrition = 0.05
+			state_production_speed_bunker_factor = 0.5
+			state_production_speed_coastal_bunker_factor = 0.5
+			army_speed_factor_for_controller = 0.1
+			enemy_army_bonus_air_superiority_factor = -0.25
+			enemy_army_speed_factor =-0.1
+			enemy_local_supplies = -0.25
+			dig_in_speed = 5
+		}		
 	}
-	
+	mega_gun_emplacement = {
+		dlc_allowed = { has_dlc = Gotterdammerung }
+		hide_if_missing_tech = yes
+		show_on_map = 1
+		base_cost = 20000
+		damage_factor = 0 # This building can't be damaged by regular strat bombing
+		icon_frame = 24
+		value = 1
+		disabled_in_dmz = yes
+		infrastructure_construction_effect = yes
+		gun_emplacement = yes
+		hide_if_missing_tech = yes
+		spawn_point = rocket_site_spawn
+		level_cap = {
+			state_max = 1
+			shares_slots = yes
+		}
+		#Building utilizes equipment "explosive_ammo_equipment" as ammunition for the air mission barrage
+	}
 	commercial_nuclear_reactor = {
 		hide_if_missing_tech = yes
 		missing_tech_loc = { 
@@ -317,7 +378,7 @@ buildings = {
 		}
 		spawn_point = nuclear_reactor_spawn
 		show_on_map = 1
-		base_cost = 55000
+		base_cost = 60000
 		icon_frame = 27
 		#nuclear_reactor = yes
 		value = 10
@@ -327,7 +388,8 @@ buildings = {
 			modifiers = {
 				nuclear_production_factor = 3
 				thermonuclear_production_factor = 2
-				#consumer_goods_factor = -0.05
+				industrial_capacity_dockyard = 0.05
+				industrial_capacity_factory = 0.05
 			}
 		}
 
@@ -343,10 +405,11 @@ buildings = {
 			group_by = reactors
 		}
 	}
+
 	nuclear_facility = {
 		show_on_map = 1
-		base_cost = 15000
-		per_controlled_building_extra_cost = 5000
+		base_cost = 40000
+		per_controlled_building_extra_cost = 10000
 		damage_factor = 0 # This building can't be damaged by regular strat bombing
 		icon_frame = 20
 		value = 1
@@ -357,18 +420,8 @@ buildings = {
 		tags = { facility }
 		disabled_in_dmz = yes
 		only_display_if_exists = yes
+		infrastructure_construction_effect = yes
 		special_icon = GFX_specialization_nuclear
-		#state_damage_modifier = { conscription_exemptions_granted }
-		#construction_speed_factor = {
-		#	trigger = {
-		#		OR = {
-		#			state = 56
-		#			state = 59
-		#			state = 64
-		#		}
-		#	}
-		#	factor = 10
-		#}
 		level_cap = {
 			province_max = 1
 			state_max = 1
@@ -378,12 +431,13 @@ buildings = {
 
 	air_facility = {
 		show_on_map = 1
-		base_cost = 12000
-		per_controlled_building_extra_cost = 5000
+		base_cost = 25000
+		per_controlled_building_extra_cost = 10000
 		damage_factor = 0 # This building can't be damaged by regular strat bombing
 		icon_frame = 17
 		value = 1
 		spawn_point = special_project_facility_spawn 
+		infrastructure_construction_effect = yes
 		specialization = { specialization_air}
 		tags = { facility }
 		need_supply = yes
@@ -401,19 +455,20 @@ buildings = {
 
 	land_facility = {
 		show_on_map = 1
-		base_cost = 12000
-		per_controlled_building_extra_cost = 5000
+		base_cost = 25000
+		per_controlled_building_extra_cost = 10000
 		damage_factor = 0 # This building can't be damaged by regular strat bombing
 		icon_frame = 19
 		value = 1
 		spawn_point = special_project_facility_spawn 
+		infrastructure_construction_effect = yes
 		specialization = { specialization_land }
 		tags = { facility }
 		disabled_in_dmz = yes
 		need_supply = yes
 		need_detection = yes
 		detecting_intel_type = army
-		only_display_if_exists = yes
+		only_display_if_exists = no
 		special_icon = GFX_specialization_land
 		level_cap = {
 			province_max = 1
@@ -519,54 +574,6 @@ buildings = {
 			
 		}
 	}
-	supply_node = {
-		show_on_map = 1
-		base_cost = 14000
-	
-		disabled_in_dmz = yes
-		icon_frame = 16
-		
-		centered = yes
-		supply_node = yes
-		infrastructure_construction_effect = yes
-		damage_factor = 0.1
-		allied_build = yes
-		always_shown = yes
-		level_cap = {
-			province_max = 1
-		}
-	}
-	rail_way = {
-		base_cost = 600
-		per_level_extra_cost = 150
-		damage_factor = 0.05
-		
-		disabled_in_dmz = yes
-		infrastructure_construction_effect = yes
-		icon_frame = 17
-		level_cap = {
-			province_max = 1
-		}
-	}
-	mega_gun_emplacement = {
-		dlc_allowed = { has_dlc = Gotterdammerung }
-		hide_if_missing_tech = yes
-		show_on_map = 1
-		base_cost = 20000
-		damage_factor = 0 # This building can't be damaged by regular strat bombing
-		icon_frame = 24
-		value = 1
-		disabled_in_dmz = yes
-		infrastructure_construction_effect = yes
-		gun_emplacement = yes
-		spawn_point = rocket_site_spawn
-		level_cap = {
-			state_max = 1
-			shares_slots = yes
-			exclusive_with = rocket_site
-		}
-		#Building utilizes equipment "explosive_ammo_equipment" as ammunition for the air mission barrage
-	}
 }
 
 spawn_points = {
@@ -603,4 +610,3 @@ spawn_points = {
 		disable_auto_nudging = yes
 	}
 }
-#EOF#
