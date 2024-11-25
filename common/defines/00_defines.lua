@@ -724,10 +724,10 @@ NRaids = {
 	NUCLEAR_BOMB_PRODUCTION_SCALE = 2555.0,					-- +1 nuclear_production gives 1 nuke per 7 years
 	THERMONUCLEAR_BOMB_PRODUCTION_SCALE = 2555.0,			-- +1 nuclear_production gives 1 nuke per 7 years
 
-	NUCLEAR_BOMB_MIN_DAMAGE_PERCENT = 0.1,					-- Minimum damage from nukes as a percentage of current strength/organisation
-	NUCLEAR_BOMB_MAX_DAMAGE_PERCENT = 0.9,					-- Minimum damage from nukes as a percentage of current strength/organisation
+	NUCLEAR_BOMB_MIN_DAMAGE_PERCENT = 0.6,					-- Minimum damage from nukes as a percentage of current strength/organisation
+	NUCLEAR_BOMB_MAX_DAMAGE_PERCENT = 0.8,					-- Minimum damage from nukes as a percentage of current strength/organisation
 	THERMONUCLEAR_BOMB_MIN_DAMAGE_PERCENT = 0.6,			-- Minimum damage from nukes as a percentage of current strength/organisation
-	THERMONUCLEAR_BOMB_MAX_DAMAGE_PERCENT = 0.9,			-- Minimum damage from nukes as a percentage of current strength/organisation
+	THERMONUCLEAR_BOMB_MAX_DAMAGE_PERCENT = 0.8,			-- Minimum damage from nukes as a percentage of current strength/organisation
 	NUCLEAR_RAID_CATEGORY_NAME = "nuclear_raids",           -- The raid category to activate when clicking on the "nuclear" mission button for a rocket
 
 	ARMY_TRANSFER_MOVE_SAFELY = true,						-- Whether to move safely when transferring divisions to the raid source
