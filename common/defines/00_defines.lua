@@ -1875,7 +1875,7 @@ NNavy = {
 	--gtd
 	UNDERWAY_REPLENISHMENT_PRIORITY = 7,							-- Default convoy priority for underway replenishment
 	UNDERWAY_REPLENISHMENT_RANGE_FACTOR = 0.4,			-- bonus factor applied to task force's range when underway replenishment is activated (e.g. 0.2 means +20%)
-	UNDERWAY_REPLENISHMENT_CONVOY_COST_PER_FUEL = 0.35,	-- Cost in convoys for underway replenishment multiplied by max daily fuel consumption (rounded up)
+	UNDERWAY_REPLENISHMENT_CONVOY_COST_PER_FUEL = 1,	-- Cost in convoys for underway replenishment multiplied by max daily fuel consumption (rounded up)
 	MIN_SHIPS_FOR_HIGHER_SHIP_RATIO_PENALTY = 0,    -- the minimum fleet size in ships that a fleet must be before having the large fleet penalty applied to them
 
 
