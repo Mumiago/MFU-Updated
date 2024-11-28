@@ -1558,12 +1558,12 @@ NAir = {
 	AIR_COMBAT_FINAL_DAMAGE_SCALE = 0.4,               -- % how many max disrupted only planes are alloed to die in a single combat
 	AIR_COMBAT_FINAL_DAMAGE_PLANES = 50,                -- scaling/control for when only very few planes exist to stop roundoff issues
 	AIR_COMBAT_FINAL_DAMAGE_PLANES_FACTOR = 0.1,
-	AA_INDUSTRY_AIR_DAMAGE_FACTOR = -0.09,				-- 5x levels = 60% defense from bombing
+	AA_INDUSTRY_AIR_DAMAGE_FACTOR = -0.08,				-- 5x levels = 60% defense from bombing
 	NAVAL_STRIKE_DETECTION_BALANCE_FACTOR = 0.7,		-- Value used to scale the surface_visibility stats to balance the gameplay, so 100% detection chance still won't spam the strikes.
 	NAVAL_RECON_DETECTION_BALANCE_FACTOR = 0.7,			-- Value used to scale the surface_visibility stats to balance the gameplay, so 100% detection chance still won't spam spotting.
 	LEND_LEASED_EQUIPMENT_EXPERIENCE_GAIN = 0.5,		-- Value used for equipment
-	ANTI_AIR_PLANE_DAMAGE_FACTOR = 0.09,					-- Anti Air Gun Damage factor
-	ANTI_AIR_PLANE_DAMAGE_CHANCE = 0.26,					-- Anti Air Gun hit chance
+	ANTI_AIR_PLANE_DAMAGE_FACTOR = 0.07,					-- Anti Air Gun Damage factor
+	ANTI_AIR_PLANE_DAMAGE_CHANCE = 0.22,					-- Anti Air Gun hit chance
 	ANTI_AIR_ATTACK_TO_DAMAGE_REDUCTION_FACTOR = 0.75,	-- Balancing value to convert equipment stat anti_air_attack to the damage reduction modifier apply to incoming air attacks against units with AA.
 	ANTI_AIR_MAXIMUM_DAMAGE_REDUCTION_FACTOR = 0.7,	-- Maximum damage reduction factor applied to incoming air attacks against units with AA.
 	AIR_DEPLOYMENT_DAYS = 0,							-- Days to deploy one air wing
@@ -1841,9 +1841,9 @@ NSupply = {
 	STORED_SUPPLY_CONSUMPTION_RATE_FACTOR = 1,				--Multiplies consumption rate of stored supply (more/less easement)
 },
 NRailwayGun = {
-	RAILWAY_GUN_POSSIBLE_RANGES = { 30, 15, 45 },	-- Possible values for railway gun range in pixel.
+	RAILWAY_GUN_POSSIBLE_RANGES = { 20, 28, 45 },	-- Possible values for railway gun range in pixel.
 
-	RAILWAY_GUN_RANGE = 22,							-- The range of railway guns in pixels
+	RAILWAY_GUN_RANGE = 24,							-- The range of railway guns in pixels
 	ATTACK_TO_FORTS_MODIFIER_FACTOR = 0.8,		-- Forts modifier is calculated by multiplying railway gun attack value with this and dividing by 100
 	ATTACK_TO_ENTRENCHMENT_MODIFIER_FACTOR = 1.43,		-- Entrenchment modifier is calculated by multiplying railway gun attack value with this and dividing by 100
 	ATTACK_TO_BOMBARDMENT_MODIFIER_FACTOR = 0.2,	-- Bombardment modifier is calculated by multiplying railway gun attack value with this and dividing by 100
@@ -2354,7 +2354,7 @@ NNavy = {
 	
 	SHIP_TO_FLEET_ANTI_AIR_RATIO									= 0.02,	-- total sum of fleet's anti air will be multiplied with this ratio and added to calculations anti-air of individual ships while air damage reduction
 	
-	ANTI_AIR_POW_ON_INCOMING_AIR_DAMAGE								= 0.8,	-- received air damage is calculated using following: 1 - ( (ship_anti_air + fleet_anti_air * SHIP_TO_FLEET_ANTI_AIR_RATIO )^ANTI_AIR_POW_ON_INCOMING_AIR_DAMAGE ) * ANTI_AIR_MULT_ON_INCOMING_AIR_DAMAGE
+	ANTI_AIR_POW_ON_INCOMING_AIR_DAMAGE								= 0.76,	-- received air damage is calculated using following: 1 - ( (ship_anti_air + fleet_anti_air * SHIP_TO_FLEET_ANTI_AIR_RATIO )^ANTI_AIR_POW_ON_INCOMING_AIR_DAMAGE ) * ANTI_AIR_MULT_ON_INCOMING_AIR_DAMAGE
 	ANTI_AIR_MULT_ON_INCOMING_AIR_DAMAGE							= 0.05,
 	
 	MAX_ANTI_AIR_REDUCTION_EFFECT_ON_INCOMING_AIR_DAMAGE 			= 0.85,	-- damage reduction for incoming air attacks is clamped to this value at maximum.
