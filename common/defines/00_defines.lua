@@ -681,10 +681,10 @@ NProject = {
 	PROJECT_CAPTURE_DIMINISHING_RETURN = 0.6,          -- Reduced amount of gain when capturing a facility with a project you already gained. Will apply the factor each time a capture occurs. 0.6 means a reduction of 60% on next project capture.
 	BASIC_RESEARCH_TECHNOLOGY_BONUS_FACTOR = 0.02,     -- Bonus research factor applied to technologies per scientist skill level when performing basic research in a matching facility.
 	BASIC_RESEARCH_TECHNOLOGY_BONUS_DIMINISHING_RETURN_FACTOR = 0.5, -- Diminishing return on BASIC_RESEARCH_TECHNOLOGY_BONUS_FACTOR for each extra scientist performing basic research for multiple facilities.
-	BREAKTHROUGH_DAILY_TECHNOLOGY_GAIN = 12,           -- Amount in 1/100th percentage. E.g. 25 = 0.25%
-	BREAKTHROUGH_DAILY_SCIENTIST_SKILL_GAIN = 5,       -- Amount in 1/100th percentage gained per skill when doing basic research. E.g. 5 = 0.05% per skill level.
+	BREAKTHROUGH_DAILY_TECHNOLOGY_GAIN = 8,           -- Amount in 1/100th percentage. E.g. 25 = 0.25%
+	BREAKTHROUGH_DAILY_SCIENTIST_SKILL_GAIN = 2,       -- Amount in 1/100th percentage gained per skill when doing basic research. E.g. 5 = 0.05% per skill level.
 	BREAKTHROUGH_DAILY_ROCKET_SITE_GAIN = 1,		   -- Amount in 1/100th percentage gained per rocket site level. E.g. 1 = 0.01% per rocket site level.
-	BREAKTHROUGH_DAILY_NUCLEAR_REACTOR_GAIN = 1,       -- Amount in 1/100th percentage gained per nuclear reactor. E.g. 2 = 0.02% per nuclear reactor.
+	BREAKTHROUGH_DAILY_NUCLEAR_REACTOR_GAIN = 15,       -- Amount in 1/100th percentage gained per nuclear reactor. E.g. 2 = 0.02% per nuclear reactor.
 	BREAKTHROUGH_GAIN_ANIMATION_SPEED_MAX = 1.0,	   -- The animation for gaining breakthrough progress is a ratio of this value and current daily gain.
 },
 NRaids = {
