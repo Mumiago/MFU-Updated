@@ -2387,6 +2387,11 @@ MAN_economic_retadism = {
 	#
 	##################################
 	##################################
+	#
+	#		building speed normal
+	#
+	##################################
+	##################################
 		MAN_speed = {
 			icon = GFX_decision_eng_trade_unions_support
 					available = { 
@@ -2397,20 +2402,19 @@ MAN_economic_retadism = {
 
 						num_of_civilian_factories_available_for_projects > 1
 						
-
-						NOT =  {
-							has_country_flag = workeers_trust_flag			
-						}
-	
 						check_variable = {
-							compare = greater_than_or_equals
-							value = 3000
 							var = logs
+							   value = 1500
+							compare = greater_than_or_equals
 						}
 					 }
 	
 					visible = {
 						NOT= {has_completed_focus = MAN_import_of_labor_for_construction}	
+
+						check_variable = {
+							workeers_CSS < 14
+						}
 					}
 					priority = 3
 
@@ -2421,40 +2425,46 @@ MAN_economic_retadism = {
 					custom_cost_trigger = {
 						check_variable = {
 							var = logs
-							   value = 3000
+							   value = 1500
 							compare = greater_than_or_equals
 						}
 					}
-					custom_cost_text = MAN_3000_Volunteers_2 
-					fire_only_once = yes
+					custom_cost_text = MAN_1500_Volunteers_2 
+					fire_only_once = no
 			
-					days_remove = 120
+					days_remove = 70
 
 					complete_effect = {
 
+						add_to_variable = {
+							var = workeers_CSS
+							value = 1
+					 	}
+
+						set_country_flag = { flag = MAN_politics value = 1 days = 70}
+
 					   subtract_from_variable = {
 						var = logs
-						value = 3000
+						value = 1500
 					   }
 
 					}
 
 					remove_effect = {					
 						custom_effect_tooltip = MAN_recruitable_tt0
-						
 						add_to_variable = {
 							var = MAN_military_industry_dm_production_speed_buildings_factor
-							value =0.05
-							tooltip = buildings_build_speed_factor_tooltip
+							value =0.01
+							tooltip = MAN_military_industry_dm_production_speed_buildings_factor
 						}
 
+						custom_effect_tooltip = spacers
+						custom_effect_tooltip = limit_cst_tooltip
+						custom_effect_tooltip = MANspace
+						custom_effect_tooltip = Check_add_3
 					}
 			}
-	##################################
-	#
-	#		building speed for right
-	#
-	##################################
+
 	MAN_speed_long = {
 		icon = GFX_decision_eng_trade_unions_support
 			available = { 
@@ -2462,24 +2472,21 @@ MAN_economic_retadism = {
 					OR={
 						MAN ={has_full_control_of_state = 716}
 						any_allied_country ={has_full_control_of_state = 716}
-						}
-					NOT =  {
-						has_country_flag = workeers_trust_flag			
-						}
-			
+					}
+
 						check_variable = {
-						workeers_flag > 1
-						}
-		
-						check_variable = {
-							compare = greater_than_or_equals
-							value = 3000
 							var = logs
+							   value = 2500
+							compare = greater_than_or_equals
 						}
-			
 					} 
 			visible = {
 				has_completed_focus = MAN_import_of_labor_for_construction	
+
+				check_variable = {
+					workeers_CSS < 14
+				}
+
 			}
 			priority = 3
 			modifier = {
@@ -2489,21 +2496,28 @@ MAN_economic_retadism = {
 			custom_cost_trigger = {
 				check_variable = {
 					var = logs
-					   value = 3000
+					   value = 2500
 					compare = greater_than_or_equals
 				}
 			}
-			custom_cost_text = MAN_2000_Volunteers_2 
+			custom_cost_text = MAN_2250_Volunteers_2 
 			fire_only_once = no
 	
-			days_remove = 120
+			days_remove = 70
 			days_re_enable = 0
 
 			complete_effect = {	
 
+				add_to_variable = {
+					var = workeers_CSS
+					value = 1
+				}
+
+				set_country_flag = { flag = MAN_politics value = 1 days = 70}
+
 			   subtract_from_variable = {
 				var = logs
-				value = 3000
+				value = 2250
 			   }
 			}
 
@@ -2512,11 +2526,18 @@ MAN_economic_retadism = {
 
 			set_variable = {
 				var = MAN_military_industry_dm_production_speed_buildings_factor
-				value = 0.075
-				tooltip = buildings_build_speed_factor_tooltip
+				value = 0.02
+				tooltip = MAN_military_industry_dm_production_speed_buildings_factor
 			}
-			}
+			custom_effect_tooltip = spacers
+			custom_effect_tooltip = limit_cst_tooltip
+		}
 	}
+	##################################
+	#
+	#		building speed for right
+	#
+	##################################
 	##################################
 	#
 	#		millies civiies forte note
