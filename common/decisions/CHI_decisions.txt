@@ -2909,7 +2909,7 @@ CHI_80_division_plan = {
 				}
 
 			}
-			has_equipment = { infantry_equipment > 9999 }
+			#has_equipment = { infantry_equipment > 9999 }
 			
 		}
 
@@ -2928,7 +2928,7 @@ CHI_80_division_plan = {
 				state = 754
 				disband = yes #will refund equipment and manpower
 			}
-			add_equipment_to_stockpile = { type = infantry_equipment amount = -10000 producer = CHI }
+			#add_equipment_to_stockpile = { type = infantry_equipment amount = -10000 producer = CHI }
 		}
 		remove_effect = {
 			custom_effect_tooltip = CHI_spawn_divs_here_tt
@@ -2975,15 +2975,15 @@ CHI_80_division_plan = {
 			random_owned_controlled_state = {
 				prioritize = { 754 }
 				create_unit = {
-					division = "division_template = \"Reorganized Division\" start_experience_factor = 0.6 start_equipment_factor = 1.0" 
+					division = "division_template = \"Reorganized Division\" start_experience_factor = 0.6 start_equipment_factor = 0.5" 
 					owner = CHI
 				}
 				create_unit = {
-					division = "division_template = \"Reorganized Division\" start_experience_factor = 0.6 start_equipment_factor = 1.0" 
+					division = "division_template = \"Reorganized Division\" start_experience_factor = 0.6 start_equipment_factor = 0.5" 
 					owner = CHI
 				}
 				create_unit = {
-					division = "division_template = \"Reorganized Division\" start_experience_factor = 0.6 start_equipment_factor = 1.0" 
+					division = "division_template = \"Reorganized Division\" start_experience_factor = 0.6 start_equipment_factor = 0.5" 
 					owner = CHI
 				}
 			}
@@ -3907,14 +3907,14 @@ CHI_roads_of_life = {
 			
 			
 			CHI = {
-				add_equipment_to_stockpile = { type = infantry_equipment_1 amount = 5500 producer = GER }
-				add_equipment_to_stockpile = { type = horse_equipment amount = 1500 producer = GER }
-				add_equipment_to_stockpile = { type = artillery_equipment_1 amount = 250 producer = GER }
-				add_equipment_to_stockpile = { type = support_equipment amount = 250 producer = GER }
-				add_equipment_to_stockpile = { type = radio_equipment amount = 200 producer = GER }
-				add_equipment_to_stockpile = { type = anti_air_equipment amount = 60 producer = GER }
-				add_equipment_to_stockpile = { type = motorized_equipment amount = 200 producer = GER }
-				add_equipment_to_stockpile = { type = light_tank_chassis_1936 amount = 100	 producer = CHI }
+				add_equipment_to_stockpile = { type = infantry_equipment_1 amount = 6500 producer = GER }
+				add_equipment_to_stockpile = { type = horse_equipment amount = 2000 producer = GER }
+				add_equipment_to_stockpile = { type = artillery_equipment_1 amount = 350 producer = GER }
+				add_equipment_to_stockpile = { type = support_equipment amount = 300 producer = GER }
+				add_equipment_to_stockpile = { type = radio_equipment amount = 300 producer = GER }
+				add_equipment_to_stockpile = { type = anti_air_equipment amount = 80 producer = GER }
+				add_equipment_to_stockpile = { type = motorized_equipment amount = 250 producer = GER }
+				add_equipment_to_stockpile = { type = light_tank_chassis_1936 amount = 150	 producer = CHI }
 			}
 			GER = {
 				add_offsite_building = {
@@ -3934,7 +3934,7 @@ CHI_roads_of_life = {
 		}
 		highlight_states = {
 			highlight_provinces = { 
-				1553
+				1553 1116 8010
 			
 			}
 		}
@@ -4548,13 +4548,15 @@ CHI_roads_of_life = {
 			RAJ = {
 				NOT = {
 					controls_province = 1553
+					controls_province = 1116
+					controls_province = 8010
 				}
 			}
 			
 		}
 		highlight_states = {
 			highlight_provinces = { 
-				1553
+				1553 1116 8010
 			
 			}
 		}
@@ -4562,7 +4564,12 @@ CHI_roads_of_life = {
 		activation = {
 			has_completed_focus = CHI_expand_the_hump
 			RAJ = {
-				controls_province = 1553
+				OR = {
+					controls_province = 1553
+					controls_province = 1116
+					controls_province = 8010
+				}
+				
 			}	
 		}
 
@@ -4686,7 +4693,11 @@ CHI_roads_of_life = {
 				if = {
 					limit = {
 						RAJ = {
-							controls_province = 1553
+							OR = {
+								controls_province = 1553
+								controls_province = 1116
+								controls_province = 8010
+							}
 						}
 					}
 					activate_mission = CHI_the_hump_decision
@@ -5549,41 +5560,22 @@ CHI_roads_of_life = {
 		icon = ger_military_buildup
 
 		available = {
-			OR = {
-				823 = {
-					OR = {
-						is_controlled_by = JAP 
-						is_controlled_by = MAN 
-						is_controlled_by = RCC 
-					}
-				}
-				432 = {
-					OR = {
-						is_controlled_by = JAP 
-						is_controlled_by = MAN 
-						is_controlled_by = RCC 
-					}
-				}
+			RAJ = {
+				has_capitulated = yes
 			}
 			
 		}	
 		activation = {
 			has_completed_focus = CHI_establish_burma_road
-			432 = {
-				is_controlled_by = RAJ 
-			}
-			823 = {
-				is_controlled_by = RAJ 
-			}
 			has_global_flag = CHI_ledo_road_built
+			RAJ = {
+				has_capitulated = no
+			}
 		
 					
 		}
 		highlight_states = {
-			highlight_state_targets = {
-				state = 823
-				state = 432
-			}
+			
 		}
 
 		visible = {
@@ -5709,11 +5701,8 @@ CHI_roads_of_life = {
 			hidden_effect = {
 				if = {
 					limit = {
-						432 = {
-							is_controlled_by = RAJ 
-						}
-						823 = {
-							is_controlled_by = RAJ 
+						RAJ = {
+							has_capitulated = no
 						}
 						has_global_flag = CHI_ledo_road_built
 						

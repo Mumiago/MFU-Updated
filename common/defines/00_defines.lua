@@ -1091,7 +1091,7 @@ NMilitary = {
 	LAND_COMBAT_STR_ARMOR_DEFLECTION_FACTOR = 0.60, -- damage reduction if armor outclassing enemy
 	LAND_COMBAT_ORG_ARMOR_DEFLECTION_FACTOR = 0.60, -- damage reduction if armor outclassing enemy
 	LAND_COMBAT_COLLATERAL_FACTOR = 0.002,		   -- Factor to scale collateral damage to infra and forts with.
-	LAND_COMBAT_FORT_DAMAGE_CHANCE = 18,		-- chance to get a hit to damage on forts. (out of 100)
+	LAND_COMBAT_FORT_DAMAGE_CHANCE = 16,		-- chance to get a hit to damage on forts. (out of 100)
 	ATTRITION_DAMAGE_ORG = 0.1,					   -- damage from attrition to Organisation
 	ATTRITION_EQUIPMENT_LOSS_CHANCE = 0.01,		   -- Chance for loosing equipment when suffer attrition. Scaled up the stronger attrition is. Then scaled down by equipment reliability.
 	ATTRITION_EQUIPMENT_PER_TYPE_LOSS_CHANCE = 0.35, -- Chance for loosing equipment when suffer attrition. Scaled up the stronger attrition is. Then scaled down by equipment reliability.
@@ -1518,7 +1518,7 @@ NAir = {
 	PORT_STRIKES_DELAY_MULTIPLIER = 6,					-- multplies HOURS_DELAY_AFTER_EACH_COMBAT if port strikes																								  
 	CARRIER_HOURS_DELAY_AFTER_EACH_COMBAT = 6,          -- how often carrier planes do battle inside naval combat
 	NAVAL_STRIKE_TARGETTING_TO_AMOUNT = 0.3,			-- Balancing value to convert the naval_strike_targetting equipment stats to chances of how many airplanes managed to do successfull strike.
-	NAVAL_STRIKE_DAMAGE_TO_STR = 1.8,					-- Balancing value to convert damage ( nanaval_strike_attackval_strike_attack * hits ) to Strength reduction.
+	NAVAL_STRIKE_DAMAGE_TO_STR = 1.6,					-- Balancing value to convert damage ( nanaval_strike_attackval_strike_attack * hits ) to Strength reduction.
 	NAVAL_STRIKE_DAMAGE_TO_ORG = 1,					-- Balancing value to convert damage ( naval_strike_attack * hits ) to Organisation reduction.
 	NAVAL_STRIKE_CARRIER_MULTIPLIER = 2.5,              -- damage bonus when planes are in naval combat where their carrier is present (and can thus sortie faster and more effectively)																																													 
 	NAVAL_STRIKE_AIR_VS_AIR_PASS_CHANCE = 0.9,			-- Balancing value to control
@@ -1995,7 +1995,7 @@ NNavy = {
 	COMBAT_TORPEDO_CRITICAL_CHANCE = 0.12,							-- chance for critical hit from torpedo.
 	COMBAT_TORPEDO_CRITICAL_DAMAGE_MULT = 2.0,						-- multiplier to damage when got critical hit from torpedo. (Critical hits are devastating as usualy torpedo_attack are pretty high base values).
 	
-	COMBAT_DAMAGE_TO_STR_FACTOR = 0.45,								-- casting damage value to ship strength multiplier. Use it ot balance the game difficulty.
+	COMBAT_DAMAGE_TO_STR_FACTOR = 0.42,								-- casting damage value to ship strength multiplier. Use it ot balance the game difficulty.
 	COMBAT_DAMAGE_TO_ORG_FACTOR = 0.25,							-- casting damage value to ship organisation multiplier. Use it to balance the game difficulty.
 	
 	NAVY_MAX_XP = 100,
@@ -2354,10 +2354,10 @@ NNavy = {
 	
 	SHIP_TO_FLEET_ANTI_AIR_RATIO									= 0.02,	-- total sum of fleet's anti air will be multiplied with this ratio and added to calculations anti-air of individual ships while air damage reduction
 	
-	ANTI_AIR_POW_ON_INCOMING_AIR_DAMAGE								= 0.76,	-- received air damage is calculated using following: 1 - ( (ship_anti_air + fleet_anti_air * SHIP_TO_FLEET_ANTI_AIR_RATIO )^ANTI_AIR_POW_ON_INCOMING_AIR_DAMAGE ) * ANTI_AIR_MULT_ON_INCOMING_AIR_DAMAGE
+	ANTI_AIR_POW_ON_INCOMING_AIR_DAMAGE								= 0.8,	-- received air damage is calculated using following: 1 - ( (ship_anti_air + fleet_anti_air * SHIP_TO_FLEET_ANTI_AIR_RATIO )^ANTI_AIR_POW_ON_INCOMING_AIR_DAMAGE ) * ANTI_AIR_MULT_ON_INCOMING_AIR_DAMAGE
 	ANTI_AIR_MULT_ON_INCOMING_AIR_DAMAGE							= 0.05,
 	
-	MAX_ANTI_AIR_REDUCTION_EFFECT_ON_INCOMING_AIR_DAMAGE 			= 0.85,	-- damage reduction for incoming air attacks is clamped to this value at maximum.
+	MAX_ANTI_AIR_REDUCTION_EFFECT_ON_INCOMING_AIR_DAMAGE 			= 0.8,	-- damage reduction for incoming air attacks is clamped to this value at maximum.
 	
 	CHANCE_TO_DAMAGE_PART_ON_CRITICAL_HIT							= 0.1,	-- the game will roll between 0-1 and will damage a random part if below this val on naval critical hits
 	CHANCE_TO_DAMAGE_PART_ON_CRITICAL_HIT_FROM_AIR					= 0.1,	-- the game will roll between 0-1 and will damage a random part if below this val on air critical hits
