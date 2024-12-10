@@ -136,17 +136,8 @@ technologies = {
 			}
 		}
 		
-		artillery = {
-			soft_attack = 0.1
-		}
-		artillery_brigade = {
-			soft_attack = 0.2
-		}
-		mot_artillery_brigade = {
-			soft_attack = 0.2
-		}
-		category_self_propelled_artillery = {
-			soft_attack = 0.1
+		category_heavy_artillery = {
+		   soft_attack = 0.3
 		}
 
 		force_use_small_tech_layout = yes
@@ -238,13 +229,51 @@ technologies = {
 		on_research_complete = {
 			custom_effect_tooltip = sonar_advice_tt
 		}
+		path = {
+			leads_to_tech = advanced_sonar
+			research_cost_coeff = 1
+		}
 		research_cost = 1
 
-		start_year = 1935
+		start_year = 1936
 
 		folder = {
 			name = electronics_folder
-			position = { x = 3 y = 0 }
+			position = { x = 12 y = 0 }
+		}
+
+		ai_will_do = {
+			factor = 2
+
+			modifier = {
+				factor = 4
+				has_war_with = GER
+			}
+			modifier = {
+				factor = 2
+				anti_submarine_strategy_required_trigger = yes
+			}
+		}
+
+		categories = {
+			naval_equipment
+			asw_tech
+		}
+	}
+	advanced_sonar = {
+		enable_equipment_modules = {
+			ship_sonar_3
+		}
+		on_research_complete = {
+			custom_effect_tooltip = sonar_advice_tt
+		}
+		research_cost = 2
+
+		start_year = 1940
+
+		folder = {
+			name = electronics_folder
+			position = { x = 12 y = 4 }
 		}
 
 		ai_will_do = {
@@ -309,6 +338,7 @@ technologies = {
 			electronics
 		}
 	}
+#signal company+recon buff
 	mobile_link_stations = {
 
 		coordination_bonus = 0.01
@@ -450,7 +480,7 @@ technologies = {
 			max_organisation = 5
 		}
 		
-		research_cost = 0.8
+		research_cost = 2
 		start_year = 1940
 		folder = {
 			name = electronics_folder
@@ -465,17 +495,22 @@ technologies = {
 			factor = 8
 		}
 	}
+#Airforce-Army Communication Integration
+#ground support and arty attack
 	ground_air_comms = {
-		
-		category_all_infantry = {
-			max_organisation = 5
-		}
-		category_cavalry = {
-			max_organisation = 5
+		coordination_bonus = 0.01			
+		category_line_artillery = {
+			breakthrough = 0.15
+			defense = 0.075
+			soft_attack = 0.025
+			hard_attack = 0.025
+			need = {
+			   radio_equipment = 1
+			}
 		}
 
-		research_cost = 0.8
-		start_year = 1944
+		research_cost = 2
+		start_year = 1940
 
 		path = {
 			leads_to_tech = improved_corps_command_network
@@ -491,7 +526,7 @@ technologies = {
 		}
 	}
 	improved_corps_command_network = {
-		
+		coordination_bonus = 0.01			
 		category_all_infantry = {
 			max_organisation = 5
 		}
@@ -499,8 +534,8 @@ technologies = {
 			max_organisation = 5
 		}
 
-		research_cost = 0.8
-		start_year = 1944
+		research_cost = 2
+		start_year = 1942
 
 		
 		folder = {
@@ -616,6 +651,7 @@ technologies = {
 			electronics
 		}
 	}
+###+radio equipment reliability?
 	frequency_modulation = {
 		special_project_specialization = {  specialization_nuclear }		
 		
@@ -935,7 +971,8 @@ technologies = {
 		}
 	}	
 	mclos_control_link = {
-		
+###engineer company urban attack buff
+		special_project_specialization = {  specialization_nuclear }		
 
 
 		research_cost = 0.8
@@ -964,8 +1001,20 @@ technologies = {
 	}	
 ##unlocks at missile company
 	anti_tank_missile = {
-		
-
+		special_project_specialization = {  specialization_land }
+		allow = {
+	 		ROOT = {
+				is_special_project_completed = sp:sp_land_high_explosive_anti_tank
+			}
+		}
+		enable_equipments = {
+			atgm_equipment
+		}		
+		enable_subunits = {
+			atgm_battalion
+			motorized_atgm_battalion
+			atgm_company			
+		}
 
 		research_cost = 0.8
 		start_year = 1945
@@ -980,9 +1029,16 @@ technologies = {
 			factor = 8
 		}
 	}	
+###a lot of heavy fighter air attack, ok light fighter air attack
 	air_to_air_missile = {
-		
+		special_project_specialization = {  specialization_air }		
+		allow = {
+	 		ROOT = {
+				is_special_project_completed = sp:sp_naval_proximity_fuze
+			}
+		}
 
+		is_special_project_tech = yes
 
 		research_cost = 0.8
 		start_year = 1945
@@ -1046,7 +1102,7 @@ technologies = {
 
 		is_special_project_tech = yes
 		special_project_specialization = {  specialization_nuclear }		
-		coordination_bonus = 0.01		
+	
 		
 		path = {
 			leads_to_tech = centimetric_fc_radar 
@@ -1127,7 +1183,12 @@ technologies = {
 ###magnetron firecontrol radar
 	centimetric_fc_radar = {
 
-		# radar boost in air/sea combat depends on radar level
+		allow = {
+	 		ROOT = {
+				is_special_project_completed = sp:sp_cavity_magnetron
+			}
+		}
+		is_special_project_tech = yes
 	
 		enable_equipment_modules = { 
 			ship_radar_3
@@ -1158,7 +1219,12 @@ technologies = {
 	}	
 	advanced_centimetric_fc_radar = {
 
-	
+		allow = {
+	 		ROOT = {
+				is_special_project_completed = sp:sp_cavity_magnetron
+			}
+		}
+		is_special_project_tech = yes	
 
 		static_anti_air_hit_chance_factor = 0.1
 		
@@ -1182,8 +1248,15 @@ technologies = {
 			radar_tech
 		}
 	}	
+###extra ground launched aa missile attack.
 	beam_riding = {
-		
+		allow = {
+	 		ROOT = {
+				is_special_project_completed = sp:sp_rockets_ground_to_air_missile
+			}
+		}
+		is_special_project_tech = yes
+		special_project_specialization = {  specialization_nuclear }		
 		research_cost = 2
 		folder = {
 			name = electronics_folder
@@ -1242,7 +1315,12 @@ technologies = {
 	}
 ##magnetron air radar
 	night_fighters2 = {
-		
+		allow = {
+	 		ROOT = {
+				is_special_project_completed = sp:sp_cavity_magnetron
+			}
+		}
+		is_special_project_tech = yes		
 		research_cost = 2
 		folder = {
 			name = electronics_folder
@@ -1271,7 +1349,12 @@ technologies = {
 		special_project_specialization = { specialization_air }
 	}
 	air_to_ground_radar = {
-		
+		allow = {
+	 		ROOT = {
+				is_special_project_completed = sp:sp_cavity_magnetron
+			}
+		}
+		is_special_project_tech = yes		
 		research_cost = 2
 		folder = {
 			name = electronics_folder
@@ -1318,7 +1401,7 @@ technologies = {
 			computing_tech
 		}
 	}
-	
+###advanced decryption and encryption locked behind computing	
 	computing_machine = {
 
 		# small boost to research speed
@@ -1357,7 +1440,7 @@ technologies = {
 			computing_tech
 		}
 	}
-	
+####gives bombing bonus (computing bombsight, 	
 	improved_computing_machine = {
 
 		research_speed_factor = 0.12
@@ -1877,13 +1960,6 @@ technologies = {
 
 		is_special_project_tech = yes
 
-		enable_equipments = {
-			#guided_missile_equipment_2
-		}
-		
-		enable_equipment_modules = {
-			guided_anti_ship_missile
-		}
 		guided_missile = { 
 			air_range = 0.25
 		}
