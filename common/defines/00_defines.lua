@@ -1084,7 +1084,7 @@ NMilitary = {
 	LAND_COMBAT_STR_DAMAGE_MODIFIER = 0.052,        -- global damage modifier... but some equipment is returned at end of battles see : EQUIPMENT_COMBAT_LOSS_FACTOR
 	LAND_COMBAT_ORG_DAMAGE_MODIFIER = 0.045,        -- global damage modifier
 	LAND_AIR_COMBAT_STR_DAMAGE_MODIFIER = 0.024,    -- air global damage modifier
-	LAND_AIR_COMBAT_ORG_DAMAGE_MODIFIER = 0.023,    -- global damage modifier
+	LAND_AIR_COMBAT_ORG_DAMAGE_MODIFIER = 0.022,    -- global damage modifier
 	LAND_AIR_COMBAT_MAX_PLANES_PER_ENEMY_WIDTH = 2, -- how many CAS/TAC can enter a combat depending on enemy width there
 	LAND_COMBAT_STR_ARMOR_ON_SOFT_DICE_SIZE = 2,   -- extra damage dice if our armor outclasses enemy
 	LAND_COMBAT_ORG_ARMOR_ON_SOFT_DICE_SIZE = 4,   -- extra damage dice if our armor outclasses enemy
@@ -1423,7 +1423,7 @@ NMilitary = {
 
 NAir = {
 	--gtd 
-	MISSILE_LAUNCHER_SLOTS = 1,                         -- The number of missile slots a missile launcher unit can have
+	MISSILE_LAUNCHER_SLOTS = 2,                         -- The number of missile slots a missile launcher unit can have
 	MISSILE_LAUNCHER_CAPACITY = 10,                     -- The number of missiles per slot
 
 	
