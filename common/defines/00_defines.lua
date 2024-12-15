@@ -679,10 +679,10 @@ NProject = {
 	PROJECT_CAPTURE_GAIN_RATIO = 0.2,                  -- Ratio of difference from captured facilities ongoing project to receive to the captors' progress
 	PROJECT_CAPTURE_BREAKTHROUGH_PROGRESS = 0.1,        -- Ratio of breakthrough progress on capture to the captor for the facilities specialization
 	PROJECT_CAPTURE_DIMINISHING_RETURN = 0.6,          -- Reduced amount of gain when capturing a facility with a project you already gained. Will apply the factor each time a capture occurs. 0.6 means a reduction of 60% on next project capture.
-	BASIC_RESEARCH_TECHNOLOGY_BONUS_FACTOR = 0.04,     -- Bonus research factor applied to technologies per scientist skill level when performing basic research in a matching facility.
+	BASIC_RESEARCH_TECHNOLOGY_BONUS_FACTOR = 0.05,     -- Bonus research factor applied to technologies per scientist skill level when performing basic research in a matching facility.
 	BASIC_RESEARCH_TECHNOLOGY_BONUS_DIMINISHING_RETURN_FACTOR = 0.2, -- Diminishing return on BASIC_RESEARCH_TECHNOLOGY_BONUS_FACTOR for each extra scientist performing basic research for multiple facilities.
-	BREAKTHROUGH_DAILY_TECHNOLOGY_GAIN = 10,           -- Amount in 1/100th percentage. E.g. 25 = 0.25%
-	BREAKTHROUGH_DAILY_SCIENTIST_SKILL_GAIN = 4,       -- Amount in 1/100th percentage gained per skill when doing basic research. E.g. 5 = 0.05% per skill level.
+	BREAKTHROUGH_DAILY_TECHNOLOGY_GAIN = 12,           -- Amount in 1/100th percentage. E.g. 25 = 0.25%
+	BREAKTHROUGH_DAILY_SCIENTIST_SKILL_GAIN = 5,       -- Amount in 1/100th percentage gained per skill when doing basic research. E.g. 5 = 0.05% per skill level.
 	BREAKTHROUGH_DAILY_ROCKET_SITE_GAIN = 3,		   -- Amount in 1/100th percentage gained per rocket site level. E.g. 1 = 0.01% per rocket site level.
 	BREAKTHROUGH_DAILY_NUCLEAR_REACTOR_GAIN = 15,       -- Amount in 1/100th percentage gained per nuclear reactor. E.g. 2 = 0.02% per nuclear reactor.
 	BREAKTHROUGH_GAIN_ANIMATION_SPEED_MAX = 1.0,	   -- The animation for gaining breakthrough progress is a ratio of this value and current daily gain.
@@ -1112,7 +1112,7 @@ NMilitary = {
 	RIVER_SMALL_START_INDEX = 0,                   -- color indices for rivers
 	RIVER_SMALL_STOP_INDEX = 6,
 	RIVER_LARGE_STOP_INDEX = 11,
-	BASE_FORT_PENALTY = -0.13, 					   -- fort penalty
+	BASE_FORT_PENALTY = -0.14, 					   -- fort penalty
 	BASE_STACKING_PENALTY = -0.1,                  -- multiple direction attack penalty
 	MULTIPLE_COMBATS_PENALTY = -0.5,               -- defender penalty if attacked from multiple directions
 	DIG_IN_FACTOR = 0.02,						   -- bonus factor for each dug-in level
