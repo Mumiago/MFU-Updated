@@ -1261,8 +1261,6 @@ NMilitary = {
 	PLAN_BLITZ_OPTIMISM = 0.2,						-- Additional combat balance value in favor of blitzing side when considering targets (not a combat bonus, just offsets planning)
 	
 	FLANKED_PROVINCES_COUNT = 3,					-- Attacker has to attack from that many provinces for the attack to be considered as flanking
-	NUKE_MIN_DAMAGE_PERCENT = 0.9,					-- Minimu	m damage from nukes as a percentage of current strength/organisation
-	NUKE_MAX_DAMAGE_PERCENT = 0.9,					-- Minimum damage from nukes as a percentage of current strength/organisation
 	EQUIPMENT_REPLACEMENT_RATIO = 0.1,				-- Equipment min ratio after blocking the equipment type
 	NUKE_DELAY_HOURS = 12,							-- How many hours does it take for the nuclear drop to happen
 	PARADROP_PENALTY = -0.3, 						-- Combat penalty when recently paradropped
@@ -1546,7 +1544,6 @@ NAir = {
 	BASE_STRATEGIC_BOMBING_HIT_SHIP_DAMAGE_FACTOR = 50,
 	BASE_STRATEGIC_BOMBING_HIT_PLANE_CHANCE = 0.5,		-- Chance to hit a plane in airbase when it is bombed.
 	BASE_STRATEGIC_BOMBING_HIT_PLANE_DAMAGE_FACTOR = 0.2,
-	STRATEGIC_BOMBER_NUKE_AIR_SUPERIORITY = 0.6,		-- How much air superiority is needed for a tactical bomber to be able to nuke a province
 	AGGRESSION_THRESHOLD = { 0.0, 0.25, 0.5 },			-- Threshold levels for mission aggressivity for air
  
 	ACE_WING_SIZE =	100,								-- size of wing ace bonuses are set up for. if lower more bonus, if higher less bonus
@@ -1633,6 +1630,8 @@ NAir = {
 		0.0, -- NAVAL_MINES_PLANTING
 		0.0, -- NAVAL_MINES_SWEEPING
 		0.0, -- MISSION_RECON
+		0,0, -- BARRAGE
+		0,0, -- SAM
 	},
 
 	MISSION_FUEL_COSTS = {  -- fuel cost per plane for each mission
@@ -1651,6 +1650,10 @@ NAir = {
 		1.0, -- NAVAL_MINES_PLANTING
 		1.0, -- NAVAL_MINES_SWEEPING
 		1.0, -- MISSION_RECON
+		0.0, -- BARRAGE
+		0,0, -- NUCLEAR
+		0,0, -- SAM
+
 	},
 	MAX_FUEL_FLOW_MULT = 1.0, -- max fuel flow ratio for planes, which will be multiplied by supply
 	
@@ -1852,8 +1855,6 @@ NRailwayGun = {
 	ENCIRCLED_DISBAND_MANPOWER_FACTOR = 0.2,		-- The percentage of manpower returned when an encircled unit is disbanded
 	OUT_OF_SUPPLY_SPEED = -0.5,						-- Max speed reduction from supply for railway guns
 	BASE_CAPTURE_CHANCE = 1,						-- The base chance of railway guns being captured during an overrrun. Will be further modified by the equipment capture chance of the capturing unit.
-	ANNEX_RATIO = 1,								-- How many railway guns will be transferred on annexation
-	HOURS_BETWEEN_REDISTRIBUTION = 24,				-- Number of hours between redistribution of attached railway guns, tracked per army
 	DISTRIBUTION_RAILWAY_GUN_PRESENCE_SCORE = -250,					-- Score for Railway Guns in range from given province when distributing Railway Guns
 	DISTRIBUTION_OUR_UNITS_PRESENCE_SCORE = 1,	 					-- Score for our units in province when distributing Railway Guns
 	DISTRIBUTION_FRIENDLY_UNITS_PRESENCE_SCORE = 0,					-- Score for friendly units in province when distributing Railway Guns
@@ -2980,7 +2981,6 @@ NAI = {
 
 		-- <start> assigning leaders to armies
 		ARMY_LEADER_ASSIGN_FIELD_MARSHAL_TO_ARMY = -500,            -- Score for assigning a field marshal to a normal army (want to use them for army groups)
-		ARMY_LEADER_ASSIGN_KEEP_LEADER = 500,                       -- Score for keeping the leader if already assigned
 		ARMY_LEADER_ASSIGN_EMPTYNESS_MALUS = 0.2,                   -- Factor for avoiding assigning leaders that can lead large armies to small armies (a value of 0.2 reduces the score by max 20 %)
 		ARMY_LEADER_ASSIGN_OVERCAPACITY = -200,                     -- Score for assigning leader to a too large army
 		ARMY_LEADER_ASSIGN_OVERALL_SKILL_FACTOR = 50,               -- This times general's overall skill is added to score
@@ -3213,8 +3213,6 @@ NAI = {
 	PLAN_ATTACK_DEPTH_FACTOR = 0.5,				-- Factor applied to size or enemy being attacked.
 	PLAN_STEP_COST_LIMIT = 1,					-- When stepping to draw a plan this cost makes it break if it hits hard terrain (multiplied by number of desired steps)
 	PLAN_STEP_COST_LIMIT_REDUCTION = 3,			-- Cost limit is reduced per iteration, making hard terrain less likely to be crossed the further into enemy territory it is
-	PLAN_FRONT_SECTION_MAX_LENGTH = 18,			-- When a front is longer than this it will be split in two sections for the AI
-	PLAN_FRONT_SECTION_MIN_LENGTH = 10,			-- When two front sections together are this short they will be merged for the AI
 	PLAN_MIN_SIZE_FOR_FALLBACK = 50,			-- A country with less provinces than this will not draw fallback plans, but rather station their troops along the front
 	SEND_VOLUNTEER_EVAL_BASE_DISTANCE = 105.0,  -- How far away it will evaluate sending volunteers if not a major power
 	SEND_VOLUNTEER_EVAL_MAJOER_POWER = 2, 	-- How willing major powers are to send volunteers.
@@ -3368,79 +3366,6 @@ NAI = {
 	START_TRAINING_EQUIPMENT_LEVEL = 0.8,               -- ai will not start to train if equipment drops below this level
 	STOP_TRAINING_EQUIPMENT_LEVEL = 0.6,                -- ai will not train if equipment drops below this level
 	BUILD_REFINERY_LACK_OF_RESOURCE_MODIFIER = 0.01,	-- How much lack of resources are worth when evaluating what to build.
-	DIVISION_DESIGN_WEIGHTS = {							-- Base values used by AI to evaluate value of a stat
-		-- Army Values
-		0.5, -- default_morale
-		1.0, -- defense
-		1.0, -- breakthrough
-		1.0, -- hardness
-		1.2, -- soft_attack
-		0.0, -- hard_attack
-		0.0, -- recon
-		0.0, -- entrenchment
-		0.0, -- initiative
-		0.0, -- casualty_trickleback
-		-1.0, -- supply_consumption_factor
-		-0.25, -- supply_consumption
-		0.0, -- suppression
-		0.0, -- suppression_factor
-		0.0, -- experience_loss_factor
-		0.0, -- equipment_capture_factor
-		0.0, -- fuel_capacity
-		-- Navy Values
-		0.0, -- surface_detection
-		0.0, -- sub_detection
-		0.0, -- surface_visibility
-		0.0, -- sub_visibility
-		0.0, -- lg attack
-		0.0, -- lg piercing
-		0.0, -- hg attack
-						
-		0.0, -- hg piercing
-		0.0, -- torpedo
-		0.0, -- sub attack
-		0.0, -- anti air attack
-		0.0, -- amphibious_defense
-		0.0, -- naval_speed
-		0.0, -- range
-		0.0, -- mine plant
-		0.0, -- mine sweep
-		0.0, -- raiding coordination
-		0.0, -- patrol coordination
-		0.0, -- search and destroy coordination
-		-- Air Values
-		0.0, -- air_range
-		0.0, -- air_defence
-		0.0, -- air_attack
-		0.0, -- air_agility
-		0.0, -- air_bombing
-		0.0, -- air_superiority
-		0.0, -- naval_strike_attack
-		0.0, -- naval_strike_targetting
-		0.0, -- air_ground_attack
-		0.0, -- air_visibility_factor
-		-- Common Values
-		1.0, -- max_organisation
-		1.0, -- max_strength
-		1.0, -- maximum_speed
-		1.0, -- armor_value
-		0.5, -- ap_attack
-		0.0, -- reliability
-		0.0, -- reliability_factor
-		-0.25, -- weight
-		0.0, -- fuel_consumption
-		0.0, -- fuel_consumption_factor																															   
-		-- Special Values
-		0.0, -- strategic_attack
-		0.0, -- carrier_size
-		0.0, -- acclimatization hot gain
-		0.0, -- acclimatization cold gain
-		-0.5, -- build_cost_ic
-	},
-	DIVISION_DESIGN_MANPOWER_WEIGHT = 0.005,
-	DIVISION_DESIGN_STOCKPILE_WEIGHT = 0.02,
-	DIVISION_DESIGN_COMBAT_WIDTH_WEIGHT = -2.5,			-- -3.0
-	DIVISION_DESIGN_COMBAT_WIDTH_TARGET_WEIGHT = -200.0,
 	DIVISION_DESIGN_MAX_FAILED_DAYS = 60,					-- max days we keep track of since failure of a design update
 
 	EQUIPMENT_DESIGN_MAX_FAILED_DAYS = 60,					-- max days we keep track of since failure of an equipment design update
@@ -3472,7 +3397,6 @@ NAI = {
 	AREA_DEFENSE_BASE_IMPORTANCE = 3,					-- Area defense order base importance value (used for determining order of troop selections)
 	AREA_DEFENSE_CIVIL_WAR_IMPORTANCE = 10000,			-- Area defense order importance value when a country is in a civil war as target or revolter.
 
-	COMBINED_ARMS_LEVEL = 1,							-- 0 = Never, 1 = Infantry/Artillery, 2 = Go wild
 	MAX_DISTANCE_NALAV_INVASION = 180.0,				-- AI is extremely unwilling to plan naval invasions above this naval distance limit.
 	ENEMY_NAVY_STRENGTH_DONT_BOTHER = 1.5,				-- If the enemy has a navy at least these many times stronger that the own, don't bother invading
 	MIN_SUPPLY_USE_SANITY_CAP = 100,					-- Ignore supply cap if below this value when deciding on how many divisions to produce.
@@ -3501,7 +3425,7 @@ NAI = {
 	NEW_LEADER_EXTRA_PP_FACTOR = 7.0,					-- Country must have at least this many times extra PP to get new admirals or army leaders
 	SCARY_LEVEL_AVERAGE_DEFENSE = -0.7,                 -- average front defense modifier to make it consider it as a PITA to go for
 	ATTACK_HEAVILY_DEFENDED_LIMIT = 0.45,				-- AI will not launch attacks against heavily defended fronts unless they consider to have this level of advantage (1.0 = 100%)
-	HOUR_BAD_COMBAT_REEVALUATE = 24,                   -- if we are in combat for this amount and it goes shitty then try skipping it 
+	CANCEL_COMBAT_DISADVANTAGE_RATIO = 1.5,             -- If the enemy's advantage ratio over us during (normal) combat is more than <value>, allow canceling the attack
 	MIN_PLAN_VALUE_TO_MICRO_INACTIVE = 0.2,				-- The AI will not consider members of groups which plan is not activated AND evaluates lower than this.
 	
 	MAX_UNITS_FACTOR_AREA_ORDER = 1.5,					-- Factor for max number of units to assign to area defense orders
@@ -3539,7 +3463,6 @@ NAI = {
 	FRONT_BULGE_RATIO_UPPER_CUTOFF = 1.5,				-- If total bulginess is lower than this, the front is ignored.
 	FRONT_BULGE_RATIO_LOWER_CUTOFF = 0.95,				-- If local bulginess drops below this, a point of interest is found
 	FRONT_CUTOFF_MIN_EDGE_PROXIMITY = 2,				-- Minimum number of provinces to the front edge to determine for cutoff oportunity.
-	INVASION_DISTANCE_RANDOMNESS = 30,					-- This higher the value, the more unpredictable the invasions. Compares to actual map distance in pixels.
 	
 	AIR_SUPERIORITY_MISSION_FACTOR = 1.0,				-- AI air superiority mission factor
 	CAS_MISSION_FACTOR = 1.4,							-- AI cas mission factor
