@@ -1,530 +1,3 @@
-@MAN_HUNT_BANDITS_EQUIPMENT_COST_TRIGGER = 499
-@MAN_HUNT_BANDITS_EQUIPMENT_COST_EFFECT = -500
-
-MAN_banditry_category = {
-
-	MAN_pacify_bandits_in_the_northern_countryside = {
-
-		icon = generic_oppression
-		
-		available = {
-			has_completed_focus = MAN_appease_the_bandits
-			has_country_flag = MAN_northern_bandits
-		}
-		highlight_states = {
- 			highlight_state_targets = { 
-				 state = 714
-			 }	 
-		}
-
-		cost = 0
-
-		ai_will_do = {
-			factor = 50
-		}
-		
-		visible = {
-			NOT = { has_active_mission = MAN_maintain_northern_control }
-			has_country_flag = MAN_northern_bandits
-		}
-
-		is_good = yes
-
-		complete_effect = {
-			add_political_power = 25
-			add_equipment_to_stockpile = {
-				type = infantry_equipment_0
-				amount = 500
-			}
-			add_equipment_to_stockpile = {
-				type = support_equipment
-				amount = 100
-			}
-			activate_mission = MAN_maintain_northern_control
-			custom_effect_tooltip = MAN_pacify_bandits_mission_explanation
-		}
-	}
-
-	MAN_hunt_down_northern_bandits = {
-
-		icon = generic_oppression
-
-		available = {
-			has_completed_focus = MAN_crack_down_on_banditry
-			has_equipment = { infantry_equipment > @MAN_HUNT_BANDITS_EQUIPMENT_COST_TRIGGER }
-			has_country_flag = MAN_northern_bandits
-
-		}
-
-		cost = 0
-
-		highlight_states = {
- 			highlight_state_targets = { 
-				 state = 714
-			 }		 
-		}
-		visible = {
-			has_country_flag = MAN_northern_bandits
-		}
-		is_good = yes
-
-		fire_only_once = yes
-
-		ai_will_do = {
-			factor = 50
-		}
-
-		complete_effect = {
-			custom_effect_tooltip = MAN_hunt_down_northern_bandits_tt
-			add_manpower = -1000
-			
-			add_equipment_to_stockpile = {
-				type = infantry_equipment
-				amount = @MAN_HUNT_BANDITS_EQUIPMENT_COST_EFFECT
-			}
-			if = {
-				limit = {
-					has_idea = jap_kwantung_army_3
-				}
-				army_experience = 40
-			}
-			else = {
-				army_experience = 20
-			}
-			
-
-			remove_mission = MAN_maintain_northern_control
-			clr_country_flag = MAN_northern_bandits
-			if = {
-				limit = {
-					NOT = { has_country_flag = MAN_eastern_bandits }
-					NOT = { has_country_flag = MAN_western_bandits }
-				}
-				remove_ideas = MAN_banditry
-			}
-		}
-	}
-
-	MAN_maintain_northern_control = {
-
-		icon = generic_civil_support
-
-		available = {
-			always = no
-		}
-
-		days_mission_timeout = MAN_main_control_timer?45
-
-		activation = {
-			always = no #Triggered from effect
-		}
-
-		cancel_trigger = {
-
-		}
-
-		highlight_states = {
- 			highlight_state_targets = { 
-				 state = 714
-			 }		 
-		}
-
-		visible = {
-			
-		}
-
-		is_good = yes
-
-		timeout_effect = {
-			custom_effect_tooltip = MAN_hunt_down_northern_bandits_tt
-			if = {
-				limit = {
-					has_idea = jap_kwantung_army_3
-				}
-				army_experience = 30
-			}
-			else = {
-				army_experience = 15
-			}
-			
-			clr_country_flag = MAN_northern_bandits
-			if = {
-				limit = {
-					NOT = { has_country_flag = MAN_eastern_bandits }
-					NOT = { has_country_flag = MAN_western_bandits }
-				}
-				remove_ideas = MAN_banditry
-			}
-		}
-	}
-
-###  ##   ## ### ### ###  #  # 
-#   #  # #    #  #   #  # ## # 
-##  ####  #   #  ##  ###  # ## 
-#   #  #   #  #  #   #  # #  # 
-### #  # ##   #  ### #  # #  # 
-
-	MAN_pacify_bandits_in_the_eastern_countryside = {
-
-		icon = generic_oppression
-		
-		available = {
-			has_completed_focus = MAN_appease_the_bandits
-			has_country_flag = MAN_eastern_bandits		
-		}
-
-		highlight_states = {
- 			highlight_state_targets = { 
-				 state = 717
-			 }	 
-		}
-
-		cost = 0
-
-		ai_will_do = {
-			factor = 50
-		}
-
-		visible = {
-			NOT = { has_active_mission = MAN_maintain_eastern_control }
-			has_country_flag = MAN_eastern_bandits
-		}
-
-		is_good = yes
-
-		complete_effect = {
-			add_political_power = 25
-			add_equipment_to_stockpile = {
-				type = infantry_equipment_0
-				amount = 500
-			}
-			add_equipment_to_stockpile = {
-				type = support_equipment
-				amount = 100
-			}
-			activate_mission = MAN_maintain_eastern_control
-			custom_effect_tooltip = MAN_pacify_bandits_mission_explanation
-		}
-	}
-
-	MAN_hunt_down_eastern_bandits = {
-
-		icon = generic_oppression
-
-		available = {
-			has_completed_focus = MAN_crack_down_on_banditry
-			has_equipment = { infantry_equipment > @MAN_HUNT_BANDITS_EQUIPMENT_COST_TRIGGER }
-			has_country_flag = MAN_eastern_bandits
-		}
-
-		visible = {
-			has_country_flag = MAN_eastern_bandits
-		}
-
-		cost = 0
-
-		highlight_states = {
- 			highlight_state_targets = { 
-				 state = 717
-			 }		 
-		}
-
-		is_good = yes
-
-		fire_only_once = yes
-
-		ai_will_do = {
-			factor = 100
-		}
-
-		complete_effect = {
-			custom_effect_tooltip = MAN_hunt_down_eastern_bandits_tt
-			add_manpower = -1000
-			
-			add_equipment_to_stockpile = {
-				type = infantry_equipment
-				amount = @MAN_HUNT_BANDITS_EQUIPMENT_COST_EFFECT
-			}
-			if = {
-				limit = {
-					has_idea = jap_kwantung_army_3
-				}
-				army_experience = 30
-			}
-			else = {
-				army_experience = 15
-			}
-			
-
-			remove_mission = MAN_maintain_eastern_control
-			clr_country_flag = MAN_eastern_bandits
-			if = {
-				limit = {
-					NOT = { has_country_flag = MAN_northern_bandits }
-					NOT = { has_country_flag = MAN_western_bandits }
-				}
-				remove_ideas = MAN_banditry
-			}
-		}
-	}
-
-	MAN_maintain_eastern_control = {
-
-		icon = generic_civil_support
-
-		available = {			
-			always = no
-		}
-
-		days_mission_timeout = MAN_main_control_timer?45
-
-		activation = {
-			always = no #Triggered from effect
-		}
-
-		cancel_trigger = {
-
-		}
-
-		highlight_states = {
- 			highlight_state_targets = { 
-				 state = 717
-			 }	 
-		}
-
-		visible = {
-			
-		}
-
-		is_good = yes
-
-		timeout_effect = {
-			custom_effect_tooltip = MAN_hunt_down_eastern_bandits_tt
-			if = {
-				limit = {
-					has_idea = jap_kwantung_army_3
-				}
-				army_experience = 20
-			}
-			else = {
-				army_experience = 10
-			}
-	
-			clr_country_flag = MAN_eastern_bandits
-			if = {
-				limit = {
-					NOT = { has_country_flag = MAN_northern_bandits }
-					NOT = { has_country_flag = MAN_western_bandits }
-				}
-				remove_ideas = MAN_banditry
-			}
-		}
-	}
-
-#   # ###  ## ### ### ###  #  # 
-#   # #   #    #  #   #  # ## # 
-# # # ##   #   #  ##  ###  # ## 
-# # # #     #  #  #   #  # #  # 
- # #  ### ##   #  ### #  # #  # 
-	
-	MAN_pacify_bandits_in_the_western_countryside = {
-
-		icon = generic_oppression
-		
-		available = {
-			has_completed_focus = MAN_appease_the_bandits
-			has_country_flag = MAN_western_bandits
-		}
-
-		highlight_states = {
- 			highlight_state_targets = { 
-				 state = 610
-			 } 
-		}
-
-		cost = 0
-
-		ai_will_do = {
-			factor = 100
-		}
-
-		visible = {
-			NOT = { has_active_mission = MAN_maintain_western_control }
-			has_country_flag = MAN_western_bandits
-		}
-
-		is_good = yes
-
-		complete_effect = {
-			add_political_power = 25
-			add_equipment_to_stockpile = {
-				type = infantry_equipment_0
-				amount = 500
-			}
-			add_equipment_to_stockpile = {
-				type = support_equipment
-				amount = 100
-			}
-			activate_mission = MAN_maintain_western_control
-			custom_effect_tooltip = MAN_pacify_bandits_mission_explanation
-		}
-	}
-
-	MAN_hunt_down_western_bandits = {
-
-		icon = generic_oppression
-
-		available = {
-			has_completed_focus = MAN_crack_down_on_banditry
-			has_equipment = { infantry_equipment > @MAN_HUNT_BANDITS_EQUIPMENT_COST_TRIGGER }
-			has_country_flag = MAN_western_bandits
-		}
-
-		cost = 0
-
-		highlight_states = {
- 			highlight_state_targets = { 
-				 state = 610
-			 }	 
-		}
-
-		visible = {
-			has_country_flag = MAN_western_bandits
-		}
-
-		is_good = yes
-
-		fire_only_once = yes
-
-		ai_will_do = {
-			factor = 100
-		}
-
-		complete_effect = {
-			custom_effect_tooltip = MAN_hunt_down_western_bandits_tt
-			add_manpower = -1000
-			
-			add_equipment_to_stockpile = {
-				type = infantry_equipment
-				amount = @MAN_HUNT_BANDITS_EQUIPMENT_COST_EFFECT
-			}
-			if = {
-				limit = {
-					has_idea = jap_kwantung_army_3
-				}
-				army_experience = 30
-			}
-			else = {
-				army_experience = 15
-			}
-	
-
-			remove_mission = MAN_maintain_western_control
-			clr_country_flag = MAN_western_bandits
-			if = {
-				limit = {
-					NOT = { has_country_flag = MAN_eastern_bandits }
-					NOT = { has_country_flag = MAN_northern_bandits }
-				}
-				remove_ideas = MAN_banditry
-			}
-		}
-	}
-
-	MAN_maintain_western_control = {
-
-		icon = generic_civil_support
-
-		available = {			
-			always = no
-		}
-
-		days_mission_timeout = MAN_main_control_timer?45
-
-		activation = {
-			always = no #Triggered from effect
-		}
-
-		cancel_trigger = {
-		}
-
-		highlight_states = {
- 			highlight_state_targets = { 
-				 state = 610
-			 }		 
-		}
-
-		visible = {
-			
-		}
-
-		is_good = yes
-
-		timeout_effect = {
-			custom_effect_tooltip = MAN_hunt_down_western_bandits_tt
-			if = {
-				limit = {
-					has_idea = jap_kwantung_army_3
-				}
-				army_experience = 30
-			}
-			else = {
-				army_experience = 15
-			}
-		
-			clr_country_flag = MAN_western_bandits
-			if = {
-				limit = {
-					NOT = { has_country_flag = MAN_eastern_bandits }
-					NOT = { has_country_flag = MAN_northern_bandits }
-				}
-				remove_ideas = MAN_banditry
-			}
-		}
-	}
-	MAN_bandit_raids = {
-
-		icon = generic_civil_support
-
-		available = {
-			NOT = { has_idea = MAN_banditry }
-		}
-
-		days_mission_timeout = 120
-
-		activation = {
-			has_idea = MAN_banditry
-		}
-
-		visible = {
-			
-		}		
-
-		fixed_random_seed = no
-
-		fire_only_once = no
-
-		is_good = no
-
-		timeout_effect = {
-	
-			random_list = {
-				25 = {
-					country_event = wtt_manchukou_bandit_sabotage.21
-				}
-				25 = {
-					country_event = wtt_manchukou_bandit_sabotage.22
-				}
-				25 = {
-					country_event = wtt_manchukou_bandit_sabotage.23
-				}
-				25 = {
-					
-				}
-			}
-		}
-	}
-}
 
 prospect_for_resources = {
 
@@ -813,360 +286,2458 @@ prospect_for_resources = {
 ##################################
 ##################################
 
+MAN_internal_factions = {
+	#MAN_mitzu_
+	#MAN_SM_
+	#MAN_MIC_
+	#MAN_KPT_
 
-MAN_political_retadism ={
-	
-MAN_polical_fix = {
-	icon = GFX_decision_generic_military
-		available = { 
-			NOT =  {
-				has_country_flag = MAN_politics_mandate
-				}
-				NOT =  {
-					has_country_flag = MAN_politics	
-					}
-				NOT ={check_variable = {
-					MAN_politics > 9
-				   }
-				
-			 } 
+	#
+	# MAN_mitzu is focus more around stability and growth
+	#
+	#
+	# MAN_SM is the construction faction that will bring infra with influence and resource gain with the loyality
+	#
+	#
+	# MAN_MIC(aka Mangyo) is industrial based and will: loyality will affect output by 10%/=10% and influence spawns new factories so R! 0-25-50 R! - G! 50-75-100 G1
+	#
+	# MAN_KPT will be based on the more political control ,where all workers focuses are affected but these are not inclined to be controled that much by the manchurian goverment
 
-		 } 
-		 
+	MAN_pro_corpo_stance ={
+		icon = GFX_decision_category_gre_investment_decisions
+		priority = 50
+
+		allowed = { 
+			original_tag = MAN
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = faction_change_going
+			}
+			OR = {
+				has_completed_focus = MAN_the_law_on_zaibatsu_regulations
+				has_completed_focus = MAN_obedience
+			}
+		}
 		visible = {
-			check_variable = {
-				MAN_politics < 10
-			  }		 
-			
+			NOT = {
+				has_country_flag = path_2_selected
+			}
+			NOT = {
+				has_country_flag = path_3_selected
+			}
+			NOT = {
+				has_completed_focus = MAN_kwantung_army_takes_control
+			}
 		}
-		priority = 8
-		modifier = {
-			political_power_gain = -0.10
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 0
+				has_completed_focus = MAN_kwantung_army_takes_control
+			}
+			modifier = {
+				factor = 1
+				has_completed_focus = MAN_obedience
+			}
+			modifier = {
+				factor = 10
+				has_completed_focus = MAN_the_law_on_zaibatsu_regulations
+			}
 		}
 
-		fire_only_once = no
+		fire_only_once = yes
+		days_remove = 120
 
-		modifier = {
-			
+		complete_effect = {
+			set_country_flag = path_1_selected
+
+
+			set_country_flag = { flag = faction_change_going value = 1 days = 70 }
+
+
+			if={
+				limit = {
+					JAP = {
+						NOT ={
+							has_completed_focus = JAP_found_mangyo
+						}
+					}
+					NOT = {
+						has_completed_focus = MAN_the_law_on_zaibatsu_regulations
+					}
+				}
+				MAN_mitzu_medium_influence_increase_effect = yes
+				MAN_SM_medium_influence_increase_effect = yes
+
+				custom_effect_tooltip = MANspace
+
+				MAN_KPT_high_loyalty_decrease_effect = yes
+				MAN_KPT_low_influence_decrease_effect = yes
+
+				else_if = {
+					limit = {
+						JAP = {
+							NOT ={
+								has_completed_focus = JAP_found_mangyo
+							}
+						}
+						has_completed_focus = MAN_the_law_on_zaibatsu_regulations
+					}
+					MAN_mitzu_high_influence_increase_effect = yes
+					MAN_SM_high_influence_increase_effect = yes
+
+					custom_effect_tooltip = MANspace
+
+					MAN_KPT_high_loyalty_decrease_effect = yes
+					MAN_KPT_medium_influence_decrease_effect = yes
+
+				}
+				else_if = {
+					limit = {
+						JAP = {
+							has_completed_focus = JAP_found_mangyo
+						}
+						NOT = {
+							has_completed_focus = MAN_the_law_on_zaibatsu_regulations
+						}
+					}
+					MAN_mitzu_medium_influence_increase_effect = yes
+					MAN_SM_medium_influence_increase_effect = yes
+					MAN_MIC_medium_influence_increase_effect = yes
+
+					custom_effect_tooltip = MANspace
+
+					MAN_KPT_high_loyalty_decrease_effect = yes
+					MAN_KPT_low_influence_decrease_effect = yes
+
+				}
+				else_if = {
+					limit = {
+						JAP = {
+							has_completed_focus = JAP_found_mangyo
+						}
+						has_completed_focus = MAN_the_law_on_zaibatsu_regulations
+					}
+					MAN_mitzu_high_influence_increase_effect = yes
+					MAN_SM_high_influence_increase_effect = yes
+					MAN_MIC_high_influence_increase_effect = yes
+
+					custom_effect_tooltip = MANspace
+
+					MAN_KPT_high_loyalty_decrease_effect = yes
+					MAN_KPT_medium_influence_decrease_effect = yes
+				}
+			}
+			custom_effect_tooltip = spacers
 		}
+		remove_effect = {
+			custom_effect_tooltip = MANspace
+			custom_effect_tooltip = MAN_the_death_of_china
+			add_to_variable = {
+				var = MAN_stability_factor_var
+				value = 0.1
+				tooltip = stability_tooltip_general
+			}
+
+			add_to_variable = {
+				var = MAN_political_power_factor_var
+				value = -0.05
+				tooltip = political_power_gain_modifier_tooltip
+			}
+			set_country_flag = pro_corpo
+		}
+	}
+
+
+	MAN_expand_building_funds = {
+		icon = GFX_decision_generic_electricity
+		priority = 50
+
+		allowed = { 
+			original_tag = MAN
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = faction_change_going
+			}
+			has_country_flag = pro_corpo
+
+			custom_trigger_tooltip = {
+				tooltip = custom_tooltip_copro_loyal_50
+				if = {
+					limit = {
+						JAP = {
+							NOT ={
+								has_completed_focus = JAP_found_mangyo
+							}
+						}
+					}
+					check_variable = {
+						Mitsui_loyalty > 49
+					}
+					check_variable = {
+						SM_loyalty > 49
+					}
+						else_if = {
+							limit = {
+								JAP = {
+									has_completed_focus = JAP_found_mangyo
+								}
+							}
+							check_variable = {
+								Mitsui_loyalty > 49
+							}
+							check_variable = {
+								SM_loyalty > 49
+							}
+							check_variable = {
+								MIC_loyalty > 49
+							}
+					}
+				}
+			}
+		}
+		visible = {
+			NOT = {
+				has_country_flag = path_2_selected
+			}
+			NOT = {
+				has_country_flag = path_3_selected
+			}
+			NOT = {
+				has_completed_focus = MAN_kwantung_army_takes_control
+			}
+		}
+
+		ai_will_do = {
+			base = 10
+		}
+
+		fire_only_once = yes
 		days_remove = 70
 
 		complete_effect = {
-			set_country_flag = { flag = MAN_politics value = 1 days = 70}
+			set_country_flag = { flag = faction_change_going value = 1 days = 70 }
+			
+		}
+		remove_effect = {
+
+			set_country_flag = pro_corpo_2
+
+
+			if={
+				limit = {
+					JAP = {
+						NOT ={
+							has_completed_focus = JAP_found_mangyo
+						}
+					}
+				}
+				MAN_mitzu_low_influence_increase_effect = yes
+				MAN_SM_low_influence_increase_effect = yes
+				else_if = {
+					limit = {
+						JAP = {
+							has_completed_focus = JAP_found_mangyo
+						}
+					}
+					MAN_mitzu_low_influence_increase_effect = yes
+					MAN_SM_low_influence_increase_effect = yes
+					MAN_MIC_low_influence_increase_effect = yes
+				}
+			}
+			custom_effect_tooltip = spacers
+			every_state = {
+				add_extra_state_shared_building_slots = 5
+				limit = {
+					is_core_of = MAN 
+				}
+			}
+		
+			custom_effect_tooltip = MANspace
+		}
+	}
+
+
+	MAN_quality_workers = {
+		icon = GFX_decision_generic_disband_irregulars
+		priority = 50
+
+		allowed = { 
+			original_tag = MAN
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = faction_change_going
+			}
+			has_country_flag = pro_corpo_2
+
+			custom_trigger_tooltip = {
+				tooltip = custom_tooltip_copro_loyal_50
+				if = {
+					limit = {
+						JAP = {
+							NOT ={
+								has_completed_focus = JAP_found_mangyo
+							}
+						}
+					}
+					check_variable = {
+						Mitsui_loyalty > 49
+					}
+					check_variable = {
+						SM_loyalty > 49
+					}
+						else_if = {
+							limit = {
+								JAP = {
+									has_completed_focus = JAP_found_mangyo
+								}
+							}
+							check_variable = {
+								Mitsui_loyalty > 49
+							}
+							check_variable = {
+								SM_loyalty > 49
+							}
+							check_variable = {
+								MIC_loyalty > 49
+							}
+					}
+				}
+			}
+
+		}
+		visible = {
+			NOT = {
+				has_country_flag = path_2_selected
+			}
+			NOT = {
+				has_country_flag = path_3_selected
+			}
+			NOT = {
+				has_completed_focus = MAN_kwantung_army_takes_control
+			}
+		}
+
+		ai_will_do = {
+			base = 10
+		}
+
+		fire_only_once = yes
+		days_remove = 120
+
+		complete_effect = {
+			set_country_flag = { flag = faction_change_going value = 1 days = 120 }
+			custom_effect_tooltip = MANspace
+			custom_effect_tooltip = reduce_workers_needs
+			set_country_flag = reduce_workers_needs
+			custom_effect_tooltip = spacers
+		}
+		remove_effect = {
+			if={
+				limit = {
+					JAP = {
+						NOT ={
+							has_completed_focus = JAP_found_mangyo
+						}
+					}
+				}
+				MAN_mitzu_medium_loyalty_decrease_effect = yes
+				MAN_SM_medium_loyalty_decrease_effect = yes
+				else_if = {
+					limit = {
+						JAP = {
+							has_completed_focus = JAP_found_mangyo
+						}
+					}
+					MAN_mitzu_medium_loyalty_decrease_effect = yes
+					MAN_SM_medium_loyalty_decrease_effect = yes
+					MAN_MIC_medium_loyalty_decrease_effect = yes
+				}
+			}
+			custom_effect_tooltip = MANspace
+
+			#under is the flag that sets the focuses rewards of workers 
+			
+			set_country_flag = good_workers
+		}
+	}
+
+	MAN_stabily_and_opportunity = {
+		icon = GFX_decision_gre_paying_ifc_debt
+		priority = 50
+
+		allowed = { 
+			original_tag = MAN
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = faction_change_going
+			}
+			has_country_flag = pro_corpo_2
+
+			if = {
+				limit = {
+					JAP ={
+						NOT = {
+							has_completed_focus = JAP_found_mangyo
+						}
+					}
+					
+				}
+				
+				custom_trigger_tooltip = {
+					tooltip = custom_tooltip_copro_loyal_75
+					if = {
+						limit = {
+							JAP = {
+								NOT ={
+									has_completed_focus = JAP_found_mangyo
+								}
+							}
+						}
+						check_variable = {
+							Mitsui_loyalty >74
+						}
+						check_variable = {
+							SM_loyalty >74
+						}
+							else_if = {
+								limit = {
+									JAP = {
+										has_completed_focus = JAP_found_mangyo
+									}
+								}
+								check_variable = {
+									Mitsui_loyalty > 74
+								}
+								check_variable = {
+									SM_loyalty > 74
+								}
+								check_variable = {
+									MIC_loyalty > 74
+								}
+						}
+					}
+				}
+			}
+			
+		}
+		visible = {
+			NOT = {
+				has_country_flag = path_2_selected
+			}
+			NOT = {
+				has_country_flag = path_3_selected
+			}
+			NOT = {
+				has_completed_focus = MAN_kwantung_army_takes_control
+			}
+		}
+
+		ai_will_do = {
+			base = 10
+		}
+
+		fire_only_once = yes
+		days_remove = 120
+
+		complete_effect = {
+			set_country_flag = { flag = faction_change_going value = 1 days = 120 }
+			 add_political_power = 25
+
+			 custom_effect_tooltip = spacers
+
+			 if={
+				limit = {
+					JAP = {
+						NOT ={
+							has_completed_focus = JAP_found_mangyo
+						}
+					}
+				}
+				MAN_mitzu_medium_influence_increase_effect = yes
+				MAN_SM_medium_influence_increase_effect = yes
+				else_if = {
+					limit = {
+						JAP = {
+							has_completed_focus = JAP_found_mangyo
+						}
+					}
+					MAN_mitzu_medium_influence_increase_effect = yes
+					MAN_SM_medium_influence_increase_effect = yes
+					MAN_MIC_medium_influence_increase_effect = yes
+				}
+			}
+			MAN_KPT_medium_loyalty_decrease_effect = yes
+			custom_effect_tooltip = spacers
+		}
+		remove_effect = {
+			
+			MAN_KPT_medium_influence_decrease_effect = yes
+
+			custom_effect_tooltip = spacers
 
 			custom_effect_tooltip = MAN_the_death_of_china
-			add_to_variable = { MAN_fasi_modifier = -0.01 tooltip = fascism_drift_hundred }
-		   }
+
+				add_to_variable = {
+					var = MAN_stability_factor_var
+					value = 0.1
+					tooltip = stability_tooltip_general
+				}
+
+				add_to_variable = { 
+					MAN_kempeitai_var_stability_factor = 0.001
+					tooltip = MAN_kempeitai_var_stability_factor_tooltip 
+				}
+
+			set_country_flag = Arasaka_forming
+		}
+	}
+
+	Unite_all_companies_in_one = {
+		icon = GFX_decision_category_generic_formable_nations
+		priority = 50
+
+		allowed = { 
+			original_tag = MAN
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = faction_change_going
+			}
+
+			has_country_flag = Arasaka_forming
+
+
+				custom_trigger_tooltip = {
+					tooltip = arasaka_formations
+
+					has_country_flag = MAN_MTZ_integrated
+
+					has_country_flag = MAN_SM_integrated
+
+					has_country_flag = MAN_MIC_integrated
+					
+				}
+			
+		}
+		visible = {
+			NOT = {
+				has_country_flag = path_2_selected
+			}
+			NOT = {
+				has_country_flag = path_3_selected
+			}
+			NOT = {
+				has_completed_focus = MAN_kwantung_army_takes_control
+			}
+		}
+
+		ai_will_do = {
+			base = 10
+		}
+
+		fire_only_once = yes
+		days_remove = 28
+
+		complete_effect = {
+			set_country_flag = { flag = faction_change_going value = 1 days = 28 }
+
+			 add_political_power = 75
+
+			 custom_effect_tooltip = spacers
+
+			
+		}
 		remove_effect = {
+
+			custom_effect_tooltip = MAN_the_death_of_china
+				add_to_variable = {
+					var = MAN_stability_factor_var
+					value = 0.1
+					tooltip = stability_tooltip_general
+				}
+				add_to_variable = { 
+					MAN_kempeitai_var_stability_factor = 0.001
+					tooltip = MAN_kempeitai_var_stability_factor_tooltip 
+				}
+
+			set_country_flag = corpo_rule
+			mark_focus_tree_layout_dirty = yes
+			
+		}
+	}
+
+
+	# pro corporations^ path unique decisions for it
+	################################### 	################################### 	################################### 	################################### 
+	# middle path !
+
+
+
+
+	MAN_middle_stance = {
+		icon = GFX_decision_category_generic_political_actions
+		priority = 50
+
+		allowed = { 
+			original_tag = MAN
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = faction_change_going
+			}
+			OR = {
+				has_completed_focus = MAN_the_law_on_zaibatsu_regulations
+				has_completed_focus = MAN_obedience
+				has_completed_focus = MAN_kwantung_army_takes_control
+			}
+		}
+		visible = {
+			NOT = {
+				has_country_flag = path_1_selected
+			}
+			NOT = {
+				has_country_flag = path_3_selected
+			}
+		}
+
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 0
+				has_completed_focus = MAN_kwantung_army_takes_control
+			}
+			modifier = {
+				factor = 10
+				has_completed_focus = MAN_obedience
+			}
+			modifier = {
+				factor = 0
+				has_completed_focus = MAN_the_law_on_zaibatsu_regulations
+			}
+		}
+		
+
+		fire_only_once = yes
+		days_remove = 120
+
+		complete_effect = {
+
+			set_country_flag = path_2_selected
+
+			set_country_flag = { flag = faction_change_going value = 1 days = 120 }
+
+			set_country_flag = center_path_faction
+
+			MAN_KPT_low_influence_decrease_effect = yes
+			MAN_KPT_medium_loyalty_increase_effect = yes
+			custom_effect_tooltip = MANspace
+		}
+		remove_effect = {
+
+		}
+	}
+
+	MAN_balance_and_growth = {
+		icon = GFX_decision_generic_operation
+		priority = 50
+
+		allowed = { 
+			original_tag = MAN
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = faction_change_going
+			}
+			has_country_flag = center_path_faction
+		}
+		visible = {
+			NOT = {
+				has_country_flag = path_1_selected
+			}
+			NOT = {
+				has_country_flag = path_3_selected
+			}
+		}
+
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 1
+				has_completed_focus = MAN_kwantung_army_takes_control
+			}
+			modifier = {
+				factor = 10
+				has_completed_focus = MAN_obedience
+			}
+			modifier = {
+				factor = 1
+				has_completed_focus = MAN_the_law_on_zaibatsu_regulations
+			}
+		}
+		
+
+		fire_only_once = yes
+		days_remove = 70
+
+		complete_effect = {
+			set_country_flag = { flag = faction_change_going value = 1 days = 120 }
+			set_country_flag = center_path_faction_2
+
+
+			MAN_SM_medium_loyalty_increase_effect = yes
+			MAN_KPT_low_loyalty_increase_effect = yes
+
+			custom_effect_tooltip = MANspace
+			
+		}
+		remove_effect = {
+			custom_effect_tooltip = spacers
+			custom_effect_tooltip = MAN_the_death_of_china
+			add_to_variable = { 
+				MAN_kempeitai_var_stability_factor = 0.001
+				tooltip = MAN_kempeitai_var_stability_factor_tooltip 
+			}
+		}
+	}
+	MAN_force_there_hand = {
+		icon = GFX_decision_SWI_support_humanitarian_efforts
+		priority = 50
+
+		allowed = { 
+			original_tag = MAN
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = faction_change_going
+			}
+			NOT = {
+				has_country_flag = faction_our_hand
+			}
+			has_country_flag = center_path_faction_2
+		}
+		visible = {
+			NOT = {
+				has_country_flag = path_1_selected
+			}
+			NOT = {
+				has_country_flag = path_3_selected
+			}
+		}
+
+
+		ai_will_do = {
+			base = 5
+		}
+		
+
+		fire_only_once = yes
+		days_remove = 120
+
+		complete_effect = {
+			add_political_power = 25
+			custom_effect_tooltip = spacers
+			set_country_flag = { flag = faction_change_going value = 1 days = 120 }
+			set_country_flag = faction_there_hand
+
+			if={
+				limit = {
+					JAP = {
+						NOT ={
+							has_completed_focus = JAP_found_mangyo
+						}
+					}
+				}
+				MAN_mitzu_medium_loyalty_increase_effect = yes
+				MAN_SM_medium_loyalty_increase_effect = yes
+				else_if = {
+					limit = {
+						JAP = {
+							has_completed_focus = JAP_found_mangyo
+						}
+					}
+					MAN_mitzu_medium_loyalty_increase_effect = yes
+					MAN_SM_medium_loyalty_increase_effect = yes
+					MAN_MIC_medium_loyalty_increase_effect = yes
+				}
+			}
+			MAN_KPT_high_loyalty_decrease_effect = yes
+
+
+			custom_effect_tooltip = MANspace
+		}
+		remove_effect = {
+			MAN_KTP_high_influence_decrease_effect = yes
+			custom_effect_tooltip = spacers
+			custom_effect_tooltip = MAN_the_death_of_china
+
+			add_to_variable = {
+				var = MAN_political_power_factor_var
+				value = 0.1
+				tooltip = political_power_gain_modifier_tooltip
+			}
+		}
+	}
+	MAN_force_our_hand = {
+		icon = GFX_decision_generic_break_treaty
+		priority = 50
+
+		allowed = { 
+			original_tag = MAN
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = faction_change_going
+			}
+			NOT = {
+				has_country_flag = faction_there_hand
+			}
+			has_country_flag = center_path_faction_2
+		}
+		visible = {
+			NOT = {
+				has_country_flag = path_1_selected
+			}
+			NOT = {
+				has_country_flag = path_3_selected
+			}
+		}
+
+
+		ai_will_do = {
+			base = 0
+			modifier = {
+				add = 1
+				has_completed_focus = MAN_kwantung_army_takes_control
+			}
+			modifier = {
+				factor = 10
+				has_completed_focus = MAN_obedience
+			}
+			modifier = {
+				factor = 1
+				has_completed_focus = MAN_the_law_on_zaibatsu_regulations
+			}
+		}
+		
+
+		fire_only_once = yes
+		days_remove = 120
+
+		complete_effect = {
+			add_political_power = -25
+			custom_effect_tooltip = spacers
+			set_country_flag = { flag = faction_change_going value = 1 days = 120 }
+			set_country_flag = faction_our_hand
+			if={
+				limit = {
+					JAP = {
+						NOT ={
+							has_completed_focus = JAP_found_mangyo
+						}
+					}
+				}
+				MAN_mitzu_low_loyalty_increase_effect = yes
+				MAN_SM_low_loyalty_increase_effect = yes
+				else_if = {
+					limit = {
+						JAP = {
+							has_completed_focus = JAP_found_mangyo
+						}
+					}
+					MAN_mitzu_low_loyalty_increase_effect = yes
+					MAN_SM_low_loyalty_increase_effect = yes
+					MAN_MIC_low_loyalty_increase_effect = yes
+				}
+			}
+
+
+			custom_effect_tooltip = MANspace
+		}
+		remove_effect = {
+			MAN_KPT_medium_influence_decrease_effect = yes
+
+			custom_effect_tooltip = spacers
 
 			custom_effect_tooltip = MAN_the_death_of_china
 
 			add_to_variable = {
 				var = MAN_stability_factor_var
-				value = 0.02
+				value = 0.1
 				tooltip = stability_tooltip_general
 			}
-			add_to_variable = { MAN_politics = +1 }
-			custom_effect_tooltip = MANspace
-			custom_effect_tooltip = nii_shit_from_mumi
+		}
+	}
+	
+	MAN_stabily_and_opportunity_center = {
+		icon = GFX_decision_onmap_recruit_operative
+		priority = 50
+
+		allowed = { 
+			original_tag = MAN
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = faction_change_going
+			}
+			OR = {
+				has_country_flag = faction_there_hand
+				has_country_flag = faction_our_hand
+			}
+			
+		}
+		visible = {
+
+			NOT = {
+				has_country_flag = path_1_selected
+			}
+			NOT = {
+				has_country_flag = path_3_selected
+			}
+		}
+
+		ai_will_do = {
+			base = 10
+		}
+
+		fire_only_once = yes
+		days_remove = 120
+
+		complete_effect = {
+			set_country_flag = { flag = faction_change_going value = 1 days = 120 }
+			add_political_power = 25
+
+			custom_effect_tooltip = spacers
 
 		}
-		
- }
+		remove_effect = {
+			
+			MAN_KPT_low_loyalty_increase_effect = yes
+			MAN_KPT_low_influence_decrease_effect = yes
 
-	MAN_onlu_1_left= {
-		icon = GFX_decision_generic_speech
-			available = { 
-				NOT =  {
-					has_country_flag = MAN_politics			
-					}
-					NOT ={check_variable = {
-						MAN_politics < 5
-					  }		 
+			custom_effect_tooltip = spacers
+
+			set_country_flag = pro_corpo_5
+
+			custom_effect_tooltip = MAN_the_death_of_china
+				add_to_variable = { 
+					MAN_kempeitai_var_stability_factor = 0.001
+					tooltip = MAN_kempeitai_var_stability_factor_tooltip 
+			}
+		}
+	}
+
+
+
+
+		# middle path^ path unique decisions for it
+		################################### 	################################### 	################################### 
+		# anti corporations !
+		
+
+
+
+		#colors yellow Y and here we gonna get the decisions that get +0.4 stab weekly,political power gain and less workers and even gaining workers
+		
+		MAN_anti_corpo_stance ={
+			icon = GFX_decision_category_SOV_merge_designers
+			priority = 50
+
+			allowed = { 
+				original_tag = MAN
+			}
+
+			available = {
+				NOT = {
+					has_country_flag = faction_change_going
 				}
-				
-	
-				custom_trigger_tooltip = {
-					tooltip = pick_more_five
-				} 
-			 } 
-			 
-			 
+				OR = {
+					has_completed_focus = MAN_obedience
+					has_completed_focus = MAN_kwantung_army_takes_control
+				}
+			}
 			visible = {
-				
-				
+				NOT = {
+					has_country_flag = path_1_selected
+				}
+				NOT = {
+					has_country_flag = path_2_selected
+				}
+				NOT = {
+					has_completed_focus = MAN_the_law_on_zaibatsu_regulations
+				}
 			}
-			priority = 6
-			modifier = {
-				stability_weekly = 0.002
+
+			ai_will_do = {
+				base = 0
+				modifier = {
+					add = 10
+					has_completed_focus = MAN_kwantung_army_takes_control
+				}
+				modifier = {
+					factor = 1
+					has_completed_focus = MAN_obedience
+				}
 			}
+
+			fire_only_once = yes
+			days_remove = 120
+
+			complete_effect = {
+
+				set_country_flag = path_3_selected
+
+				set_country_flag = { flag = faction_change_going value = 1 days = 70 }
+
+				if={
+					limit = {
+						JAP = {
+							NOT ={
+								has_completed_focus = JAP_found_mangyo
+							}
+						}
+					}
+
+					MAN_mitzu_low_influence_decrease_effect = yes
+					MAN_SM_low_influence_decrease_effect = yes
+
+					else_if = {
+						limit = {
+							JAP = {
+								has_completed_focus = JAP_found_mangyo
+							}
+						}
+						MAN_mitzu_low_influence_decrease_effect = yes
+						MAN_SM_low_influence_decrease_effect = yes
+						MAN_MIC_low_influence_decrease_effect = yes
+					}
+				}
+
+				custom_effect_tooltip = MANspace
+
+				MAN_KPT_low_loyalty_increase_effect = yes
+				MAN_KPT_low_influence_increase_effect = yes
+
+				custom_effect_tooltip = MANspace
+			}
+			remove_effect = {
+				custom_effect_tooltip = MANspace
+				custom_effect_tooltip = MAN_recruitable_tt0
+
+						add_to_variable = {
+							var = MAN_stability_factor_var
+							value = -0.1
+							tooltip = stability_tooltip_general
+						}
+
+				set_country_flag = right_side_center
+			}
+		}
+
+		MAN_crush_the_corrupt_ones = {
+			icon = GFX_decision_generic_speech
+			priority = 50
+	
+			allowed = { 
+				original_tag = MAN
+			}
+	
+			available = {
+				NOT = {
+					has_country_flag = faction_change_going
+				}
+				has_country_flag = right_side_center
+			}
+			visible = {
+				NOT = {
+					has_country_flag = path_1_selected
+				}
+				NOT = {
+					has_country_flag = path_2_selected
+				}
+				NOT = {
+					has_completed_focus = MAN_the_law_on_zaibatsu_regulations
+				}
+			}
+	
+	
+			ai_will_do = {
+				base = 5
+			}
+			
 	
 			fire_only_once = yes
-	
 			days_remove = 70
 	
 			complete_effect = {
-				set_country_flag = { flag = MAN_politics value = 1 days = 70 }
-			   }
+				set_country_flag = { flag = faction_change_going value = 1 days = 120 }
+				set_country_flag = faction_there_hand
+	
+				if={
+					limit = {
+						JAP = {
+							NOT ={
+								has_completed_focus = JAP_found_mangyo
+							}
+						}
+					}
+					MAN_SM_medium_loyalty_decrease_effect = yes
+					else_if = {
+						limit = {
+							JAP = {
+								has_completed_focus = JAP_found_mangyo
+							}
+						}
+						MAN_SM_medium_loyalty_decrease_effect = yes
+						MAN_MIC_low_loyalty_decrease_effect = yes
+					}
+				}
+				MAN_KPT_medium_loyalty_increase_effect = yes
+				custom_effect_tooltip = MANspace
+			}
 			remove_effect = {
+				if={
+					limit = {
+						JAP = {
+							NOT ={
+								has_completed_focus = JAP_found_mangyo
+							}
+						}
+					}
+					MAN_SM_low_influence_decrease_effect = yes
+					else_if = {
+						limit = {
+							JAP = {
+								has_completed_focus = JAP_found_mangyo
+							}
+						}
+						MAN_SM_low_influence_decrease_effect = yes
+						MAN_MIC_low_influence_decrease_effect = yes
+					}
+				}
+				MAN_KPT_low_influence_increase_effect = yes
 
-				custom_effect_tooltip = MAN_the_death_of_china
+				set_country_flag = right_side_spirit
 
+				custom_effect_tooltip = spacers
+
+			 custom_effect_tooltip = MAN_the_death_of_china
 				add_to_variable = { 
-					MAN_kempeitai_var_stability_factor = 0.003 
+					MAN_kempeitai_var_stability_factor = -0.001
 					tooltip = MAN_kempeitai_var_stability_factor_tooltip 
 				}
 
-				add_to_variable = { MAN_politics = +1 }
+				add_to_variable = {
+					var = MAN_political_power_factor_var
+					value = 0.05
+					tooltip = political_power_gain_modifier_tooltip
+				}
+				custom_effect_tooltip = spacers
+
+				add_stability = -0.05
+			}
+		}
+
+		MAN_crush_the_corruption = {
+			icon = GFX_decision_generic_scorched_earth
+			priority = 50
+	
+			allowed = { 
+				original_tag = MAN
+			}
+	
+			available = {
+				NOT = {
+					has_country_flag = faction_change_going
+				}
+
+				has_country_flag = right_side_spirit
+			}
+			visible = {
+				NOT = {
+					has_country_flag = path_1_selected
+				}
+				NOT = {
+					has_country_flag = path_2_selected
+				}
+				NOT = {
+					has_completed_focus = MAN_the_law_on_zaibatsu_regulations
+				}
+			}
+	
+	
+			ai_will_do = {
+				base = 0
+				modifier = {
+					add = 1
+					has_completed_focus = MAN_kwantung_army_takes_control
+				}
+				modifier = {
+					factor = 10
+					has_completed_focus = MAN_obedience
+				}
+				modifier = {
+					factor = 1
+					has_completed_focus = MAN_the_law_on_zaibatsu_regulations
+				}
+			}
+			
+	
+			fire_only_once = yes
+			days_remove = 120
+	
+			complete_effect = {
+				set_country_flag = { flag = faction_change_going value = 1 days = 120 }
+				set_country_flag = faction_there_hand
+	
+				MAN_SM_medium_loyalty_decrease_effect = yes
+				MAN_mitzu_low_loyalty_decrease_effect = yes
+					
+				MAN_KPT_medium_loyalty_increase_effect = yes
+
 				custom_effect_tooltip = MANspace
-				custom_effect_tooltip = Only
-
 			}
-		}
-	MAN_propaganda ={
-		icon = GFX_decision_generic_brainwash
-		available = { 
-			NOT =  {
-				has_country_flag = MAN_politics			
-				}
-			NOT =  {
-				has_country_flag = MAN_politics_mandate		
-			}
-		 } 
-	 
-	visible = {
-		
-		
-	}
-	priority = 10
-	modifier = {
-		stability_weekly = -0.003
-	}
+			remove_effect = {
+				set_country_flag = right_side_crusher
 
-	fire_only_once = no
+				MAN_SM_medium_influence_decrease_effect = yes
+				MAN_mitzu_low_influence_decrease_effect = yes
 
-	modifier = {
-		
-	}
-	days_remove = 70
-	complete_effect = {	
-		add_political_power = 25
+				MAN_KPT_high_influence_increase_effect = yes
 
-		set_country_flag = { flag = MAN_politics value = 1 days = 70 }
+				custom_effect_tooltip = spacers
 
-		
-	   }
-	remove_effect = {
-		add_stability = 0.01
-		
-   }
-}
-MAN_Checkmate_liberals = {
-	icon = generic_megaphone
-		available = { 
-			NOT =  {
-				has_country_flag = MAN_politics			
-				}
-			NOT =  {
-				has_country_flag = MAN_politics_mandate		
-			}
-
-		 } 
-		 
-		visible = {
-			
-			
-		}
-		priority = 9
-		modifier = {
-			political_power_gain = -0.2
-			stability_weekly = -0.001
-		}
-
-		fire_only_once = no
-
-		modifier = {
-			
-		}
-		days_remove = 70
-
-		complete_effect = {	
-			custom_effect_tooltip = MANspace
 			custom_effect_tooltip = MAN_the_death_of_china
-			
-			add_to_variable = { MAN_fasi_modifier = +0.01 tooltip = fascism_drift_hundred }
-			set_country_flag = { flag = MAN_politics value = 1 days = 70 }
-
-			
-		   }
-		remove_effect = {
-			add_stability = 0.03
-			add_popularity = {
-				ideology = fascism
-				popularity = 0.02
-			}
-
-		}
-}
-MAN_educational_torture = {
-	icon = oppression
-		available = { 
-			NOT =  {
-				has_country_flag = MAN_politics_mandate		
+				add_to_variable = { 
+					MAN_kempeitai_var_stability_factor = -0.001
+					tooltip = MAN_kempeitai_var_stability_factor_tooltip 
 				}
-			NOT =  {
-				has_country_flag = MAN_politics	
+				add_to_variable = {
+					var = MAN_political_power_factor_var
+					value = 0.05
+					tooltip = political_power_gain_modifier_tooltip
+				}
+				custom_effect_tooltip = spacers
+
+				add_stability = -0.05
 			}
-		 } 
-		 
-		visible = {
-			
-			
 		}
-		priority = 9
+	
+		#
+		######
+
+		MAN_reconsile_with_corps = {
+			icon = GFX_decision_generic_political_discourse
+			priority = 50
+	
+			allowed = { 
+				original_tag = MAN
+			}
+	
+			available = {
+				NOT = {
+					has_country_flag = faction_change_going
+				}
+				
+				has_country_flag = right_side_center
+				has_completed_focus = MAN_kwantung_army_takes_control
+			}
+			visible = {
+				NOT = {
+					has_country_flag = path_1_selected
+				}
+				NOT = {
+					has_country_flag = path_2_selected
+				}
+				NOT = {
+					has_completed_focus = MAN_the_law_on_zaibatsu_regulations
+				}
+			}
+	
+	
+			ai_will_do = {
+				base = 5
+			}
+			
+	
+			fire_only_once = yes
+			days_remove = 70
+	
+			complete_effect = {
+				set_country_flag = { flag = faction_change_going value = 1 days = 120 }
+				set_country_flag = faction_there_hand
+	
+				if={
+					limit = {
+						JAP = {
+							NOT ={
+								has_completed_focus = JAP_found_mangyo
+							}
+						}
+					}
+					MAN_mitzu_low_loyalty_increase_effect = yes
+					MAN_SM_low_loyalty_increase_effect = yes
+					else_if = {
+						limit = {
+							JAP = {
+								has_completed_focus = JAP_found_mangyo
+							}
+						}
+						MAN_mitzu_low_loyalty_increase_effect = yes
+						MAN_SM_low_loyalty_increase_effect = yes
+						MAN_MIC_low_loyalty_increase_effect = yes
+					}
+				}
+
+				custom_effect_tooltip = MANspace
+			}
+			remove_effect = {
+				set_country_flag = right_side_forget
+				custom_effect_tooltip = spacers
+				custom_effect_tooltip = MAN_the_death_of_china
+				add_to_variable = { 
+					MAN_kempeitai_var_stability_factor = 0.001
+					tooltip = MAN_kempeitai_var_stability_factor_tooltip 
+				}
+
+			}
+		}
+
+		MAN_reconsile_and_be_pacient = {
+			icon = GFX_decision_eng_trade_unions_demand
+			priority = 50
+	
+			allowed = { 
+				original_tag = MAN
+			}
+	
+			available = {
+				NOT = {
+					has_country_flag = faction_change_going
+				}
+				has_country_flag = right_side_forget
+			}
+			visible = {
+				NOT = {
+					has_country_flag = path_1_selected
+				}
+				NOT = {
+					has_country_flag = path_2_selected
+				}
+				NOT = {
+					has_completed_focus = MAN_the_law_on_zaibatsu_regulations
+				}
+			}
+	
+	
+			ai_will_do = {
+				base = 0
+				modifier = {
+					add = 1
+					has_completed_focus = MAN_kwantung_army_takes_control
+				}
+				modifier = {
+					factor = 10
+					has_completed_focus = MAN_obedience
+				}
+				modifier = {
+					factor = 1
+					has_completed_focus = MAN_the_law_on_zaibatsu_regulations
+				}
+			}
+			
+	
+			fire_only_once = yes
+			days_remove = 120
+	
+			complete_effect = {
+				set_country_flag = { flag = faction_change_going value = 1 days = 120 }
+				set_country_flag = right_side_go_on
+	
+				if={
+					limit = {
+						JAP = {
+							NOT ={
+								has_completed_focus = JAP_found_mangyo
+							}
+						}
+					}
+					MAN_mitzu_low_loyalty_increase_effect = yes
+					MAN_SM_low_loyalty_increase_effect = yes
+					else_if = {
+						limit = {
+							JAP = {
+								has_completed_focus = JAP_found_mangyo
+							}
+						}
+						MAN_mitzu_low_loyalty_increase_effect = yes
+						MAN_SM_low_loyalty_increase_effect = yes
+						MAN_MIC_low_loyalty_increase_effect = yes
+					}
+				}
+				MAN_KPT_low_loyalty_increase_effect = yes
+				custom_effect_tooltip = MANspace
+			}
+			remove_effect = {
+				
+				if={
+					limit = {
+						JAP = {
+							NOT ={
+								has_completed_focus = JAP_found_mangyo
+							}
+						}
+					}
+					MAN_mitzu_low_influence_decrease_effect = yes
+					MAN_SM_low_influence_decrease_effect = yes
+					else_if = {
+						limit = {
+							JAP = {
+								has_completed_focus = JAP_found_mangyo
+							}
+						}
+						MAN_mitzu_low_influence_decrease_effect = yes
+						MAN_SM_low_influence_decrease_effect = yes
+						MAN_MIC_low_influence_decrease_effect = yes
+					}
+				}
+				MAN_KPT_medium_influence_increase_effect = yes
+				custom_effect_tooltip = spacers
+
+			custom_effect_tooltip = MAN_the_death_of_china
+			add_to_variable = {
+				var = MAN_stability_factor_var
+				value = 0.05
+				tooltip = stability_tooltip_general
+			}
+
+			}
+		}
+
+		##############################################
+		#
+		#	nightmrae in manchuria
+		#
+
+
+
+		MAN_tojo_purge = {
+			icon = GFX_decision_category_generic_crisis
+			priority = 50
+	
+			allowed = { 
+				original_tag = MAN
+			}
+	
+			available = {
+				NOT = {
+					has_country_flag = faction_change_going
+				}
+				has_completed_focus = MAN_kwantung_army_takes_control
+				has_country_flag = right_side_crusher
+
+				custom_trigger_tooltip = {
+					tooltip = custom_tooltip_tojo_decision_thing
+					if = {
+						limit = { }
+					}
+					check_variable = {
+						KPT_loyalty > 74
+					}
+					check_variable = {
+						KPT_influence > 74
+					}
+				}
+				
+			}
+			visible = {
+				NOT = {
+					has_country_flag = path_1_selected
+				}
+				NOT = {
+					has_country_flag = path_2_selected
+				}
+				has_completed_focus = MAN_kwantung_army_takes_control
+				NOT= {
+					has_country_flag = almsot_fuck_up_2
+				}
+				
+			}
+	
+	
+			ai_will_do = {
+				base = 100
+
+			}
+			
+	
+			fire_only_once = yes
+			days_remove = 14
+
+			complete_effect = {
+			set_country_flag = { flag = faction_change_going value = 1 days = 14 }
+	
+				set_country_flag = almsot_fuck_up_1
+			}
+			remove_effect = {
+				set_country_flag = TOJO_flag
+
+				add_to_variable = { 
+					MAN_kempeitai_var_stability_factor = 0.004
+					tooltip = MAN_kempeitai_var_stability_factor_tooltip 
+				}		
+			}
+		}
 		
 
-		fire_only_once = no
+		MAN_the_sun_is_dark = {
+			icon = GFX_decision_category_SWI_presidential_office
+			priority = 50
+	
+			allowed = { 
+				original_tag = MAN
+			}
+	
+			available = {
+				NOT = {
+					has_country_flag = faction_change_going
+				}
+				has_completed_focus = MAN_kwantung_army_takes_control
+
+				has_country_flag = right_side_go_on
+				
+
+
+				custom_trigger_tooltip = {
+					tooltip = custom_tooltip_blacksun_decision_thing
+					check_variable = {
+						SM_loyalty > 74
+					}
+
+					check_variable = {
+						SM_loyalty > 74
+					}
+				}
+			}
+			visible = {
+				NOT = {
+					has_country_flag = path_1_selected
+				}
+				NOT = {
+					has_country_flag = path_2_selected
+				}
+				has_completed_focus = MAN_kwantung_army_takes_control
+
+				NOT= {
+					has_country_flag = almsot_fuck_up_1
+				}
+			}
+	
+	
+			ai_will_do = {
+				base = 100
+
+			}
+			
+	
+			fire_only_once = yes
+			days_remove = 14
+
+			complete_effect = {
+			set_country_flag = { flag = faction_change_going value = 1 days = 14 }
+	
+				set_country_flag = almsot_fuck_up_2
+			}
+			remove_effect = {
+				set_country_flag = Peace_for_now
+
+				custom_effect_tooltip = MAN_the_death_of_china
+				add_to_variable = {
+					var = MAN_stability_factor_var
+					value = 0.05
+					tooltip = stability_tooltip_general
+				}
+
+				add_to_variable = { 
+					MAN_kempeitai_var_stability_factor = 0.001
+					tooltip = MAN_kempeitai_var_stability_factor_tooltip 
+				}	
+			}
+		}
+	
+	
+	
+		# anti corporations ^ path unique decisions for it
+	################################### 	################################### 	################################### 
+
+
+	JAP_companies_benefits  = { 
+		icon = GFX_decision_generic_fundraising
+		priority = 50
+
+		allowed = { 
+			original_tag = MAN
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = faction_change_going
+			}
+		}
+		visible = {
+
+		}
+
+		custom_cost_trigger = {
+			num_of_civilian_factories_available_for_projects > 2
+		}
+		custom_cost_text = stabber_cost_jap
 
 		modifier = {
-			political_power_gain = -0.15
-			stability_weekly = -0.002
+			civilian_factory_use = 2
 		}
-		days_remove = 70
+
+		days_remove = 120
+		days_re_enable = 0
+
+		fire_only_once = no
 
 		complete_effect = {
-			set_country_flag = { flag = MAN_politics value = 1 days = 70 }
 
-			custom_effect_tooltip = MAN_the_death_of_china
-			add_to_variable = { MAN_comi_modifier  = -0.01 tooltip = commie_drift_hundred }
-		   }
+			set_country_flag = { flag = faction_change_going value = 1 days = 120 }
+
+		}
+
+
 		remove_effect = {
-			add_stability = 0.05
-			add_popularity = {
-				ideology = neutrality
-				popularity = 0.02
+			if={
+				limit = {
+					JAP = {
+						NOT ={
+							has_completed_focus = JAP_found_mangyo
+						}
+					}
+				}
+				MAN_mitzu_medium_loyalty_increase_effect = yes
+				MAN_SM_medium_loyalty_increase_effect = yes
+				else_if = {
+					limit = {
+						JAP = {
+							has_completed_focus = JAP_found_mangyo
+						}
+					}
+					MAN_mitzu_medium_loyalty_increase_effect = yes
+					MAN_SM_medium_loyalty_increase_effect = yes
+					MAN_MIC_medium_loyalty_increase_effect = yes
+				}
 			}
+		}
+	}
+
+	MAN_companies_benefits  = { 
+		icon = GFX_decision_generic_fundraising
+		priority = 50
+
+		allowed = { 
+			original_tag = MAN
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = faction_change_going
+			}
+		}
+		visible = {
+
+		}
+
+		custom_cost_trigger = {
+			has_political_power >39
+		}
+		custom_cost_text = stabber_cost_man
+
+		days_remove = 120
+		days_re_enable = 0
+
+		fire_only_once = no
+
+
+		complete_effect = {
+
+				hidden_effect = {
+					add_political_power = -50
+				}
+
+			set_country_flag = { flag = faction_change_going value = 1 days = 120 }
+
+		 }	
+
+
+	 remove_effect = {
+		if={
+			limit = {
+				JAP = {
+					NOT ={
+						has_completed_focus = JAP_found_mangyo
+					}
+				}
+			}
+
+			MAN_mitzu_low_influence_increase_effect = yes
+			MAN_SM_low_influence_increase_effect = yes
+			MAN_KPT_low_influence_decrease_effect = yes
+
+			else_if = {
+				limit = {
+					JAP = {
+						has_completed_focus = JAP_found_mangyo
+					}
+				}
+
+				MAN_mitzu_low_influence_decrease_effect = yes
+				MAN_SM_low_influence_increase_effect = yes
+				MAN_MIC_medium_influence_decrease_effect = yes
+				MAN_KPT_low_influence_decrease_effect = yes
+
+				}
+			}
+		}
+	}
+
+	
+	KPT_benefits  = { 
+		icon = GFX_decision_generic_fundraising
+		priority = 50
+
+		allowed = { 
+			original_tag = MAN
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = faction_change_going
+			}
+		}
+		visible = {
+
+		}
+
+		custom_cost_trigger = {
+			has_stability > 0.03
+		}
+		custom_cost_text = stabber_cost_2
+
+		days_remove = 120
+		days_re_enable = 0
+
+		fire_only_once = no
+
+		complete_effect = {
+
+			hidden_effect = {
+				add_stability = -0.06
+			}
+
+			set_country_flag = { flag = faction_change_going value = 1 days = 120 }
+
+
+				MAN_mitzu_medium_loyalty_decrease_effect = yes
+
+				MAN_SM_medium_loyalty_decrease_effect = yes
+				MAN_KPT_low_loyalty_increase_effect = yes
+				
+			
+
+		}
+
+
+		remove_effect = {
+
+				MAN_mitzu_low_influence_decrease_effect = yes
+
+				MAN_SM_low_influence_decrease_effect = yes
+				MAN_KPT_medium_influence_increase_effect = yes
+				
+			custom_effect_tooltip = spacers
+			
 			add_popularity = {
 				ideology = fascism
-				popularity = 0.02
+				popularity = 0.04
 			}
+		}
+	}
+	Abose_button = {
+		icon = GFX_decision_hol_attract_foreign_investors
+		priority = 50
+
+		allowed = { 
+			original_tag = MAN
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = faction_change_going
+			}
+		}
+		visible = {
+
+		}
+
+		days_remove = 120
+		days_re_enable = 0
+
+		fire_only_once = no
+
+		complete_effect = {
+
+			set_country_flag = { flag = faction_change_going value = 1 days = 120 }
+
+				if = {
+					limit = {
+						NOT = {
+							has_country_flag = MAN_MTZ_integrated
+							has_country_flag = MAN_MTZ_remove
+						}
+						NOT = {
+							has_country_flag = MAN_SM_integrated
+							has_country_flag = MAN_SM_remove
+						}
+						NOT = {
+							has_country_flag = MAN_KPT_integrated
+							has_country_flag = MAN_KPT_remove
+						}
+					}
+					add_political_power  = 100
+				}
+
+				if = {
+						limit = {
+							has_country_flag = MAN_MTZ_integrated
+							has_country_flag = MAN_MTZ_remove
+						NOT = {
+							has_country_flag = MAN_SM_integrated
+							has_country_flag = MAN_SM_remove
+						}
+						NOT = {
+							has_country_flag = MAN_KPT_integrated
+							has_country_flag = MAN_KPT_remove
+						}
+					}
+						add_political_power  = 50
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_country_flag = MAN_MTZ_integrated
+							has_country_flag = MAN_MTZ_remove
+						}
+							has_country_flag = MAN_SM_integrated
+							has_country_flag = MAN_SM_remove
+						NOT = {
+							has_country_flag = MAN_KPT_integrated
+							has_country_flag = MAN_KPT_remove
+						}
+					}
+					add_political_power  = 50
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_country_flag = MAN_MTZ_integrated
+							has_country_flag = MAN_MTZ_remove
+						}
+						NOT = {
+							has_country_flag = MAN_SM_integrated
+							has_country_flag = MAN_SM_remove
+						}
+							has_country_flag = MAN_KPT_integrated
+							has_country_flag = MAN_KPT_remove
+						}
+					add_political_power  = 50
+				}
+				if = {
+					limit = {
+						NOT = {
+							has_country_flag = MAN_MTZ_integrated
+							has_country_flag = MAN_MTZ_remove
+						}
+							has_country_flag = MAN_SM_integrated
+							has_country_flag = MAN_SM_remove
+
+							has_country_flag = MAN_KPT_integrated
+							has_country_flag = MAN_KPT_remove
+							
+					}
+					add_political_power  = 25
+				}
+				if = {
+					limit = {
+						has_country_flag = MAN_MTZ_integrated
+						has_country_flag = MAN_MTZ_remove
+							
+							NOT = {
+								has_country_flag = MAN_SM_integrated
+								has_country_flag = MAN_SM_remove
+							}
+
+						has_country_flag = MAN_KPT_integrated
+						has_country_flag = MAN_KPT_remove
+							
+					}
+						add_political_power  = 25
+				}
+				if = {
+					limit = {
+						has_country_flag = MAN_MTZ_integrated
+						has_country_flag = MAN_MTZ_remove
+
+						has_country_flag = MAN_SM_integrated
+						has_country_flag = MAN_SM_remove
+							
+							NOT = {
+								has_country_flag = MAN_KPT_integrated
+								has_country_flag = MAN_KPT_remove
+							}
+						}
+					add_political_power  = 25
+				}
+				if = {
+					limit = {
+						OR = {
+							has_country_flag = MAN_MTZ_integrated
+							has_country_flag = MAN_MTZ_remove
+						}
+						OR = {
+							has_country_flag = MAN_SM_integrated
+							has_country_flag = MAN_SM_remove
+						}
+						OR = {
+							has_country_flag = MAN_KPT_integrated
+							has_country_flag = MAN_KPT_remove
+						}
+					}
+					add_political_power  = 0
+				}
+				
+			
+			custom_effect_tooltip = spacers
+
+			if={
+				limit = {
+					JAP = {
+						NOT ={
+							has_completed_focus = JAP_found_mangyo
+						}
+					}
+				}
+				MAN_mitzu_medium_loyalty_decrease_effect = yes
+				MAN_SM_medium_influence_decrease_effect = yes
+				else_if = {
+					limit = {
+						JAP = {
+							has_completed_focus = JAP_found_mangyo
+						}
+					}
+					MAN_mitzu_medium_loyalty_decrease_effect = yes
+					MAN_SM_medium_influence_decrease_effect = yes
+					MAN_MIC_medium_loyalty_decrease_effect = yes
+				}
+			}
+
+		}
+
+
+		remove_effect = {
+			if={
+				limit = {
+					JAP = {
+						NOT ={
+							has_completed_focus = JAP_found_mangyo
+						}
+					}
+				}
+				MAN_mitzu_medium_influence_decrease_effect = yes
+				MAN_SM_medium_influence_decrease_effect = yes
+				else_if = {
+					limit = {
+						JAP = {
+							has_completed_focus = JAP_found_mangyo
+						}
+					}
+					MAN_mitzu_low_influence_decrease_effect = yes
+					MAN_SM_medium_influence_decrease_effect = yes
+					MAN_MIC_low_influence_decrease_effect = yes
+				}
+			}
+			custom_effect_tooltip = spacers
+			
 			add_popularity = {
 				ideology = communism
-				popularity = -0.02
-			}
-			add_popularity = {
-				ideology = democratic
-				popularity = -0.02
+				popularity = 0.1
 			}
 		}
-}
+	}
+	
+	#coomon shit ^ path unique decisions for it
+	################################### 	################################### 	################################### 
+	#integrate and pacify
 
+	MAN_integrate_MTZ = {
+		icon = GFX_decision_eng_trade_unions_support
+		priority = 50
 
-MAN_mandated_civilization = {
-	icon = generic_independence
-		available = { 
-			NOT =  {
-				has_country_flag = MAN_politics	
+		allowed = { 
+			original_tag = MAN
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = faction_change_going
 			}
-			NOT =  {
-				has_country_flag = MAN_politics_mandate		
+
+			custom_trigger_tooltip = {
+				tooltip = custom_tooltip_integrate_MTZ
+				check_variable = {
+					Mitsui_loyalty > 89
 				}
-				NOT ={
-					check_variable = {
-						MAN_checkers_2 > 1
-					 }
-
+				check_variable = {
+					Mitsui_influence > 89
 				}
-			 
-		}
-
-		priority = 5
-		modifier = {
-
-		}
-
-		fire_only_once = no
-
-		modifier = {
+			}
 			
 		}
-		days_remove = 35
-
-		complete_effect = {
-			set_country_flag = { flag = MAN_politics value = 1 days = 30 }
-			
-		   }
-		remove_effect = {
-
-			add_to_variable = { MAN_checkers = -1 }
-			add_to_variable = { MAN_checkers_2 = +1 }
-			
-			custom_effect_tooltip = MANspace
-			custom_effect_tooltip = MAN_the_death_of_china
-			add_to_variable = { 
-				MAN_kempeitai_var_research_speed_factor = -0.03
-				tooltip = research_speed_factor 
-			}
-			add_to_variable = { 
-				MAN_political_power_factor_var = 0.05
-				tooltip = political_power_gain_modifier_tooltip
-			}
-
-		}
-}
-MAN_suppesivity = {
-	icon = oppression
-		available = { 
-			NOT =  {
-				has_country_flag = MAN_politics			
+		visible = {
+			OR = {
+				check_variable = {
+					Mitsui_loyalty > 74
 				}
-			NOT =  {
-				has_country_flag = MAN_politics_mandate		
-				}
-				NOT ={check_variable = {
-					MAN_checkers > 1
-				   }
-
+				check_variable = {
+					Mitsui_influence > 74
+				}	
 			}
 		}
-		priority = 4
-		
 
-		fire_only_once = no
-
-		modifier = {
-
-		}
-		days_remove = 35
-
-		complete_effect = {
-			set_country_flag = { flag = MAN_politics value = 1 days = 30 }
-
-		   }
-		remove_effect = {
-
-			add_to_variable = { MAN_checkers = +1 }
-			add_to_variable = { MAN_checkers_2 = -1 }
-
-
-			custom_effect_tooltip = MANspace
-			custom_effect_tooltip = MAN_the_death_of_china
-			add_to_variable = { 
-				MAN_kempeitai_var_research_speed_factor = 0.03
-				tooltip = research_speed_factor 
-			}
-			add_to_variable = { 
-				MAN_political_power_factor_var = -0.05
-				tooltip = political_power_gain_modifier_tooltip
-			}
-
-			add_to_variable = { MAN_politics_mandate = +1 }
-
+		ai_will_do = {
+			base = 1000
 		}
 		
-}
+		fire_only_once = yes
+		days_remove = 50
 
-}
+		complete_effect = {
+			set_country_flag = { flag = faction_change_going value = 1 days = 50 }
+
+		}
+		remove_effect = {
+			set_country_flag = MAN_MTZ_integrated
+			custom_effect_tooltip = MAN_integrated_faction	
+		}
+	}
+	MAN_integrate_SM = {
+		icon = GFX_decision_eng_trade_unions_support
+		priority = 50
+
+		allowed = { 
+			original_tag = MAN
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = faction_change_going
+			}
+
+			custom_trigger_tooltip = {
+				tooltip = custom_tooltip_integrate_SM
+				check_variable = {
+					SM_loyalty > 89
+				}
+				check_variable = {
+					SM_influence > 89
+				}
+			}
+			
+		}
+		visible = {
+			OR = {
+				check_variable = {
+					SM_loyalty > 74
+				}
+				check_variable = {
+					SM_influence > 74
+				}	
+			}
+		}
+
+		ai_will_do = {
+			base = 1000
+		}
+		
+
+		fire_only_once = yes
+		days_remove = 50
+
+		complete_effect = {
+			set_country_flag = { flag = faction_change_going value = 1 days = 50 }
+
+		}
+		remove_effect = {
+			set_country_flag = MAN_SM_integrated
+			custom_effect_tooltip = MAN_integrated_faction	
+		}
+	}
+	MAN_integrate_MIC = {
+		icon = GFX_decision_eng_trade_unions_support
+		priority = 50
+
+		allowed = { 
+			original_tag = MAN
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = faction_change_going
+			}
+
+			custom_trigger_tooltip = {
+				tooltip = custom_tooltip_integrate_MIC
+				check_variable = {
+					MIC_loyalty > 89
+				}
+				check_variable = {
+					MIC_influence > 89
+				}
+			}
+			
+		}
+		visible = {
+			OR = {
+				check_variable = {
+					MIC_loyalty > 74
+				}
+				check_variable = {
+					MIC_influence > 74
+				}	
+			}
+		}
+
+		ai_will_do = {
+			base = 100
+		}
+		
+
+		fire_only_once = yes
+		days_remove = 50
+
+		complete_effect = {
+			set_country_flag = { flag = faction_change_going value = 1 days = 50 }
+
+		}
+		remove_effect = {
+			set_country_flag = MAN_MIC_integrated
+			custom_effect_tooltip = MAN_integrated_faction	
+		}
+	}
+	MAN_integrate_KPT = {
+		icon = GFX_decision_eng_trade_unions_support
+		priority = 50
+
+		allowed = { 
+			original_tag = MAN
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = faction_change_going
+			}
+
+			custom_trigger_tooltip = {
+				tooltip = custom_tooltip_integrate_KPT
+				check_variable = {
+					KPT_loyalty > 89
+				}
+				check_variable = {
+					KPT_influence > 89
+				}
+			}
+			
+		}
+		visible = {
+			OR = {
+				check_variable = {
+					KPT_loyalty > 74
+				}
+				check_variable = {
+					KPT_influence > 74
+				}	
+			}
+		}
+
+
+		ai_will_do = {
+			base = 100
+		}
+		
+
+		fire_only_once = yes
+		days_remove = 50
+
+		complete_effect = {
+			set_country_flag = { flag = faction_change_going value = 1 days = 50 }
+			
+		}
+		remove_effect = {
+			set_country_flag = MAN_KPT_integrated
+			custom_effect_tooltip = MAN_integrated_faction
+		}
+	}
+
+
+
+	MAN_pacify_MTZ = {
+		icon = GFX_decision_SWI_no_elected_president
+		priority = 50
+
+		allowed = { 
+			original_tag = MAN
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = faction_change_going
+			}
+
+			custom_trigger_tooltip = {
+				tooltip = custom_tooltip_p_MTZ
+				check_variable = {
+					Mitsui_loyalty < 10
+				}
+				check_variable = {
+					Mitsui_influence < 10
+				}
+			}
+			
+		}
+		visible = {
+			OR = {
+				has_completed_focus = MAN_kwantung_army_takes_control
+				has_completed_focus = MAN_the_law_on_zaibatsu_regulations
+			}
+			OR = {
+				check_variable = {
+					Mitsui_loyalty < 26
+				}
+				check_variable = {
+					Mitsui_influence < 26
+				}	
+			}
+
+		}
+
+		ai_will_do = {
+			base = 1000
+		}
+		
+		fire_only_once = yes
+		days_remove = 50
+
+		complete_effect = {
+			set_country_flag = { flag = faction_change_going value = 1 days = 50 }
+
+		}
+		remove_effect = {
+			set_country_flag = MAN_MTZ_remove
+			custom_effect_tooltip = MAN_remove_faction
+		}
+	}
+	MAN_pacify_SM = {
+		icon = GFX_decision_SWI_no_elected_president
+		priority = 50
+
+		allowed = { 
+			original_tag = MAN
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = faction_change_going
+			}
+
+			custom_trigger_tooltip = {
+				tooltip = custom_tooltip_p_SM
+				check_variable = {
+					SM_loyalty < 10
+				}
+				check_variable = {
+					SM_influence < 10
+				}
+			}
+			
+		}
+		visible = {
+			OR = {
+				has_completed_focus = MAN_kwantung_army_takes_control
+				has_completed_focus = MAN_the_law_on_zaibatsu_regulations
+			}
+			OR = {
+				check_variable = {
+					SM_loyalty < 26
+				}
+				check_variable = {
+					SM_influence < 26
+				}	
+			}
+		}
+
+		ai_will_do = {
+			base = 1000
+		}
+		
+
+		fire_only_once = yes
+		days_remove = 50
+
+		complete_effect = {
+			set_country_flag = { flag = faction_change_going value = 1 days = 50 }
+
+		}
+		remove_effect = {
+			set_country_flag = MAN_SM_remove
+			custom_effect_tooltip = MAN_remove_faction	
+		}
+	}
+	MAN_pacify_MIC = {
+		icon = GFX_decision_SWI_no_elected_president
+		priority = 50
+
+		allowed = { 
+			original_tag = MAN
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = faction_change_going
+			}
+			JAP ={
+				has_completed_focus = JAP_found_mangyo
+			}
+			custom_trigger_tooltip = {
+				tooltip = custom_tooltip_p_MIC
+				check_variable = {
+					MIC_loyalty < 10
+				}
+				check_variable = {
+					MIC_influence < 10
+				}
+			}
+			
+		}
+		visible = {
+			OR = {
+				has_completed_focus = MAN_kwantung_army_takes_control
+				has_completed_focus = MAN_the_law_on_zaibatsu_regulations
+			}
+			OR = {
+				check_variable = {
+					MIC_loyalty < 26
+				}
+				check_variable = {
+					MIC_influence < 26
+				}	
+			}
+
+		}
+
+		ai_will_do = {
+			base = 100
+		}
+		
+
+		fire_only_once = yes
+		days_remove = 50
+
+		complete_effect = {
+			set_country_flag = { flag = faction_change_going value = 1 days = 50 }
+
+		}
+		remove_effect = {
+			set_country_flag = MAN_MIC_remove
+			custom_effect_tooltip = MAN_remove_faction
+		}
+	}
+	MAN_pacify_KPT = {
+		icon = GFX_decision_SWI_no_elected_president
+		priority = 50
+
+		allowed = { 
+			original_tag = MAN
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = faction_change_going
+			}
+
+			custom_trigger_tooltip = {
+				tooltip = custom_tooltip_p_KPT
+				check_variable = {
+					KPT_loyalty < 10
+				}
+				check_variable = {
+					KPT_influence < 10
+				}
+			}
+			
+		}
+		visible = {
+
+				has_completed_focus = MAN_kwantung_army_takes_control
+			
+			OR = {
+				check_variable = {
+					KPT_loyalty < 26
+				}
+				check_variable = {
+					KPT_influence < 26
+				}	
+			}
+		}
+
+
+		ai_will_do = {
+			base = 100
+		}
+		
+
+		fire_only_once = yes
+		days_remove = 50
+
+		complete_effect = {
+			set_country_flag = { flag = faction_change_going value = 1 days = 50 }
+			
+		}
+		remove_effect = {
+			set_country_flag = MAN_KPT_remove
+			custom_effect_tooltip = MAN_remove_faction
+		}
+	}
+	
+}	
 
 ##################################
 ##################################
@@ -2582,7 +4153,7 @@ MAN_economic_retadism = {
 		remove_effect = {
 			custom_effect_tooltip = MAN_recruitable_tt0
 
-			set_variable = {
+			add_to_variable = {
 				var = MAN_military_industry_dm_production_speed_buildings_factor
 				value = 0.02
 				tooltip = MAN_military_industry_dm_production_speed_buildings_factor
@@ -5028,5 +6599,5 @@ MAN_research_unit_long_funded ={
 		}
 
 	}
+
 	
- 
