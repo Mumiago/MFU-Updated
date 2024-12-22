@@ -36,7 +36,8 @@ focus_tree = {
 			add_political_power = 150
 			add_stability = 0.2
 			add_war_support = -0.1
-			
+			custom_effect_tooltip = spacers
+			custom_effect_tooltip = UNLOCK_1_path
 		}
 	}
 
@@ -186,6 +187,10 @@ focus_tree = {
 		
 		ai_will_do = {
 			factor = 1
+		}
+
+		search_filters = {
+			FOCUS_FILTER_MAN_MIC
 		}
 
 		available = {}
@@ -445,6 +450,11 @@ focus_tree = {
 		
 		ai_will_do = {
 			factor = 1
+		}
+
+
+		search_filters = {
+			FOCUS_FILTER_MAN_SM
 		}
 
 		available = {}
@@ -972,6 +982,10 @@ focus_tree = {
 		}
 		ai_will_do = {
 			factor = 1
+		}
+
+		search_filters = {
+			FOCUS_FILTER_MAN_MIC
 		}
 
 		available = {}
@@ -1528,6 +1542,12 @@ focus_tree = {
 			factor = 1
 		}
 
+
+		search_filters = {
+			FOCUS_FILTER_MAN_SM
+		}
+
+
 		available = {}
 
 		bypass = {}
@@ -1616,6 +1636,10 @@ focus_tree = {
 		
 		ai_will_do = {
 			factor = 1
+		}
+
+		search_filters = {
+			FOCUS_FILTER_MAN_MIC
 		}
 
 		available = {}
@@ -1966,6 +1990,11 @@ focus = {
 			factor = 1
 		}
 
+
+		search_filters = {
+			FOCUS_FILTER_MAN_MIC
+		}
+
 		available = {}
 
 		bypass = {}
@@ -2222,6 +2251,7 @@ focus = {
 			add_stability = 0.1
 			add_war_support = 0.1
 			custom_effect_tooltip = spacers
+			custom_effect_tooltip = UNLOCK_2_path
 		}
 	}
 
@@ -2536,6 +2566,10 @@ focus = {
 		relative_position_id = MAN_reorganize_the_heavy_industry
 		cost = 7.16
 
+		search_filters = {
+			FOCUS_FILTER_MAN_MIC
+		}
+
 		available = {
 		}
 
@@ -2668,6 +2702,11 @@ focus = {
 		y = 1
 		relative_position_id = MAN_invite_japanese_investors
 		cost = 7.16
+
+
+		search_filters = {
+			FOCUS_FILTER_MAN_SM
+		}
 
 		available = {
 		}
@@ -3104,8 +3143,11 @@ focus = {
 			factor = 1
 		}
 
-		available = {
+		search_filters = {
+			FOCUS_FILTER_MAN_MIC
+		}
 
+		available = {
 		}
 
 		bypass = {
@@ -3769,9 +3811,13 @@ focus = {
 		relative_position_id = MAN_steel_casting_industry
 		cost = 7.16
 
-		available = {
-			
+
+		search_filters = {
+			FOCUS_FILTER_MAN_KPT
 		}
+
+
+		available = {}
 
 		ai_will_do = {
 			factor = 1
@@ -3791,12 +3837,85 @@ focus = {
 				value = 0.05
 				tooltip = industrial_dockyard_capacity_factory_tooltip
 			}
-			716 = {
-				add_extra_state_shared_building_slots = 2 
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes 
+			if = {
+				limit = { 
+					NOT = {
+						OR ={
+							check_variable = {
+								KPT_influence < 25				
+							}
+							check_variable = {
+								KPT_influence < 75			
+							}
+							check_variable = {
+								KPT_influence > 74			
+							}
+							has_country_flag = MAN_KPT_integrated
+						}
+					}
+				}
+				611 = {
+					add_extra_state_shared_building_slots = 2
+						add_building_construction = {
+						type = arms_factory
+						level = 2
+						instant_build = yes 
+					}
+				}
+				else_if = {
+					limit = {
+						check_variable = {
+							KPT_influence < 25					
+						}
+						NOT = {has_country_flag = MAN_KPT_integrated}
+
+					}
+					611 = {
+						add_extra_state_shared_building_slots = 2
+						add_building_construction = {
+							type = arms_factory
+							level = 2
+							instant_build = yes 
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						check_variable = {
+							KPT_influence < 75						
+						}
+						NOT = {has_country_flag = MAN_KPT_integrated}
+
+					}
+					611 = {
+						add_extra_state_shared_building_slots = 3
+						add_building_construction = {
+							type = arms_factory
+							level = 3
+							instant_build = yes 
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						OR ={
+
+							check_variable = {
+								KPT_influence > 74									
+							}
+
+							has_country_flag = MAN_KPT_integrated
+						}
+
+					}
+					611 = {
+						add_extra_state_shared_building_slots = 4
+						add_building_construction = {
+							type = arms_factory
+							level = 4
+							instant_build = yes 
+						}
+					}
 				}
 			}
 			610 = {
@@ -4339,12 +4458,12 @@ focus = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			custom_effect_tooltip = MAN_recruitable_tt0
 
+			custom_effect_tooltip = MAN_the_death_of_china
 			add_to_variable = {
-				var = MAN_political_power_factor_var
-				value = 0.1
-				tooltip = political_power_gain_modifier_tooltip
+				var = MAN_stability_factor_var
+				value = 0.15
+				tooltip = stability_tooltip_general
 			}
 
 			add_to_variable = {
@@ -4731,7 +4850,7 @@ focus = {
 
 			add_to_variable = {
 				var = MAN_military_industry_dm_local_resources_factor
-				value = 0.15
+				value = 0.1
 				tooltip = MAN_resorse_2_fix
 			}
 			custom_effect_tooltip = spacers
@@ -4801,12 +4920,8 @@ focus = {
 				value = -0.05
 				tooltip = recruitable_population_factor_tooltip
 			} 
-			custom_effect_tooltip = MANspace
-			if = {
-				limit = { has_completed_focus = MAN_appease_the_bandits }
-				custom_effect_tooltip = loggs_pacifist_tooltip
-				custom_effect_tooltip = loggies_pacifism_150_tooltip
-			}
+			custom_effect_tooltip = spacers
+			custom_effect_tooltip = UNLOCK_3_path
 		}
 	}
 
@@ -5419,6 +5534,7 @@ focus = {
 
 		}
 	}
+	
 	focus = {
 		id = MAN_import_of_labor_for_construction
 		icon = GFX_focus_labor_company
@@ -5469,6 +5585,125 @@ focus = {
 			add_to_variable = {
 				var = logs
 				value = 750
+			}
+		}
+	}
+	focus = {
+		id = MAN_kwantung_1
+		icon = GFX_focus_labor_company
+		x = -1
+		y = 1
+
+		cost = 5
+		prerequisite = { focus = MAN_import_of_labor_for_construction }
+
+		relative_position_id = MAN_import_of_labor_for_construction
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		search_filters = {
+			FOCUS_FILTER_MAN_KPT
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+			if = {
+				limit = { 
+					NOT = {
+						OR ={
+							check_variable = {
+								KPT_influence < 25				
+							}
+							check_variable = {
+								KPT_influence < 75			
+							}
+							check_variable = {
+								KPT_influence > 74			
+							}
+							has_country_flag = MAN_KPT_integrated
+						}
+					}
+				}
+				611 = {
+					add_extra_state_shared_building_slots = 2
+						add_building_construction = {
+						type = arms_factory
+						level = 2
+						instant_build = yes 
+					}
+				}
+				else_if = {
+					limit = {
+						check_variable = {
+							KPT_influence < 25					
+						}
+						NOT = {has_country_flag = MAN_KPT_integrated}
+
+					}
+					611 = {
+						add_extra_state_shared_building_slots = 2
+						add_building_construction = {
+							type = arms_factory
+							level = 2
+							instant_build = yes 
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						check_variable = {
+							KPT_influence < 75						
+						}
+						NOT = {has_country_flag = MAN_KPT_integrated}
+
+					}
+					611 = {
+						add_extra_state_shared_building_slots = 3
+						add_building_construction = {
+							type = arms_factory
+							level = 3
+							instant_build = yes 
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						OR ={
+
+							check_variable = {
+								KPT_influence > 74									
+							}
+
+							has_country_flag = MAN_KPT_integrated
+						}
+
+					}
+					611 = {
+						add_extra_state_shared_building_slots = 4
+						add_building_construction = {
+							type = arms_factory
+							level = 4
+							instant_build = yes 
+						}
+					}
+				}
+			}
+
+			custom_effect_tooltip = spacers
+			custom_effect_tooltip = 250lesswork
+			add_to_variable = {
+				var = logs
+				value = -250
 			}
 		}
 	}
@@ -5589,10 +5824,10 @@ focus = {
 			}
 			custom_effect_tooltip = spacers
 			716 = {
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 3
 				add_building_construction = {
 					type = arms_factory
-					level = 2
+					level = 3
 					instant_build = yes 
 				}
 			}
@@ -5881,12 +6116,15 @@ focus = {
 			factor = 1
 		}
 
-		available = {
 
+		search_filters = {
+			FOCUS_FILTER_MAN_KPT
+		}
+
+		available = {
 		}
 
 		bypass = {
-
 		}
 
 		cancel_if_invalid = yes
@@ -5909,12 +6147,85 @@ focus = {
 				tooltip = CAN_recruitable_tt1
 			}
 			custom_effect_tooltip = spacers
-			610 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes 
+			if = {
+				limit = { 
+					NOT = {
+						OR ={
+							check_variable = {
+								KPT_influence < 25				
+							}
+							check_variable = {
+								KPT_influence < 75			
+							}
+							check_variable = {
+								KPT_influence > 74			
+							}
+							has_country_flag = MAN_KPT_integrated
+						}
+					}
+				}
+				714 = {
+					add_extra_state_shared_building_slots = 2
+						add_building_construction = {
+						type = arms_factory
+						level = 2
+						instant_build = yes 
+					}
+				}
+				else_if = {
+					limit = {
+						check_variable = {
+							KPT_influence < 25					
+						}
+						NOT = {has_country_flag = MAN_KPT_integrated}
+
+					}
+					714 = {
+						add_extra_state_shared_building_slots = 2
+						add_building_construction = {
+							type = arms_factory
+							level = 2
+							instant_build = yes 
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						check_variable = {
+							KPT_influence < 75						
+						}
+						NOT = {has_country_flag = MAN_KPT_integrated}
+
+					}
+					714 = {
+						add_extra_state_shared_building_slots = 3
+						add_building_construction = {
+							type = arms_factory
+							level = 3
+							instant_build = yes 
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						OR ={
+
+							check_variable = {
+								KPT_influence > 74									
+							}
+
+							has_country_flag = MAN_KPT_integrated
+						}
+
+					}
+					714 = {
+						add_extra_state_shared_building_slots = 4
+						add_building_construction = {
+							type = arms_factory
+							level = 4
+							instant_build = yes 
+						}
+					}
 				}
 			}
 			custom_effect_tooltip = spacers
@@ -6866,55 +7177,6 @@ focus = {
 			custom_effect_tooltip = spacers
 		}
 	}
-	focus = {
-		id = Ilusion_of_war
-		icon = GFX_focus_generic_news
-		x = 0
-		y = 1
-
-		cost = 7.16
-
-		prerequisite = { focus = MAN_bring_them_fake_freedom_for_loyalty }
-
-		mutually_exclusive = {
-			focus = MAN_ilusion_of_peace
-		}
-
-		relative_position_id = Bring_the_mandate_back
-
-		ai_will_do = {
-			factor = 1
-		}
-
-		available = {
-	
-			
-		}
-
-		bypass = {
-
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		completion_reward = {
-
-			custom_effect_tooltip = MAN_the_death_of_china
-			add_to_variable = { 
-				MAN_kempeitai_var_war_support_factor = 0.003 
-				tooltip = MAN_kempeitai_var_war_support_factor_tooltip
-			}
-			add_to_variable = {
-				MAN_industry_spirit_population_factor_pog = 0.02
-				tooltip = CAN_recruitable_tt1
-			}
-			custom_effect_tooltip = MANspace
-			add_war_support = 0.1
-			add_manpower = 30000
-		}
-	}
 	
 #######################################
 	focus = {
@@ -7019,10 +7281,10 @@ focus = {
 		id = MAN_and_CHI
 		icon = GFX_Reconcile_with_China
 		x = 0
-		y = 2
+		y = 1
 
 		cost = 10
-		prerequisite = { focus = Ilusion_of_war focus = MAN_ilusion_of_peace}
+		prerequisite = { focus = MAN_bring_them_fake_freedom_for_loyalty }
 
 
 		relative_position_id = MAN_bring_them_fake_freedom_for_loyalty
@@ -7150,58 +7412,7 @@ focus = {
 	}	
 	
 	
-	focus = {
-		id = MAN_ilusion_of_peace
-		icon = GFX_focus_media_industry
-		x = 0
-		y = 2
-
-		cost = 7.16
-
-		prerequisite = { focus = MAN_bring_them_fake_freedom_for_loyalty }
-
-		mutually_exclusive = {
-			focus = Ilusion_of_war
-		}
-
-		relative_position_id = MAN_loyalty_of_the_japs
-
-		ai_will_do = {
-			factor = 1
-		}
-
-		available = {
-
-		}
-
-		bypass = {
-
-		}
-
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-
-		completion_reward = {
-
-			custom_effect_tooltip = MAN_the_death_of_china
-
-			add_to_variable = { MAN_kempeitai_var_stability_factor = 0.001 tooltip = MAN_kempeitai_var_stability_factor_tooltip }
-			
-			add_stability = 0.1
-
-			custom_effect_tooltip = MANspace
-			set_popularities = {
-				fascism = 100
-				democratic = 0
-				communism =  0
-			}
-			custom_effect_tooltip = MANspace
-			add_manpower = -30000
-			
-
-		}
-	}	
+	
 
 	#################################							
 
