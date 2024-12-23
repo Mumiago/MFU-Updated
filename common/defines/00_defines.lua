@@ -1199,8 +1199,8 @@ NMilitary = {
 	ORG_LOSS_FACTOR_ON_CONQUER = 0.2,              -- percentage of (max) org loss on takign enemy province
 	LOW_ORG_FOR_ATTACK = 0.5,                      -- at what org % we start affecting speed when doign hostile moves. scales down ZERO_ORG_MOVEMENT_MODIFIER
 
-	PLANNING_DECAY = 0.015,
-	PLAYER_ORDER_PLANNING_DECAY = 0.02,				-- Amount of planning lost due to player manual order
+	PLANNING_DECAY = 0.01,
+	PLAYER_ORDER_PLANNING_DECAY = 0.015,				-- Amount of planning lost due to player manual order
 	PLANNING_GAIN = 0.025,
 	PLANNING_MAX = 0.15,                           	-- can get more from techs
 	CIVILWAR_ORGANIZATION_FACTOR = 0.3,			  	-- Multiplier of org for both sides when civilwar.
@@ -1996,7 +1996,7 @@ NNavy = {
 	COMBAT_TORPEDO_CRITICAL_CHANCE = 0.12,							-- chance for critical hit from torpedo.
 	COMBAT_TORPEDO_CRITICAL_DAMAGE_MULT = 2.0,						-- multiplier to damage when got critical hit from torpedo. (Critical hits are devastating as usualy torpedo_attack are pretty high base values).
 	
-	COMBAT_DAMAGE_TO_STR_FACTOR = 0.4,								-- casting damage value to ship strength multiplier. Use it ot balance the game difficulty.
+	COMBAT_DAMAGE_TO_STR_FACTOR = 0.38,								-- casting damage value to ship strength multiplier. Use it ot balance the game difficulty.
 	COMBAT_DAMAGE_TO_ORG_FACTOR = 0.25,							-- casting damage value to ship organisation multiplier. Use it to balance the game difficulty.
 	
 	NAVY_MAX_XP = 100,
@@ -2023,7 +2023,7 @@ NNavy = {
 	REPAIR_AND_RETURN_UNIT_DYING_STR = 0.2,							-- Str below this point is considering a single ship "dying", and a high priority to send to repair.
 	EXPERIENCE_LOSS_FACTOR = 1.00,                 					-- percentage of experienced solders who die when manpower is removed
 	NAVY_EXPENSIVE_IC = 7000,										-- How much IC is considering the fleet to be expensive. Those expensive will triger the alert, when are on low STR.
-	MISSION_MAX_REGIONS = 4,										-- Limit of the regions that can be assigned to naval mission. Set to 0 for unlimited.
+	MISSION_MAX_REGIONS = 5,										-- Limit of the regions that can be assigned to naval mission. Set to 0 for unlimited.
 	CONVOY_EFFICIENCY_LOSS_MODIFIER = 0.26,							-- How much efficiency drops when losing convoys. If modifier is 0.5, then losing 100% of convoys in short period, the efficiency will drop by 50%.
 	CONVOY_EFFICIENCY_REGAIN_AFTER_DAYS = 7,						-- Convoy starts regaining it's efficiency after X days without any convoys being sink.
 	CONVOY_EFFICIENCY_REGAIN_BASE_SPEED = 0.03,						-- How much efficiency regains every day.
