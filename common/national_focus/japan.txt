@@ -1181,11 +1181,21 @@ focus_tree = {
 		}
 
 		available = {
-			#MAN = { is_subject_of = ROOT }
+			OR = {
+				MAN = { is_subject_of = ROOT }
+				MAN ={
+					exists = no
+				}
+				
+			}
+			
 		}
 
 		bypass = {
-
+			MAN ={
+				exists = no
+			}
+			
 		}
 
 		cancel_if_invalid = yes
@@ -1295,8 +1305,8 @@ focus_tree = {
 		id = JAP_found_mangyo
 		icon = GFX_mangyo
 		prerequisite = { focus = JAP_the_manchurian_project }
-		x = -2
-		y = 1
+		x = 0
+		y = 2
 		relative_position_id = JAP_the_manchurian_project
 
 		cost = 2.9
@@ -1322,7 +1332,7 @@ focus_tree = {
 			custom_effect_tooltip = JAP_manchukuo
 			custom_effect_tooltip = available_political_advisor		
 			show_ideas_tooltip = MAN_yoshisuke_ayu
-		
+			custom_effect_tooltip = spacers
 			714 = {
 
 				add_extra_state_shared_building_slots = 1
@@ -1332,13 +1342,38 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
+			if = {
+				limit = { 
+					MAN = {
+						has_completed_focus = MAN_modernizing_the_economy
+					}
+				}
+				else_if = {
+					limit = { 
+						MAN = {
+							NOT ={
+								has_completed_focus = MAN_modernizing_the_economy
+							}
+						}
+					}
+					custom_effect_tooltip = spacers
+					custom_effect_tooltip = MAN_MIC_founding
+
+					set_variable = {
+						MIC_influence = 30
+					}
+					set_variable = {
+						MIC_loyalty = 30
+					}
+				}
+			}
 		}
 	}
 
 	focus = {
 		id = JAP_rapid_development_of_strategic_industries
 		icon = GFX_sstrategic_industries
-		prerequisite = { focus = JAP_found_mangyo }
+		prerequisite = { focus = JAP_jap_settlement }
 		x = -2
 		y = 2
 		relative_position_id = JAP_the_manchurian_project
@@ -1442,8 +1477,8 @@ focus_tree = {
 		prerequisite = { focus = JAP_rapid_development_of_strategic_industries }
 
 
-		x = -1
-		y = 2
+		x = -3
+		y = 1
 		relative_position_id = JAP_found_mangyo
 
 		cost = 4.3
@@ -1537,8 +1572,8 @@ focus_tree = {
 		icon = GFX_japanese_settlement
 		prerequisite = { focus = JAP_the_manchurian_project }
 
-		x = 0
-		y = 2
+		x = -2
+		y = 1
 		relative_position_id = JAP_the_manchurian_project
 
 		cost = 5
@@ -1548,13 +1583,22 @@ focus_tree = {
 		}
 
 		available = {
-			MAN = {
+			OR = {
+					MAN = {
 
-				is_subject_of = ROOT
-				has_full_control_of_state = 715
-				has_full_control_of_state = 610
-				has_full_control_of_state = 328
+					is_subject_of = ROOT
+					has_full_control_of_state = 715
+					has_full_control_of_state = 610
+					has_full_control_of_state = 328
+				}
+				NOT = {
+					MAN ={
+						exists = yes
+					}
+				}
+
 			}
+			
 		}
 
 		bypass = {
@@ -1567,6 +1611,18 @@ focus_tree = {
 
 
 		completion_reward = {
+			if ={
+				limit = {
+					MAN ={
+						exists = no
+					}
+				}
+				MAN = {
+					every_owned_state = {
+						add_manpower = 34721
+					}
+				}
+			}
 			MAN = {every_owned_state = {
 				add_manpower = 34721
 			}
@@ -3347,10 +3403,10 @@ focus_tree = {
 		id = JAP_co_prosperity_sphere
 		icon = GFX_JAP_r56_goal_JAP_co_prosperity_sphere
 		prerequisite = { focus = JAP_intervene_in_china}
-		prerequisite = { focus = JAP_jap_settlement}
+		prerequisite = { focus = JAP_found_mangyo}
 		prerequisite = { focus = JAP_national_mobilization_law}
-		x = 0
-		y = 4
+		x = 2
+		y = 5
 		relative_position_id = JAP_jap_settlement
 
 		cost = 5
