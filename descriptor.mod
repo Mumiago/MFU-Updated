@@ -17,6 +17,7 @@ replace_path="history/general"
 replace_path="common/localisation"
 replace_path="common/ai_strategy"
 replace_path="common/peace_conference"
+replace_path="common/peace_conference/cost_modifiers"
 replace_path="common/military_industrial_organization/organizations"
 replace_path="common/military_industrial_organization/policies"
 tags={

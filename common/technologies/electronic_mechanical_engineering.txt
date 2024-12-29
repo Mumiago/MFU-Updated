@@ -1,4 +1,10 @@
+
 technologies = {
+	@rockets_1942 = 0
+	@rockets_1943 = 2
+	@rockets_1944 = 4
+	@rockets_1945 = 6
+	@rockets_1946 = 8
 	electronic_mechanical_engineering = {
 
 		# small boost to research speed
@@ -14,7 +20,15 @@ technologies = {
 			research_cost_coeff = 1
 		}
 		path = {
+			leads_to_tech = basic_fire_control_system
+			research_cost_coeff = 1
+		}
+		path = {
 			leads_to_tech = improved_sonar
+			research_cost_coeff = 1
+		}
+		path = {
+			leads_to_tech = advanced_electronic_mechanical_engineering
 			research_cost_coeff = 1
 		}
 		enable_equipment_modules = {
@@ -30,7 +44,7 @@ technologies = {
 		start_year = 1933
 		folder = {
 			name = electronics_folder
-			position = { x = 3 y = -2 }
+			position = { x = 9 y = -2 }
 		}
 		
 		ai_will_do = {
@@ -43,6 +57,178 @@ technologies = {
 			asw_tech
 		}
 	}
+###radio reliability+factory output+research
+	advanced_electronic_mechanical_engineering = {
+			research_speed_factor = 0.04
+		    industrial_capacity_factory = 0.05
+	
+	
+		enable_equipment_modules = {
+		stabilizer
+		lc_stabilizers
+		}	
+		research_cost = 1
+		start_year = 1940
+		folder = {
+			name = electronics_folder
+			position = { x = 9 y = 4 }
+		}
+		path = {
+			leads_to_tech = centimetric_radarr
+			research_cost_coeff = 1
+		}		
+		path = {
+			leads_to_tech = night_vision
+			research_cost_coeff = 1
+		}	
+		path = {
+			leads_to_tech = sp_shock_hardening_techniques
+			research_cost_coeff = 1
+		}
+		path = {
+			leads_to_tech = frequency_modulation
+			research_cost_coeff = 1
+		}	
+		ai_will_do = {
+			factor = 13
+		}
+		
+		categories = {
+			electronics
+			naval_equipment
+			asw_tech
+		}
+	}
+	sp_shock_hardening_techniques = {
+		
+
+
+		allow = {
+	 		ROOT = {
+				is_special_project_completed = sp:sp_naval_proximity_fuze
+			}
+		}
+
+		static_anti_air_damage_factor = 0.15
+		static_anti_air_hit_chance_factor = 0.15
+
+		path = {
+			leads_to_tech = sp_variable_time_fuze_shells
+			research_cost_coeff = 1
+		}
+        
+        force_use_small_tech_layout = yes		
+		is_special_project_tech = yes	
+		research_cost = 1
+		start_year = 1942
+		folder = {
+			name = electronics_folder
+			position = { x = 9 y = 8 }
+		}
+
+		categories = {
+			artillery
+
+		}
+
+		special_project_specialization = { specialization_land specialization_air }
+	}
+
+	sp_variable_time_fuze_shells = {
+
+
+		allow = {
+	 		ROOT = {
+				is_special_project_completed = sp:sp_naval_proximity_fuze
+			}
+		}
+		
+		category_heavy_artillery = {
+		   soft_attack = 0.25
+		}
+		artillery_siege_support = {	
+			soft_attack = 0.25
+		}
+		force_use_small_tech_layout = yes
+		research_cost = 1
+		start_year = 1944
+		is_special_project_tech = yes
+			
+		folder = {
+			name = electronics_folder
+			position = { x = 9 y = 12 }
+		}
+
+		categories = {
+			artillery
+		}
+
+		special_project_specialization = { specialization_land specialization_air }
+	}
+	#night
+	
+	night_vision = {
+		allow = {
+		 	ROOT = {
+				is_special_project_completed = sp:sp_night_vision
+			}
+		}
+
+		special_project_specialization = { specialization_nuclear }
+		is_special_project_tech = yes
+		land_night_attack = 0.1
+		
+		path = {
+			leads_to_tech = night_vision2
+			research_cost_coeff = 1
+		}
+
+		research_cost = 2.5
+		start_year = 1943
+		folder = {
+			name = electronics_folder
+			position = { x = 11 y = 10 }
+		}
+		
+		categories = {
+			night_vision
+		}
+		on_research_complete = {
+			add_ideas = night1
+		}
+		ai_will_do = {
+			factor = 4
+		}
+	}
+	
+	night_vision2 = {
+		allow = {
+		 	ROOT = {
+				is_special_project_completed = sp:sp_night_vision
+			}
+		}
+
+		special_project_specialization = { specialization_nuclear }
+		is_special_project_tech = yes
+		land_night_attack = 0.15	
+
+		research_cost = 2
+		start_year = 1945
+		folder = {
+			name = electronics_folder
+			position = { x = 11 y = 14 }
+		}
+		
+		categories = {
+			night_vision
+		}
+		on_research_complete = {
+			add_ideas = night2
+		}
+		ai_will_do = {
+			factor = 4
+		}
+	}
 	improved_sonar = {
 		enable_equipment_modules = {
 			ship_sonar_2
@@ -50,13 +236,51 @@ technologies = {
 		on_research_complete = {
 			custom_effect_tooltip = sonar_advice_tt
 		}
-		research_cost = 1
+		path = {
+			leads_to_tech = advanced_sonar
+			research_cost_coeff = 1
+		}
+		research_cost = 0.5
 
-		start_year = 1935
+		start_year = 1936
 
 		folder = {
 			name = electronics_folder
-			position = { x = 3 y = 0 }
+			position = { x = 12 y = 0 }
+		}
+
+		ai_will_do = {
+			factor = 2
+
+			modifier = {
+				factor = 4
+				has_war_with = GER
+			}
+			modifier = {
+				factor = 2
+				anti_submarine_strategy_required_trigger = yes
+			}
+		}
+
+		categories = {
+			naval_equipment
+			asw_tech
+		}
+	}
+	advanced_sonar = {
+		enable_equipment_modules = {
+			ship_sonar_3
+		}
+		on_research_complete = {
+			custom_effect_tooltip = sonar_advice_tt
+		}
+		research_cost = 1
+
+		start_year = 1940
+
+		folder = {
+			name = electronics_folder
+			position = { x = 12 y = 4 }
 		}
 
 		ai_will_do = {
@@ -84,21 +308,19 @@ technologies = {
 		land_reinforce_rate = 0.02
 		planning_speed = 0.1
 		coordination_bonus = 0.02
-
+		enable_equipments = {
+			radio_equipment_1
+		}
 		enable_equipment_modules = { 
 			tank_radio_1
+			lc_radio_1
 		}
-		
 		path = {
-			leads_to_tech = radio_detection 
+			leads_to_tech = mobile_link_stations
 			research_cost_coeff = 1
 		}
 		path = {
-			leads_to_tech = recon_radio
-			research_cost_coeff = 1
-		}
-		path = {
-			leads_to_tech = support_radio
+			leads_to_tech = platoon_level_radios
 			research_cost_coeff = 1
 		}
 		
@@ -107,7 +329,7 @@ technologies = {
 		start_year = 1936
 		folder = {
 			name = electronics_folder
-			position = { x = -1 y = 0 }
+			position = { x = 19 y = 0 }
 		}
 		folder = {
 			name = support_folder
@@ -123,20 +345,23 @@ technologies = {
 			electronics
 		}
 	}
-	#recon radio
-	recon_radio = {
+#signal company+recon buff
+	mobile_link_stations = {
 
 		coordination_bonus = 0.01
-
+		special_project_specialization = {  specialization_nuclear }		
 		research_cost = 2
 		folder = {
 			name = electronics_folder
-			position = { x = -1 y = 4 }
+			position = { x = 19 y = 2 }
 		}
-		
-		start_year = 1937
+		start_year = 1938
 		path = {
-			leads_to_tech = vehicle_radio
+			leads_to_tech = improved_division_command_network
+			research_cost_coeff = 1
+		}
+		path = {
+			leads_to_tech = ground_air_comms
 			research_cost_coeff = 1
 		}
 		recon = {
@@ -171,40 +396,222 @@ technologies = {
 			   radio_equipment = 2
 			}
 		}
+		helicopter_recon = { 
+			recon = 1 
+			defense = 0.1
+			breakthrough = 0.1
+			need = {
+			   radio_equipment = 2
+			}
+		}
 		ai_will_do = {
 			factor = 10
 		}
 		on_research_complete = {
-			custom_effect_tooltip = radio_benefit
-			custom_effect_tooltip = radio1_rec_tt
+			set_temp_variable = { temp = 2 }
+			set_temp_variable = { total_unit = num_battalions_with_type@light_armor_recon }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@recon_ac }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@mot_recon }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@recon }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@helicopter_recon }
+			
+
+			multiply_temp_variable = { total_unit = temp }
+
+			set_temp_variable = { radios_stored = num_equipment@radio_equipment }
+
+			
+			custom_effect_tooltip = radio2_tt
 		}
 		categories = {
 			electronics
 		}
 	}
-	vehicle_radio = {
 
-	
+##supp radio buff+org buff from inf tab radios
+	improved_division_command_network = {
+
 		path = {
-			leads_to_tech = tank_radio
-			research_cost_coeff = 1
+			leads_to_tech = improved_corps_command_network
+			
 		}
+				
+
+			
+		
+		
+		on_research_complete = {
+			
+			set_temp_variable = { temp = 2 }
+			set_temp_variable = { total_unit = num_battalions_with_type@recon }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@mot_recon }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@recon_ac }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_armor_recon }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@super_heavy_flame_tank }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@heavy_flame_tank }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@medium_flame_tank }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_flame_tank }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@field_hospital }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@construction_engineer }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@mobile_engineer }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@engineer }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@anti_tank }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@anti_air_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@artillery_heavy_support }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@pack_artillery }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@rocket_artillery }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@field_gun_support }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@artillery }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@anti_air_heavy_support }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@commando_unit }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_armor_para }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@logistics_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@logistics_company_mot }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@logistics_company_mech }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@maintenance_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@salvage_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@military_police }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@artillery_siege_support }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@signal_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@super_heavy_sp_anti_air_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@heavy_sp_anti_air_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@medium_sp_anti_air_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_sp_anti_air_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@medium_assault_gun_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@heavy_assaut_gun_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@super_heavy_assault_gun_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_assault_gun_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@signal_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@helicopter_recon }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@helicopter_field_hospital }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@helicopter_transport }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@land_cruiser }
+
+			
+	
+			multiply_temp_variable = { total_unit = temp }
+
+			set_temp_variable = { radios_stored = num_equipment@radio_equipment }
+
+			custom_effect_tooltip = radio21_tt
+			custom_effect_tooltip = radio_benefit3
+			
+		}		
+		category_all_infantry = {
+			max_organisation = 5
+		}
+		category_cavalry = {
+			max_organisation = 5
+		}
+		category_support_battalions = {
+				need = {
+				radio_equipment = 2
+				}
+			}
+		
+		
+		research_cost = 2
+		start_year = 1940
+		folder = {
+			name = electronics_folder
+			position = { x = 18 y = 4 }
+		}
+		
+		categories = {
+			infantry_weapons
+		}
+		
+		ai_will_do = {
+			factor = 8
+		}
+	}
+#Airforce-Army Communication Integration
+#ground support and arty attack
+	ground_air_comms = {
+		air_close_air_support_org_damage_factor	= 0.05
+		air_cas_present_factor = 0.1
+		coordination_bonus = 0.01			
+		
+		signal_company = {
+			battalion_mult = {
+				category = category_line_artillery
+				soft_attack = 0.05
+				hard_attack = 0.05
+				defense = 0.05
+				breakthrough = 0.05
+			}
+		}
+
+		research_cost = 2
+		start_year = 1940
+
 		path = {
-			leads_to_tech = plane_radio
+			leads_to_tech = improved_corps_command_network
+			
+		}		
+		folder = {
+			name = electronics_folder
+			position = { x = 20 y = 4 }
+		}
+		
+		ai_will_do = {
+			factor = 8
+		}
+	}
+	improved_corps_command_network = {
+		coordination_bonus = 0.01			
+		category_all_infantry = {
+			max_organisation = 5
+		}
+		category_cavalry = {
+			max_organisation = 5
+		}
+
+		research_cost = 2
+		start_year = 1942
+
+		
+		folder = {
+			name = electronics_folder
+			position = { x = 19 y = 8 }
+		}
+		
+		ai_will_do = {
+			factor = 8
+		}
+	}
+
+#platoon level radios. Mot+tank+inf+arty stats
+	platoon_level_radios = {
+		special_project_specialization = {  specialization_nuclear }		
+	
+
+		path = {
+			leads_to_tech = frequency_modulation
 			research_cost_coeff = 1
 		}
 		research_cost = 2.5
-		start_year = 1938
+		start_year = 1940
 		folder = {
 			name = electronics_folder
-			position = { x = -1 y = 6 }
+			position = { x = 15 y = 4 }
 		}
 		
 		ai_will_do = {
 			factor = 10
 			
 		}
+		category_line_artillery = {
+			breakthrough = 0.15
+			defense = 0.075
+			soft_attack = 0.025
+			hard_attack = 0.025
+			need = {
+			   radio_equipment = 1
+			}
+		}
 		
+				
 		category_motorised = {
 			need = {
 			   radio_equipment = 2
@@ -215,29 +622,88 @@ technologies = {
 		signal_company = {
 			battalion_mult = {
 				category = category_motorised
-				soft_attack = 0.03
-				hard_attack = 0.03
-				defense = 0.03
-				breakthrough = 0.03
+				soft_attack = 0.04
+				hard_attack = 0.04
+				defense = 0.04
+				breakthrough = 0.04
 			}
 		}
 		on_research_complete = {
-		custom_effect_tooltip = radio_benefit
-		custom_effect_tooltip = radio2_tt
+			set_temp_variable = { temp = 2 }
+			set_temp_variable = { total_unit = num_battalions_with_type@recon_ac }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@mot_recon }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@amphibious_mechanized }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@motorized }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@mechanized }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@ss_motorized }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@ss_mechanized }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@guards_mech }
+
+			multiply_temp_variable = { total_unit = temp }
+
+			set_temp_variable = { radios_stored = num_equipment@radio_equipment }
+		
+			custom_effect_tooltip = radio22_tt
 		}
+		on_research_complete = {
+			set_temp_variable = { temp = 1 }
+			set_temp_variable = { total_unit = num_battalions_with_type@anti_air }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@anti_air_mot }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@anti_tank_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@anti_tank_brigade_mot }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@artillery_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@artillery_brigade_mot }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@field_gun_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@field_gun_brigade_mot }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@pack_artillery_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@pack_artillery_brigade_mot }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@artillery_heavy }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@artillery_heavy_mot }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@rocket_artillery_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@motorized_rocket_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@mountain_artillery_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@mountain_gun_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@anti_air_heavy }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@anti_air_heavy_mot }
+
+			multiply_temp_variable = { total_unit = temp }
+
+			set_temp_variable = { radios_stored = num_equipment@radio_equipment }
+	
+			custom_effect_tooltip = radio2art_tt
+			custom_effect_tooltip = radio_benefit
+		}	
 		
 		categories = {
 			electronics
 		}
 	}
-	plane_radio = {
-	
-		
-		research_cost = 2.5
-		start_year = 1939
+###+radio equipment reliability?
+	frequency_modulation = {
+		special_project_specialization = {  specialization_nuclear }		
+        allow = {
+			AND = { 
+			has_tech = platoon_level_radios
+			has_tech = advanced_electronic_mechanical_engineering
+			}
+        }			
+		research_cost = 1.5
+		start_year = 1942
+		path = {
+			leads_to_tech = tank_radio2
+			research_cost_coeff = 1
+		}
+		path = {
+			leads_to_tech = infantry_radio
+			research_cost_coeff = 1
+		}
+		path = {
+			leads_to_tech = mclos_control_link
+			research_cost_coeff = 1
+		}
 		folder = {
 			name = electronics_folder
-			position = { x = 0 y = 8 }
+			position = { x = 15 y = 8 }
 		}
 		
 		ai_will_do = {
@@ -247,38 +713,9 @@ technologies = {
 				factor = 15
 			}
 		}
-		
-		air_intercept_efficiency = 0.05
-		air_superiority_efficiency = 0.05
-		air_cas_efficiency	= 0.05
-		naval_strike_targetting_factor = 0.05
-		air_strategic_bomber_bombing_factor = 0.05
-		
-		on_research_complete = {
-		custom_effect_tooltip = plane_radio_tt
-		hidden_effect = { add_ideas = plane_radio_idea }
-		}
-		categories = {
-			electronics
-		}
-	}
-	# tank radio
-	tank_radio = {
-
-		
 		enable_equipment_modules = { 
 			tank_radio_2
-		}
-
-		research_cost = 2.5
-		folder = {
-			name = electronics_folder
-			position = { x = -2 y = 10 }
-		}
-		
-		path = {
-			leads_to_tech = tank_radio2
-			research_cost_coeff = 1
+			lc_radio_2
 		}
 		
 		category_all_armor = {
@@ -291,27 +728,84 @@ technologies = {
 		signal_company = {
 			battalion_mult = {
 				category = category_all_armor
-				defense = 0.02
-				breakthrough = 0.02
+				defense = 0.04
+				breakthrough = 0.04
 			}
 		}
 		on_research_complete = {
-		custom_effect_tooltip = radio_benefit
-		custom_effect_tooltip = radio2_tt
-		}
-		start_year = 1940
+			
+			set_temp_variable = { temp = 2 }
+			set_temp_variable = { total_unit = num_battalions_with_type@amphibious_armor }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@amphibious_light_armor }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@amphibious_medium_armor }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@amphibious_heavy_armor }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@amphibious_super_heavy_armor }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@armored_car }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@super_heavy_flame_tank }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_flame_tank }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@medium_flame_tank }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@heavy_flame_tank }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@heavy_armor }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@ss_panzer_iii }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@ss_panzer_vi }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@guards_medium }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@guards_heavy }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_armor }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_armor_para }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@medium_armor }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_armor_recon }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_sp_anti_air_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@medium_sp_anti_air_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@heavy_sp_anti_air_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@super_heavy_sp_anti_air_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_sp_anti_air_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@medium_sp_anti_air_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@heavy_sp_anti_air_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@super_heavy_sp_anti_air_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_sp_artillery_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@medium_sp_artillery_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@heavy_sp_artillery_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@super_heavy_sp_artillery_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_assault_gun_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_assault_gun_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@medium_assault_gun_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@medium_assault_gun_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@heavy_assaut_gun_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@heavy_assaut_gun_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@super_heavy_assault_gun_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@super_heavy_assault_gun_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@super_heavy_armor }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_tank_destroyer_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@medium_tank_destroyer_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@heavy_tank_destroyer_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@super_heavy_tank_destroyer_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_assault_gun_company }
+			
+			multiply_temp_variable = { total_unit = temp }
+
+			set_temp_variable = { radios_stored = num_equipment@radio_equipment }
+			custom_effect_tooltip = radio2_tt
+			custom_effect_tooltip = radio_benefit
+			custom_effect_tooltip = plane_radio_tt
+			hidden_effect = { add_ideas = plane_radio_idea }
+		}		
+		air_intercept_efficiency = 0.05
+		air_superiority_efficiency = 0.05
+		air_cas_efficiency	= 0.05
+		naval_strike_targetting_factor = 0.05
+		air_strategic_bomber_bombing_factor = 0.05
 		
-		ai_will_do = {
-			factor = 15		
+		on_research_complete = {
+
 		}
-		
 		categories = {
 			electronics
 		}
 	}
+
 	# tank radio
 	tank_radio2 = {
-		
+		special_project_specialization = {  specialization_nuclear }		
 		coordination_bonus = 0.01
 
 		research_cost = 2.5
@@ -319,11 +813,12 @@ technologies = {
 		enable_equipment_modules = { 
 		    tank_phone
 			tank_radio_3
+			lc_radio_3
 		}
 
 		folder = {
 			name = electronics_folder
-			position = { x = -2 y = 14 }
+			position = { x = 14 y = 10 }
 		}
 		
 		category_all_armor = {
@@ -336,15 +831,64 @@ technologies = {
 		signal_company = {
 			battalion_mult = {
 				category = category_all_armor
-				soft_attack = 0.02
-				hard_attack = 0.02
+				soft_attack = 0.04
+				hard_attack = 0.04
 			}
 		}
 		on_research_complete = {
-		custom_effect_tooltip = radio_benefit
-		custom_effect_tooltip = radio2_tt
+			set_temp_variable = { temp = 2 }
+			set_temp_variable = { total_unit = num_battalions_with_type@amphibious_armor }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@amphibious_light_armor }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@amphibious_medium_armor }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@amphibious_heavy_armor }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@amphibious_super_heavy_armor }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@armored_car }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@super_heavy_flame_tank }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_flame_tank }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@medium_flame_tank }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@heavy_flame_tank }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@heavy_armor }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@ss_panzer_iii }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@ss_panzer_vi }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@guards_medium }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@guards_heavy }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_armor }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_armor_para }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@medium_armor }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_armor_recon }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_sp_anti_air_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@medium_sp_anti_air_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@heavy_sp_anti_air_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@super_heavy_sp_anti_air_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_sp_anti_air_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@medium_sp_anti_air_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@heavy_sp_anti_air_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@super_heavy_sp_anti_air_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_sp_artillery_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@medium_sp_artillery_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@heavy_sp_artillery_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@super_heavy_sp_artillery_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_assault_gun_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_assault_gun_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@medium_assault_gun_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@medium_assault_gun_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@heavy_assaut_gun_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@heavy_assaut_gun_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@super_heavy_assault_gun_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@super_heavy_assault_gun_company }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@super_heavy_armor }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_tank_destroyer_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@medium_tank_destroyer_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@heavy_tank_destroyer_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@super_heavy_tank_destroyer_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_assault_gun_company }
+			
+			multiply_temp_variable = { total_unit = temp }
+
+			set_temp_variable = { radios_stored = num_equipment@radio_equipment }
+			custom_effect_tooltip = radio2_tt
 		}
-		start_year = 1942
+		start_year = 1943
 		
 		ai_will_do = {
 			factor = 10
@@ -352,37 +896,6 @@ technologies = {
 				tag = GER
 				factor = 15
 			}
-		}
-		
-		categories = {
-			electronics
-		}
-	}
-	support_radio = {
-		research_cost = 2
-		folder = {
-			name = electronics_folder
-			position = { x = -4 y = 6 }
-		}
-		
-		category_support_battalions = {
-			need = {
-			   radio_equipment = 2
-			}
-		}
-		path = {
-			leads_to_tech = artillery_radio
-			research_cost_coeff = 1
-		}
-		on_research_complete = {
-		custom_effect_tooltip = radio_benefit
-		custom_effect_tooltip = radio2_tt
-		}
-		start_year = 1938
-		
-		ai_will_do = {
-			factor = 10
-			
 		}
 		
 		categories = {
@@ -390,76 +903,27 @@ technologies = {
 		}
 	}
 
-	# artillery radio
-	artillery_radio = {
-		research_cost = 2.5
-		folder = {
-			name = electronics_folder
-			position = { x = -4 y = 10 }
-		}
-		path = {
-			leads_to_tech = infantry_radio
-			research_cost_coeff = 1
-		}		
-		category_line_artillery = {
-			breakthrough = 0.15
-			defense = 0.075
-			soft_attack = 0.025
-			hard_attack = 0.025
-			need = {
-			   radio_equipment = 1
-			}
-		}
-		signal_company = {
-			battalion_mult = {
-				category = category_line_artillery
-				soft_attack = 0.05
-				hard_attack = 0.05
-				defense = 0.05
-				breakthrough = 0.05
-			}
-		}
-		on_research_complete = {
-		custom_effect_tooltip = radio_benefit
-		custom_effect_tooltip = radio2art_tt
-		}
-		start_year = 1940
-		
-		ai_will_do = {
-			factor = 10
-			modifier = {
-				tag = GER
-				factor = 15
-			}
-		}
-		
-		categories = {
-			electronics
-		}
-	}
+
+
 	#infantry radio
 	infantry_radio = {
+		special_project_specialization = {  specialization_nuclear }		
 		coordination_bonus = 0.01
 		
 		research_cost = 2.5
 		folder = {
 			name = electronics_folder
-			position = { x = -4 y = 14 }
+			position = { x = 16 y = 10 }
 		}
 		
 		category_all_infantry = {
 			soft_attack = 0.05
 			hard_attack = 0.05
 			need = {
-			   radio_equipment = 2
-			}
-		}
-		category_cavalry = {
-			soft_attack = 0.03
-			hard_attack = 0.03
-			need = {
 			   radio_equipment = 1
 			}
+			max_organisation = 5
+			default_morale = 0.05
 		}
 		category_line_artillery = {
 			breakthrough = 0.15
@@ -473,20 +937,63 @@ technologies = {
 		signal_company = {
 			battalion_mult = {
 				category = category_all_infantry
-				soft_attack = 0.05
-				hard_attack = 0.05
+				soft_attack = 0.1
+				hard_attack = 0.1
 				defense = 0.05
-				breakthrough = 0.05
+				breakthrough = 0.15
 			}
 		}
 
 		on_research_complete = {
-		custom_effect_tooltip = radio_benefit
-		custom_effect_tooltip = radio2_inf_tt
-		custom_effect_tooltip = radio2art_tt
-		custom_effect_tooltip = radio1_tt
+			set_temp_variable = { temp = 1 }
+			set_temp_variable = { total_unit = num_battalions_with_type@anti_air }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@anti_air_mot }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@anti_tank_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@anti_tank_brigade_mot }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@artillery_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@artillery_brigade_mot }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@field_gun_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@field_gun_brigade_mot }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@pack_artillery_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@pack_artillery_brigade_mot }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@artillery_heavy }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@artillery_heavy_mot }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@rocket_artillery_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@motorized_rocket_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@mountain_artillery_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@mountain_gun_brigade }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@anti_air_heavy }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@anti_air_heavy_mot }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@cavalry }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@amphibious_mechanized }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@infantry }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@militia }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@volkssturm_infantry }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@light_infantry }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@garrison }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@truck_infantry }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@truck_garrison }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@bicycle_battalion }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@motorized }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@mechanized }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@marine }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@mountaineers }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@paratrooper }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@ss_infantry }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@ss_motorized }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@ss_mechanized }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@guards_mech }
+			add_to_temp_variable  = { total_unit = num_battalions_with_type@infantry_spain }
+
+			multiply_temp_variable = { total_unit = temp }
+
+			set_temp_variable = { radios_stored = num_equipment@radio_equipment }
+				
+			
+			custom_effect_tooltip = radio3art_tt
+	
 		}
-		start_year = 1942
+		start_year = 1943
 		
 		ai_will_do = {
 			factor = 10
@@ -497,44 +1004,173 @@ technologies = {
 			electronics
 		}
 	}	
-	# radar
+	mclos_control_link = {
+###engineer company urban attack buff
+		special_project_specialization = {  specialization_nuclear }		
+
+
+		engineer = {
+
+			urban = { 
+				attack = 0.05
+			}
+		}
+		mobile_engineer = {
+			soft_attack = 0.05
+			hard_attack = 0.05
+			urban = { 
+				attack = 0.05
+			}
+		}
+		construction_engineer = {
+			urban = { 
+				defence = 0.05
+			}
+		}
+		research_cost = 0.8
+		start_year = 1943
+
+		path = {
+			leads_to_tech = anti_tank_missile
+			research_cost_coeff = 1
+		}
+		path = {
+			leads_to_tech = air_to_air_missile
+			research_cost_coeff = 1
+		}	
+		path = {
+			leads_to_tech = sp_rockets_rocket_bomber
+			research_cost_coeff = 1
+			
+		}		
+		folder = {
+			name = electronics_folder
+			position = { x = 19 y = 10 }
+		}
+		
+		ai_will_do = {
+			factor = 8
+		}
+	}	
+##unlocks at missile company
+	anti_tank_missile = {
+		special_project_specialization = {  specialization_land }
+		is_special_project_tech = yes
+		allow = {
+	 		ROOT = {
+				is_special_project_completed = sp:sp_land_high_explosive_anti_tank
+			}
+			AND = { 
+			has_tech = mclos_control_link
+			has_tech = experimental_rockets
+			}
+		}
+
+		enable_equipments = {
+			anti_tank_guided_missile_equipment_1
+		}		
+		enable_subunits = {
+			atgm_battalion
+			motorized_atgm_battalion
+			atgm_company			
+		}
+
+		research_cost = 0.8
+		start_year = 1945
+
+	
+		folder = {
+			name = electronics_folder
+			position = { x = 22 y = 14 }
+		}
+		
+		ai_will_do = {
+			factor = 8
+		}
+	}	
+###a lot of heavy fighter air attack, ok light fighter air attack
+	air_to_air_missile = {
+		special_project_specialization = {  specialization_air }		
+		allow = {
+	 		ROOT = {
+				is_special_project_completed = sp:sp_naval_proximity_fuze
+			}
+			AND = { 
+			has_tech = mclos_control_link
+			has_tech = experimental_rockets
+			}
+		}
+		on_research_complete = {
+			add_ideas = air_to_air_missiles
+		}
+
+		is_special_project_tech = yes
+
+		research_cost = 0.8
+		start_year = 1945
+
+		
+		folder = {
+			name = electronics_folder
+			position = { x = 24 y = 14 }
+		}
+		
+		ai_will_do = {
+			factor = 8
+		}
+	}	
 	radio_detection = {
-		# 
+		allow = {	
+	 		ROOT = {
+				is_special_project_completed = sp:sp_air_radar
+			}
+		}
+
 		enable_building = {
 			building = radar_station
 			level = 1
 		}
+
+
+		#enable_equipment_modules = {
+		#	ship_radar_1
+		#	radio_navigation_1
+		#}
+		research_cost = 1.75
 		
-		path = {
-			leads_to_tech = decimetric_radar 
-			research_cost_coeff = 1
-		}
-		enable_equipment_modules = { 
-			ship_radar_1
-		}
-		research_cost = 1.5
-		start_year = 1937
-		folder = {
-			name = electronics_folder
-			position = { x = 2 y = 4 }
-		}
+		#folder = {
+		#	name = electronics_folder
+		#	position = { x = @radar y = 2 }
+		#}
 		
 		ai_will_do = {
-			factor = 10
+			factor = 0
 		}
 		
 		categories = {
 			electronics
 			radar_tech
 		}
+
 	}
 	
-	decimetric_radar = {
-		
+#Heavy Gun Laying Radar (ship radar 2)+ state radar 2	
+	basic_gun_laying_radar = {
+		# can build radars/radar boost in air/sea combat depends on radar level
+		allow = {
+	 		ROOT = {
+				is_special_project_completed = sp:sp_air_radar
+			}
+		}
+
+		is_special_project_tech = yes
+		special_project_specialization = {  specialization_nuclear }		
+	
 		
 		path = {
-			leads_to_tech = centimetric_radar 
+			leads_to_tech = centimetric_fc_radar 
 			research_cost_coeff = 1
+			ignore_for_layout = yes
 		}
 		
 		static_anti_air_hit_chance_factor = 0.1
@@ -543,10 +1179,11 @@ technologies = {
 		start_year = 1939
 		folder = {
 			name = electronics_folder
-			position = { x = 2 y = 8 }
+			position = { x = 3 y = 4 }
 		}
 		enable_equipment_modules = { 
 			ship_radar_2
+			lc_radar
 		}
 		ai_will_do = {
 			factor = 5
@@ -562,34 +1199,43 @@ technologies = {
 			level = 2
 		}
 	}
-	
-	centimetric_radar = {
 
+###autocompleted by cavity magnetron, special project gained by tizzard mission for allies
+	centimetric_radarr = {
+		allow = {
+	 		ROOT = {
+				is_special_project_completed = sp:sp_cavity_magnetron
+			}
+		}
+		is_special_project_tech = yes
+		special_project_specialization = {  specialization_nuclear }	
 		enable_building = {
 			building = radar_station
-			level = 3
+			level = 4
 		}
 		
-		static_anti_air_hit_chance_factor = 0.1
+		path = {
+			leads_to_tech = centimetric_fc_radar
+			research_cost_coeff = 1
 		
-		path = {
-			leads_to_tech = advanced_centimetric_radar
-			research_cost_coeff = 1
 		}
 		path = {
-			leads_to_tech = night_fighters1
+			leads_to_tech = night_fighters2
 			research_cost_coeff = 1
+		
 		}
-		enable_equipment_modules = { 
-			ship_radar_3
+		path = {
+			leads_to_tech = beam_riding
+			research_cost_coeff = 1
 		}
 		research_cost = 2
 		start_year = 1941
 		
 		folder = {
 			name = electronics_folder
-			position = { x = 2 y = 12 }
+			position = { x = 5 y = 6 }
 		}
+	
 		
 		ai_will_do = {
 			factor = 1
@@ -600,29 +1246,44 @@ technologies = {
 			radar_tech
 		}
 	}
-	
-	advanced_centimetric_radar = {
+###magnetron firecontrol radar
+	centimetric_fc_radar = {
 
-		# radar boost in air/sea combat depends on radar level
-		enable_building = {
-			building = radar_station
-			level = 4
-		}		
-		path = {
-			leads_to_tech = night_fighters2
-			research_cost_coeff = 1
+		allow = {
+	 		ROOT = {
+				is_special_project_completed = sp:sp_cavity_magnetron
+			}
+			AND = { 
+			has_tech = centimetric_radarr
+			has_tech = basic_gun_laying_radar
+			}
+		}
+		is_special_project_tech = yes
+
+		category_heavy_anti_air = {
+			air_attack = 0.2
 		}
 		static_anti_air_hit_chance_factor = 0.1
+
+		enable_equipment_modules = { 
+			ship_radar_3
+		}
+		path = {
+			leads_to_tech = advanced_centimetric_fc_radar
+			research_cost_coeff = 1
+		}
+		
+		
+	
 		
 		research_cost = 2
 		start_year = 1942
-		enable_equipment_modules = { 
-			ship_radar_4
-		}
+
 		folder = {
 			name = electronics_folder
-			position = { x = 2 y = 14 }
+			position = { x = 3 y = 8 }
 		}
+		special_project_specialization = {  specialization_nuclear }		
 		
 		ai_will_do = {
 			factor = 5
@@ -632,19 +1293,98 @@ technologies = {
 			electronics
 			radar_tech
 		}
-	}
-	night_fighters1 = {
+	}	
+	advanced_centimetric_fc_radar = {
+
+		allow = {
+	 		ROOT = {
+				is_special_project_completed = sp:sp_cavity_magnetron
+			}
+		}
+		is_special_project_tech = yes	
+
+		static_anti_air_hit_chance_factor = 0.1
+
+		category_anti_air = {
+			air_attack = 0.2
+		}
+		enable_building = {
+			building = anti_air_building
+			level = 10
+		}		
+		research_cost = 1
+		start_year = 1944
+		enable_equipment_modules = { 
+			ship_radar_4
+		}
+		folder = {
+			name = electronics_folder
+			position = { x = 3 y = 12 }
+		}
+		special_project_specialization = {  specialization_nuclear }		
 		
+		ai_will_do = {
+			factor = 5
+		}
+		
+		categories = {
+			electronics
+			radar_tech
+		}
+	}	
+###extra ground launched aa missile attack.
+	beam_riding = {
+		allow = {
+	 		ROOT = {
+				is_special_project_completed = sp:sp_rockets_ground_to_air_missile
+			}
+		}
+		is_special_project_tech = yes
+		special_project_specialization = {  specialization_nuclear }		
 		research_cost = 2
 		folder = {
 			name = electronics_folder
-			position = { x = 0 y = 12 }
+			position = { x = 5 y = 12 }
+		}
+		on_research_complete = {
+			add_ideas = beam_riding
+		}		
+		
+		
+		start_year = 1944
+		
+		ai_will_do = {
+			factor = 10
+			
 		}
 		
+		categories = {
+			electronics
+		}
+		special_project_specialization = { specialization_air }
+	}
+##klystron air radar
+	night_fighters1 = {
+		allow = {
+	 		ROOT = {
+				is_special_project_completed = sp:sp_air_radar
+			}
+		}
+
+		is_special_project_tech = yes		
+		research_cost = 1
+		folder = {
+			name = electronics_folder
+			position = { x = 7 y = 6 }
+		}
+		path = {
+			leads_to_tech = night_fighters2
+			research_cost_coeff = 1
+			ignore_for_layout = yes
+		}		
 		
 		air_night_penalty = -0.2
 		air_weather_penalty = -0.2
-		air_accidents_factor = -0.2
 		
 		
 		start_year = 1941
@@ -657,19 +1397,32 @@ technologies = {
 		categories = {
 			electronics
 		}
+		special_project_specialization = { specialization_air }
 	}
+##magnetron air radar
 	night_fighters2 = {
-		
-		research_cost = 2
+		allow = {
+	 		ROOT = {
+				is_special_project_completed = sp:sp_cavity_magnetron
+			}
+			AND = { 
+			has_tech = centimetric_radarr
+			has_tech = night_fighters1
+			}
+		}
+		is_special_project_tech = yes		
+		research_cost = 1
 		folder = {
 			name = electronics_folder
-			position = { x = 0 y = 14 }
+			position = { x = 7 y = 8 }
 		}
-		
+		path = {
+			leads_to_tech = air_to_ground_radar
+			research_cost_coeff = 1
+		}		
 		
 		air_night_penalty = -0.2
 		air_weather_penalty = -0.2
-		air_accidents_factor = -0.2
 		
 		
 		start_year = 1942
@@ -682,6 +1435,34 @@ technologies = {
 		categories = {
 			electronics
 		}
+		special_project_specialization = { specialization_air }
+	}
+	air_to_ground_radar = {
+		allow = {
+	 		ROOT = {
+				is_special_project_completed = sp:sp_cavity_magnetron
+			}
+		}
+		is_special_project_tech = yes		
+		research_cost = 1
+		folder = {
+			name = electronics_folder
+			position = { x = 7 y = 10 }
+		}
+		
+		air_strategic_bomber_night_penalty = -0.3		
+		
+		start_year = 1943
+		
+		ai_will_do = {
+			factor = 10
+			
+		}
+		
+		categories = {
+			electronics
+		}
+		special_project_specialization = { specialization_air }
 	}
 	mechanical_computing = {
 
@@ -692,15 +1473,12 @@ technologies = {
 			leads_to_tech = computing_machine 
 			research_cost_coeff = 1
 		}
-		path = {
-			leads_to_tech = basic_fire_control_system
-			research_cost_coeff = 1
-		}
+
 		research_cost = 2.5
-		
+		special_project_specialization = {  specialization_nuclear }		
 		folder = {
 			name = electronics_folder
-			position = { x = 8 y = 2 }
+			position = { x = 0 y = 0 }
 		}
 		
 		ai_will_do = {
@@ -712,40 +1490,29 @@ technologies = {
 			computing_tech
 		}
 	}
-	
+###advanced decryption and encryption locked behind computing	
 	computing_machine = {
 
 		# small boost to research speed
 		research_speed_factor = 0.11
-		
+        special_project_speed_factor = 0.03		
 		path = {
 			leads_to_tech = improved_computing_machine 
 			research_cost_coeff = 1
 		}
 		path = {
-			leads_to_tech = electro_mechanical_firecontrol
+			leads_to_tech = improved_fire_control_system
 			research_cost_coeff = 1
-		}
-		path = {
-			leads_to_tech = basic_encryption 
-			research_cost_coeff = 1
-		}
-		path = {
-			leads_to_tech = basic_decryption 
-			research_cost_coeff = 1
-		}
-		path = {
-			leads_to_tech = tech_stabilizer
-			research_cost_coeff = 1
-		}
+		}	
+		
 		research_cost = 2.5
 		start_year = 1938
 		
 		folder = {
 			name = electronics_folder
-			position = { x = 8 y = 6 }
+			position = { x = 0 y = 4 }
 		}
-		
+		special_project_specialization = {  specialization_nuclear }		
 		ai_will_do = {
 			factor = 8
 		}
@@ -757,43 +1524,17 @@ technologies = {
 			computing_tech
 		}
 	}
-	tech_stabilizer = {
-
-		enable_equipment_modules = {
-			stabilizer
-		}
-			
-		research_cost = 1.5
-		start_year = 1939
-		folder = {
-			name = electronics_folder
-			position = { x = 9 y = 8 }
-		}
-		
-		categories = {
-			tank_upgrade
-			
-		}
-				
-		ai_will_do = {
-			factor = 8
-		}
-	}	
-	
+####gives bombing bonus (computing bombsight, 	
 	improved_computing_machine = {
 
 		research_speed_factor = 0.12
-
+        special_project_speed_factor = 0.06
 		path = {
 			leads_to_tech = advanced_computing_machine 
 			research_cost_coeff = 1
 		}
 		path = {
-			leads_to_tech = improved_encryption 
-			research_cost_coeff = 1
-		}
-		path = {
-			leads_to_tech = improved_decryption 
+			leads_to_tech = advanced_fire_control_system
 			research_cost_coeff = 1
 		}
 		research_cost = 2.5
@@ -801,13 +1542,13 @@ technologies = {
 		
 		folder = {
 			name = electronics_folder
-			position = { x = 8 y = 10 }
+			position = { x = 0 y = 6 }
 		}
 		
 		ai_will_do = {
 			factor = 7
 		}
-		
+		special_project_specialization = {  specialization_nuclear }		
 		categories = {
 			electronics
 			encryption_tech
@@ -820,7 +1561,7 @@ technologies = {
 
 		# small boost to research speed
 		research_speed_factor = 0.13
-		
+        special_project_speed_factor = 0.12		
 		path = {
 			leads_to_tech = advanced_encryption 
 			research_cost_coeff = 1
@@ -832,10 +1573,10 @@ technologies = {
 		
 		research_cost = 2.5
 		start_year = 1942
-		
+		special_project_specialization = {  specialization_nuclear }		
 		folder = {
 			name = electronics_folder
-			position = { x = 8 y = 14 }
+			position = { x = 0 y = 12 }
 		}
 		
 		ai_will_do = {
@@ -850,155 +1591,6 @@ technologies = {
 		}
 	}
 	
-	basic_encryption = {
-
-		# encryption 1
-		encryption = 1
-		allow_branch = {
-			NOT = { has_dlc = "La Resistance" }
-		}
-		research_cost = 1
-		start_year = 1938
-		
-		folder = {
-			name = electronics_folder
-			position = { x = 4 y = 6 }
-		}
-		
-		ai_will_do = {
-			factor = 1
-		}
-		
-		categories = {
-			electronics
-			encryption_tech
-		}
-	}
-	
-	improved_encryption = {
-
-		# encryption 2
-		encryption = 1
-		allow_branch = {
-			NOT = { has_dlc = "La Resistance" }
-		}
-		research_cost = 1
-		start_year = 1940
-		
-		folder = {
-			name = electronics_folder
-			position = { x = 4 y = 10 }
-		}
-		
-		ai_will_do = {
-			factor = 6
-		}
-		
-		categories = {
-			electronics
-			encryption_tech
-		}
-	}
-	
-	advanced_encryption = {
-
-		# encryption 3
-		encryption = 1
-		allow_branch = {
-			NOT = { has_dlc = "La Resistance" }
-		}
-		research_cost = 1
-		start_year = 1942
-		
-		folder = {
-			name = electronics_folder
-			position = { x = 4 y = 14 }
-		}
-		
-		ai_will_do = {
-			factor = 6
-		}
-		
-		categories = {
-			electronics
-			encryption_tech
-		}
-	}
-	
-	basic_decryption = {
-
-		# decryption 1
-		decryption = 1
-		allow_branch = {
-			NOT = { has_dlc = "La Resistance" }
-		}
-		research_cost = 1.5
-		start_year = 1938
-		
-		folder = {
-			name = electronics_folder
-			position = { x = 8 y = 6 }
-		}
-		
-		ai_will_do = {
-			factor = 6
-		}
-		
-		categories = {
-			electronics
-			decryption_tech
-		}
-	}
-	
-	improved_decryption = {
-
-		# decryption 2
-		decryption = 1
-		allow_branch = {
-			NOT = { has_dlc = "La Resistance" }
-		}
-		research_cost = 1.5
-		start_year = 1940
-		
-		folder = {
-			name = electronics_folder
-			position = { x = 8 y = 10 }
-		}
-		
-		ai_will_do = {
-			factor = 6
-		}
-		
-		categories = {
-			electronics
-			decryption_tech
-		}
-	}
-	
-	advanced_decryption = {
-
-		# decryption 3
-		decryption = 1
-		allow_branch = {
-			NOT = { has_dlc = "La Resistance" }
-		}
-		research_cost = 1.5
-		start_year = 1942
-		
-		folder = {
-			name = electronics_folder
-			position = { x = 8 y = 14 }
-		}
-		
-		ai_will_do = {
-			factor = 6
-		}
-		
-		categories = {
-			electronics
-			decryption_tech
-		}
-	}
 	basic_fire_control_system = {
 
 		allow_branch = {
@@ -1008,21 +1600,18 @@ technologies = {
 		enable_equipment_modules = { 
 			ship_fire_control_system_1
 		}
-		path = {
-			leads_to_tech = improved_fire_control_system
-			research_cost_coeff = 1
-		}
+
 		path = {
 			leads_to_tech = optical_rangefinder
 			research_cost_coeff = 1
 		}	
-		research_cost = 1
+		research_cost = 0.5
 		
 		folder = {
 			name = electronics_folder
-			position = { x = 4 y = 4 }
+			position = { x = -2 y = 0 }
 		}
-		start_year = 1937
+		start_year = 1936
 		ai_will_do = {
 			factor = 0.75
 			modifier = {
@@ -1055,20 +1644,17 @@ technologies = {
 			ship_fire_control_system_2
 		}
 
-		path = {
-			leads_to_tech = advanced_fire_control_system
-			research_cost_coeff = 1
-		}
+
 		
-		research_cost = 1
+		research_cost = 0.5
 		allow_branch = {
 			has_dlc = "Man the Guns"
 		}
 		folder = {
 			name = electronics_folder
-			position = { x = 4 y = 8 }
+			position = { x = -2 y = 4 }
 		}
-		start_year = 1939
+		start_year = 1940
 		ai_will_do = {
 			factor = 0.75
 			modifier = {
@@ -1104,11 +1690,11 @@ technologies = {
 			has_dlc = "Man the Guns"
 		}
 		
-		research_cost = 1
+		research_cost = 0.5
 		
 		folder = {
 			name = electronics_folder
-			position = { x = 4 y = 10 }
+			position = { x = -2 y = 6 }
 		}
 		start_year = 1940
 		ai_will_do = {
@@ -1143,7 +1729,7 @@ technologies = {
 		
 		folder = {
 			name = electronics_folder
-			position = { x = 5 y = 12 }
+			position = { x = -4 y = 6 }
 		}
 		
 		ai_will_do = {
@@ -1157,293 +1743,13 @@ technologies = {
 		}
 
 	}
-	electro_mechanical_firecontrol = {
-	
-		enable_equipment_modules = {
-		FC
-		}
 
-
-		research_cost = 1
-
-		start_year = 1942
-		
-		folder = {
-			name = electronics_folder
-			position = { x = 6 y = 14 }
-		}
-		
-		ai_will_do = {
-			factor = 6
-			
-		}
-						
-		categories = {
-            tank_upgrade
-            
-		}
-
-	}
-	experimental_rockets = {
-
-		enable_building = {
-			building = rocket_site
-			level = 2
-		}
-
-		path = {
-			leads_to_tech = rocket_engines 
-			research_cost_coeff = 1
-		}
-		
-		research_cost = 2
-		start_year = 1943
-		
-		folder = {
-			name = electronics_folder
-			position = { x = 1 y = 0 }
-		}
-		folder = {
-			name = secret_weapons_folder
-			position = { x = 10 y = 0 }
-		}
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				tag = ENG
-				factor = 10
-			}
-			modifier = {
-				tag = GER
-				factor = 25
-			}
-			modifier = {
-				tag = USA
-				factor = 10
-			}
-		}
-		
-		categories = {
-			rocketry
-		}
-	}
-	
-	rocket_engines = {
-
-		show_equipment_icon = yes
-
-		# can build v1s/rocket planes
-		enable_equipments = {
-			rocket_interceptor_equipment_1
-			guided_missile_equipment_1
-		}
-		
-		rocket_artillery = {
-			soft_attack = 0.15
-		}
-		rocket_artillery_brigade = {
-			soft_attack = 0.15
-		}
-		motorized_rocket_brigade = {
-			soft_attack = 0.15
-		}
-		
-		path = {
-			leads_to_tech = improved_rocket_engines 
-			research_cost_coeff = 1
-		}
-		path = {
-			leads_to_tech = jet_engines 
-			research_cost_coeff = 1
-		}
-		
-		research_cost = 2.5
-		start_year = 1944
-		
-		folder = {
-			name = electronics_folder
-			position = { x = 1 y = 2 }
-		}
-		
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				tag = ENG
-				factor = 10
-			}
-			modifier = {
-				tag = GER
-				factor = 25
-			}
-			modifier = {
-				tag = USA
-				factor = 10
-			}
-		}
-		
-		categories = {
-			rocketry
-		}		
-	}
-	
-	improved_rocket_engines = {
-
-		show_equipment_icon = yes
-		
-		# can build v2s
-		
-		enable_equipments = {
-			rocket_interceptor_equipment_2
-			guided_missile_equipment_2
-		}
-		
-		rocket_artillery = {
-			soft_attack = 0.15
-		}
-		rocket_artillery_brigade = {
-			soft_attack = 0.15
-		}
-		motorized_rocket_brigade = {
-			soft_attack = 0.15
-		}
-		
-		path = {
-			leads_to_tech = advanced_rocket_engines 
-			research_cost_coeff = 1
-		}
-		
-		research_cost = 1.5
-		start_year = 1945
-		
-		folder = {
-			name = electronics_folder
-			position = { x = 1 y = 4 }
-		}
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				tag = ENG
-				factor = 10
-			}
-			modifier = {
-				tag = GER
-				factor = 25
-			}
-			modifier = {
-				tag = USA
-				factor = 10
-			}
-		}
-		
-		categories = {
-			rocketry
-		}
-	}
-	
-	advanced_rocket_engines = {
-
-		show_equipment_icon = yes
-
-		# can build ICBMs?
-		
-		enable_equipments = {
-			rocket_interceptor_equipment_3
-			guided_missile_equipment_3
-		}
-		
-		rocket_artillery = {
-			soft_attack = 0.15
-		}
-		rocket_artillery_brigade = {
-			soft_attack = 0.15
-		}
-		motorized_rocket_brigade = {
-			soft_attack = 0.15
-		}
-		
-		
-		research_cost = 1.5
-		start_year = 1946
-		
-		folder = {
-			name = electronics_folder
-			position = { x = 1 y = 6  }
-		}
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				tag = ENG
-				factor = 10
-			}
-			modifier = {
-				tag = GER
-				factor = 25
-			}
-			modifier = {
-				tag = USA
-				factor = 10
-			}
-		}
-		
-		categories = {
-			rocketry
-		}
-	}
-	
-	jet_engines = {
-	
-		folder = {
-			name = electronics_folder
-			position = { x = 3 y = 2 }
-		}
-		enable_equipment_modules = {
-			tank_gas_turbine_engine
-		}	
-		start_year = 1944
-		research_cost = 2
-
-		
-		
-		desc = "JET_ENGINES_SPECIAL"
-
-		on_research_complete = {
-			custom_effect_tooltip = JET_ENGINES_RESEARCHED
-		}
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				tag = ENG
-				factor = 10
-			}
-			modifier = {
-				tag = GER
-				factor = 25
-			}
-			modifier = {
-				tag = USA
-				factor = 10
-			}
-		}
-		
-		categories = {
-			rocketry
-			jet_technology
-		}
-	}
 	
 	atomic_research = {
 
 		research_speed_factor = 0.05
 		
-		path = {
-			leads_to_tech = nuclear_reactor 
-			research_cost_coeff = 1
-		}
+		special_project_specialization = {  specialization_nuclear }		
 		
 		start_year = 1940
 		research_cost = 5
@@ -1464,71 +1770,114 @@ technologies = {
 		categories = {
 			nuclear
 		}
+		on_research_complete = {
+			custom_effect_tooltip = {
+				localization_key = SP_UNLOCK_PROJECT
+				PROJECT = sp_nuclear_reactor	
+			}
+		}
 		
 
 	}
-	
 	nuclear_reactor = {
-
+		
 		# can build reactors
 		
 		start_year = 1943
 		research_cost = 5
 		
-		folder = {
-			name = electronics_folder
-			position = { x = 2 y = 2 }
-		}
+		#folder = {
+		#	name = electronics_folder
+		#	position = { x = 0 y = 2 }
+		#}
 
-		path = {
-			leads_to_tech = nukes 
-			research_cost_coeff = 1
-		}
+		#path = {
+		#	leads_to_tech = nukes 
+		#	research_cost_coeff = 1
+		#}
 		
 		ai_will_do = {
-			factor = 1
-
+			factor = 3
 			modifier = {
 				tag = USA
-				factor = 25
+				factor = 2
 			}
 		}
 		
 		categories = {
 			nuclear
 		}
+
+		special_project_specialization = { specialization_nuclear }
 		
 		enable_building = {
 			building = nuclear_reactor
 			level = 1
 		}
 	}
+	nuclear_reactor_heavy_water = {
 
-	nukes = {
-	
-		start_year = 1945
-		research_cost = 10
+		# can build reactors
 		
-		folder = {
-			name = electronics_folder
-			position = { x = 2 y = 6 }
-		}
+		start_year = 1943
+		research_cost = 5
+		
+		#folder = {
+		#	name = electronics_folder
+		#	position = { x = 0 y = 2 }
+		#}
+
+		#path = {
+		#	leads_to_tech = nukes 
+		#	research_cost_coeff = 1
+		#}
 		
 		ai_will_do = {
 			factor = 1
-
-			modifier = {
-				tag = USA
-				factor = 50
-			}
 		}
-		
-		nuclear_production = 1
 		
 		categories = {
 			nuclear
 		}
+
+		special_project_specialization = { specialization_nuclear }
+		
+		enable_building = {
+			building = nuclear_reactor_heavy_water
+			level = 1
+		}
 	}
+	nukes = {
+	
+		start_year = 1945
+		research_cost = 5
+		
+		#folder = {
+		#	name = electronics_folder
+		#	position = { x = 0 y = 6 }
+		#}
+		
+		ai_will_do = {
+			factor = 10
+		}
+		
+		nuclear_production = 0.5
+		on_research_complete = {
+			if = {
+				limit = {
+					tag = USA
+					has_war_with = JAP
+				}
+				play_warning_to_japan_effect = yes
+			}
+		}
+		categories = {
+			nuclear
+		}
+		special_project_specialization = { specialization_nuclear }
+	}
+	
+	
 	lar_decryption_bonus_tech = {
 				
 		research_cost = 1.5 #Carrier Variant
@@ -1546,4 +1895,311 @@ technologies = {
 		}
 		################
 	}
+###   ##   ##  # # ### ### ###  #   # 
+#  # #  # #  # # # #    #  #  #  # #  
+###  #  # #    ##  ##   #  ###    #   
+#  # #  # #  # # # #    #  #  #   #   
+#  #  ##   ##  # # ###  #  #  #   #   
+
+	
+
+	
+	experimental_rockets = {
+
+		enable_building = {
+			building = rocket_site
+			level = 3
+		}
+		
+		path = {
+			leads_to_tech = sp_rockets_improved_guidance 
+			research_cost_coeff = 1
+		}
+		path = {
+			leads_to_tech = sp_rockets_rocket_bomber 
+			research_cost_coeff = 1
+			ignore_for_layout = yes
+		}
+		path = {
+			leads_to_tech = sp_rockets_dual_chamber_rocket_engine_1 
+			research_cost_coeff = 1
+		}
+		
+		research_cost = 1.5
+		start_year = 1942
+		
+		folder = {
+			name = electronics_folder
+			position = { x = 27 y = 8 }
+		}
+
+		on_research_complete = {
+
+			custom_effect_tooltip = {
+				localization_key = SP_UNLOCK_PROJECT
+				PROJECT = sp_rockets_flying_bomb	
+			}
+			custom_effect_tooltip = {
+				localization_key = SP_UNLOCK_PROJECT
+				PROJECT = sp_rockets_ballistic_missile	
+			}
+			custom_effect_tooltip = {
+				localization_key = SP_UNLOCK_PROJECT
+				PROJECT = sp_rocket_interceptor	
+			}						
+		}
+	
+		ai_will_do = {
+			factor = 1
+		}
+		
+		categories = {
+			rocketry
+		}
+		special_project_specialization = { specialization_air }
+	}
+	
+	
+
+	sp_rockets_improved_guidance = {
+		allow = {
+	 		ROOT = {
+				is_special_project_completed = sp:sp_rockets_flying_bomb
+			}
+		}
+
+		special_project_specialization = { specialization_air }
+
+		is_special_project_tech = yes
+
+		guided_missile = { 
+			air_range = 0.25
+		}
+
+		rocket_artillery = {
+			soft_attack = 0.1
+		}
+		rocket_artillery_brigade = {
+			soft_attack = 0.1
+		}
+	
+		motorized_rocket_brigade = {
+			soft_attack = 0.1
+		}
+		
+		research_cost = 0.5
+		start_year = 1943
+		
+		folder = {
+			name = electronics_folder
+			position = { x = 27 y = 10 }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+		
+		categories = {
+			rocketry
+		}
+	}
+
+	sp_rockets_rocket_bomber = {
+		allow = {
+	 		ROOT = {
+				is_special_project_completed = sp:sp_rockets_flying_bomb
+			}
+		}
+
+		special_project_specialization = { specialization_air }
+
+		is_special_project_tech = yes
+		
+			modifier = {
+				naval_strike_targetting_factor = 0.1
+			}
+		
+		path = {
+			leads_to_tech = sp_rockets_improved_rocket_bomber 
+			research_cost_coeff = 1
+		}
+		
+		research_cost = 0.5
+		start_year = 1944
+		
+		folder = {
+			name = electronics_folder
+			position = { x = 26 y = 12 }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+		
+		categories = {
+			rocketry
+		}
+	}
+
+	sp_rockets_improved_rocket_bomber = {
+		allow = {
+	 		ROOT = {
+				is_special_project_completed = sp:sp_rockets_flying_bomb
+			}
+		}
+
+		special_project_specialization = { specialization_air }
+		
+		is_special_project_tech = yes
+
+			modifier = {
+				naval_strike_targetting_factor = 0.1
+			}
+		
+		research_cost = 0.5
+		start_year = 1945
+		
+		folder = {
+			name = electronics_folder
+			position = { x = 26 y = 14 }
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+		
+		categories = {
+			rocketry
+		}
+	}
+	
+	
+	
+	jet_engines = {
+	
+	#	folder = {
+	#		name = electronics_folder
+	#		position = { x = 2 y = 2 }
+	#	}
+	#	
+		start_year = 1944
+		research_cost = 2
+		enable_equipment_modules = {
+			tank_gas_turbine_engine
+			jet_engine_1x
+			jet_engine_2x
+			jet_engine_3x
+			jet_engine_4x
+			jet_engine_6x
+		}
+	#	folder = {
+	#		name = air_techs_folder
+	#		position = { x = 2 y = 11 }
+	#	}
+
+	#	folder = {
+	#		name = bba_air_techs_folder
+	#		position = { x = -1 y = 11 }
+	#	}
+		
+		desc = "JET_ENGINES_SPECIAL"
+
+		on_research_complete = {
+			custom_effect_tooltip = JET_ENGINES_RESEARCHED
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+		
+		categories = {
+			rocketry
+			jet_technology
+		}
+	}
+	########## SPECIAL PROJECTS ##########
+
+	#############################
+		### Rocket Projects ###
+	#############################
+	
+
+	sp_rockets_dual_chamber_rocket_engine_1 = {
+		show_equipment_icon = yes
+		allow = {
+		 	ROOT = {
+				is_special_project_completed = sp:sp_rocket_interceptor
+			}
+		}
+
+		special_project_specialization = { specialization_air }
+
+		is_special_project_tech = yes
+				
+		enable_equipments = {
+
+			rocket_interceptor_equipment_2
+		}
+
+		
+		path = {
+			leads_to_tech = sp_rockets_dual_chamber_rocket_engine_2
+			research_cost_coeff = 1
+		}
+
+		research_cost = 1
+		start_year = 1944
+		
+		folder = {
+			name = electronics_folder
+			position = { x = 28 y = 12 }
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		categories = {
+			rocketry
+		}
+
+	}
+
+	sp_rockets_dual_chamber_rocket_engine_2 = {
+		show_equipment_icon = yes
+		allow = {
+		 	ROOT = {
+				is_special_project_completed = sp:sp_rocket_interceptor
+			}
+		}
+
+		special_project_specialization = { specialization_air }
+
+		is_special_project_tech = yes
+				
+		enable_equipments = {
+
+			rocket_interceptor_equipment_3
+		}
+
+
+		
+		research_cost = 1
+		start_year = 1946
+		
+		folder = {
+			name = electronics_folder
+			position = { x = 28 y = 16 }
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		categories = {
+			rocketry
+		}
+	}
+
+
 }
