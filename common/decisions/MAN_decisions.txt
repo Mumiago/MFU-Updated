@@ -315,10 +315,7 @@ MAN_internal_factions = {
 			NOT = {
 				has_country_flag = faction_change_going
 			}
-			OR = {
-				has_completed_focus = MAN_the_law_on_zaibatsu_regulations
-				has_completed_focus = MAN_obedience
-			}
+			has_completed_focus = MAN_the_law_on_zaibatsu_regulations
 		}
 		visible = {
 			NOT = {
@@ -327,8 +324,6 @@ MAN_internal_factions = {
 			NOT = {
 				has_country_flag = path_3_selected
 			}
-
-			has_completed_focus = MAN_the_law_on_zaibatsu_regulations
 
 		}
 		ai_will_do = {
@@ -359,20 +354,13 @@ MAN_internal_factions = {
 
 			if={
 				limit = {
-					OR = {
-						JAP = {
-							NOT ={
-								has_completed_focus = JAP_found_mangyo
-							}
+					JAP = {
+						NOT ={
+							has_completed_focus = JAP_found_mangyo
 						}
-						NOT = {
-							has_completed_focus = MAN_modernizing_the_economy
-						}
-						
 					}
-					
 					NOT = {
-						has_completed_focus = MAN_the_law_on_zaibatsu_regulations
+						has_completed_focus = MAN_modernizing_the_economy
 					}
 				}
 				MAN_mitzu_medium_influence_increase_effect = yes
@@ -424,24 +412,6 @@ MAN_internal_factions = {
 					MAN_KPT_medium_loyalty_decrease_effect = yes
 					MAN_KPT_low_influence_decrease_effect = yes
 
-				}
-				else_if = {
-					limit = {
-						OR = {
-							JAP = {
-								has_completed_focus = JAP_found_mangyo
-							}
-							has_completed_focus = MAN_modernizing_the_economy
-						}
-					}
-					MAN_mitzu_high_influence_increase_effect = yes
-					MAN_SM_high_influence_increase_effect = yes
-					MAN_MIC_high_influence_increase_effect = yes
-
-					custom_effect_tooltip = MANspace
-
-					MAN_KPT_high_loyalty_decrease_effect = yes
-					MAN_KPT_medium_influence_decrease_effect = yes
 				}
 			}
 			custom_effect_tooltip = spacers
@@ -948,6 +918,9 @@ MAN_internal_factions = {
 				has_country_flag = faction_change_going
 			}
 
+			has_completed_focus = MAN_obedience
+			
+
 		}
 		visible = {
 			NOT = {
@@ -956,7 +929,6 @@ MAN_internal_factions = {
 			NOT = {
 				has_country_flag = path_3_selected
 			}
-			has_completed_focus = MAN_obedience
 		}
 
 
@@ -1346,10 +1318,7 @@ MAN_internal_factions = {
 				NOT = {
 					has_country_flag = faction_change_going
 				}
-				OR = {
-					has_completed_focus = MAN_obedience
-					has_completed_focus = MAN_kwantung_army_takes_control
-				}
+				has_completed_focus = MAN_kwantung_army_takes_control
 			}
 			visible = {
 				NOT = {
@@ -1358,7 +1327,6 @@ MAN_internal_factions = {
 				NOT = {
 					has_country_flag = path_2_selected
 				}
-				has_completed_focus = MAN_kwantung_army_takes_control
 			}
 
 			ai_will_do = {
@@ -2047,7 +2015,7 @@ MAN_internal_factions = {
 		}
 
 		custom_cost_trigger = {
-			has_political_power >39
+			has_political_power >24
 		}
 		custom_cost_text = stabber_cost_man
 
@@ -2060,7 +2028,7 @@ MAN_internal_factions = {
 		complete_effect = {
 
 				hidden_effect = {
-					add_political_power = -50
+					add_political_power = -24
 				}
 
 			set_country_flag = { flag = faction_change_going value = 1 days = 120 }
@@ -2469,10 +2437,72 @@ MAN_internal_factions = {
 				}
 			}
 			custom_effect_tooltip = spacers
-			
-			add_popularity = {
-				ideology = communism
-				popularity = 0.1
+
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = MAN_MTZ_integrated
+						has_country_flag = MAN_MTZ_remove
+					}
+					NOT = {
+						has_country_flag = MAN_SM_integrated
+						has_country_flag = MAN_SM_remove
+					}
+				}
+
+				add_popularity = {
+					ideology = communism
+					popularity = 0.1
+				}
+
+				else_if = {
+					limit = {
+						OR = {
+							has_country_flag = MAN_MTZ_integrated
+							has_country_flag = MAN_MTZ_remove
+						}
+						NOT = {
+							has_country_flag = MAN_SM_integrated
+							has_country_flag = MAN_SM_remove
+						}
+					}
+					add_popularity = {
+						ideology = communism
+						popularity = 0.05
+					}
+				}
+				else_if = {
+					limit = {
+						NOT = {
+							has_country_flag = MAN_MTZ_integrated
+							has_country_flag = MAN_MTZ_remove
+						}
+						OR = {
+							has_country_flag = MAN_SM_integrated
+							has_country_flag = MAN_SM_remove
+						}
+					}
+					add_popularity = {
+						ideology = communism
+						popularity = 0.05
+					}
+				}
+				else_if = {
+					limit = {
+						OR = {
+							has_country_flag = MAN_MTZ_integrated
+							has_country_flag = MAN_MTZ_remove
+						}
+						OR = {
+							has_country_flag = MAN_SM_integrated
+							has_country_flag = MAN_SM_remove
+						}
+					}
+					add_popularity = {
+						ideology = fascism
+						popularity = 0.02
+					}
+				}
 			}
 		}
 	}
@@ -2774,7 +2804,7 @@ MAN_internal_factions = {
 		visible = {
 			OR = {
 				has_completed_focus = MAN_kwantung_army_takes_control
-				has_completed_focus = MAN_the_law_on_zaibatsu_regulations
+				has_completed_focus = MAN_obedience
 			}
 			OR = {
 				check_variable = {
@@ -2851,7 +2881,7 @@ MAN_internal_factions = {
 		visible = {
 			OR = {
 				has_completed_focus = MAN_kwantung_army_takes_control
-				has_completed_focus = MAN_the_law_on_zaibatsu_regulations
+				has_completed_focus = MAN_obedience
 			}
 			OR = {
 				check_variable = {
@@ -2926,7 +2956,7 @@ MAN_internal_factions = {
 		visible = {
 			OR = {
 				has_completed_focus = MAN_kwantung_army_takes_control
-				has_completed_focus = MAN_the_law_on_zaibatsu_regulations
+				has_completed_focus = MAN_obedience
 			}
 			OR = {
 				check_variable = {
@@ -2935,6 +2965,12 @@ MAN_internal_factions = {
 				check_variable = {
 					MIC_influence < 26
 				}	
+			}
+			OR = {
+				JAP = {
+					has_completed_focus = JAP_found_mangyo
+				}
+				has_completed_focus = MAN_modernizing_the_economy
 			}
 				NOT = {
 					has_completed_focus = MAN_the_law_on_zaibatsu_regulations
@@ -2994,9 +3030,6 @@ MAN_internal_factions = {
 			
 		}
 		visible = {
-
-				has_completed_focus = MAN_kwantung_army_takes_control
-			
 			OR = {
 				check_variable = {
 					KPT_loyalty < 26
@@ -3153,7 +3186,13 @@ MAN_internal_factions = {
 					has_country_flag = MAN_MIC_remove
 				}
 			}
-
+			OR = {
+				has_completed_focus = MAN_modernizing_the_economy
+				JAP = {
+					has_completed_focus = JAP_found_mangyo
+				}
+			}
+			
 			check_variable = {
 				var = MIC_loyalty
 				value = MIC_influence
