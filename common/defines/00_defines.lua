@@ -650,10 +650,10 @@ NProject = {
 	NEEDED_SUPPLY_FOR_FULL_SPEED_PROJECT = 3.0,	-- Supply needed in province to get full research speed for special project
     MINIMUM_PROJECT_SPEED_FACTOR_FROM_RESOURCE_SHORTAGE = 0.2, -- Minimum special project research speed factor based on resource shortage^M
 	ITERATION_REWARD_DEFAULT_WEIGHT = 1.0,			-- If no weight is specified, set it to 1.0
-	DEFAULT_PROJECT_COMPLETION_SCIENTIST_EXPERIENCE_GAIN = 192.0,	-- Default experience gain for assigned scientist when a project is completed
+	DEFAULT_PROJECT_COMPLETION_SCIENTIST_EXPERIENCE_GAIN = 400.0,	-- Default experience gain for assigned scientist when a project is completed
 	SCIENTIST_INJURED_FACTOR = 0.0,                 -- A factor to reduce the amount of progress gained in a program with attached injured scientist. E.g. 0.5 reduces the progress by 50%
 	RECRUIT_SCIENTIST_ONE_TRAIT_CHANCE = 0.35,		-- Chance to get one trait when creating a scientist. E.g. 0.35 = 35% chance to get a trait
-	SCIENTIST_BASIC_RESEARCH_DAILY_XP_GAIN = 0.28,	-- Daily experience gain for doing basic research
+	SCIENTIST_BASIC_RESEARCH_DAILY_XP_GAIN = 0.6,	-- Daily experience gain for doing basic research
 	RECRUIT_SCIENTIST_COST = {						-- Amount of pp to hire a scientist based on available scientist
 		25,			-- pp cost if no available scientist
 		50,			-- pp cost if 1 available scientist
@@ -663,9 +663,9 @@ NProject = {
 	SCIENTIST_SKILL_LEVEL_THRESHOLDS = {			-- Threshold for scientist to level up
 		100,		-- to go from level 0 to level 1
 		100,		-- to go from level 1 to level 2
-		300,		-- to go from level 2 to level 3
-		700,		-- ...
-		1500,		-- Max level = Array size
+		400,		-- to go from level 2 to level 3
+		1000,		-- ...
+		2000,		-- Max level = Array size
 	},
 	SCIENTIST_SKILL_LEVEL_SPEED_MODIFIER = {		-- Bonus to apply to daily phase progress according to the skill level of the scientist
 	    -1.0,    -- -1.0 means -100%         also name loc key is SCIENTIST_SKILL_LEVEL_NAME_0
@@ -680,11 +680,11 @@ NProject = {
 	PROJECT_CAPTURE_BREAKTHROUGH_PROGRESS = 0.15,        -- Ratio of breakthrough progress on capture to the captor for the facilities specialization
 	PROJECT_CAPTURE_DIMINISHING_RETURN = 0.6,          -- Reduced amount of gain when capturing a facility with a project you already gained. Will apply the factor each time a capture occurs. 0.6 means a reduction of 60% on next project capture.
 	BASIC_RESEARCH_TECHNOLOGY_BONUS_FACTOR = 0.05,     -- Bonus research factor applied to technologies per scientist skill level when performing basic research in a matching facility.
-	BASIC_RESEARCH_TECHNOLOGY_BONUS_DIMINISHING_RETURN_FACTOR = 0.15, -- Diminishing return on BASIC_RESEARCH_TECHNOLOGY_BONUS_FACTOR for each extra scientist performing basic research for multiple facilities.
+	BASIC_RESEARCH_TECHNOLOGY_BONUS_DIMINISHING_RETURN_FACTOR = 0.1, -- Diminishing return on BASIC_RESEARCH_TECHNOLOGY_BONUS_FACTOR for each extra scientist performing basic research for multiple facilities.
 	BREAKTHROUGH_DAILY_TECHNOLOGY_GAIN = 10,           -- Amount in 1/100th percentage. E.g. 25 = 0.25%
 	BREAKTHROUGH_DAILY_SCIENTIST_SKILL_GAIN = 4,       -- Amount in 1/100th percentage gained per skill when doing basic research. E.g. 5 = 0.05% per skill level.
 	BREAKTHROUGH_DAILY_ROCKET_SITE_GAIN = 3,		   -- Amount in 1/100th percentage gained per rocket site level. E.g. 1 = 0.01% per rocket site level.
-	BREAKTHROUGH_DAILY_NUCLEAR_REACTOR_GAIN = 15,       -- Amount in 1/100th percentage gained per nuclear reactor. E.g. 2 = 0.02% per nuclear reactor.
+	BREAKTHROUGH_DAILY_NUCLEAR_REACTOR_GAIN = 20,       -- Amount in 1/100th percentage gained per nuclear reactor. E.g. 2 = 0.02% per nuclear reactor.
 	BREAKTHROUGH_GAIN_ANIMATION_SPEED_MAX = 1.0,	   -- The animation for gaining breakthrough progress is a ratio of this value and current daily gain.
 },
 NRaids = {
@@ -693,8 +693,8 @@ NRaids = {
 	RAID_TARGET_ITEM_POOL_SIZE = 512,				   -- PERFORMANCE (UI) : number of entries to reserve in the raid target item pool
 	RAID_TYPE_ICON_ITEM_POOL_SIZE = 512,			   -- PERFORMANCE (UI) : number of entries to reserve in the raid type icon item pool
     RAID_LOW_RISK_SETTING_DISASTER_MODIFIER = 0,       -- How much the disaster risk is modified when the dial is set to "low"
-    RAID_MEDIUM_RISK_SETTING_DISASTER_MODIFIER = 0.1,  -- How much the disaster risk is modified when the dial is set to "medium"
-    RAID_HIGH_RISK_SETTING_DISASTER_MODIFIER = 0.25,   -- How much the disaster risk is modified when the dial is set to "high"
+    RAID_MEDIUM_RISK_SETTING_DISASTER_MODIFIER = 0.15,  -- How much the disaster risk is modified when the dial is set to "medium"
+    RAID_HIGH_RISK_SETTING_DISASTER_MODIFIER = 0.3,   -- How much the disaster risk is modified when the dial is set to "high"
     RAID_SUCCESS_MODIFIER_THRESHOLD_BAD = -10.0,       -- If a success chance modifier is below this value, it will be displayed in red
     RAID_SUCCESS_MODIFIER_THRESHOLD_NEUTRAL = 0.0,     -- If a success chance modifier is below this value, it will be displayed in yellow
 	MAX_DETECTED_TARGETS_PER_HOUR = 1,                 -- PERFORMANCE (HOURLY TICK) : max number of targets to be detected per hour, NOTE : keep this low because detection is checked against every country!
@@ -1105,7 +1105,7 @@ NMilitary = {
 	ADDITIONAL_COMBAT_WIDTH = 30,                  -- more opened up by support attack
 	AMPHIBIOUS_INVADE_MOVEMENT_COST = 24.0,        -- total progress cost of movement while amphibious invading
 	LAND_SPEED_MODIFIER = 0.031,                    -- basic speed control
-	RIVER_CROSSING_PENALTY = -0.25,                 -- small river crossing
+	RIVER_CROSSING_PENALTY = -0.275,                 -- small river crossing
 	RIVER_CROSSING_PENALTY_LARGE = -0.35,           -- large river crossing
 	RIVER_CROSSING_SPEED_PENALTY = -0.15,          -- small river crossing
 	RIVER_CROSSING_SPEED_PENALTY_LARGE = -0.3,     -- large river crossing
