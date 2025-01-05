@@ -662,10 +662,10 @@ NProject = {
 	},
 	SCIENTIST_SKILL_LEVEL_THRESHOLDS = {			-- Threshold for scientist to level up
 		100,		-- to go from level 0 to level 1
-		100,		-- to go from level 1 to level 2
-		400,		-- to go from level 2 to level 3
-		1000,		-- ...
-		2000,		-- Max level = Array size
+		200,		-- to go from level 1 to level 2
+		500,		-- to go from level 2 to level 3
+		1200,		-- ...
+		2200,		-- Max level = Array size
 	},
 	SCIENTIST_SKILL_LEVEL_SPEED_MODIFIER = {		-- Bonus to apply to daily phase progress according to the skill level of the scientist
 	    -1.0,    -- -1.0 means -100%         also name loc key is SCIENTIST_SKILL_LEVEL_NAME_0
