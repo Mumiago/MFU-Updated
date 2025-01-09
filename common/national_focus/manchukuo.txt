@@ -147,7 +147,7 @@ focus_tree = {
 		y = 2
 		relative_position_id = MAN_corporate_takeover
 
-		cost = 5
+		cost = 2.9
 
 		prerequisite = { 
 			focus = MAN_corporate_takeover 
@@ -3128,8 +3128,8 @@ focus = {
 
 		}
 
-		bypass = {
-
+		search_filters = {
+			FOCUS_FILTER_MAN_KPT
 		}
 
 		cancel_if_invalid = yes
@@ -3151,15 +3151,71 @@ focus = {
 				tooltip = production_factory_efficiency_gain_factor_tooltip
 			}
 			custom_effect_tooltip = MANspace
-			328 = {
-				
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = arms_factory
-					level = 3
-					instant_build = yes 
+			if = {
+				limit = { 
+
+					OR= {
+						check_variable = {
+							KPT_influence < 25				
+						}
+						has_country_flag = MAN_KPT_removed
+					}
+
+					NOT = {has_country_flag = MAN_KPT_integrated}
 				}
-			}		
+
+				328 = {
+					add_extra_state_shared_building_slots = 2
+						add_building_construction = {
+						type = arms_factory
+						level = 2
+						instant_build = yes 
+					}
+				}
+				else_if = {
+					limit = {
+						check_variable = {
+							KPT_influence > 24				
+						}
+						check_variable = {
+							KPT_influence < 74
+						}
+
+						NOT = {has_country_flag = MAN_KPT_integrated}
+						NOT = {has_country_flag = MAN_KPT_removed}
+
+					}
+					328 = {
+						add_extra_state_shared_building_slots = 3
+						add_building_construction = {
+							type = arms_factory
+							level = 3
+							instant_build = yes 
+						}
+					}
+				}
+				else_if = {
+					limit = {
+
+						OR = {
+							check_variable = {
+								KPT_influence > 74			
+							}
+							has_country_flag = MAN_KPT_integrated
+						}
+						NOT = {has_country_flag = MAN_KPT_removed}
+	
+					}
+					328 = {
+						add_extra_state_shared_building_slots = 4
+						add_building_construction = {
+							type = arms_factory
+							level = 4
+							instant_build = yes 
+						}
+					}
+				}
+			}
 
 		}
 	}
@@ -3560,10 +3616,10 @@ focus = {
 			}
 
 			610 = {
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = arms_factory
-					level = 2
+					level = 1
 					instant_build = yes 
 				}
 			}
@@ -3732,8 +3788,8 @@ focus = {
 
 		available = {
 			OR={
-				JAP ={controls_province = 6999}
-				any_allied_country ={controls_province = 6999}
+				JAP ={controls_province = 7101}
+				any_allied_country ={controls_province = 7101}
 				}
 		}
 		bypass = {
@@ -3754,7 +3810,7 @@ focus = {
 			}
 			add_to_variable = {
 				var = MAN_military_industry_dm_industrial_capacity_factory
-				value = 0.1
+				value = 0.05
 				tooltip = industrial_capacity_factory_tooltip
 			}
 			750 = {
@@ -4783,11 +4839,11 @@ focus = {
 				add_extra_state_shared_building_slots = 12
 				add_building_construction = {
 					type = industrial_complex
-					level = 3
+					level = 4
 				}
 				add_building_construction = {
 					type = arms_factory
-					level = 3
+					level = 2
 					instant_build = yes 
 				}
 				add_building_construction = {
@@ -4803,7 +4859,7 @@ focus = {
 				}
 				add_building_construction = {
 					type = arms_factory
-					level = 3
+					level = 2
 					instant_build = yes 
 				}
 				add_building_construction = {
@@ -5929,6 +5985,7 @@ focus = {
 
 		completion_reward = {
 
+			add_political_power = 100 
 			custom_effect_tooltip = MAN_recruitable_tt0
 
 			add_to_variable = {
@@ -5936,7 +5993,17 @@ focus = {
 				value = 0.04
 				tooltip = recruitable_population_factor_tooltip
 			}
-			custom_effect_tooltip = spacers
+			custom_effect_tooltip = MANspace
+			if = {
+				limit = { has_dlc = Gotterdammerung }
+				716 = {
+					add_building_construction = {
+						type = dam
+						level = 1
+						province = 6860
+					}
+				}
+			}
 			if = {
 				limit = {
 					NOT = {
@@ -5944,12 +6011,7 @@ focus = {
 					}
 				}
 				transfer_state = 745 
-				custom_effect_tooltip = spacers
 			}
-			
-			add_political_power = 100 
-
-
 		}
 	}			
 
