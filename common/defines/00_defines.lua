@@ -682,7 +682,7 @@ NProject = {
 	BASIC_RESEARCH_TECHNOLOGY_BONUS_FACTOR = 0.05,     -- Bonus research factor applied to technologies per scientist skill level when performing basic research in a matching facility.
 	BASIC_RESEARCH_TECHNOLOGY_BONUS_DIMINISHING_RETURN_FACTOR = 0.1, -- Diminishing return on BASIC_RESEARCH_TECHNOLOGY_BONUS_FACTOR for each extra scientist performing basic research for multiple facilities.
 	BREAKTHROUGH_DAILY_TECHNOLOGY_GAIN = 8,           -- Amount in 1/100th percentage. E.g. 25 = 0.25%
-	BREAKTHROUGH_DAILY_SCIENTIST_SKILL_GAIN = 4,       -- Amount in 1/100th percentage gained per skill when doing basic research. E.g. 5 = 0.05% per skill level.
+	BREAKTHROUGH_DAILY_SCIENTIST_SKILL_GAIN = 5,       -- Amount in 1/100th percentage gained per skill when doing basic research. E.g. 5 = 0.05% per skill level.
 	BREAKTHROUGH_DAILY_ROCKET_SITE_GAIN = 3,		   -- Amount in 1/100th percentage gained per rocket site level. E.g. 1 = 0.01% per rocket site level.
 	BREAKTHROUGH_DAILY_NUCLEAR_REACTOR_GAIN = 20,       -- Amount in 1/100th percentage gained per nuclear reactor. E.g. 2 = 0.02% per nuclear reactor.
 	BREAKTHROUGH_GAIN_ANIMATION_SPEED_MAX = 1.0,	   -- The animation for gaining breakthrough progress is a ratio of this value and current daily gain.
@@ -1271,7 +1271,7 @@ NMilitary = {
 	COMBAT_STACKING_PENALTY = -0.1,                -- how much stackign penalty per division
 	COMBAT_OVER_WIDTH_PENALTY = -0.1,					-- over combat width penalty per %.
 	COMBAT_OVER_WIDTH_PENALTY_MAX = -0.4,			-- over combat width max (when you cant join no more).
-	RETREAT_SPEED_FACTOR = 0.175,                    -- speed bonus when retreating
+	RETREAT_SPEED_FACTOR = 0.15,                    -- speed bonus when retreating
 	WITHDRAWING_SPEED_FACTOR = 0.15,				-- speed bonus when withdrawing
 	STRATEGIC_SPEED_BASE = 5,                 	-- Speed of strategic redeployment
 	STRATEGIC_INFRA_SPEED = 14.0,                   -- Max of additional speed gained trouh=gh level for strategic redeployment per infra
