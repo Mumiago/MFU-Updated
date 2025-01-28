@@ -2,11 +2,19 @@ technologies = {
     elevate_special_forces = {
 		
 		xp_research_type = army
-		xp_unlock_cost = 60
+		xp_unlock_cost = 50
 		
 		#xor = { special_forces_mountaineers special_forces_paratroopers }
 		
 		force_use_small_tech_layout = yes
+		
+		category_special_forces = {
+			max_organisation = 5
+			defense = 0.05
+		}
+		enable_subunits = {
+			commando_unit
+		}
 		
 		
 		path = {
@@ -47,9 +55,14 @@ technologies = {
     integrated_engineers = {
 		
 		xp_research_type = army
-		xp_unlock_cost = 60
+		xp_unlock_cost = 50
 			
 		force_use_small_tech_layout = yes
+
+		enable_subunits = {
+			mobile_engineer
+		}
+
 		
 		path = {
 			leads_to_tech = urban_clearance_teams 
@@ -87,9 +100,23 @@ technologies = {
     urban_clearance_teams = {
 		
 		xp_research_type = army
-		xp_unlock_cost = 60
+		xp_unlock_cost = 50
 		xor = { shore_parties stormtroopers }			
 		force_use_small_tech_layout = yes
+
+		mobile_engineer = {
+			urban = {
+				attack = 0.05
+				defence = 0.05
+			}
+			need = {
+				support_equipment = 10
+			}
+		}
+		on_research_complete = {
+			custom_effect_tooltip = MANspace
+			custom_effect_tooltip = increases_engineer_cost_tt
+		}
 		
 		path = {
 			leads_to_tech = demolition_experts 
@@ -120,13 +147,31 @@ technologies = {
     stormtroopers = {
 		
 		xp_research_type = army
-		xp_unlock_cost = 60
+		xp_unlock_cost = 50
 		xor = { shore_parties urban_clearance_teams }				
 		force_use_small_tech_layout = yes
 		
 		path = {
 			leads_to_tech = demolition_experts 
 			research_cost_coeff = 1
+		}
+		mobile_engineer = {
+			breakthrough = 0.5
+			soft_attack = 0.5
+			hard_attack = 0.5
+			river = {
+				movement = 0.1
+			}
+			urban = {
+				movement = 0.1
+			}
+			need = {
+				support_equipment = 10
+			}
+		}
+		on_research_complete = {
+			custom_effect_tooltip = MANspace
+			custom_effect_tooltip = increases_engineer_cost_tt
 		}
 			
 		doctrine = yes	
@@ -153,13 +198,25 @@ technologies = {
     shore_parties = {
 		
 		xp_research_type = army
-		xp_unlock_cost = 60
+		xp_unlock_cost = 50
 			
 		force_use_small_tech_layout = yes
 		xor = { urban_clearance_teams stormtroopers }			
 		path = {
 			leads_to_tech = demolition_experts 
 			research_cost_coeff = 1
+		}
+		mobile_engineer = {
+			amphibious = {
+				attack = 0.075
+			}
+			need = {
+				support_equipment = 10
+			}
+		}
+		on_research_complete = {
+			custom_effect_tooltip = MANspace
+			custom_effect_tooltip = increases_engineer_cost_tt
 		}
 			
 		doctrine = yes	
@@ -186,9 +243,20 @@ technologies = {
     demolition_experts = {
 		
 		xp_research_type = army
-		xp_unlock_cost = 60
+		xp_unlock_cost = 50
 			
 		force_use_small_tech_layout = yes
+
+			
+		land_bunker_effectiveness_factor = 0.1
+		coastal_bunker_effectiveness_factor = 0.1
+		on_research_complete = {
+			
+			custom_effect_tooltip = UNLOCK_SIEGE_ARTY_ABILITY
+		}
+
+		
+		
 		
 		path = {
 			leads_to_tech = long_range_patrols 
@@ -223,13 +291,19 @@ technologies = {
     best_of_the_best = {
 		
 		xp_research_type = army
-		xp_unlock_cost = 60
+		xp_unlock_cost = 50
 			
 		force_use_small_tech_layout = yes
 		xor = { combined_arms_training  }		
 		path = {
 			leads_to_tech = expeditionary_units 
 			research_cost_coeff = 1
+		}
+
+		category_special_forces = {
+			soft_attack = 0.1
+			hard_attack = 0.1
+			max_strength = 1
 		}
 			
 		doctrine = yes	
@@ -239,6 +313,7 @@ technologies = {
 			special_forces_doctrine
 
 		}
+		
 	
 		folder = {
 			name = special_forces_doctrine_folder
@@ -256,13 +331,19 @@ technologies = {
   expeditionary_units = {
 		
 		xp_research_type = army
-		xp_unlock_cost = 60
+		xp_unlock_cost = 50
 			
 		force_use_small_tech_layout = yes		
 		path = {
 			leads_to_tech = hit_and_run_tactics 
 			research_cost_coeff = 1
 		}
+
+		special_forces_attack_factor  = 0.05
+		special_forces_min = 27
+		special_forces_no_supply_grace = 24
+
+
 			
 		doctrine = yes	
 		research_cost = 2.25
@@ -288,7 +369,7 @@ technologies = {
    combined_arms_training = {
 		
 		xp_research_type = army
-		xp_unlock_cost = 60
+		xp_unlock_cost = 50
 			
 		force_use_small_tech_layout = yes
 		xor = { best_of_the_best  }		
@@ -296,7 +377,15 @@ technologies = {
 			leads_to_tech = mechanized_vanguard 
 			research_cost_coeff = 1
 		}
-			
+		category_tanks = {
+			soft_attack = 0.05
+			hard_attack = 0.05
+		}
+		category_all_infantry = {
+			soft_attack = 0.05
+			hard_attack = 0.05
+		}
+
 		doctrine = yes	
 		research_cost = 2.25
 		
@@ -321,12 +410,19 @@ technologies = {
   mechanized_vanguard = {
 		
 		xp_research_type = army
-		xp_unlock_cost = 60
+		xp_unlock_cost = 50
 			
 		force_use_small_tech_layout = yes	
 		path = {
 			leads_to_tech = hit_and_run_tactics 
 			research_cost_coeff = 1
+		}
+		category_mechanized = {
+			max_strength = 1.5
+		}
+
+		on_research_complete = {
+			add_ideas = GEN_cheaper_mechmot
 		}
 			
 		doctrine = yes	
@@ -353,7 +449,7 @@ technologies = {
   hit_and_run_tactics = {
 		
 		xp_research_type = army
-		xp_unlock_cost = 60
+		xp_unlock_cost = 50
 			
 		force_use_small_tech_layout = yes	
 		path = {
@@ -364,7 +460,11 @@ technologies = {
 			leads_to_tech = rangers_support 
 			research_cost_coeff = 1
 		}	
-			
+		army_speed_factor = 0.05
+		coordination_bonus = 0.05
+		
+
+
 		doctrine = yes	
 		research_cost = 2.25
 		
@@ -389,7 +489,7 @@ technologies = {
   rough_terrain_specialists = {
 		
 		xp_research_type = army
-		xp_unlock_cost = 60
+		xp_unlock_cost = 50
 			
 		force_use_small_tech_layout = yes	
 		path = {
@@ -403,6 +503,14 @@ technologies = {
 		categories = {
 			special_forces_doctrine
 
+		}
+		commando_unit = {
+			mountain = {
+				attack = 0.1
+			}
+			jungle = {
+				attack = 0.05
+			}
 		}
 	
 		folder = {
@@ -421,12 +529,16 @@ technologies = {
   ambush_tactics = {
 		
 		xp_research_type = army
-		xp_unlock_cost = 60
+		xp_unlock_cost = 50
 			
 		force_use_small_tech_layout = yes	
 		path = {
 			leads_to_tech = enchanced_navigational_training 
 			research_cost_coeff = 1
+		}
+		enable_tactic = tactic_double_envelopment
+		on_research_complete = {
+			custom_effect_tooltip = enables_ambush_in_sfd_tt
 		}
 			
 		doctrine = yes	
@@ -454,12 +566,22 @@ technologies = {
   blowtorch_and_corcscrew = {
 		
 		xp_research_type = army
-		xp_unlock_cost = 60
+		xp_unlock_cost = 50
 		xor = { rough_terrain_specialists  }				
 		force_use_small_tech_layout = yes	
 		path = {
 			leads_to_tech = elite_forward_observers 
 			research_cost_coeff = 1
+		}
+		air_cas_present_factor = 0.1
+		shore_bombardment_bonus = 0.25
+		commando_unit = {
+			battalion_mult = {
+				category = category_special_forces
+				soft_attack = 0.05
+				hard_attack = 0.05
+				breakthrough = 0.05
+			}
 		}
 			
 		doctrine = yes	
@@ -485,14 +607,31 @@ technologies = {
 	}
   elite_forward_observers = {		
 		xp_research_type = army
-		xp_unlock_cost = 60
+		xp_unlock_cost = 50
 			
 		force_use_small_tech_layout = yes	
 		path = {
 			leads_to_tech = enchanced_navigational_training 
 			research_cost_coeff = 1
 		}
-			
+		category_special_forces = {
+			initiative = 0.01
+		}
+		recon = {  
+			recon = 0.25
+		}
+		recon_ac = { 
+			recon = 0.25
+		}
+		mot_recon = { 
+			recon = 0.25
+		}
+		light_armor_recon = { 
+			recon = 0.25
+		}
+		helicopter_recon = { 
+			recon = 0.25
+		}
 		doctrine = yes	
 		research_cost = 2.25
 		
@@ -516,7 +655,7 @@ technologies = {
 	}
   enchanced_navigational_training = {		
 		xp_research_type = army
-		xp_unlock_cost = 60
+		xp_unlock_cost = 50
 			
 		force_use_small_tech_layout = yes	
 		path = {
@@ -527,6 +666,14 @@ technologies = {
 			leads_to_tech = rangers_support 
 			research_cost_coeff = 1
 		}			
+		acclimatization_cold_climate_gain_factor = 0.15
+		acclimatization_hot_climate_gain_factor = 0.15
+		special_forces_no_supply_grace = 24
+		category_special_forces = {
+			max_organisation = 5
+			supply_consumption = -0.01
+		}
+
 		doctrine = yes	
 		research_cost = 2.25
 		
@@ -550,12 +697,23 @@ technologies = {
 	}
   rangers_support = {		
 		xp_research_type = army
-		xp_unlock_cost = 60
+		xp_unlock_cost = 50
 		xor = { long_range_patrols  }				
 		force_use_small_tech_layout = yes	
 		path = {
 			leads_to_tech = shared_instructors 
 			research_cost_coeff = 1
+		}
+
+		commando_unit = {
+			forest = {
+				attack = 0.05
+				movement = 0.05
+			}
+			jungle = {
+				attack = 0.05
+				movement = 0.05
+			}
 		}
 			
 		doctrine = yes	
@@ -581,12 +739,22 @@ technologies = {
 	}
   long_range_patrols = {		
 		xp_research_type = army
-		xp_unlock_cost = 60
+		xp_unlock_cost = 50
 		xor = { rangers_support  }				
 		force_use_small_tech_layout = yes	
 		path = {
 			leads_to_tech = shared_instructors 
 			research_cost_coeff = 1
+		}
+
+		recon = {
+			recon = 1 
+		}
+		mot_recon = {
+			recon = 0.5
+			desert = {
+				attack = 0.1
+			}
 		}
 			
 		doctrine = yes	
@@ -613,7 +781,7 @@ technologies = {
 
   shared_instructors = {		
 		xp_research_type = army
-		xp_unlock_cost = 60				
+		xp_unlock_cost = 50				
 		force_use_small_tech_layout = yes	
 
 			
@@ -624,6 +792,35 @@ technologies = {
 			special_forces_doctrine
 
 		}
+		acclimatization_cold_climate_gain_factor = 0.15
+		acclimatization_hot_climate_gain_factor = 0.15
+		special_forces_attack_factor  = 0.05
+		marine = {
+			amphibious = {
+				attack = 0.05
+			}
+		}
+		mountaineers = {
+			amphibious = {
+				attack = 0.05
+			}
+		}
+		amphibious_mechanized = {
+			amphibious = {
+				attack = 0.05
+			}
+		}
+		amphibious_armor = {
+			amphibious = {
+				attack = 0.05
+			}
+		}
+		infantry = {
+			amphibious = {
+				attack = 0.05
+			}
+		}
+
 	
 		folder = {
 			name = special_forces_doctrine_folder
@@ -638,3 +835,4 @@ technologies = {
 			#artillery = 4.0
 		}
 	}
+}
