@@ -1091,7 +1091,7 @@ NMilitary = {
 	LAND_COMBAT_STR_ARMOR_DEFLECTION_FACTOR = 0.60, -- damage reduction if armor outclassing enemy
 	LAND_COMBAT_ORG_ARMOR_DEFLECTION_FACTOR = 0.60, -- damage reduction if armor outclassing enemy
 	LAND_COMBAT_COLLATERAL_FACTOR = 0.002,		   -- Factor to scale collateral damage to infra and forts with.
-	LAND_COMBAT_FORT_DAMAGE_CHANCE = 16,		-- chance to get a hit to damage on forts. (out of 100)
+	LAND_COMBAT_FORT_DAMAGE_CHANCE = 18,		-- chance to get a hit to damage on forts. (out of 100)
 	ATTRITION_DAMAGE_ORG = 0.1,					   -- damage from attrition to Organisation
 	ATTRITION_EQUIPMENT_LOSS_CHANCE = 0.01,		   -- Chance for loosing equipment when suffer attrition. Scaled up the stronger attrition is. Then scaled down by equipment reliability.
 	ATTRITION_EQUIPMENT_PER_TYPE_LOSS_CHANCE = 0.35, -- Chance for loosing equipment when suffer attrition. Scaled up the stronger attrition is. Then scaled down by equipment reliability.
@@ -1301,7 +1301,7 @@ NMilitary = {
 	FRONT_MIN_PATH_TO_REDEPLOY = 4,					-- If a units path is at least this long to reach its front location, it will strategically redeploy.
 	ARMY_INITIATIVE_REINFORCE_FACTOR = 1,		-- scales initiative for reinforce chance
 		
-	BASE_CAPTURE_EQUIPMENT_RATIO = 0.01,				-- after a successful land combat, ratio of the equipments that are being captured/salvaged from enemy's lost equipment
+	BASE_CAPTURE_EQUIPMENT_RATIO = 0,				-- after a successful land combat, ratio of the equipments that are being captured/salvaged from enemy's lost equipment
 
 	ACCLIMATIZATION_IN_COMBAT_SPEED_FACTOR = 3,		-- Acclimatization speed multiplier while being in combat.
 	ACCLIMATIZATION_SPEED_GAIN = 0.1,				-- A variable used to balance the overall speed of gaining the acclimatization
@@ -1854,7 +1854,7 @@ NRailwayGun = {
 	DISBAND_MANPOWER_LOSS = 0.0,					-- The ration of manpower lost on disbanding railway guns
 	ENCIRCLED_DISBAND_MANPOWER_FACTOR = 0.2,		-- The percentage of manpower returned when an encircled unit is disbanded
 	OUT_OF_SUPPLY_SPEED = -0.5,						-- Max speed reduction from supply for railway guns
-	BASE_CAPTURE_CHANCE = 1,						-- The base chance of railway guns being captured during an overrrun. Will be further modified by the equipment capture chance of the capturing unit.
+	BASE_CAPTURE_CHANCE = 10,						-- The base chance of railway guns being captured during an overrrun. Will be further modified by the equipment capture chance of the capturing unit.
 	DISTRIBUTION_RAILWAY_GUN_PRESENCE_SCORE = -250,					-- Score for Railway Guns in range from given province when distributing Railway Guns
 	DISTRIBUTION_OUR_UNITS_PRESENCE_SCORE = 1,	 					-- Score for our units in province when distributing Railway Guns
 	DISTRIBUTION_FRIENDLY_UNITS_PRESENCE_SCORE = 0,					-- Score for friendly units in province when distributing Railway Guns
