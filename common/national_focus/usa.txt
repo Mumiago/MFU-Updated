@@ -1116,7 +1116,7 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			custom_effect_tooltip = ""
+			custom_effect_tooltip = USA_spacer_tooltip_tt
 		}
 	}
 
@@ -1916,12 +1916,1051 @@ focus_tree = {
 	}
 
 
+######################################################################
+############ ARMY PATH ###############################################
+######################################################################
 
+	focus = {
+		id = USA_retire_malin_craig
+		icon = GFX_USA_appoint_marshall
+		#prerequisite = { focus = }
 
-#########################################################################
+		x = 20
+		y = 0
+		cost = 5
+		available = {
+		}
 
-#####################WAR PATH 
+		search_filters = { FOCUS_FILTER_HISTORICAL FOCUS_FILTER_ARMY_XP FOCUS_FILTER_MILITARY_CHARACTER }
 
+		completion_reward = {
+			army_experience = 150
+		
+			custom_effect_tooltip = USA_command_post_modification_intro
+			add_to_variable = { 
+				var = USA_air_doctrine_cost_factor_var 
+				value = -0.1 
+				tooltip = air_doc_tp
+			}
+			add_to_variable = { 
+				var = USA_land_doctrine_cost_factor_var 
+				value = -0.1 
+				tooltip = land_doc_tp
+			}
+			add_to_variable = { 
+				var = USA_experience_gain_army_factor_var 
+				value = 0.25
+				tooltip = army_xp_tp
+			}
+			add_to_variable = { 
+				var = USA_experience_gain_navy_factor_var 
+				value = 0.25
+				tooltip = navy_xp_tp
+			}
+			add_to_variable = { 
+				var = USA_experience_gain_air_factor_var 
+				value = 0.25
+				tooltip = air_xp_tp
+			}
+			add_to_variable = { 
+				var = USA_fuel_gain_factor_var 
+				value = 0.2 
+				tooltip = fuel_gain_tp
+			}
+
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+		}
+	}
+	
+	focus = {
+		id = USA_selective_service_act2
+		icon = GFX_USA_selective_service_act2
+		prerequisite = { focus = USA_retire_malin_craig }
+
+		x = 0
+		y = 1
+		relative_position_id = USA_retire_malin_craig
+		cost = 5
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_HISTORICAL FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_CHARACTER }
+
+		completion_reward = {
+			add_ideas = limited_conscription
+			custom_effect_tooltip = generic_skip_one_line_tt
+			USA_infantry_industry_level_up = yes 
+			add_timed_idea = {
+				idea = USA_selective_service_act_idea
+				days = 730
+			}
+		}
+	}
+	
+	focus = {
+		id = USA_forging_the_GI_corps
+		icon = GFX_focus_USA_prussian_legacy
+		prerequisite = { focus = USA_retire_malin_craig }
+		x = -2
+		y = 2
+		relative_position_id = USA_retire_malin_craig
+		cost = 5
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_ARMY_XP }
+
+		completion_reward = {
+			add_command_power = 25
+			army_experience = 15
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_doctrine_cost_reduction = {
+				name = USA_forging_the_GI_corps
+				cost_reduction = 0.5
+				uses = 2
+				category = cat_grand_battle_plan
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = USA_unlock_operational_planning_bewegungskrieg_tt
+			effect_tooltip = { #This is done for tooltip purposes
+				add_dynamic_modifier = { modifier = USA_bewegungskrieg_modifier }
+			}
+		}
+	}
+	
+	focus = {
+		id = USA_armored_cavalry
+		icon = GFX_goal_generic_army_motorized
+		prerequisite = { focus = USA_forging_the_GI_corps }
+
+		x = -3
+		y = 1
+		relative_position_id = USA_forging_the_GI_corps
+		cost = 5
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_MILITARY_CHARACTER FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+
+			if = {
+				limit = {
+					has_character = USA_oswald_lutz
+					NOT = { has_completed_focus = USA_reorganize_the_wehrmacht }
+				}
+				every_unit_leader = {
+					limit = {
+						is_character = USA_oswald_lutz
+					}
+					add_skill_level = 1
+					add_attack = 1
+					add_planning = 1
+					add_logistics = 1
+				}
+				if = {
+					limit = {
+						USA_oswald_lutz = {
+							NOT = {
+								has_trait = trickster
+							}
+						}
+					}
+					add_trait = {
+					    character = USA_oswald_lutz
+					    trait = trickster
+					}
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			USA_modify_army_modifier = yes			
+			add_to_variable = { 
+				USA_military_org_loss_when_moving = -0.1
+				tooltip = org_loss_when_moving_tt
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			if = {
+				limit = {
+					NOT = { has_dlc = "Arms Against Tyranny"}
+				}
+				if = {
+					limit = {
+						has_idea = USA_alkett
+					}
+					swap_ideas = {
+						remove_idea = USA_alkett
+						add_idea = USA_alkett_improved
+					}
+				}
+				else = {
+					effect_tooltip = {
+						swap_ideas = {
+							remove_idea = USA_alkett
+							add_idea = USA_alkett_improved
+						}
+					}
+				}
+			}
+			else = {
+				mio:USA_alkett_organization = {
+					add_mio_size = 1
+					add_mio_funds_gain_factor = 0.25
+					add_mio_research_bonus = 0.05
+
+					#unlock_mio_trait_tooltip = 
+					#unlock_mio_trait_tooltip = 
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = USA_legacy_of_the_doughboys
+		icon = GFX_focus_generic_little_entente
+		prerequisite = { focus = USA_forging_the_GI_corps }
+
+		x = -1
+		y = 1
+		relative_position_id = USA_forging_the_GI_corps
+		cost = 5
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_ARMY_XP FOCUS_FILTER_MILITARY_CHARACTER FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+			army_experience = 15
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_doctrine_cost_reduction = {
+				name = USA_legacy_of_the_doughboys
+				cost_reduction = 0.25
+				uses = 2
+				category = land_doctrine
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			show_unit_leaders_tooltip = USA_friedrich_schulz
+			show_unit_leaders_tooltip = USA_ernsteberhard_hell
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			USA_modify_army_modifier = yes
+			add_to_variable = { 
+				USA_military_max_dig_in_factor = 0.1
+				tooltip = max_dig_in_factor_tt
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = USA_modify_bewegungskrieg_modifier_tt
+			effect_tooltip = {
+				add_to_variable = { 
+					USA_bewegungskrieg_army_infantry_attack_factor = 0.05
+					tooltip = army_infantry_attack_factor_tt
+				}
+			}
+		}
+	}			
+
+	focus = {
+		id = USA_fight_fascists_with_fire_2
+		icon = GFX_focus_SWE_let_fly_all_guns
+		prerequisite = { focus = USA_legacy_of_the_doughboys }
+		prerequisite = { focus = USA_armored_cavalry }
+
+		x = 1
+		y = 1
+		relative_position_id = USA_armored_cavalry
+		cost = 10
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+		}
+	}
+	
+	focus = {
+		id = USA_3_second_response_timer
+		icon = GFX_focus_CHL_departemento_de_las_tropas_nacistas_de_asalto
+		prerequisite = { focus = USA_fight_fascists_with_fire_2 }
+
+		x = 0
+		y = 1
+		relative_position_id = USA_fight_fascists_with_fire_2
+		cost = 5
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_ARMY_XP FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH FOCUS_FILTER_MILITARY_CHARACTER }
+
+		completion_reward = {
+		}
+	}
+	
+	focus = {
+		id = USA_built_to_last
+		icon = GFX_focus_generic_motor_cycle
+		prerequisite = { focus = USA_forging_the_GI_corps focus = USA_forge_the_thunderbolt }
+
+		x = 1
+		y = 1
+		relative_position_id = USA_forging_the_GI_corps
+		cost = 5
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_HISTORICAL }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = USA_built_to_last
+				uses = 1
+				bonus = 0.5
+				category = military_police_tech
+			}
+
+			if = {
+				limit = {
+					has_dlc = "Gotterdammerung"
+				}
+				if = {
+					limit = {
+						NOT = { has_tech = sp_armored_motorized_military_police_tech }
+					}
+					add_tech_bonus = {
+						name = USA_built_to_last
+						uses = 1
+						bonus = 1
+						technology = sp_armored_motorized_military_police_tech
+					}
+				}
+				add_equipment_bonus = {
+					name = USA_built_to_last
+					bonus = {
+						motorbike_equipment_1 = {
+							build_cost_ic = -0.25
+						}
+					}
+				}
+			}
+
+			if = {
+				limit = {
+					controls_state = 54
+					54 = {
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = yes
+						}
+					}
+				}
+				54 = { #Franken
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+			else = {
+				random_owned_state = {
+					limit = {
+						is_controlled_by = ROOT
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = USA_adapt_and_overcome
+		icon = GFX_focus_generic_tank_assembly
+		prerequisite = { focus = USA_forging_the_GI_corps focus = USA_forge_the_thunderbolt }
+
+		x = 3
+		y = 1
+		relative_position_id = USA_forging_the_GI_corps
+		cost = 5
+		available = {
+			has_war_with_major = yes
+		}
+		continue_if_invalid = yes
+
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_MILITARY_CHARACTER FOCUS_FILTER_HISTORICAL }
+
+		completion_reward = {
+			random_owned_state = {
+				limit = {
+					is_controlled_by = ROOT
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = available_military_high_command
+			show_ideas_tooltip = USA_alfred_becker
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			USA_modify_army_modifier = yes
+			add_to_variable = { 
+				USA_military_equipment_capture = 0.05
+				tooltip = equipment_capture_tt
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			USA_modify_industrial_modifier = yes
+			add_to_variable = { 
+				USA_industrial_equipment_conversion_speed = 0.1
+				tooltip = equipment_conversion_speed_tt
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			every_army_leader = {
+				limit = {
+					NOT = { has_trait = scavenger }
+				}
+				random_select_amount = 2
+				add_trait = { trait = scavenger }
+			}
+		}
+	}
+	
+	focus = {
+		id = USA_american_audacity
+		icon = GFX_goal_generic_axis_build_infantry
+		prerequisite = { focus = USA_forging_the_GI_corps focus = USA_forge_the_thunderbolt }
+
+		x = 2
+		y = 2
+		relative_position_id = USA_forging_the_GI_corps
+		cost = 5
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_ARMY_XP FOCUS_FILTER_HISTORICAL FOCUS_FILTER_MILITARY_CHARACTER }
+
+		completion_reward = {
+			army_experience = 25
+			add_doctrine_cost_reduction = {
+				name = USA_american_audacity
+				cost_reduction = 0.25
+				uses = 1
+				category = land_doctrine
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			USA_modify_army_modifier = yes
+			add_to_variable = { 
+				USA_military_initiative_factor = 0.1
+				tooltip = initiative_factor_tt
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+			custom_effect_tooltip = available_chief_of_army
+			show_ideas_tooltip = franz_halder
+
+			if = {
+				limit = {
+					has_character = USA_gerd_von_rundstedt
+					USA_gerd_von_rundstedt = {
+						is_field_marshal = no
+					}
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+				USA_gerd_von_rundstedt = {
+					promote_leader = yes
+				}
+			}
+
+			if = {
+				limit = {
+					has_character = USA_gunther_von_kluge
+					USA_gunther_von_kluge = {
+						is_field_marshal = no
+					}
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+				USA_gunther_von_kluge = {
+					promote_leader = yes
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = USA_through_hell_and_back
+		icon = GFX_focus_GER_afrikakorps
+		prerequisite = { focus = USA_american_audacity }
+
+		x = -2
+		y = 1
+		relative_position_id = USA_american_audacity
+		cost = 5
+		available = {
+			OR = {
+				AND = {
+					any_controlled_state = {
+						is_fully_controlled_by = ROOT
+						OR =  {
+							is_on_continent = africa
+							is_on_continent = asia
+						}
+					}
+				}
+				AND = {
+					any_subject_country = {
+						any_controlled_state = {
+							is_fully_controlled_by = PREV
+							OR =  {
+								is_on_continent = africa
+								is_on_continent = asia
+							}
+						}
+					}
+				}
+				AND = {
+					any_allied_country = {
+						any_controlled_state = {
+							is_fully_controlled_by = PREV
+							OR =  {
+								is_on_continent = africa
+								is_on_continent = asia
+							}
+						}
+					}
+				}
+			}
+		}
+
+		search_filters = { FOCUS_FILTER_MILITARY_CHARACTER FOCUS_FILTER_HISTORICAL }
+
+		completion_reward = {
+			if = {
+				limit = {
+					NOT = { has_completed_focus = USA_forging_the_GI_corps}
+					has_character = USA_erwin_rommel
+					USA_erwin_rommel = {
+						NOT = { has_trait = desert_fox }
+					}
+				}
+				USA_erwin_rommel = {
+					add_trait = { trait = desert_fox }
+				}
+			}
+			if = {
+				limit = {
+					NOT = { has_completed_focus = USA_forging_the_GI_corps}
+					has_character = USA_walther_nehring
+					USA_walther_nehring = {
+						NOT = { has_trait = desert_fox }
+					}
+				}
+				USA_walther_nehring = {
+					add_trait = { trait = desert_fox }
+				}
+			}
+
+			USA_modify_army_modifier = yes
+			add_to_variable = { 
+				USA_military_acclimatization_hot_climate_gain_factor = 0.1
+				tooltip = acclimatization_hot_climate_gain_factor_tt
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = USA_unlock_operational_planning_in_africa_tt
+		}
+	}
+
+	focus = {
+		id = USA_piercing_the_weak_underbelly
+		icon = GFX_focus_GER_gebirgsjager
+		prerequisite = { focus = USA_american_audacity }
+
+		x = 2
+		y = 1
+		relative_position_id = USA_american_audacity
+		cost = 5
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_HISTORICAL FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			USA_modify_army_modifier = yes
+			add_to_variable = { 
+				USA_military_special_forces_cap = 0.05
+				tooltip = special_forces_cap_tt
+			}
+			add_to_variable = { 
+				USA_military_acclimatization_cold_climate_gain_factor = 0.1
+				tooltip = acclimatization_cold_climate_gain_factor_tt
+			}
+
+			if = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				custom_effect_tooltip = generic_skip_one_line_tt
+				add_doctrine_cost_reduction = {
+					name = USA_piercing_the_weak_underbelly
+					cost_reduction = 0.25
+					uses = 2
+					category = cat_mountaineers_doctrine
+				}
+			}
+			add_tech_bonus = {
+				name = USA_piercing_the_weak_underbelly
+				bonus = 0.5
+				uses = 1
+				category = mountaineers_tech
+			}
+		}
+	}
+	
+	focus = {
+		id = USA_tip_of_the_spear
+		icon = GFX_focus_generic_mechanized
+		prerequisite = { focus = USA_american_audacity }
+
+		x = 0
+		y = 1
+		relative_position_id = USA_american_audacity
+		cost = 10
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_HISTORICAL }
+
+		completion_reward = {
+
+			add_tech_bonus = {
+				name = USA_tip_of_the_spear
+				ahead_reduction = 1
+				bonus = 1
+				uses = 1
+				category = cat_mechanized_equipment
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			if = {
+				limit = {
+					NOT = { has_completed_focus = USA_forging_the_GI_corps }
+					NOT = { has_completed_focus = USA_forge_the_thunderbolt }
+				}
+				custom_effect_tooltip = USA_modify_bewegungskrieg_or_blitzkrieg_tt
+				effect_tooltip = {
+					add_to_variable = { 
+						USA_motor_and_mech_attack_motorized_attack_factor = 0.05
+						tooltip = motorized_attack_factor_tt
+					}
+					add_to_variable = { 
+						USA_motor_and_mech_attack_mechanized_attack_factor = 0.05
+						tooltip = mechanized_attack_factor_tt
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_completed_focus = USA_forge_the_thunderbolt
+				}
+				custom_effect_tooltip = USA_modify_blitzkrieg_modifier_tt
+				effect_tooltip = {
+					add_to_variable = { 
+						USA_motor_and_mech_attack_motorized_attack_factor = 0.1
+						tooltip = motorized_attack_factor_tt
+					}
+					add_to_variable = {
+						USA_motor_and_mech_attack_mechanized_attack_factor = 0.1
+						tooltip = mechanized_attack_factor_tt
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					has_completed_focus = USA_forging_the_GI_corps
+				}
+				custom_effect_tooltip = USA_modify_bewegungskrieg_modifier_tt
+				effect_tooltip = {
+					add_to_variable = { 
+						USA_motor_and_mech_attack_motorized_attack_factor = 0.1
+						tooltip = motorized_attack_factor_tt
+					}
+					add_to_variable = {
+						USA_motor_and_mech_attack_mechanized_attack_factor = 0.1
+						tooltip = mechanized_attack_factor_tt
+					}
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			if = {
+				limit = {
+					NOT = { has_dlc = "Arms Against Tyranny" }
+				}
+				if = {
+					limit = {
+						has_idea = USA_auto_union
+					}
+					swap_ideas = {
+						remove_idea = USA_auto_union
+						add_idea = USA_auto_union_improved
+					}
+				}
+				else = {
+					effect_tooltip = {
+						swap_ideas = {
+							remove_idea = USA_auto_union
+							add_idea = USA_auto_union_improved
+						}
+					}
+				}
+			}
+			else = {
+				mio:USA_auto_union_organization = {
+					add_mio_size = 1
+					add_mio_funds_gain_factor = 0.25
+					add_mio_research_bonus = 0.05
+
+					unlock_mio_trait_tooltip = USA_mio_trait_schwerer_panzerspahwagen
+					#unlock_mio_trait_tooltip = 
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = USA_improve_the_logistics_system
+		icon = GFX_focus_generic_reinforcing_the_supply_network
+		prerequisite = { focus = USA_tip_of_the_spear }
+
+		x = -1
+		y = 1
+		relative_position_id = USA_tip_of_the_spear
+		cost = 5
+		available = {
+			has_war = yes
+		}
+		continue_if_invalid = yes
+
+		search_filters = {}
+
+		completion_reward = {
+			USA_modify_army_modifier = yes
+			add_to_variable = { 
+				USA_military_supply_factor = 0.15
+				tooltip = supply_factor_tt
+			}
+			add_to_variable = { 
+				USA_military_army_fuel_consumption_factor = -0.1
+				tooltip = army_fuel_consumption_factor_tt
+			}
+		}
+	}
+	
+	focus = {
+		id = USA_can_do_spirit
+		icon = GFX_goal_generic_defence
+		prerequisite = { focus = USA_tip_of_the_spear }
+
+		x = 1
+		y = 1
+		relative_position_id = USA_tip_of_the_spear
+		cost = 5
+		available = {
+			has_war = yes
+		}
+
+		search_filters = { FOCUS_FILTER_HISTORICAL }
+
+		completion_reward = {
+			add_timed_idea = {
+				idea = USA_can_do_spirit_ns
+				days = 545
+			}
+		}
+	}
+	
+	focus = {
+		id = USA_forge_the_thunderbolt
+
+		icon = GFX_focus_generic_tank_assault
+		prerequisite = { focus = USA_retire_malin_craig }
+		x = 2
+		y = 2
+		relative_position_id = USA_retire_malin_craig
+		cost = 5
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_HISTORICAL FOCUS_FILTER_MILITARY_CHARACTER FOCUS_FILTER_ARMY_XP }
+
+		completion_reward = {
+			add_command_power = 25
+			army_experience = 15
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_doctrine_cost_reduction = {
+				name = USA_forge_the_thunderbolt
+				cost_reduction = 0.5
+				uses = 1
+				category = cat_mobile_warfare
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			show_unit_leaders_tooltip = USA_heinz_guderian
+			custom_effect_tooltip = available_theorist
+			show_ideas_tooltip = heinz_guderian
+			show_unit_leaders_tooltip = USA_erwin_rommel
+			custom_effect_tooltip = available_military_high_command
+			show_ideas_tooltip = erwin_rommel
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = USA_unlock_operational_planning_blitzkrieg_tt
+			effect_tooltip = { #This is done for tooltip purposes
+				add_dynamic_modifier = { modifier = USA_blitzkrieg_modifier }
+			}
+		}
+	}
+	
+	focus = {
+		id = USA_chaffes_armored_force
+		icon = GFX_goal_generic_army_tanks
+		prerequisite = { focus = USA_forge_the_thunderbolt }
+
+		x = 1
+		y = 1
+		relative_position_id = USA_forge_the_thunderbolt
+		cost = 5
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_ARMY_XP FOCUS_FILTER_HISTORICAL FOCUS_FILTER_MILITARY_CHARACTER }
+
+		completion_reward = {
+			army_experience = 15
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			add_doctrine_cost_reduction = {
+				name = USA_forge_the_thunderbolt
+				cost_reduction = 0.25
+				uses = 2
+				category = land_doctrine
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			show_unit_leaders_tooltip = USA_hasso_von_manteuffel
+			show_unit_leaders_tooltip = USA_walther_nehring
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			USA_modify_army_modifier = yes			
+			add_to_variable = { 
+				USA_military_org_loss_when_moving = -0.1
+				tooltip = org_loss_when_moving_tt
+			}
+		}
+	}
+	
+	focus = {
+		id = USA_t6_prototype
+		icon = GFX_focus_generic_army_tanks2
+		prerequisite = { focus = USA_forge_the_thunderbolt }
+
+		x = 3
+		y = 1
+		relative_position_id = USA_forge_the_thunderbolt
+		cost = 10
+		available = {
+			has_tech = radio
+		}
+
+		search_filters = { FOCUS_FILTER_HISTORICAL FOCUS_FILTER_RESEARCH FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = USA_t6_prototype
+				#ahead_reduction = 1
+				bonus = 1
+				uses = 1
+				category = cat_medium_armor
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			USA_modify_army_modifier = yes
+			add_to_variable = { 
+				USA_military_coordination_bonus = 0.05
+				tooltip = coordination_bonus_tt
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = USA_modify_blitzkrieg_modifier_tt
+			effect_tooltip = {
+				add_to_variable = { 
+					USA_blitzkrieg_army_armor_speed_factor = 0.05
+					tooltip = army_armor_speed_factor_tt
+				}
+				add_to_variable = { 
+					USA_blitzkrieg_army_armor_attack_factor = 0.05
+					tooltip = army_armor_attack_factor_tt
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+		
+            mio:USA_MAN_organization = {
+                add_mio_size = 1
+                add_mio_funds_gain_factor = 0.25
+                add_mio_research_bonus = 0.05
+            }
+		}
+	}
+	
+	focus = {
+		id = USA_quantity_and_quality
+		icon = GFX_focus_generic_heavy_tank
+		prerequisite = { focus = USA_t6_prototype }
+		prerequisite = { focus = USA_chaffes_armored_force }
+
+		x = 1
+		y = 1
+		relative_position_id = USA_chaffes_armored_force
+		cost = 5
+		available = {
+			has_war_with_major = yes
+		}
+
+		continue_if_invalid = yes
+
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH FOCUS_FILTER_HISTORICAL }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = USA_quantity_and_quality
+				ahead_reduction = 1
+				bonus = 1
+				uses = 1
+				category = cat_heavy_armor
+			}
+			add_tech_bonus = {
+				name = USA_quantity_and_quality
+				bonus = 1
+				uses = 1
+				category = cat_medium_armor
+			}
+			add_breakthrough_progress = {
+				specialization = specialization_land
+				value = 0.5
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			custom_effect_tooltip = USA_modify_blitzkrieg_modifier_tt
+			effect_tooltip = {
+				add_to_variable = { 
+					USA_blitzkrieg_army_armor_attack_factor = 0.05
+					tooltip = army_armor_attack_factor_tt
+				}
+				add_to_variable = { 
+					USA_blitzkrieg_breakthrough_factor = 0.05
+					tooltip = breakthrough_factor_tt
+				}
+			}
+
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+            mio:USA_porsche_organization = {
+                add_mio_size = 1
+                add_mio_funds_gain_factor = 0.25
+                add_mio_research_bonus = 0.05
+
+                #unlock_mio_trait_tooltip = 
+                #unlock_mio_trait_tooltip = 
+            }
+		}
+	}
+	
+	focus = {
+		id = USA_combined_arms
+
+		icon = GFX_focus_generic_tank_air_support
+		alternate_icon = GFX_focus_USA_combined_arms_historical
+
+		prerequisite = { focus = USA_quantity_and_quality }
+
+		x = 0
+		y = 1
+		relative_position_id = USA_quantity_and_quality
+		cost = 5
+		available = {
+		}
+
+		search_filters = { FOCUS_FILTER_HISTORICAL }
+
+		completion_reward = {
+			USA_modify_army_modifier = yes
+			add_to_variable = { 
+				USA_military_air_superiority_bonus_in_combat = 0.1
+				tooltip = air_superiority_bonus_in_combat_tt
+			}
+			add_to_variable = { 
+				USA_military_coordination_bonus = 0.05
+				tooltip = coordination_bonus_tt
+			}
+		}
+	}
 
 	focus = {
 		id = USA_focus_on_asia
@@ -3203,39 +4242,10 @@ focus_tree = {
 		cancel_if_invalid = yes
 
 		completion_reward = {
-			army_experience = 75
-		
-			custom_effect_tooltip = USA_command_post_modification_intro
-			add_to_variable = { 
-				var = USA_air_doctrine_cost_factor_var 
-				value = -0.1 
-				tooltip = air_doc_tp
-			}
-			add_to_variable = { 
-				var = USA_land_doctrine_cost_factor_var 
-				value = -0.1 
-				tooltip = land_doc_tp
-			}
-			add_to_variable = { 
-				var = USA_experience_gain_army_factor_var 
-				value = 0.25
-				tooltip = army_xp_tp
-			}
-			add_to_variable = { 
-				var = USA_experience_gain_navy_factor_var 
-				value = 0.25
-				tooltip = navy_xp_tp
-			}
-			add_to_variable = { 
-				var = USA_experience_gain_air_factor_var 
-				value = 0.25
-				tooltip = air_xp_tp
-			}
-			add_to_variable = { 
-				var = USA_fuel_gain_factor_var 
-				value = 0.2 
-				tooltip = fuel_gain_tp
-			}
+
+
+
+
 		}
 	}
 
@@ -3264,13 +4274,6 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = land_doctrine
-			}
-			army_experience = 75 
 		}
 	}
 
@@ -3502,9 +4505,9 @@ focus_tree = {
 		icon = GFX_USA_support_china
 		mutually_exclusive = {  }
 		prerequisite = {
-			focus = USA_focus_on_asia
+			focus = USA_1937_election
 		}
-		relative_position_id = USA_focus_on_asia
+		relative_position_id = USA_1937_election
 		x = -8
 		y = 1
 		cost = 5
@@ -5476,6 +6479,8 @@ focus_tree = {
 		completion_reward = {
 			
 			add_ideas = limited_conscription
+			USA_infantry_industry_level_up = yes 
+
 			#activate_mission_tooltip = USA_selected_service_act_mission
 			
 			USA_infantry_industry_level_up = yes 
