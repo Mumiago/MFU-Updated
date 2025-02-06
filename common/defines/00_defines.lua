@@ -1199,8 +1199,8 @@ NMilitary = {
 	ORG_LOSS_FACTOR_ON_CONQUER = 0.2,              -- percentage of (max) org loss on takign enemy province
 	LOW_ORG_FOR_ATTACK = 0.5,                      -- at what org % we start affecting speed when doign hostile moves. scales down ZERO_ORG_MOVEMENT_MODIFIER
 
-	PLANNING_DECAY = 0.01,
-	PLAYER_ORDER_PLANNING_DECAY = 0.015,				-- Amount of planning lost due to player manual order
+	PLANNING_DECAY = 0.02,
+	PLAYER_ORDER_PLANNING_DECAY = 0.02,				-- Amount of planning lost due to player manual order
 	PLANNING_GAIN = 0.025,
 	PLANNING_MAX = 0.15,                           	-- can get more from techs
 	CIVILWAR_ORGANIZATION_FACTOR = 0.3,			  	-- Multiplier of org for both sides when civilwar.
@@ -1507,7 +1507,7 @@ NAir = {
 	AIR_REGION_SUPERIORITY_PIXEL_SCALE = 0.04,           -- air superiority scale = superiority/(pixels*this)
 	COMBAT_SUP_VS_SUP_ATTACK_CHANCE_SPEED_DIFF = 0.25, 	-- How much diff in speed between aircrafts affects the chance of who attacks first in superiority vs superiority.( Naval air combat only )
 	COMBAT_MULTIPLANE_CAP = 1.40,						-- How many planes can shoot at each plane on other side ( if there are 100 planes we are atttacking COMBAT_MULTIPLANE_CAP * 100 of our planes can shoot )
-	COMBAT_DAMAGE_SCALE = 0.24,							-- Higher value = more shot down planes
+	COMBAT_DAMAGE_SCALE = 0.25,							-- Higher value = more shot down planes
 	COMBAT_DAMAGE_SCALE_CARRIER = 10,                    -- same as above but used inside naval combat for carrier battles																								   
 	DETECT_CHANCE_FROM_OCCUPATION = 0.15, 				-- How much the controlled provinces in area affects the air detection base value.
 	DETECT_CHANCE_FROM_RADARS = 0.7, 					-- How much the radars in area affects detection chance.
@@ -1854,7 +1854,7 @@ NRailwayGun = {
 
 	RAILWAY_GUN_RANGE = 24,							-- The range of railway guns in pixels
 	ATTACK_TO_FORTS_MODIFIER_FACTOR = 0.8,		-- Forts modifier is calculated by multiplying railway gun attack value with this and dividing by 100
-	ATTACK_TO_ENTRENCHMENT_MODIFIER_FACTOR = 2.8,		-- Entrenchment modifier is calculated by multiplying railway gun attack value with this and dividing by 100
+	ATTACK_TO_ENTRENCHMENT_MODIFIER_FACTOR = 1.4,		-- Entrenchment modifier is calculated by multiplying railway gun attack value with this and dividing by 100
 	ATTACK_TO_BOMBARDMENT_MODIFIER_FACTOR = 0.2,	-- Bombardment modifier is calculated by multiplying railway gun attack value with this and dividing by 100
 	DAILY_MANPOWER_GAIN_RATIO = 0.05,				-- Railway Guns will be able to gain this ratio of their max manpower daily
 	DISBAND_MANPOWER_LOSS = 0.0,					-- The ration of manpower lost on disbanding railway guns
