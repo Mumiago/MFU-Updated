@@ -7518,9 +7518,20 @@ equipment_type = { amphibious_mechanized_equipment  }
 research_categories = { amphibious_mechanized_equipment  }
 
 tree_header_text = {
-	text = "Pacific focus design"
-	x = 2
+	text = "Production and Design"
+	x = 4
 }
+
+tree_header_text = {
+	text = "Anti-Tank focus"
+	x = 1
+}
+
+tree_header_text = {
+	text = "Anti-Infantry focus"
+	x = 7
+}
+
 
 initial_trait = {
 name = "Amphibious Tractors Manufacturing"
@@ -7530,44 +7541,43 @@ organization_modifier = {
 }
 
 equipment_bonus = {
-	reliability = 0.1
+	reliability = -0.05
 }
 }
 trait = {
 	token = amp1
 	name = "Full Assembly Line"
 	icon = GFX_generic_mio_trait_icon_efficiency_cap 
-	position = { x=2 y=0}
+	position = { x=4 y=0}
 
-	organization_modifier = {
-		military_industrial_organization_size_up_requirement = -0.15
-	}
 	production_bonus = {
 		production_capacity_factor = 0.05
+		production_resource_need_factor = -0.1
+		production_resource_penalty_factor = 0.1
 	}
+
 }
 
 
 trait = {
 	token = amp2
-	name = "Amphibious Expertise"
-	icon = GFX_generic_mio_department_icon_facilities
+	name = "Mass-Produced Hulls"
+	icon = GFX_generic_mio_department_icon_mechanized_line_efficiency
 
-	position = { x=1 y=1 }
+	position = { x=-1 y=2 }
 	relative_position_id = amp1
 
 	any_parent = { amp1}
-	
-	organization_modifier = {
-		military_industrial_organization_funds_gain = 0.2
-	}
-	production_bonus = {
-		production_resource_need_factor = -0.05
-		production_resource_penalty_factor = 0.1
+
+	mutually_exclusive = {
+		amp4
 	}
 
 	equipment_bonus = {
-		armor_value = 0.1
+		reliability = -0.05
+		hardness = -0.05
+		build_cost_ic = -0.05
+		fuel_consumption = 0.25
 	}
 }
 
@@ -7579,31 +7589,33 @@ trait = {
 	position = { x=1 y=1 }
 	relative_position_id = amp2
 
-	any_parent = { amp2}
+	any_parent = { amp2 amp4 }
 	
 	equipment_bonus = {
-		armor_value = 0.10
-		hardness = 0.05
+		armor_value = 0.4
 	}
 }
 #dreapta prima
 trait = {
 	token = amp4
-	name = "Increase Funding"
-	icon = GFX_generic_mio_department_icon_facilities
+	name = "Specialized Hulls"
+	icon = GFX_generic_mio_department_icon_mechanized_technology
 	position = { x=2 y=0 }
 	relative_position_id = amp2
 
+	any_parent = { amp1 }
 
-	any_parent = { amp2}
-	organization_modifier = {
-		military_industrial_organization_funds_gain = 0.4
+	mutually_exclusive = {
+		amp2
 	}
-	production_bonus = {
-		production_resource_need_factor = -0.10
-		production_resource_penalty_factor = 0.10
-		production_efficiency_gain_factor = 0.05
+
+
+	equipment_bonus = {
+		hardness = 0.05
+		build_cost_ic = 0.05
+		fuel_consumption = -0.25
 	}
+
 }
 
 #separare sus#
@@ -7613,44 +7625,40 @@ trait = {
 	name = "Multi-porpuse Armaments"
 	icon = GFX_generic_mio_department_icon_tank_general_weapons
 
-	position = { x=-1 y=1 }
-	relative_position_id = amp3
+	position = { x=-3 y=1 }
+	relative_position_id = amp1
 	mutually_exclusive = {
 		ampR1
 	   }
 
-	any_parent = { amp3}
+	any_parent = { amp1 }
 	
 	equipment_bonus = {
-
-		hard_attack = 1
+		soft_attack = 0.15
+		hard_attack = 0.5
 		ap_attack = 1
-		breakthrough = 0.25
-		build_cost_ic = 0.05
 	}
-	organization_modifier = {
-		military_industrial_organization_funds_gain = -0.3
-	}
+
 }
 trait = {
 	token = ampL11
 	name = "Anti-Tank Armaments"
 	icon = GFX_generic_mio_trait_icon_ap_attack
-	position = { x=-2 y=0 }
+	position = { x=0 y=2 }
 	relative_position_id = ampL1
 	  
-	any_parent = { ampL1}
+	any_parent = { ampL1 }
 	
 	equipment_bonus = {
-		hard_attack = 1
-		ap_attack = 1
-		reliability = -0.1
-		build_cost_ic = 0.1
+		soft_attack = 0.25
+		hard_attack = 0.7
+		ap_attack = 2
+		reliability = -0.05
+		build_cost_ic = 0.07
 	}
-	organization_modifier = {
-		military_industrial_organization_funds_gain = -0.2
-	}
+
 }
+
 #amph stanga
 
 
@@ -7659,18 +7667,16 @@ trait = {
 	name = "Rubber Torsilastic Suspension"
 	icon = GFX_generic_mio_trait_icon_reliability
 		
-	position = { x=-2 y=1 }
-	relative_position_id = ampL1
+	position = { x=0 y=2 }
+	relative_position_id = amp2
 
-	any_parent = { ampL1 ampR1}
+	any_parent = { amp2 amp4}
 	
 	equipment_bonus = {
-		reliability = 0.1
-		defense = 0.25
+		reliability = 0.05
+		breakthrough = 0.2
 	}
-	organization_modifier = {
-		military_industrial_organization_funds_gain = -0.2
-	}
+
 }
 
 trait = {
@@ -7680,18 +7686,15 @@ trait = {
 	special_trait_background = yes
 
 	position = { x=0 y=2 }
-	relative_position_id = amp3
+	relative_position_id = amp4
 
-	any_parent = { ampL1 ampR1}
+	any_parent = { amp4 }
 	
 	equipment_bonus = {
-		armor_value = 0.1
 		reliability = 0.1
-		experience_loss_factor = -0.10
+		breakthrough = 0.4
 	}
-	organization_modifier = {
-		military_industrial_organization_funds_gain = -0.2
-	}
+
 }
 
 #amph dreapta
@@ -7701,20 +7704,17 @@ trait = {
 	name = "Infantry Focus Designs"
 	icon =  GFX_generic_mio_department_icon_tank_general_spg
 
-	position = { x=1 y=1 }
-	relative_position_id = amp3
+	position = { x=3 y=1 }
+	relative_position_id = amp1
 	mutually_exclusive = {
 		ampL1
 	   }
 
-	any_parent = { amp3}
+	any_parent = { amp1 }
 	
 	equipment_bonus = {
 		soft_attack = 0.25
-		build_cost_ic = 0.05
-	}
-	organization_modifier = {
-		military_industrial_organization_funds_gain = -0.2
+		hard_attack = 0.15
 	}
 }
 
@@ -7723,21 +7723,19 @@ trait = {
 	name = "Anti-Infantry Armaments "
 	icon = GFX_generic_mio_trait_icon_soft_attack
 
-	position = { x=2 y=1 }
+	position = { x=0 y=2 }
 	relative_position_id = ampR1
 	   
 
 	any_parent = { ampR1}
 	
 	equipment_bonus = {
-		soft_attack = 0.50
-		breakthrough = 0.5
+		soft_attack = 0.45
+		hard_attack = 0.25
 		reliability = -0.05
-		build_cost_ic = 0.05
+		build_cost_ic = 0.07
 	}
-	organization_modifier = {
-		military_industrial_organization_funds_gain = -0.2
-	}
+
 }
 
 
