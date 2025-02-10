@@ -41,9 +41,11 @@
 		
 		equipment_bonus = {
 					#supply_consumption = 0.05
-					build_cost_ic = -0.04
+					build_cost_ic = -0.05
+					soft_attack = 0.03
+					hard_attack = 0.03
 					hardness = 0.05 
-					armor_value = 0.25
+					armor_value = 0.3
 					reliability = 0.05
 
 		}
@@ -63,13 +65,7 @@ POL_vickers_armstrong_eng_organization = {
 			}
 	
 			available = {
-				POL = {
-					OR = {
-						has_capitulated = yes
-						has_completed_focus = POL_poland_is_not_yet_lost
-					}
-
-				}
+				
 			}		
 
 }
@@ -86,13 +82,7 @@ POL_nuffield ={
 	}
 
 	available = {
-		POL = {
-			OR = {
-				has_capitulated = yes
-				has_completed_focus = POL_poland_is_not_yet_lost
-			}
-
-		}
+		
 	}
 
 }
@@ -108,13 +98,7 @@ POL_birmingham = {
 			}
 
 			available = {
-				POL = {
-					OR = {
-						has_capitulated = yes
-						has_completed_focus = POL_poland_is_not_yet_lost
-					}
-
-				}
+			
 			}		
 
 
@@ -132,13 +116,7 @@ POL_vauxhall = {
 			}
 
 			available = {
-				POL = {
-					OR = {
-						has_capitulated = yes
-						has_completed_focus = POL_poland_is_not_yet_lost
-					}
-
-				}
+				
 			}		
 
 
@@ -156,13 +134,7 @@ POL_vulcan = {
 
 	
 			available = {
-				POL = {
-					OR = {
-						has_capitulated = yes
-						has_completed_focus = POL_poland_is_not_yet_lost
-					}
-
-				}
+			
 			}		
 
 }
@@ -321,12 +293,481 @@ POL_fb_lucznik = {
 }
 
 POL_zaklady_przemyslowe = {
-	include = generic_artillery_organization
-	icon = 	GFX_idea_POL_zaklady_przemyslowe
-	allowed = {		
-		OR = {
-			original_tag = POL
-			
+	icon = GFX_idea_POL_zaklady_przemyslowe
+	allowed = {
+		tag = POL 
+	}
+	equipment_type = {
+		mio_cat_eq_all_arty
+	}
+
+	research_categories = {
+		artillery
+	}
+	tree_header_text = {
+		text = "Light- and Heavy Artillery"
+		x = 1
+	}
+
+	tree_header_text = {
+		text = "Rocket Artillery"
+		x = 3
+	}
+	tree_header_text = {
+		text = "Infantry- and Field Guns"
+		x = 5
+	}
+	tree_header_text = {
+		text = "Anti-Tank"
+		x = 7
+	}
+	tree_header_text = {
+		text = "AA and Heavy AA"
+		x = 9
+	}
+	initial_trait = {
+		name = generic_heavy_artillery_organization
+
+	    organization_modifier = {
+			military_industrial_organization_research_bonus = 0.05
+		}
+		production_bonus = {
+			production_cost_factor = -0.15
+		}
+	}		
+###art and h art			
+	trait = {
+		token = mobilelimbers2
+		name = "Mobile Limbers"
+		icon = GFX_generic_mio_department_icon_artillery_technology
+		position = { x=0 y=0}
+		mutually_exclusive = { widerangles2 }
+		limit_to_equipment_type = { 
+			artillery_equipment
+			heavy_artillery_equipment
+			siege_artillery_equipment
+		}
+		equipment_bonus = {
+			build_cost_ic = -0.03
+			defense = 0.08
+		}
+		
+	}
+	trait = {
+		token = widerangles2
+		name = "Wider Firing Angles"
+		icon = GFX_generic_mio_department_icon_artillery_technology
+		position = { x=2 y=0}
+		mutually_exclusive = { mobilelimbers2 }
+		limit_to_equipment_type = { 
+			artillery_equipment
+			heavy_artillery_equipment
+			siege_artillery_equipment
+		}
+		equipment_bonus = {
+			soft_attack = 0.05
+			breakthrough = 0.05
+		}
+	}
+	trait = {
+		token = range_focus
+		name = "Focus on Range"
+		icon = GFX_generic_mio_trait_icon_breakthrough
+		position = { x=0 y=1}
+		mutually_exclusive = { shell_weight }
+		available = {
+			POL = {
+				has_completed_focus = POL_huta_stalowa_wola
+			}
+		}
+	    any_parent = { widerangles2 mobilelimbers2 }
+		limit_to_equipment_type = { 
+			heavy_artillery_equipment
+			siege_artillery_equipment
+		}
+		equipment_bonus = {
+            breakthrough = 0.075
+			defense = 0.04
+			build_cost_ic = 0.05
+		}
+		
+	}
+	trait = {
+		token = shell_weight
+		name = "Focus on Shell Weight"
+		icon = GFX_generic_mio_department_icon_tank_general_spg
+		position = { x=2 y=1}
+		mutually_exclusive = { range_focus }
+	    any_parent = { widerangles2 mobilelimbers2 }
+		available = {
+			POL = {
+				has_completed_focus = POL_huta_stalowa_wola
+			}
+		}
+		limit_to_equipment_type = { 
+			heavy_artillery_equipment
+			siege_artillery_equipment
+		}
+		equipment_bonus = {
+			soft_attack = 0.05
+			hard_attack = 0.1
+			build_cost_ic = 0.05
+		}
+	}
+	trait = {
+		token = improvedpropel2
+		name = "Improved Propellant"
+		icon = GFX_generic_mio_department_icon_tank_general_weapons
+		position = { x=3 y=1}
+		relative_position_id = mobilelimbers2
+	    any_parent = { widerangles2 mobilelimbers2 rocketmotors2}
+		limit_to_equipment_type = { 
+			artillery_equipment
+			heavy_artillery_equipment
+			rocket_artillery_equipment
+			siege_artillery_equipment
+		}
+		available = {
+			owner = {
+				has_tech = computing_machine
+			}
+		}
+		equipment_bonus = {
+			breakthrough = 0.1
+		}
+	}
+	trait = {
+		token = strengthalloys2
+		name = "High Strength Alloys"
+		icon = GFX_generic_mio_department_icon_artillery_materials
+		position = { x=0 y=2}
+		relative_position_id = mobilelimbers2
+		mutually_exclusive = { muzzlebreak2 }
+	    any_parent = { improvedpropel2 shell_weight range_focus}
+
+		limit_to_equipment_type = { 
+			artillery_equipment
+			heavy_artillery_equipment
+			siege_artillery_equipment
+		}
+		available = {
+			owner = {
+				has_tech = advanced_machine_tools
+			}
+		}
+		equipment_bonus = {
+		    defense = 0.14
+		}
+		production_bonus = {
+			production_resource_need_factor = 0.2
+			production_resource_penalty_factor 0.2
+		}
+	}
+	trait = {
+		token = muzzlebreak2
+		name = "Muzzle Breaks"
+		icon = GFX_generic_mio_department_icon_artillery_conversion
+		position = { x=0 y=2}
+		relative_position_id = widerangles2
+		mutually_exclusive = { strengthalloys2 }
+	   any_parent = { improvedpropel2 shell_weight range_focus}
+		limit_to_equipment_type = { 
+			artillery_equipment
+			heavy_artillery_equipment
+			siege_artillery_equipment
+		}
+		available = {
+			owner = {
+				has_tech = advanced_machine_tools
+			}
+		}
+		equipment_bonus = {
+		  build_cost_ic = -0.075
+		}
+	}
+	trait = {
+		token = improved_barrels2
+		name = "Improved Gun Barrel Manufacturing"
+		icon = GFX_generic_mio_department_icon_artillery_production
+		position = { x=1 y=1}
+		relative_position_id = strengthalloys2
+	    any_parent = { muzzlebreak2 strengthalloys2}
+		limit_to_equipment_type = { 
+			artillery_equipment
+			heavy_artillery_equipment
+			siege_artillery_equipment
+		}
+		available = {
+			owner = {
+				has_tech = assembly_line_production
+			}
+		}
+		equipment_bonus = {
+			 soft_attack = 0.1
+		}
+		production_bonus = {
+			production_efficiency_cap_factor = 0.04
+		}
+	}
+##rocketarty
+	trait = {
+		token = rocketmotors2
+		name = "Improved Rocket Motor Designs"
+		icon = GFX_rocket2
+		position = { x=3 y=0}
+		limit_to_equipment_type = { 
+			rocket_artillery_equipment
+		}
+		available = {
+			owner = {
+				has_tech = rocket_artillery
+			}
+		}
+		equipment_bonus = {
+			soft_attack = 0.2
+			build_cost_ic = 0.04
+		}
+	}
+	trait = {
+		token = rocketlauncher2
+		name = "Rocket Launcher Improvements"
+		icon = GFX_rocket1
+			    any_parent = { improvedpropel2 }
+		position = { x=3 y=3}
+		available = {
+			owner = {
+				has_tech = rocket_artillery3
+			}
+		}
+		equipment_bonus = {
+	    	defense = 0.08
+	    	soft_attack = 0.05
+			breakthrough = 0.1
+			build_cost_ic = 0.04
+		}
+	}
+##field and inf
+	trait = {
+		token = modernization2
+		name = "Field- and Infantry Gun Modernization"
+		icon = GFX_infgun1
+		position = { x=4 y=0}
+		mutually_exclusive = { upgrade2 }
+		limit_to_equipment_type = { 
+			pack_artillery_equipment
+			field_gun_equipment
+		}
+		available = {
+			owner = {
+				has_tech = improved_machine_tools
+			}
+		}
+		equipment_bonus = {
+		breakthrough = 0.12
+		soft_attack = 0.1
+		ap_attack = 0.1
+		hard_attack = 0.1
+		defense = 0.12
+		build_cost_ic = 0.06
+
+		}
+	}
+	trait = {
+		token = upgrade2
+		name = "Field- and Infantry Gun Construction Upgrade"
+		icon = GFX_infgun2
+		position = { x=6 y=0}
+		mutually_exclusive = { modernization2 }
+		limit_to_equipment_type = { 
+			pack_artillery_equipment
+			field_gun_equipment
+		}
+		available = {
+			owner = {
+				has_tech = improved_machine_tools
+			}
+		}
+		equipment_bonus = {
+		defense = 0.12
+		build_cost_ic = -0.08
+		}
+		production_bonus = {
+			production_efficiency_cap_factor = 0.02
+		}
+	}
+	trait = {
+		token = indirect2
+		name = "Infantry- and Field Gun Indirect Fire Upgrade"
+		icon = GFX_infgun3
+		position = { x=1 y=1}
+		relative_position_id = modernization2
+	    any_parent = { modernization2 upgrade2 }
+		limit_to_equipment_type = { 
+			pack_artillery_equipment
+			field_gun_equipment
+		}
+		available = {
+			owner = {
+				has_tech = advanced_machine_tools
+			}
+		}
+		equipment_bonus = {
+		breakthrough = 0.7
+		build_cost_ic = 0.04
+		}
+
+	}
+	trait = {
+		token = builtrapid2
+		name = "Built for Rapid Fire"
+		icon = GFX_infgun4
+		position = { x=0 y=1}
+		relative_position_id = indirect2
+	    any_parent = { indirect2 }
+		available = {
+			owner = {
+				has_tech = assembly_line_production
+			}
+		}
+		equipment_bonus = {
+		soft_attack = 0.1
+		hard_attack = 0.05
+		}
+	}
+###AT
+
+##someone has to test piercing values !!IMPORTANT
+	trait = {
+		token = apcr2
+		name = "Armor Piercing Composite Rigid Ammunition"
+		icon = GFX_generic_mio_trait_icon_ap_attack
+		position = { x=7 y=0}
+		limit_to_equipment_type = { 
+			anti_tank_equipment
+		}
+		available = {
+			owner = {
+				has_tech = improved_machine_tools
+			}
+		}
+		equipment_bonus = {
+	     	hard_attack = 0.1
+	     	build_cost_ic = 0.02
+			ap_attack = 0.2
+		}
+		production_bonus = {
+			production_resource_need_factor = 0.2
+			production_resource_penalty_factor 0.2
+		}
+	}
+	trait = {
+		token = aluminum2
+		name = "Aluminum Carriage"
+		icon = GFX_generic_mio_department_icon_anti_tank_materials
+		position = { x=1 y=1}
+		relative_position_id = apcr2
+	    any_parent = { apcr2  }
+		limit_to_equipment_type = { 
+			anti_tank_equipment
+		}
+		equipment_bonus = {
+	     	defense = 1.2
+	      	build_cost_ic = 0.02
+		}
+		production_bonus = {
+			production_resource_need_factor = 0.2
+			production_resource_penalty_factor 0.2
+		}
+	}
+	trait = {
+		token = apds2
+		name = "Armor Piercing Discarding Sabot Ammunition"
+		icon = GFX_generic_mio_trait_icon_ap_attack
+		position = { x=0 y=3}
+		relative_position_id = apcr2
+	    any_parent = { apcr2  }
+		limit_to_equipment_type = { 
+			anti_tank_equipment
+		}
+		available = {
+			owner = {
+				has_tech = assembly_line_production
+			}
+		}
+		equipment_bonus = {
+	     	hard_attack = 0.1
+	     	build_cost_ic = 0.02
+			ap_attack = 0.2
+		}
+		production_bonus = {
+			production_resource_need_factor = 0.2
+			production_resource_penalty_factor 0.2
+		}
+	}
+###aa
+	trait = {
+		token = semi_gun_laying2
+		name = "Semi-Automatic Gun Laying"
+		icon = GFX_generic_mio_department_icon_tank_general_aa
+		position = { x=9 y=0}
+		limit_to_equipment_type = { 
+			anti_air_equipment 
+			heavy_anti_air_equipment 
+		}
+		available = {
+			owner = {
+				has_tech = improved_machine_tools
+			}
+		}
+		equipment_bonus = {
+	    	air_attack = 0.06
+		    defense = 0.9
+	     	build_cost_ic = 0.02
+		}
+	}
+	trait = {
+		token = improved_targeting2
+		name = "Anti-Aircraft Targeting Upgrade"
+		icon = GFX_generic_mio_department_icon_tank_general_aa
+		position = { x=0 y=1}
+		relative_position_id = semi_gun_laying2
+	    any_parent = { semi_gun_laying2  }
+		limit_to_equipment_type = { 
+			anti_air_equipment 
+			heavy_anti_air_equipment 
+		}
+		available = {
+			owner = {
+				has_tech = advanced_machine_tools
+			}
+		}
+		equipment_bonus = {
+	    	air_attack = 0.06
+		    soft_attack = 0.18
+	     	build_cost_ic = 0.02
+		}
+	}
+	trait = {
+		token = improved_ballistics2
+		name = "Anti-Aircraft Barrel and Ballistics Upgrade"
+		icon = GFX_generic_mio_department_icon_anti_air_technology
+		position = { x=0 y=1}
+		relative_position_id = improved_targeting2
+	    any_parent = { improved_targeting2  }
+		limit_to_equipment_type = { 
+			anti_air_equipment 
+			heavy_anti_air_equipment 
+		}
+		available = {
+			owner = {
+				has_tech = assembly_line_production
+			}
+		}
+		equipment_bonus = {
+		    hard_attack = 0.05
+	    	air_attack = 0.06
+	     	ap_attack = 0.1
+	     	build_cost_ic = 0.06
 		}
 	}
 
@@ -340,19 +781,3 @@ POL_perkun = {
 	}
 }
 
-POL_huta_stalowa_wola = {
-	include = generic_heavy_artillery_organization
-	icon = GFX_idea_POL_huta_stalowa_wola
-	allowed = {	
-		OR = {
-			original_tag = POL
-			
-		}
-	}
-	available = {
-		POL = {
-			has_completed_focus = POL_huta_stalowa_wola
-		}
-		
-	}
-}
