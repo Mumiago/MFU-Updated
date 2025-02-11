@@ -554,7 +554,7 @@ MAN_internal_factions = {
 			}
 			custom_effect_tooltip = spacers
 			every_state = {
-				add_extra_state_shared_building_slots = 5
+				add_extra_state_shared_building_slots = 4
 				limit = {
 					is_core_of = MAN 
 				}
@@ -1136,7 +1136,7 @@ MAN_internal_factions = {
 			custom_effect_tooltip = MANspace
 		}
 		remove_effect = {
-			MAN_KTP_high_influence_decrease_effect = yes
+			MAN_KPT_medium_influence_decrease_effect = yes
 			custom_effect_tooltip = spacers
 			custom_effect_tooltip = MAN_the_death_of_china
 
@@ -1232,7 +1232,7 @@ MAN_internal_factions = {
 			custom_effect_tooltip = MANspace
 		}
 		remove_effect = {
-			MAN_KPT_medium_influence_decrease_effect = yes
+			MAN_KPT_low_influence_decrease_effect = yes
 
 			custom_effect_tooltip = spacers
 
@@ -1292,7 +1292,6 @@ MAN_internal_factions = {
 		remove_effect = {
 			
 			MAN_KPT_low_loyalty_increase_effect = yes
-			MAN_KPT_low_influence_decrease_effect = yes
 
 			custom_effect_tooltip = spacers
 
@@ -1795,7 +1794,7 @@ MAN_internal_factions = {
 
 		##############################################
 		#
-		#	nightmrae in manchuria
+		#	nightmare in manchuria
 		#
 
 
@@ -2094,7 +2093,7 @@ MAN_internal_factions = {
 	}
 	
 	KPT_benefits  = { 
-		icon = GFX_decision_generic_fundraising
+		icon = GFX_decision_generic_army_support
 		priority = 50
 
 		allowed = { 
@@ -2133,38 +2132,90 @@ MAN_internal_factions = {
 			}
 
 			set_country_flag = { flag = faction_change_going value = 1 days = 90 }
-
-
-				MAN_mitzu_medium_loyalty_decrease_effect = yes
-
-				MAN_SM_medium_loyalty_decrease_effect = yes
-				MAN_KPT_medium_loyalty_increase_effect = yes
-				
 			
+			MAN_KPT_medium_loyalty_increase_effect = yes
+				
 
 		}
 
 
 		remove_effect = {
 
-				MAN_mitzu_low_influence_decrease_effect = yes
+			if = {
+				limit = {
+					NOT = {
+						check_variable = {
+							times_clicked > 9
+						}
+					}
+					OR = {
+						check_variable = {
+							KPT_influence > 75
+							KPT_loyalty > 75
+						}
+						has_country_flag = MAN_KPT_integrated
+					}
 
-				MAN_SM_low_influence_decrease_effect = yes
-				MAN_KPT_medium_influence_increase_effect = yes
+				}
+				random_state = {
+					prioritize = {
+						714
+					}
+					add_extra_state_shared_building_slots = 2
+					
+					add_building_construction = {
+						type = arms_factory
+						level = 2
+						instant_build = yes
+					}
+				}
+
+				add_to_variable = {
+					var = times_clicked
+					value = 1
+				}
 				
-			custom_effect_tooltip = spacers
-			random_state = {
-				prioritize = {
-					714
-				}
-				add_extra_state_shared_building_slots = 1
-
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
 			}
+			if = {
+				limit = {
+					NOT = {
+						check_variable = {
+							times_clicked > 14
+						}
+					}
+
+					NOT = {
+						OR = {
+							check_variable = {
+								KPT_influence > 75
+								KPT_loyalty > 75
+							}
+							has_country_flag = MAN_KPT_integrated
+						}
+					}
+
+
+				}
+				random_state = {
+					prioritize = {
+						714
+					}
+					add_extra_state_shared_building_slots = 1
+					
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+				}
+
+				add_to_variable = {
+					var = times_clicked
+					value = 1
+				}
+
+			}
+			
 			custom_effect_tooltip = spacers
 			add_popularity = {
 				ideology = fascism
@@ -2172,6 +2223,93 @@ MAN_internal_factions = {
 			}
 		}
 	}
+
+	KPT_influence  = { 
+		icon = GFX_decision_generic_army_support
+		priority = 50
+
+		allowed = { 
+			original_tag = MAN
+		}
+
+		available = {
+			NOT = {
+				has_country_flag = faction_change_going
+			}
+			custom_trigger_tooltip = {
+				tooltip = condis_2
+				NOT = {
+					has_country_flag = MAN_KPT_remove
+				}
+			}
+		}
+		visible = {
+
+		}
+
+		custom_cost_trigger = {
+			has_political_power >24
+		}
+		custom_cost_text = stabber_cost_man
+
+		days_remove = 90
+		days_re_enable = 0
+
+		fire_only_once = no
+
+		complete_effect = {
+
+			hidden_effect = {
+				add_stability = -0.02
+			}
+
+			set_country_flag = { flag = faction_change_going value = 1 days = 90 }
+
+				if={
+					limit = {
+							JAP = {
+								NOT ={
+									has_completed_focus = JAP_found_mangyo
+								}
+							}
+							NOT ={
+								has_completed_focus = MAN_modernizing_the_economy
+							}
+					}
+		
+					MAN_mitzu_low_loyalty_decrease_effect = yes
+					MAN_SM_low_loyalty_decrease_effect = yes
+					MAN_KPT_medium_influence_increase_effect = yes
+		
+				else_if = {
+					limit = {
+						OR = {
+							JAP = {
+								has_completed_focus = JAP_found_mangyo
+							}
+						has_completed_focus = MAN_modernizing_the_economy
+						}	
+					}
+		
+					MAN_mitzu_low_loyalty_decrease_effect = yes
+					MAN_SM_low_loyalty_decrease_effect = yes
+					MAN_MIC_low_loyalty_decrease_effect = yes
+					MAN_KPT_medium_influence_increase_effect = yes
+				}
+			}
+
+		}
+
+
+		remove_effect = {
+
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.02
+			}
+		}
+	}
+
 	Abose_button = {
 		icon = GFX_decision_hol_attract_foreign_investors
 		priority = 50
@@ -2196,6 +2334,56 @@ MAN_internal_factions = {
 					}
 				}
 			}
+			custom_trigger_tooltip = {
+				tooltip = condis_4
+				NOT = {
+					OR = {
+						if={
+							limit = {
+								OR ={
+									JAP = {
+										NOT ={
+											has_completed_focus = JAP_found_mangyo
+										}
+									}
+									NOT ={
+										has_completed_focus = MAN_modernizing_the_economy
+									}
+								}
+							}
+
+							check_variable = {
+								Mitsui_influence < 1
+							}
+							check_variable = {
+								SM_influence < 1
+							}
+								
+						}
+							else_if = {
+								limit = {
+									OR = {
+										JAP = {
+											has_completed_focus = JAP_found_mangyo
+										}
+									has_completed_focus = MAN_modernizing_the_economy
+									}	
+								}
+								check_variable = {
+									Mitsui_influence < 1
+								}
+								check_variable = {
+									SM_influence < 1
+								}
+								check_variable = {
+									MIC_influence < 1
+								}
+								
+							}
+					}
+				}
+			}
+			
 		}
 		visible = {}
 
@@ -2286,19 +2474,22 @@ MAN_internal_factions = {
 				}
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-			 }
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+				 }
 				add_building_construction = {
 					type = arms_factory
 					level = 1
 					instant_build = yes
 				}
 			}
+			
+			
 
 			custom_effect_tooltip = spacers
-
+			custom_effect_tooltip = communist_manchu_removal_1
+			custom_effect_tooltip = MANspace
 			if = {
 				limit = {
 					NOT = {
@@ -2317,7 +2508,19 @@ MAN_internal_factions = {
 
 				add_popularity = {
 					ideology = communism
-					popularity = 0.15
+					popularity = 0.12
+				}
+				add_popularity = {
+					ideology = democratic
+					popularity = 0.04
+				}
+				add_popularity = {
+					ideology = fascism
+					popularity = -0.06
+				}
+				add_popularity = {
+					ideology = neutrality
+					popularity = -0.06
 				}
 
 				else_if = {
@@ -2331,10 +2534,24 @@ MAN_internal_factions = {
 							has_country_flag = MAN_SM_remove
 						}
 					}
+
 					add_popularity = {
 						ideology = communism
-						popularity = 0.1
+						popularity = 0.06
 					}
+					add_popularity = {
+						ideology = democratic
+						popularity = 0.02
+					}
+					add_popularity = {
+						ideology = fascism
+						popularity = -0.03
+					}
+					add_popularity = {
+						ideology = neutrality
+						popularity = -0.03
+					}
+
 				}
 				else_if = {
 					limit = {
@@ -2347,10 +2564,24 @@ MAN_internal_factions = {
 							has_country_flag = MAN_SM_remove
 						}
 					}
+
 					add_popularity = {
 						ideology = communism
-						popularity = 0.1
+						popularity = 0.06
 					}
+					add_popularity = {
+						ideology = democratic
+						popularity = 0.02
+					}
+					add_popularity = {
+						ideology = fascism
+						popularity = -0.03
+					}
+					add_popularity = {
+						ideology = neutrality
+						popularity = -0.03
+					}
+
 				}
 				else_if = {
 					limit = {
@@ -2364,8 +2595,12 @@ MAN_internal_factions = {
 						}
 					}
 					add_popularity = {
-						ideology = communism
-						popularity = 0.05
+						ideology = fascism
+						popularity = -0.1
+					}
+					add_popularity = {
+						ideology = neutrality
+						popularity = -0.1
 					}
 				}
 			}
@@ -2694,7 +2929,7 @@ MAN_internal_factions = {
 			custom_effect_tooltip = MAN_recruitable_tt0
 			add_to_variable = {
 				var = MAN_military_industry_dm_production_speed_industrial_complex_factor
-				value = 0.05
+				value = 0.1
 				tooltip = industrial_complex_build_speed_factor_tooltip
 			}
 		}
@@ -2793,8 +3028,6 @@ MAN_internal_factions = {
 			}
 		}
 	}
-
-
 
 	MAN_pacify_MTZ = {
 		icon = GFX_decision_SWI_no_elected_president
@@ -3170,7 +3403,7 @@ MAN_internal_factions = {
 	}
 
 	SYSTEM_CHANGE_OY_BONUS_1 ={
-		icon = faction
+		icon = GFX_decision_generic_scorched_earth
  
 		available = {
 			tag = MAN
@@ -3178,6 +3411,10 @@ MAN_internal_factions = {
 
 		visible = {
 			always = no
+		}
+
+		modifier = {
+			industrial_capacity_factory = -0.1
 		}
 
 		selectable_mission = no
@@ -3217,7 +3454,7 @@ MAN_internal_factions = {
 			}
 	}
 	SYSTEM_CHANGE_OY_BONUS_2 ={
-		icon = faction
+		icon = GFX_decision_generic_scorched_earth
  
 		available = {
 			tag = MAN
@@ -3225,6 +3462,10 @@ MAN_internal_factions = {
 
 		visible = {
 			always = no
+		}
+
+		modifier = {
+			local_resources_factor = -0.1
 		}
 
 		selectable_mission = no
@@ -3264,7 +3505,7 @@ MAN_internal_factions = {
 			}
 	}
 	SYSTEM_CHANGE_OY_BONUS_3 ={
-		icon = faction
+		icon = GFX_decision_generic_scorched_earth
  
 		available = {
 			tag = MAN
@@ -3273,6 +3514,11 @@ MAN_internal_factions = {
 		visible = {
 			always = no
 		}
+
+		modifier = {
+			production_speed_industrial_complex_factor = -0.1
+		}
+
 
 		selectable_mission = no
 		days_mission_timeout = 14
@@ -3317,7 +3563,7 @@ MAN_internal_factions = {
 			}
 	}
 	SYSTEM_CHANGE_OY_BONUS_4 ={
-		icon = faction
+		icon = GFX_decision_generic_scorched_earth
  
 		available = {
 			tag = MAN
@@ -3325,6 +3571,11 @@ MAN_internal_factions = {
 
 		visible = {
 			always = no
+		}
+
+		modifier = {
+			production_speed_arms_factory_factor = -0.1
+			production_speed_dockyard_factor = -0.1
 		}
 
 		selectable_mission = no
@@ -3343,7 +3594,11 @@ MAN_internal_factions = {
 			}
 
 			NOT = {
-				has_idea_with_trait = leader_of_kuangtung
+				OR = {
+					has_idea_with_trait = leader_of_kuangtung
+					has_completed_focus = MAN_kwantung_army_takes_control			
+				}
+
 			}
 
 			check_variable = {
@@ -3366,7 +3621,7 @@ MAN_internal_factions = {
 	}
 
 	SYSTEM_CHANGE_OY_BONUS_10 ={
-		icon = faction
+		icon = GFX_decision_generic_ignite_civil_war
  
 		available = {
 			tag = MAN
@@ -3388,7 +3643,8 @@ MAN_internal_factions = {
 		}
 
 		activation = {
-			communism > 0.3
+			communism > 0.2
+			has_stability < 0.3
 		}
 			
 		
@@ -3398,15 +3654,17 @@ MAN_internal_factions = {
 		}
 
 		remove_effect = {
+
 			add_stability = -0.01
+
 			add_popularity = {
 				ideology = communism
-				popularity = -0.01
+				popularity = -0.02
 			}
 		}
 	}
 	SYSTEM_CHANGE_OY_BONUS_11 ={
-		icon = faction
+		icon = GFX_decision_generic_ignite_civil_war
  
 		available = {
 			tag = MAN
@@ -3426,11 +3684,11 @@ MAN_internal_factions = {
 		modifier = {
 			civilian_factory_use = 1
 			consumer_goods_expected_value = 0.03
-			stability_weekly = -0.001
 		}
 
 		activation = {
-			communism > 0.4
+			communism > 0.3
+			has_stability < 0.2
 		}
 			
 		
@@ -3440,15 +3698,27 @@ MAN_internal_factions = {
 		}
 
 		remove_effect = {
-			add_stability = -0.02
+			custom_effect_tooltip = communist_manchu_removal_2
+			if = {
+				limit = {
+					has_stability > 0.01
+				 }
+					add_stability = -0.02
+
+					else_if = {
+						limit = { has_stability < 0.01 }
+						add_war_support = -0.01
+				}
+			}
+
 			add_popularity = {
 				ideology = communism
-				popularity = -0.02
+				popularity = -0.04
 			}
 		}
 	}
 	SYSTEM_CHANGE_OY_BONUS_12 ={
-		icon = faction
+		icon = GFX_decision_generic_ignite_civil_war
  
 		available = {
 			tag = MAN
@@ -3467,12 +3737,13 @@ MAN_internal_factions = {
 
 		modifier = {
 			civilian_factory_use = 2
-			consumer_goods_expected_value = 0.03
-			stability_weekly = -0.002
+			consumer_goods_expected_value = 0.05
+			stability_weekly = -0.001
 		}
 
 		activation = {
-			communism > 0.5
+			communism > 0.4
+			has_stability < 0.1
 		}
 			
 		
@@ -3482,10 +3753,25 @@ MAN_internal_factions = {
 		}
 
 		remove_effect = {
-			add_stability = -0.03
+			custom_effect_tooltip = communist_manchu_removal_2
+			if = {
+				limit = {
+					has_stability > 0.01
+				 }
+					add_stability = -0.03
+
+					else_if = {
+						limit = { has_stability < 0.01 }
+						add_war_support = -0.03
+				}
+			}
 			add_popularity = {
 				ideology = communism
-				popularity = -0.05
+				popularity = -0.06
+			}
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.02
 			}
 		}
 	}
@@ -3564,60 +3850,6 @@ MAN_economic_retadism = {
 		}
 	}
 	
-	MAN_forced_5Nanning = {
-		icon = GFX_decision_generic_operation
-		available = {
- 			OR={
-				MAN ={controls_province = 7137}
-				any_allied_country ={controls_province = 7137}
-			}
-
-			OR = {
-				has_completed_focus = MAN_kwantung_army_takes_control
-				num_of_civilian_factories_available_for_projects > 1
-			}
-
-			NOT =  {
-				has_country_flag = workeers_flag_fuzhou
-			}
-	
-		 }
-
-		 highlight_states = {
-			highlight_state_targets = {
-				state = 594
-		}
-		highlight_color_while_active = 2
-		highlight_color_before_active = 1
-		}
-
-		priority = 3
-		modifier = {
-			civilian_factory_use = 1
-		}
-	
-		fire_only_once = no
-	
-		cost = 20
-		days_remove = 90
-		days_re_enable = 0
-		complete_effect = {
-			set_country_flag = { flag = workeers_flag_fuzhou value = 1 days = 90 }
-		}
-		remove_effect = {
-	
-			add_to_variable = { workeers_flag = +1 }
-			custom_effect_tooltip = loggi_7_5k
-
-				add_to_variable = {
-					var = logs
-					value = 750
-				}
-
-			add_stability = -0.02
-	
-		}
-	}
 	MAN_forced_2Nanjing = {
 		icon = oppression
 		available = {
@@ -3658,18 +3890,18 @@ MAN_economic_retadism = {
 		days_remove = 90
 		days_re_enable = 0
 		complete_effect = {
-			add_stability = -0.04
+			add_stability = -0.05
 			set_country_flag = { flag = workeers_flag_2 value = 1 days = 90 }
 		}
 		remove_effect = {
 	
 			add_to_variable = { workeers_flag = +1 }
-			custom_effect_tooltip = loggi_15k
+			custom_effect_tooltip = loggi_20k
 			custom_effect_tooltip = MANspace
 
 				add_to_variable = {
 					var = logs
-					value = 1500
+					value = 2000
 				}
 		}
 	}
@@ -3715,7 +3947,7 @@ MAN_economic_retadism = {
 			set_country_flag = { flag = workeers_flag_2_21 value = 1 days = 90 }
 		}
 		remove_effect = {
-			add_stability = -0.04
+			add_stability = -0.02
 			add_to_variable = { workeers_flag = +1 }
 			custom_effect_tooltip = loggi_20k
 			custom_effect_tooltip = MANspace
@@ -3727,6 +3959,7 @@ MAN_economic_retadism = {
 	
 		}
 	}
+
 	MAN_forced_4Changsha = {
 		icon = GFX_decision_generic_operation
 		available = {
@@ -3769,26 +4002,18 @@ MAN_economic_retadism = {
 			set_country_flag = { flag = workeers_flag_3 value = 1 days = 90 }
 		}
 		remove_effect = {
-			add_stability = -0.06
+			add_stability = -0.04
 			add_to_variable = { workeers_flag = +1 }
-			custom_effect_tooltip = loggi_30k
+			custom_effect_tooltip = loggi_40k
 			custom_effect_tooltip = MANspace
 
 				add_to_variable = {
 					var = logs
-					value = 3000
+					value = 4000
 				}
 	
 		}
 	}
-
-	 ######################
-	 #
-	 ##
-	 #RIGHT SIDE x2 
-	 ##
-	 #
-	 ######################
 	
 	 ##################################
 	 ##################################
@@ -3846,7 +4071,10 @@ MAN_economic_retadism = {
 						}
 						custom_effect_tooltip = highlight_workers_3
 					}
+					custom_effect_tooltip = MANspace
+					custom_effect_tooltip = Check_for_workers
 				}
+
 			}
 
 			left_side_workers = {
@@ -3886,7 +4114,7 @@ MAN_economic_retadism = {
 
 					custom_effect_tooltip = man_workers_50_digits
 					custom_effect_tooltip = MANspace
-					add_stability = -0.03
+					add_stability = -0.01
 				}
 
 			}
@@ -3946,7 +4174,7 @@ MAN_economic_retadism = {
 
 					custom_effect_tooltip = man_workers_100_digits
 					custom_effect_tooltip = MANspace
-					add_stability = -0.03
+					add_stability = -0.01
 
 				}
 			}
@@ -4005,7 +4233,7 @@ MAN_economic_retadism = {
 					
 					custom_effect_tooltip = man_workers_150_digits
 					custom_effect_tooltip = MANspace
-					add_stability = -0.03
+					add_stability = -0.01
 
 				}
 			}
@@ -4025,20 +4253,9 @@ MAN_economic_retadism = {
 					remove_decision = right_side_workers
 				}
 			}
-
-			
-	 ##################################
-	 ##################################
-	 #
-	 #		building speed normal
-	 #
-	 ##################################
-	 ##################################
-
 	
-
-
-
+	 ##################################
+	 ##################################
 
 
 	 #Here i have the new worker sistem where if you go in the negative with the workers needed bad buffs come,and vise versa but too many workers is actually bad
@@ -4580,7 +4797,7 @@ MAN_economic_retadism = {
 			 }
 			 NOT = {
 				check_variable = {
-					logs < -1999
+					logs < -2999
 				}
 			 }
 		 }
@@ -4748,45 +4965,37 @@ MAN_economic_retadism = {
 			 }
 		 }
 	  }
- 
-	
+
 	##################################
 	##################################
-	#
-	#		building speed normal
-	#
-	##################################
-	##################################
-	#
-	#		building speed normal
-	#
-	##################################
-	##################################
+
+	#construction speed is here where on left and center is 1% and the right is 2%
+
 		MAN_speed = {
 			icon = GFX_decision_eng_trade_unions_support
-					available = { 
-						OR={
-							MAN ={has_full_control_of_state = 716}
-							any_allied_country ={has_full_control_of_state = 716}
-						}
-
-						num_of_civilian_factories_available_for_projects > 1
-						
-						check_variable = {
-							var = logs
-							   value = 1500
-							compare = greater_than_or_equals
-						}
-					 }
-	
-					visible = {
-						NOT= {has_completed_focus = MAN_import_of_labor_for_construction}	
-
-						check_variable = {
-							workeers_CSS < 14
-						}
+				available = { 
+					OR={
+						MAN ={has_full_control_of_state = 716}
+						any_allied_country ={has_full_control_of_state = 716}
 					}
-					priority = 3
+
+					num_of_civilian_factories_available_for_projects > 1
+						
+					check_variable = {
+						var = logs
+						   value = 1500
+						compare = greater_than_or_equals
+					}
+				}
+	
+				visible = {
+					NOT= {has_completed_focus = MAN_import_of_labor_for_construction}	
+
+					check_variable = {
+						workeers_CSS < 11
+					}
+				}
+				priority = 3
 
 					modifier = {
 						civilian_factory_use = 2
@@ -4801,39 +5010,38 @@ MAN_economic_retadism = {
 					}
 					custom_cost_text = MAN_1500_Volunteers_2 
 					fire_only_once = no
-			
-					days_remove = 70
+		
+			days_remove = 70
 
-					complete_effect = {
+			complete_effect = {
 
-						add_to_variable = {
-							var = workeers_CSS
-							value = 1
-					 	}
+				add_to_variable = {
+					var = workeers_CSS
+					value = 1
+				}
 
-						set_country_flag = { flag = MAN_politics value = 1 days = 70}
+				set_country_flag = { flag = MAN_politics value = 1 days = 70}
 
-					   subtract_from_variable = {
-						var = logs
-						value = 1500
-					   }
-
-					}
-
-					remove_effect = {					
-						custom_effect_tooltip = MAN_recruitable_tt0
-						add_to_variable = {
-							var = MAN_military_industry_dm_production_speed_buildings_factor
-							value =0.01
-							tooltip = MAN_military_industry_dm_production_speed_buildings_factor
-						}
-
-						custom_effect_tooltip = spacers
-						custom_effect_tooltip = limit_cst_tooltip
-						custom_effect_tooltip = MANspace
-						custom_effect_tooltip = Check_add_3
-					}
+			   subtract_from_variable = {
+				var = logs
+				value = 1500
+			   }
 			}
+
+			remove_effect = {					
+				custom_effect_tooltip = MAN_recruitable_tt0
+				add_to_variable = {
+					var = MAN_military_industry_dm_production_speed_buildings_factor
+					value =0.01
+				tooltip = MAN_military_industry_dm_production_speed_buildings_factor
+			}
+
+			custom_effect_tooltip = spacers
+			custom_effect_tooltip = limit_cst_tooltip
+			custom_effect_tooltip = MANspace
+			custom_effect_tooltip = Check_add_3
+		}
+	}
 
 	MAN_speed_long = {
 		icon = GFX_decision_eng_trade_unions_support
@@ -4854,7 +5062,7 @@ MAN_economic_retadism = {
 				has_completed_focus = MAN_import_of_labor_for_construction	
 
 				check_variable = {
-					workeers_CSS < 14
+					workeers_CSS < 11
 				}
 
 			}
@@ -4903,16 +5111,13 @@ MAN_economic_retadism = {
 			custom_effect_tooltip = limit_cst_tooltip
 		}
 	}
-	##################################
-	#
-	#		building speed for right
-	#
-	##################################
+
 	##################################
 	#
 	#		millies civiies forte note
 	#
 	##################################
+
 	MAN_civie = {
 	 icon = GFX_decision_generic_factory
 		available = {
@@ -5062,7 +5267,8 @@ MAN_economic_retadism = {
 	 }
 
 
-	MAN_mills = {
+	
+	 MAN_mills = {
 
 	 icon = GFX_decision_generic_merge_plant_materiel
 		available = { 
@@ -5199,8 +5405,8 @@ MAN_economic_retadism = {
 			   custom_effect_tooltip = MANspace
 			   custom_effect_tooltip = Check_add_2
 		   }
-	   }
-
+	}
+	
 	MAN_doky = {
 		icon = GFX_decision_generic_merge_plant_ship
 			available = {
@@ -5216,6 +5422,9 @@ MAN_economic_retadism = {
 				compare = greater_than_or_equals
 				value = 1000
 				var = logs
+			}
+			check_variable = {
+				worker_cost_3 < 21
 			}
 						
 		} 
@@ -5254,8 +5463,15 @@ MAN_economic_retadism = {
 		}
 		remove_effect = {
 
-
-			610 ={
+			random_state = {
+				prioritize = {
+					610
+					716
+				}
+				limit = {
+					is_core_of = MAN
+					is_coastal = yes
+				}
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = dockyard
@@ -5263,8 +5479,13 @@ MAN_economic_retadism = {
 					instant_build = yes
 				}
 			}
+
+			custom_effect_tooltip = spacers
+			custom_effect_tooltip = limit_cst_tooltip_2
+			custom_effect_tooltip = MANspace
 		}
 	}
+
 	MAN_doky_LaynaLazar_twitch_eyes = {
 		icon = GFX_decision_generic_merge_plant_ship
 			available = {
@@ -5282,6 +5503,9 @@ MAN_economic_retadism = {
 				compare = greater_than_or_equals
 				value = 1500
 				var = logs
+			}
+			check_variable = {
+				worker_cost_3 < 16
 			}
 						
 		} 
@@ -5321,7 +5545,15 @@ MAN_economic_retadism = {
 		}
 			remove_effect = {
 
-				610 ={
+				random_state = {
+					prioritize = {
+						610
+						716
+					}
+					limit = {
+						is_core_of = MAN
+						is_coastal = yes
+					}
 					add_extra_state_shared_building_slots = 2
 					add_building_construction = {
 						type = dockyard
@@ -5329,11 +5561,14 @@ MAN_economic_retadism = {
 						instant_build = yes
 					}
 				}
-
+	
+				custom_effect_tooltip = spacers
+				custom_effect_tooltip = limit_cst_tooltip_3
+				custom_effect_tooltip = MANspace
 			}
 	}
 	
-		MAN_mines = {
+	MAN_mines = {
 			icon = GFX_decision_generic_construction
 				available = {
 					OR={
@@ -5413,8 +5648,9 @@ MAN_economic_retadism = {
 				custom_effect_tooltip = MANspace
 				custom_effect_tooltip = Check_add_3
 				}
-			}
-			MAN_mines_at_cost = {
+	}
+
+	MAN_mines_at_cost = {
 				icon = GFX_decision_generic_construction
 					available = {
 						OR={
@@ -5492,7 +5728,7 @@ MAN_economic_retadism = {
 				custom_effect_tooltip = Check_add_3
 
 			}
-		}
+	}
 
 		####################################################################################################
 		#
@@ -5573,8 +5809,9 @@ MAN_economic_retadism = {
 					custom_effect_tooltip = MANspace
 					custom_effect_tooltip = Check_add_3
 				}
-			}
-			MAN_mines_at_cost_center = {
+		}
+
+		MAN_mines_at_cost_center = {
 				icon = GFX_decision_generic_construction
 					available = {
  						has_completed_focus = MAN_steel_casting_industry
@@ -5616,7 +5853,7 @@ MAN_economic_retadism = {
 							compare = greater_than_or_equals
 						}
 					}
-					custom_cost_text = MAN_2500_Volunteers_2 
+					custom_cost_text = MAN_1000_Volunteers_2 
 					fire_only_once = no
 			
 					days_remove = 45
@@ -5625,7 +5862,7 @@ MAN_economic_retadism = {
 					complete_effect = {	
 					   subtract_from_variable = {
 							var = logs
-							value = 1500
+							value = 1000
 					   }
 					   add_to_variable = {
 							var = worker_Smind
