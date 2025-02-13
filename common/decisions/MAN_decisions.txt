@@ -536,8 +536,8 @@ MAN_internal_factions = {
 					}
 			 	 
 				}
-				MAN_mitzu_low_influence_increase_effect = yes
-				MAN_SM_low_influence_increase_effect = yes
+				MAN_mitzu_low_loyalty_decrease_effect = yes
+				MAN_SM_low_loyalty_decrease_effect = yes
 				else_if = {
 					limit = {
 						OR ={
@@ -547,14 +547,14 @@ MAN_internal_factions = {
 							has_completed_focus = MAN_modernizing_the_economy
 						}
 					}
-					MAN_mitzu_low_influence_increase_effect = yes
-					MAN_SM_low_influence_increase_effect = yes
-					MAN_MIC_low_influence_increase_effect = yes
+					MAN_mitzu_low_loyalty_decrease_effect = yes
+					MAN_SM_low_loyalty_decrease_effect = yes
+					MAN_MIC_low_loyalty_decrease_effect = yes
 				}
 			}
 			custom_effect_tooltip = spacers
 			every_state = {
-				add_extra_state_shared_building_slots = 4
+				add_extra_state_shared_building_slots = 5
 				limit = {
 					is_core_of = MAN 
 				}
@@ -649,31 +649,30 @@ MAN_internal_factions = {
 		remove_effect = {
 			if={
 				limit = {
-						JAP = {
-							NOT ={
-								has_completed_focus = JAP_found_mangyo
-							}
+					JAP = {
+						NOT ={
+							has_completed_focus = JAP_found_mangyo
 						}
-					NOT ={
-					has_completed_focus = MAN_modernizing_the_economy
 					}
-					
+					NOT ={
+						has_completed_focus = MAN_modernizing_the_economy
+					}
+			 	 
 				}
-				MAN_mitzu_medium_loyalty_decrease_effect = yes
-				MAN_SM_medium_loyalty_decrease_effect = yes
+				MAN_mitzu_low_influence_increase_effect = yes
+				MAN_SM_low_influence_increase_effect = yes
 				else_if = {
 					limit = {
 						OR ={
 							JAP = {
 								has_completed_focus = JAP_found_mangyo
 							}
-						has_completed_focus = MAN_modernizing_the_economy
+							has_completed_focus = MAN_modernizing_the_economy
 						}
-
 					}
-					MAN_mitzu_medium_loyalty_decrease_effect = yes
-					MAN_SM_medium_loyalty_decrease_effect = yes
-					MAN_MIC_medium_loyalty_decrease_effect = yes
+					MAN_mitzu_low_influence_increase_effect = yes
+					MAN_SM_low_influence_increase_effect = yes
+					MAN_MIC_low_influence_increase_effect = yes
 				}
 			}
 			custom_effect_tooltip = MANspace
@@ -723,12 +722,23 @@ MAN_internal_factions = {
 								has_completed_focus = MAN_modernizing_the_economy
 							}
 						}
-						check_variable = {
-							Mitsui_loyalty >74
+						AND = {
+							check_variable = {
+								Mitsui_loyalty >74
+							}
+							check_variable = {
+								Mitsui_influence >74
+							}
 						}
-						check_variable = {
-							SM_loyalty >74
+						AND = {
+							check_variable = {
+								SM_loyalty >74
+							}
+							check_variable = {
+								SM_influence >74
+							}
 						}
+
 							else_if = {
 								limit = {
 									OR = {
@@ -739,18 +749,33 @@ MAN_internal_factions = {
 									}
 								
 								}
-								check_variable = {
-									Mitsui_loyalty > 74
+								AND = {
+									check_variable = {
+										Mitsui_loyalty >74
+									}
+									check_variable = {
+										Mitsui_influence >74
+									}
 								}
-								check_variable = {
-									SM_loyalty > 74
+								AND = {
+									check_variable = {
+										SM_loyalty >74
+									}
+									check_variable = {
+										SM_influence >74
+									}
 								}
-								check_variable = {
-									MIC_loyalty > 74
+								AND = {
+									check_variable = {
+										MIC_loyalty >74
+									}
+									check_variable = {
+										MIC_influence >74
+									}
 								}
+							}
 						}
 					}
-				}
 			}
 			
 		}
@@ -893,7 +918,7 @@ MAN_internal_factions = {
 					tooltip = stability_tooltip_general
 				}
 				add_to_variable = { 
-					MAN_kempeitai_var_stability_factor = 0.001
+					MAN_kempeitai_var_stability_factor = 0.002
 					tooltip = MAN_kempeitai_var_stability_factor_tooltip 
 				}
 
@@ -972,12 +997,13 @@ MAN_internal_factions = {
 
 			set_country_flag = center_path_faction
 
-			MAN_KPT_low_influence_decrease_effect = yes
-			MAN_KPT_medium_loyalty_increase_effect = yes
-			custom_effect_tooltip = MANspace
+
 		}
 		remove_effect = {
-
+			MAN_mitzu_low_influence_increase_effect = yes
+			MAN_SM_low_influence_increase_effect = yes
+			MAN_MIC_low_influence_increase_effect = yes
+			MAN_KPT_low_influence_increase_effect = yes
 		}
 	}
 
@@ -1059,6 +1085,7 @@ MAN_internal_factions = {
 			}
 		}
 	}
+
 	MAN_force_there_hand = {
 		icon = GFX_decision_SWI_support_humanitarian_efforts
 		priority = 50
@@ -1147,6 +1174,7 @@ MAN_internal_factions = {
 			}
 		}
 	}
+
 	MAN_force_our_hand = {
 		icon = GFX_decision_generic_break_treaty
 		priority = 50
@@ -1294,7 +1322,14 @@ MAN_internal_factions = {
 			MAN_KPT_low_loyalty_increase_effect = yes
 
 			custom_effect_tooltip = spacers
+			custom_effect_tooltip = MAN_the_death_of_china
 
+			add_to_variable = {
+				var = MAN_stability_factor_var
+				value = 0.05
+				tooltip = stability_tooltip_general
+			}
+			custom_effect_tooltip = MANspace
 			set_country_flag = pro_corpo_5
 
 			custom_effect_tooltip = MAN_the_death_of_china
@@ -2092,6 +2127,7 @@ MAN_internal_factions = {
 		}
 	}
 	
+
 	KPT_benefits  = { 
 		icon = GFX_decision_generic_army_support
 		priority = 50
@@ -2134,88 +2170,14 @@ MAN_internal_factions = {
 			set_country_flag = { flag = faction_change_going value = 1 days = 90 }
 			
 			MAN_KPT_medium_loyalty_increase_effect = yes
-				
+			custom_effect_tooltip = MANspace
 
+			
 		}
-
+		
 
 		remove_effect = {
 
-			if = {
-				limit = {
-					NOT = {
-						check_variable = {
-							times_clicked > 9
-						}
-					}
-					OR = {
-						check_variable = {
-							KPT_influence > 75
-							KPT_loyalty > 75
-						}
-						has_country_flag = MAN_KPT_integrated
-					}
-
-				}
-				random_state = {
-					prioritize = {
-						714
-					}
-					add_extra_state_shared_building_slots = 2
-					
-					add_building_construction = {
-						type = arms_factory
-						level = 2
-						instant_build = yes
-					}
-				}
-
-				add_to_variable = {
-					var = times_clicked
-					value = 1
-				}
-				
-			}
-			if = {
-				limit = {
-					NOT = {
-						check_variable = {
-							times_clicked > 14
-						}
-					}
-
-					NOT = {
-						OR = {
-							check_variable = {
-								KPT_influence > 75
-								KPT_loyalty > 75
-							}
-							has_country_flag = MAN_KPT_integrated
-						}
-					}
-
-
-				}
-				random_state = {
-					prioritize = {
-						714
-					}
-					add_extra_state_shared_building_slots = 1
-					
-					add_building_construction = {
-						type = arms_factory
-						level = 1
-						instant_build = yes
-					}
-				}
-
-				add_to_variable = {
-					var = times_clicked
-					value = 1
-				}
-
-			}
-			
 			custom_effect_tooltip = spacers
 			add_popularity = {
 				ideology = fascism
@@ -2322,6 +2284,9 @@ MAN_internal_factions = {
 			NOT = {
 				has_country_flag = faction_change_going
 			}
+			NOT = {
+				has_completed_focus = MAN_obedience
+			}
 			custom_trigger_tooltip = {
 				tooltip = condis_1
 				NOT = {
@@ -2336,56 +2301,55 @@ MAN_internal_factions = {
 			}
 			custom_trigger_tooltip = {
 				tooltip = condis_4
-				NOT = {
-					OR = {
-						if={
-							limit = {
-								OR ={
-									JAP = {
-										NOT ={
-											has_completed_focus = JAP_found_mangyo
-										}
-									}
-									NOT ={
-										has_completed_focus = MAN_modernizing_the_economy
-									}
+				if={
+					limit = {
+						OR ={
+							JAP = {
+								NOT ={
+									has_completed_focus = JAP_found_mangyo
 								}
 							}
-
-							check_variable = {
-								Mitsui_influence < 1
+							NOT ={
+								has_completed_focus = MAN_modernizing_the_economy
 							}
-							check_variable = {
-								SM_influence < 1
-							}
-								
 						}
-							else_if = {
-								limit = {
-									OR = {
-										JAP = {
-											has_completed_focus = JAP_found_mangyo
-										}
-									has_completed_focus = MAN_modernizing_the_economy
-									}	
-								}
-								check_variable = {
-									Mitsui_influence < 1
-								}
-								check_variable = {
-									SM_influence < 1
-								}
-								check_variable = {
-									MIC_influence < 1
-								}
-								
-							}
 					}
+					check_variable = {
+						Mitsui_influence > 0
+					}
+					check_variable = {
+						SM_influence > 0
+					}
+						
+				}
+					else_if = {
+						limit = {
+							OR = {
+								JAP = {
+									has_completed_focus = JAP_found_mangyo
+								}
+							has_completed_focus = MAN_modernizing_the_economy
+							}	
+						}
+					AND = {
+						check_variable = {
+							Mitsui_influence > 0
+						}
+						check_variable = {
+							SM_influence > 0
+						}
+						check_variable = {
+							MIC_influence > 0
+						}
+					}
+
 				}
 			}
 			
 		}
-		visible = {}
+		visible = {
+
+		}
 
 		modifier = {
 			consumer_goods_expected_value = -0.02
@@ -2467,24 +2431,22 @@ MAN_internal_factions = {
 					MAN_MIC_low_influence_decrease_effect = yes
 				}
 			}
+			add_to_variable = {
+				var = worker_abose
+				value = 1
+			}
 
 			random_state = {
 				prioritize = {
 					714
 				}
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 						type = industrial_complex
 						level = 1
 						instant_build = yes
 				 }
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-			}
-			
+			}		
 			
 
 			custom_effect_tooltip = spacers
@@ -2508,19 +2470,19 @@ MAN_internal_factions = {
 
 				add_popularity = {
 					ideology = communism
-					popularity = 0.12
+					popularity = 0.1
 				}
 				add_popularity = {
 					ideology = democratic
-					popularity = 0.04
+					popularity = -0.02
 				}
 				add_popularity = {
 					ideology = fascism
-					popularity = -0.06
+					popularity = -0.02
 				}
 				add_popularity = {
 					ideology = neutrality
-					popularity = -0.06
+					popularity = -0.02
 				}
 
 				else_if = {
@@ -2537,19 +2499,19 @@ MAN_internal_factions = {
 
 					add_popularity = {
 						ideology = communism
-						popularity = 0.06
+						popularity = 0.05
 					}
 					add_popularity = {
 						ideology = democratic
-						popularity = 0.02
+						popularity = -0.01
 					}
 					add_popularity = {
 						ideology = fascism
-						popularity = -0.03
+						popularity = -0.01
 					}
 					add_popularity = {
 						ideology = neutrality
-						popularity = -0.03
+						popularity = -0.01
 					}
 
 				}
@@ -2567,19 +2529,19 @@ MAN_internal_factions = {
 
 					add_popularity = {
 						ideology = communism
-						popularity = 0.06
+						popularity = 0.05
 					}
 					add_popularity = {
 						ideology = democratic
-						popularity = 0.02
+						popularity = -0.01
 					}
 					add_popularity = {
 						ideology = fascism
-						popularity = -0.03
+						popularity = -0.01
 					}
 					add_popularity = {
 						ideology = neutrality
-						popularity = -0.03
+						popularity = -0.01
 					}
 
 				}
@@ -2595,12 +2557,16 @@ MAN_internal_factions = {
 						}
 					}
 					add_popularity = {
+						ideology = democratic
+						popularity = -0.01
+					}
+					add_popularity = {
 						ideology = fascism
-						popularity = -0.1
+						popularity = -0.01
 					}
 					add_popularity = {
 						ideology = neutrality
-						popularity = -0.1
+						popularity = -0.01
 					}
 				}
 			}
@@ -2618,6 +2584,9 @@ MAN_internal_factions = {
 		available = {
 			NOT = {
 				has_country_flag = faction_change_going
+			}
+			NOT = {
+				has_completed_focus = MAN_kwantung_army_takes_control
 			}
 			custom_trigger_tooltip = {
 				tooltip = condis_3
@@ -3414,7 +3383,8 @@ MAN_internal_factions = {
 		}
 
 		modifier = {
-			industrial_capacity_factory = -0.1
+			industrial_capacity_factory = -0.15
+			industrial_capacity_dockyard = -0.25
 		}
 
 		selectable_mission = no
@@ -3441,7 +3411,7 @@ MAN_internal_factions = {
 				compare = less_than
 			}
 
-			}
+		}
 			
 		
 
@@ -3465,7 +3435,7 @@ MAN_internal_factions = {
 		}
 
 		modifier = {
-			local_resources_factor = -0.1
+			local_resources_factor = -0.15
 		}
 
 		selectable_mission = no
@@ -3516,7 +3486,7 @@ MAN_internal_factions = {
 		}
 
 		modifier = {
-			production_speed_industrial_complex_factor = -0.1
+			production_speed_industrial_complex_factor = -0.25
 		}
 
 
@@ -3574,8 +3544,8 @@ MAN_internal_factions = {
 		}
 
 		modifier = {
-			production_speed_arms_factory_factor = -0.1
-			production_speed_dockyard_factor = -0.1
+			production_speed_arms_factory_factor = -0.15
+			production_speed_dockyard_factor = -0.2
 		}
 
 		selectable_mission = no
@@ -3632,35 +3602,44 @@ MAN_internal_factions = {
 		}
 
 		selectable_mission = no
-		days_mission_timeout = 90
+		days_mission_timeout = 35
 		is_good = no
 		fire_only_once = no
 
-		days_remove = 90
+		days_remove = 35
 
 		modifier = {
 			consumer_goods_expected_value = 0.02
+			stability_weekly = -0.001
 		}
 
 		activation = {
-			communism > 0.2
+			OR = {
+				communism > 0.15
+				neutrality > 0.3
+				democratic > 0.3
+			}
+
 		}
-			
-		
 
 		ai_will_do = {
 			factor = 0
 		}
-
 		remove_effect = {
+			custom_effect_tooltip = communist_manchu_removal_2
+			if = {
+				limit = {
+					has_stability > 0.01
+				 }
+					add_stability = -0.01
 
-			add_stability = -0.01
-
-			add_popularity = {
-				ideology = communism
-				popularity = -0.02
+					else_if = {
+						limit = { has_stability < 0.01 }
+						add_war_support = -0.01
+				}
 			}
 		}
+
 	}
 	SYSTEM_CHANGE_OY_BONUS_11 ={
 		icon = GFX_decision_generic_ignite_civil_war
@@ -3674,20 +3653,28 @@ MAN_internal_factions = {
 		}
 
 		selectable_mission = no
-		days_mission_timeout = 90
+		days_mission_timeout = 60
 		is_good = no
 		fire_only_once = no
 
-		days_remove = 90
+		days_remove = 35
 
 		modifier = {
-			civilian_factory_use = 1
 			consumer_goods_expected_value = 0.03
 			stability_weekly = -0.001
+			communism_drift = -0.01
+			industrial_capacity_factory = -0.075
+			industrial_capacity_dockyard = -0.075
+
 		}
 
 		activation = {
-			communism > 0.3
+			OR = {
+				communism > 0.3
+				neutrality > 0.45
+				democratic > 0.45
+			}
+
 		}
 			
 		
@@ -3706,13 +3693,13 @@ MAN_internal_factions = {
 
 					else_if = {
 						limit = { has_stability < 0.01 }
-						add_war_support = -0.01
+						add_war_support = -0.02
 				}
 			}
 
 			add_popularity = {
 				ideology = communism
-				popularity = -0.04
+				popularity = -0.02
 			}
 		}
 	}
@@ -3728,21 +3715,27 @@ MAN_internal_factions = {
 		}
 
 		selectable_mission = no
-		days_mission_timeout = 14
+		days_mission_timeout = 60
 		is_good = no
 		fire_only_once = no
 
 		days_remove = 90
 
 		modifier = {
-			civilian_factory_use = 2
+			civilian_factory_use = 5
 			consumer_goods_expected_value = 0.05
 			stability_weekly = -0.002
+			industrial_capacity_factory = -0.25
+			industrial_capacity_dockyard = -0.25
+			communism_drift = -0.02
 		}
 
 		activation = {
-			communism > 0.4
-			has_stability < 0.1
+			OR = {
+				communism > 0.45
+				neutrality > 0.75
+				democratic > 0.6
+			}
 		}
 			
 		
@@ -3766,15 +3759,73 @@ MAN_internal_factions = {
 			}
 			add_popularity = {
 				ideology = communism
-				popularity = -0.06
-			}
-			add_popularity = {
-				ideology = fascism
-				popularity = 0.02
+				popularity = -0.03
 			}
 		}
 	}
-	
+
+	SYSTEM_CHANGE_OY_BONUS_13 ={
+		icon = GFX_decision_generic_ignite_civil_war
+ 
+		available = {
+			tag = MAN
+		}
+
+		visible = {
+			always = no
+		}
+
+		selectable_mission = no
+		days_mission_timeout = 60
+		is_good = no
+		fire_only_once = no
+
+		days_remove = 90
+
+		modifier = {
+			civilian_factory_use = 5
+			consumer_goods_expected_value = 0.1
+			stability_weekly = -0.002
+			industrial_capacity_factory = -0.50
+			industrial_capacity_dockyard = -0.50
+			communism_drift = -0.1
+		}
+
+		activation = {
+			OR = {
+				communism > 0.6
+				neutrality > 0.85
+				democratic > 0.8
+			}
+		}
+			
+		
+
+		ai_will_do = {
+			factor = 0
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = communist_manchu_removal_2
+			if = {
+				limit = {
+					has_stability > 0.01
+				 }
+					add_stability = -0.03
+
+					else_if = {
+						limit = { has_stability < 0.01 }
+						add_war_support = -0.03
+				}
+			}
+			add_popularity = {
+				ideology = communism
+				popularity = -0.03
+			}
+		}
+	}
+
+
 }
 
 
@@ -6209,7 +6260,7 @@ MAN_research_unit_short_funded ={
 				civilian_factory_use = 3
 			}
 			
-			days_remove = 90
+			days_remove = 120
 
 			complete_effect = {
 				if = {
@@ -6261,7 +6312,7 @@ MAN_research_unit_short_funded ={
 				civilian_factory_use = 3
 			}
 	
-			days_remove = 90
+			days_remove = 120
 
 			complete_effect = {
 				if = {
@@ -6304,7 +6355,7 @@ MAN_research_unit_short_funded ={
 				civilian_factory_use = 3
 			}
 			
-			days_remove = 90
+			days_remove = 120
 
 			complete_effect = {
 				if = {
@@ -6347,7 +6398,7 @@ MAN_research_unit_short_funded ={
 				civilian_factory_use = 3
 			}
 			
-			days_remove = 90
+			days_remove = 120
 
 			complete_effect = {
 				if = {
@@ -6390,7 +6441,7 @@ MAN_research_unit_short_funded ={
 				civilian_factory_use = 3
 			}
 	
-			days_remove = 90
+			days_remove = 120
 
 			complete_effect = {
 				if = {
@@ -6438,7 +6489,7 @@ MAN_research_unit_short_funded ={
 				civilian_factory_use = 3
 			}
 
-			days_remove = 90
+			days_remove = 120
 
 			complete_effect = {
 				if= {
@@ -6495,7 +6546,7 @@ MAN_research_unit_short_funded ={
 			civilian_factory_use = 2
 			consumer_goods_expected_value = 0.01
 		}
-priority = 8
+ priority = 8
 		fire_only_once = yes
 
 		cost = 25
@@ -6686,7 +6737,7 @@ MAN_research_unit_long_funded ={
 				custom_effect_tooltip = MANspace
 			}
 		}
-##################
+ ##################
 		MAN_research_speed_long = {
 				icon = research_bonus
 				available = {
@@ -6923,7 +6974,7 @@ MAN_research_unit_long_funded ={
 				
 			}
 
-################################################################################################################
+ ################################################################################################################
 			MAN_research_arty_long = {#1
 				icon = generic_industry
 				available = {
@@ -7096,7 +7147,7 @@ MAN_research_unit_long_funded ={
 			}
 
 
-#######################################################################
+ #######################################################################
 			MAN_research_tanks_long = {#1
 				icon = GFX_decision_generic_merge_plant_tank
 				available = {
@@ -7300,7 +7351,9 @@ MAN_research_unit_long_funded ={
 			}
 		}
 
-	Exports_to_japan ={
+#######################################################################
+
+Exports_to_japan ={
 		Develop_air_fatory_center_2 ={
 			icon = GFX_decision_generic_merge_plant_aircraft
 
