@@ -739,16 +739,38 @@ GER_operation_barbarossa_category = {
 					#add_unit_leader_trait = barbarossa_river
 				#}
 				get_barb_offensive = yes 
-			}					
-			SOV = {
-			
-				add_ideas = Disorganized_Red_Army_1
-				add_dynamic_modifier = {
-					modifier = SOV_surprise_strike_dynamic
-					days = 180
+			}	
+			if = {
+				limit = {
+					SOV = {
+						NOT = {
+							has_completed_focus = SOV_arms_kommissariats
+						}
+					}
 				}
-				
+				SOV = {
+					add_ideas = Disorganized_Red_Army_1
+					add_dynamic_modifier = {
+						modifier = SOV_surprise_strike_dynamic
+						days = 180
+					}
+					
+				}
 			}
+			if = {
+				limit = {
+					SOV = {
+						has_completed_focus = SOV_arms_kommissariats
+					}
+				}
+				SOV = {
+					add_timed_idea = {	
+						idea = groza_offensive
+						days = 180
+					}
+				}
+			}				
+			
 			hidden_effect = {	
 				every_other_country = { 
 					limit = { NOT = { tag = SOV } NOT = { tag = GER } } 
@@ -5431,6 +5453,32 @@ foreign_politics = {
 					ENG = { 
 						country_event = { id =  britain.54 days = 20 }
 					}
+					every_country = {
+						limit = {
+							OR = {
+								tag = HUN
+								tag = BUL
+								tag = ROM
+								tag = CZE
+								tag = POL
+								tag = CAN 
+								tag = SAF
+								tag = RAJ
+								tag = AST
+								tag = NZL
+								tag = FRA
+								tag = GER  
+								tag = ITA 
+								tag = ENG 
+								tag = USA 
+								tag = SOV 
+								tag = MAN
+								
+
+							}
+						}
+						add_war_support = -0.05
+					}
 				}
 				
 				if = {
@@ -6508,6 +6556,9 @@ foreign_politics = {
 		available = {
 			OR = {
 				GER = { is_in_faction_with = BUL }	
+				GER ={
+					controls_state = 48
+				}
 				any_other_country = {
 					is_in_faction_with = GER
 					controls_state = 48
