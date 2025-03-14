@@ -601,17 +601,17 @@ focus_tree = {
 					priority = 2
 	
 					regiments = {
-						mountaineers = { x = 0 y = 0 }
-						mountaineers = { x = 0 y = 1 }
-						mountaineers = { x = 0 y = 2 }
+						infantry  = { x = 0 y = 0 }
+						infantry  = { x = 0 y = 1 }
+						infantry  = { x = 0 y = 2 }
 			
-			   		 	mountaineers = { x = 1 y = 0 }
-						mountaineers = { x = 1 y = 1 }
-						mountaineers = { x = 1 y = 2 }
+			   		 	infantry  = { x = 1 y = 0 }
+						infantry  = { x = 1 y = 1 }
+						infantry  = { x = 1 y = 2 }
 			
-			   		 	mountaineers = { x = 2 y = 0 }
-						mountaineers = { x = 2 y = 1 }
-						mountaineers = { x = 2 y = 2 }
+			   		 	infantry  = { x = 2 y = 0 }
+						infantry  = { x = 2 y = 1 }
+						infantry  = { x = 2 y = 2 }
 						
 						artillery_brigade = { x = 3 y = 0 }
 						artillery_brigade = { x = 3 y = 1 }
@@ -828,10 +828,8 @@ focus_tree = {
 		y = 7
 		cost = 5
 		
-		
 		completion_reward = {
-			add_political_power = 100	
-			unlock_decision_category_tooltip = BUL_resettlement 
+			custom_effect_tooltip = BUL_resettle_decisions
 		}
 	}	
 	
@@ -941,25 +939,14 @@ focus_tree = {
 		y = 0
 		cost = 5
 		
-		completion_reward = {
-			
+		completion_reward = {	
+			custom_effect_tooltip = BUL_activate_five_year_mission
 			add_tech_bonus = {
 				name = all_industry_bonus
 				bonus = 1
 				uses = 1
 				category = industry
-			} 	
-			custom_effect_tooltip = BUL_modify_industry_spirit	 			
-			add_to_variable = { 
-				var = BUL_production_speed_industrial_complex_factor_var 
-				value = 0.075
-				tooltip = industrial_complex_build_speed_factor_tooltip
-			}
-			add_to_variable = { 
-				var = BUL_production_speed_arms_factory_factor_var
-				value = 0.075
-				tooltip = arms_factory_build_speed_factor_tooltip
-			}			
+			} 				
 		}	
 	}
 	
@@ -1031,15 +1018,15 @@ focus_tree = {
 		cost = 5
 		
 		completion_reward = {
-			custom_effect_tooltip = BUL_modify_industry_spirit
+			custom_effect_tooltip = BUL_modify_production_spirit
 			add_to_variable = { 
 				var = BUL_production_factory_start_efficiency_factor_var 
-				value = 0.075
+				value = 0.1
 				tooltip = BUL_efficiency_base_tt
 			}
 			add_to_variable = { 
 				var = BUL_industrial_capacity_factory_var 
-				value = 0.125
+				value = 0.1
 				tooltip = BUL_factory_output_tt
 			}
 		}	
@@ -1056,7 +1043,7 @@ focus_tree = {
 		cost = 5
 		
 		completion_reward = {
-			custom_effect_tooltip = BUL_modify_industry_spirit
+			custom_effect_tooltip = BUL_modify_production_spirit
 			add_to_variable = { 
 				var = BUL_production_factory_max_efficiency_factor_var 
 				value = 0.05
@@ -1076,16 +1063,11 @@ focus_tree = {
 		cost = 5
 		
 		completion_reward = {
-			custom_effect_tooltip = BUL_modify_industry_spirit
+			custom_effect_tooltip = BUL_modify_production_spirit
 			add_to_variable = { 
 				var = BUL_production_factory_efficiency_gain_factor_var 
-				value = 0.125
+				value = 0.1
 				tooltip = BUL_efficiency_gain_tt
-			}
-			add_to_variable = { 
-				var = BUL_production_lack_of_resource_penalty_factor_var 
-				value = -0.2
-				tooltip = BUL_lack_of_resource_tt
 			}
 		}	
 	}
@@ -1101,17 +1083,12 @@ focus_tree = {
 		cost = 5
 		
 		completion_reward = {
-			custom_effect_tooltip = BUL_modify_industry_spirit
+			custom_effect_tooltip = BUL_modify_production_spirit
 			add_to_variable = { 
 				var = BUL_line_change_production_efficiency_factor_var 
-				value = 0.075
-				tooltip = BUL_retention_tt
-			}
-			add_to_variable = { 
-				var = BUL_local_factories_var 
 				value = 0.15
-				tooltip = BUL_max_factory_tt
-			}			
+				tooltip = BUL_retention_tt
+			}		
 		}	
 	}
 
@@ -1165,15 +1142,15 @@ focus_tree = {
 		cost = 5
 		
 		completion_reward = {
-			custom_effect_tooltip = BUL_modify_industry_spirit
+			custom_effect_tooltip = BUL_modify_production_spirit
 			add_to_variable = { 
 				var = BUL_production_factory_efficiency_gain_factor_var 
-				value = 0.075
+				value = 0.05
 				tooltip = BUL_efficiency_gain_tt
 			}
 			add_to_variable = { 
 				var = BUL_research_speed_factor_var 
-				value = 0.075
+				value = 0.05
 				tooltip = BUL_research_speed_tt
 			}
 		}	
@@ -1222,11 +1199,6 @@ focus_tree = {
 				var = BUL_consumer_goods_expected_value_var 
 				value = -0.03
 				tooltip = consumer_goods_tooltip
-			}
-			add_to_variable = { 
-				var = BUL_monthly_population_var 
-				value = 0.15
-				tooltip = BUL_monthly_population_tt
 			}	
 		}	
 	}
@@ -1387,7 +1359,21 @@ focus_tree = {
 		cost = 5
 		
 		completion_reward = {
-			custom_effect_tooltip = BUL_fill2_tt
+			custom_effect_tooltip = BUL_industrial_concern_improvement
+			if ={ 
+				limit = { has_idea = BUL_pirin }
+				swap_ideas = {
+					remove_idea = BUL_pirin
+					add_idea = BUL_pirin_2
+				}
+			}
+			else_if = {
+				limit = { has_idea = BUL_vulkan_cement }
+				swap_ideas = {
+					remove_idea = BUL_vulkan_cement
+					add_idea = BUL_vulkan_cement_2
+				}
+			}							
 		}	
 	}
 	
@@ -1402,7 +1388,7 @@ focus_tree = {
 		cost = 5
 		
 		completion_reward = {
-			custom_effect_tooltip = BUL_fill1_tt
+			custom_effect_tooltip = BUL_ger_concern_unlock
 		}	
 	}
 	
@@ -1475,10 +1461,11 @@ focus_tree = {
 		cost = 5
 		
 		completion_reward = {
-			custom_effect_tooltip = BUL_modify_industry_spirit
+			custom_effect_tooltip = BUL_modify_production_spirit
+
 			add_to_variable = { 
 				var = BUL_research_speed_factor_var 
-				value = 0.175
+				value = 0.15
 				tooltip = BUL_research_speed_tt
 			}
 		}	
