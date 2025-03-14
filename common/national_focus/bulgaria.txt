@@ -46,7 +46,7 @@ focus_tree = {
 			custom_effect_tooltip = BUL_modify_imro_spirit
 			add_to_variable = { 
 				var = BUL_stability_factor_var 
-				value = 0.1
+				value = 0.15
 				tooltip = stability_factor_tooltip
 			}
 			add_to_variable = { 
@@ -59,7 +59,9 @@ focus_tree = {
 					limit={OR={state = 48 state = 212 state = 806 state = 211}}
 					add_dynamic_modifier = { modifier = imro_cells_modifier}
 				}
-			}	
+			}
+		custom_effect_tooltip = MANspace
+		custom_effect_tooltip = BUL_terror_vs_tsar	
 		}
 	}
 	
@@ -251,37 +253,18 @@ focus_tree = {
 		id = BUL_integrate_balkans
 
 		prerequisite = { focus = BUL_tsar_regime }
-		icon = GFX_focus_BUL_demand_dobrudja
-		x = 14
+		icon = GFX_goal_BUL_balkan_bulgaria
+		x = 13
 		y = 6
-		cost = 5
-		
-		available = {
-			77 = { is_controlled_by = BUL }
-		}
+		cost = 5		
 		
 		completion_reward = {
-			BUL = {
-				add_state_core  = 77
-			}
-			77 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-			}
+		custom_effect_tooltip = BUL_core_decision
 		}
 	}	
 	
 	focus = {
-		id = BUL_integrate_thrace
+		id = BUL_appease_thrace
 
 		prerequisite = { focus = BUL_integrate_balkans focus = BUL_appease_the_greeks}
 		icon = GFX_focus_BUL_demand_vardar
@@ -291,17 +274,15 @@ focus_tree = {
 		
 		available = {
 			184 = { is_controlled_by = BUL }
+			is_core_of = BUL
 		}
 		
 		completion_reward = {
-			BUL = {
-				add_state_core  = 184
-			}
 			184 = {
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 3
 				add_building_construction = {
 					type = industrial_complex
-					level = 1
+					level = 2
 					instant_build = yes
 				}
 				add_building_construction = {
@@ -314,7 +295,7 @@ focus_tree = {
 	}	
 	
 	focus = {
-		id = BUL_integrate_macedonia
+		id = BUL_appease_macedonia
 
 		prerequisite = { focus = BUL_integrate_balkans }
 		icon = GFX_focus_BUL_demand_macedonia
@@ -324,17 +305,15 @@ focus_tree = {
 		
 		available = {
 			106 = { is_controlled_by = BUL }
+			is_core_of = BUL
 		}
 		
 		completion_reward = {
-			BUL = {
-				add_state_core  = 106
-			}
 			106 = {
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 3
 				add_building_construction = {
 					type = industrial_complex
-					level = 1
+					level = 2
 					instant_build = yes
 				}
 				add_building_construction = {
@@ -349,10 +328,11 @@ focus_tree = {
 	focus = {
 		id = BUL_renewed_bulgaria
 
-		prerequisite = { focus = BUL_integrate_macedonia }
-		prerequisite = { focus = BUL_integrate_thrace }
+		prerequisite = { focus = BUL_appease_macedonia }
+		prerequisite = { focus = BUL_appease_thrace }
+		prerequisite = { focus = BUL_appease_dobrudja }
 		icon = GFX_goal_bulgarian_revanchism
-		x = 14
+		x = 13
 		y = 8
 		cost = 5
 		
@@ -607,13 +587,65 @@ focus_tree = {
 		cost = 5
 		
 		completion_reward = {
-						custom_effect_tooltip = BUL_fill3_tt
 			custom_effect_tooltip = BUL_modify_imro_spirit
 			add_to_variable = { 
 				var = BUL_weekly_manpower_var 
-				value = 1500
+				value = 2500
 				tooltip = BUL_weekly_manpower_tt
 			}
+			custom_effect_tooltip = BUL_mountaineer_spawn
+			hidden_effect = {
+				division_template = {
+					name = "Planinska Divizjia"
+					division_names_group = BUL_MTN_01
+					priority = 2
+	
+					regiments = {
+						mountaineers = { x = 0 y = 0 }
+						mountaineers = { x = 0 y = 1 }
+						mountaineers = { x = 0 y = 2 }
+			
+			   		 	mountaineers = { x = 1 y = 0 }
+						mountaineers = { x = 1 y = 1 }
+						mountaineers = { x = 1 y = 2 }
+			
+			   		 	mountaineers = { x = 2 y = 0 }
+						mountaineers = { x = 2 y = 1 }
+						mountaineers = { x = 2 y = 2 }
+						
+						artillery_brigade = { x = 3 y = 0 }
+						artillery_brigade = { x = 3 y = 1 }
+						artillery_brigade = { x = 3 y = 2 }
+						artillery_brigade = { x = 3 y = 3 }
+						artillery_brigade = { x = 4 y = 0 }
+						artillery_brigade = { x = 4 y = 1 }
+						}
+	
+					support = {
+						artillery = { x = 0 y = 0 }
+						engineer = { x = 0 y = 1 }
+						recon = { x = 0 y = 2 }
+						pack_artillery = { x = 0 y = 3 }
+						maintenance_company = { x = 1 y = 0 }
+						logistics_company = { x = 1 y = 1 }
+						field_hospital = { x = 1 y = 2 }
+					}
+
+				}
+
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Parva Sofijska pehotna diviziya\" division_template = \"Planinska Divizjia\" start_experience_factor = 0.7" 
+						owner = BUL
+				}
+			}
+				random_owned_controlled_state = {
+					create_unit = {
+						division = "name = \"Peta Dunavska pehotna diviziya\" division_template = \"Planinska Divizjia\" start_experience_factor = 0.7" 
+						owner = BUL
+					}	
+				}
+			}			
 		}
 	}	
 	
@@ -792,7 +824,7 @@ focus_tree = {
 
 		prerequisite = { focus = BUL_total_war }
 		icon = GFX_goal_generic_promote_ruralism
-		x = 19
+		x = 20
 		y = 7
 		cost = 5
 		
@@ -808,7 +840,7 @@ focus_tree = {
 
 		prerequisite = { focus = BUL_total_war focus = BUL_german_arms_deal }
 		icon = GFX_goal_generic_secret_police
-		x = 21
+		x = 22
 		y = 7
 		cost = 5
 		
@@ -828,7 +860,7 @@ focus_tree = {
 		prerequisite = { focus = BUL_resettle_in_the_balkans }
 		prerequisite = { focus = BUL_organize_rzo }
 		icon = GFX_focus_greater_bulgaria
-		x = 20
+		x = 21
 		y = 8
 		cost = 5
 		
@@ -913,19 +945,19 @@ focus_tree = {
 			
 			add_tech_bonus = {
 				name = all_industry_bonus
-				bonus = 0.75
+				bonus = 1
 				uses = 1
 				category = industry
 			} 	
 			custom_effect_tooltip = BUL_modify_industry_spirit	 			
 			add_to_variable = { 
 				var = BUL_production_speed_industrial_complex_factor_var 
-				value = 0.05
+				value = 0.075
 				tooltip = industrial_complex_build_speed_factor_tooltip
 			}
 			add_to_variable = { 
 				var = BUL_production_speed_arms_factory_factor_var
-				value = 0.05
+				value = 0.075
 				tooltip = arms_factory_build_speed_factor_tooltip
 			}			
 		}	
@@ -1330,6 +1362,16 @@ focus_tree = {
 					level = 1
 					instant_build = yes
 				}		
+			}
+			custom_effect_tooltip = MANspace
+			custom_effect_tooltip = BUL_hun_tt	
+			43 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}		
 			}			
 		}
 	}
@@ -1509,30 +1551,34 @@ focus_tree = {
 	}
 	
 	focus = {
-		id = BUL_appease_the_greeks
+		id = BUL_appease_dobrudja
 		
-		prerequisite = { focus = BUL_tsar_regime }
-		icon = GFX_focus_generic_befriend_greece
-		x = 12
-		y = 6
+		prerequisite = { focus = BUL_integrate_balkans }
+		icon = GFX_focus_BUL_demand_dobrudja
+		x = 11
+		y = 7
 		cost = 5
 		
 		completion_reward = {
-			184 = {
-				add_extra_state_shared_building_slots = 2
+			77 = {
+				add_extra_state_shared_building_slots = 3
 				add_building_construction = {
 					type = industrial_complex
 					level = 2
 					instant_build = yes
-					}
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
 				}
 			}
+		}	
 		available = {
-			GRE = {
-			has_capitulated = no
-			}
-		}
-	}	
+			77 = { is_controlled_by = BUL }
+			is_core_of = BUL
+			}	
+	}
 	
 	focus = {
 		id = BUL_bulgarian_rearmament
@@ -1797,7 +1843,6 @@ focus_tree = {
 		cost = 5
 		
 		completion_reward = {
-			hidden_effect = { set_technology = { BUL_shock_infantry = 1 } }
 			custom_effect_tooltip = BUL_modify_army_spirit
 
 			add_to_variable = {
@@ -1851,7 +1896,7 @@ focus_tree = {
 			custom_effect_tooltip = BUL_modify_army_spirit
 			add_to_variable = {
 				var = BUL_cas_damage_reduction_var 
-				value = 0.03
+				value = 0.075
 				tooltip = BUL_cas_damage_tt
 			}
 			add_tech_bonus = {
@@ -1938,14 +1983,12 @@ focus_tree = {
 		
 		completion_reward = {
 			army_experience = 50
-			211 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes
-				}
-			}
+			custom_effect_tooltip = BUL_modify_army_spirit
+			add_to_variable = {
+				var = BUL_army_org_factor_var 
+				value = 0.1
+				tooltip = army_org_factor_tooltip
+			}			
 		}
 	}
 	
@@ -2347,8 +2390,8 @@ focus_tree = {
 		completion_reward = {
 			add_doctrine_cost_reduction = {
 				name = land_doc_bonus
-				cost_reduction = 0.99
-				uses = 2
+				cost_reduction = 0.75
+				uses = 3
 				category = land_doctrine
 			}		
 		add_ideas = BUL_prussia_of_the_balkans
