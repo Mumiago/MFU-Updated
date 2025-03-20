@@ -1674,7 +1674,7 @@ NAir = {
     NAVAL_MINES_PLANTING_SPEED_MULT = 0.025,						-- Value used to overall balance of the speed of planting naval mines
 	NAVAL_MINES_SWEEPING_SPEED_MULT = 0.025,						-- Value used to overall balance of the speed of sweeping naval mines
 	NON_CORE_STRATEGIC_IMPACT = 1,                                -- multiplier for strategic impact of non-core bombing	
-	RECON_LAND_SPOT_CHANCE = 0.02,                     				-- scale factor on spotting lan
+	RECON_LAND_SPOT_CHANCE = 0.03,                     				-- scale factor on spotting lan
 },
 NSupply = {
 	--NEW SHIT*/
@@ -1988,8 +1988,8 @@ NNavy = {
 
 	MAX_CAPITALS_PER_AUTO_TASK_FORCE = 5,							-- maximum number of capital ships the auto-task force creation will put together when designing SurfaceActionGroup
 	MAX_SUBMARINES_PER_AUTO_TASK_FORCE = 30,						-- maximum number of submarines the auto-task force creation will put together when designing wolfpack
-	BEST_CAPITALS_TO_CARRIER_RATIO = 2,							-- capitals / carriers ratio used when auto-task force creation designs CarrierTaskForce
-	BEST_CAPITALS_TO_SCREENS_RATIO = 0.33, 							-- capitals / screens ratio used for creating FEX groups in naval combat
+	BEST_CAPITALS_TO_CARRIER_RATIO = 3,							-- capitals / carriers ratio used when auto-task force creation designs CarrierTaskForce
+	BEST_CAPITALS_TO_SCREENS_RATIO = 0.5, 							-- capitals / screens ratio used for creating FEX groups in naval combat
 	COMBAT_BASE_HIT_CHANCE = 0.06,									-- base chance for hit
 
 	COMBAT_MIN_HIT_CHANCE = 0.02,									-- never less hit chance then this?
@@ -2068,7 +2068,7 @@ NNavy = {
 	NAVAL_TRANSFER_BASE_NAVAL_DIST_MULT = 20,						-- Multiplier for the cost of naval movement ( compared to land movement ) when deciding what ports to use for naval transfer
 	NAVAL_SUPREMACY_CAN_INVADE = 0.5,								-- required naval supremacy to perform invasions on an area
 	CARRIER_STACK_PENALTY = 4,										-- The most efficient is 4 carriers in combat. 5+ brings the penalty to the amount of wings in battle.
-	CARRIER_STACK_PENALTY_EFFECT = 0.25,								-- Each carrier above the optimal amount decreases the amount of airplanes being able to takeoff by such %.
+	CARRIER_STACK_PENALTY_EFFECT = 0.1,								-- Each carrier above the optimal amount decreases the amount of airplanes being able to takeoff by such %.
 	SHORE_BOMBARDMENT_CAP = 0.2,
 	ANTI_AIR_TARGETING = 0.8,                                       -- how good ships are at hitting aircraft
 	MIN_TRACTED_ASSIST_DAMAGE_RATIO = 0.05,							-- How much damage counts as assist damage
@@ -2150,7 +2150,7 @@ NNavy = {
 		10000,	-- I am death incarnate!
 	},
 	
-	AGGRESION_MULTIPLIER_FOR_COMBAT = 1.5,				-- ships are more aggresive in combat
+	AGGRESION_MULTIPLIER_FOR_COMBAT = 3,				-- ships are more aggresive in combat
 	
 	AGGRESSION_ARMOR_EFFICIENCY_MULTIPLIER = 1,		-- armor to enemy piercing ratio is multiplied by this value, which will increase the strength of ships while considering them for aggression
 	AGGRESSION_MIN_ARMOR_EFFICIENCY = 0.5,              -- armor multiplier has a min and max caps while being factored in aggression
@@ -2210,7 +2210,7 @@ NNavy = {
 	MAX_ORG_ON_MANUAL_MOVE = 1.0,	-- org will clamped to this ratio on manual move
 	MIN_ORG_ON_MANUAL_MOVE = 0.1,	-- org will clamped to this ratio on manual move
 	
-	INITIAL_ALLOWED_DOCKYARD_RATIO_FOR_REPAIRS = 0.25,				-- initially countries will allocate this ratio of dockyards for repairs
+	INITIAL_ALLOWED_DOCKYARD_RATIO_FOR_REPAIRS = 1,				-- initially countries will allocate this ratio of dockyards for repairs
 	
 	
 	MISSION_SUPREMACY_RATIOS = { -- supremacy multipliers for different mission types
@@ -2309,9 +2309,9 @@ NNavy = {
 	SUB_DETECTION_CHANCE_SPOTTING_SPEED_EFFECT = 2.0,				-- effect of spotting speed for initial spotting of pure submarine forces. this along with prev value is added together and rolled against a random to start spotting
 	SUB_DETECTION_CHANCE_BASE_SPOTTING_POW_EFFECT = 1.5,			-- effect of spotting speed will be powered by this for initial spotting of pure submarine forces. this along with prev value is added together and rolled against a random to start spotting
 	
-	BASE_CONVOY_SPOTTING_SPEED = 0.0,								-- daily base spotting speed against convoys
-	BASE_UNIT_TRANSFER_SPOTTING_SPEED = 0.0,						-- daily base spotting speed against unit trans
-	BASE_NAVAL_INVASION_SPOTTING_SPEED = 0.0,						-- daily base spotting speed against unit transfers
+	BASE_CONVOY_SPOTTING_SPEED = 0.75,								-- daily base spotting speed against convoys
+	BASE_UNIT_TRANSFER_SPOTTING_SPEED = 0.75,						-- daily base spotting speed against unit trans
+	BASE_NAVAL_INVASION_SPOTTING_SPEED = 0.75,						-- daily base spotting speed against unit transfers
 
 	CONVOY_SPOTTING_SPEED_MULT = 6.0,								-- spotting speed mult against convoys
 	UNIT_TRANSFER_SPOTTING_SPEED_MULT = 12,						-- spotting speed mult against unit transfers
@@ -2342,13 +2342,13 @@ NNavy = {
 	BASE_POSITIONING												= 0.8,	-- base value for positioning
 	
 	RELATIVE_SURFACE_DETECTION_TO_POSITIONING_FACTOR				= 0.02,	-- multiples the surface detection difference between two sides. the side with higher detection will get a bonus of this value
-	MAX_POSITIONING_BONUS_FROM_SURFACE_DETECTION					= 0.3,  -- will clamp the bonus that you get from detection
+	MAX_POSITIONING_BONUS_FROM_SURFACE_DETECTION					= 0.2,  -- will clamp the bonus that you get from detection
 	
 	HIGHER_SHIP_RATIO_POSITIONING_PENALTY_FACTOR					= 0.2, -- if one side has more ships than the other, that side will get this penalty for each +100% ship ratio it has
 	MAX_POSITIONING_PENALTY_FROM_HIGHER_SHIP_RATIO					= 0.8,  -- maximum penalty to get from larger fleets
 
-	HIGHER_CARRIER_RATIO_POSITIONING_PENALTY_FACTOR					= 0.15;  -- penalty if other side has stronger carrier air force 
-	MAX_CARRIER_RATIO_POSITIONING_PENALTY_FACTOR 					= 0.15;  -- max penalty from stronger carrier air force
+	HIGHER_CARRIER_RATIO_POSITIONING_PENALTY_FACTOR					= 0.4;  -- penalty if other side has stronger carrier air force 
+	MAX_CARRIER_RATIO_POSITIONING_PENALTY_FACTOR 					= 0.20;  -- max penalty from stronger carrier air force
 	
 	POSITIONING_PENALTY_FOR_SHIPS_JOINED_COMBAT_AFTER_IT_STARTS		= 0.01, -- each ship that joins the combat will have this penalty to be added into positioning
 	MAX_POSITIONING_PENALTY_FOR_NEWLY_JOINED_SHIPS 					= 0.2,  -- the accumulated penalty from new ships will be clamped to this value
@@ -2369,8 +2369,8 @@ NNavy = {
 	CHANCE_TO_DAMAGE_PART_ON_CRITICAL_HIT							= 0.1,	-- the game will roll between 0-1 and will damage a random part if below this val on naval critical hits
 	CHANCE_TO_DAMAGE_PART_ON_CRITICAL_HIT_FROM_AIR					= 0.1,	-- the game will roll between 0-1 and will damage a random part if below this val on air critical hits
 	
-	SCREEN_RATIO_FOR_FULL_SCREENING_FOR_CAPITALS 					= 3.0,	-- this screen ratio to num capital/carriers is needed for full screening beyond screen line
-	CAPITAL_RATIO_FOR_FULL_SCREENING_FOR_CARRIERS 					= 2,  -- this capital ratio to num carriers is needed for full screening beyond screen line
+	SCREEN_RATIO_FOR_FULL_SCREENING_FOR_CAPITALS 					= 2.0,	-- this screen ratio to num capital/carriers is needed for full screening beyond screen line
+	CAPITAL_RATIO_FOR_FULL_SCREENING_FOR_CARRIERS 					= 3,  -- this capital ratio to num carriers is needed for full screening beyond screen line
 	
 	TASK_FORCE_ROLE_TO_INSIGNIA = {								-- define the index of the insignia to use for a task force designed for a specific role
 		6,	-- Role undefined
