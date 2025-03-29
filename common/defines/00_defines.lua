@@ -682,7 +682,7 @@ NProject = {
 	BASIC_RESEARCH_TECHNOLOGY_BONUS_FACTOR = 0.05,     -- Bonus research factor applied to technologies per scientist skill level when performing basic research in a matching facility.
 	BASIC_RESEARCH_TECHNOLOGY_BONUS_DIMINISHING_RETURN_FACTOR = 0.1, -- Diminishing return on BASIC_RESEARCH_TECHNOLOGY_BONUS_FACTOR for each extra scientist performing basic research for multiple facilities.
 	BREAKTHROUGH_DAILY_TECHNOLOGY_GAIN = 8,           -- Amount in 1/100th percentage. E.g. 25 = 0.25%
-	BREAKTHROUGH_DAILY_SCIENTIST_SKILL_GAIN = 7,       -- Amount in 1/100th percentage gained per skill when doing basic research. E.g. 5 = 0.05% per skill level.
+	BREAKTHROUGH_DAILY_SCIENTIST_SKILL_GAIN = 8,       -- Amount in 1/100th percentage gained per skill when doing basic research. E.g. 5 = 0.05% per skill level.
 	BREAKTHROUGH_DAILY_ROCKET_SITE_GAIN = 3,		   -- Amount in 1/100th percentage gained per rocket site level. E.g. 1 = 0.01% per rocket site level.
 	BREAKTHROUGH_DAILY_NUCLEAR_REACTOR_GAIN = 20,       -- Amount in 1/100th percentage gained per nuclear reactor. E.g. 2 = 0.02% per nuclear reactor.
 	BREAKTHROUGH_GAIN_ANIMATION_SPEED_MAX = 1.0,	   -- The animation for gaining breakthrough progress is a ratio of this value and current daily gain.
@@ -1192,7 +1192,7 @@ NMilitary = {
 	UNIT_LEADER_MAX_SKILL_XP_BOOST_FACTOR = 2.0,   -- When a commander is at maximum level, he gains ranks faster.
 	BORDER_WAR_ATTRITION_FACTOR = 0.05,			   -- How much of borderwar balance of power makes it into attrition
 	BORDER_WAR_VICTORY = 0.92,					   -- At wich border war balance of power is victory declared
-	REINFORCE_CHANCE = 0.03,                 	   -- base chance to join combat from back line when empty
+	REINFORCE_CHANCE = 0.02,                 	   -- base chance to join combat from back line when empty
 	SPEED_REINFORCEMENT_BONUS = 0.0,              -- chance to join combat bonus by each 100% larger than infantry base (up to 200%)
 	OVERSEAS_LOSE_EQUIPMENT_FACTOR = 1.0,		   -- percentage of equipment lost disbanded overseas
 	ENCIRCLED_DISBAND_MANPOWER_FACTOR = 0.0,       -- percentage of manpower returned when an encircled unit is disbanded
@@ -1301,7 +1301,7 @@ NMilitary = {
 	FRONT_MIN_PATH_TO_REDEPLOY = 4,					-- If a units path is at least this long to reach its front location, it will strategically redeploy.
 	ARMY_INITIATIVE_REINFORCE_FACTOR = 2.4,		-- scales initiative for reinforce chance
 		
-	BASE_CAPTURE_EQUIPMENT_RATIO = 0,				-- after a successful land combat, ratio of the equipments that are being captured/salvaged from enemy's lost equipment
+	BASE_CAPTURE_EQUIPMENT_RATIO = 0.00,				-- after a successful land combat, ratio of the equipments that are being captured/salvaged from enemy's lost equipment
 
 	ACCLIMATIZATION_IN_COMBAT_SPEED_FACTOR = 3,		-- Acclimatization speed multiplier while being in combat.
 	ACCLIMATIZATION_SPEED_GAIN = 0.1,				-- A variable used to balance the overall speed of gaining the acclimatization
@@ -1889,7 +1889,8 @@ NNavy = {
 
 	--aat 
 	RESOURCE_PURCHASE_PRIORITY = 6,									-- Default convoy priority for export equipment purchase
-	NAVY_PIERCING_THRESHOLD_DAMAGE_VALUES = {	-- 0 armor will always receive maximum damage (so add overmatching at your own peril). the system expects at least 2 values, with no upper limit.
+	NAVY_PIERCING_THRESHOLD_DAMAGE_VALUES = { -- 0 armor will always receive maximum damage (so add overmatching at your own peril). the system expects at least 2 values, with no upper limit.
+		8,	
 		1.3,
 		1.00,
 		0.70,
@@ -1901,7 +1902,8 @@ NNavy = {
 	--BBA
 	PEACE_ACTION_TRANSFER_NAVY_EXPERIENCE_RETAINED = 0.25,			-- % of experience to retain after being transferred in a peace conference
 	HIT_PROFILE_SPEED_BASE											= 20,		-- Base value added to hitprofile speed calulation
-	NAVY_PIERCING_THRESHOLDS = {					-- Our piercing / their armor must be this value to deal damage fraction equal to the index in the array below [higher number = higher penetration]. If armor is 0, 1.00 will be returned.
+	NAVY_PIERCING_THRESHOLDS = {	-- Our piercing / their armor must be this value to deal damage fraction equal to the index in the array below [higher number = higher penetration]. If armor is 0, 1.00 will be returned.
+		45,				
 		1.35,
 		1.00,
 		0.75,
@@ -1911,6 +1913,7 @@ NNavy = {
 	},
 
 	NAVY_PIERCING_THRESHOLD_CRITICAL_VALUES = {	-- 0 armor will always receive maximum damage (so add overmatching at your own peril). the system expects at least 2 values, with no upper limit.
+		15.00,
 		2.00,
 		1.00,
 		0.75,
@@ -2030,9 +2033,9 @@ NNavy = {
 	EXPERIENCE_LOSS_FACTOR = 1.00,                 					-- percentage of experienced solders who die when manpower is removed
 	NAVY_EXPENSIVE_IC = 7000,										-- How much IC is considering the fleet to be expensive. Those expensive will triger the alert, when are on low STR.
 	MISSION_MAX_REGIONS = 5,										-- Limit of the regions that can be assigned to naval mission. Set to 0 for unlimited.
-	CONVOY_EFFICIENCY_LOSS_MODIFIER = 0.26,							-- How much efficiency drops when losing convoys. If modifier is 0.5, then losing 100% of convoys in short period, the efficiency will drop by 50%.
+	CONVOY_EFFICIENCY_LOSS_MODIFIER = 1,							-- How much efficiency drops when losing convoys. If modifier is 0.5, then losing 100% of convoys in short period, the efficiency will drop by 50%.
 	CONVOY_EFFICIENCY_REGAIN_AFTER_DAYS = 7,						-- Convoy starts regaining it's efficiency after X days without any convoys being sink.
-	CONVOY_EFFICIENCY_REGAIN_BASE_SPEED = 0.03,						-- How much efficiency regains every day.
+	CONVOY_EFFICIENCY_REGAIN_BASE_SPEED = 0.05,						-- How much efficiency regains every day.
 	CONVOY_EFFICIENCY_MIN_VALUE = 0.65,								-- To avoid complete 0% efficiency, set the lower limit.
 	CONVOY_ROUTE_SIZE_CONVOY_SCALE = 0.4,                           -- scales impact of convoy route size (0 to turn off)
 	ANTI_AIR_TARGETTING_TO_CHANCE = 0.25,							-- Balancing value to convert averaged equipment stats (anti_air_targetting and naval_strike_agility) to probability chances of airplane being hit by navies AA.
@@ -2068,7 +2071,7 @@ NNavy = {
 	NAVAL_TRANSFER_BASE_NAVAL_DIST_MULT = 20,						-- Multiplier for the cost of naval movement ( compared to land movement ) when deciding what ports to use for naval transfer
 	NAVAL_SUPREMACY_CAN_INVADE = 0.5,								-- required naval supremacy to perform invasions on an area
 	CARRIER_STACK_PENALTY = 4,										-- The most efficient is 4 carriers in combat. 5+ brings the penalty to the amount of wings in battle.
-	CARRIER_STACK_PENALTY_EFFECT = 0.1,								-- Each carrier above the optimal amount decreases the amount of airplanes being able to takeoff by such %.
+	CARRIER_STACK_PENALTY_EFFECT = 0.06,								-- Each carrier above the optimal amount decreases the amount of airplanes being able to takeoff by such %.
 	SHORE_BOMBARDMENT_CAP = 0.2,
 	ANTI_AIR_TARGETING = 0.8,                                       -- how good ships are at hitting aircraft
 	MIN_TRACTED_ASSIST_DAMAGE_RATIO = 0.05,							-- How much damage counts as assist damage
@@ -2280,7 +2283,7 @@ NNavy = {
 
 	MIN_HOURS_TO_SHUFFLE_NEWLY_ASSIGNED_PATROLS = 7 * 24,			-- if a fleet has less patrol than it needs to cover all of it areas, it will shuffle the patrols around. it will wait this much hour before shuffling a task force to new area
 	SPOTTING_ENEMY_SPOTTING_MULTIPLIER_FOR_RUNNING_AWAY = 0.3,		-- enemy spotting is multiplied by this value to simulate running away
-	SPOTTING_MULTIPLIER_FOR_SURFACE = 0.05,							-- task force surface spotting value is multiplied by this and added to spotting percentage every hour
+	SPOTTING_MULTIPLIER_FOR_SURFACE = 0.4,							-- task force surface spotting value is multiplied by this and added to spotting percentage every hour
 	SPOTTING_MULTIPLIER_FOR_SUB = 1.8,								-- task force sub spotting value is multiplied by this and added to spotting percentage every hour
 	SPOTTING_SPEED_MULT_FOR_RUNNING_AWAY = 0.1,						-- task forces that does not want to engage will reduce enemy spotting rate every hour by speed diff mult this ratio
 	SPOTTING_SPEED_MULT_FOR_CATCHING_UP = 0.1,						-- speed diff bonus rate that is added to spotting every hour
@@ -2296,7 +2299,7 @@ NNavy = {
 	INTEL_LEVEL_MEDIUM_HALF_RANGE_MIN_CAPITALS = 1,							-- Same as above but for capital ships. NOTE: overriden to 0 if the total number of ships in the task force is less than four.
 	INTEL_LEVEL_LOW_STRENGTH_ESTIMATE_HALF_RANGE_PERCENTAGE = 20,					-- Integer representing the maximum offset of the estimated enemy strength to the original, in percentage (divided by 100 in code). For spotting level "low".
 	INTEL_LEVEL_MEDIUM_STRENGTH_ESTIMATE_HALF_RANGE_PERCENTAGE = 10,					-- Same as above for spotting level "medium"
-	BASE_SPOTTING_SPEED = 0.75,										-- daily base spotting speed
+	BASE_SPOTTING_SPEED = 0.25,										-- daily base spotting speed
 	BASE_ESCAPE_SPEED = 0.1,										-- daily base escape speed (gained as percentagE)
 	SPEED_TO_ESCAPE_SPEED = 0.5,									-- ratio to converstion from ship speed to escape speed (divided by hundred)
 	ESCAPE_SPEED_PER_COMBAT_DAY = 0.01,								-- daily increase in escape speed during combat duration
@@ -2309,13 +2312,13 @@ NNavy = {
 	SUB_DETECTION_CHANCE_SPOTTING_SPEED_EFFECT = 2.0,				-- effect of spotting speed for initial spotting of pure submarine forces. this along with prev value is added together and rolled against a random to start spotting
 	SUB_DETECTION_CHANCE_BASE_SPOTTING_POW_EFFECT = 1.5,			-- effect of spotting speed will be powered by this for initial spotting of pure submarine forces. this along with prev value is added together and rolled against a random to start spotting
 	
-	BASE_CONVOY_SPOTTING_SPEED = 0.75,								-- daily base spotting speed against convoys
-	BASE_UNIT_TRANSFER_SPOTTING_SPEED = 0.75,						-- daily base spotting speed against unit trans
-	BASE_NAVAL_INVASION_SPOTTING_SPEED = 0.75,						-- daily base spotting speed against unit transfers
+	BASE_CONVOY_SPOTTING_SPEED = 0.2,								-- daily base spotting speed against convoys
+	BASE_UNIT_TRANSFER_SPOTTING_SPEED = 0.5,						-- daily base spotting speed against unit trans
+	BASE_NAVAL_INVASION_SPOTTING_SPEED = 0.5,						-- daily base spotting speed against unit transfers
 
 	CONVOY_SPOTTING_SPEED_MULT = 6.0,								-- spotting speed mult against convoys
-	UNIT_TRANSFER_SPOTTING_SPEED_MULT = 12,						-- spotting speed mult against unit transfers
-	NAVAL_INVASION_SPOTTING_SPEED_MULT = 30.0,						-- spotting speed mult against naval invasion armies
+	UNIT_TRANSFER_SPOTTING_SPEED_MULT = 50,						-- spotting speed mult against unit transfers
+	NAVAL_INVASION_SPOTTING_SPEED_MULT = 50.0,						-- spotting speed mult against naval invasion armies
 	
 	
 	CONVOY_DETECTION_CHANCE_BASE = 4.12,							-- regular convoy base chance detection percentage (if this fails, no detection is done on that tick)
@@ -2559,6 +2562,9 @@ NAITheatre = {
 	AI_THEATRE_AI_FRONT_MIN_DESIRED_RATIO = 0.19,						-- Fronts are sorted based on priority, we nudge unit demand based on this sorting, the higher the value the more units the most important front gets
 },
 NAI = {
+	PEACE_BID_CONTEST_TIE_BREAKER_CONFERENCE_SCORE = 1.0,       -- How much to weigh relative remaining peace conference score between the countries
+	PEACE_BID_CONTEST_TIE_BREAKER_INFLUENCE_DISTANCE = 1.0,     -- How much to weigh relative influence distance between the countries
+	PEACE_BID_CONTEST_TIE_BREAKER_COUNTRY_SCORE = 1.0,          -- How much to weigh relative country score between the countries
 	-- GTD
 	RAIDS_SCORE_DIFF_TO_CANCEL = 0.3,                      -- If already-created low-scoring raids are blocking higher-scoring ones from being created due to command power, this allows the AI to cancel the lower-scoring raids. If `lowerScore < <value>*higherScore`, then the lower-scoring one may be cancelled. A value of 0.0 means it will never allow cancelling lower-scoring raids, while a value of 1.0 means it will always allow cancelling lower-scoring raids.
 	START_TRAINING_SUPPLY_LEVEL = 0.40,                  -- ai will not start to train if supply ratio drops below this level
