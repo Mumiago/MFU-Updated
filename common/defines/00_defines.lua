@@ -1890,10 +1890,15 @@ NNavy = {
 	--aat 
 	RESOURCE_PURCHASE_PRIORITY = 6,									-- Default convoy priority for export equipment purchase
 	NAVY_PIERCING_THRESHOLD_DAMAGE_VALUES = { -- 0 armor will always receive maximum damage (so add overmatching at your own peril). the system expects at least 2 values, with no upper limit.
-		8,	
+		10,	
 		1.3,
+		1.2,
+		1.1,
 		1.00,
+		0.90,
+		0.80,
 		0.70,
+		0.6,
 		0.40,
 		0.30,
 		0.10 -- 
@@ -1905,18 +1910,28 @@ NNavy = {
 	NAVY_PIERCING_THRESHOLDS = {	-- Our piercing / their armor must be this value to deal damage fraction equal to the index in the array below [higher number = higher penetration]. If armor is 0, 1.00 will be returned.
 		45,				
 		1.35,
+		1.2,
+		1.1,
 		1.00,
-		0.75,
+		0.9,
+		0.8,
+		0.7,
+		0.6,
 		0.50,
 		0.10,
 		0.00 --there isn't much point setting this higher than 0
 	},
 
 	NAVY_PIERCING_THRESHOLD_CRITICAL_VALUES = {	-- 0 armor will always receive maximum damage (so add overmatching at your own peril). the system expects at least 2 values, with no upper limit.
-		15.00,
+		20.00,
 		2.00,
+		1.6,
+		1.3,
 		1.00,
-		0.75,
+		0.9,
+		0.8,
+		0.7,
+		0.6,
 		0.50,
 		0.10,
 		0.00 -- For criticals, you could reduce crit chance unlike damage in army combat, but we do not for now.
@@ -2396,7 +2411,7 @@ NNavy = {
 	LIGHT_GUN_ATTACK_TO_SHORE_BOMBARDMENT							= 0.05, -- light gun attack value is divided by this value * 100 and added to shore bombardment modifier 
 
 	GUN_HIT_PROFILES = { -- hit profiles for guns, if target ih profile is lower the gun will have lower accuracy
-		40.0,	-- big guns
+		44.0,	-- big guns
 		90.0,	-- torpedos
 		36.0,	-- small guns
 	},
