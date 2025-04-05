@@ -2412,7 +2412,7 @@ NNavy = {
 
 	GUN_HIT_PROFILES = { -- hit profiles for guns, if target ih profile is lower the gun will have lower accuracy
 		44.0,	-- big guns
-		90.0,	-- torpedos
+		95.0,	-- torpedos
 		36.0,	-- small guns
 	},
 	
