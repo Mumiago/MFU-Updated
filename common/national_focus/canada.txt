@@ -41,8 +41,9 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-
 		    add_ideas = free_trade
+			custom_effect_tooltip = MANspace
+			add_political_power = 50
 			add_stability = 0.10
 		}
 	}
@@ -233,12 +234,35 @@ focus_tree = {
 		  
 			custom_effect_tooltip = CAN_modify_industry_spirit_tt
 			add_to_variable = {
-				CAN_consumer_goods_factor_var = -0.02
+				CAN_consumer_goods_factor_var = -0.03
 				tooltip = consumer_goods_tooltip
 			}
 			custom_effect_tooltip = MANspace
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = CAN_james_lorimer
+			if = {
+				limit = {
+					amount_taken_ideas = {
+						amount < 3
+						slots = {
+							political_advisor
+						}
+					}
+
+				}
+				add_ideas = CAN_james_lorimer
+
+			}
+			else_if ={
+				limit = {
+					amount_taken_ideas = {
+						amount > 2
+						slots = {
+							political_advisor
+						}
+					}
+				}
+				add_political_power = 150
+			}
+
 			custom_effect_tooltip = MANspace
 			add_stability = -0.05
 		}
@@ -701,7 +725,7 @@ focus_tree = {
 			custom_effect_tooltip = CAN_modify_industry_spirit_tt
 
 			add_to_variable = {
-				CAN_production_speed_industrial_complex_factor_var = 0.1
+				CAN_production_speed_industrial_complex_factor_var = -0.1
 				tooltip = industrial_complex_build_speed_factor_tooltip
 			}
 			add_to_variable = {
@@ -757,16 +781,39 @@ focus_tree = {
 				tooltip = CAN_cap_tt1
 			}
 			add_to_variable = {
-				CAN_local_resources_factor_var = 0.05
-				tooltip = MAN_resorse_2_fix
+				CAN_factory_efficiency_gain_factor = 0.05
+				tooltip = production_factory_efficiency_gain_factor_tooltip
 			}
 			custom_effect_tooltip = MANspace
-			add_war_support = 0.05
-			custom_effect_tooltip = MANspace
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = CAN_humphrey_mitchell
 
-		    
+
+			if = {
+				limit = {
+					amount_taken_ideas = {
+						amount < 3
+						slots = {
+							political_advisor
+						}
+					}
+
+				}
+				add_ideas = CAN_humphrey_mitchell
+
+			}
+			else_if ={
+				limit = {
+					amount_taken_ideas = {
+						amount > 2
+						slots = {
+							political_advisor
+						}
+					}
+				}
+				add_political_power = 150
+			}
+			custom_effect_tooltip = MANspace  
+		  	add_war_support = 0.05
+
 		}
 	}
 
@@ -821,11 +868,11 @@ focus_tree = {
 			}
 			custom_effect_tooltip = MANspace
 
+			add_political_power = 150
 			add_offsite_building = {
 				type = industrial_complex
 				level = 3
 			}
-			add_political_power = 150
 		}
 	}
 
@@ -928,12 +975,12 @@ focus_tree = {
 			custom_effect_tooltip = CAN_modify_industry_spirit_tt
 
 			add_to_variable = {
-				CAN_industrial_capacity_factory_var = 0.15
+				CAN_industrial_capacity_factory_var = 0.1
 				tooltip = industrial_capacity_factory_tooltip
 			}
 			custom_effect_tooltip = MANspace
 		    random_owned_controlled_state= {
-				add_extra_state_shared_building_slots = 10
+				add_extra_state_shared_building_slots = 9
 				add_building_construction = {
 					type = arms_factory
 					level = 6
@@ -1567,7 +1614,7 @@ focus_tree = {
 
 			custom_effect_tooltip = MANspace
 			682 = {
-				add_extra_state_shared_building_slots = 5
+				add_extra_state_shared_building_slots = 6
 				add_building_construction = {
 					type = arms_factory
 					level = 3
@@ -1779,7 +1826,7 @@ focus_tree = {
 		x = -7
 		y = 1
 		relative_position_id = CAN_a_parliamentary_declaration_of_war
-		cost = 5
+		cost = 4
 
 		ai_will_do = {
 			factor = 3
@@ -1817,7 +1864,7 @@ focus_tree = {
 		x = 0
 		y = 1
 		relative_position_id = CAN_clayton_knight_committee
-		cost = 5
+		cost = 4
 
 		ai_will_do = {
 			factor = 3
@@ -1839,7 +1886,7 @@ focus_tree = {
 		
 			custom_effect_tooltip = CAN_modify_army_spirit_tt
 			add_to_variable = {
-				CAN_army_core_attack_factor_var = 0.30
+				CAN_army_core_attack_factor_var = 0.5
 				tooltip = CAN_coreat_tt1
 			}
 		}
@@ -1873,12 +1920,6 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-		    add_tech_bonus = {
-				name = CAN_modern_tools_bonus
-				bonus = 2
-				uses = 1
-				technology = modern_tools
-			}
 
 			add_tech_bonus = {
 				name = CAN_synth_resources_bonus
@@ -1925,10 +1966,13 @@ focus_tree = {
 			add_doctrine_cost_reduction = {
 				name = land_doc_bonus
 				cost_reduction = 0.75
-				uses = 3
+				uses = 4
 				category = special_forces_doctrine
 			}
-			
+			add_to_variable = {
+				CAN_special_forces_min_var = 27
+				tooltip = JAP_sf_bonus_tt
+			}
 		}
 	}
 
@@ -2093,9 +2137,6 @@ focus_tree = {
 			custom_effect_tooltip = MANspace
 			custom_effect_tooltip = available_tank_designer
 			show_ideas_tooltip = CAN_j_h_berry
-			custom_effect_tooltip = MANspace
-			custom_effect_tooltip = available_industrial_concern
-			show_ideas_tooltip = CAN_c_j_stenning
 		}
 	}
 
@@ -2125,6 +2166,12 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
+			custom_effect_tooltip = CAN_modify_industry_spirit_tt
+			add_to_variable = {
+				CAN_production_factory_max_efficiency_factor_var = 0.025
+				tooltip = CAN_cap_tt1
+			}
+			custom_effect_tooltip = MANspace
 		    add_offsite_building = {
 				type = arms_factory
 				level = 4
@@ -2302,7 +2349,7 @@ focus_tree = {
 			focus = CAN_department_of_munitions_and_supply_new
 			focus = CAN_wartime_price
 		}
-		cost = 7.15
+		cost = 5
 
 		ai_will_do = {
 			factor = 3
@@ -2340,7 +2387,7 @@ focus_tree = {
 
 		prerequisite = { focus = CAN_dominion_arsenal}
 
-		cost = 7.15
+		cost = 5
 
 		ai_will_do = {
 			factor = 3
@@ -2400,7 +2447,7 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = CAN_modify_industry_spirit_tt
 			add_to_variable = {
-				CAN_local_resources_factor_var = 0.05
+				CAN_local_resources_factor_var = 0.1
 				tooltip = CAN_res_tt1
 			}
 			custom_effect_tooltip = MANspace
@@ -2649,7 +2696,7 @@ focus_tree = {
 		x = 14
 		y = 3
 
-		cost = 5
+		cost = 3
 
 		ai_will_do = {
 			factor = 3
@@ -2770,7 +2817,7 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-		    add_political_power = 100
+		    add_political_power = 150
 			army_experience = 150
 		}
 	}
@@ -3149,7 +3196,13 @@ focus = {
 		}
 
 		available = {
-
+			OR = {
+				has_completed_focus = CAN_all_in
+				AND = {
+					has_completed_focus = CAN_keep_the_current_military_budget
+					has_war = yes
+				}
+			}
 		}
 		
 		bypass = {
@@ -3179,17 +3232,14 @@ focus = {
 		}
 		}
 	}
-
 	focus = {
-		id = CAN_valentine
-		icon = GFX_goal_continuous_armor_production
-
-		relative_position_id = CAN_retool_montreal_locomotive_works
+		id = CAN_construct_the_long_branch_arsenal
+		icon = GFX_goal_proving_grounds
 		x = 0
 		y = 2
-		
-		prerequisite = { focus = CAN_retool_montreal_locomotive_works}
 
+		prerequisite = { focus =CAN_retool_montreal_locomotive_works}
+		relative_position_id = CAN_retool_montreal_locomotive_works
 		cost = 5
 
 		ai_will_do = {
@@ -3197,9 +3247,7 @@ focus = {
 		}
 
 		available = {
-			ENG ={
-				has_tech = eng_1939_medium_tank_chassis
-			}
+
 		}
 		
 		bypass = {
@@ -3211,18 +3259,20 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			set_technology = {
-				eng_1939_medium_tank_chassis =1
-			}
 			add_tech_bonus = {
-				category = cat_medium_armor
+				name = CAN_construction_bonus
 				uses = 1
-				bonus = 0.75
-				name = CAN_medium_tank_bonus 
+				bonus = 1
+				ahead_reduction = 0.5
+				category = construction_tech
 			}
-
-			mio:ENG_vickers_armstrong_eng_organization = {
-				add_mio_funds = 1600
+			random_owned_controlled_state= {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
 			}
 		}
 	}
@@ -3300,6 +3350,7 @@ focus = {
 				uses = 1
 				bonus = 0.75
 				ahead_reduction = 0.5
+				technology = can_1939_medium_tank_chassis
 				technology = can_1940_medium_tank_chassis
 				technology = can_1942_medium_tank_chassis
 			}
@@ -3350,12 +3401,12 @@ focus = {
 		icon = GFX_goal_generic_armored_car_offensive
 
 		relative_position_id = CAN_mechanize_the_cavalry
-		x = 1
+		x = 7
 		y = 2
 
 		prerequisite = {
-			focus = CAN_infantry_tank_production 
-			focus = CAN_a_canadian_cruiser
+			focus = CAN_logistics_effort
+			focus = CAN_the_CRMC
 		}
 
 		cost = 5
@@ -3387,7 +3438,7 @@ focus = {
 			}
 			mio:ENG_AEC = {
 				add_mio_funds_gain_factor = 0.2
-				add_mio_funds = 1200
+				add_mio_funds = 2400
 			}
 		}
 	}
@@ -3424,7 +3475,14 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-
+			add_tech_bonus = {
+				name = mechanized
+				uses = 1
+				bonus = 0.75
+				technology = can_mechanised_infantry1
+				technology = can_nsb_mechanised_infantry2
+			}
+			custom_effect_tooltip = MANspace
 			mio:CAN_generic_mechanized_designer = {
 				complete_mio_trait = Didts_special
 			}
@@ -3442,7 +3500,7 @@ focus = {
 
 		prerequisite = {
 			focus = CAN_armoured_carrier_mass_production
-			focus = CAN_heavy_recon
+			focus = CAN_adopt_us_armor
 		
 		}
 
@@ -3524,6 +3582,12 @@ focus = {
 			custom_effect_tooltip = MANspace
 			add_ideas = CAN_firepower_focus_general_staff
 			custom_effect_tooltip = MANspace
+
+			custom_effect_tooltip = SAF_heavy_arty_speed
+			hidden_effect = {
+				set_technology = {  can_modify_heavy_urban = 1 }
+			}
+			custom_effect_tooltip = MANspace
 			add_doctrine_cost_reduction = {
 				name = land_doc_bonus
 				cost_reduction = 0.5
@@ -3572,18 +3636,20 @@ focus = {
 				bonus = 0.75
 				category = infantry_weapons
 			}
-			add_equipment_to_stockpile = { type = infantry_equipment_1 amount = 2140 producer = CAN }
+			add_equipment_to_stockpile = { type = infantry_equipment_1 amount = 2150 producer = CAN }
 		}
 	}
 
 	focus = {
-		id = CAN_construct_the_long_branch_arsenal
-		icon = GFX_goal_proving_grounds
+		id = CAN_valentine
+		icon = GFX_goal_continuous_armor_production
+
+		relative_position_id = CAN_replace_the_ross
 		x = 0
 		y = 2
+		
+		prerequisite = { focus = CAN_replace_the_ross}
 
-		prerequisite = { focus =CAN_replace_the_ross}
-		relative_position_id = CAN_replace_the_ross
 		cost = 5
 
 		ai_will_do = {
@@ -3591,7 +3657,9 @@ focus = {
 		}
 
 		available = {
-
+			ENG ={
+				has_tech = eng_1939_medium_tank_chassis
+			}
 		}
 		
 		bypass = {
@@ -3603,22 +3671,22 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_tech_bonus = {
-				name = CAN_construction_bonus
-				uses = 1
-				bonus = 1.5
-				category = construction_tech
+			set_technology = {
+				eng_1939_medium_tank_chassis =1
 			}
-			random_owned_controlled_state= {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes
-				}
+			add_tech_bonus = {
+				category = cat_medium_armor
+				uses = 1
+				bonus = 0.75
+				name = CAN_medium_tank_bonus 
+			}
+
+			mio:ENG_vickers_armstrong_eng_organization = {
+				add_mio_funds = 1600
 			}
 		}
 	}
+
 
 	focus = {
 		id = CAN_who_sees_first_kills_first
@@ -3756,6 +3824,13 @@ focus = {
 
 		completion_reward = {
 			add_tech_bonus = {
+				name = mechanized
+				uses = 1
+				bonus = 1
+				technology = can_mechanised_infantry1
+			}
+			custom_effect_tooltip = MANspace
+			add_tech_bonus = {
 				name = spg
 				uses = 2
 				bonus = 0.75
@@ -3764,10 +3839,18 @@ focus = {
 				technology = siege_gun
 			}
 			custom_effect_tooltip = MANspace
-			swap_ideas = {
-				remove_idea = CAN_firepower_focus_general_staff
-				add_idea = CAN_firepower_focus_general_staff_2
+			hidden_effect = {
+
+				swap_ideas = {
+					remove_idea = CAN_firepower_focus_general_staff
+					add_idea = CAN_firepower_focus_general_staff_2
+				}
+				set_technology = {
+					CAN_support_tanks_reduction = 1
+				}
 			}
+			custom_effect_tooltip = reduce_mot_req
+
 			
 
 		}
@@ -3812,6 +3895,7 @@ focus = {
 				ahead_reduction = 1.5
 				technology = improved_division_command_network
 				technology = improved_corps_command_network
+				technology = frequency_modulation
 			}
 
 		}
@@ -3903,17 +3987,14 @@ focus = {
 		completion_reward = {
 			custom_effect_tooltip = CAN_modify_army_spirit_tt
 			add_to_variable = {
+				CAN_experience_loss_factor_var = -0.1
+				tooltip = CAN_xploss_tt1
+			}
+
+			add_to_variable = {
 				CAN_max_planning_var = 0.05
 				tooltip = CAN_maxplan_tt1
 			}
-			add_to_variable = {
-				CAN_max_dig_in_var = 2
-				tooltip = CAN_digin_tt1
-			}
-			custom_effect_tooltip = MANspace
-
-			army_experience = 25
-			
 		}
 	}
 
@@ -3952,14 +4033,6 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-
-			custom_effect_tooltip = CAN_modify_industry_spirit_tt
-
-			add_to_variable = {
-				CAN_production_factory_max_efficiency_factor_var = -0.05
-				tooltip = CAN_cap_tt1
-			}
-			custom_effect_tooltip = MANspace
 			custom_effect_tooltip = CAN_modify_army_spirit_tt
 
 			add_to_variable = {
@@ -4006,7 +4079,7 @@ focus = {
 
 		prerequisite = { 
 			focus = CAN_send_in_the_zombies
-			focus = CAN_adopt_us_armor
+			focus = CAN_heavy_recon
 		}
 
 		cost = 7.15
@@ -4029,15 +4102,15 @@ focus = {
 		completion_reward = {
 			custom_effect_tooltip = CAN_modify_army_spirit_tt
 			add_to_variable = {
-				CAN_army_attack_factor_var = 0.03
+				CAN_army_attack_factor_var = 0.05
 				tooltip = CAN_attack_tt1
 			}
 			add_to_variable = {
-				CAN_army_defence_factor_var = 0.03
+				CAN_army_defence_factor_var = 0.05
 				tooltip = army_defense_factor_tooltip
 			}
 			add_to_variable = {
-				CAN_max_dig_in_var = 2
+				CAN_max_dig_in_var = 3
 				tooltip = CAN_digin_tt1
 			}
 
@@ -4077,7 +4150,7 @@ focus = {
 		    add_tech_bonus = {
 				name = CAN_logistics_bonus
 				bonus = 1.5
-				uses = 3
+				uses = 4
 				category = support_tech
 			}
 
@@ -4122,7 +4195,7 @@ focus = {
 			add_doctrine_cost_reduction = {
 				name = land_doc_bonus
 				cost_reduction = 0.5
-				uses = 2
+				uses = 3
 				category = special_forces_doctrine
 			}
 
@@ -4134,11 +4207,11 @@ focus = {
 		icon = GFX_goal_CAN_grizzly
 
 		prerequisite = {
-			focus = CAN_logistics_effort
-			focus = CAN_the_CRMC
+			focus = CAN_infantry_tank_production 
+			focus = CAN_a_canadian_cruiser
 		}
 
-		x = 6
+		x = 0
 		y = 1
 
 		relative_position_id = CAN_infantry_tank_production
@@ -4150,10 +4223,7 @@ focus = {
 		}
 
 		available = {
-			OR = {
-				has_war = yes
-				date > 1939.10.1
-			}
+			has_war = yes
 		}
 		
 		bypass = {
@@ -4169,16 +4239,20 @@ focus = {
 			custom_effect_tooltip = MANspace
 
 			mio:CAN_Chrysler_Corporation = {
-				add_mio_funds = 750
+				add_mio_funds = 2500
+				add_mio_funds_gain_factor = 0.1
 			}
 			mio:CAN_army_ordnance_department_organization = {
 				add_mio_funds = 750
+				add_mio_funds_gain_factor = 0.1
 			}
 			mio:CAN_Fisher_armaments = {
-				add_mio_funds = 750
+				add_mio_funds = 250
+				add_mio_funds_gain_factor = 0.1
 			}
 			mio:CAN_td_board = {
-				add_mio_funds = 750
+				add_mio_funds = 250
+				add_mio_funds_gain_factor = 0.1
 			}
 
 		}
@@ -4256,7 +4330,7 @@ focus = {
 			#add_ideas = CAN_special_training_school_no103
 			custom_effect_tooltip = CAN_modify_army_spirit_tt
 			add_to_variable = {
-				CAN_operative_slot_var = 1
+				CAN_operative_slot_var = 2
 				tooltip = CAN_operative_tt1
 			}
 			add_to_variable = {
@@ -4334,8 +4408,12 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			#add_ideas = CAN_women_in_the_factories
 			custom_effect_tooltip = CAN_modify_army_spirit_tt
+			add_to_variable = {
+				CAN_mobilization_law_cost = -0.1
+				tooltip = CAN_conscription_cost
+			}
+			#add_ideas = CAN_women_in_the_factories
 			add_to_variable = {
 				CAN_conscription_factor_var = 0.02
 				tooltip = CAN_recruit_tt1
@@ -4509,9 +4587,19 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_to_variable = {
-				CAN_special_forces_min_var = 27
-				tooltip = JAP_sf_bonus_tt
+			add_tech_bonus = {
+				name = mountain_artillery_brigade
+				uses = 1
+				bonus = 1
+				ahead_reduction = 1
+				technology = artillery7_1
+			}
+		
+			custom_effect_tooltip = sf_mountain_gun_tooltip
+			hidden_effect = {
+				set_technology = {
+					sf_mountain_gun = 1
+				}
 			}
 
 			
@@ -4800,7 +4888,7 @@ focus = {
 			}
 			add_equipment_to_stockpile = { 
 				type = small_plane_cas_airframe
-				amount = 50 
+				amount = 100
 				producer = ENG 
 			}
 		}
@@ -4864,7 +4952,7 @@ focus = {
 
 			add_equipment_to_stockpile = { 
 				type = small_plane_airframe
-				amount = 150
+				amount = 250
 				producer = ENG
 			}
 		}
@@ -6506,7 +6594,8 @@ focus = {
 
 	focus = {
 		id = CAN_a_canadian_town_class
-		icon = GFX_focus_generic_naval_invasion
+		icon = GFX_goal_generic_amphibious_assault
+		icon = GFX_goal_generic_amphibious_assault
 
 		relative_position_id = CAN_focus_on_antisubmarine_warfare
 		x = -3
