@@ -1899,9 +1899,12 @@ NNavy = {
 		0.80,
 		0.70,
 		0.6,
+		0.50,
 		0.40,
 		0.30,
-		0.10 -- 
+		0.20,
+		0.10,
+		0.05 -- 
 	},
 
 	--BBA
@@ -1918,6 +1921,9 @@ NNavy = {
 		0.7,
 		0.6,
 		0.50,
+		0.40,
+		0.30,
+		0.20,
 		0.10,
 		0.00 --there isn't much point setting this higher than 0
 	},
@@ -1933,6 +1939,9 @@ NNavy = {
 		0.7,
 		0.6,
 		0.50,
+		0.40,
+		0.30,
+		0.20,
 		0.10,
 		0.00 -- For criticals, you could reduce crit chance unlike damage in army combat, but we do not for now.
 	},
@@ -2382,7 +2391,7 @@ NNavy = {
 	ANTI_AIR_POW_ON_INCOMING_AIR_DAMAGE								= 0.78,	-- received air damage is calculated using following: 1 - ( (ship_anti_air + fleet_anti_air * SHIP_TO_FLEET_ANTI_AIR_RATIO )^ANTI_AIR_POW_ON_INCOMING_AIR_DAMAGE ) * ANTI_AIR_MULT_ON_INCOMING_AIR_DAMAGE
 	ANTI_AIR_MULT_ON_INCOMING_AIR_DAMAGE							= 0.05,
 	
-	MAX_ANTI_AIR_REDUCTION_EFFECT_ON_INCOMING_AIR_DAMAGE 			= 0.8,	-- damage reduction for incoming air attacks is clamped to this value at maximum.
+	MAX_ANTI_AIR_REDUCTION_EFFECT_ON_INCOMING_AIR_DAMAGE 			= 0.75,	-- damage reduction for incoming air attacks is clamped to this value at maximum.
 	
 	CHANCE_TO_DAMAGE_PART_ON_CRITICAL_HIT							= 0.1,	-- the game will roll between 0-1 and will damage a random part if below this val on naval critical hits
 	CHANCE_TO_DAMAGE_PART_ON_CRITICAL_HIT_FROM_AIR					= 0.1,	-- the game will roll between 0-1 and will damage a random part if below this val on air critical hits
