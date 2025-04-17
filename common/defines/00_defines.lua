@@ -644,7 +644,7 @@ NProject = {
 	DEFAULT_EMPTY_REWARD_WEIGHT = 1.0,				-- The weight for no reward being given after a prototype iteration.
 	DEFAULT_STOP_PROJECT_DAYS = 10,					-- The amount of days it takes for a cancelled project to be stopped.
 	DAYS_TO_REMOVE_SCIENTIST = 10,					-- Amount of days needed for a scientist to be unassigned.
-	DISMANTLE_FACILITY_DAYS = 365,                   -- Amount of days needed to dismantle a facility.
+	DISMANTLE_FACILITY_DAYS = 500,                   -- Amount of days needed to dismantle a facility.
 	PROTOTYPE_PHASE_MAX_PROGRESS = 100,				-- the number of progress points needed to finish the prototype phase and complete the project
 	MINIMUM_PROJECT_SPEED_FACTOR_FROM_SUPPLY = 0.2,	-- Minimum special project research speed based on supply
 	NEEDED_SUPPLY_FOR_FULL_SPEED_PROJECT = 3.0,	-- Supply needed in province to get full research speed for special project
@@ -1553,7 +1553,7 @@ NAir = {
 	AGGRESSION_THRESHOLD = { 0.0, 0.25, 0.5 },			-- Threshold levels for mission aggressivity for air
  
 	ACE_WING_SIZE =	100,								-- size of wing ace bonuses are set up for. if lower more bonus, if higher less bonus
-	ACE_WING_SIZE_MAX_BONUS = 10,                       -- biggest bonus we can get from having a small wing with an ace on
+	ACE_WING_SIZE_MAX_BONUS = 5,                       -- biggest bonus we can get from having a small wing with an ace on
 	NO_SEARCH_MISSION_DETECT_FACTOR = -0.5,				-- value of planes not on active search missions for detection
 	SUPPLY_NEED_FACTOR = 0.5, 							-- multiplies supply usage
 	SUPPLY_PRIO_FACTOR = 100.0,							-- Effect of supply need per unit for target province picking for air supply
