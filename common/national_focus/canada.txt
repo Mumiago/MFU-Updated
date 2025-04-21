@@ -311,10 +311,10 @@ focus_tree = {
 			custom_effect_tooltip = MANspace
 		    random_owned_controlled_state= {
 				prioritize = { 276 }
-				add_extra_state_shared_building_slots = 9
+				add_extra_state_shared_building_slots = 6
 				add_building_construction = {
 					type = industrial_complex
-					level = 6
+					level = 4
 					instant_build = yes
 				}
 			}
@@ -359,16 +359,16 @@ focus_tree = {
 			custom_effect_tooltip = CAN_modify_industry_spirit_tt
 
 			add_to_variable = {
-				CAN_industrial_capacity_factory_var = 0.05
+				CAN_industrial_capacity_factory_var = 0.1
 				tooltip = industrial_capacity_factory_tooltip
 			}
 			custom_effect_tooltip = MANspace
 		    random_owned_controlled_state= {
 				prioritize = { 276 }
-				add_extra_state_shared_building_slots = 6
+				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
 					type = industrial_complex
-					level = 3
+					level = 2
 					instant_build = yes
 				}
 			}
@@ -423,6 +423,11 @@ focus_tree = {
 				CAN_production_speed_buildings_factor_var = 0.1
 				tooltip = CAN_constra_tt1
 			}
+
+			add_offsite_building = {
+				type = industrial_complex
+				level = 4
+			}
 		}
 	}
 
@@ -472,10 +477,10 @@ focus_tree = {
 		    add_ideas = CAN_crown_corporations_advisory
 			custom_effect_tooltip = MANspace
 			468= {
-				add_extra_state_shared_building_slots = 5
+				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
 					type = industrial_complex
-					level = 4
+					level = 3
 					instant_build = yes
 				}
 				add_building_construction = {
@@ -904,6 +909,10 @@ focus_tree = {
 			add_to_variable = {
 				CAN_factory_efficiency_gain_factor = 0.1
 				tooltip = production_factory_efficiency_gain_factor_tooltip
+			}
+			add_to_variable = {
+				CAN_industrial_capacity_factory_var = 0.05
+				tooltip = industrial_capacity_factory_tooltip
 			}
 			custom_effect_tooltip = MANspace
 
@@ -1747,7 +1756,7 @@ focus_tree = {
 		available = {
 			OR = {
 				has_war = yes
-				date > 1939.10.1
+				date > 1939.9.1
 			}
 
 		}
@@ -1964,6 +1973,8 @@ focus_tree = {
 				CAN_special_forces_min_var = 27
 				tooltip = JAP_sf_bonus_tt
 			}
+			custom_effect_tooltip = MANspace
+			custom_effect_tooltip = robert_frederick_tooltip
 		}
 	}
 
@@ -2636,7 +2647,7 @@ focus_tree = {
 			if = {
 				limit = { 
 					has_dlc = Gotterdammerung 
-					466 = {
+					276 = {
 						is_fully_controlled_by = ROOT
 						can_construct_building = nuclear_facility 
 					}
@@ -2645,12 +2656,12 @@ focus_tree = {
 					}
 				}
 					
-				466 = {
+				276 = {
 					add_building_construction = {
 						type = nuclear_facility
 						level = 1
 						instant_build = yes
-						province = 983
+						province = 6625
 					}
 					
 				}
@@ -3187,6 +3198,10 @@ focus = {
 
 			custom_effect_tooltip = CAN_modify_army_spirit_tt
 			add_to_variable = {
+				CAN_armor_attack = 0.05 
+					tooltip = SAF_tank_1t
+				}
+			add_to_variable = {
 				CAN_army_morale_factor = 0.1
 				tooltip = army_morale_factor_tooltip
 			}
@@ -3361,7 +3376,7 @@ focus = {
 
 		mutually_exclusive = {focus = CAN_infantry_tank_production}
 
-		cost = 5
+		cost = 5 
 
 		ai_will_do = {
 			factor = 3
@@ -3400,7 +3415,8 @@ focus = {
 		prerequisite = {focus = CAN_mechanize_the_cavalry}
 		mutually_exclusive = {focus = CAN_a_canadian_cruiser}
 		relative_position_id = CAN_mechanize_the_cavalry
-		cost = 5
+
+		cost = 5 
 
 		ai_will_do = {
 			factor = 3
@@ -3467,8 +3483,11 @@ focus = {
 				name = CAN_recon_bonus
 				bonus = 0.75
 				uses = 2
-				category = armored_cars
-				category = cat_light_armor
+				technology = can_nsb_tech_armored_cars2
+				technology = can_nsb_tech_armored_cars3
+				technology = can_nsb_tech_armored_cars4
+				technology = can_nsb_tech_armored_cars5
+
 			}
 			mio:ENG_AEC = {
 				add_mio_funds_gain_factor = 0.2
@@ -3512,7 +3531,7 @@ focus = {
 			add_tech_bonus = {
 				name = mechanized
 				uses = 1
-				bonus = 0.75
+				bonus = 1.5
 				technology = can_mechanised_infantry1
 				technology = can_nsb_mechanised_infantry2
 			}
@@ -3538,7 +3557,7 @@ focus = {
 		
 		}
 
-		cost = 7.15
+		cost = 5
 
 		ai_will_do = {
 			factor = 3
@@ -3705,18 +3724,19 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			set_technology = {
-				eng_1939_medium_tank_chassis =1
-			}
-			add_tech_bonus = {
-				category = cat_medium_armor
-				uses = 1
-				bonus = 0.75
-				name = CAN_medium_tank_bonus 
+			if = {
+				limit = {
+					NOT = {
+						has_tech = eng_1939_medium_tank_chassis
+					}
+				}
+				set_technology = {
+					eng_1939_medium_tank_chassis =1
+				}
 			}
 
 			mio:ENG_vickers_armstrong_eng_organization = {
-				add_mio_funds = 1600
+				add_mio_funds = 5000
 			}
 		}
 	}
@@ -3734,7 +3754,7 @@ focus = {
 
 		mutually_exclusive = {focus = CAN_the_best_of_both_worlds}
 
-		cost = 5
+		cost = 5 
 
 		ai_will_do = {
 			factor = 3
@@ -3753,8 +3773,11 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			set_technology = {
-				can_mechanised_infantry1 = 1
+			add_tech_bonus = {
+				name = mechanized
+				uses = 1
+				bonus = 3
+				technology = can_mechanised_infantry1
 			}
 
 			custom_effect_tooltip = MANspace
@@ -3838,7 +3861,8 @@ focus = {
 		prerequisite = { focus = CAN_mobile_artillery}
 
 		mutually_exclusive = {focus = CAN_who_sees_first_kills_first}
-		cost = 5
+
+		cost = 5 
 
 		ai_will_do = {
 			factor = 3
@@ -3857,13 +3881,7 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_tech_bonus = {
-				name = mechanized
-				uses = 1
-				bonus = 1
-				technology = can_mechanised_infantry1
-			}
-			custom_effect_tooltip = MANspace
+
 			add_tech_bonus = {
 				name = spg
 				uses = 2
@@ -3948,7 +3966,7 @@ focus = {
 			focus = CAN_walkie_talkie_new
 		}
 
-		cost = 7.15
+		cost = 5
 
 		ai_will_do = {
 			factor = 3
@@ -4026,7 +4044,7 @@ focus = {
 			}
 
 			add_to_variable = {
-				CAN_max_planning_var = 0.05
+				CAN_max_planning_var = 0.08
 				tooltip = CAN_maxplan_tt1
 			}
 		}
@@ -4067,6 +4085,13 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
+			custom_effect_tooltip = CAN_modify_industry_spirit_tt
+			add_to_variable = {
+				CAN_production_factory_max_efficiency_factor_var = -0.025
+				tooltip = CAN_cap_tt1
+			}
+
+			custom_effect_tooltip = MANspace
 			custom_effect_tooltip = CAN_modify_army_spirit_tt
 
 			add_to_variable = {
@@ -4074,6 +4099,11 @@ focus = {
 				tooltip = CAN_conscription_cost
 			}
 			custom_effect_tooltip = MANspace
+
+			hidden_effect = {
+				remove_ideas = CAN_conscription_question_1
+			}
+			custom_effect_tooltip = CAN_can_do_more_conscript_tt
 			if = {
 				limit = {
 					has_idea = disarmed_nation
@@ -4093,11 +4123,7 @@ focus = {
 				}
 
 			}
-			custom_effect_tooltip = MANspace
-			hidden_effect = {
-				remove_ideas = CAN_conscription_question_1
-			}
-			custom_effect_tooltip = CAN_can_do_more_conscript_tt
+
 			custom_effect_tooltip = MANspace
 			add_doctrine_cost_reduction = {
 				name = land_doc_bonus
@@ -4121,7 +4147,7 @@ focus = {
 			focus = CAN_heavy_recon
 		}
 
-		cost = 7.15
+		cost = 5 
 
 		ai_will_do = {
 			factor = 3
@@ -4278,20 +4304,24 @@ focus = {
 			custom_effect_tooltip = MANspace
 
 			mio:CAN_Chrysler_Corporation = {
-				add_mio_funds = 2500
-				add_mio_funds_gain_factor = 0.1
+				add_mio_funds = 4000
+				add_mio_funds_gain_factor = 0.2
+				add_mio_size_up_requirement_factor = -0.1
 			}
 			mio:CAN_army_ordnance_department_organization = {
-				add_mio_funds = 750
-				add_mio_funds_gain_factor = 0.1
+				add_mio_funds = 2550
+				add_mio_funds_gain_factor = 0.2
+				add_mio_size_up_requirement_factor = -0.1
 			}
 			mio:CAN_Fisher_armaments = {
-				add_mio_funds = 250
-				add_mio_funds_gain_factor = 0.1
+				add_mio_funds = 2550
+				add_mio_funds_gain_factor = 0.2
+				add_mio_size_up_requirement_factor = -0.1
 			}
 			mio:CAN_td_board = {
-				add_mio_funds = 250
-				add_mio_funds_gain_factor = 0.1
+				add_mio_funds = 2550
+				add_mio_funds_gain_factor = 0.2
+				add_mio_size_up_requirement_factor = -0.1
 			}
 
 		}
@@ -5092,6 +5122,29 @@ focus = {
 				cost_reduction = 0.5
 				uses = 2
 				category = air_doctrine
+			}
+			if = {
+				limit = { 
+					has_dlc = Gotterdammerung 
+					466 = {
+						is_fully_controlled_by = ROOT
+						can_construct_building = air_facility 
+					}
+					NOT = {
+						has_facility_specialization = specialization_air
+					}
+				}
+					
+				466 = {
+					add_building_construction = {
+						type = air_facility
+						level = 1
+						instant_build = yes
+						province = 3691
+					}
+					
+				}
+			
 			}
 		}
 	}
