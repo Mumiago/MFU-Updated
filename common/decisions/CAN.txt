@@ -1,24 +1,318 @@
 CAN_parliament_support = {
-	CAN_voting_legislation = {
+	CAN_shadow_factories = {
 		icon = generic_political_discourse
 		priority = 100
 		allowed = { tag = CAN } 
-		available = {
-        	hidden_trigger = { always = no }
-        }
-		activation = { 
-			has_country_flag = CAN_voting_legislation_focus 
-		}
 
-		fire_only_once = no
-		days_mission_timeout = 34
-		cancel_trigger = {
+		available = {
+			has_completed_focus = CAN_shadow_factories
 			NOT = {
-				has_country_flag = CAN_voting_legislation_focus
+				check_variable = {
+					shadow_factories_CAN > 9
+				}
+			}
+
+        }
+		activation = {
+			has_completed_focus = CAN_shadow_factories
+			NOT = {
+				check_variable = {
+					shadow_factories_CAN > 9
+				}
 			}
 		}
-		timeout_effect = {
-			custom_effect_tooltip = CAN_parliament_busy_tt
+		
+		selectable_mission = no
+		days_mission_timeout = 50
+		is_good = no
+		fire_only_once = no
+
+		days_remove = 40
+
+
+		remove_effect = {
+			add_to_variable = {
+				var = shadow_factories_CAN
+				value = 1
+			}
+			if = {
+				limit = {
+					check_variable = {
+						shadow_factories_CAN < 5
+					}
+					
+				}
+				add_to_variable = {
+					var = counter_CAN_1
+					value = 1
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						shadow_factories_CAN > 5
+					}
+					
+				}
+				add_to_variable = {
+					var = counter_CAN_2
+					value = 1
+				}
+			}
+			custom_effect_tooltip = add_shadow_factory
+		}
+		
+	}
+}
+CAN_minsters_synergy = {
+	CAN_banker_labor_show = {
+
+		icon = generic_political_discourse
+		allowed = { tag = CAN } 
+
+		available = {
+			always = no
+			custom_trigger_tooltip = {
+				tooltip = banker_labor_can_advisor
+				has_idea_with_trait = CAN_minister_labor
+				has_idea_with_trait = CAN_bank_president
+			}
+		}
+
+		visible = {
+			NOT = {
+				AND = {
+					has_idea_with_trait = CAN_minister_labor
+					has_idea_with_trait = CAN_bank_president
+				}
+			}
+		}
+
+		days_remove = 45
+
+
+		remove_effect = {
+			custom_effect_tooltip = industrial_capacity_factor_can
+		}
+	}
+	CAN_banker_labor = {
+
+		icon = generic_political_discourse
+		allowed = { tag = CAN } 
+
+		available = {
+			has_idea_with_trait = CAN_minister_labor
+			has_idea_with_trait = CAN_bank_president
+        }
+
+		visible = {
+			always = yes
+		}
+
+		activation = {
+			has_idea_with_trait = CAN_minister_labor
+			has_idea_with_trait = CAN_bank_president
+		}
+		
+		selectable_mission = no
+		days_mission_timeout = 45
+		is_good = no
+		fire_only_once = no
+
+		days_remove = 45
+
+		modifier = {
+			industrial_capacity_factory = 0.05
+		}
+	}
+
+	CAN_social_democrats_show = {
+
+		icon = generic_political_discourse
+		allowed = { tag = CAN } 
+
+		available = {
+			always = no
+			custom_trigger_tooltip = {
+				tooltip = social_democrats_can_advisor
+				has_idea_with_trait = CAN_minister_finance_receiver
+				has_idea_with_trait = CAN_social_democratic_organizer
+			}
+		}
+
+		visible = {
+			NOT = {
+				AND = {
+					has_idea_with_trait = CAN_minister_finance_receiver
+					has_idea_with_trait = CAN_social_democratic_organizer
+				}
+			}
+		}
+
+		days_remove = 45
+
+
+		remove_effect = {
+			custom_effect_tooltip = constuction_speed_can
+		}
+	}
+	CAN_social_democrats = {
+
+		icon = generic_political_discourse
+		allowed = { tag = CAN } 
+
+		available = {
+			has_idea_with_trait = CAN_minister_finance_receiver
+			has_idea_with_trait = CAN_social_democratic_organizer
+        }
+
+		visible = {
+			always = yes
+		}
+
+		activation = {
+			has_idea_with_trait = CAN_minister_finance_receiver
+			has_idea_with_trait = CAN_social_democratic_organizer
+		}
+		
+		selectable_mission = no
+		days_mission_timeout = 45
+		is_good = no
+		fire_only_once = no
+
+		days_remove = 45
+
+		modifier = {
+			production_speed_buildings_factor = 0.05
+			research_speed_factor = 0.025
+		}
+	}
+
+	CAN_political_reformers_show = {
+
+		icon = generic_political_discourse
+		allowed = { tag = CAN } 
+
+		available = {
+			always = no
+			custom_trigger_tooltip = {
+				tooltip = political_reform_can_advisor
+				has_idea_with_trait = CAN_minister_war_services
+				has_idea_with_trait = CAN_goverment_refromer
+			}
+		}
+		
+
+		visible = {
+			NOT = {
+				AND = {
+					has_idea_with_trait = CAN_minister_war_services
+					has_idea_with_trait = CAN_goverment_refromer
+				}
+			}
+		}
+
+		days_remove = 45
+
+
+		remove_effect = {
+			custom_effect_tooltip = political_reform_can
+		}
+	}
+	CAN_political_reformers = {
+
+		icon = generic_political_discourse
+		allowed = { tag = CAN } 
+
+		available = {
+			has_idea_with_trait = CAN_minister_war_services
+			has_idea_with_trait = CAN_goverment_refromer
+        }
+
+		visible = {
+			always = yes
+		}
+
+		activation = {
+			has_idea_with_trait = CAN_minister_war_services
+			has_idea_with_trait = CAN_goverment_refromer
+		}
+		
+		selectable_mission = no
+		days_mission_timeout = 45
+		is_good = no
+		fire_only_once = no
+
+		days_remove = 45
+
+		modifier = {
+			political_power_cost = -0.2
+		}
+	}
+
+	CAN_external_trade_show = {
+
+		icon = generic_political_discourse
+		allowed = { tag = CAN } 
+
+		available = {
+			always = no
+			custom_trigger_tooltip = {
+				tooltip = external_trade_can_advisor
+				has_idea_with_trait = CAN_external_affairs
+				has_idea_with_trait = CAN_minister_of_agriculture
+			}
+		}
+
+		visible = {
+			NOT = {
+				AND = {
+					has_idea_with_trait = CAN_external_affairs
+					OR = {
+						has_idea_with_trait = CAN_minister_of_agriculture
+						has_idea_with_trait = CAN_minister_wheat_board
+					}
+					
+				}
+			}
+		}
+
+		days_remove = 45
+
+
+		remove_effect = {
+			custom_effect_tooltip = trade_and_political_can
+		}
+	}
+	CAN_external_trade = {
+
+		icon = generic_political_discourse
+		allowed = { tag = CAN } 
+
+		available = {
+			has_idea_with_trait = CAN_external_affairs
+			has_idea_with_trait = CAN_minister_of_agriculture
+        }
+
+		visible = {
+			always = yes
+		}
+
+		activation = {
+			has_idea_with_trait = CAN_external_affairs
+			has_idea_with_trait = CAN_minister_of_agriculture
+		}
+		
+		selectable_mission = no
+		days_mission_timeout = 45
+		is_good = no
+		fire_only_once = no
+
+		days_remove = 45
+
+		modifier = {
+			political_power_gain = 0.05
+			min_export = 0.05
 		}
 	}
 }
