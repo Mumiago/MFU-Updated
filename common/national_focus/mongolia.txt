@@ -9,7 +9,8 @@ focus_tree = {
 			tag = MON
 		}
 		
-	}	
+	}
+	
 	##Follow the soviets
 
 	focus = { 
@@ -92,6 +93,100 @@ focus_tree = {
 			}	
 		}
 	}
+
+focus = {
+	id = MON_prepare_for_war
+	cost = 5
+	relative_position_id = MON_build_new_factories_2
+	x = -1
+	y = 1
+	prerequisite = {
+		focus = MON_build_new_factories_2
+	}
+	mutually_exclusive = {
+		focus = MON_long_term_prosperity
+	}
+	completion_reward = {
+		330 = {
+			add_extra_state_shared_building_slots = 10
+			add_building_construction = {
+				type = arms_factory
+				level = 10
+				instant_build = yes
+			}
+		}	
+	}
+}
+
+focus = {
+	id = MON_long_term_prosperity
+	cost = 5
+	relative_position_id = MON_build_new_factories_2
+	x = 1
+	y = 1
+	prerequisite = {
+		focus = MON_build_new_factories_2
+	}
+	mutually_exclusive = {
+		focus = MON_prepare_for_war
+	}
+	completion_reward = {
+		330 = {
+			add_extra_state_shared_building_slots = 6
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}
+		}	
+		add_to_variable = {
+				var = MON_military_industry_dm_production_speed_industrial_complex_factor
+				value = 0.15
+				tooltip = industrial_complex_build_speed_factor_tooltip
+			}
+		add_to_variable = {
+				var = MON_military_industry_dm_production_speed_arms_factory_factor
+				value = 0.05
+				tooltip = arms_factory_build_speed_factor_tooltip
+			}
+		add_to_variable = {
+				var = MON_military_industry_dm_consumer_goods_factor
+				value = -0.05
+				tooltip = consumer_goods_tooltip
+			}
+	}
+}
+focus = {
+	id = MON_mobilize_for_war
+	cost = 5
+	relative_position_id = MON_long_term_prosperity
+	x = -1
+	y = 1
+	prerequisite = {
+		OR = {
+			focus = MON_prepare_for_war
+			focus = MON_long_term_prosperity
+		}
+	}
+
+	#prerequisite kalkin gol?
+	completion_reward = {
+			add_to_variable = {
+				var = MON_military_industry_dm_production_speed_arms_factory_factor
+				value = 0.15
+				tooltip = arms_factory_build_speed_factor_tooltip
+			}
+			completion_reward = {
+			add_to_variable = {
+				var = MON_military_industry_dm_production_speed_arms_factory_factor
+				value = 0.20
+				tooltip = industrial_capacity_factory_tooltip
+			}
+		}
+	}
+
+
+
 	focus = {
 		id = MON_invite_soviet_industrial_experts
 		icon = GFX_FRA_VIC_rationing
@@ -119,12 +214,25 @@ focus_tree = {
 			}	
 		}
 	}
+	focus = {	
+		id = MON_form_new_research_groups
+		cost = 5
+		relative_position_id = MON_invite_soviet_research_experts
+		x = 0
+		y = 1
+		prerequisite = {
+			focus = MON_invite_soviet_research_experts
+		}
+		completion_reward = {
+			add_research_slot = 1
+		}
+	}
 	focus = {
 		id = MON_industrial_breakthroughs
 		icon = GFX_FRA_VIC_rationing
 		cost = 5
 		relative_position_id = MON_invite_soviet_industrial_experts
-		x = 2
+		x = 1
 		y = 1
 		prerequisite = {
 			focus = MON_invite_soviet_industrial_experts
@@ -141,6 +249,23 @@ focus_tree = {
 			}
 		}
 	}
+	focus = {
+	id = MON_new_production_techniques
+	cost = 5
+	relative_position_id = MON_industrial_breakthroughs
+	x = 0
+	y = 1
+	prerequisite = {
+		focus = MON_industrial_breakthroughs
+	}
+	completion_reward = {
+		add_to_variable{
+			var = MON_military_industry_dm_production_factory_efficiency_gain_factor
+			value = 0.15
+			tooltip = production_factory_efficiency_gain_factor_tooltip
+		}
+	}
+}
 	focus = {
 		id = MON_invite_soviet_research_experts
 		icon = GFX_FRA_VIC_rationing
@@ -275,7 +400,7 @@ focus_tree = {
 		}
 		prerequisite = { focus = MON_army_reform_path_3 }
 		relative_position_id = MON_army_reform_path_3
-		mutually_exclusive = { MON_form_our_own_army MON_reform_the_steppe_hordes }
+		mutually_exclusive = { focus = MON_form_our_own_army focus =  MON_reform_the_steppe_hordes }
 		completion_reward = {
 			add_to_variable = {
 					MON_tank_attack_factor_var = 0.15
@@ -297,8 +422,16 @@ focus_tree = {
 		icon = GFX_goal_unknown
 		prerequisite = { focus = MON_army_reform_path_3 }
 		relative_position_id = MON_army_reform_path_3
-		mutually_exclusive = { MON_follow_zhukov MON_reform_the_steppe_hordes }
+		mutually_exclusive = { focus = MON_follow_zhukov focus =  MON_reform_the_steppe_hordes }
 		completion_reward = {
+			add_to_variable = {
+					MON_army_attack_factor_var = 0.05
+					tooltip = army_attack_factor_tooltip
+				}
+			add_to_variable = {
+					MON_army_defence_factor_var = 0.05
+					tooltip = army_defense_factor_tooltip
+				}
 			
 		}
 	}
@@ -314,7 +447,7 @@ focus_tree = {
 		}
 		prerequisite = { focus = MON_army_reform_path_3 }
 		relative_position_id = MON_army_reform_path_3
-		mutually_exclusive = { MON_follow_zhukov MON_form_our_own_army }
+		mutually_exclusive = { focus = MON_follow_zhukov focus =  MON_form_our_own_army }
 		completion_reward = {
 			add_to_variable = {
 					MON_cavalry_attack_factor_var = 0.05
@@ -340,3 +473,4 @@ focus_tree = {
 			factor = 5
 		}
 	}
+}
