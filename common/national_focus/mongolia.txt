@@ -34,7 +34,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id= MON_Implement_our_five_year_plan
+		id = MON_Implement_our_five_year_plan
 		cost = 10
 		relative_position_id = MON_Follow_the_soviets
 		x = -2
@@ -285,7 +285,7 @@ focus = {
 		id = MON_Start_the_great_repression
 		cost = 10
 		relative_position_id = MON_Follow_the_soviets
-		x = 2
+		x = 3
 		y = 1
 		prerequisite = {
 
@@ -304,8 +304,17 @@ focus = {
 		mutually_exclusive = {
 			focus = MON_Follow_the_soviets
 		}
-		
-		
+		completion_reward = {
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.2
+			}
+			add_to_variable = {
+				var = MON_stability_factor_var
+				value = 0.10
+				tooltip = stability_factor_tooltip
+			}
+		}
 		ai_will_do = {
 			factor = 5
 		}
@@ -367,7 +376,7 @@ focus = {
 		icon = GFX_goal_generic_economic_mobilization
 		cost = 35
 		relative_position_id = MON_economic_reforms
-		x = -2
+		x = -1
 		y = 1
 		prerequisite = { focus = MON_economic_reforms }
 		mutually_exclusive = { focus = MON_military_construction_effort }
@@ -385,7 +394,7 @@ focus = {
 		icon = GFX_goal_generic_economic_mobilization
 		cost = 35
 		relative_position_id = MON_economic_reforms
-		x = 2
+		x = 1
 		y = 1
 		prerequisite = { focus = MON_economic_reforms }
 		mutually_exclusive = { focus = MON_civilian_construction_effort }
@@ -420,7 +429,7 @@ focus = {
 		icon = GFX_goal_generic_support_the_left_right
 		cost = 70
 		relative_position_id = MON_scientific_advancement
-		x = -2
+		x = -1
 		y = 1
 		prerequisite = { focus = MON_scientific_advancement }
 		mutually_exclusive = { focus = MON_expand_research_capabilities }
@@ -438,7 +447,7 @@ focus = {
 		icon = GFX_goal_generic_support_the_left_right
 		cost = 70
 		relative_position_id = MON_scientific_advancement
-		x = 2
+		x = 1
 		y = 1
 		prerequisite = { focus = MON_scientific_advancement }
 		mutually_exclusive = { focus = MON_enhance_research_efficiency }
@@ -504,8 +513,10 @@ focus = {
         y = 1
         cost = 5
         icon = GFX_goal_unknown
-        prerequisite = { focus = MON_army_reform_path_1 }
-		 prerequisite = { focus = MON_army_reform_path_2 }
+        prerequisite = { 
+            focus = MON_army_reform_path_1 
+            focus = MON_army_reform_path_2 
+        }
         relative_position_id = MON_army_reform_path_2
         completion_reward = {
 			330 = {
@@ -525,11 +536,14 @@ focus = {
 		cost = 5
 		icon = GFX_goal_unknown
 		avalable = {
-			has_completed_focus = c
+			has_completed_focus = MON_Follow_the_soviets
 		}
 		prerequisite = { focus = MON_army_reform_path_3 }
 		relative_position_id = MON_army_reform_path_3
-		mutually_exclusive = { focus = MON_form_our_own_army focus =  MON_reform_the_steppe_hordes }
+		mutually_exclusive = { 
+			focus = MON_form_our_own_army 
+			focus = MON_reform_the_steppe_hordes 
+		}
 		completion_reward = {
 			add_to_variable = {
 					MON_tank_attack_factor_var = 0.15
@@ -557,7 +571,7 @@ focus = {
                 name = "Light Tank Research Bonus"
                 bonus = 0.75
                 uses = 1
-                category = light_tank
+                category = cat_light_armor
             }	
         }
         ai_will_do = {
@@ -580,7 +594,7 @@ focus = {
                 name = "Medium Tank Research Bonus"
                 bonus = 0.75
                 uses = 1
-                category = medium_tank
+                category = cat_medium_armor
             }
         }
         ai_will_do = {
@@ -603,7 +617,7 @@ focus = {
                 name = "Heavy Tank Research Bonus"
                 bonus = 0.75
                 uses = 1
-                category = heavy_tank
+                category = cat_heavyy_armor
             }
         }
         ai_will_do = {
@@ -619,7 +633,10 @@ focus = {
 		icon = GFX_goal_unknown
 		prerequisite = { focus = MON_army_reform_path_3 }
 		relative_position_id = MON_army_reform_path_3
-		mutually_exclusive = { focus = MON_follow_zhukov focus =  MON_reform_the_steppe_hordes }
+		mutually_exclusive = { 
+			focus = MON_follow_zhukov 
+			focus = MON_reform_the_steppe_hordes 
+		}
 		completion_reward = {
 			add_to_variable = {
 					MON_army_attack_factor_var = 0.05
@@ -721,7 +738,10 @@ focus = {
 		}
 		prerequisite = { focus = MON_army_reform_path_3 }
 		relative_position_id = MON_army_reform_path_3
-		mutually_exclusive = { focus = MON_follow_zhukov focus =  MON_form_our_own_army }
+		mutually_exclusive = { 
+			focus = MON_follow_zhukov 
+			focus = MON_form_our_own_army 
+		}
 		completion_reward = {
 			add_to_variable = {
 					MON_cavalry_attack_factor_var = 0.05
@@ -900,39 +920,62 @@ focus = {
 		cost = 5
 		x = 35
 		y = 0
-	
-		
-		
 		ai_will_do = {
 			factor = 5
 		}
 	}
+
 	focus = { 
-	id = MON_train_soviet_cavalry
-	cost = 10
-	x = 40
-	y = 0
-	
+		id = MON_train_soviet_cavalry
+		cost = 10
+		x = 40
+		y = 0
 		available = {
 			has_army_experience > 199
-		}	
-	completion_reward = {
-				add_political_power = -60 
-				army_experience = -200
-				SOV = {
+		}    
+		completion_reward = {
+			add_political_power = -60 
+			army_experience = -200
+			SOV = {
 				add_to_variable = {
-						var = SOV_cavalry_attack_factor_var
-						value = 0.05
-						tooltip =  MON_sovcavat_tt
-					}
-				add_to_variable = {
-						var = SOV_cavalry_defence_factor_var 
-						value = 0.05
-						tooltip =  MON_sovcavdef_tt
+					var = SOV_cavalry_attack_factor_var
+					value = 0.05
+					tooltip = MON_sovcavat_tt
 				}
+				add_to_variable = {
+					var = SOV_cavalry_defence_factor_var 
+					value = 0.05
+					tooltip = MON_sovcavdef_tt
 				}
 			}
 		}
+	}
+
+	focus = { 
+		id = MON_contribute_to_the_five_year_plan
+		icon = GFX_FRA_VIC_rationing
+		cost = 10
+		x = 40
+		y = 2
+		available = {
+			has_completed_focus = MON_Implement_our_five_year_plan
+			SOV = {
+				OR = {
+					has_idea = SOV_idea_2_5_year_plan
+					has_idea = SOV_idea_3_5_year_plan
+				}
+			}
+		}
+		completion_reward = {
+			SOV = {
+				add_to_variable = {
+					var = progress_5_year_plan
+					value = 4
+				}
+			}
+		}
+	}
+
 	focus = { 
 		id = MON_expand_soviet_mines
 		icon = GFX_FRA_VIC_rationing
@@ -943,31 +986,29 @@ focus = {
 			has_tech = excavation3
 		}
 	}
+
 	focus = { 
-	id = MON_assist_soviet_industry
-	cost = 10
-	x = 40
-	y = 6
-	prerequisite = {
-			## finish teh mongolian 5 year plan
-			##excav
+		id = MON_assist_soviet_industry
+		cost = 10
+		x = 40
+		y = 6
+		prerequisite = {
 		}
-	completion_reward = {
-		add_to_variable = {
-			var = MON_military_industry_dm_production_speed_industrial_complex_factor
-			value = 0.1
-			tooltip = industrial_complex_build_speed_factor_tooltip
+		completion_reward = {
+			add_to_variable = {
+				var = MON_military_industry_dm_production_speed_industrial_complex_factor
+				value = 0.1
+				tooltip = industrial_complex_build_speed_factor_tooltip
+			}
 		}
 	}
-	}
+
 	focus = { 
 		id = MON_help_develop_siberia
 		cost = 10
 		x = 40
 		y = 8
 		prerequisite = {
-			## finish teh mongolian 5 year plan
-			##excav
 			has_tech = construction3
 		}
 		completion_reward = {
