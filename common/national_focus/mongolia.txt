@@ -28,8 +28,15 @@ focus_tree = {
 		}
 
 		completion_reward = {
-		
-			
+			add_popularity = {
+				ideology = communism
+				popularity = 0.1
+			}
+			add_to_variable = {
+				var = MON_kempeitai_var_stability_factor
+				value = -0.003
+				tooltip = stability_factor_tooltip
+			}
 		}
 	}
 
@@ -285,7 +292,7 @@ focus = {
 		id = MON_Start_the_great_repression
 		cost = 10
 		relative_position_id = MON_Follow_the_soviets
-		x = 3
+		x = 4
 		y = 1
 		prerequisite = {
 
@@ -305,6 +312,10 @@ focus = {
 			focus = MON_Follow_the_soviets
 		}
 		completion_reward = {
+			set_politics = {
+				ruling_party = neutrality
+				elections_allowed = no
+			}
 			add_popularity = {
 				ideology = neutrality
 				popularity = 0.2
@@ -325,7 +336,7 @@ focus = {
 		icon = GFX_goal_generic_political_pressure
 		cost = 5
 		relative_position_id = MON_Return_to_our_roots
-		x = -5
+		x = -3
 		y = 1
 		prerequisite = { focus = MON_Return_to_our_roots }
 		completion_reward = {
@@ -351,6 +362,18 @@ focus = {
 				value = 0.10
 				tooltip = stability_factor_tooltip
 			}
+		}
+	}
+
+	focus = {
+		id = MON_hire_new_advisors
+		icon = GFX_goal_generic_political_pressure
+		cost = 5
+		relative_position_id = MON_consolidate_authority
+		x = 0
+		y = 1
+		prerequisite = { focus = MON_consolidate_authority }
+		completion_reward = {
 		}
 	}
 
@@ -390,6 +413,25 @@ focus = {
 	}
 
 	focus = {
+		id = MON_expand_civilian_industry
+		icon = GFX_goal_generic_economic_mobilization
+		cost = 5
+		relative_position_id = MON_civilian_construction_effort
+		x = 0
+		y = 1
+		prerequisite = { focus = MON_civilian_construction_effort }
+		completion_reward = {
+			330 = {
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
 		id = MON_military_construction_effort
 		icon = GFX_goal_generic_economic_mobilization
 		cost = 35
@@ -403,6 +445,25 @@ focus = {
 				var = MON_military_industry_dm_production_speed_arms_factory_factor
 				value = 0.20
 				tooltip = arms_factory_build_speed_factor_tooltip
+			}
+		}
+	}
+
+	focus = {
+		id = MON_expand_military_industry
+		icon = GFX_goal_generic_economic_mobilization
+		cost = 5
+		relative_position_id = MON_military_construction_effort
+		x = 0
+		y = 1
+		prerequisite = { focus = MON_military_construction_effort }
+		completion_reward = {
+			330 = {
+				add_building_construction = {
+					type = arms_factory
+					level = 3
+					instant_build = yes
+				}
 			}
 		}
 	}
@@ -699,6 +760,32 @@ focus = {
 	}
 
 	focus = {
+		id = MON_improve_combat_tactics
+		icon = GFX_goal_generic_army_doctrine
+		cost = 5
+		relative_position_id = MON_upgrade_generals
+		x = 0
+		y = 1
+		prerequisite = { 
+			focus = MON_doctrine_cost_reduction
+			focus = MON_upgrade_generals
+			focus = MON_infantry_equipment
+		}
+		completion_reward = {
+			add_to_variable = {
+				var = MON_kempeitai_var_entrenchment_factor
+				value = 0.05
+				tooltip = entrenchment_factor_tooltip
+			}
+			add_to_variable = {
+				var = MON_kempeitai_var_planning_factor
+				value = 0.05
+				tooltip = planning_factor_tooltip
+			}
+		}
+	}
+
+	focus = {
 		id = MON_begin_tank_production
 		icon = GFX_goal_generic_army_tank_production
 		relative_position_id = MON_medium_tank_focus
@@ -808,111 +895,109 @@ focus = {
 		}
 	}
 
-	#focus = {
-	#	id = MON_recruit_scattered_tribes
-	#	cost = 5
-	#	relative_position_id = MON_develop_weaponry
-	#	x = 0
-	#	y = 1
-	#	prerequisite = { 
-	#		OR = {
-	#			focus = MON_increase_cavalry_training
-	#			focus = MON_develop_weaponry
-	#			focus = MON_draw_on_ancient_wisdom
-	#		}
-	#	}
-	#	custom_effect_tooltip = GER_volksturm_tt
-	#	hidden_effect = {	
-	#		if = {
-	#			limit = {
-	#				MON = {
-	#					NOT = {
-	#						has_tech = mass_assault
-	#					}
-	#				}
-	#			}
-	#			division_template = {
-	#				name = "Steppe Tribe"
-	#				priority = 2
-	#				division_names_group = GER_ALTINF_01
-	#				is_locked = yes
+	focus = {
+		id = MON_recruit_scattered_tribes
+		cost = 5
+		relative_position_id = MON_develop_weaponry
+		x = 0
+		y = 1
+		prerequisite = { 
+			focus = MON_increase_cavalry_training
+			focus = MON_develop_weaponry
+			focus = MON_draw_on_ancient_wisdom
+		}
+		custom_effect_tooltip = GER_volksturm_tt
+		hidden_effect = {	
+			if = {
+				limit = {
+					MON = {
+						NOT = {
+							has_tech = mass_assault
+						}
+					}
+				}
+				division_template = {
+					name = "Steppe Tribe"
+					priority = 2
+					division_names_group = GER_ALTINF_01
+					is_locked = yes
 	
-	#				support = {
-	#					artillery = { x = 0 y = 0 } 
-	#					mobile_engineer = { x = 0 y = 1  } 
-	#					military_police = { x = 1 y = 0 }
-	#				}
+					support = {
+						artillery = { x = 0 y = 0 } 
+						mobile_engineer = { x = 0 y = 1  } 
+						military_police = { x = 1 y = 0 }
+					}
 	
-	#				regiments = {
-	#					volkssturm_infantry = { x = 0 y = 0 }
-	#					volkssturm_infantry = { x = 0 y = 1 }
-	#					volkssturm_infantry = { x = 0 y = 2 }
+					regiments = {
+						volkssturm_infantry = { x = 0 y = 0 }
+						volkssturm_infantry = { x = 0 y = 1 }
+						volkssturm_infantry = { x = 0 y = 2 }
 				
-	#					volkssturm_infantry = { x = 1 y = 0 }
-	#					volkssturm_infantry = { x = 1 y = 1 }
-	#					volkssturm_infantry = { x = 1 y = 2 }
-	#					volkssturm_infantry = { x = 1 y = 3 }
+						volkssturm_infantry = { x = 1 y = 0 }
+						volkssturm_infantry = { x = 1 y = 1 }
+						volkssturm_infantry = { x = 1 y = 2 }
+						volkssturm_infantry = { x = 1 y = 3 }
 	
-	#					volkssturm_infantry = { x = 2 y = 0 }
-	#					volkssturm_infantry = { x = 2 y = 1 }
-	#					volkssturm_infantry = { x = 2 y = 2 }
-	#					volkssturm_infantry = { x = 2 y = 3 }
+						volkssturm_infantry = { x = 2 y = 0 }
+						volkssturm_infantry = { x = 2 y = 1 }
+						volkssturm_infantry = { x = 2 y = 2 }
+						volkssturm_infantry = { x = 2 y = 3 }
 							
-	#					pack_artillery_brigade = { x = 3 y = 0 }
-	#					pack_artillery_brigade = { x = 3 y = 1 }
-	#					pack_artillery_brigade = { x = 3 y = 2 }
-	#					pack_artillery_brigade = { x = 3 y = 3 }						
+						pack_artillery_brigade = { x = 3 y = 0 }
+						pack_artillery_brigade = { x = 3 y = 1 }
+						pack_artillery_brigade = { x = 3 y = 2 }
+						pack_artillery_brigade = { x = 3 y = 3 }						
 						
-	#				}
-	#			}
-	#		}
-	#		else_if = {
-	#			limit = {
-	#				MON = {
-	#					has_tech = mass_assault
-	#				}
-	#			}
-	#			division_template = {
-	#				name = "Steppe Tribe"
-	#				priority = 2
-	#				division_names_group = GER_ALTINF_01
-	#				is_locked = yes
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					MON = {
+						has_tech = mass_assault
+					}
+				}
+				division_template = {
+					name = "Steppe Tribe"
+					priority = 2
+					division_names_group = GER_ALTINF_01
+					is_locked = yes
 	
-	#				support = {
-	#					artillery = { x = 0 y = 0 } 
-	#					mobile_engineer = { x = 0 y = 1  } 
-	#					military_police = { x = 1 y = 0 }
-	#				}
+					support = {
+						artillery = { x = 0 y = 0 } 
+						mobile_engineer = { x = 0 y = 1  } 
+						military_police = { x = 1 y = 0 }
+					}
 	
-	#				regiments = {
-	#					volkssturm_infantry = { x = 0 y = 0 }
-	#					volkssturm_infantry = { x = 0 y = 1 }
-	#					volkssturm_infantry = { x = 0 y = 2 }
-	#					volkssturm_infantry = { x = 0 y = 3 }
+					regiments = {
+						volkssturm_infantry = { x = 0 y = 0 }
+						volkssturm_infantry = { x = 0 y = 1 }
+						volkssturm_infantry = { x = 0 y = 2 }
+						volkssturm_infantry = { x = 0 y = 3 }
 				
-	#					volkssturm_infantry = { x = 1 y = 0 }
-	#					volkssturm_infantry = { x = 1 y = 1 }
-	#					volkssturm_infantry = { x = 1 y = 2 }
-	#					volkssturm_infantry = { x = 1 y = 3 }
+						volkssturm_infantry = { x = 1 y = 0 }
+						volkssturm_infantry = { x = 1 y = 1 }
+						volkssturm_infantry = { x = 1 y = 2 }
+						volkssturm_infantry = { x = 1 y = 3 }
 	
-	#					volkssturm_infantry = { x = 2 y = 0 }
-	#					volkssturm_infantry = { x = 2 y = 1 }
-	#					volkssturm_infantry = { x = 2 y = 2 }
-	#					volkssturm_infantry = { x = 2 y = 3 }
+						volkssturm_infantry = { x = 2 y = 0 }
+						volkssturm_infantry = { x = 2 y = 1 }
+						volkssturm_infantry = { x = 2 y = 2 }
+						volkssturm_infantry = { x = 2 y = 3 }
 							
-	#					pack_artillery_brigade = { x = 3 y = 0 }
-	#					pack_artillery_brigade = { x = 3 y = 1 }
-	#					pack_artillery_brigade = { x = 3 y = 2 }
-	#					pack_artillery_brigade = { x = 3 y = 3 }
+						pack_artillery_brigade = { x = 3 y = 0 }
+						pack_artillery_brigade = { x = 3 y = 1 }
+						pack_artillery_brigade = { x = 3 y = 2 }
+						pack_artillery_brigade = { x = 3 y = 3 }
 							
-	#					pack_artillery_brigade = { x = 4 y = 0 }	
-	#					pack_artillery_brigade = { x = 4 y = 1 }	
+						pack_artillery_brigade = { x = 4 y = 0 }	
+						pack_artillery_brigade = { x = 4 y = 1 }	
 						
-	#				}
-	#			}
-	#		}
-	#	}
-	#}
+					}
+				}
+			}
+		}
+	}
 
 	focus = {
 		id = MON_form_mongolian_air_force
@@ -1023,7 +1108,39 @@ focus = {
 		cost = 5
 
 		completion_reward = {
-			
+			330 = {
+				add_building_construction = {
+					type = air_base
+					level = 3
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = air_research_facility
+					level = 1
+					instant_build = yes
+				}
+			}
+			848 = {
+				add_building_construction = {
+					type = air_base
+					level = 3
+					instant_build = yes
+				}
+			}
+			849 = {
+				add_building_construction = {
+					type = air_base
+					level = 3
+					instant_build = yes
+				}
+			}
+			850 = {
+				add_building_construction = {
+					type = air_base
+					level = 3
+					instant_build = yes
+				}
+			}
 		}
 	}
 	focus = {                                                                      
