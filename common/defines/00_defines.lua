@@ -629,7 +629,7 @@ NIndustrialOrganisation = {
 	FUNDS_FOR_RESEARCH_COMPLETION_PER_RESEARCH_COST = 500,     -- Funds added to MIO when the Design Team has completed a research, multiplied by research_cost in technology template
 	FUNDS_FOR_CREATING_EQUIPMENT_VARIANT = 0,		-- Funds added to MIO when a new variant is created with the Design Team assigned to it
 	FUNDS_FROM_MANUFACTURER_PER_IC_PER_DAY = 0.1,		-- Funds added to MIO when a manufacturer is attached to a production line. Added every day proportional to IC produced.
-	MAX_FUNDS_FROM_MANUFACTURER_PER_DAY = 100,		-- Max funds generated per manufacturer per day. Set to 0 for no Maximum.
+	MAX_FUNDS_FROM_MANUFACTURER_PER_DAY = 1000,		-- Max funds generated per manufacturer per day. Set to 0 for no Maximum.
 	DESIGN_TEAM_RESEARCH_BONUS = 0.0,				-- Research bonus for applying a Design Team that matches the technology
 	ENABLE_TASK_CAPACITY = false,					-- Enable limited task capacity for MIOs
 	DEFAULT_INITIAL_TASK_CAPACITY = 0,				-- Default start task capacity for each MIO (may be overriden in DB)
@@ -1900,10 +1900,10 @@ NNavy = {
 		0.70,
 		0.6,
 		0.50,
-		0.40,
-		0.30,
-		0.20,
-		0.10,
+		0.35,
+		0.25,
+		0.15,
+		0.1,
 		0.05 -- 
 	},
 
@@ -1939,9 +1939,9 @@ NNavy = {
 		0.7,
 		0.6,
 		0.50,
-		0.40,
-		0.30,
-		0.20,
+		0.35,
+		0.25,
+		0.15,
 		0.10,
 		0.00 -- For criticals, you could reduce crit chance unlike damage in army combat, but we do not for now.
 	},
@@ -1997,7 +1997,7 @@ NNavy = {
 		0.05  -- 5% for level two
 		      -- 0% for level three to ten
 	},
-	COMBAT_INITIAL_DURATION = 72,									-- Number of hours that is considered the "initial phase" of naval combat, used for modifiers like surprise attack during "initial combat"
+	COMBAT_INITIAL_DURATION = 60,									-- Number of hours that is considered the "initial phase" of naval combat, used for modifiers like surprise attack during "initial combat"
 	-- Convoy Priorities START
 	NAVAL_INVASION_PRIORITY = 1,									-- Default convoy priority for naval invasions
 	NAVAL_TRANSFER_PRIORITY = 1,									-- Default convoy priority for naval transports
@@ -2195,10 +2195,10 @@ NNavy = {
 	
 	SUBMARINE_ESCAPE_RATIOS = { -- subs will escape battle in convoy raid if there are enemies that can attack
 		1000,     -- do not engage
-		15,   -- low
-		3.0,   -- medium
-		1.0,   -- high
-		1.0,   -- I am death incarnate!
+		20,   -- low
+		20.0,   -- medium
+		20.0,   -- high
+		20.0,   -- I am death incarnate!
 	},
 	
 	MIN_REPAIR_FOR_JOINING_COMBATS = { -- strikeforces/patrol forces will not join combats if they are not repaired enough
@@ -2348,7 +2348,7 @@ NNavy = {
 	CONVOY_DETECTION_CHANCE_BASE = 4.12,							-- regular convoy base chance detection percentage (if this fails, no detection is done on that tick)
 	BASE_SPOTTING_EFFECT_FOR_INITIAL_CONVOY_SPOTTING = 0.05,		-- effect of base convoy spotting for initial spotting of regular convoys. this along with next value is added together and rolled a random  once for every convoy to check for spotting
 	SPOTTING_SPEED_EFFECT_FOR_INITIAL_CONVOY_SPOTTING = 0.50,		-- effect of convoy spotting speed for initial spotting of regular convoys. this along with prev value is added together and rolled a random once for every convoy to check for spotting
-	SPOTTING_MOD_FOR_CONVOY_COUNT = 0.2,							-- a modifier for scaling the count of convoys on a parabolic curve (counvoy_count ^ SPOTTING_MOD_FOR_CONVOY_COUNT)
+	SPOTTING_MOD_FOR_CONVOY_COUNT = 0.19,							-- a modifier for scaling the count of convoys on a parabolic curve (counvoy_count ^ SPOTTING_MOD_FOR_CONVOY_COUNT)
 
 	UNIT_TRANSFER_DETECTION_CHANCE_BASE = 8,							-- unit transfer and naval invasion base chance detection percentage (if this fails, no detection is done on that tick)
 	BASE_SPOTTING_EFFECT_FOR_INITIAL_UNIT_TRANSFER_SPOTTING = 2,		-- same as BASE_SPOTTING_EFFECT_FOR_INITIAL_CONVOY_SPOTTING, but for naval transfer convoys
@@ -2384,14 +2384,14 @@ NNavy = {
 	DAMAGE_PENALTY_ON_MINIMUM_POSITIONING 							= 0.95,	-- damage penalty at 0% positioning
 	SCREENING_EFFICIENCY_PENALTY_ON_MINIMUM_POSITIONING				= 0.3,  -- screening efficiency (screen to capital ratio) at 0% positioning
 	AA_EFFICIENCY_PENALTY_ON_MINIMUM_POSITIONING					= 0.5,  -- AA penalty at 0% positioning
-	SUBMARINE_REVEAL_ON_MINIMUM_POSITIONING                         = 0.4,  -- submarine reveal chance on 0% positioning 
+	SUBMARINE_REVEAL_ON_MINIMUM_POSITIONING                         = 0.3,  -- submarine reveal chance on 0% positioning 
 	
-	SHIP_TO_FLEET_ANTI_AIR_RATIO									= 0.02,	-- total sum of fleet's anti air will be multiplied with this ratio and added to calculations anti-air of individual ships while air damage reduction
+	SHIP_TO_FLEET_ANTI_AIR_RATIO									= 0,	-- total sum of fleet's anti air will be multiplied with this ratio and added to calculations anti-air of individual ships while air damage reduction
 	
-	ANTI_AIR_POW_ON_INCOMING_AIR_DAMAGE								= 0.78,	-- received air damage is calculated using following: 1 - ( (ship_anti_air + fleet_anti_air * SHIP_TO_FLEET_ANTI_AIR_RATIO )^ANTI_AIR_POW_ON_INCOMING_AIR_DAMAGE ) * ANTI_AIR_MULT_ON_INCOMING_AIR_DAMAGE
-	ANTI_AIR_MULT_ON_INCOMING_AIR_DAMAGE							= 0.05,
+	ANTI_AIR_POW_ON_INCOMING_AIR_DAMAGE								= 0.8,	-- received air damage is calculated using following: 1 - ( (ship_anti_air + fleet_anti_air * SHIP_TO_FLEET_ANTI_AIR_RATIO )^ANTI_AIR_POW_ON_INCOMING_AIR_DAMAGE ) * ANTI_AIR_MULT_ON_INCOMING_AIR_DAMAGE
+	ANTI_AIR_MULT_ON_INCOMING_AIR_DAMAGE							= 0.08,
 	
-	MAX_ANTI_AIR_REDUCTION_EFFECT_ON_INCOMING_AIR_DAMAGE 			= 0.75,	-- damage reduction for incoming air attacks is clamped to this value at maximum.
+	MAX_ANTI_AIR_REDUCTION_EFFECT_ON_INCOMING_AIR_DAMAGE 			= 0.8,	-- damage reduction for incoming air attacks is clamped to this value at maximum.
 	
 	CHANCE_TO_DAMAGE_PART_ON_CRITICAL_HIT							= 0.1,	-- the game will roll between 0-1 and will damage a random part if below this val on naval critical hits
 	CHANCE_TO_DAMAGE_PART_ON_CRITICAL_HIT_FROM_AIR					= 0.1,	-- the game will roll between 0-1 and will damage a random part if below this val on air critical hits
@@ -2433,7 +2433,7 @@ NNavy = {
 	HIT_PROFILE_MULT 												= 100.0,  	-- multiplies hit profile of every ship
 	
 	CONVOY_RAID_MAX_REGION_TO_TASKFORCE_RATIO						= 1.5,		-- each taskforce in convoy raid mission can at most cover this many regions without losing efficiency
-	CONVOY_DEFENSE_MAX_CONVOY_TO_SHIP_RATIO							= 12.0,		-- each ship in convoy defense mission can at most cover this many convoys without losing efficiency
+	CONVOY_DEFENSE_MAX_CONVOY_TO_SHIP_RATIO							= 15.0,		-- each ship in convoy defense mission can at most cover this many convoys without losing efficiency
 	CONVOY_DEFENSE_MAX_REGION_TO_TASKFORCE_RATIO					= 8.0,		-- each taskforce in convoy defense mission can at most cover this many regions without losing efficiency
 	
 	MINE_SWEEPING_SUPREMACY_EFFICIENCY_MAX_REGION_TO_TASKFORCE_RATIO = 1.0,		-- mine missions will get lower supremacies if they are assigned more regions than this
@@ -2593,7 +2593,7 @@ NAI = {
 	RAIDS_SCORE_DIFF_TO_CANCEL = 0.3,                      -- If already-created low-scoring raids are blocking higher-scoring ones from being created due to command power, this allows the AI to cancel the lower-scoring raids. If `lowerScore < <value>*higherScore`, then the lower-scoring one may be cancelled. A value of 0.0 means it will never allow cancelling lower-scoring raids, while a value of 1.0 means it will always allow cancelling lower-scoring raids.
 	START_TRAINING_SUPPLY_LEVEL = 0.40,                  -- ai will not start to train if supply ratio drops below this level
 	STOP_TRAINING_SUPPLY_LEVEL = 0.30,                   -- ai will not train if supply ratio drops below this level
-	STOP_TRAINING_FULLY_TRAINED_FACTOR = 0.95,           -- ai will not train if at least this ratio of divisions in the army are fully trained
+	STOP_TRAINING_FULLY_TRAINED_FACTOR = 0.94,           -- ai will not train if at least this ratio of divisions in the army are fully trained
 	ROCKET_PRIORITIZE_BARRAGE = false,			-- Prioritize rocket barrage or strategic bombing mission. false = prioritize strategic bombing, true = prioritize barrage
 	GUN_EMPLACEMENT_MIN_ASSIGN_SCORE = 1,       -- Minimum total score for region to be considered for gun emplacement air missions
 	GUN_EMPLACEMENT_MIN_PRIO_ASSIGN_SCORE = 50, -- Minimum total score for region to be considered for critical gun emplacement air missions
@@ -2608,7 +2608,7 @@ NAI = {
 	LAND_DEFENSE_INTERCEPTORS_PER_RAID = 100,           -- Amount of interceptor planes requested per detected raid targetting us
 	LAND_DEFENSE_INTERCEPTORS_PER_BOMBERS = 0.8,        -- Amount of interceptor planes requested per enemy bomber
 	LAND_DEFENSE_INTERCEPTORS_PER_PLANE = 0.1,          -- Amount of interceptor planes requested per enemy plane (non bomber)
-	LAND_DEFENSE_SAM_MISSILE_IMPORTANCE_FACTOR = 0.21,	-- Importance factor of using sam missiles for regions strategic importance. Higher value will increase the usage
+	LAND_DEFENSE_SAM_MISSILE_IMPORTANCE_FACTOR = 0.2,	-- Importance factor of using sam missiles for regions strategic importance. Higher value will increase the usage
 	LAND_COMBAT_MISSILE_IMPORTANCE_FACTOR = 1.5, 		-- Importance factor of using missiles for regions strategic importance. Higher value will increase the usage
 	CONSTRUCTION_PRIO_SUPPLY_BUILDING = 1.10,                                   -- base prio for supply buildings (supply hubs, ports) in the construction queue
 	INVASION_TARGET_DISTANCE_DENOMINATOR = 1000,            -- When selecting invasion target, divide this with (pixel) distance to get distance score factor. (Doesn't really affect the relative scoring, but it affects the linearity of the score function.)
