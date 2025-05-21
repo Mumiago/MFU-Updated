@@ -214,7 +214,7 @@ prospect_for_resources = {
 		716 = {
 			add_resource = {
 				type = steel
-				amount = 15
+				amount = 12
 			}
 		}
 	}
@@ -2946,9 +2946,6 @@ MAN_internal_factions = {
 				}	
 			}
 			NOT = {
-				has_idea_with_trait = leader_of_kuangtung
-			}
-			NOT = {
 				has_country_flag = MAN_KPT_remove
 			}
 			
@@ -3938,7 +3935,6 @@ MAN_economic_retadism = {
 		}
 	
 		fire_only_once = no
-		cost = 10
 		days_remove = 90
 		days_re_enable = 0
 		complete_effect = {
@@ -3948,7 +3944,7 @@ MAN_economic_retadism = {
 		remove_effect = {
 			add_to_variable = { workeers_flag = +1 }
 			custom_effect_tooltip = loggi_5k
-
+				add_to_variable = { var = counter_man_total value = 500 }
 				add_to_variable = {
 					var = logs
 					value = 500
@@ -4026,7 +4022,7 @@ MAN_economic_retadism = {
 			add_to_variable = { workeers_flag = +1 }
 			custom_effect_tooltip = loggi_20k
 			custom_effect_tooltip = MANspace
-
+				add_to_variable = { var = counter_man_total value = 2000 }
 				add_to_variable = {
 					var = logs
 					value = 2000
@@ -4086,7 +4082,7 @@ MAN_economic_retadism = {
 			add_to_variable = { workeers_flag = +1 }
 			custom_effect_tooltip = loggi_20k
 			custom_effect_tooltip = MANspace
-
+				add_to_variable = { var = counter_man_total value = 2000 }
 				add_to_variable = {
 					var = logs
 					value = 2000
@@ -4154,7 +4150,7 @@ MAN_economic_retadism = {
 			add_to_variable = { workeers_flag = +1 }
 			custom_effect_tooltip = loggi_40k
 			custom_effect_tooltip = MANspace
-
+				add_to_variable = { var = counter_man_total value = 4000 }
 				add_to_variable = {
 					var = logs
 					value = 4000
@@ -4172,76 +4168,19 @@ MAN_economic_retadism = {
 	 ##################################
 	 			# each will give a option of how to deal with the workers,left means you can get decent amounts with no negatives,center gets you better buffs and right will increase the amount but alos the penalty
 
-
-			Check_land_for_workers = {
-				available = {
-					always = no
-				}
-
-				highlight_states = {
-					highlight_provinces = {
-						9843 10000 1047 4196 7137 7101 4619 1069 11913 7301
-					}
-					highlight_color_while_active = 2
-					highlight_color_before_active = 1
-				}
-				complete_effect = {
-					if ={
-						limit = {
-							NOT ={
-								has_decision = left_side_workers
-							}
-							NOT = {
-								has_decision = center_side_workers
-							}
-							NOT = {
-								has_decision = right_side_workers
-							}
-						}
-						custom_effect_tooltip = highlight_workers
-					}
-					if ={
-						limit = {
-							has_decision = left_side_workers
-						}
-						custom_effect_tooltip = highlight_workers_1
-					}
-					if ={
-						limit = {
-							has_decision = center_side_workers
-							}
-						
-						custom_effect_tooltip = highlight_workers_2
-					}
-					if ={
-						limit = {
-							has_decision = right_side_workers
-						}
-						custom_effect_tooltip = highlight_workers_3
-					}
-					custom_effect_tooltip = MANspace
-					custom_effect_tooltip = Check_for_workers
-				}
-
-			}
-
-			left_side_workers = {
+			contexted_zone = {
 				icon = GFX_decision_generic_operation
 
 				available = {
-					NOT = {
-						has_decision = center_side_workers
-					}
-					NOT = {
-						has_decision = right_side_workers
-					}
 					OR = {
 						has_war_with = CHI
 						NOT = {
 							country_exists = CHI
 						}
 					}
-					
+					NOT = {
+						has_country_flag = ANti_infinite_com
+					}
 				}
 
 				fire_only_once = no
@@ -4251,33 +4190,58 @@ MAN_economic_retadism = {
 				cost = 0
 
 				modifier = {
-
-				}
-
-				remove_effect = {
-				}
-				complete_effect = {
-
-					custom_effect_tooltip = man_workers_50_digits
-					custom_effect_tooltip = MANspace
-					add_stability = -0.01
-				}
-
-			}
-			left_side_workers_cancel = {
-				icon = GFX_decision_generic_operation
-
-				available = {
+					political_power_gain = -0.2
 					
 				}
 
-				visible = {
-					has_decision = left_side_workers
+				remove_effect = {
+					custom_effect_tooltip = JAP_kempeitai_bonus2
+					custom_effect_tooltip = 7daysfree
 				}
+				complete_effect = {
+					set_country_flag = { flag = ANti_infinite_com value = 1 days = 7}
+					custom_effect_tooltip = stab_rec_tooltip
+					custom_effect_tooltip = MANspace
+					add_stability = -0.01
+					RCC = {
+						add_to_variable = {
+							RCC_compliance_gain = 0.01
+						}
+					
+					}
+				}
+
+			}
+			contexted_zone_cancel = {
+				icon = GFX_decision_generic_operation
+
+				available = {
+					NOT = {
+						has_country_flag = ANti_infinite_com
+					}
+				}
+
+				visible = {
+					has_decision = contexted_zone
+				}
+
 				fire_only_once = no
 				cost = 0
+				days_re_enable = 2
+
+				remove_effect = {
+					custom_effect_tooltip = JAP_kempeitai_bonus3
+					custom_effect_tooltip = 7daysfree
+				}
 				complete_effect = {
-					remove_decision = left_side_workers
+					set_country_flag = { flag = ANti_infinite_com value = 1 days = 7}
+					remove_decision = contexted_zone
+					RCC = {
+						add_to_variable = {
+							RCC_compliance_gain = -0.01
+						}
+					
+					}
 				}
 			}
 			
@@ -4287,17 +4251,14 @@ MAN_economic_retadism = {
 				icon = GFX_decision_generic_operation
 
 				available = {
-					NOT = {
-						has_decision = right_side_workers
-					}
-					NOT = {
-						has_decision = left_side_workers
-					}
 					OR = {
 						has_war_with = CHI
 						NOT = {
 							country_exists = CHI
 						}
+					}
+					NOT = {
+						has_country_flag = ANti_infinite_com_2
 					}
 				}
 
@@ -4309,16 +4270,18 @@ MAN_economic_retadism = {
 
 				modifier = {
 
-					political_power_gain = -0.2
-					industrial_capacity_factory = -0.05
+					political_power_gain = -0.1
+					industrial_capacity_factory = -0.1
+					industrial_capacity_dockyard = -0.1
 
 				}
 
 				remove_effect = {
+					custom_effect_tooltip = 30daysfree
 				}
 				complete_effect = {
-
-					custom_effect_tooltip = man_workers_100_digits
+					set_country_flag = { flag = ANti_infinite_com_2 value = 1 days = 30}
+					custom_effect_tooltip = heavy_rec_tooltip
 					custom_effect_tooltip = MANspace
 					add_stability = -0.01
 
@@ -4328,7 +4291,9 @@ MAN_economic_retadism = {
 				icon = GFX_decision_generic_operation
 
 				available = {
-
+					NOT = {
+						has_country_flag = ANti_infinite_com_2
+					}
 				}
 
 				visible = {
@@ -4336,69 +4301,16 @@ MAN_economic_retadism = {
 				}
 				fire_only_once = no
 				cost = 0
+				remove_effect = {
+					custom_effect_tooltip = 30daysfree
+				}
 				complete_effect = {
+					set_country_flag = { flag = ANti_infinite_com_2 value = 1 days = 30}
 					remove_decision = center_side_workers
 					
 				}
 			}
 
-			####################
-
-			right_side_workers = {
-				icon = GFX_decision_generic_operation
-
-				available = {
-					NOT = {
-						has_decision = left_side_workers
-					}
-					NOT = {
-						has_decision = center_side_workers
-					}
-					OR = {
-						has_war_with = CHI
-						NOT = {
-							country_exists = CHI
-						}
-					}
-				}
-				fire_only_once = no
-
-				days_remove = -1
-
-				cost = 0
-
-				modifier = {
-					industrial_capacity_factory = -0.2
-					political_power_gain = -0.4
-				}
-
-				remove_effect = {
-				}
-				complete_effect = {
-					
-					custom_effect_tooltip = man_workers_150_digits
-					custom_effect_tooltip = MANspace
-					add_stability = -0.01
-
-				}
-			}
-			right_side_workers_cancel = {
-				icon = GFX_decision_generic_operation
-
-				available = {
-					#has_completed_focus = MAN_total_economic_control
-				}
-
-				visible = {
-					has_decision = right_side_workers
-				}
-				fire_only_once = no
-				cost = 0
-				complete_effect = {
-					remove_decision = right_side_workers
-				}
-			}
-	
 	 ##################################
 	 ##################################
 
@@ -6285,7 +6197,7 @@ MAN_economic_retadism = {
 				  }
 				
 				custom_effect_tooltip = MANspace
-				custom_effect_tooltip = i_love_her_fully
+				custom_effect_tooltip = repetition_30
 			}
 		}
 }
@@ -6331,7 +6243,7 @@ MAN_research_unit_short_funded ={
 			name = electronics
 			}	
 			custom_effect_tooltip = MANspace
-			custom_effect_tooltip = cute_saruei	
+			custom_effect_tooltip = done_only_one_man_tooltip	
 			custom_effect_tooltip = MANspace
 			}
 		}
@@ -7619,7 +7531,7 @@ MAN_research_unit_short_funded ={
 
 			add_research_slot = 1
 			custom_effect_tooltip = MANspace
-			custom_effect_tooltip = cute_saruei
+			custom_effect_tooltip = done_only_one_man_tooltip
 			custom_effect_tooltip = MANspace
 		}
 	}
@@ -7661,7 +7573,7 @@ MAN_research_unit_short_funded ={
 					}
 
 					custom_effect_tooltip = MANspace
-					custom_effect_tooltip = cute_saruei
+					custom_effect_tooltip = done_only_one_man_tooltip
 					custom_effect_tooltip = MANspace
 				}
 		}
@@ -7707,7 +7619,7 @@ MAN_research_unit_short_funded ={
 					add_mio_funds_gain_factor = 0.06
 				}
 				custom_effect_tooltip = MANspace
-				custom_effect_tooltip = cute_saruei
+				custom_effect_tooltip = done_only_one_man_tooltip
 				custom_effect_tooltip = MANspace
 			}
 		}
@@ -7757,7 +7669,7 @@ MAN_research_unit_short_funded ={
 					add_mio_funds_gain_factor = 0.06
 				}
 				custom_effect_tooltip = MANspace
-				custom_effect_tooltip = cute_saruei
+				custom_effect_tooltip = done_only_one_man_tooltip
 				custom_effect_tooltip = MANspace
 			}
 		}
@@ -7796,7 +7708,7 @@ MAN_research_unit_long_funded ={
 	
 				add_research_slot = 1
 				custom_effect_tooltip = MANspace
-				custom_effect_tooltip = cute_saruei
+				custom_effect_tooltip = done_only_one_man_tooltip
 				custom_effect_tooltip = MANspace
 			}
 		}
@@ -7830,7 +7742,7 @@ MAN_research_unit_long_funded ={
 
 					add_to_variable = { MAN_kempeitai_var_research_speed_factor = +0.025 tooltip = research_speed_factor_tooltip }
 					custom_effect_tooltip = MANspace
-					custom_effect_tooltip = i_love_her_fully
+					custom_effect_tooltip = repetition_30
 					custom_effect_tooltip = MANspace
 					
 
@@ -7870,7 +7782,7 @@ MAN_research_unit_long_funded ={
 						name = electronics
 					}
 					custom_effect_tooltip = MANspace
-					custom_effect_tooltip = cute_saruei
+					custom_effect_tooltip = done_only_one_man_tooltip
 					custom_effect_tooltip = MANspace
 					
 		}
@@ -7923,7 +7835,7 @@ MAN_research_unit_long_funded ={
 					add_to_variable = { inf1 = +1}
 
 					custom_effect_tooltip = MANspace
-					custom_effect_tooltip = cute_from_saruei
+					custom_effect_tooltip = repetition_double_30
 					custom_effect_tooltip = MANspace
 					}
 				
@@ -7979,7 +7891,7 @@ MAN_research_unit_long_funded ={
 					custom_effect_tooltip = MANspace
 					custom_effect_tooltip = MAN_retardism_for_retards
 					custom_effect_tooltip = MANspace
-					custom_effect_tooltip = cute_saruei
+					custom_effect_tooltip = done_only_one_man_tooltip
 					custom_effect_tooltip = MANspace
 					}
 				
@@ -8081,7 +7993,7 @@ MAN_research_unit_long_funded ={
 					add_to_variable = { MAN_731_arty = +1}
 					add_to_variable = { art1 = +1}
 					custom_effect_tooltip = MANspace
-					custom_effect_tooltip = cute_from_saruei
+					custom_effect_tooltip = repetition_double_30
 					custom_effect_tooltip = MANspace
 				}
 			}
@@ -8143,7 +8055,7 @@ MAN_research_unit_long_funded ={
 					custom_effect_tooltip = MANspace
 					custom_effect_tooltip = MAN_retardism_for_retards
 					custom_effect_tooltip = MANspace
-					custom_effect_tooltip = cute_saruei
+					custom_effect_tooltip = done_only_one_man_tooltip
 					custom_effect_tooltip = MANspace
 					}
 				
@@ -8266,7 +8178,7 @@ MAN_research_unit_long_funded ={
 					add_to_variable = { tnk1 = +1}
 
 					custom_effect_tooltip = MANspace
-					custom_effect_tooltip = cute_from_saruei
+					custom_effect_tooltip = repetition_double_30
 					custom_effect_tooltip = MANspace
 				}
 			}
@@ -8329,7 +8241,7 @@ MAN_research_unit_long_funded ={
 					custom_effect_tooltip = MANspace
 					custom_effect_tooltip = MAN_retardism_for_retards
 					custom_effect_tooltip = MANspace
-					custom_effect_tooltip = cute_saruei
+					custom_effect_tooltip = done_only_one_man_tooltip
 					custom_effect_tooltip = MANspace
 					}
 				
