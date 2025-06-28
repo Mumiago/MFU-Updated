@@ -1066,8 +1066,10 @@ SOV_socialism_in_one_country = {
 						is_ai = no
 					}
 				}
+
 				set_country_flag = SOV_winter_war_country_flag
 				hidden_effect = {
+					FIN = { country_event = finland.12 }
 					FIN = {
 						set_technology = { FIN_winter_war = 1 }
 					}				
@@ -1129,6 +1131,7 @@ SOV_socialism_in_one_country = {
 					SOV = { has_full_control_of_state = 146 }
 				}
 				FIN = { surrender_progress > 0.4 }
+				FIN = { has_country_flag = FIN_Surrender }
 			}			
 		}
 
@@ -1144,34 +1147,44 @@ SOV_socialism_in_one_country = {
 		visible = {
 			original_tag = SOV
 		}
-
+		cancel_trigger = {
+			FIN = { has_country_flag = FIN_quick_end_winter_war }
+		}
 		timeout_effect = {
+			#winter war sov loss
 			SOV = { 
 				set_country_flag = SOV_winter_war_mission_over
 			}
-			add_stability = -0.3
-			add_political_power = -150
-		   	add_timed_idea = {	
-		   		idea = SOV_red_army_humiliated_finland
-		   		days = 730
-		   	}
+			FIN = {
+				every_unit_leader = {
+					remove_unit_leader_trait = Winter_War_Grind
+				}
+			}
+			FIN = { country_event = finland.9 }
 			hidden_effect = {
 				FIN = {
 					set_technology = { FIN_winter_war_over = 1 }
+				    set_country_flag = FIN_won_winter_war
 				}				
 			}
 			FIN = { country_event = finland.7 }
 		}
 
 		complete_effect = {
+			#Winter war sov win
 			SOV = { 
 				set_country_flag = SOV_winter_war_mission_over
 			}			
-			add_stability = 0.1
-			add_political_power = 50
+			
 			hidden_effect = {
 				FIN = {
+				every_unit_leader = {
+					remove_unit_leader_trait = Winter_War_Grind
+				}
+				}
+				FIN = {
 					set_technology = { FIN_winter_war_over = 1 }
+					set_country_flag = FIN_lost_winter_war
 				}				
 			}
 			FIN = { country_event = finland.7 }				

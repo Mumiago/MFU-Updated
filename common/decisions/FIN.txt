@@ -1,0 +1,68 @@
+war_measures = {
+	FIN_surrender_to_soviets = {
+		icon = generic_political_reform
+		available = {
+			date < 1941.1.1
+			has_war_with = SOV
+		}
+		visible = {
+			original_tag = FIN
+		}
+		cost = 0
+
+		fire_only_once = yes
+		complete_effect = {
+			SOV = { country_event = soviet.34 }
+		}
+	}
+
+FIN_quick_end_to_winter_war = {
+	icon = generic_attack
+	days_mission_timeout = 200
+	fire_only_once = yes
+
+	activation = {
+		has_war_with = SOV
+		date < 1941.1.1
+	}
+	available = {
+	OR = {
+			SOV = { 
+				casualties_inflicted_by = {
+					opponent = FIN
+					thousands > 250
+				} 
+		}	
+        FIN = { controls_province = 8151 } # Leningrad
+    	}
+	}
+	cancel_trigger ={
+	OR = {
+		has_country_flag = FIN_lost_winter_war
+		has_country_flag = FIN_won_winter_war
+	}
+	}
+	complete_effect = {
+		set_country_flag = FIN_quick_end_winter_war
+		SOV = { 
+				set_country_flag = SOV_winter_war_mission_over
+			}
+			FIN = {
+				every_unit_leader = {
+					remove_unit_leader_trait = Winter_War_Grind
+				}
+			}
+			FIN = { country_event = finland.9 }
+			hidden_effect = {
+				FIN = {
+					set_technology = { FIN_winter_war_over = 1 }
+				    set_country_flag = FIN_won_winter_war
+				}				
+			}
+			FIN = { country_event = finland.7 }
+	}
+	
+	timeout_effect = {
+	}
+}
+}
