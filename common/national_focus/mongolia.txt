@@ -31,11 +31,7 @@ focus_tree = {
 			add_popularity = {
 				ideology = communism
 				popularity = 0.1
-			}
-			add_to_variable = {
-				var = MON_kempeitai_var_stability_factor
-				stability_weekly = -0.003
-				tooltip = stability_factor_tooltip
+				add_stability = -0.2
 			}
 		}
 	}
@@ -160,33 +156,73 @@ focus = {
 				var = MON_military_industry_dm_consumer_goods_factor
 				value = -0.05
 				tooltip = consumer_goods_tooltip
-			}
+		}
 	}
 }
 focus = {
-	id = MON_mobilize_for_war
-	cost = 5
+	id = MON_consumer_good
+	icon = GFX_FRA_VIC_rationing
+	cost = 7.15
 	relative_position_id = MON_long_term_prosperity
-	x = -1
+	x = 0
 	y = 1
-	prerequisite = {
-		OR = {
-			focus = MON_prepare_for_war
-			focus = MON_long_term_prosperity
+    prerequisite = { 
+		focus = MON_long_term_prosperity
+	}
+    completion_reward = {
+		add_to_variable = {
+				var = MON_military_industry_dm_consumer_goods_factor
+				value = -0.05
+				tooltip = consumer_goods_tooltip
 		}
 	}
-	completion_reward = {
-			add_to_variable = {
-				MON_military_industry_dm_production_speed_arms_factory_factor = 0.15
-				tooltip = arms_factory_build_speed_factor_tooltip
-				}
-			add_to_variable = {
-				var = MON_military_industry_dm_production_speed_arms_factory_factor
-				value = 0.20
-				tooltip = industrial_capacity_factory_tooltip
-			}
-		}
+}
 
+focus = {
+	id = MON_mobilize_for_war
+	icon = GFX_FRA_VIC_rationing
+	cost = 7.15
+	relative_position_id = MON_long_term_prosperity
+	x = -1
+	y = 2
+	prerequisite = {
+
+			focus = MON_civ_go_bye_bye
+			focus = MON_consumer_good
+		}
+	completion_reward = {
+		add_stability = -0.2
+		add_war_support = 0.15
+			if = {
+				limit = {
+					NOT = { has_idea = partial_economic_mobilisation }
+				}
+				add_ideas = war_economy
+			}
+			else_if = {
+				limit = {
+					has_idea = war_economy
+				}
+				add_political_power = 150 				
+		}
+	}
+}
+focus = {
+	id = MON_civ_go_bye_bye
+	icon = GFX_FRA_VIC_rationing
+	cost = 7.15
+	relative_position_id = MON_prepare_for_war
+	x = 0
+	y = 1
+	prerequisite = {
+		focus = MON_prepare_for_war
+	}
+	completion_reward = {
+		custom_effect_tooltip = JAP_everythingforwareffort_tt
+	}
+}
+
+	
 	focus = {
 		id = MON_invite_soviet_industrial_experts
 		icon = GFX_FRA_VIC_rationing
@@ -391,7 +427,9 @@ focus = {
 		y = 1
 		prerequisite = { focus = MON_consolidate_authority }
 		completion_reward = {
+			add_stability = 0.2
 		}
+
 	}
 
 	focus = {
@@ -443,6 +481,7 @@ focus = {
 					type = industrial_complex
 					level = 2
 					instant_build = yes
+					
 				}
 			}
 		}
@@ -1063,8 +1102,9 @@ focus = {
 		id = MON_form_mongolian_air_force
 		icon = GFX_goal_generic_build_airforce
 		cost = 5
-		x = 35
-		y = 0
+		x = 12
+		y = 8
+
 		
 		completion_reward = {
 			add_equipment_to_stockpile = {
