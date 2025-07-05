@@ -17,65 +17,18 @@ focus_tree = {
 	continuous_focus_position = { x = 1000 y = 2500 }
 
 	focus = {
-		id = SPA_a_great_spain
-
-		cancel_if_invalid = yes
-		
-		bypass = {
-			has_global_flag = spanish_civil_war
-		}
-
-		icon = GFX_goal_generic_demand_territory
-		x = 5
-		y = 0
-	
-		cost = 5
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-	
-		
-			
-
-			add_popularity = {
-				ideology = fascism
-				popularity = 0.1
-			}
-			add_popularity = {
-				ideology = neutrality
-				popularity = 0.05
-			}
-			hidden_effect = {
-				every_owned_state = {
-					limit = {
-						NOT = {
-							state = 290
-							state = 699
-							state = 783
-							state = 297
-						}
-					}
-					SPA_garrison_control_cost_calculation = yes
-				}
-			}
-		}
-	}
-
-	focus = {
 		id = SPA_hand_over_the_ceda_campaign_chest
 		available = {
 		}
 		bypass = {
 			has_global_flag = spanish_civil_war
 		}
-		prerequisite = { focus = SPA_a_great_spain }
+
 		
 		icon = GFX_focus_generic_concessions
 		x = 0
-		y = 1
+		y = 7
 		
-		relative_position_id = SPA_a_great_spain
 		cost = 5
 
 		available_if_capitulated = yes
@@ -95,7 +48,7 @@ focus_tree = {
 		prerequisite = { focus = SPA_hand_over_the_ceda_campaign_chest }
 		
 		icon = GFX_goal_generic_military_deal
-		x = 0
+		x = -1
 		y = 1
 		relative_position_id = SPA_hand_over_the_ceda_campaign_chest
 		cost = 4
@@ -103,6 +56,30 @@ focus_tree = {
 		available_if_capitulated = yes
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_SPA_CIVIL_WAR }
 		completion_reward = {
+
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.1
+			}
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.05
+			}
+
+			hidden_effect = {
+				every_owned_state = {
+					limit = {
+						NOT = {
+							state = 290
+							state = 699
+							state = 783
+							state = 297
+						}
+					}
+					SPA_garrison_control_cost_calculation = yes
+				}
+			}
+
 			set_country_flag = SPA_negotiate_carlist_support_flag
 			add_popularity = {
 				ideology = neutrality
@@ -115,19 +92,31 @@ focus_tree = {
 	}
 
 	focus = {
-		id = SPA_the_army_of_africa
-		available = {
-		}
-		bypass = {
-			has_global_flag = spanish_civil_war
-		}
-		prerequisite = { focus = SPA_negotiate_carlist_support }
-		
+		id = SPA_secure_granada	
 		icon = GFX_goal_generic_special_forces
+
 		x = 0
 		y = 1
 		relative_position_id = SPA_negotiate_carlist_support
+
 		cost = 5
+
+
+		prerequisite = { 
+			focus = SPA_negotiate_carlist_support 
+			focus = SPA_secure_the_northern_garrisons
+		}
+
+		mutually_exclusive = {
+			focus = SPA_secure_sevila
+		}
+
+		available = {
+		}
+
+		bypass = {
+			has_global_flag = spanish_civil_war
+		}
 
 		available_if_capitulated = yes
 		search_filters = { FOCUS_FILTER_SPA_CIVIL_WAR }
@@ -145,12 +134,12 @@ focus_tree = {
 		bypass = {
 			has_global_flag = spanish_civil_war
 		}
-		prerequisite = { focus = SPA_the_army_of_africa }
+		prerequisite = { focus = SPA_hand_over_the_ceda_campaign_chest }
 		
 		icon = GFX_goal_generic_position_armies
-		x = 0
+		x = 1
 		y = 1
-		relative_position_id = SPA_the_army_of_africa
+		relative_position_id = SPA_hand_over_the_ceda_campaign_chest
 		cost = 5
 
 		available_if_capitulated = yes
@@ -160,22 +149,72 @@ focus_tree = {
 			custom_effect_tooltip = SPA_northern_garrison_tt
 		}
 	}
+
+		focus = {
+		id = SPA_secure_sevila
+		icon = GFX_goal_generic_special_forces
+
+		x = 0
+		y = 1
+		relative_position_id = SPA_secure_the_northern_garrisons
+	
+		cost = 5
+
+		prerequisite = { 
+			focus = SPA_negotiate_carlist_support 
+			focus = SPA_secure_the_northern_garrisons
+		}
+
+		mutually_exclusive = {
+			focus = SPA_secure_granada
+		}
+		
+	
+		available = {
+		}
+
+		bypass = {
+			has_global_flag = spanish_civil_war
+		}
+
+
+		available_if_capitulated = yes
+		search_filters = { FOCUS_FILTER_SPA_CIVIL_WAR }
+		completion_reward = {
+			
+			add_to_variable = { var = spa_civil_war_divisions_counter_var value = 4 }
+			custom_effect_tooltip = SPA_the_army_of_africa_tt
+		}
+	}
+
 	focus = {
-		id = SPA_con_paquito
+		id = SPA_the_plalanx_ascendent
+		icon = GFX_goal_generic_dangerous_deal
+
+		x = -8
+		y = 1
+
+		relative_position_id = SPA_secure_granada
+		cost = 1
+		
+		ai_will_do = {
+			factor = 100
+		}
+		prerequisite = { 
+			focus = SPA_secure_granada 
+			focus = SPA_secure_sevila
+		}
+
+		mutually_exclusive = {
+			focus = SPA_con_paquito
+			focus = SPA_dios_patria_y_rey
+		}
+
 		available = {
 		}
 		bypass = {
 			has_global_flag = spanish_civil_war
 		}
-		ai_will_do = {
-			factor = 100
-		}
-		prerequisite = { focus = SPA_secure_the_northern_garrisons }		
-		icon = GFX_goal_generic_dangerous_deal
-		x = 0	
-		y = 1
-		relative_position_id = SPA_secure_the_northern_garrisons
-		cost = 1
 
 		available_if_capitulated = yes
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_SPA_CIVIL_WAR }
@@ -187,6 +226,401 @@ focus_tree = {
 				}
 				add_unit_leader_trait = trait_SPA_nationalist_sympathies
 			}
+		}
+	}
+	focus = { 
+		id = SPA_eliminate_the_carlists
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_the_plalanx_ascendent
+		x = -1
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_the_plalanx_ascendent
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+	focus = { 
+		id = SPA_secure_the_national_defense_council
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_the_plalanx_ascendent
+		x = 1
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_the_plalanx_ascendent
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_establish_the_directory
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_secure_the_national_defense_council
+		x = -1
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_secure_the_national_defense_council
+			focus = SPA_eliminate_the_carlists
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = SPA_con_paquito
+		icon = GFX_goal_generic_dangerous_deal
+
+		x = 1
+		y = 1
+		relative_position_id = SPA_secure_granada
+
+		cost = 1
+
+		ai_will_do = {
+			factor = 100
+		}
+		prerequisite = { 
+			focus = SPA_secure_granada 
+			focus = SPA_secure_sevila
+		}
+
+		mutually_exclusive = {
+			focus = SPA_the_plalanx_ascendent
+			focus = SPA_dios_patria_y_rey
+		}
+
+		available = {
+		}
+		bypass = {
+			has_global_flag = spanish_civil_war
+		}
+
+		available_if_capitulated = yes
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_SPA_CIVIL_WAR }
+		completion_reward = {
+			custom_effect_tooltip = SPA_con_paquito_tt
+			random_unit_leader = {
+				limit = {
+					has_id = 1108
+				}
+				add_unit_leader_trait = trait_SPA_nationalist_sympathies
+			}
+		}
+	}
+	focus = { 
+		id = SPA_the_caudilo_of_spain
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_con_paquito
+		x = -1
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_con_paquito
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = SPA_banish_the_party_leaders
+		available = {
+		}
+		bypass = {
+			has_global_flag = SPR_carlist_uprising_flag
+			has_global_flag = scw_over
+		}
+		prerequisite = { focus = SPA_con_paquito }
+		
+		icon = GFX_focus_generic_support_the_left_right
+		x = 1
+		y = 1
+		relative_position_id = SPA_con_paquito
+		cost = 7.2
+
+		available_if_capitulated = yes
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_SPA_CARLIST_UPRISING }
+		completion_reward = {
+			add_political_power = 200
+			custom_effect_tooltip = remove_political_advisor
+			show_ideas_tooltip = SPA_manuel_hedilla
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = SPA_jose_antonio_primo_de_rivera
+		}
+	}
+
+	focus = {
+		id = SPA_fuse_the_parties
+		icon = GFX_focus_spa_fuse_the_parties
+
+		x = -1
+		y = 1
+		relative_position_id = SPA_banish_the_party_leaders
+
+		cost = 7.2
+
+		bypass = {
+			has_global_flag = SPR_carlist_uprising_flag
+			has_global_flag = scw_over
+		}
+
+		prerequisite = { 
+			focus = SPA_the_caudilo_of_spain 
+			focus = SPA_banish_the_party_leaders
+		}
+
+		
+
+		available_if_capitulated = yes
+
+		search_filters = { FOCUS_FILTER_MANPOWER }
+
+		completion_reward = {
+			set_party_name = { ideology = fascism long_name = SPR_fascism_francoist_party_long name = SPR_fascism_francoist_party }
+			set_party_name = { ideology = neutrality long_name = SPR_fascism_francoist_party_long name = SPR_fascism_francoist_party }
+			if = {
+				limit = {
+					NOT = {
+						has_idea = SPA_carlism_2
+						has_idea = SPA_carlism_3
+					}
+				}
+				effect_tooltip = {
+					swap_ideas = {
+						remove_idea = SPA_carlism_2
+						add_idea = SPA_carlism_3
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_idea = SPA_carlism_2
+				}
+				swap_ideas = {
+					remove_idea = SPA_carlism_2
+					add_idea = SPA_carlism_5
+				}
+			}
+			if = {
+				limit = {
+					has_idea = SPA_carlism_3
+				}
+				swap_ideas = {
+					remove_idea = SPA_carlism_3
+					add_idea = SPA_carlism_4
+				}
+			}
+		
+		}
+		ai_will_do = {
+			factor = 5
+		}
+	}
+	focus = {
+		id = SPA_dios_patria_y_rey
+		icon = GFX_goal_generic_dangerous_deal
+		x = 10
+		y = 1
+
+		relative_position_id = SPA_secure_granada
+		cost = 1
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		prerequisite = { 
+			focus = SPA_secure_granada 
+			focus = SPA_secure_sevila
+		}		
+
+		mutually_exclusive = {
+			focus = SPA_con_paquito
+			focus = SPA_the_plalanx_ascendent
+		}
+
+		available = {
+		}
+
+		bypass = {
+			has_global_flag = spanish_civil_war
+		}
+		available_if_capitulated = yes
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_SPA_CIVIL_WAR }
+		completion_reward = {
+			custom_effect_tooltip = SPA_con_paquito_tt
+			random_unit_leader = {
+				limit = {
+					has_id = 1108
+				}
+				add_unit_leader_trait = trait_SPA_nationalist_sympathies
+			}
+		}
+	}
+
+	focus = { 
+		id = SPA_expand_the_requetes
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_dios_patria_y_rey
+		x = -1
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_dios_patria_y_rey
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+		focus = { 
+		id = SPA_eliminate_the_falangists
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_dios_patria_y_rey
+		x = 1
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_dios_patria_y_rey
+		}
+
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_the_crusade_against_the_godless
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_expand_the_requetes
+		x = 1
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_expand_the_requetes
+			focus = SPA_eliminate_the_falangists
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
 		}
 	}
 
@@ -205,6 +639,1654 @@ focus_tree = {
 #  # #  #  #   #  #  # #  # #  # #    #    #  #    #            #   #  # #  # #  # #  # #  # 
 #  # #  #  #  ###  ##  #  # #  # ### ### ##   #  ##             #   #  # #  # #  #  ##   ##  
 
+	focus = { 
+		id = SPA_redeploy_army_of_africa
+		icon = GFX_focus_jap_zaibatsu
+
+		x = 0
+		y = 0
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_to_variable = { var = spa_civil_war_divisions_counter_var value = 4 }
+			custom_effect_tooltip = SPA_the_army_of_africa_tt
+		}
+	}
+
+	#CONDOR LEGION PATH
+
+	focus = { 
+		id = SPA_legoin_condor_leads_the_way
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_redeploy_army_of_africa
+		x = -13
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_redeploy_army_of_africa
+		}
+
+		mutually_exclusive = {
+			focus = SPA_ctv_in_charge
+			focus = SPA_every_man_for_spain
+			focus = SPA_army_of_africa_leads_the_way
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_spanish_macc_company
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_legoin_condor_leads_the_way
+		x = -2
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_legoin_condor_leads_the_way
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+	focus = { 
+		id = SPA_import_german_tools
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_spanish_macc_company
+		x = 0
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_spanish_macc_company
+		}
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+	focus = { 
+		id = SPA_flak_kanone
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_import_german_tools
+		x = 0
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_import_german_tools
+		}
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_strumkampffungeng
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_legoin_condor_leads_the_way
+		x = 0
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_legoin_condor_leads_the_way
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+	focus = { 
+		id = SPA_expand_bomber_fleet
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_strumkampffungeng
+		x = 0
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_strumkampffungeng
+		}
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+	focus = { 
+		id = SPA_deploy_heavy_artillery
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_expand_bomber_fleet
+		x = 0
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_trial_modern_figters
+			focus = SPA_expand_bomber_fleet
+		}
+
+		mutually_exclusive = {
+			focus = SPA_rial_terror_bombing
+		}
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = { 
+		id = SPA_trial_armor_spearhead
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_legoin_condor_leads_the_way
+		x = 2
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_legoin_condor_leads_the_way
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_trial_modern_figters
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_trial_armor_spearhead
+		x = 0
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_trial_armor_spearhead
+		}
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_rial_terror_bombing
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_trial_modern_figters
+		x = 0
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_trial_modern_figters
+			focus = SPA_expand_bomber_fleet
+		}
+
+		mutually_exclusive = {
+			focus = SPA_deploy_heavy_artillery
+		}
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_the_future_of_warfare
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_deploy_heavy_artillery
+		x = 0
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_flak_kanone
+		}
+		prerequisite = {
+			focus = SPA_deploy_heavy_artillery
+			focus = SPA_rial_terror_bombing
+		}
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	#Naval Blockade of the Republicans
+
+	focus = { 
+		id = naval_blockade_of_republicans
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_legoin_condor_leads_the_way
+		x = 4
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_legoin_condor_leads_the_way
+			focus = SPA_ctv_in_charge
+		}
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+	#Naval Blockade of the Republicans
+
+
+	#CTV in Charge 
+
+	focus = { 
+		id = SPA_ctv_in_charge
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_redeploy_army_of_africa
+		x = -4
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_redeploy_army_of_africa
+		}
+
+		mutually_exclusive = {
+			focus = SPA_legoin_condor_leads_the_way
+			focus = SPA_every_man_for_spain
+			focus = SPA_army_of_africa_leads_the_way
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_re_equip_the_carabineros
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_ctv_in_charge
+		x = -3
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_ctv_in_charge
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_empty_the_great_war_eq
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_re_equip_the_carabineros
+		x = 1
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_re_equip_the_carabineros
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_import_siege_artillery
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_empty_the_great_war_eq
+		x = 1
+		y = 2
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_empty_the_great_war_eq
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_regulars_spr
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_ctv_in_charge
+		x = -1
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_ctv_in_charge
+		}
+
+		mutually_exclusive = {
+			focus = SPA_blackshirt_spr
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_blackshirt_spr
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_ctv_in_charge
+		x = 1
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_ctv_in_charge
+		}
+
+		mutually_exclusive = {
+			focus = SPA_regulars_spr
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_aviaziune_legionaria
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_ctv_in_charge
+		x = 0
+		y = 2
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_ctv_in_charge
+		}
+
+		prerequisite = {
+			focus = SPA_regulars_spr
+			focus = SPA_blackshirt_spr
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_crush_the_republic
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_aviaziune_legionaria
+		x = 0
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_aviaziune_legionaria
+		}
+
+		prerequisite = {
+			focus = SPA_regulars_spr
+			focus = SPA_blackshirt_spr
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_mass_motorization_spr
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_ctv_in_charge
+		x = 3
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_ctv_in_charge
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_modify_tankettes
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_mass_motorization_spr
+		x = -1
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_mass_motorization_spr
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_tank_and_armor_car_group
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_modify_tankettes
+		x = -1
+		y = 2
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_modify_tankettes
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_flechas
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_crush_the_republic
+		x = 0
+		y = 2
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_crush_the_republic
+		}
+
+		prerequisite = {
+			focus = SPA_import_siege_artillery
+			focus = SPA_tank_and_armor_car_group
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	#Every man for Spain
+
+	focus = { 
+		id = SPA_every_man_for_spain
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_redeploy_army_of_africa
+		x = 4
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_redeploy_army_of_africa
+		}
+
+		mutually_exclusive = {
+			focus = SPA_legoin_condor_leads_the_way
+			focus = SPA_ctv_in_charge
+			focus = SPA_army_of_africa_leads_the_way
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_secure_the_arsenale
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_every_man_for_spain
+		x = -3
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_every_man_for_spain
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_emergency_munitions_corporations
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_secure_the_arsenale
+		x = 1
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_secure_the_arsenale
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+	focus = { 
+		id = SPA_artillery_production
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_emergency_munitions_corporations
+		x = 1
+		y = 2
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_emergency_munitions_corporations
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_secure_unity_of_ranks
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_every_man_for_spain
+		x = -1
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_every_man_for_spain
+		}
+
+		mutually_exclusive = {
+			focus = SPA_rape_republican_soldiers
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_rape_republican_soldiers
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_every_man_for_spain
+		x = 1
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_every_man_for_spain
+		}
+
+		mutually_exclusive = {
+			focus = SPA_secure_unity_of_ranks
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_foreign_training_staff
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_secure_unity_of_ranks
+		x = 1
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_every_man_for_spain
+		}
+		prerequisite = {
+			focus = SPA_rape_republican_soldiers
+			focus = SPA_secure_unity_of_ranks
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_terror_tactics
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_foreign_training_staff
+		x = 0
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_foreign_training_staff
+
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_integrate_por_units
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_every_man_for_spain
+		x = 3
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_every_man_for_spain
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_new_calvarary_division
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_integrate_por_units
+		x = -1
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_integrate_por_units
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_tackkle_the_vulnerable_fronts
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_new_calvarary_division
+		x = -1
+		y = 2
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_new_calvarary_division
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+		focus = { 
+		id = SPA_extal_the_martyrs_of_war
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_tackkle_the_vulnerable_fronts
+		x = -1
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_terror_tactics
+		}
+		prerequisite = {
+			focus = SPA_artillery_production
+			focus = SPA_tackkle_the_vulnerable_fronts
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	#Army of Africa Takes the Lead
+
+	focus = { 
+		id = SPA_army_of_africa_leads_the_way
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_redeploy_army_of_africa
+		x = 13
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_redeploy_army_of_africa
+		}
+
+		mutually_exclusive = {
+			focus = SPA_legoin_condor_leads_the_way
+			focus = SPA_ctv_in_charge
+			focus = SPA_every_man_for_spain
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_consolidate_the_north
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_army_of_africa_leads_the_way
+		x = -2
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_army_of_africa_leads_the_way
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+	focus = { 
+		id = SPA_organise_armor_car_prodution
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_consolidate_the_north
+		x = 0
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_consolidate_the_north
+		}
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+	focus = { 
+		id = SPA_secure_key_industries
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_organise_armor_car_prodution
+		x = 0
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_organise_armor_car_prodution
+		}
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_expand_the_legion
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_army_of_africa_leads_the_way
+		x = 0
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_army_of_africa_leads_the_way
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+	focus = { 
+		id = SPA_there_can_be_no_cowards
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_expand_the_legion
+		x = 0
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_expand_the_legion
+		}
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+	focus = { 
+		id = SPA_unite_the_requetes
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_there_can_be_no_cowards
+		x = 0
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_fuerzas_regulated_indiginous
+			focus = SPA_there_can_be_no_cowards
+		}
+
+		mutually_exclusive = {
+			focus = SPA_formant_carlist_spirit
+		}
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+	
+	focus = { 
+		id = SPA_africanist_spirit
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_army_of_africa_leads_the_way
+		x = 2
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_army_of_africa_leads_the_way
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_fuerzas_regulated_indiginous
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_africanist_spirit
+		x = 0
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_africanist_spirit
+		}
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_formant_carlist_spirit
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_fuerzas_regulated_indiginous
+		x = 0
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_fuerzas_regulated_indiginous
+			focus = SPA_there_can_be_no_cowards
+		}
+
+		mutually_exclusive = {
+			focus = SPA_unite_the_requetes
+		}
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SPA_gardia_mora
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_unite_the_requetes
+		x = 0
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_secure_key_industries
+			focus = SPA_unite_the_requetes
+			focus = SPA_formant_carlist_spirit
+		}
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+
+		#Circurvent non-intervention Treaties
+
+	focus = { 
+		id = SPA_circurvent_non_intervention_treaties
+		icon = GFX_focus_jap_zaibatsu
+
+		relative_position_id = SPA_army_of_africa_leads_the_way
+		x = -4
+		y = 1
+
+		cost = 5
+
+		prerequisite = {
+			focus = SPA_army_of_africa_leads_the_way
+			focus = SPA_every_man_for_spain
+		}
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+	#Circurvent non-intervention Treaties
+
+	#FOCUS TREE NATIONALISTS
+
+
 	focus = {
 		id = SPA_unify_the_nationalist_front
 		available = {
@@ -215,11 +2297,11 @@ focus_tree = {
 			has_global_flag = scw_over
 
 		}
-		prerequisite = { focus = SPA_con_paquito }
+
 		icon = GFX_focus_spa_unify_the_nationalist_front
 		x = 0
-		y = 1
-		relative_position_id = SPA_con_paquito
+		y = 30
+
 		cost = 7.2
 
 		available_if_capitulated = yes
@@ -363,7 +2445,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = SPA_consolidate_the_north
+		id = SPA_consolidate_the_northh
 		available = {
 			controls_state = 176
 			controls_state = 792
@@ -454,12 +2536,12 @@ focus_tree = {
 			has_global_flag = SPR_carlist_uprising_flag
 			has_global_flag = scw_over
 		}
-		prerequisite = { focus = SPA_consolidate_the_north }
+		prerequisite = { focus = SPA_consolidate_the_northh }
 		
 		icon = GFX_goal_generic_military_deal
 		x = 0
 		y = 2
-		relative_position_id = SPA_consolidate_the_north
+		relative_position_id = SPA_consolidate_the_northh
 		cost = 7.2
 
 		available_if_capitulated = yes
@@ -643,94 +2725,7 @@ focus_tree = {
 		}
 	}
 
-	focus = {
-		id = SPA_banish_the_party_leaders
-		available = {
-		}
-		bypass = {
-			has_global_flag = SPR_carlist_uprising_flag
-			has_global_flag = scw_over
-		}
-		prerequisite = { focus = SPA_extol_the_martyrs_of_the_war }
-		prerequisite = { focus = SPA_foment_a_carlist_split }
-		
-		icon = GFX_focus_generic_support_the_left_right
-		x = 1
-		y = 1
-		relative_position_id = SPA_extol_the_martyrs_of_the_war
-		cost = 7.2
-
-		available_if_capitulated = yes
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_SPA_CARLIST_UPRISING }
-		completion_reward = {
-			add_political_power = 200
-			custom_effect_tooltip = remove_political_advisor
-			show_ideas_tooltip = SPA_manuel_hedilla
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = SPA_jose_antonio_primo_de_rivera
-		}
-	}
-
-	focus = {
-		id = SPA_fuse_the_parties
-		available = {
-		}
-		bypass = {
-			has_global_flag = SPR_carlist_uprising_flag
-			has_global_flag = scw_over
-		}
-		prerequisite = { focus = SPA_banish_the_party_leaders }
-		prerequisite = { focus = SPA_safeguard_the_freedom_of_worship }
-		
-		icon = GFX_focus_spa_fuse_the_parties
-		x = -1
-		y = 1
-		relative_position_id = SPA_banish_the_party_leaders
-		cost = 7.2
-
-		available_if_capitulated = yes
-		search_filters = { FOCUS_FILTER_MANPOWER }
-		completion_reward = {
-			set_party_name = { ideology = fascism long_name = SPR_fascism_francoist_party_long name = SPR_fascism_francoist_party }
-			set_party_name = { ideology = neutrality long_name = SPR_fascism_francoist_party_long name = SPR_fascism_francoist_party }
-			if = {
-				limit = {
-					NOT = {
-						has_idea = SPA_carlism_2
-						has_idea = SPA_carlism_3
-					}
-				}
-				effect_tooltip = {
-					swap_ideas = {
-						remove_idea = SPA_carlism_2
-						add_idea = SPA_carlism_3
-					}
-				}
-			}
-			if = {
-				limit = {
-					has_idea = SPA_carlism_2
-				}
-				swap_ideas = {
-					remove_idea = SPA_carlism_2
-					add_idea = SPA_carlism_5
-				}
-			}
-			if = {
-				limit = {
-					has_idea = SPA_carlism_3
-				}
-				swap_ideas = {
-					remove_idea = SPA_carlism_3
-					add_idea = SPA_carlism_4
-				}
-			}
-		
-		}
-		ai_will_do = {
-			factor = 5
-		}
-	}
+	
 	focus = {
 		id = SPA_join_the_axis
 		available = {
@@ -2037,12 +4032,12 @@ focus_tree = {
 		}
 		bypass = {
 		}
-		prerequisite = { focus = SPA_fuse_the_parties }
+
 		
 		icon = GFX_focus_generic_treaty
-		x = 4
-		y = 1
-		relative_position_id = SPA_fuse_the_parties
+		x = 5
+		y = 7
+
 		cost = 7.2
 
 		available_if_capitulated = yes
@@ -2547,7 +4542,7 @@ focus_tree = {
 		
 		icon = GFX_goal_generic_army_doctrines
 		x = -5
-		y = 1
+		y = 10
 		relative_position_id = SPA_fuse_the_parties
 		cost = 7.2
 
