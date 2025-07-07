@@ -487,7 +487,7 @@ focus = {
 		y = 1
 		prerequisite = { focus = MON_consolidate_authority }
 		completion_reward = {
-
+		add_ideas = MON_leagacy_of_the_kan
 		}
 
 	}
@@ -502,12 +502,11 @@ focus = {
 		completion_reward = {
 			add_to_variable = {
 				var = MON_military_industry_dm_consumer_goods_factor
-				value = -0.05
-				tooltip = consumer_goods_factor_tooltip
+				value = -0.1
+				tooltip = consumer_goods_tooltip
 			}
 		}
 	}
-
 	focus = {
 		id = MON_civilian_construction_effort
 		icon = GFX_goal_generic_economic_mobilization
@@ -518,16 +517,18 @@ focus = {
 		prerequisite = { focus = MON_economic_reforms }
 		mutually_exclusive = { focus = MON_military_construction_effort }
 		completion_reward = {
-			add_to_variable = {
-				var = MON_military_industry_dm_production_speed_industrial_complex_factor
-				value = 0.20
-				tooltip = industrial_complex_build_speed_factor_tooltip
+					add_tech_bonus = {
+				technology = construction2
+				technology = construction3
+				technology = construction4
+				technology = construction5
+				uses = 2
+				bonus = 2
 			}
 		}
 	}
-
-	focus = {
-		id = MON_expand_civilian_industry
+		focus = {
+		id = MON_more_domestic_products 
 		icon = GFX_goal_generic_economic_mobilization
 		cost = 5
 		relative_position_id = MON_civilian_construction_effort
@@ -535,10 +536,26 @@ focus = {
 		y = 1
 		prerequisite = { focus = MON_civilian_construction_effort }
 		completion_reward = {
+				add_to_variable = {
+				var = MON_military_industry_dm_production_speed_industrial_complex_factor
+				value = 0.20
+				tooltip = industrial_complex_build_speed_factor_tooltip
+			}
+		}
+	}
+	focus = {
+		id = MON_expand_civilian_industry
+		icon = GFX_goal_generic_economic_mobilization
+		cost = 5
+		relative_position_id = MON_more_domestic_products
+		x = 0
+		y = 1
+		prerequisite = { focus = MON_more_domestic_products }
+		completion_reward = {
 			330 = {
 				add_building_construction = {
 					type = industrial_complex
-					level = 2
+					level = 3
 					instant_build = yes
 					
 				}
@@ -576,13 +593,30 @@ focus = {
 			330 = {
 				add_building_construction = {
 					type = arms_factory
-					level = 3
+					level = 5
 					instant_build = yes
 				}
 			}
 		}
 	}
-
+	focus = {
+		id = MON_import_soviet_tools
+		icon = GFX_goal_generic_economic_mobilization
+		cost = 5
+		relative_position_id = MON_expand_military_industry
+		x = 0
+		y = 1
+		prerequisite = { focus = MON_expand_military_industry }
+		completion_reward = {
+				add_tech_bonus = {
+				technology = improved_machine_tools
+				technology = advanced_machine_tools
+				technology = assembly_line_production
+				uses = 1
+				bonus = 2
+			}
+		}
+	}
 	focus = {
 		id = MON_scientific_advancement
 		icon = GFX_goal_generic_support_the_left_right
@@ -612,7 +646,7 @@ focus = {
 		completion_reward = {
 			add_to_variable = {
 				var = MON_research_speed_factor_var
-				value = 0.20
+				value = 0.40
 				tooltip = research_speed_factor_tooltip
 			}
 		}
@@ -628,7 +662,52 @@ focus = {
 		prerequisite = { focus = MON_scientific_advancement }
 		mutually_exclusive = { focus = MON_enhance_research_efficiency }
 		completion_reward = {
-			add_research_slot = 1
+			add_research_slot = 2
+		}
+	}
+		focus = {
+		id = MON_expand_electronic_department
+		icon = GFX_goal_generic_support_the_left_right
+		cost = 10
+		relative_position_id = MON_expand_research_capabilities
+		x = -1
+		y = 1
+		prerequisite = { 
+		focus = MON_enhance_research_efficiency  
+		focus = MON_expand_research_capabilities
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = GER_siemens
+				bonus = 0.75
+				uses = 2
+				category = electronics		
+			}	
+		}
+	}
+		focus = {
+		id = MON_understanding_the_importance_of_special_projects 
+		icon = GFX_goal_generic_support_the_left_right
+		cost = 10
+		relative_position_id = MON_expand_electronic_department
+		x = 0
+		y = 1
+		prerequisite = {
+		focus = MON_expand_electronic_department
+		}
+		completion_reward = {
+		330 = {
+					add_building_construction = {
+						type = nuclear_facility
+						level = 1
+						instant_build = yes 
+						province = 4862
+					}
+				}
+				add_breakthrough_points = {
+				specialization = specialization_nuclear
+				value = 1
+			}
 		}
 	}
 
@@ -1342,9 +1421,16 @@ focus = {
 
 	focus = { 
 		id = MON_train_soviet_cavalry
+		relative_position_id = Mon_Invite_soviet_workers
+		prerequisite = {
+		focus = Mon_Invite_soviet_workers
+		}
+		prerequisite = {
+		focus = MON_assist_soviet_industry 
+		}
 		cost = 10
-		x = 45
-		y = 0
+		x = -1
+		y = 1
 		available = {
 			has_army_experience > 199
 		}    
@@ -1396,15 +1482,36 @@ focus = {
 		cost = 10
 		x = 45
 		y = 5
+		prerequisite = {
+		focus = MON_train_soviet_cavalry
+		}
+		prerequisite = {
+		focus = MON_help_develop_siberia
+		}
 		completion_reward = {
-			SOV = {
-				add_to_variable = {
-					var = progress_5_year_plan
-					value = 4
+			add_war_support = 0.3
+			add_stability = -0.2
+			add_political_power = -300
+			MON = {
+				add_offsite_building = {
+					type = industrial_complex
+					level = 4
+				}
+			}
+				MON = {
+				add_offsite_building = {
+					type = arms_factory
+					level = 4
+				}
+			}
+				SOV = {
+				add_offsite_building = {
+					type = industrial_complex
+					level = 4
 				}
 			}
 		}
-	}
+}
 	focus = {
 		id = MON_take_in_soviet_dissidents
 		icon = GFX_goal_generic_political_pressure
@@ -1463,23 +1570,12 @@ focus = {
 		}
 	}
 	focus = { 
-		id = MON_conscript_white_exiles
-		icon = GFX_FRA_VIC_rationing
+		id = MON_assist_soviet_industry
 		cost = 10
 		x = 45
 		y = 3
 		prerequisite = {
-		MON_contribute_to_the_five_year_plan
-		}
-		completion_reward = {
-	}
-
-	focus = { 
-		id = MON_assist_soviet_industry
-		cost = 10
-		x = 45
-		y = 6
-		prerequisite = {
+		focus = MON_contribute_to_the_five_year_plan
 		}
 		completion_reward = {
 			add_to_variable = {
@@ -1493,10 +1589,14 @@ focus = {
 	focus = { 
 		id = MON_help_develop_siberia
 		cost = 10
-		x = 45
-		y = 8
+		x = 1
+		y = 1
+		relative_position_id = MON_take_in_soviet_dissidents
 		prerequisite = {
-			has_tech = construction3
+			focus =MON_take_in_soviet_dissidents
+		}
+		prerequisite = { 
+			focus= MON_assist_soviet_industry
 		}
 		completion_reward = {
 			589 = {
@@ -1550,7 +1650,7 @@ focus = {
 			330 = {
 				add_building_construction = {
 					type = industrial_complex
-					level = -6
+					level = -4
 				}
 			}
 		}
