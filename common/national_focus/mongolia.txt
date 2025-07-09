@@ -28,7 +28,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_stability = -0.2 
+			add_stability = -0.25
 			add_popularity = {
 				ideology = communism
 				popularity = 0.1
@@ -364,6 +364,10 @@ focus = {
 				value = 0.1
 				tooltip = arms_factory_build_speed_factor_tooltip
 			}	
+					add_to_variable = {
+				MON_military_industry_dm_production_speed_arms_factory_factor = 0.15
+				tooltip = industrial_capacity_factory_tooltip
+				}
 	}
 }
 	focus = {
@@ -387,7 +391,16 @@ focus = {
 			}
 		}
 	}
-
+completion_reward = {
+			330 = {
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}	
+		}
 	focus = {
 		id = MON_Start_the_great_repression
 		cost = 10
@@ -395,12 +408,65 @@ focus = {
 		x = 4
 		y = 1
 		prerequisite = {
-
 				focus = MON_Follow_the_soviets
 			}
-
 	}
-
+	focus = {
+		id = MON_Start_the_recovery
+		cost = 10
+		relative_position_id = MON_Start_the_great_repression
+		x = 0
+		y = 1
+		prerequisite = {
+				focus = MON_Start_the_great_repression
+			}
+	completion_reward = {
+			330 = {
+				add_extra_state_shared_building_slots = 7
+				add_building_construction = {
+					type = industrial_complex
+					level = 5
+					instant_build = yes
+				}
+			}	
+		}
+	}
+		focus = {
+		id = MON_declare_one_party_state
+		cost = 10
+		relative_position_id = MON_Start_the_recovery
+		x = 0
+		y = 1
+		prerequisite = {
+				focus = MON_Start_the_recovery
+			}
+	completion_reward = {
+				add_popularity = {
+				ideology = communism
+				popularity = 0.4
+			}
+			add_to_variable = {
+				var = MON_stability_factor_var
+				value = 0.15
+				tooltip = stability_factor_tooltip
+			}
+		}
+	}
+		focus = {
+		id = MON_expand_KGB
+		cost = 10
+		relative_position_id =MON_declare_one_party_state
+		x = 0
+		y = 1
+		prerequisite = {
+				focus = MON_declare_one_party_state
+			}
+	completion_reward = {
+			add_ideas = {
+			MON_KGB
+			}	
+		}
+	}
 	### return to roots 
 	focus = {
 		id = MON_Return_to_our_roots
@@ -487,7 +553,57 @@ focus = {
 		y = 1
 		prerequisite = { focus = MON_consolidate_authority }
 		completion_reward = {
-		
+		add_ideas = {
+		MON_the_khan_legeacy 
+		}
+	}
+	}
+		focus = {
+		id = MON_the_second_coercion
+		icon = GFX_goal_generic_political_pressure
+		cost = 5
+		relative_position_id = MON_leagacy_for_the_khan
+		x = 0
+		y = 1
+		prerequisite = { focus = MON_leagacy_for_the_khan }
+		completion_reward = {
+		add_popularity = {
+				ideology = neutrality
+				popularity = 0.3
+			}
+			add_to_variable = {
+				var = MON_stability_factor_var
+				value = 0.10
+				tooltip = stability_factor_tooltip
+			}
+	}
+	}
+		focus = {
+		id = MON_begin_rearmament
+		icon = GFX_goal_generic_political_pressure
+		cost = 5
+		relative_position_id = MON_leagacy_for_the_khan
+		x = 0
+		y = 1
+		prerequisite = { focus = MON_leagacy_for_the_khan }
+		completion_reward = {
+		add_war_support = 0.10
+		add_ideas = partial_economic_mobilisation
+	}
+	}
+		focus = {
+		id = MON_more_materials_for_the_step_hords
+		icon = GFX_goal_generic_political_pressure
+		cost = 5
+		relative_position_id = MON_begin_rearmament
+		x = 0
+		y = 1
+		prerequisite = { focus = MON_begin_rearmament }
+		completion_reward = {
+		add_to_variable = {
+			MON_military_industry_dm_local_resources_factor = 0.1
+			tooltip = MON_resource10_tt
+			}
 		}
 	}
 	focus = {
@@ -507,14 +623,15 @@ focus = {
 		}
 	}
 		focus = {
-		id = MON_build_to_rebuild_our_honner
+		id = MON_rebuild_our_home
 		icon = GFX_goal_generic_economic_mobilization
 		cost = 5
 		relative_position_id = MON_invest_in_public_works
-		x = -1
+		x = -2
 		y = 1
 		prerequisite = { focus = MON_invest_in_public_works }
 		prerequisite = { focus = MON_develop_the_countryside }
+		prerequisite = { focus = MON_more_materials_for_the_step_hords }
 		completion_reward = {
 			add_to_variable = {
 				var = MON_military_industry_dm_consumer_goods_factor
@@ -522,7 +639,7 @@ focus = {
 				tooltip = consumer_goods_tooltip
 			}
 			add_to_variable = {
-				MON_military_industry_dm_production_speed_arms_factory_factor = 0.15
+				MON_military_industry_dm_production_speed_arms_factory_factor = 0.2
 				tooltip = industrial_capacity_factory_tooltip
 				}
 		}
@@ -574,7 +691,7 @@ focus = {
 			330 = {
 				add_building_construction = {
 					type = industrial_complex
-					level = 3
+					level = 5
 					instant_build = yes
 					
 				}
@@ -778,6 +895,45 @@ focus = {
 		}
 	}
 		focus = {
+		id = MON_state_univeristy 
+		icon = GFX_goal_generic_support_the_left_right
+		cost = 10
+		relative_position_id = MON_expand_KGB
+		x = 0
+		y = 1
+		prerequisite = { 
+		focus = MON_expand_KGB
+		}
+		completion_reward = {
+		add_research_slot = 1
+				add_to_variable = {
+				var = MON_kempeitai_var_research_speed_factor
+				value = 0.1
+				tooltip = research_speed_factor_tooltip
+			}
+			add_tech_bonus = {
+				name = GER_siemens
+				bonus = 1.5
+				uses = 1
+				category = electronics		
+			}	
+		}
+	}
+	focus = {
+		id = MON_police_offer_recutment
+		icon = GFX_goal_generic_support_the_left_right
+		cost = 10
+		relative_position_id = MON_state_univeristy
+		x = 0
+		y = 1
+		prerequisite = { 
+		focus = MON_state_univeristy
+		}
+		completion_reward = {
+add_ideas = MON_KGB_recrutment
+		}
+	}
+		focus = {
 		id = MON_understanding_the_importance_of_special_projects 
 		icon = GFX_goal_generic_support_the_left_right
 		cost = 10
@@ -891,11 +1047,11 @@ focus = {
 		}
 		completion_reward = {
 			add_to_variable = {
-					MON_tank_attack_factor_var = 0.15
+					MON_tank_attack_factor_var = 0.1 
 					tooltip = MON_tankdef_tt
 				}
 			add_to_variable = {
-					MON_tank_defence_factor_var = 0.15
+					MON_tank_defence_factor_var = 0.1
 					tooltip = MON_tankat_tt
 			}
 			
@@ -1081,22 +1237,12 @@ focus = {
 		x = 0
 		y = 1
 		cost = 5
-		available = { }
 		completion_reward = {
-			add_to_variable = {
-					MON_military_industry_dm_local_resources_factor = 0.1
-					tooltip = MON_resource10_tt
-				}
-		add_to_variable = {
-				MON_military_industry_dm_production_speed_arms_factory_factor = 0.15
-				tooltip = industrial_capacity_factory_tooltip
-				}
-		}
-		ai_will_do = {
-			factor = 1
-		}
+		add_ideas = {
+		MON_Armor_production
+		}	
 	}
-
+	}
 	focus = {
 		id = MON_reform_the_steppe_hordes
 		x = 6
