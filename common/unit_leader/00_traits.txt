@@ -4209,11 +4209,14 @@ leader_traits = {
 
 		#new_commander_weight = {
 		#}
+		gain_xp_leader = {
+			operative_leader_operation = operation_rescue_operative
+		}
 
 		modifier = { 
-			operation_infiltrate_outcome = 0.25
-			operation_infiltrate_risk = -0.25
-			own_operative_detection_chance_factor = -0.2
+			operation_infiltrate_outcome = 0.2
+			operation_infiltrate_risk = -0.2
+			own_operative_detection_chance_factor = -0.1
 		}
 	}
 
@@ -4233,7 +4236,6 @@ leader_traits = {
 				operative_leader_operation = operation_infiltrate_armed_forces_army
 				operative_leader_operation = operation_infiltrate_armed_forces_navy
 				operative_leader_operation = operation_infiltrate_armed_forces_airforce
-				operative_leader_operation = operation_make_resistance_contacts
 			}
 		}
 
@@ -4252,10 +4254,15 @@ leader_traits = {
 
 		cost = 400
 		gain_xp_leader = {
+			OR = {
+				operative_leader_mission = root_out_resistance
+				operative_leader_mission = counter_intelligence
+			}
 		}
 
 		modifier = {
 			intelligence_agency_defense = 0.2
+			enemy_intel_network_gain_factor_over_occupied_tag = -0.15
 		}
 	}
 
@@ -4268,10 +4275,16 @@ leader_traits = {
 
 		cost = 400
 		gain_xp_leader = {
+			OR = {
+				operative_leader_operation = operation_rescue_operative
+				operative_leader_operation = operation_make_resistance_contacts
+				operative_leader_operation = operation_boost_resistance
+			}
 		}
 
 		modifier = {
-			# something good
+			enemy_operative_detection_chance_factor = 0.1
+			enemy_intel_network_gain_factor_over_occupied_tag = -0.10
 		}
 	}
 
@@ -4282,9 +4295,15 @@ leader_traits = {
 		new_commander_weight = {
 			factor = 0 # only from events
 		}
+		gain_xp_leader = {
+			OR = {
+			}
+		}
 
 		modifier = {
-			# something good
+			intel_network_gain_factor = 0.1
+			enemy_operative_intel_extraction_rate = 0.25
+			enemy_operative_detection_chance_factor = 0.1
 		}
 	}
 
@@ -4297,6 +4316,8 @@ leader_traits = {
 
 		modifier = {
 			enemy_operative_intel_extraction_rate = -0.5
+			operative_death_on_capture_chance = 0.1
+			intel_from_combat_factor = 0.15
 		}
 	}
 
@@ -4308,7 +4329,16 @@ leader_traits = {
 			factor = 0.5
 		}
 
+		gain_xp_leader = {
+			OR = {
+				operative_leader_operation = operation_steal_tech_army
+				operative_leader_operation = operation_steal_tech_navy
+				operative_leader_operation = operation_fake_intel
+			}
+		}
+
 		modifier = {
+			operation_infiltrate_cost = 0.1
 			operation_capture_cipher_outcome = 0.25
 			operation_steal_tech_risk = -0.25
 			operation_steal_tech_outcome = 0.25
@@ -4324,11 +4354,17 @@ leader_traits = {
 
 		cost = 400
 		gain_xp_leader = {
+			OR = {
+			operative_leader_mission = control_trade
+			operative_leader_mission = diplomatic_pressure
+				operative_leader_operation = operation_fake_intel
+			}
 		}
 
 		modifier = {
-			control_trade_mission_factor = 0.2
-			diplomatic_pressure_mission_factor = 0.2
+			control_trade_mission_factor = 0.5
+			diplomatic_pressure_mission_factor = 0.5
+			intel_from_combat_factor = 0.1
 		}
 	}
 
@@ -4337,11 +4373,14 @@ leader_traits = {
 		trait_type = basic_trait
 
 		gain_xp_leader = {
+			operative_leader_mission = build_intel_network
+			operative_leader_mission = counter_intelligence
 		}
 		
 		cost = 400
 		modifier = {
-			boost_ideology_mission_factor = 0.2
+			intel_network_gain_factor = 0.15
+			enemy_operative_intel_extraction_rate = 0.15
 		}
 	}
 
@@ -4369,11 +4408,74 @@ leader_traits = {
 		}
 
 		modifier = {
-			target_sabotage_factor = 0.25
-			target_sabotage_cost = -0.25
-			boost_resistance_factor = 0.25
+			target_sabotage_factor = 0.3
+			target_sabotage_cost = -0.35
+			boost_resistance_factor = 0.15
 		}
 	}
+
+	operative_scientist = {
+		type = operative
+		trait_type = personality_trait
+
+		new_commander_weight = {
+			factor = 0.3
+		}
+
+		gain_xp_leader = {
+			# you cant farm it, to op
+		}
+
+		modifier = {
+			operation_capture_cipher_risk = -0.15
+			operation_capture_cipher_outcome = 0.15
+			operation_steal_tech_risk = -0.15
+			operation_steal_tech_outcome = 0.15
+		
+		}
+	}
+
+	operative_web_of_lies = {
+		type = operative
+		trait_type = assignable_trait
+
+		new_commander_weight = {
+			factor = 0 # only from events
+		}
+
+		modifier = {
+			intel_network_gain_factor = 0.3
+			operation_infiltrate_outcome = 0.2
+		}
+		
+		cost = 800
+		gain_xp_leader = {
+			# you cant farm it, to op
+		}
+	}
+	operative_spyhunter = {
+		type = operative
+		trait_type = basic_trait
+
+		new_commander_weight = {
+			factor = 0.5
+		}
+
+		modifier = {
+			enemy_operative_capture_chance_factor = 0.15
+			enemy_operative_detection_chance_factor = 0.15
+			enemy_intel_network_gain_factor_over_occupied_tag = -0.15
+		}
+
+		cost = 800
+		gain_xp_leader = {
+			OR = {
+				operative_leader_mission = root_out_resistance
+				operative_leader_mission = counter_intelligence
+			}
+		}
+	}
+
 	disgruntled = { 
 		type = all
 		trait_type = status_trait

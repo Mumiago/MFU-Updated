@@ -1362,12 +1362,12 @@ NMilitary = {
  
 	NEW_OPERATIVE_RANDOM_PERSONALITY_TRAIT_CHANCES = {  -- chances to gain a personality trait for new operatives
 		0.5, -- 50% for first trait
-		0.1  -- 10% for second trait after that
+		0.15  -- 15% for second trait after that
 	},
 	
 	NEW_OPERATIVE_RANDOM_BASIC_TRAIT_CHANCES = {  -- chances to gain a basic trait for new operatives
 		0.25, -- 25% for first trait
-		0.05  -- 5% for second trait after that
+		0.10  -- 10% for second trait after that
 	},
 	
 	NEW_OPERATIVE_RANDOM_STATUS_TRAIT_CHANCES = {  -- chances to gain a status trait for new operatives
@@ -3890,10 +3890,10 @@ NOperatives = {
 	AGENCY_AI_BASE_NUM_FACTORIES = 25.0,				-- Used by AI to pace the upgrades. Formula : if( AGENCY_AI_BASE_NUM_FACTORIES <= num_civ_factories - num_upgrades * AGENCY_AI_PER_UPGRADE_FACTORIES )
 	AGENCY_AI_PER_UPGRADE_FACTORIES = 6.0,			-- Used by AI to pace the upgrades. Formula : if( AGENCY_AI_BASE_NUM_FACTORIES <= num_civ_factories - num_upgrades * AGENCY_AI_PER_UPGRADE_FACTORIES )
 	AGENCY_UPGRADE_PER_OPERATIVE_SLOT = 5,			-- Number of upgrade needed to unlock an additional operative slot
-	MAX_OPERATIVE_SLOT_FROM_AGENCY_UPGRADES = 1,	-- max operative slots gained from upgrades
+	MAX_OPERATIVE_SLOT_FROM_AGENCY_UPGRADES = 2,	-- max operative slots gained from upgrades
 	AGENCY_OPERATIVE_RECRUITMENT_TIME = 30,			-- Number of days to wait to have operative to recruit when an operative slot first becomes available
 	BECOME_SPYMASTER_PP_COST = 50,					-- Number of political power used to become Spy Master
-	BECOME_SPYMASTER_MIN_UPGRADES = 3,				-- Number of agency upgrades you need before becoming Spy Master
+	BECOME_SPYMASTER_MIN_UPGRADES = 4,				-- Number of agency upgrades you need before becoming Spy Master
 	BASE_COUNTER_INTELLIGENCE_RATING = 0.0,					-- Base national counter intelligence rating for all countries
 	AGENCY_DEFENSE_EFFECT_ON_HOSTILE_ACTION_COST = 0.2,			-- Defense factor that is responsible for multiplying the cost hostile actions against our country by its level and this value
 	INTEL_NETWORK_GAIN_RATE_ON_WRONG_CONTROLLER = -10.0,			-- Amount of network strength lost in a state when it does not have the right controller anymore
@@ -3927,7 +3927,7 @@ NOperatives = {
 	INTEL_NETWORK_SUB_NETWORK_NATIONAL_COVERAGE_TO_DETECTION_CHANCE_FACTOR = 3.0,	-- multiplied to the contribution to the national coverage of the sub network (a value in range [0, 1])
 	INTEL_NETWORK_DETECTION_GLOBAL_FACTOR = 0.01,				-- global factor multiplied to the detection chance before it is multiplied a dice roll in the range [0,1000)
 	BUILD_INTEL_NETWORK_DAILY_XP_GAIN = 1,
-	QUIET_INTEL_NETWORK_DAILY_XP_GAIN = 0,
+	QUIET_INTEL_NETWORK_DAILY_XP_GAIN =  0.112,
 	OPERATIVE_MISSION_DETECTION_CHANCE_FACTOR = {
 		-- Factor multiplied to the detection chance of an agent on mission before the offsets
 		0.0, -- NoMission
@@ -3952,10 +3952,10 @@ NOperatives = {
 
 	INTEL_NETWORK_MIN_DEFAULT_FOR_SHOWING = 25,              -- default min level for networks used to filter operation requirements if not overriden
 
-	OPERATIVE_BASE_INTEL_NETWORK_GAIN = 0.4,				-- Base amount of network strength gain per day provided by an operative
+	OPERATIVE_BASE_INTEL_NETWORK_GAIN = 0.3,				-- Base amount of network strength gain per day provided by an operative
 	OPERATIVE_MAX_INTEL_NETWORK_GAIN = -1.0,				-- Max amount of network strength gain per day provided by an operative after modifiers have been applied (negative value means no max)
 	COUNTER_INTELLIGENCE_FOREIGN_AGENT_FACTOR = 0.0,			-- Multiplier to the counter intelligence provided by foreign (ally) operatives
-	COUNTER_INTELLIGENCE_STACKING_FACTOR = 0.5,				-- Multiplier applied to each operative after the first one. So if we have the following counter intelligence rating values [ 0.1, 0.3, 0.2 ], the factor is applied twice for the lowest value and once for the 2nd lowest one as such : [ 0.3, 0.2 * D, 0.1 * D * D ] and then the result is summed up to give the final rating value
+	COUNTER_INTELLIGENCE_STACKING_FACTOR = 0.55,				-- Multiplier applied to each operative after the first one. So if we have the following counter intelligence rating values [ 0.1, 0.3, 0.2 ], the factor is applied twice for the lowest value and once for the 2nd lowest one as such : [ 0.3, 0.2 * D, 0.1 * D * D ] and then the result is summed up to give the final rating value
 	COUNTER_INTELLIGENCE_TO_DEFENSE_LOG_FACTOR = 0.0,			-- Defense = LogFactor * log( 1 + CounterIntelligence ) + CounterIntelligence / Divisor
 	COUNTER_INTELLIGENCE_TO_DEFENSE_DIVISOR = 1.0,				-- see above
 	COUNTER_INTELLIGENCE_DAILY_XP_GAIN = 0.112,
@@ -3971,16 +3971,16 @@ NOperatives = {
 	PROPAGANDA_DEFENSE_FACTOR = 0.01,					-- Multiplied to the target's defense before being subtracted from the Stability/WarSupport drift caused by an operative
 	PROPAGANDA_OPERATIVE_STACKING_FACTOR = 0.5,				-- Multiplied to the Stability/WarSupport drift values of each operative after the one with the greatest values. The process is done separatly for Stability and WarSupport
 	PROPAGANDA_COUNTRY_STACKING_FACTOR = 0.5,				-- Multiplied to the Stability/WarSupport drift values of each country after the one with the greatest values. The process is done separatly for Stability and WarSupport
-	PROPAGANDA_DAILY_XP_GAIN = 0.350,
+	PROPAGANDA_DAILY_XP_GAIN = 0.400,
 	OPERATIVE_BASE_ROOT_OUT_RESISTANCE_EFFICIENCY = 1.0,			-- The base efficiency of an operative at the RootOutResistance mission (this is a percentage, 1.0 == 100%)
 	ROOT_OUT_RESISTANCE_STACKING_FACTOR = 0.5,				-- Multiplied to each operative efficiency after the first one
 	ROOT_OUT_RESISTANCE_RANGE_STEP_FACTOR = 0.5,				-- Multiplied to the summed up efficiency from all operative operating in a same state to determine the efficiency in neighboring states
-	ROOT_OUT_RESISTANCE_DAILY_XP_GAIN = 0.068,
-	OPERATIVE_BASE_CONTROL_TRADE_DRIFT = 0.5,				-- The base daily drift in trade influence caused by an operative
-	CONTROL_TRADE_STACKING_FACTOR = 0.5,					-- Multiplied to the drift of each operative after the first one
+	ROOT_OUT_RESISTANCE_DAILY_XP_GAIN = 0.08,
+	OPERATIVE_BASE_CONTROL_TRADE_DRIFT = 0.80,				-- The base daily drift in trade influence caused by an operative
+	CONTROL_TRADE_STACKING_FACTOR = 0.6,					-- Multiplied to the drift of each operative after the first one
 	CONTROL_TRADE_MAX_INFLUENCE = 50.0,					-- The maximum amount of trade influence that can be gained through the control trade mission
 	CONTROL_TRADE_INFLUENCE_DAILY_DECAY = 0.1,				-- The amount of trade influence lost when no operative are assigned to the mission
-	CONTROL_TRADE_DAILY_XP_GAIN = 0.137,
+	CONTROL_TRADE_DAILY_XP_GAIN = 0.162,
 	OPERATIVE_BASE_DIPLOMATIC_PRESSURE_AI_ACCEPTANCE_SCORE_DRIFT = 0.4,	-- The daily change in the amount of opinion requiered to join a faction
 	OPERATIVE_BASE_DIPLOMATIC_PRESSURE_TENSION_REQUIREMENTS_DRIFT = 0.001,	-- The daily change in world tension requiered to join a faction
 	DIPLOMATIC_PRESSURE_MAX_AI_ACCEPTANCE_SCORE_INCREASE = 20.0,	-- the maximum amount of ai acceptance score from diplomatic pressure
@@ -4005,7 +4005,7 @@ NOperatives = {
 	CYRPTO_ACTIVE_BONUS_ACTIVATION_PROGRESS_RATIO = 0.5,	-- once bonus is activated, decryption progress will be reduced to this ratio
 	
 	OPERATION_AI_MINIMUM_SCORE = 10.0,						-- Once an operation's AI weight falls below the minimum score it will be scrapped if it is being prepared
-	OPERATION_COMPLETION_XP = 18,
+	OPERATION_COMPLETION_XP = 20,
 
 	OPERATIVE_CAPTURE_DURATION_IN_DAYS = 9*30,
 	
@@ -4057,8 +4057,8 @@ NOperatives = {
 
 NIntel = {
 	--GTD
-	RAID_MIN_INTEL_FOR_WARNING_ON_LAUNCH = 0.1,           -- how much intel (of the relevant type) is needed to show a warning when raid is launched
-	RAID_MIN_INTEL_FOR_WARNING_HALFWAY_TO_LAUNCH = 0.5,   -- how much intel (of the relevant type) is needed to show a warning halfway through preparation
+	RAID_MIN_INTEL_FOR_WARNING_ON_LAUNCH = 0.5,           -- how much intel (of the relevant type) is needed to show a warning when raid is launched
+	RAID_MIN_INTEL_FOR_WARNING_HALFWAY_TO_LAUNCH = 0.7,   -- how much intel (of the relevant type) is needed to show a warning halfway through preparation
 	--     (this limit is a dummy value only used for communicating the role of intel in the intel ledger )
 	--     (in reality, detection scales linearly with intel. 70% intel = detection at 30% preparation, 50% intel = detection at 50% preparation, etc.
 	RAID_MIN_INTEL_FOR_WARNING_EARLY_PREPARATION = 0.8,   -- how much intel (of the relevant type) is needed to show a warning early in the preparation
@@ -4068,20 +4068,20 @@ NIntel = {
 
 
 
-	CIVILIAN_MIN_INTEL_TO_SHOW_TRUCKS_GRAPH = 0.5,
-	CIVILIAN_MIN_INTEL_TO_SHOW_TRAINS_GRAPH = 0.5,
+	CIVILIAN_MIN_INTEL_TO_SHOW_TRUCKS_GRAPH = 0.6,
+	CIVILIAN_MIN_INTEL_TO_SHOW_TRAINS_GRAPH = 0.6,
 
 	CIVILIAN_MIN_INTEL_TO_SHOW_RAIL_STAUS = 0.4, -- when mousing over supply map mode, shows damage/construction status
-	CIVILIAN_TRUCKS_RANGE_INTEL_MIN = 0.1, -- minimum value to show fuzzy factory counts below this you will get ???
-	CIVILIAN_TRUCKS_RANGE_INTEL_MAX = 0.5, -- maximum value to show fuzzy factory counts. above this you will get full count
+	CIVILIAN_TRUCKS_RANGE_INTEL_MIN = 0.3, -- minimum value to show fuzzy factory counts below this you will get ???
+	CIVILIAN_TRUCKS_RANGE_INTEL_MAX = 0.6, -- maximum value to show fuzzy factory counts. above this you will get full count
 	CIVILIAN_TRUCKS_INTEL_RANGE_AT_LOWEST_INTEL = 0.5, -- range of intel values at lowest intel
 
-	CIVILIAN_TRAINS_RANGE_INTEL_MIN = 0.1, -- minimum value to show fuzzy factory counts below this you will get ???
-	CIVILIAN_TRAINS_RANGE_INTEL_MAX = 0.5, -- maximum value to show fuzzy factory counts. above this you will get full count
+	CIVILIAN_TRAINS_RANGE_INTEL_MIN = 0.3, -- minimum value to show fuzzy factory counts below this you will get ???
+	CIVILIAN_TRAINS_RANGE_INTEL_MAX = 0.6, -- maximum value to show fuzzy factory counts. above this you will get full count
 	CIVILIAN_TRAINS_INTEL_RANGE_AT_LOWEST_INTEL = 0.5, -- range of intel values at lowest intel
 
-	CIVILIAN_SUPPLY_RANGE_INTEL_MIN = 0.1, -- minimum value to show fuzzy factory counts below this you will get ???
-	CIVILIAN_SUPPLY_RANGE_INTEL_MAX = 0.5, -- maximum value to show fuzzy factory counts. above this you will get full count
+	CIVILIAN_SUPPLY_RANGE_INTEL_MIN = 0.3, -- minimum value to show fuzzy factory counts below this you will get ???
+	CIVILIAN_SUPPLY_RANGE_INTEL_MAX = 0.6, -- maximum value to show fuzzy factory counts. above this you will get full count
 	CIVILIAN_SUPPLY_INTEL_RANGE_AT_LOWEST_INTEL = 0.5, -- range of intel values at lowest intel
 	COUNTRY_LEVEL_INTEL_MAXIMUMS = {			-- The maximum intel a country can have over another
 		100.0, -- Civilian
@@ -4289,24 +4289,24 @@ NIntel = {
 	},
 
 	-- intel ledger defines
-	CIVILIAN_PRODUCTION_RANGE_INTEL_MIN = 0.1, -- minimum value to show fuzzy factory counts below this you will get ???
-	CIVILIAN_PRODUCTION_RANGE_INTEL_MAX = 0.5, -- maximum value to show fuzzy factory counts. above this you will get full count
+	CIVILIAN_PRODUCTION_RANGE_INTEL_MIN = 0.3, -- minimum value to show fuzzy factory counts below this you will get ???
+	CIVILIAN_PRODUCTION_RANGE_INTEL_MAX = 0.8, -- maximum value to show fuzzy factory counts. above this you will get full count
 	CIVILIAN_PRODUCTION_INTEL_RANGE_AT_LOWEST_INTEL = 0.5, -- range of intel values at lowest intel
 	
 	CIVILIAN_FUEL_RANGE_INTEL_MIN = 0.3, -- minimum value to show fuzzy factory counts below this you will get ???
 	CIVILIAN_FUEL_RANGE_INTEL_MAX = 0.7, -- maximum value to show fuzzy factory counts. above this you will get full count
 	CIVILIAN_FUEL_INTEL_RANGE_AT_LOWEST_INTEL = 0.5, -- range of intel values at lowest intel
 	
-	CIVILIAN_MANPOWER_RANGE_INTEL_MIN = 0.1, -- minimum value to show fuzzy factory counts below this you will get ???
+	CIVILIAN_MANPOWER_RANGE_INTEL_MIN = 0.2, -- minimum value to show fuzzy factory counts below this you will get ???
 	CIVILIAN_MANPOWER_RANGE_INTEL_MAX = 0.7, -- maximum value to show fuzzy factory counts. above this you will get full count
 	CIVILIAN_MANPOWER_INTEL_RANGE_AT_LOWEST_INTEL = 0.5, -- range of intel values at lowest intel
 	
-	CIVILIAN_CONVOYS_RANGE_INTEL_MIN = 0.1, -- minimum value to show fuzzy factory counts below this you will get ???
+	CIVILIAN_CONVOYS_RANGE_INTEL_MIN = 0.3, -- minimum value to show fuzzy factory counts below this you will get ???
 	CIVILIAN_CONVOYS_INTEL_RANGE_AT_LOWEST_INTEL = 0.5, -- range of intel values at lowest intel
 	
-	CIVILIAN_TRADE_SHOW_TRADE_AMOUNTS = 0.0, -- minimum value to show how much a country trades a resource
-	CIVILIAN_TRADE_SHOW_TRADE_PARTNERS = 0.1, -- minimum value to show who a country trades with
-	CIVILIAN_MIN_INTEL_FOR_RESOURCE_ROUTES_TOOLTIPS = 0.9, -- minimum value to show convoy routes for resource transfer
+	CIVILIAN_TRADE_SHOW_TRADE_AMOUNTS = 0.2, -- minimum value to show how much a country trades a resource
+	CIVILIAN_TRADE_SHOW_TRADE_PARTNERS = 0.3, -- minimum value to show who a country trades with
+	CIVILIAN_MIN_INTEL_FOR_RESOURCE_ROUTES_TOOLTIPS = 0.8, -- minimum value to show convoy routes for resource transfer
 	CIVILIAN_MIN_INTEL_FOR_TRADE_ROUTES = 0.7, -- minimum value to show trade routes on map
 	CIVILIAN_MIN_INTEL_FOR_RESOURCE_ORIGIN_ROUTES = 0.5, -- minimum value to show resource transfers to mainland on map
 	
@@ -4328,26 +4328,26 @@ NIntel = {
 	INTEL_TO_SHOW_PREVIOUSLY_RESEARCHED = { 0.7, 0.7, 0.7, 0.7 }, -- minimum value to show previously researched tech
 	INTEL_TO_SHOW_CURRENTLY_RESEARCHED = { 0.8, 0.8, 0.8, 0.8 }, -- minimum value to show currently being researched tech
 	
-	INTEL_TO_SHOW_IDEAS = { 0.0, 0.0, 0.0, 0.0 },
+	INTEL_TO_SHOW_IDEAS = { 0.2, 0.4, 0.4, 0.4 },
 	
-	ARMY_ARMY_COUNT_RANGE_INTEL_MIN = 0.05,
+	ARMY_ARMY_COUNT_RANGE_INTEL_MIN = 0.3,
 	ARMY_ARMY_COUNT_RANGE_INTEL_MAX = 0.7,
 	ARMY_ARMY_COUNT_RANGE_INTEL_RANGE_AT_LOWEST_INTEL = 0.8,
 	
 	ARMY_SPECIAL_FORCES_COUNT_RANGE_INTEL_RANGE_AT_LOWEST_INTEL = 0.7,
 	
-	ARMY_DEPLOYED_MANPOWER_COUNT_RANGE_INTEL_MIN = 0.1,
+	ARMY_DEPLOYED_MANPOWER_COUNT_RANGE_INTEL_MIN = 0.3,
 	ARMY_DEPLOYED_MANPOWER_COUNT_RANGE_INTEL_MAX = 0.7,
 	ARMY_DEPLOYED_MANPOWER_COUNT_RANGE_INTEL_RANGE_AT_LOWEST_INTEL = 0.5,
 	ARMY_MIN_INTEL_TO_SHOW_EQUIPMENT_RATIO = 0.7,
 	
-	ARMY_MIN_INTEL_TO_SHOW_BASIC_TEMPLATE_INFO = 0.3,
+	ARMY_MIN_INTEL_TO_SHOW_BASIC_TEMPLATE_INFO = 0.4,
 	ARMY_TEMPLATE_UNIT_COUNT_INTEL_MIN = 0.5,
 	ARMY_TEMPLATE_UNIT_COUNT_INTEL_MAX = 0.7,
 	ARMY_TEMPLATE_UNIT_COUNT_INTEL_RANGE_AT_LOWEST_INTEL = 1.0,
 	ARMY_MIN_INTEL_TO_SHOW_EXACT_TEMPLATE_INFO = 0.8,
 	
-	ARMY_STOCKPILE_COUNT_INTEL_MIN = 0.3,
+	ARMY_STOCKPILE_COUNT_INTEL_MIN = 0.4,
 	ARMY_STOCKPILE_COUNT_INTEL_MAX = 0.7,
 	ARMY_STOCKPILE_COUNT_INTEL_RANGE_AT_LOWEST_INTEL = 0.5,
 	
@@ -4356,43 +4356,43 @@ NIntel = {
 	ARMY_MIN_INTEL_RATIO_NEEDED_FOR_DISPLAYING_FAKE_ENEMY_INTEL_IN_LEDGER = 0.9,
 	ARMY_MIN_INTEL_RATIO_NEEDED_FOR_REVEALING_FAKE_ENEMY_INTEL = 0.9,
 	
-	ARMY_INTEL_COMBAT_BONUS_MAX_BONUS = 0.08, -- max combat bonus that will apply when intel is high enough
-	ARMY_INTEL_COMBAT_BONUS_FACTOR_ATTACK = 1.0, -- multiplier for attack value of intel combat bonus
-	ARMY_INTEL_COMBAT_BONUS_FACTOR_DEFENSE = 1.0, -- multiplier for defense value of intel combat bonus
+	ARMY_INTEL_COMBAT_BONUS_MAX_BONUS = 0.10, -- max combat bonus that will apply when intel is high enough
+	ARMY_INTEL_COMBAT_BONUS_FACTOR_ATTACK = 1.25, -- multiplier for attack value of intel combat bonus
+	ARMY_INTEL_COMBAT_BONUS_FACTOR_DEFENSE = 1.25, -- multiplier for defense value of intel combat bonus
 	
-	ARMY_INTEL_COMBAT_BONUS_MIN_INTEL_FOR_BONUS = 5, -- min intel needed to start applying ARMY_INTEL_COMBAT_BONUS_MAX_BONUS
-	ARMY_INTEL_COMBAT_BONUS_MAX_INTEL_FOR_BONUS = 50, -- intel needed to fully apply ARMY_INTEL_COMBAT_BONUS_MAX_BONUS
+	ARMY_INTEL_COMBAT_BONUS_MIN_INTEL_FOR_BONUS = 20, -- min intel needed to start applying ARMY_INTEL_COMBAT_BONUS_MAX_BONUS
+	ARMY_INTEL_COMBAT_BONUS_MAX_INTEL_FOR_BONUS = 60, -- intel needed to fully apply ARMY_INTEL_COMBAT_BONUS_MAX_BONUS
 
-	NAVAL_SUPREMACY_INTEL_LOW = 0.3,								-- we need more intel than this to get any supremacy
+	NAVAL_SUPREMACY_INTEL_LOW = 0.4,								-- we need more intel than this to get any supremacy
 	NAVAL_SUPREMACY_INTEL_LOW_SUPREMACY_PENALTY_START = 0.1,		-- supremacy is reduced to NAVAL_SUPREMACY_INTEL_LOW_SUPREMACY_MIN_PENALTY at or below this intel
 	NAVAL_SUPREMACY_INTEL_LOW_SUPREMACY_MIN_PENALTY = 0.5, -- you get this much supremacy at NAVAL_SUPREMACY_INTEL_LOW_SUPREMACY_PENALTY_START and scales up to 1 at NAVAL_SUPREMACY_INTEL_LOW
 	
-	NAVY_FLEET_COUNT_INTEL_MIN = 0.1,
-	NAVY_FLEET_COUNT_INTEL_MAX = 0.3,
-	NAVY_FLEET_COUNT_INTEL_RANGE_AT_LOWEST_INTEL = 0.5,
+	NAVY_FLEET_COUNT_INTEL_MIN = 0.5,
+	NAVY_FLEET_COUNT_INTEL_MAX = 0.7,
+	NAVY_FLEET_COUNT_INTEL_RANGE_AT_LOWEST_INTEL = 0.6,
 	
-	NAVY_TASKFORCE_COUNT_INTEL_MIN = 0.3,
+	NAVY_TASKFORCE_COUNT_INTEL_MIN = 0.5,
 	NAVY_TASKFORCE_COUNT_INTEL_MAX = 0.7,
-	NAVY_TASKFORCE_COUNT_INTEL_RANGE_AT_LOWEST_INTEL = 0.5,
+	NAVY_TASKFORCE_COUNT_INTEL_RANGE_AT_LOWEST_INTEL = 0.6,
 	
-	NAVY_SHIP_COUNT_INTEL_MIN = 0.1,
+	NAVY_SHIP_COUNT_INTEL_MIN = 0.4,
 	NAVY_SHIP_COUNT_INTEL_MAX = 0.8,
 	NAVY_SHIP_COUNT_INTEL_RANGE_AT_LOWEST_INTEL = 0.5,
 	
-	NAVY_MIN_INTEL_TO_SHOW_EXISTING_CATEGORY_TYPES = 0.1,   --this is about disaplying ships by class category
-	NAVY_SHIP_TYPE_COUNT_INTEL_MIN = 0.3,					--this range is used both when for disaplying counts by class and counts by variant					
-	NAVY_SHIP_TYPE_COUNT_INTEL_MAX = 0.7,
+	NAVY_MIN_INTEL_TO_SHOW_EXISTING_CATEGORY_TYPES = 0.5,   --this is about disaplying ships by class category
+	NAVY_SHIP_TYPE_COUNT_INTEL_MIN = 0.4,					--this range is used both when for disaplying counts by class and counts by variant					
+	NAVY_SHIP_TYPE_COUNT_INTEL_MAX = 0.8,
 	NAVY_SHIP_TYPE_COUNT_INTEL_RANGE_AT_LOWEST_INTEL = 0.5,
 	
 	NAVY_MIN_INTEL_TO_SHOW_SHIP_CLASSES = 0.5, --this unclocks the display of a given variant
-	NAVY_DEPLOYED_MANPOWER_COUNT_RANGE_INTEL_MIN = 0.05,
+	NAVY_DEPLOYED_MANPOWER_COUNT_RANGE_INTEL_MIN = 0.25,
 	NAVY_DEPLOYED_MANPOWER_COUNT_RANGE_INTEL_MAX = 0.7,
 	NAVY_DEPLOYED_MANPOWER_COUNT_RANGE_INTEL_RANGE_AT_LOWEST_INTEL = 0.5,
 	
 	NAVY_MIN_INTEL_TO_SHOW_SHIP_DESIGN_DETAILS = 0.8,
 	
-	AIR_AIRWING_COUNT_INTEL_MIN = 0.0,
-	AIR_AIRWING_COUNT_INTEL_MAX = 0.7,
+	AIR_AIRWING_COUNT_INTEL_MIN = 0.4,
+	AIR_AIRWING_COUNT_INTEL_MAX = 0.8,
 	AIR_AIRWING_COUNT_INTEL_RANGE_AT_LOWEST_INTEL = 0.5,
 	
 	AIR_MIN_INTEL_TO_SHOW_AIRWING_CLASSES = 0.3,
@@ -4400,7 +4400,7 @@ NIntel = {
 	AIR_WING_TYPE_COUNT_INTEL_MAX = 0.7,
 	AIR_WING_TYPE_COUNT_INTEL_RANGE_AT_LOWEST_INTEL = 0.5,
 	
-	AIR_DEPLOYED_MANPOWER_COUNT_RANGE_INTEL_MIN = 0.1,
+	AIR_DEPLOYED_MANPOWER_COUNT_RANGE_INTEL_MIN = 0.3,
 	AIR_DEPLOYED_MANPOWER_COUNT_RANGE_INTEL_MAX = 0.7,
 	AIR_DEPLOYED_MANPOWER_COUNT_RANGE_INTEL_RANGE_AT_LOWEST_INTEL = 0.5,
 
@@ -4434,10 +4434,10 @@ NIntel = {
 	NAVY_MAPICON_MISSION_COUNT_INTEL_MIN = 0.5,  -- min intel to show assigned naval missions
 	NAVY_MAPICON_MISSION_COUNT_INTEL_MAX = 0.8,  -- min intel to show assigned naval missions with perfect accuracy, and taskforces count
 
-	NAVY_MAPICON_SHOW_ALL_NAVAL_PORTS = 0.3,  -- min intel to show all naval ports (otherwise you will only see nearby ones)
+	NAVY_MAPICON_SHOW_ALL_NAVAL_PORTS = 0.4,  -- min intel to show all naval ports (otherwise you will only see nearby ones)
 	NAVY_MAPICON_NAVAL_PORT_VISIBILITY_DETAIL_THRESHOLDS = { -- how detailed the post tooltips will be
 		0.0,	-- for no intel
-		0.1,	-- show port level
+		0.3,	-- show port level
 		0.3,	-- show fuzzy taskforce count
 		0.7,	-- show full taskforce count
 		0.8,	-- show taskforce details
