@@ -4297,17 +4297,17 @@ NIntel = {
 	CIVILIAN_FUEL_RANGE_INTEL_MAX = 0.7, -- maximum value to show fuzzy factory counts. above this you will get full count
 	CIVILIAN_FUEL_INTEL_RANGE_AT_LOWEST_INTEL = 0.5, -- range of intel values at lowest intel
 	
-	CIVILIAN_MANPOWER_RANGE_INTEL_MIN = 0.2, -- minimum value to show fuzzy factory counts below this you will get ???
+	CIVILIAN_MANPOWER_RANGE_INTEL_MIN = 0.3, -- minimum value to show fuzzy factory counts below this you will get ???
 	CIVILIAN_MANPOWER_RANGE_INTEL_MAX = 0.7, -- maximum value to show fuzzy factory counts. above this you will get full count
 	CIVILIAN_MANPOWER_INTEL_RANGE_AT_LOWEST_INTEL = 0.5, -- range of intel values at lowest intel
 	
 	CIVILIAN_CONVOYS_RANGE_INTEL_MIN = 0.3, -- minimum value to show fuzzy factory counts below this you will get ???
 	CIVILIAN_CONVOYS_INTEL_RANGE_AT_LOWEST_INTEL = 0.5, -- range of intel values at lowest intel
 	
-	CIVILIAN_TRADE_SHOW_TRADE_AMOUNTS = 0.2, -- minimum value to show how much a country trades a resource
+	CIVILIAN_TRADE_SHOW_TRADE_AMOUNTS = 0.3, -- minimum value to show how much a country trades a resource
 	CIVILIAN_TRADE_SHOW_TRADE_PARTNERS = 0.3, -- minimum value to show who a country trades with
-	CIVILIAN_MIN_INTEL_FOR_RESOURCE_ROUTES_TOOLTIPS = 0.8, -- minimum value to show convoy routes for resource transfer
-	CIVILIAN_MIN_INTEL_FOR_TRADE_ROUTES = 0.7, -- minimum value to show trade routes on map
+	CIVILIAN_MIN_INTEL_FOR_RESOURCE_ROUTES_TOOLTIPS = 0.6, -- minimum value to show convoy routes for resource transfer
+	CIVILIAN_MIN_INTEL_FOR_TRADE_ROUTES = 0.6, -- minimum value to show trade routes on map
 	CIVILIAN_MIN_INTEL_FOR_RESOURCE_ORIGIN_ROUTES = 0.5, -- minimum value to show resource transfers to mainland on map
 	
 	ARMY_MIN_INTEL_FOR_SUPPLY_ROUTES = 0.5, -- minimum value to show convoy routes for supply transfer
@@ -4382,10 +4382,10 @@ NIntel = {
 	NAVY_MIN_INTEL_TO_SHOW_EXISTING_CATEGORY_TYPES = 0.5,   --this is about disaplying ships by class category
 	NAVY_SHIP_TYPE_COUNT_INTEL_MIN = 0.4,					--this range is used both when for disaplying counts by class and counts by variant					
 	NAVY_SHIP_TYPE_COUNT_INTEL_MAX = 0.8,
-	NAVY_SHIP_TYPE_COUNT_INTEL_RANGE_AT_LOWEST_INTEL = 0.5,
+	NAVY_SHIP_TYPE_COUNT_INTEL_RANGE_AT_LOWEST_INTEL = 0.4,
 	
 	NAVY_MIN_INTEL_TO_SHOW_SHIP_CLASSES = 0.5, --this unclocks the display of a given variant
-	NAVY_DEPLOYED_MANPOWER_COUNT_RANGE_INTEL_MIN = 0.30,
+	NAVY_DEPLOYED_MANPOWER_COUNT_RANGE_INTEL_MIN = 0.20,
 	NAVY_DEPLOYED_MANPOWER_COUNT_RANGE_INTEL_MAX = 0.7,
 	NAVY_DEPLOYED_MANPOWER_COUNT_RANGE_INTEL_RANGE_AT_LOWEST_INTEL = 0.5,
 	
