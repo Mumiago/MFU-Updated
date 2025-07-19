@@ -3926,8 +3926,8 @@ NOperatives = {
 	INTEL_NETWORK_SUB_NETWORK_STRENGTH_TO_DETECTION_CHANCE_FACTOR = 0.1,	-- multiplied to the network strength (a value in range [0, 100]
 	INTEL_NETWORK_SUB_NETWORK_NATIONAL_COVERAGE_TO_DETECTION_CHANCE_FACTOR = 3.0,	-- multiplied to the contribution to the national coverage of the sub network (a value in range [0, 1])
 	INTEL_NETWORK_DETECTION_GLOBAL_FACTOR = 0.01,				-- global factor multiplied to the detection chance before it is multiplied a dice roll in the range [0,1000)
-	BUILD_INTEL_NETWORK_DAILY_XP_GAIN = 1,
-	QUIET_INTEL_NETWORK_DAILY_XP_GAIN =  0.112,
+	BUILD_INTEL_NETWORK_DAILY_XP_GAIN = 2.25,
+	QUIET_INTEL_NETWORK_DAILY_XP_GAIN =  0.55,
 	OPERATIVE_MISSION_DETECTION_CHANCE_FACTOR = {
 		-- Factor multiplied to the detection chance of an agent on mission before the offsets
 		0.0, -- NoMission
@@ -3952,18 +3952,18 @@ NOperatives = {
 
 	INTEL_NETWORK_MIN_DEFAULT_FOR_SHOWING = 25,              -- default min level for networks used to filter operation requirements if not overriden
 
-	OPERATIVE_BASE_INTEL_NETWORK_GAIN = 0.3,				-- Base amount of network strength gain per day provided by an operative
+	OPERATIVE_BASE_INTEL_NETWORK_GAIN = 0.35,				-- Base amount of network strength gain per day provided by an operative
 	OPERATIVE_MAX_INTEL_NETWORK_GAIN = -1.0,				-- Max amount of network strength gain per day provided by an operative after modifiers have been applied (negative value means no max)
 	COUNTER_INTELLIGENCE_FOREIGN_AGENT_FACTOR = 0.0,			-- Multiplier to the counter intelligence provided by foreign (ally) operatives
 	COUNTER_INTELLIGENCE_STACKING_FACTOR = 0.55,				-- Multiplier applied to each operative after the first one. So if we have the following counter intelligence rating values [ 0.1, 0.3, 0.2 ], the factor is applied twice for the lowest value and once for the 2nd lowest one as such : [ 0.3, 0.2 * D, 0.1 * D * D ] and then the result is summed up to give the final rating value
 	COUNTER_INTELLIGENCE_TO_DEFENSE_LOG_FACTOR = 0.0,			-- Defense = LogFactor * log( 1 + CounterIntelligence ) + CounterIntelligence / Divisor
 	COUNTER_INTELLIGENCE_TO_DEFENSE_DIVISOR = 1.0,				-- see above
-	COUNTER_INTELLIGENCE_DAILY_XP_GAIN = 0.112,
+	COUNTER_INTELLIGENCE_DAILY_XP_GAIN = 0.625,
 	BOOST_IDEOLOGY_NATIONAL_COVERAGE_FACTOR = 1.0,				-- used to compute the drift factor as follow: BASE * SUB_NETWORK_NC * BOOST_IDEOLOGY_DEFENSE_FACTOR
 	BOOST_IDEOLOGY_MAX_DRIFT_BY_OPERATIVE = 0.25,				-- the maximum drift an operative can cause, a negative value means no maximum
 	BOOST_IDEOLOGY_DRIFT_STACKING_FACTOR = 0.5,				-- multiplied to the drift of an operative for each operative after the first one, with the greatest drift. So if we have the following drift values [ 0.1, 0.3, 0.2 ], the factor is applied twice for the lowest value and once for the 2nd lowest one as such : [ 0.3, 0.2 * D, 0.1 * D * D ] and then the result is summed up to give the final drift value.
 	BOOST_IDEOLOGY_DEFENSE_FACTOR = 0.2,					-- multiplied to the target's defense to get the amount of drift to remove from each operative's drift
-	BOOST_IDEOLOGY_DAILY_XP_GAIN = 0.274,
+	BOOST_IDEOLOGY_DAILY_XP_GAIN = 0.3,
 	OPERATIVE_BASE_INTEL_AGENCY_DEFENSE = 1.0,				-- Base amount of intel agency defense contributed by an operative on counter_intelligence mission
 	OPERATIVE_BASE_BOOST_IDEOLOGY = 0.0,					-- Base amount of daily ideology drift provoked by an operative
 	OPERATIVE_BASE_PROPAGANDA_POWER = 0.0,					-- Base amount of daily war support and stability change when an operative is assigned to propaganda
@@ -3975,12 +3975,12 @@ NOperatives = {
 	OPERATIVE_BASE_ROOT_OUT_RESISTANCE_EFFICIENCY = 1.0,			-- The base efficiency of an operative at the RootOutResistance mission (this is a percentage, 1.0 == 100%)
 	ROOT_OUT_RESISTANCE_STACKING_FACTOR = 0.5,				-- Multiplied to each operative efficiency after the first one
 	ROOT_OUT_RESISTANCE_RANGE_STEP_FACTOR = 0.5,				-- Multiplied to the summed up efficiency from all operative operating in a same state to determine the efficiency in neighboring states
-	ROOT_OUT_RESISTANCE_DAILY_XP_GAIN = 0.08,
+	ROOT_OUT_RESISTANCE_DAILY_XP_GAIN = 0.75,
 	OPERATIVE_BASE_CONTROL_TRADE_DRIFT = 0.80,				-- The base daily drift in trade influence caused by an operative
 	CONTROL_TRADE_STACKING_FACTOR = 0.6,					-- Multiplied to the drift of each operative after the first one
-	CONTROL_TRADE_MAX_INFLUENCE = 50.0,					-- The maximum amount of trade influence that can be gained through the control trade mission
-	CONTROL_TRADE_INFLUENCE_DAILY_DECAY = 0.1,				-- The amount of trade influence lost when no operative are assigned to the mission
-	CONTROL_TRADE_DAILY_XP_GAIN = 0.162,
+	CONTROL_TRADE_MAX_INFLUENCE = 75.0,					-- The maximum amount of trade influence that can be gained through the control trade mission
+	CONTROL_TRADE_INFLUENCE_DAILY_DECAY = 0.06,				-- The amount of trade influence lost when no operative are assigned to the mission
+	CONTROL_TRADE_DAILY_XP_GAIN = 0.425,
 	OPERATIVE_BASE_DIPLOMATIC_PRESSURE_AI_ACCEPTANCE_SCORE_DRIFT = 0.4,	-- The daily change in the amount of opinion requiered to join a faction
 	OPERATIVE_BASE_DIPLOMATIC_PRESSURE_TENSION_REQUIREMENTS_DRIFT = 0.001,	-- The daily change in world tension requiered to join a faction
 	DIPLOMATIC_PRESSURE_MAX_AI_ACCEPTANCE_SCORE_INCREASE = 20.0,	-- the maximum amount of ai acceptance score from diplomatic pressure
@@ -3988,13 +3988,13 @@ NOperatives = {
 	DIPLOMATIC_PRESSURE_OPERATIVE_STACKING_FACTOR = 0.5,		-- The diminishing return factor to apply to operative working for the same faction after the first one. Operatives operating for a same faction are ranked by their efficiency and their opinion and tension drift are individually applyied a stacking factor like so: DRIFT * STACKING_FACTOR^RANK where RANK is a value from 0 to the number of operative -1 where the opperative with the highest drift value has rank 0
 	DIPLOMATIC_PRESSURE_AI_ACCEPTANCE_SCORE_DECAY = 0.4,			-- daily decay when the mission is not active
 	DIPLOMATIC_PRESSURE_TENSION_REQUIREMENTS_DECAY = 0.001,			--
-	DIPLOMATIC_PRESSURE_DAILY_XP_GAIN = 0.137,
+	DIPLOMATIC_PRESSURE_DAILY_XP_GAIN = 0.325,
 	MIN_NATIONAL_COVERAGE_FOR_BOOST_IDEOLOGY = 0.01,			-- Minimum network coverage required to start the mission (the code ensures that a network exists at all)
 	MIN_NATIONAL_COVERAGE_FOR_PROPAGANDA = 0.01,			-- Minimum network coverage required to start the mission (the code ensures that a network exists at all)
-	OPERATIVE_MIN_DAYS_HARMED = 30,						-- Minimum number of days an operative can be harmed. Applied after modifiers. Can be zero.
-	OPERATIVE_MAX_DAYS_HARMED = 120,						-- Maximum number of days an operative can be harmed. Applied after modifiers. Is ignored if negative
+	OPERATIVE_MIN_DAYS_HARMED = 14,						-- Minimum number of days an operative can be harmed. Applied after modifiers. Can be zero.
+	OPERATIVE_MAX_DAYS_HARMED = 135,						-- Maximum number of days an operative can be harmed. Applied after modifiers. Is ignored if negative
 	OPERATIVE_MIN_DAYS_FORCED_INTO_HIDING = 7,				-- Minimum number of days an operative can be forced into hiding. Applied after modifiers. Can be zero.
-	OPERATIVE_MAX_DAYS_FORCED_INTO_HIDING = 120,				-- Maximum number of days an operative can be forced into hiding. Applied after modifiers. Is ignored if negative
+	OPERATIVE_MAX_DAYS_FORCED_INTO_HIDING = 135,				-- Maximum number of days an operative can be forced into hiding. Applied after modifiers. Is ignored if negative
 	OPERATIVE_MAX_DAYS_TO_AUTO_RESUME_MISSION = 30,				-- Maximum number of days an operative has to be disabled before its mission is not automatically resumed once he is available again
 	MAX_RECRUITED_OPERATIVES = 10,
 	
@@ -4005,7 +4005,7 @@ NOperatives = {
 	CYRPTO_ACTIVE_BONUS_ACTIVATION_PROGRESS_RATIO = 0.5,	-- once bonus is activated, decryption progress will be reduced to this ratio
 	
 	OPERATION_AI_MINIMUM_SCORE = 10.0,						-- Once an operation's AI weight falls below the minimum score it will be scrapped if it is being prepared
-	OPERATION_COMPLETION_XP = 20,
+	OPERATION_COMPLETION_XP = 75,
 
 	OPERATIVE_CAPTURE_DURATION_IN_DAYS = 9*30,
 	
