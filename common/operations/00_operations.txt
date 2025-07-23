@@ -2637,3 +2637,141 @@ operation_steal_tech_special_project = { ### 17 3/55
 		exfiltration_submarine_pickup = { base = 15 }
 	}
 }
+
+Operation_ass_unit_leader = { ### 0 1/35
+	icon = GFX_operations_infiltrate_civilian_govt
+	map_icon = GFX_operations_infiltrate_civilian_govt_map
+	name = "Military Staff Assassination"
+	desc = Operation_ass_unit_leader_desc
+	priority = 14
+
+
+	days = 120
+	network_strength = 60
+	operatives = 3
+
+	risk_chance = 0.4
+	cost_multiplier = 0.1
+
+	visible = {
+		network_national_coverage = {
+			target = FROM
+			value > 0
+		}
+		has_operation_token = {
+			tag = FROM
+			token = token_army
+		}
+		is_spymaster = yes
+		is_major = yes
+		Not = {
+			original_tag = FRA
+		}
+	}
+
+	available = {
+		has_war = yes
+		has_operation_token = {
+			tag = FROM
+			token = token_army
+		}
+		is_spymaster = yes
+	}
+
+	required_tokens = {
+		token_army
+	}
+
+
+	risk_modifiers = { operation_infiltrate_risk operation_grooming_risk operation_risk target_sabotage_risk }
+	outcome_modifiers = { operation_grooming_outcome operation_outcome operation_infiltrate_outcome }
+	cost_modifiers = { operation_cost target_sabotage_cost }
+
+
+	outcome_execute = { 
+		FROM = {
+			random_army_leader = {
+				retire = yes
+			}
+			custom_effect_tooltip = successful_assasination
+		}
+		ROOT = {
+			remove_operation_token = {
+				tag = FROM
+				token = token_army
+			}
+		}
+	}
+	outcome_extra_execute = { 
+		random_list = {
+			20 = {
+				FROM = { 
+					random_army_leader = {
+						retire = yes
+					}
+				}
+				custom_effect_tooltip = successful_assasination
+			}
+			80 = {
+				FROM = {
+					random_army_leader = {
+						retire = no
+					}
+					custom_effect_tooltip = failed_assasination
+				}
+			}
+		}
+		ROOT = {
+			remove_operation_token = {
+				tag = FROM
+				token = token_army
+			}
+		}
+	}
+	outcome_potential = {
+		FROM = {
+			random_army_leader = {
+				retire = yes
+			}
+		}
+		custom_effect_tooltip = operation_outcome_consumes_token_tt
+		ROOT = {
+			remove_operation_token = {
+				tag = FROM
+				token = token_army
+			}
+		}
+	}
+
+	phases = { #infiltration
+		infiltration_border = { base = 25 }
+		infiltration_paradrop = { 
+			base = 50
+		}
+		infiltration_diplomatic = {
+			base = 25
+			modifier = {
+				factor = 20
+				ROOT = { has_war = no }
+				FROM = {
+					has_war = no
+				}
+			}
+			modifier = {
+				FROM = {
+					has_war_with = ROOT
+				}
+				factor = 0
+			}
+		}
+	}
+	phases = {
+		targeted_sabotage_destroy_bridge = { base = 30 }
+		targeted_sabotage_collapse_tunnel = { base = 30 }
+		targeted_sabotage_remove_roadsigns = { base = 40 }
+	}
+	phases = { #exfiltration
+		exfiltration_border = { base = 50 }
+		exfiltration_go_to_ground = { base = 50 }
+	}
+}
