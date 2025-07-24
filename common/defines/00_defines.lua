@@ -3893,7 +3893,7 @@ NOperatives = {
 	MAX_OPERATIVE_SLOT_FROM_AGENCY_UPGRADES = 2,	-- max operative slots gained from upgrades
 	AGENCY_OPERATIVE_RECRUITMENT_TIME = 30,			-- Number of days to wait to have operative to recruit when an operative slot first becomes available
 	BECOME_SPYMASTER_PP_COST = 50,					-- Number of political power used to become Spy Master
-	BECOME_SPYMASTER_MIN_UPGRADES = 4,				-- Number of agency upgrades you need before becoming Spy Master
+	BECOME_SPYMASTER_MIN_UPGRADES = 7,				-- Number of agency upgrades you need before becoming Spy Master
 	BASE_COUNTER_INTELLIGENCE_RATING = 0.0,					-- Base national counter intelligence rating for all countries
 	AGENCY_DEFENSE_EFFECT_ON_HOSTILE_ACTION_COST = 0.2,			-- Defense factor that is responsible for multiplying the cost hostile actions against our country by its level and this value
 	INTEL_NETWORK_GAIN_RATE_ON_WRONG_CONTROLLER = -10.0,			-- Amount of network strength lost in a state when it does not have the right controller anymore
@@ -3926,7 +3926,7 @@ NOperatives = {
 	INTEL_NETWORK_SUB_NETWORK_STRENGTH_TO_DETECTION_CHANCE_FACTOR = 0.1,	-- multiplied to the network strength (a value in range [0, 100]
 	INTEL_NETWORK_SUB_NETWORK_NATIONAL_COVERAGE_TO_DETECTION_CHANCE_FACTOR = 3.0,	-- multiplied to the contribution to the national coverage of the sub network (a value in range [0, 1])
 	INTEL_NETWORK_DETECTION_GLOBAL_FACTOR = 0.01,				-- global factor multiplied to the detection chance before it is multiplied a dice roll in the range [0,1000)
-	BUILD_INTEL_NETWORK_DAILY_XP_GAIN = 2.25,
+	BUILD_INTEL_NETWORK_DAILY_XP_GAIN = 1.65,
 	QUIET_INTEL_NETWORK_DAILY_XP_GAIN =  0.55,
 	OPERATIVE_MISSION_DETECTION_CHANCE_FACTOR = {
 		-- Factor multiplied to the detection chance of an agent on mission before the offsets
@@ -3958,7 +3958,7 @@ NOperatives = {
 	COUNTER_INTELLIGENCE_STACKING_FACTOR = 0.55,				-- Multiplier applied to each operative after the first one. So if we have the following counter intelligence rating values [ 0.1, 0.3, 0.2 ], the factor is applied twice for the lowest value and once for the 2nd lowest one as such : [ 0.3, 0.2 * D, 0.1 * D * D ] and then the result is summed up to give the final rating value
 	COUNTER_INTELLIGENCE_TO_DEFENSE_LOG_FACTOR = 0.0,			-- Defense = LogFactor * log( 1 + CounterIntelligence ) + CounterIntelligence / Divisor
 	COUNTER_INTELLIGENCE_TO_DEFENSE_DIVISOR = 1.0,				-- see above
-	COUNTER_INTELLIGENCE_DAILY_XP_GAIN = 0.625,
+	COUNTER_INTELLIGENCE_DAILY_XP_GAIN = 0.55,
 	BOOST_IDEOLOGY_NATIONAL_COVERAGE_FACTOR = 1.0,				-- used to compute the drift factor as follow: BASE * SUB_NETWORK_NC * BOOST_IDEOLOGY_DEFENSE_FACTOR
 	BOOST_IDEOLOGY_MAX_DRIFT_BY_OPERATIVE = 0.25,				-- the maximum drift an operative can cause, a negative value means no maximum
 	BOOST_IDEOLOGY_DRIFT_STACKING_FACTOR = 0.5,				-- multiplied to the drift of an operative for each operative after the first one, with the greatest drift. So if we have the following drift values [ 0.1, 0.3, 0.2 ], the factor is applied twice for the lowest value and once for the 2nd lowest one as such : [ 0.3, 0.2 * D, 0.1 * D * D ] and then the result is summed up to give the final drift value.
@@ -3975,7 +3975,7 @@ NOperatives = {
 	OPERATIVE_BASE_ROOT_OUT_RESISTANCE_EFFICIENCY = 1.0,			-- The base efficiency of an operative at the RootOutResistance mission (this is a percentage, 1.0 == 100%)
 	ROOT_OUT_RESISTANCE_STACKING_FACTOR = 0.5,				-- Multiplied to each operative efficiency after the first one
 	ROOT_OUT_RESISTANCE_RANGE_STEP_FACTOR = 0.5,				-- Multiplied to the summed up efficiency from all operative operating in a same state to determine the efficiency in neighboring states
-	ROOT_OUT_RESISTANCE_DAILY_XP_GAIN = 0.75,
+	ROOT_OUT_RESISTANCE_DAILY_XP_GAIN = 0.621,
 	OPERATIVE_BASE_CONTROL_TRADE_DRIFT = 0.80,				-- The base daily drift in trade influence caused by an operative
 	CONTROL_TRADE_STACKING_FACTOR = 0.6,					-- Multiplied to the drift of each operative after the first one
 	CONTROL_TRADE_MAX_INFLUENCE = 75.0,					-- The maximum amount of trade influence that can be gained through the control trade mission
@@ -4316,7 +4316,7 @@ NIntel = {
 	CIVILIAN_INTEL_NEEDED_TO_SHOW_ANTI_AIR_REDUCTION = 0.3, -- minimum value to show anti air damage reduction
 
 	CIVILIAN_INTEL_NEEDED_TO_SHOW_FOCUS_TREE = 0.7, -- min required intel to focus tree with taken focuses
-	CIVILIAN_INTEL_NEEDED_TO_SHOW_CURRENT_FOCUS = 0.3,  -- min required intel to show currently focus
+	CIVILIAN_INTEL_NEEDED_TO_SHOW_CURRENT_FOCUS = 0.4,  -- min required intel to show currently focus
 	CIVILIAN_INTEL_NEEDED_TO_SHOW_CURRENT_FOCUS_PROGRESS = 0.5,  -- min required intel to show current focus progress
 	
 	CIVILIAN_MIN_INTEL_TO_SHOW_INDUSTRY_GRAPH = 0.30,
