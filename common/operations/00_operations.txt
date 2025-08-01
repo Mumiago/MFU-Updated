@@ -2319,124 +2319,6 @@ operation_steal_tech_electronics = { ### 17 3/55
 	}
 }
 
-operation_maped_sites = { ### 17 3/55
-	icon = GFX_operations_coordinated_strike
-	map_icon = GFX_operations_coordinated_strike_map
-	name = "Gather Intelligence on Research Facilities"
-	desc = operation_map_sites_desc
-	priority = 14
-
-	days = 180
-	network_strength = 50
-	operatives = 2
-	cost_multiplier = 0.1
-
-	visible = {
-		num_of_operatives > 1
-		network_national_coverage = {
-			target = FROM
-			value > 0
-		}
-	}
-
-	equipment = {
-		transport_plane_equipment = 10
-	}
-
-	required_tokens = {
-		
-	}
-
-	risk_chance = 0.3
-	experience = 2
-
-	outcome_extra_chance = 0
-	risk_modifiers = { operation_infiltrate_risk operation_grooming_risk operation_risk }
-	outcome_modifiers = { operation_grooming_outcome operation_outcome }
-	cost_modifiers = { operation_cost }
-
-	outcome_execute = {
-		ROOT = {
-			add_operation_token = {
-				tag = FROM
-				token = token_maped_site
-			}
-		}
-	}
-		outcome_extra_execute = { # SCOPE_OPERATION
-		random_list = {
-			40 = {
-				ROOT = {
-					add_intel = {
-						target = FROM
-						army_intel = 20
-					}
-				}
-			}
-			60 = {
-				ROOT = {
-					add_intel = {
-						target = FROM
-						army_intel = 10
-					}
-					}
-				}
-			}
-		}
-	phases = { #infiltration
-		infiltration_border = { base = 25 }
-		infiltration_submarine = { base = 25 }
-		infiltration_paradrop = { 
-			base = 25 
-			modifier = {
-				ROOT = { 
-					has_equipment = {
-						transport_plane_equipment < 1
-					}
-				}
-				factor = 0
-			}
-		}
-		infiltration_diplomatic = {
-			base = 25
-			modifier = {
-				factor = 20
-				ROOT = { has_war = no }
-				FROM = {
-					has_war = no
-				}
-			}
-			modifier = {
-				FROM = {
-					has_war_with = ROOT
-				}
-				factor = 0
-			}
-		}
-	}
-	phases = { #blueprint theft
-		steal_blueprints_bribe = { base = 40 }
-		steal_blueprints_seduction = { base = 40 }
-		steal_blueprints_infiltrate_naval_design_office = { base = 20 }
-	}
-	phases = { #exfiltration
-		exfiltration_air_pickup = { 
-			base = 15 
-			modifier = {
-				ROOT = { 
-					has_equipment = {
-						transport_plane_equipment < 1
-					}
-				}
-				factor = 0
-			}
-		}
-		exfiltration_border = { base = 30 }
-		exfiltration_go_to_ground = { base = 30 }
-		exfiltration_submarine_pickup = { base = 25 }
-	}
-}
-
 operation_steal_tech_special_project = { ### 17 3/55
 	icon = GFX_operations_steal_blueprints
 	map_icon = GFX_operations_steal_blueprints_map
@@ -2444,7 +2326,7 @@ operation_steal_tech_special_project = { ### 17 3/55
 	desc = operation_steal_tech_special_project_desc
 	priority = 17
 
-	days = 190
+	days = 160
 	network_strength = 60
 	operatives = 4
 	cost_multiplier = 0.05
@@ -2457,19 +2339,17 @@ operation_steal_tech_special_project = { ### 17 3/55
 		}
 		is_major = yes
 
-		has_operation_token = {
-			tag = FROM
-			token = token_maped_site
+		OR = {
+			FROM = {
+				is_special_project_being_researched = sp:sp_nuclear_bomb
+			}
+			FROM = {
+				is_special_project_completed = sp:sp_nuclear_bomb
+			}
 		}
 	}
 
 	requirements = {
-		FROM = {
-			OR = {
-				is_special_project_being_researched = sp:sp_nuclear_bomb
-				is_special_project_completed = sp:sp_nuclear_bomb
-			}
-		}
 
 	}
 
@@ -2478,7 +2358,6 @@ operation_steal_tech_special_project = { ### 17 3/55
 	}
 
 	required_tokens = {
-		token_maped_site
 	}
 
 	risk_chance = 0.6
@@ -2663,10 +2542,7 @@ Operation_ass_unit_leader = { ### 0 1/35
 			token = token_army
 		}
 		is_spymaster = yes
-		is_major = yes
-		Not = {
-			original_tag = FRA
-		}
+
 	}
 
 	available = {

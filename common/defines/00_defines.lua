@@ -3988,7 +3988,7 @@ NOperatives = {
 	DIPLOMATIC_PRESSURE_OPERATIVE_STACKING_FACTOR = 0.5,		-- The diminishing return factor to apply to operative working for the same faction after the first one. Operatives operating for a same faction are ranked by their efficiency and their opinion and tension drift are individually applyied a stacking factor like so: DRIFT * STACKING_FACTOR^RANK where RANK is a value from 0 to the number of operative -1 where the opperative with the highest drift value has rank 0
 	DIPLOMATIC_PRESSURE_AI_ACCEPTANCE_SCORE_DECAY = 0.4,			-- daily decay when the mission is not active
 	DIPLOMATIC_PRESSURE_TENSION_REQUIREMENTS_DECAY = 0.001,			--
-	DIPLOMATIC_PRESSURE_DAILY_XP_GAIN = 0.325,
+	DIPLOMATIC_PRESSURE_DAILY_XP_GAIN = 0.552,
 	MIN_NATIONAL_COVERAGE_FOR_BOOST_IDEOLOGY = 0.01,			-- Minimum network coverage required to start the mission (the code ensures that a network exists at all)
 	MIN_NATIONAL_COVERAGE_FOR_PROPAGANDA = 0.01,			-- Minimum network coverage required to start the mission (the code ensures that a network exists at all)
 	OPERATIVE_MIN_DAYS_HARMED = 14,						-- Minimum number of days an operative can be harmed. Applied after modifiers. Can be zero.
@@ -4103,7 +4103,7 @@ NIntel = {
 	STATIC_INTEL_SOURCE_OPERATION_TOKENS_MAXIMUMS = {},
 	STATIC_INTEL_SOURCE_BROKEN_CYPHER_MAXIMUMS = { 60.0, 60.0, 60.0, 60.0 },
 	STATIC_INTEL_SOURCE_RADAR_MAXIMUMS = { 10.0, 10.0, 20.0, 20.0 },
-	STATIC_INTEL_SOURCE_INTEL_NETWORK_MAXIMUMS = { 30.0, 30.0, 40.0, 30.0},
+	STATIC_INTEL_SOURCE_INTEL_NETWORK_MAXIMUMS = { 40.0, 40.0, 40.0, 40.0},
 
 	-- Dynamic intel pool can be manipulated through the following defines:
 	--
@@ -4170,8 +4170,8 @@ NIntel = {
 	DYNAMIC_INTEL_SOURCE_CAPTURED_OPERATIVE_MULT_DECAY = 0.95,
 	DYNAMIC_INTEL_SOURCE_CAPTURED_OPERATIVE_AGGREGAT_LOG_FACTOR = 1,
 	DYNAMIC_INTEL_SOURCE_CAPTURED_OPERATIVE_AGGREGAT_DIVISOR = 2,
-	DYNAMIC_INTEL_SOURCE_CAPTURED_OPERATIVE_MAXIMUMS = { 50, 40, 40, 30 },
-	DYNAMIC_INTEL_SOURCE_CAPTURED_OPERATIVE_ABSOLUTE_MAXIMUMS = { 50, 40, 40, 30 },
+	DYNAMIC_INTEL_SOURCE_CAPTURED_OPERATIVE_MAXIMUMS = { 30, 30, 30, 30 },
+	DYNAMIC_INTEL_SOURCE_CAPTURED_OPERATIVE_ABSOLUTE_MAXIMUMS = { 30, 30, 30, 30 },
 
 	LAND_COMBAT_ARMY_INTEL_OVER_OPPONENT_PER_INSTANCE = 1.5,			-- if the opponent has any division present, flat intel value generated py a participant against an opponent
 	LAND_COMBAT_ARMY_INTEL_OVER_OPPONENT_PER_COMITTED_DIVISIONS = 0.6,		-- multiplied to the number of comitted divisions of the opponent
@@ -4214,10 +4214,10 @@ NIntel = {
 	INTEL_NETWORK_NATIONAL_COVERAGE_NAVAL_BASE_FACTOR = 15.0, -- factor used instead of above in case you dont cover naval bases etc 
 
 	-- the maximum intel values that an intel network will provide against a target
-	INTEL_NETWORK_MAX_CIVILIAN_INTEL = 20.0,
-	INTEL_NETWORK_MAX_ARMY_INTEL = 20.0,
+	INTEL_NETWORK_MAX_CIVILIAN_INTEL = 25.0,
+	INTEL_NETWORK_MAX_ARMY_INTEL = 25.0,
 	INTEL_NETWORK_MAX_NAVY_INTEL = 25.0,				-- only apply if the network encompass a naval base controlled by the network's target
-	INTEL_NETWORK_MAX_AIRFORCE_INTEL = 15.0,
+	INTEL_NETWORK_MAX_AIRFORCE_INTEL = 25.0,
 
 	RADAR_LEVEL_INTEL_FACTOR = 1.25,					-- Multiplied to the radar level to tell the fraction of intel per covered province we get. The radar level is computed as BuildingLevel / MaxBuildingLevel.
 	RADAR_INTEL_STACKING_FACTOR = 0.5,				-- Used when multiple radars cover the same province
@@ -4321,7 +4321,7 @@ NIntel = {
 	
 	CIVILIAN_MIN_INTEL_TO_SHOW_INDUSTRY_GRAPH = 0.30,
 	CIVILIAN_MIN_INTEL_TO_SHOW_CONVOYS_GRAPH = 0.70,
-	CIVILIAN_MIN_INTEL_TO_SHOW_BOMBERS_GRAPH = 0.8,
+	CIVILIAN_MIN_INTEL_TO_SHOW_BOMBERS_GRAPH = 0.7,
 	
 	OLD_TECH_COUNT_NUM_DAYS = 180, -- num days after researched to consider a tech as "old"
 	INTEL_TO_SHOW_TECH_COUNT = { 0.5, 0.3, 0.3, 0.3 },  -- minimum value to show current tech count and current doctrine
@@ -4332,7 +4332,7 @@ NIntel = {
 	
 	ARMY_ARMY_COUNT_RANGE_INTEL_MIN = 0.3,
 	ARMY_ARMY_COUNT_RANGE_INTEL_MAX = 0.7,
-	ARMY_ARMY_COUNT_RANGE_INTEL_RANGE_AT_LOWEST_INTEL = 0.8,
+	ARMY_ARMY_COUNT_RANGE_INTEL_RANGE_AT_LOWEST_INTEL = 0.7,
 	
 	ARMY_SPECIAL_FORCES_COUNT_RANGE_INTEL_RANGE_AT_LOWEST_INTEL = 0.7,
 	
@@ -4345,7 +4345,7 @@ NIntel = {
 	ARMY_TEMPLATE_UNIT_COUNT_INTEL_MIN = 0.5,
 	ARMY_TEMPLATE_UNIT_COUNT_INTEL_MAX = 0.7,
 	ARMY_TEMPLATE_UNIT_COUNT_INTEL_RANGE_AT_LOWEST_INTEL = 1.0,
-	ARMY_MIN_INTEL_TO_SHOW_EXACT_TEMPLATE_INFO = 0.8,
+	ARMY_MIN_INTEL_TO_SHOW_EXACT_TEMPLATE_INFO = 0.7,
 	
 	ARMY_STOCKPILE_COUNT_INTEL_MIN = 0.4,
 	ARMY_STOCKPILE_COUNT_INTEL_MAX = 0.7,
@@ -4493,14 +4493,14 @@ NIntel = {
 		0.5, -- MISSION_RECON
 	},
 	
-	AIR_MAPICON_SHOW_ALL_AIR_PORTS = 0.3,  -- min intel to show all air ports (otherwise you will only see nearby ones)
+	AIR_MAPICON_SHOW_ALL_AIR_PORTS = 0.4,  -- min intel to show all air ports (otherwise you will only see nearby ones)
 	AIR_MAPICON_AIR_PORT_VISIBILITY_DETAIL_THRESHOLDS = { -- how detailed the post tooltips will be
 		0.0,	-- for no intel
 		0.3,	-- show fuzzy air plane count
 		0.7,	-- show full air count
 		0.8,	-- show air plane details
 	},
-	AIR_MAPICON_AIR_PORT_PLANE_FUZZY_THRESHOLD = 0.5,
+	AIR_MAPICON_AIR_PORT_PLANE_FUZZY_THRESHOLD = 0.4,
 	AIR_MIN_INTEL_TO_SHOW_EQUIPMENT_DESIGN_DETAILS = 0.8,
 	
 	-- ~intel ledger defines
