@@ -1429,7 +1429,7 @@ NAir = {
 	STRATEGIC_BOMBING_STATE_BUILDING_SCALE = 1.0,					-- The scale of state building priority for strategic bombing
 	
 	--gtd 
-	MISSILE_LAUNCHER_SLOTS = 2,                         -- The number of missile slots a missile launcher unit can have
+	MISSILE_LAUNCHER_SLOTS = 1,                         -- The number of missile slots a missile launcher unit can have
 	MISSILE_LAUNCHER_CAPACITY = 10,                     -- The number of missiles per slot
 
 	
