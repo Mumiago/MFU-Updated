@@ -600,7 +600,7 @@ NResistance = {
 },
 NMarket = {
 	PURCHASE_CONTRACT_DELIVERY_TOTAL_DAYS = 30,                   	-- Number of days between purchase contract deliveries
-	IC_TO_CIC_FACTOR = 2.0,                    						-- The factor for mapping IC cost to CIC cost. Should be a positive number.
+	IC_TO_CIC_FACTOR = 4.0,                    						-- The factor for mapping IC cost to CIC cost. Should be a positive number.
 	MAX_CIV_FACTORIES_PER_CONTRACT = 30,							-- Max number of factories that can be assigned for paying single contract.
 	LOW_PRICE_LEVEL_FACTOR = 1,                    				-- The factor of base equipment price for low price level. Should be in range (0,1] 
 	HIGH_PRICE_LEVEL_FACTOR = 1,                    				-- The factor of base equipment price for high price level. Should be more than 1.
@@ -746,7 +746,7 @@ NProduction = {
 
 	--AAT
 	INITIAL_ALLOWED_FACTORY_RATIO_FOR_REPAIRS = 1.0,					-- max % of factories allowed on autorepairs
-	CIC_BANK_SPEED_BOOST_FACTOR = 0.3,                 -- The CIC bank can boost production speed with this factor (0.5 means 50 %)
+	CIC_BANK_SPEED_BOOST_FACTOR = 0.15,                 -- The CIC bank can boost production speed with this factor (0.5 means 50 %)
 	MINIMUM_NUMBER_OF_FACTORIES_TAKEN_BY_CONSUMER_GOODS_VALUE = 0,		-- The minimum number of factories we have to put on consumer goods, by value.
 	MINIMUM_NUMBER_OF_FACTORIES_TAKEN_BY_CONSUMER_GOODS_PERCENT = 0,	-- The minimum number of factories we have to put on consumer goods, in percent.
 	--BBA
