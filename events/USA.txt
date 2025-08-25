@@ -194,36 +194,35 @@ country_event = {
 	}
 }
 
-# Election of 1940: Roosevelt vs Wendell Wilkie
+# Election of 1940
 country_event = {
 	id = usa.7
 	title = usa.7.t
 	desc = usa.7.d
-	picture = GFX_report_event_usa_election_roosevelt_wilkie
+	picture = GFX_report_event_usa_election_generic
 
-	is_triggered_only = yes
+	trigger = {
+		tag = USA
+		date > 1940.11.5
+	}
 
 	fire_only_once = yes 
 
+	immediate = {
+		hidden_effect = {
+			set_country_flag = 1940_election_happened_flag
+		}
+	}
 	option = {
 		name = usa.7.a
+		
+		add_country_leader_trait = dislikes_germany
 
-		custom_effect_tooltip = USA_gain_stab_democratic_tt
-
-		ai_chance = {
-			factor = 100
-		}
-		set_temp_variable = {
-			var = USA_voter_var
-			value = party_popularity@democratic
-		}
-		multiply_temp_variable = {
-			var = USA_voter_var
-			value = 0.25
-		}
-		add_stability = USA_voter_var
-
-		add_political_power = 100
+	}
+	option = {
+		name = usa.7.b
+		add_country_leader_trait = dislikes_japan
+			
 	}
 }
 
@@ -399,11 +398,7 @@ country_event = { #defence against Alf Landon#
 
 	option = {
 		name = usa.25.a
-		add_to_variable = {
-			var = USA_stability_factor_var
-			value = 0.05
-			tooltip = stability_factor_tooltip
-		}
+		add_stability = 0.05
 	}
 }
 
@@ -1262,84 +1257,7 @@ country_event = {
 
 	}
 }
-######1940 elections
-country_event = {
-	id = usa.406
-	title = usa.406.t
-	desc = usa.406.d
-	picture = GFX_report_event_usa_election_generic
 
-	trigger = {
-		tag = USA
-		date > 1940.11.5
-	}
-	fire_only_once = yes
-	
-	option = {
-		name = usa.406.a
-		USA = {
-			set_country_flag = USA_fdr_in_charge_flag
-		}
-		if = {
-			limit = {
-				USA = {
-					has_completed_focus = USA_landon
-				}
-			}
-			retire_country_leader = yes
-			create_country_leader = {
-				name="Franklin Delano Roosevelt"
-				#id = 845xa
-				#desc = ""
-				picture = "Portrait_USA_Franklin_Roosevelt.dds"
-				expire="1947.1.1.1"
-				ideology=liberalism
-				traits={ dislikes_germany }
-			}
-			hidden_effect = {
-				add_country_leader_trait = dislikes_germany
-			}
-		}
-		else = {
-			add_country_leader_trait = dislikes_germany
-		}
-		
-
-	}
-	option = {
-		name = usa.406.b
-		USA = {
-			set_country_flag = USA_alf_landon_in_charge_flag
-		}
-		if = {
-			limit = {
-				USA = {
-					has_completed_focus = USA_landon
-				}
-			}
-			add_country_leader_trait = dislikes_japan
-			
-		}
-		else = {
-			retire_country_leader = yes
-			create_country_leader = {
-				name="Wendell Willkie"
-				#id = 845xa
-				#desc = ""
-				picture = "Portrait_USA_Wendell_Willkie.dds"
-				expire="1947.1.1.1"
-				ideology=liberalism
-				traits={ dislikes_japan }
-			}
-			hidden_effect = {
-				add_country_leader_trait = dislikes_japan
-			}
-		}
-	}
-	immediate = {
-
-	}
-}
 country_event = {
 	id = usa.407
 	title = usa.407.t
@@ -2974,6 +2892,226 @@ country_event = {  ## rise of evil
 		name = usa.444.a	
 
 		custom_effect_tooltip = USA_set_crissis_lvl_25_tt
+	
+
+	}
+}
+
+country_event = {  ## garner angry
+	id = usa.445
+	title = usa.445.t
+	desc = usa.445.d
+	picture = GFX_event_event_USA_21
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA 
+		date > 1937.6.1
+		check_variable = { var = USA_new_deal_help value = 20 compare = greater_than }
+		has_idea = USA_john_nance_garner
+	}
+	mean_time_to_happen = { 
+		years = 2 
+		days = 100
+		modifier = {
+			factor = 0.1
+			USA = {
+				check_variable = {
+					var = USA_new_deal_help
+					value = 61
+					compare = greater_than_or_equals
+				}
+			}
+		}
+		
+		modifier = {
+			factor = 0.2
+			USA = {
+				check_variable = {
+					var = USA_new_deal_help
+					value = 60
+					compare = less_than_or_equals
+				}
+				check_variable = {
+					var = USA_new_deal_help
+					value = 55
+					compare = greater_than
+				}
+			}
+		}
+		modifier = {
+			factor = 0.3
+			USA = {
+				check_variable = {
+					var = USA_new_deal_help
+					value = 55
+					compare = less_than_or_equals
+				}
+				check_variable = {
+					var = USA_new_deal_help
+					value = 50
+					compare = greater_than
+				}
+			}
+		}
+		modifier = {
+			factor = 0.4
+			USA = {
+				check_variable = {
+					var = USA_new_deal_help
+					value = 50
+					compare = less_than_or_equals
+				}
+				check_variable = {
+					var = USA_new_deal_help
+					value = 45
+					compare = greater_than
+				}
+			}
+		}
+		modifier = {
+			factor = 0.5
+			USA = {
+				check_variable = {
+					var = USA_new_deal_help
+					value = 45
+					compare = less_than_or_equals
+				}
+				check_variable = {
+					var = USA_new_deal_help
+					value = 40
+					compare = greater_than
+				}
+			}
+		}
+		modifier = {
+			factor = 0.6
+			USA = {
+				check_variable = {
+					var = USA_new_deal_help
+					value = 40
+					compare = less_than_or_equals
+				}
+				check_variable = {
+					var = USA_new_deal_help
+					value = 35
+					compare = greater_than
+				}
+			}
+		}
+		modifier = {
+			factor = 0.7
+			USA = {
+				check_variable = {
+					var = USA_new_deal_help
+					value = 35
+					compare = less_than_or_equals
+				}
+				check_variable = {
+					var = USA_new_deal_help
+					value = 30
+					compare = greater_than
+				}
+			}
+		}
+		modifier = {
+			factor = 0.8
+			USA = {
+				check_variable = {
+					var = USA_new_deal_help
+					value = 30
+					compare = less_than_or_equals
+				}
+				check_variable = {
+					var = USA_new_deal_help
+					value = 25
+					compare = greater_than
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			USA = {
+				check_variable = {
+					var = USA_new_deal_help
+					value = 25
+					compare = less_than_or_equals
+				}
+				check_variable = {
+					var = USA_new_deal_help
+					value = 20
+					compare = greater_than
+				}
+			}
+		}
+	} 
+
+	option = {
+		name = usa.445.a	
+		custom_effect_tooltip = USA_change_garner_tt
+		hidden_effect = {
+			remove_ideas = USA_john_nance_garner 
+			add_ideas = USA_john_nance_garner2
+			set_country_flag = garner_angry_flag
+		}
+	}
+}
+
+country_event = {  ## first lady events
+	id = usa.446
+	title = usa.446.t
+	desc = usa.446.d
+	picture = GFX_event_event_USA_21
+
+	fire_only_once = no
+
+	is_triggered_only = yes
+
+
+	
+
+	option = {
+		name = usa.446.a		
+		add_stability = -0.02
+		add_manpower = 3000
+
+		custom_effect_tooltip = USA_modify_main_spirit_tt
+		add_to_variable = {
+			var = USA_research_speed_factor_var2
+			value = 0.02
+			tooltip = research_speed_factor_tooltip
+		}
+		
+
+	
+
+	}
+}
+country_event = {  ## swanson dies
+	id = usa.447
+	title = usa.447.t
+	desc = usa.447.d
+	picture = GFX_event_event_USA_21
+
+	fire_only_once = yes
+
+	trigger = {
+		date > 1939.3.1
+
+	}
+	mean_time_to_happen = {
+		days = 200
+	}
+
+
+	
+
+	option = {
+		name = usa.447.a		
+		retire_character = USA_claude_swanson
+		
+
 	
 
 	}
