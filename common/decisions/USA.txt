@@ -695,6 +695,11 @@ USA_crisis_management_system_cat = {
 		}
 
 		remove_effect = {
+			add_to_variable = { 
+				var = USA_new_deal_help 
+				value = 1 
+				tooltip = USA_new_deal_help_increase_tt
+			}
 			if = {
 				limit = {
 					has_completed_focus = USA_deploy_federal_power
@@ -712,11 +717,9 @@ USA_crisis_management_system_cat = {
 				custom_effect_tooltip = USA_deploy_federal_power_tt
 			}
 
-            #USA_decrease_crisis_level_by_5 = yes 
-
-			custom_effect_tooltip = USA_dust_bowl_relief_states_var_tt
+			#custom_effect_tooltip = USA_dust_bowl_relief_states_var_tt
 			add_to_variable = { USA_dust_bowl_relief_states_var = 1 }
-			add_to_variable = { USA_new_deal_help = 1 }
+			
 		
 			FROM = {
 				clr_state_flag = USA_dust_bowl_states
@@ -752,7 +755,7 @@ USA_crisis_management_system_cat = {
 
 		available = {
 			has_completed_focus = USA_flood_control_act
-			date < 1938.1.1
+		
 			NOT = {
 				has_completed_focus = USA_defund_new_deal_programs
 			}
@@ -794,18 +797,20 @@ USA_crisis_management_system_cat = {
 		}
 
 		remove_effect = {
+			add_to_variable = { 
+				var = USA_new_deal_help 
+				value = 1 
+				tooltip = USA_new_deal_help_increase_tt
+			}
 			FROM = {
 				add_dynamic_modifier = { modifier = USA_flood_barriers_built }
-				add_building_construction = {
-					type = infrastructure
-					level = 1 
-					instant_build = yes 
-				}
+				
 				clr_state_flag = USA_risk_of_flood_flag
 			}
-			hidden_effect = {
-				add_to_variable = { USA_new_deal_help = 1 }
-			}
+			USA_decrease_crisis_level_by_5 = yes 
+			USA_update_ui_effect = yes
+			custom_effect_tooltip = USA_lower_crisis_level_by_5_tt
+			
 		}
 
 		ai_will_do = {
@@ -1009,9 +1014,10 @@ USA_crisis_management_system_cat = {
 		fire_only_once = yes 
 
 		available = {
-			divisions_in_state = {
-				state = FROM 	
-				size > 1
+			army_manpower_in_state = {
+				 state = FROM
+				amount > 40000
+		
 			}
 			
 		}
@@ -1024,7 +1030,15 @@ USA_crisis_management_system_cat = {
 		}
 
 		cancel_trigger = {
-			NOT = { FROM = { is_fully_controlled_by = ROOT } }
+			OR = {
+				NOT = { FROM = { is_fully_controlled_by = ROOT } }
+				army_manpower_in_state = {
+					state = FROM
+					amount < 40000
+			
+				}
+			}
+			
 		}
 
 		cancel_effect = {
@@ -1056,6 +1070,11 @@ USA_crisis_management_system_cat = {
 		}
 
 		remove_effect = {
+			add_to_variable = { 
+				var = USA_new_deal_help 
+				value = 1 
+				tooltip = USA_new_deal_help_increase_tt
+			}
 			add_days_mission_timeout = {
 				mission = USA_fair_labour_standard_act_mission
 				days = -20
@@ -1063,9 +1082,7 @@ USA_crisis_management_system_cat = {
 			USA_decrease_crisis_level_by_5 = yes 
 			USA_update_ui_effect = yes
 			custom_effect_tooltip = USA_lower_crisis_level_by_5_tt
-			hidden_effect = {
-				add_to_variable = { USA_new_deal_help = 1 }
-			}
+			
 		}
 
 		ai_will_do = {
@@ -1088,6 +1105,7 @@ USA_crisis_management_system_cat = {
 				}
 				is_fully_controlled_by = ROOT
 			}
+			
 		}
 
 		target_root_trigger = { tag = USA } 
@@ -1101,7 +1119,6 @@ USA_crisis_management_system_cat = {
 				amount > 40000
 		
 			}
-			
 		}
 
 		visible = {
@@ -1301,6 +1318,11 @@ USA_crisis_management_system_cat = {
 		}
 
 		remove_effect = {
+			add_to_variable = { 
+				var = USA_new_deal_help 
+				value = 1 
+				tooltip = USA_new_deal_help_increase_tt
+			}
 			FROM = {
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
@@ -1312,9 +1334,7 @@ USA_crisis_management_system_cat = {
 			USA_decrease_crisis_level_by_5 = yes 
 			USA_update_ui_effect = yes
 			custom_effect_tooltip = USA_lower_crisis_level_by_5_tt
-			hidden_effect = {
-				add_to_variable = { USA_new_deal_help = 1 }
-			}
+			
 
 			
 		}
@@ -1610,7 +1630,7 @@ USA_crisis_management_system_cat = {
 				days = 60
 				value = 1
 			}
-			add_to_variable = { USA_new_deal_help = 2 }
+		
 		}
 
 		ai_will_do = {
@@ -1671,7 +1691,7 @@ USA_crisis_management_system_cat = {
 			
 		}
 
-		days_re_enable = 60
+		days_re_enable = 40
 
 		visible = {
 			check_variable = { USA_crisis_name = 4 }
@@ -2178,6 +2198,11 @@ USA_crisis_management_system_cat = {
 		}
 
 		remove_effect = {
+			add_to_variable = { 
+				var = USA_new_deal_help 
+				value = 1 
+				tooltip = USA_new_deal_help_increase_tt
+			}
 			FROM = {
 				add_dynamic_modifier = { modifier = USA_WPA_success_modifier }
 				set_state_flag = USA_finished_ABC_project
@@ -2191,7 +2216,7 @@ USA_crisis_management_system_cat = {
 			USA_update_ui_effect = yes
 			custom_effect_tooltip = USA_lower_crisis_level_by_5_tt
 			hidden_effect = {
-				add_to_variable = { USA_new_deal_help = 1 }
+				
 				add_to_variable = { USA_succesful_WPA_program_var = 1 }
 			}
 		}
@@ -2273,35 +2298,7 @@ USA_balance_of_power_category = {
 	
 	
 	
-	USA_bop_expand_conscription = {
-	
-		icon = GFX_decision_generic_military
 
-		allowed = {
-			original_tag = USA
-		}
-
-		visible = {
-
-		}
-
-		available = {
-			
-		}
-
-		cost = 25
-
-		 
-
-		complete_effect = {
-			add_power_balance_value = {
-				id = USA_power_balance
-				value = 0.6
-			}
-		}
-
-		
-	}
 }
 USA_balance_of_power_category2 = {
 	USA_sell_war_bonds = {
