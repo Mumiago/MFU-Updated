@@ -49,112 +49,1235 @@ PAR_instant_effect_decisions = {
 			}
 		}	
 	}
-	PAR_POL_capital = {
-		allowed = { tag = PAR }
-		ai_will_do = {
-			base = 100	
+
+
+	PAR_just_in_case_usa_trigger = {
+		icon = generic_megaphone
+   
+		allowed = {
+		   tag = PAR
 		}
+		
+		fire_only_once = yes
+
 		available = {
-			POL = {
-				controls_state = 831
+			USA = {
+				OR = {
+					has_war_with = JAP 
+					has_war_with = GER
+				}
+				NOT = {
+					has_country_flag = war_declared_correctly_flag
+				}
 			}
-			831 = {
-				is_capital = no
-			}
-			POL = {
-				has_capitulated = yes 
-			}
-			date > 1941.6.22
-			
-		}	
-		fire_only_once = no
+		}
+		cost = 0
 
 		complete_effect = {
-			POL = {
-				set_capital = {state=831}
+			USA = {
+				USA_crisis_reward_effect2 = yes
+				USA_initiate_balance2_of_power_effect = yes 
+				
+				set_country_flag = war_declared_correctly_flag
+
 			}
-		}	
+			if = {
+				limit = {
+					has_dynamic_modifier = USA_new_deal_modifier
+				}
+				set_variable = { USA_crisis_name = 6 }
+				set_variable = { USA_crisis_level = 0 }
+				USA_update_ui_effect = yes
+
+			}
+			else = {
+				set_variable = { USA_crisis_name = 7 }
+			}
+        		
+		}
+
+		ai_will_do = {
+			base = 1000			
+		}
 	}
-	
-	PAR_island_aa_limitation = {
+	PAR_overloaded_us_trade = {
+		icon = generic_megaphone
+   
+		allowed = {
+		   tag = PAR
+		}
+		
+		fire_only_once = no
+		
+		days_re_enable = 90
+
+		available = {
+			OR = {
+				AND = {
+					ENG = {
+						has_country_flag = overload_heavy_tank_purchase_flag
+					}
+					USA = {
+						NOT = {
+							has_idea = USA_heavy_tank_order_bonus
+							
+						}
+					}
+				}
+				AND = {
+					ENG = {
+						has_country_flag = overload_medium_tank_purchase_flag
+					}
+					USA = {
+						NOT = {
+							
+							has_idea = USA_medium_tank_order_bonus
+						}
+					}
+				}
+				AND = {
+					ENG = {
+						has_country_flag = overload_light_tank_purchase_flag
+					}
+					USA = {
+						NOT = {
+							
+							has_idea = USA_light_tank_order_bonus	
+						}
+					}
+				}
+			}
+		}
+		cost = 0
+
+		complete_effect = {
+        	if = {
+				limit = {
+					ENG = {
+						has_country_flag = overload_heavy_tank_purchase_flag
+					}
+				}
+				USA = {
+					add_timed_idea = {
+						idea = USA_heavy_tank_order_bonus
+						days = 15
+					}
+				}
+			}
+			if = {
+				limit = {
+					ENG = {
+						has_country_flag = overload_medium_tank_purchase_flag
+					}
+				}
+				USA = {
+					add_timed_idea = {
+						idea = USA_medium_tank_order_bonus
+						days = 15
+					}
+				}
+			}
+			if = {
+				limit = {
+					ENG = {
+						has_country_flag = overload_light_tank_purchase_flag
+					}
+				}
+				USA = {
+					add_timed_idea = {
+						idea = USA_light_tank_order_bonus
+						days = 15
+					}
+				}
+			}			
+		}
+
+		ai_will_do = {
+			base = 1000			
+		}
+	}
+	PAR_usa_rearmament = {
 		allowed = { tag = PAR }
 		ai_will_do = {
 			base = 100	
 		}
 		available = {
-			any_state = {
-				OR = {
-					state = 841
-					state = 844
-					state = 645
-					state = 648
-					state = 646
-					state = 843
-					state = 638
-					state = 526
-					state = 524
-					state = 845
-					state = 684
-					state = 647
-					state = 842
-					state = 633
-					state = 846
-					state = 847
-					state = 639
-					state = 632
-					state = 631
-					state = 630
-					state = 727
-					state = 629
-					state = 642
-					state = 634
+			USA = {
+				check_variable = {
+					USA_crisis_name = 5
+				}
+			}
+				NOT = {
+					has_country_flag = USA_national_defense_mediation_formed_flag
+					has_country_flag = rearmament_timer_flag
+					has_country_flag = USA_force_council_nat_def_flag
+					has_country_flag = USA_force_office_of_production_flag
+
+				}
+				
+			}
+		}	
+		fire_only_once = no
+		days_re_enable = 30
+		fixed_random_seed = no
+
+
+		complete_effect = {
+			random_list = {
+				8 = {
+					modifier = {
+						factor = 5
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 61
+								compare = greater_than_or_equals
+							}
+						}
+					}
+					
+					modifier = {
+						factor = 4.5
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 60
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 55
+								compare = greater_than
+							}
+						}
+					}
+					modifier = {
+						factor = 4
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 55
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 50
+								compare = greater_than
+							}
+						}
+					}
+					modifier = {
+						factor = 3.5
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 50
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 45
+								compare = greater_than
+							}
+						}
+					}
+					modifier = {
+						factor = 3
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 45
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 40
+								compare = greater_than
+							}
+						}
+					}
+					modifier = {
+						factor = 2.5
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 40
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 35
+								compare = greater_than
+							}
+						}
+					}
+					modifier = {
+						factor = 2
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 35
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 30
+								compare = greater_than
+							}
+						}
+					}
+					modifier = {
+						factor = 1.5
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 30
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 25
+								compare = greater_than
+							}
+						}
+					}
+					modifier = {
+						factor = 1
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 25
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 20
+								compare = greater_than
+							}
+						}
+					}
+					modifier = {
+						factor = 0.5
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 20
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 15
+								compare = greater_than
+							}
+						}
+					}
+					modifier = {
+						factor = 0.2
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 15
+								compare = less_than_or_equals
+							}
+							
+						}
+					}
+					
+					USA = {
+						if = {
+							limit = {
+								NOT = {
+									has_country_flag = second_rearm_flag
+								}
+							}
+							country_event = { id = usa.434 }
+							set_country_flag = second_rearm_flag
+							
+							
+						}
+						else_if ={
+							limit = {
+								has_country_flag = second_rearm_flag
+								NOT = {
+									has_country_flag = third_rearm_flag
+								}
+							}
+							country_event = { id = usa.435 }
+							set_country_flag = third_rearm_flag
+							
+							
+							
+						}
+						else_if ={
+							limit = {
+								has_country_flag = third_rearm_flag
+								NOT = {
+									has_country_flag = fourth_rearm_flag
+								}
+							}
+							country_event = { id = usa.436 }
+							set_country_flag = fourth_rearm_flag
+						
+							
+						}
+						else = {
+							country_event = { id = usa.437 }
+						}
+							
+						
+					}
 					
 				}
-				anti_air_building > 3
+				10 = {
+					
+				}
+			}
+		}
+	}
+	PAR_usa_recession_progress = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 100	
+		}
+		available = {
+			USA = {
+				check_variable = {
+					USA_crisis_name = 3
+				}
+				check_variable = {
+					USA_number_of_rolls < 3
+				}
+				has_country_flag = first_downturn
 				NOT = {
-					has_dynamic_modifier = { modifier = no_lvl5aareal }
+					has_country_flag = first_downturn_timer
+				}
+				
+			}
+		}	
+		fire_only_once = no
+		days_re_enable = 80
+		fixed_random_seed = no
+
+
+		complete_effect = {
+			random_list = {
+				12 = {
+					modifier = {
+						factor = 0.6
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 41
+								compare = greater_than_or_equals
+							}
+						}
+					}
+					modifier = {
+						factor = 1.2
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 40
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 35
+								compare = greater_than
+							}
+						}
+					}
+					modifier = {
+						factor = 1.8
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 35
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 30
+								compare = greater_than
+							}
+						}
+					}
+					modifier = {
+						factor = 2.4
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 30
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 25
+								compare = greater_than
+							}
+						}
+					}
+					modifier = {
+						factor = 3
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 25
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 20
+								compare = greater_than
+							}
+						}
+					}
+					modifier = {
+						factor = 3.6
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 20
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 15
+								compare = greater_than
+							}
+						}
+					}
+					modifier = {
+						factor = 4.2
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 15
+								compare = less_than_or_equals
+							}
+							
+						}
+					}
+					USA = {
+						if = {
+							limit = {
+								NOT = {
+									has_country_flag = second_downturn_flag
+								}
+							}
+							country_event = { id = usa.1417 }
+							set_country_flag = second_downturn_flag
+							add_to_variable = {
+								USA_number_of_recesions = 0.2
+							}
+						}
+						else_if ={
+							limit = {
+								has_country_flag = second_downturn_flag
+								NOT = {
+									has_country_flag = third_downturn_flag
+								}
+							}
+							country_event = { id = usa.2417 }
+							set_country_flag = third_downturn_flag
+							add_to_variable = {
+								USA_number_of_recesions = 0.2
+							}
+							
+						}
+						else_if ={
+							limit = {
+								has_country_flag = third_downturn_flag
+								NOT = {
+									has_country_flag = fourth_downturn_flag
+								}
+							}
+							country_event = { id = usa.3417 }
+							set_country_flag = fourth_downturn_flag
+							add_to_variable = {
+								USA_number_of_recesions = 0.2
+							}
+						}
+						#else = {
+						#	country_event = { id = usa.4417 }
+							#add_to_variable = {
+							#	USA_number_of_recesions = 0.2
+							#}
+
+						#}
+						
+					}
+					
+				}
+				10 = {
+					
+				}
+			}
+		}
+	}
+	PAR_defund_new_deal_usa = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 100	
+		}
+		available = {
+			USA = {
+				OR = {
+					check_variable = {
+						USA_crisis_name = 4
+					}
+					check_variable = {
+						USA_crisis_name = 5
+					}
+					check_variable = {
+						USA_new_deal_defunds < 3
+					}
+				}
+				has_completed_focus = USA_defund_new_deal_programs
+				
+				
+			}
+			
+		}	
+		fire_only_once = no
+		days_re_enable = 20
+		fixed_random_seed = no
+
+
+		complete_effect = {
+			random_list = {
+				9 = {
+					modifier = {
+						factor = 4.3
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 51
+								compare = greater_than_or_equals
+							}
+							check_variable = {
+								var = USA_crisis_name
+								value = 4
+								compare = equals
+							}
+						}
+					}
+					modifier = {
+						factor = 4.5
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 51
+								compare = greater_than_or_equals
+							}
+							
+							check_variable = {
+								var = USA_crisis_name
+								value = 5
+								compare = equals
+							}
+						}
+					}
+					modifier = {
+						factor = 3.7
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 50
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 45
+								compare = greater_than
+							}
+							check_variable = {
+								var = USA_crisis_name
+								value = 4
+								compare = equals
+							}
+						}
+					}
+					modifier = {
+						factor = 3.9
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 50
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 45
+								compare = greater_than
+							}
+							check_variable = {
+								var = USA_crisis_name
+								value = 5
+								compare = equals
+							}
+						}
+					}
+					modifier = {
+						factor = 3.1
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 45
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 40
+								compare = greater_than
+							}
+							check_variable = {
+								var = USA_crisis_name
+								value = 4
+								compare = equals
+							}
+						}
+					}
+					modifier = {
+						factor = 3.3
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 45
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 40
+								compare = greater_than
+							}
+							check_variable = {
+								var = USA_crisis_name
+								value = 5
+								compare = equals
+							}
+						}
+					}
+					modifier = {
+						factor = 2.5
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 40
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 35
+								compare = greater_than
+							}
+							check_variable = {
+								var = USA_crisis_name
+								value = 4
+								compare = equals
+							}
+						}
+					}
+					modifier = {
+						factor = 2.7
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 40
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 35
+								compare = greater_than
+							}
+							check_variable = {
+								var = USA_crisis_name
+								value = 5
+								compare = equals
+							}
+						}
+					}
+					modifier = {
+						factor = 1.9
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 35
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 30
+								compare = greater_than
+							}
+							check_variable = {
+								var = USA_crisis_name
+								value = 4
+								compare = equals
+							}
+						}
+					}
+					modifier = {
+						factor = 2.1
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 35
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 30
+								compare = greater_than
+							}
+							check_variable = {
+								var = USA_crisis_name
+								value = 5
+								compare = equals
+							}
+						}
+					}
+					modifier = {
+						factor = 1.3
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 30
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 25
+								compare = greater_than
+							}
+							check_variable = {
+								var = USA_crisis_name
+								value = 4
+								compare = equals
+							}
+						}
+					}
+					modifier = {
+						factor = 1.5
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 30
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 25
+								compare = greater_than
+							}
+							check_variable = {
+								var = USA_crisis_name
+								value = 5
+								compare = equals
+							}
+						}
+					}
+					modifier = {
+						factor = 0.7
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 25
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 20
+								compare = greater_than
+							}
+							check_variable = {
+								var = USA_crisis_name
+								value = 4
+								compare = equals
+							}
+						}
+					}
+					modifier = {
+						factor = 1.2
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 25
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 20
+								compare = greater_than
+							}
+							check_variable = {
+								var = USA_crisis_name
+								value = 5
+								compare = equals
+							}
+						}
+					}
+					modifier = {
+						factor = 0.1
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 20
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_crisis_name
+								value = 4
+								compare = equals
+							}
+						}
+					}
+					modifier = {
+						factor = 1
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 20
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_crisis_name
+								value = 5
+								compare = equals
+							}
+						}
+					}
+					USA = {
+						country_event = { id = usa.429 } 	
+						add_to_variable = {
+							var = USA_new_deal_defunds
+							value = 1
+						}
+					}
+					
+				}
+				15 = {
+
+				}
+			}
+		}
+	}
+	
+	PAR_radicalization_of_usa = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 100	
+		}
+		available = {
+			USA = {
+				check_variable = {
+					USA_crisis_name = 4
 				}
 			}
 			
 		}	
 		fire_only_once = no
+		days_re_enable = 30
+		fixed_random_seed = no
+
 
 		complete_effect = {
-			every_state = {
-				limit = {
-					OR = {
-						state = 841
-						state = 844
-						state = 645
-						state = 648
-						state = 646
-						state = 843
-						state = 638
-						state = 526
-						state = 524
-						state = 845
-						state = 684
-						state = 647
-						state = 842
-						state = 633
-						state = 846
-						state = 847
-						state = 639
-						state = 632
-						state = 631
-						state = 630
-						state = 727
-						state = 629
-						state = 642
-						state = 634
+			random_list = {
+				8 = {
+					modifier = {
+						factor = 1.1
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 50
+								compare = less_than_or_equals
+							}
+						}
 					}
-					anti_air_building > 3
-					NOT = {
-						has_dynamic_modifier = { modifier = no_lvl5aareal }
+					modifier = {
+						factor = 1.25
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 40
+								compare = less_than_or_equals
+							}
+						}
+					}
+					modifier = {
+						factor = 1.4
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 35
+								compare = less_than_or_equals
+							}
+						}
+					}
+					modifier = {
+						factor = 1.55
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 30
+								compare = less_than_or_equals
+							}
+						}
+					}
+					modifier = {
+						factor = 1.7
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 25
+								compare = less_than_or_equals
+							}
+						}
+					}
+					modifier = {
+						factor = 1.85
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 20
+								compare = less_than_or_equals
+							}
+						}
+					}
+					USA = {
+						country_event = { id = usa.419 }
+						set_country_flag = USA_communist_did_it_flag
+						add_to_variable = {
+							var = something_happened_var 
+							value = 1
+
+						}
 					}
 				}
-				remove_dynamic_modifier = { modifier = no_lvl5aaplaceholder }
-				add_dynamic_modifier = { modifier = no_lvl5aareal }
+				5 = {
+					modifier = {
+						factor = 0
+						USA = {
+							NOT = {
+								has_country_flag = USA_communist_did_it_flag
+							}
+						}
+					}
+					modifier = {
+						factor = 1.5
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 35
+								compare = less_than_or_equals
+							}
+						}
+						USA = {
+							has_country_flag = USA_communist_did_it_flag
+						}
+					}
+					modifier = {
+						factor = 2
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 30
+								compare = less_than_or_equals
+							}
+						}
+						USA = {
+							has_country_flag = USA_communist_did_it_flag
+						}
+					}
+					modifier = {
+						factor = 3
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 20
+								compare = less_than_or_equals
+							}
+						}
+						USA = {
+							has_country_flag = USA_communist_did_it_flag
+						}
+					}
+					USA = {
+						country_event = { id = usa.420 }
+						add_to_variable = {
+							var = something_happened_var 
+							value = 1
+
+						}
+					}
+				}
+				8 = {
+					modifier = {
+						factor = 1.1
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 50
+								compare = less_than_or_equals
+							}
+						}
+					}
+					modifier = {
+						factor = 1.25
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 40
+								compare = less_than_or_equals
+							}
+						}
+					}
+					modifier = {
+						factor = 1.4
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 35
+								compare = less_than_or_equals
+							}
+						}
+					}
+					modifier = {
+						factor = 1.55
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 30
+								compare = less_than_or_equals
+							}
+						}
+					}
+					modifier = {
+						factor = 1.7
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 25
+								compare = less_than_or_equals
+							}
+						}
+					}
+					modifier = {
+						factor = 1.85
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 20
+								compare = less_than_or_equals
+							}
+						}
+					}
+					USA = {
+						country_event = { id = usa.421 }
+						add_to_variable = {
+							var = something_happened_var 
+							value = 1
+
+						}
+						set_country_flag = right_did_it_flag
+					}
+				}
+				5 = {
+					modifier = {
+						factor = 0
+						USA = {
+							check_variable = {
+								var = something_happened_var 
+								value = 4
+								compare = less_than_or_equals
+							}
+							
+						}
+					}
+					modifier = {
+						factor = 1
+						USA = {
+							check_variable = {
+								var = something_happened_var 
+								value = 4
+								compare = greater_than_or_equals
+							}
+							check_variable = {
+								var = USA_crisis_level 
+								value = 50
+								compare = greater_than_or_equals
+							}
+							has_country_flag = right_did_it_flag
+							
+						}
+					}
+					modifier = {
+						factor = 1.3
+						USA = {
+							check_variable = {
+								var = something_happened_var 
+								value = 4
+								compare = greater_than_or_equals
+							}
+							check_variable = {
+								var = USA_crisis_level 
+								value = 60
+								compare = greater_than_or_equals
+							}
+							has_country_flag = right_did_it_flag
+							
+						}
+					}
+					modifier = {
+						factor = 1.8
+						USA = {
+							check_variable = {
+								var = something_happened_var 
+								value = 4
+								compare = greater_than_or_equals
+							}
+							check_variable = {
+								var = USA_crisis_level 
+								value = 70
+								compare = greater_than_or_equals
+							}
+							has_country_flag = right_did_it_flag
+							
+						}
+					}
+					modifier = {
+						factor = 3
+						USA = {
+							check_variable = {
+								var = something_happened_var 
+								value = 4
+								compare = greater_than_or_equals
+							}
+							check_variable = {
+								var = USA_crisis_level 
+								value = 80
+								compare = greater_than_or_equals
+							}
+							has_country_flag = right_did_it_flag
+							
+						}
+					}
+					USA = {
+						country_event = { id = usa.422 }
+						add_to_variable = {
+							var = something_happened_var 
+							value = 1
+
+						}
+					}
+
+					
+				}
+				15 = {
+
+				}
+				
 			}
 		}	
 	}
@@ -7962,7 +9085,12 @@ PAR_instant_effect_decisions = {
 		fire_only_once = yes
 
 		available = {
-			date > 1937.06.30
+			date > 1937.05.30
+			USA = {
+				NOT = {
+					has_completed_focus = USA_murphys_law
+				}
+			}
 		}
 
 		cost = 0
@@ -8006,29 +9134,7 @@ PAR_instant_effect_decisions = {
 		}
 	}
 
-	USA_recession_of_1937 = {
-		icon = generic_megaphone
-   
-		allowed = {
-		   tag = PAR
-		}
 
-		fire_only_once = yes
-
-		available = {	
-			date > 1937.6.1
-		}
-
-		cost = 0
-
-		complete_effect = {
-           USA = { country_event = { id = usa.30 } }
-		}
-
-		ai_will_do = {
-			base = 1000			
-		}
-	}
 
 	quit_india_movement = {
 

@@ -602,7 +602,7 @@ NResistance = {
 },
 NMarket = {
 	PURCHASE_CONTRACT_DELIVERY_TOTAL_DAYS = 30,                   	-- Number of days between purchase contract deliveries
-	IC_TO_CIC_FACTOR = 2.0,                    						-- The factor for mapping IC cost to CIC cost. Should be a positive number.
+	IC_TO_CIC_FACTOR = 4.0,                    						-- The factor for mapping IC cost to CIC cost. Should be a positive number.
 	MAX_CIV_FACTORIES_PER_CONTRACT = 30,							-- Max number of factories that can be assigned for paying single contract.
 	LOW_PRICE_LEVEL_FACTOR = 1,                    				-- The factor of base equipment price for low price level. Should be in range (0,1] 
 	HIGH_PRICE_LEVEL_FACTOR = 1,                    				-- The factor of base equipment price for high price level. Should be more than 1.
@@ -748,7 +748,7 @@ NProduction = {
 
 	--AAT
 	INITIAL_ALLOWED_FACTORY_RATIO_FOR_REPAIRS = 1.0,					-- max % of factories allowed on autorepairs
-	CIC_BANK_SPEED_BOOST_FACTOR = 0.3,                 -- The CIC bank can boost production speed with this factor (0.5 means 50 %)
+	CIC_BANK_SPEED_BOOST_FACTOR = 0.15,                 -- The CIC bank can boost production speed with this factor (0.5 means 50 %)
 	MINIMUM_NUMBER_OF_FACTORIES_TAKEN_BY_CONSUMER_GOODS_VALUE = 0,		-- The minimum number of factories we have to put on consumer goods, by value.
 	MINIMUM_NUMBER_OF_FACTORIES_TAKEN_BY_CONSUMER_GOODS_PERCENT = 0,	-- The minimum number of factories we have to put on consumer goods, in percent.
 	--BBA
@@ -2513,7 +2513,7 @@ NNavy = {
 	NAVAL_COMBAT_AIR_MAX_SPEED_TO_SUB_DETECTION = 0.0,					-- Same, but for Max Speed
 	NAVAL_COMBAT_AIR_PLANE_COUNT_TO_SUB_DETECTION = 1.0,					-- Factor applied to the number of active plane in a naval combat to deduce their contribution to sub detection
 	NAVAL_COMBAT_AIR_SUB_DETECTION_DECAY_RATE = 1.0,					-- Factor to decay the value of sub detection contributed by planes on the last hour. Note: the maximum value between the decayed value and the newly computed one is taken into account. A decay rate of 1 means that nothing is carried over, the previous value is zerod out. A decay rate of 0 means that the previous value is carried over as is.
-	NAVAL_COMBAT_AIR_SUB_DETECTION_FACTOR = 0.1,						-- A global factor that applies after all others, right before the sub detection contributed by plane is added to the global sub detection of a combatant
+	NAVAL_COMBAT_AIR_SUB_DETECTION_FACTOR = 0.0,						-- A global factor that applies after all others, right before the sub detection contributed by plane is added to the global sub detection of a combatant
 
 	NAVAL_COMBAT_AIR_SUB_TARGET_SCORE = 10,                             -- scoring for target picking for planes inside naval combat, one define per ship typ
 	NAVAL_COMBAT_AIR_CAPITAL_TARGET_SCORE = 200,

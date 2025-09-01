@@ -613,6 +613,9 @@ on_actions = {
 
 			}
 			
+			USA = {
+				country_event = { id = usa.415 } 	
+			}
 			IF = {
 				limit = {
 					has_dlc = "Gotterdammerung" 
@@ -2000,12 +2003,19 @@ on_actions = {
 					FROM = { tag = USA }
 					ROOT = { tag = JAP }
 				}
+				USA = {
+					USA_initiate_balance2_of_power_effect = yes 
+					USA_update_ui_effect = yes
+					set_variable = { USA_crisis_name = 6 }
+					set_variable = { USA_crisis_level = 0 }
+				}
 				hidden_effect = {
 					every_country = {limit = { check_variable= { speeches_enabled > 0}  }
 						scoped_sound_effect = "sp_usa_speech_japan_attack"
 					}	
 				}
 			}
+			
    		}   		
 		effect = {
 			
@@ -2542,6 +2552,10 @@ on_actions = {
 				}
 				ROOT = { tag = NOR }
 			}
+			USA = {
+				add_to_variable = { USA_crisis_level = 5 }
+				USA_update_ui_effect = yes
+			}
 			NOR = {
 		   		transfer_navy = {
 					target = ENG
@@ -2597,6 +2611,10 @@ on_actions = {
 		   		transfer_navy = {
 					target = ENG
 				}
+			}
+			USA = {
+				add_to_variable = { USA_crisis_level = 5 }
+				USA_update_ui_effect = yes
 			}	
 		}
 		if = {
@@ -2611,6 +2629,10 @@ on_actions = {
 				POL = {
 					is_ai = no
 				}
+			}
+			USA = {
+				add_to_variable = { USA_crisis_level = 5 }
+				USA_update_ui_effect = yes
 			}
 			
 			POL = {
@@ -2673,6 +2695,10 @@ on_actions = {
 				POL = {
 					is_ai = yes
 				}
+			}
+			USA = {
+				add_to_variable = { USA_crisis_level = 5 }
+				USA_update_ui_effect = yes
 			}
 			POL = {
 				transfer_navy = {
@@ -3515,6 +3541,10 @@ on_actions = {
 				}
 				ROOT = { tag = DEN }
 			}
+			USA = {
+				add_to_variable = { USA_crisis_level = 5 }
+				USA_update_ui_effect = yes
+			}
 			if = {
 				limit = {
 					FRA = {
@@ -3548,6 +3578,10 @@ on_actions = {
 					}
 				}
 				ROOT = { tag = HOL }
+			}
+			USA = {
+				add_to_variable = { USA_crisis_level = 5 }
+				USA_update_ui_effect = yes
 			}
 			if = {
 				limit = {
@@ -4319,6 +4353,19 @@ on_actions = {
 							has_completed_focus = FRA_refus_absurde
 						}
 					}
+				}
+				USA = {
+					if = {
+						limit = {
+							NOT = {
+								has_country_flag = USA_council_nat_def_formed_flag
+								has_country_flag = second_rearm_flag
+							}
+						}
+					}
+					set_country_flag = { flag = USA_force_council_nat_def_flag value = 1 days = 303 }
+					add_to_variable = { USA_crisis_level = 20 }
+					USA_update_ui_effect = yes
 				}
 		
 				ENG = {				
@@ -6598,14 +6645,16 @@ on_actions = {
 			
 				USA = {
 					#divide_variable = { casualties_against = 4000 }
-					add_to_variable = {
-						var = USA_popular_support_var
-						value = casualties_against
+					set_variable = {
+						var = actual_casualties_against
+						value = 0
 					}
+					
 					set_variable = {
 						variable = casualties_against
 						value = 0
 					}
+					
 					
 					while_loop_effect = {
 						limit = {
@@ -6664,10 +6713,134 @@ on_actions = {
 					}
 
 					divide_variable = { casualties_against = 4000 }
-					subtract_from_variable = {
-						var = USA_popular_support_var
+					#subtract_from_variable = {
+						#var = USA_popular_support_var
+						#value = casualties_against
+					#}
+					add_to_variable = {
+						var = actual_casualties_against
 						value = casualties_against
 					}
+					subtract_from_variable = {
+						var = actual_casualties_against
+						value = old_casualties_against
+					}
+					set_variable = {
+						var = old_casualties_against
+						value = casualties_against
+					}
+					add_to_variable = {
+						var = actual_casualties_against
+						value = old_casualties_against2
+					}
+					
+					
+					if = {
+						limit = {
+							check_variable = {
+								var = actual_casualties_against
+								value = 0.02
+								compare = greater_than_or_equals
+							}
+							check_variable = {
+								var = actual_casualties_against
+								value = 0.03
+								compare = less_than
+							}
+						}
+						subtract_from_variable = {
+							var = actual_casualties_against
+							value = 0.02
+						}
+						set_variable = {
+							var = old_casualties_against2
+							value = actual_casualties_against
+						}
+						add_power_balance_value = {
+							id = USA_power_balance2
+							value = -0.02
+						}
+					}
+					else_if = {
+						limit = {
+							check_variable = {
+								var = actual_casualties_against
+								value = 0.03
+								compare = greater_than_or_equals
+							}
+							check_variable = {
+								var = actual_casualties_against
+								value = 0.05
+								compare = less_than
+							}
+						}
+						subtract_from_variable = {
+							var = actual_casualties_against
+							value = 0.03
+						}
+						set_variable = {
+							var = old_casualties_against2
+							value = actual_casualties_against
+						}
+						add_power_balance_value = {
+							id = USA_power_balance2
+							value = -0.03
+						}
+					}
+					else_if = {
+						limit = {
+							check_variable = {
+								var = actual_casualties_against
+								value = 0.05
+								compare = greater_than_or_equals
+							}
+							check_variable = {
+								var = actual_casualties_against
+								value = 0.1
+								compare = less_than
+							}
+						}
+						subtract_from_variable = {
+							var = actual_casualties_against
+							value = 0.05
+						}
+						set_variable = {
+							var = old_casualties_against2
+							value = actual_casualties_against
+						}
+						add_power_balance_value = {
+							id = USA_power_balance2
+							value = -0.05
+						}
+					}
+					else_if = {
+						limit = {
+							check_variable = {
+								var = actual_casualties_against
+								value = 0.1
+								compare = greater_than_or_equals
+							}
+						}
+						subtract_from_variable = {
+							var = actual_casualties_against
+							value = 0.1
+						}
+						set_variable = {
+							var = old_casualties_against2
+							value = actual_casualties_against
+						}
+						add_power_balance_value = {
+							id = USA_power_balance2
+							value = -0.1
+						}
+					}
+					else = {
+						set_variable = {
+							var = old_casualties_against2
+							value = actual_casualties_against
+						}
+					}
+				
 				}
 			
 			}
