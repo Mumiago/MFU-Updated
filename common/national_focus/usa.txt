@@ -22,7 +22,7 @@ focus_tree = {
 		icon = GFX_USA_new_deal_focus
 		x = 5
 		y = 0
-		cost = 5
+		cost = 2.9
 
 		ai_will_do = {
 			factor = 1
@@ -72,7 +72,7 @@ focus_tree = {
 		icon = GFX_USA_inaugurate_hoover_dam
 		x = 4
 		y = 1
-		cost = 5
+		cost = 2.9
 		relative_position_id = USA_continue_the_new_deal
 		prerequisite = {
 			focus = USA_continue_the_new_deal
@@ -196,8 +196,8 @@ focus_tree = {
 				USA_production_speed_industrial_complex_factor_var = -0.6
 				tooltip = industrial_complex_build_speed_factor_tooltip
 			}
-			add_to_variable = {
-				USA_production_speed_infrastructure_factor_var = -0.4
+			set_variable = {
+				USA_production_speed_infrastructure_factor_var = 0
 				tooltip = infrastructure_build_speed_factor_tooltip
 			}
 			custom_effect_tooltip = USA_spacer_tooltip_tt
@@ -239,7 +239,7 @@ focus_tree = {
 		icon = GFX_USA_strengthen_the_authorities
 		x = 6
 		y = 1
-		cost = 5
+		cost = 2.9
 		relative_position_id = USA_continue_the_new_deal
 		prerequisite = {
 			focus = USA_continue_the_new_deal
@@ -437,6 +437,7 @@ focus_tree = {
 						state = 367
 						state = 368
 						state = 370
+						state = 369
 					}
 				}
 				add_extra_state_shared_building_slots = 4
@@ -496,6 +497,7 @@ focus_tree = {
 						state = 384 
 						state = 392 
 						state = 390
+						state = 381
 					}
 				}
 				set_state_flag = USA_marked_for_ABC_project
@@ -552,6 +554,8 @@ focus_tree = {
 						state = 377
 						state = 387
 						state = 388
+						state = 380
+						
 					}
 				}
 				add_extra_state_shared_building_slots = 6
@@ -862,8 +866,8 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			custom_effect_tooltip = USA_lower_crisis_level_by_10_tt
-			add_to_variable = { USA_crisis_level = -10 }
+			custom_effect_tooltip = USA_lower_crisis_level_by_5_tt
+			add_to_variable = { USA_crisis_level = -5 }
 			custom_effect_tooltip = USA_murphys_law_tt
 
 			
@@ -909,8 +913,8 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			custom_effect_tooltip = USA_lower_crisis_level_by_10_tt
-			add_to_variable = { USA_crisis_level = -10 }
+			custom_effect_tooltip = USA_lower_crisis_level_by_5_tt
+			add_to_variable = { USA_crisis_level = -5 }
 			USA_update_ui_effect = yes
 			custom_effect_tooltip = USA_homestead_protocol_tt
 
@@ -1061,6 +1065,13 @@ focus_tree = {
 				mission = USA_social_security_act_mission
 				days = -50
 			}
+				custom_effect_tooltip = generic_skip_one_line_tt
+			add_to_variable = { 
+				var = USA_new_deal_help 
+				value = 5
+				tooltip = USA_new_deal_help_increase_tt2
+			}
+		
 			custom_effect_tooltip = USA_spacer_tooltip_tt
 			random_owned_state = {
 				limit = {
@@ -1535,7 +1546,7 @@ focus_tree = {
 		icon = GFX_USA_einstein_szilard_letter
 		x = 3
 		y = 3
-		cost = 5
+		cost = 2.9
 		relative_position_id = USA_continue_the_new_deal
 		prerequisite = {
 			focus = USA_continue_the_new_deal
@@ -1580,7 +1591,7 @@ focus_tree = {
 		icon = GFX_USA_neutrality_act
 		x = 0
 		y = 1
-		cost = 5
+		cost = 2.9
 		relative_position_id = USA_1937_election
 		prerequisite = {
 			focus = USA_1937_election
@@ -2095,8 +2106,8 @@ focus_tree = {
 
 			custom_effect_tooltip = USA_modify_main_spirit_tt
 			add_to_variable = {
-				var = USA_production_speed_arms_factory_factor_var2
-				value = 0.15
+				var = USA_local_resources_factor_var2
+				value = 0.2
 				tooltip = local_resources_factor_tooltip
 			}
 			
@@ -2251,6 +2262,13 @@ focus_tree = {
 		}
 		completion_reward = {
 			custom_effect_tooltip = USA_enable_more_boosts_tt
+			custom_effect_tooltip = generic_skip_one_line_tt
+			custom_effect_tooltip = USA_modify_main_spirit_tt
+			add_to_variable = {
+				var = USA_local_resources_factor_var2
+				value = 0.05
+				tooltip = local_resources_factor_tooltip
+			}
 		}
 	}
 
@@ -2263,8 +2281,45 @@ focus_tree = {
 		cost = 1
 		prerequisite = { focus = USA_henderson_war_production focus = USA_transfer_power_to_OPM }
 		prerequisite = { focus = USA_supply_priorities_and_allocations_board }
+		available = {
+			date > 1941.6.1
+		}
 		completion_reward = {
+			hidden_effect = {
+				
+				add_ideas = USA_island_hopping8 
+				add_war_support = -0.2 #####to counter defensive war modifier
+				USA_crisis_reward_effect2 = yes
+				USA_initiate_balance2_of_power_effect = yes 
+
+				if = {
+					limit = {
+						has_dynamic_modifier = {
+							modifier = USA_new_deal_modifier
+						}
+						
+					}
+					set_variable = { USA_crisis_name = 6 }
+					set_variable = { USA_crisis_level = 0 }
+					USA_update_ui_effect = yes
+
+				}
+				else = {
+					set_variable = { USA_crisis_name = 7 }
+				}
+			}
+			custom_effect_tooltip = USA_new_balance_of_power_tt
+		
 			
+			ENG = {
+				add_to_faction = USA
+			}
+			hidden_effect = {
+				set_rule = { can_join_factions = yes }
+				set_rule = { can_create_factions = yes }
+			}
+			custom_effect_tooltip = USA_join_the_allies_tt
+			#custom_effect_tooltip = USA_day_of_infamy_tt
 		}
 	}
 
@@ -2359,6 +2414,16 @@ focus_tree = {
 		cost = 5
 		prerequisite = { focus = USA_scientific_research_and_development_office }
 		completion_reward = {
+			add_breakthrough_points = {
+				specialization = specialization_air
+				value = 1
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt 
+			sp:sp_rockets_flying_bomb = {
+				add_project_progress_ratio = 0.60
+			}
+			
+			custom_effect_tooltip = generic_skip_one_line_tt 
 			add_tech_bonus = {
 				name = secret_bonus
 				ahead_reduction = 2
@@ -2396,15 +2461,23 @@ focus_tree = {
 				specialization = specialization_air
 				value = 1
 			}
-			sp:sp_rockets_flying_bomb = {
-				add_project_progress_ratio = 0.2
+			custom_effect_tooltip = generic_skip_one_line_tt 
+			sp:sp_rockets_ballistic_missile = {
+				add_project_progress_ratio = 0.4
 			}
+			custom_effect_tooltip = generic_skip_one_line_tt 
+			sp:sp_land_land_cruiser = {
+				add_project_progress_ratio = 0.4
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt 
 			add_tech_bonus = {
 				name = secret_bonus
 				bonus = 2
 				uses = 1
 				technology = usa_1944_heavy_tank_chassis
 			}
+			custom_effect_tooltip = generic_skip_one_line_tt 
+			add_ideas = USA_cheaper_rockets
 
 #heavy tank, V1 ic reduction, land cruiser
 		}
@@ -2425,7 +2498,35 @@ focus_tree = {
 
 		mutually_exclusive = { focus = USA_superweapons }
 		completion_reward = {
-        #well supplied and motivated for med and light tanks, extra div rec rate. Something for air
+        	#well supplied and motivated for med and light tanks, extra div rec rate. Something for air
+			custom_effect_tooltip = USA_command_post_modification_intro
+			add_to_variable = { 
+				var = army_morale_factor 
+				value = 0.05
+				tooltip = army_morale_factor_tooltip
+			}
+			add_to_variable = { 
+				var = USA_naval_strike_targetting_factor_var 
+				value = 0.1
+				tooltip = nav_targetting_tt
+			}
+			add_to_variable = { 
+				var = USA_naval_strike_targetting_factor_var 
+				value = 0.1
+				tooltip = air_supp_eff_tt
+			}
+			add_to_variable = { 
+				var = USA_air_superiority_efficiency_var 
+				value = 0.1
+				tooltip = air_superiority_eff_tt
+			}
+				custom_effect_tooltip = generic_skip_one_line_tt
+			custom_effect_tooltip = USA_jungle_armor_tech
+		
+			hidden_effect = {
+				set_technology = { superb_weapons_usa = 1 }
+			}
+			
 		}
 	}
 
@@ -2440,17 +2541,17 @@ focus_tree = {
 		cost = 3
 		prerequisite = { focus = USA_a_day_to_live_in_infamy }
 		completion_reward = {
-			
+			add_ideas = unprepared_for_war
 			add_command_power = 100 
 			custom_effect_tooltip = USA_command_post_modification_intro
 			add_to_variable = { 
 				var = USA_air_doctrine_cost_factor_var 
-				value = -0.3 
+				value = -0.1
 				tooltip = air_doc_tp
 			}
 			add_to_variable = { 
 				var = USA_land_doctrine_cost_factor_var 
-				value = -0.3
+				value = -0.2
 				tooltip = land_doc_tp
 			}
 			add_to_variable = { 
@@ -2460,19 +2561,10 @@ focus_tree = {
 			}
 			add_to_variable = { 
 				var = USA_experience_gain_navy_factor_var 
-				value = 0.25
+				value = 0.3
 				tooltip = navy_xp_tp
 			}
-			add_to_variable = { 
-				var = USA_experience_gain_air_factor_var 
-				value = 0.25
-				tooltip = air_xp_tp
-			}
-			add_to_variable = { 
-				var = USA_fuel_gain_factor_var 
-				value = 0.2 
-				tooltip = fuel_gain_tp
-			}
+			
 
 		}
 	}
@@ -2486,7 +2578,14 @@ focus_tree = {
 		cost = 5
 		prerequisite = { focus = USA_war_powers_act_2 }
 		completion_reward = {
-#-cg
+			add_stability = -0.05
+			custom_effect_tooltip = USA_modify_main_spirit_tt
+			add_to_variable = {
+				var = USA_consumer_goods_factor_var
+				value = -0.05
+				tooltip = consumer_goods_tooltip
+			}
+			
 		}
 	}
 
@@ -2499,7 +2598,8 @@ focus_tree = {
 		cost = 5
 		prerequisite = { focus = USA_war_powers_act_2 }
 		completion_reward = {
-#reduces war support lost from casualities
+			custom_effect_tooltip = USA_unlocks_all_the_decisions
+
 		}
 	}
 
@@ -2530,8 +2630,17 @@ focus_tree = {
 		cost = 5
 		prerequisite = { focus = USA_a_day_to_live_in_infamy }
 		completion_reward = {
-			add_political_power = 50
-			add_stability = 0.05
+			custom_effect_tooltip = USA_modify_main_spirit_tt
+			add_to_variable = {
+				var = USA_production_factory_max_efficiency_factor_var2
+				value = 0.05
+				tooltip = production_factory_max_efficiency_tooltip
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = USA_william_knudsen
+			
+
 		}
 	}
 
@@ -2544,9 +2653,101 @@ focus_tree = {
 		cost = 5
 		prerequisite = { focus = USA_establish_war_production_board }
 		completion_reward = {
-		##resources for us and commonwealth and sov
-			add_political_power = 25
-			add_stability = 0.05
+			custom_effect_tooltip = USA_give_all_resources_tt
+			custom_effect_tooltip = generic_skip_one_line_tt
+			add_tech_bonus = {
+				category = synth_resources  
+				uses = 2
+				bonus = 1
+				name = USA_synthetic_rubber
+			}
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = USA 
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = synthetic_rubber_refinery
+					level = 2
+					instant_build = yes
+				}
+			}	
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = USA 
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = synthetic_rubber_refinery
+					level = 2
+					instant_build = yes
+				}
+			}	
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = USA 
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = synthetic_rubber_refinery
+					level = 2
+					instant_build = yes
+				}
+			}
+			
+			hidden_effect = {
+				add_to_variable = {
+					USA_local_resources_factor_var2 = 0.05
+				}
+				ENG = {
+					add_to_variable = {
+						ENG_local_resources_factor_var = 0.05
+					}
+				}
+				FRA = {
+					add_to_variable = {
+						FRA_colonial_rule_local_resources_factor_modifier = 0.05
+					}
+				}
+				SAF = {
+					add_to_variable = {
+						SAF_local_resources_factor_var = 0.05
+					}
+				}
+				AST = {
+					add_to_variable = {
+						AST_local_resources_factor_var = 0.05
+					}
+				}
+				CAN = {
+					add_to_variable = {
+						CAN_local_resources_factor_var = 0.05
+					}
+				}
+				POL = {
+					add_to_variable = {
+						POL_local_resources_factor_var = 0.05
+					}
+				}
+				RAJ = {
+					add_ideas = RAJ_more_resources_idea
+				}
+				if = {
+					limit = {
+						NZL = {
+							exists = yes 
+						}
+					}
+					NZL = {
+						add_ideas = RAJ_more_resources_idea
+					}
+				}
+
+			}
+			
+			
+			
+			
 		}
 	}
 
@@ -2618,9 +2819,15 @@ focus_tree = {
 		cost = 5
 		prerequisite = { focus = USA_establish_war_production_board }
 		completion_reward = {
-##willow run liberator factory
-			add_political_power = 25
-			#add_air_experience = 50
+			custom_effect_tooltip = USA_level_up_aircraft_twice_tt
+			hidden_effect = {
+				USA_aircraft_industry_level_up = yes 
+				USA_aircraft_industry_level_up = yes 
+			}
+			add_power_balance_value = {
+				id = USA_power_balance2
+				value = 0.1
+			}
 		}
 	}
 
@@ -2638,8 +2845,12 @@ focus_tree = {
 
 		mutually_exclusive = { focus = USA_mobilize_to_the_utmost }
 		completion_reward = {
-			add_political_power = 25
-			#add_production_efficiency_cap = 0.05
+			add_stability = 0.05
+			add_power_balance_value = {
+				id = USA_power_balance2
+				value = 0.3
+			}
+			
 		}
 	}
 
@@ -2657,8 +2868,61 @@ focus_tree = {
 
 		mutually_exclusive = { focus = USA_rationalize_procurement }
 		completion_reward = {
-			add_war_support = 0.10
-			add_political_power = 25
+			add_stability = -0.05
+			custom_effect_tooltip = USA_mob_to_utmost_tt
+			hidden_effect = {
+				
+				add_to_variable = {
+					USA_industrial_capacity_factory_var2 = 0.05
+				}
+				ENG = {
+					add_to_variable = {
+						ENG_industrial_capacity_factory_var = 0.05
+					}
+				}
+				FRA = {
+					add_to_variable = {
+						FRA_colonial_rule_industrial_capacity_factory_modifier = 0.05
+					}
+				}
+				SAF = {
+					add_to_variable = {
+						SAF_industrial_capacity_factory_var = 0.05
+					}
+				}
+				AST = {
+					add_to_variable = {
+						AST2_industrial_capacity_factory_var = 0.05
+					}
+				}
+				CAN = {
+					add_to_variable = {
+						CAN_industrial_capacity_factory_var = 0.05
+					}
+				}
+				POL = {
+					add_to_variable = {
+						POL_industrial_capacity_factory_var = 0.05
+					}
+				}
+				RAJ = {
+					add_ideas = RAJ_more_output_idea
+				}
+				if = {
+					limit = {
+						NZL = {
+							exists = yes 
+						}
+					}
+					NZL = {
+						add_ideas = RAJ_more_output_idea
+					}
+				}
+				SOV = {
+					add_ideas = RAJ_more_output_idea
+				}
+
+			}
 		}
 	}
 
@@ -2679,7 +2943,33 @@ focus_tree = {
 			focus = USA_mobilize_to_the_utmost
 		}
 		completion_reward = {
-#all allied nations+soviets gain 5% attack
+			custom_effect_tooltip = USA_united_nations_tt
+			hidden_effect = {
+				set_faction_name = United_nations_faction
+				every_country = {
+					limit = {
+						OR = {
+							tag = ENG 
+							tag = USA 
+							tag = CAN 
+							tag = FRA 
+							tag = SAF 
+							tag = RAJ 	
+							tag = POL 	
+							tag = AST 
+							tag = NZL 
+							tag = SOV
+						}
+					}
+					add_ideas = USA_last_crusade
+					add_ideas = USA_last_crusade2
+				}
+			}
+		
+			
+			
+			
+			
 		}
 	}
 
@@ -2689,12 +2979,12 @@ focus_tree = {
 ######################################################################
 	focus = {
 		id = USA_expand_war_plans_div
-		icon = GFX_USA_appoint_marshall
+		icon = GFX_USA_war_plans_division
 		#prerequisite = { focus = }
 
 		x = 20
 		y = 0
-		cost = 5
+		cost = 2.9
 		available = {
 		}
 
@@ -2720,7 +3010,7 @@ focus_tree = {
 
 		x = 0
 		y = 2
-		cost = 5
+		cost = 2.9
 		available = {
 		}
 
@@ -2738,7 +3028,7 @@ focus_tree = {
 
 		x = -1
 		y = 1
-		cost = 5
+		cost = 2.9
 		available = {
 		}
 
@@ -2777,7 +3067,7 @@ focus_tree = {
 
 		x = -1
 		y = 1
-		cost = 5
+		cost = 2.9
 		available = {
 		}
 
@@ -2797,7 +3087,7 @@ focus_tree = {
 
 		x = 1
 		y = 1
-		cost = 5
+		cost = 2.9
 		available = {
 		}
 
@@ -2807,7 +3097,7 @@ focus_tree = {
 			
 			add_to_variable = { 
 				var = USA_experience_gain_air_factor_var 
-				value = 0.1
+				value = 0.15
 				tooltip = air_xp_tp
 			}
 			add_to_variable = { 
@@ -2832,7 +3122,7 @@ focus_tree = {
 
 		x = 1
 		y = 1
-		cost = 5
+		cost = 2.9
 		available = {
 		}
 
@@ -2869,7 +3159,7 @@ focus_tree = {
 		x = 0
 		y = 1
 		relative_position_id = USA_retire_malin_craig
-		cost = 5
+		cost = 2.9
 		available = {
 			has_country_flag = USA_council_nat_def_formed_flag
 		}
@@ -2899,7 +3189,7 @@ focus_tree = {
 		x = -4
 		y = 1
 		relative_position_id = USA_retire_malin_craig
-		cost = 5
+		cost = 2.9
 		available = {
 		}
 
@@ -3320,7 +3610,7 @@ focus_tree = {
 		x = -1
 		y = 1
 		relative_position_id = USA_forge_the_thunderbolt
-		cost = 10
+		cost = 5
 		available = {
 			GER = {
 				has_completed_focus = GER_around_maginot
@@ -3485,13 +3775,13 @@ focus_tree = {
 			hidden_effect = {
 				load_oob = USA_paratroopers_divs
 			}
-			custom_effect_tooltip = generic_skip_one_line_tt
-			custom_effect_tooltip = USA_rangers_tt2
+			#custom_effect_tooltip = generic_skip_one_line_tt
+			#custom_effect_tooltip = USA_rangers_tt2
 		
 			
-			hidden_effect = {
-				set_technology = { rangers2 = 1 } 
-			}
+			#hidden_effect = {
+			#	set_technology = { rangers2 = 1 } 
+			#}
 
 
 
@@ -3568,7 +3858,7 @@ focus_tree = {
 		relative_position_id = USA_focus_on_asia
 		x = 5
 		y = 1
-		cost = 5
+		cost = 2.9
 		ai_will_do = {
 			factor = 100 
 		}
@@ -3599,7 +3889,7 @@ focus_tree = {
 		relative_position_id = USA_study_taranto
 		x = 1
 		y = 1
-		cost = 5
+		cost = 2.9
 		ai_will_do = {
 			factor = 100 
 		}
@@ -3634,7 +3924,7 @@ focus_tree = {
 		relative_position_id = USA_study_taranto
 		x = -1
 		y = 1
-		cost = 5
+		cost = 2.9
 		ai_will_do = {
 			factor = 100 
 		}
@@ -3716,7 +4006,7 @@ focus_tree = {
 	}
 	focus = {
 		id = USA_embargo_japan
-		cost = 3
+		cost = 2.9
 		icon = GFX_USA_sanctions_against_japan
 		available = {
 			if = {
@@ -3841,7 +4131,7 @@ focus_tree = {
 	}
 		focus = {
 		id = USA_islands
-		cost = 3
+		cost = 2.9
 		
 		icon = GFX_USA_fortify_our_islands
 		relative_position_id = USA_embargo_japan
@@ -4520,6 +4810,9 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = USA_raj
 		}
+		available = {
+			has_war_with = JAP 
+		}
 		completion_reward = {
 			AST = {
 				add_equipment_to_stockpile = {
@@ -4558,6 +4851,9 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = USA_australia
 		}
+		available = {
+			has_war_with = JAP 
+		}
 		completion_reward = {
 			RAJ = {
 				add_equipment_to_stockpile = {
@@ -4594,6 +4890,9 @@ focus_tree = {
 		}
 		available = {
 			controls_state  = 327
+			
+			has_war_with = JAP 
+		
 		}
 		completion_reward = {
 			random_owned_controlled_state = {
@@ -4792,6 +5091,7 @@ focus_tree = {
 		}
 		available = {
 			controls_state  = 327
+			has_war_with = JAP 
 		}
 		completion_reward = {
 		
@@ -4995,7 +5295,7 @@ focus_tree = {
 		relative_position_id = USA_1937_election
 		x = -11
 		y = 1
-		cost = 5
+		cost = 2.9
 		ai_will_do = {
 			factor = 100 
 		}
@@ -5136,7 +5436,7 @@ focus_tree = {
 		relative_position_id = USA_support_china
 		x = 0
 		y = 1
-		cost = 5
+		cost = 2.9
 		ai_will_do = {
 			factor = 100 
 		}
@@ -5295,7 +5595,7 @@ focus_tree = {
 		relative_position_id = USA_support_china
 		x = -2
 		y = 1
-		cost = 7.2
+		cost = 5
 		ai_will_do = {
 			factor = 100 
 		}
@@ -5471,7 +5771,7 @@ focus_tree = {
 	}
 	focus = {
 		id = USA_philippines_2
-		cost = 3
+		cost = 2.9
 		x = 1
 		y = -1
 		icon = GFX_USA_heavy_public_works_spending
@@ -6059,7 +6359,7 @@ focus_tree = {
 		relative_position_id = USA_support_china
 		x = -1
 		y = 3
-		cost = 5
+		cost = 2.9
 		ai_will_do = {
 			factor = 1
 		}
@@ -6530,7 +6830,7 @@ focus_tree = {
 		relative_position_id = USA_focus_on_asia
 		x = 0
 		y = 1
-		cost = 5
+		cost = 2.9
 		ai_will_do = {
 			factor = 100 
 		}
@@ -6611,6 +6911,14 @@ focus_tree = {
 				USA_political_power_gain_var = -0.1
 				tooltip = political_power_gain_daily_tooltip
 			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+			custom_effect_tooltip = USA_modify_main_spirit_tt
+			add_to_variable = {
+				var = USA_production_speed_dockyard_factor_var2
+				value = 0.15
+				tooltip = dockyard_build_speed_factor_tooltip
+			}
+				custom_effect_tooltip = generic_skip_one_line_tt
 			random_core_state = {
 				limit = {
 					is_coastal = yes 
@@ -6650,7 +6958,7 @@ focus_tree = {
 				uses = 1
 				category = naval_equipment
 			}
-			navy_experience = 25
+			
 			
 			
 		
@@ -6710,7 +7018,7 @@ focus_tree = {
 		relative_position_id = USA_focus_on_asia
 		x = -2
 		y = 1
-		cost = 5
+		cost = 2.9
 		ai_will_do = {
 			factor = 100 
 		}
@@ -6783,7 +7091,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = USA_focus_on_asia
 		
-		cost = 5
+		cost = 2.9
 		ai_will_do = {
 			factor = 100 
 		}
