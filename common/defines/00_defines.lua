@@ -2095,7 +2095,7 @@ NNavy = {
 	NAVAL_TRANSFER_BASE_SPEED = 12,                                  -- base speed of units on water being transported
 	NAVAL_TRANSFER_BASE_NAVAL_DIST_ADD = 100,						-- Extra cost for naval movement ( compared to land movement ) when deciding what ports to use for a naval transfer
 	NAVAL_TRANSFER_BASE_NAVAL_DIST_MULT = 20,						-- Multiplier for the cost of naval movement ( compared to land movement ) when deciding what ports to use for naval transfer
-	NAVAL_SUPREMACY_CAN_INVADE = 0.5,								-- required naval supremacy to perform invasions on an area
+	NAVAL_SUPREMACY_CAN_INVADE = 0.6,								-- required naval supremacy to perform invasions on an area
 	CARRIER_STACK_PENALTY = 4,										-- The most efficient is 4 carriers in combat. 5+ brings the penalty to the amount of wings in battle.
 	CARRIER_STACK_PENALTY_EFFECT = 0.06,								-- Each carrier above the optimal amount decreases the amount of airplanes being able to takeoff by such %.
 	SHORE_BOMBARDMENT_CAP = 0.2,
@@ -2196,11 +2196,11 @@ NNavy = {
 	AGGRESSION_CONVOY_STRENGTH_FACTOR = 0.2,			  -- convoys in combat gets a penalty to their strength in aggression calculations
 	
 	SUBMARINE_ESCAPE_RATIOS = { -- subs will escape battle in convoy raid if there are enemies that can attack
-		1000,     -- do not engage
-		20,   -- low
-		20.0,   -- medium
-		20.0,   -- high
-		20.0,   -- I am death incarnate!
+		1000.0,     -- do not engage
+		1000.0,   -- low
+		1000.0,   -- medium
+		1000.0,   -- high
+		1000.0,   -- I am death incarnate!
 	},
 	
 	MIN_REPAIR_FOR_JOINING_COMBATS = { -- strikeforces/patrol forces will not join combats if they are not repaired enough
@@ -2331,7 +2331,7 @@ NNavy = {
 	ESCAPE_SPEED_PER_COMBAT_DAY = 0.01,								-- daily increase in escape speed during combat duration
 	MAX_ESCAPE_SPEED_FROM_COMBAT_DURATION = 0.1,					-- max escape speed that will be gained from combat duration
 	ESCAPE_SPEED_SUB_BASE = -0.2,									-- subs get faster escape speed. gets replaced by hidden version below if hidden
-	ESCAPE_SPEED_HIDDEN_SUB = 0.5,									-- hidden subs get faster escape speed
+	ESCAPE_SPEED_HIDDEN_SUB = 0.2,									-- hidden subs get faster escape speed
 
 	SUB_DETECTION_CHANCE_BASE = 5,									-- to start spotting a submarine, a dice is rolled and checked if it succeeds this percentage. if not, that enemy sub force won't be spotted on this tick
 	SUB_DETECTION_CHANCE_BASE_SPOTTING_EFFECT = 0.5,				-- effect of base spotting for initial spotting of pure submarine forces. this along with next value is added together and rolled against a random to start spotting
@@ -2386,7 +2386,7 @@ NNavy = {
 	DAMAGE_PENALTY_ON_MINIMUM_POSITIONING 							= 0.95,	-- damage penalty at 0% positioning
 	SCREENING_EFFICIENCY_PENALTY_ON_MINIMUM_POSITIONING				= 0.3,  -- screening efficiency (screen to capital ratio) at 0% positioning
 	AA_EFFICIENCY_PENALTY_ON_MINIMUM_POSITIONING					= 0.5,  -- AA penalty at 0% positioning
-	SUBMARINE_REVEAL_ON_MINIMUM_POSITIONING                         = 0.3,  -- submarine reveal chance on 0% positioning 
+	SUBMARINE_REVEAL_ON_MINIMUM_POSITIONING                         = 0,  -- submarine reveal chance on 0% positioning 
 	
 	SHIP_TO_FLEET_ANTI_AIR_RATIO									= 0,	-- total sum of fleet's anti air will be multiplied with this ratio and added to calculations anti-air of individual ships while air damage reduction
 	
@@ -2445,7 +2445,7 @@ NNavy = {
 	EFFICIENCY_TO_TIME_TO_JOIN_COMBAT_PENALTY 						= 100.0,	-- at lower efficiencies less time to join combat hour will be increased
 	
 	COORDINATION_EFFECT_ON_CONVOY_RAID_EFFICIENCY					= 1.5,		-- coordination will increase the number of areas you can cover in convoy raid
-	COORDINATION_EFFECT_ON_CONVOY_DEFENSE_EFFICIENCY				= 1.5,		-- coordination will increase the number of convoys you can cover in convoy defense
+	COORDINATION_EFFECT_ON_CONVOY_DEFENSE_EFFICIENCY				= 2,		-- coordination will increase the number of convoys you can cover in convoy defense
 	
 	COORDINATION_EFFECT_ON_TIME_TO_JOIN_COMBAT						= 1.0,		-- coordination will reduce the time to join combat penalties
 	COORDINATION_EFFECT_ON_MINE_LAYING_SPEED 						= 0.5,      -- affect of coordination modifier in mine laying speed
@@ -2457,12 +2457,12 @@ NNavy = {
 	
 	MISSION_EFFICIENCY_POW_FACTOR									= 1.7,		-- mission efficiencies will be powered up by this to further penalize low efficiencies
 	
-	NAVAL_COMBAT_SUB_DETECTION_FACTOR                               = 5.0,      -- balance value for sub detection in combat by ships
+	NAVAL_COMBAT_SUB_DETECTION_FACTOR                               = 2.5,      -- balance value for sub detection in combat by ships
 	SUBMARINE_HIDE_TIMEOUT 											= 12,		-- Amount of in-game-hours that takes the submarine (with position unrevealed), to hide.
 	SUBMARINE_REVEALED_TIMEOUT 										= 12,		-- Amount of in-game-hours that makes the submarine visible if it is on the defender side.
-	SUBMARINE_REVEAL_BASE_CHANCE 									= 11,		-- Base factor for submarine detection. It's modified by the difference of a spotter's submarines detection vs submarine visibility. Use this variable for game balancing. setting this too low will cause bad spotting issues.
+	SUBMARINE_REVEAL_BASE_CHANCE 									= 8.3,		-- Base factor for submarine detection. It's modified by the difference of a spotter's submarines detection vs submarine visibility. Use this variable for game balancing. setting this too low will cause bad spotting issues.
 	SUBMARINE_REVEAL_POW 											= 3,		-- A scaling factor that is applied to the reveal chance in order to make large differences in detection vs visibility more pronounced
-	SUBMARINE_BASE_TORPEDO_REVEAL_CHANCE 							= 0.04,		-- Chance of a submarine being revealed when it fires. 1.0 is 100%. this chance is then multiplied with modifier created by comparing firer's visibiility and target's detection
+	SUBMARINE_BASE_TORPEDO_REVEAL_CHANCE 							= 0.018,		-- Chance of a submarine being revealed when it fires. 1.0 is 100%. this chance is then multiplied with modifier created by comparing firer's visibiility and target's detection
 	
 	MAX_NUM_HOURS_TO_WAIT_AT_ALLY_DOCKYARDS_FOR_REPAIRS 			= 48,		-- taskforces will wait at most this amount of hours in ally bases for repairs before switching to another base for repairs
 	
@@ -2505,15 +2505,15 @@ NNavy = {
 	NAVAL_COMBAT_AIR_SUB_DETECTION_MAX = 10.0,
 	NAVAL_COMBAT_AIR_SUB_DETECTION_SLOPE = 10.0,						-- lower means sharper curve (ramps up very fast, then flatten out very fast). Must be >0
 
-	NAVAL_COMBAT_AIR_SUB_DETECTION_EXTERNAL_FACTOR = 1.0,					-- Factor applied to the stats of external air planes
-	NAVAL_COMBAT_AIR_SUB_DETECTION_INTERNAL_EFFICIENCY_FACTOR = 1.0,			-- Factor of Carrier's sortie efficiency on the stats bellow
-	NAVAL_COMBAT_AIR_AGILITY_TO_SUB_DETECTION = 0.0,					-- Factor to apply to the agility of air planes active in a naval combat to deduce their contibution to sub detection
-	NAVAL_COMBAT_AIR_STRIKE_ATTACK_TO_SUB_DETECTION = 0.0,					-- Same, but for strike attack (aka naval attack)
-	NAVAL_COMBAT_AIR_STRIKE_TARGETING_TO_SUB_DETECTION = 0.0,				-- Same, but for strike targeting (aka naval targeting)
-	NAVAL_COMBAT_AIR_MAX_SPEED_TO_SUB_DETECTION = 0.0,					-- Same, but for Max Speed
-	NAVAL_COMBAT_AIR_PLANE_COUNT_TO_SUB_DETECTION = 1.0,					-- Factor applied to the number of active plane in a naval combat to deduce their contribution to sub detection
-	NAVAL_COMBAT_AIR_SUB_DETECTION_DECAY_RATE = 1.0,					-- Factor to decay the value of sub detection contributed by planes on the last hour. Note: the maximum value between the decayed value and the newly computed one is taken into account. A decay rate of 1 means that nothing is carried over, the previous value is zerod out. A decay rate of 0 means that the previous value is carried over as is.
-	NAVAL_COMBAT_AIR_SUB_DETECTION_FACTOR = 0.0,						-- A global factor that applies after all others, right before the sub detection contributed by plane is added to the global sub detection of a combatant
+	NAVAL_COMBAT_AIR_SUB_DETECTION_EXTERNAL_FACTOR = 100.0,					-- Factor applied to the stats of external air planes
+	NAVAL_COMBAT_AIR_SUB_DETECTION_INTERNAL_EFFICIENCY_FACTOR = 1,			-- Factor of Carrier's sortie efficiency on the stats bellow
+	NAVAL_COMBAT_AIR_AGILITY_TO_SUB_DETECTION = 0.1,					-- Factor to apply to the agility of air planes active in a naval combat to deduce their contibution to sub detection
+	NAVAL_COMBAT_AIR_STRIKE_ATTACK_TO_SUB_DETECTION = 0,					-- Same, but for strike attack (aka naval attack)
+	NAVAL_COMBAT_AIR_STRIKE_TARGETING_TO_SUB_DETECTION = 0,				-- Same, but for strike targeting (aka naval targeting)
+	NAVAL_COMBAT_AIR_MAX_SPEED_TO_SUB_DETECTION = 0.1,					-- Same, but for Max Speed
+	NAVAL_COMBAT_AIR_PLANE_COUNT_TO_SUB_DETECTION = 0.2,					-- Factor applied to the number of active plane in a naval combat to deduce their contribution to sub detection
+	NAVAL_COMBAT_AIR_SUB_DETECTION_DECAY_RATE = 0,					-- Factor to decay the value of sub detection contributed by planes on the last hour. Note: the maximum value between the decayed value and the newly computed one is taken into account. A decay rate of 1 means that nothing is carried over, the previous value is zerod out. A decay rate of 0 means that the previous value is carried over as is.
+	NAVAL_COMBAT_AIR_SUB_DETECTION_FACTOR = 0.08,						-- A global factor that applies after all others, right before the sub detection contributed by plane is added to the global sub detection of a combatant
 
 	NAVAL_COMBAT_AIR_SUB_TARGET_SCORE = 10,                             -- scoring for target picking for planes inside naval combat, one define per ship typ
 	NAVAL_COMBAT_AIR_CAPITAL_TARGET_SCORE = 200,

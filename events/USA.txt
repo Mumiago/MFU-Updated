@@ -271,8 +271,7 @@ country_event = {
 	desc = usa.10.d
 	picture = GFX_USA_report_event_floods_1936
 
-	trigger = {
-	}
+	
 
 	is_triggered_only = yes 
 
@@ -379,11 +378,7 @@ country_event = { #Alf Landon Speaks out#
 			ideology = neutrality
 			popularity = 0.02 
 		}
-		hidden_effect = {
-			USA = {
-				country_event = { id = usa.25 days = 90 }
-			}
-		}
+		
 	}
 }
 
@@ -1645,13 +1640,19 @@ country_event = {
 	is_triggered_only = yes 
 
 	immediate = {
-		
+		hidden_effect = {
+			USA = {
+				set_country_flag = first_downturn
+				set_country_flag = { flag = first_downturn_timer value = 1 days = 80 }
+			}
+		}
 	}
 
 	
 
 	option = {
 		name = usa.417.a	
+		add_stability = -0.05
 		add_to_variable = {
 			var = great_depression_var
 			value = -1
@@ -1665,8 +1666,8 @@ country_event = {
 	
 
 		hidden_effect = {
-			set_country_flag = first_downturn
-			set_country_flag = { flag = first_downturn_timer value = 1 days = 80 }
+			
+			
 			add_to_variable = {
 				USA_number_of_recesions = 0.1
 			}
@@ -2451,6 +2452,7 @@ country_event = {  #more new deal funding during recession
 	fire_only_once = yes
 	
 	trigger = {
+		tag = USA
 		check_variable = {
 			USA_crisis_name = 3
 		}
@@ -2511,6 +2513,7 @@ country_event = {  ## recovery
 	fire_only_once = yes
 	
 	trigger = {
+		tag = USA
 		OR = {
 			check_variable = {
 				USA_crisis_name = 3
@@ -2557,6 +2560,7 @@ country_event = {  ## recovery 2
 	fire_only_once = yes
 	
 	trigger = {
+		tag = USA
 		OR = {
 			check_variable = {
 				USA_crisis_name = 3
@@ -2605,6 +2609,7 @@ country_event = {  ## recovery 3
 	fire_only_once = yes
 	
 	trigger = {
+		tag = USA
 		OR = {
 			check_variable = {
 				USA_crisis_name = 3
@@ -2756,11 +2761,14 @@ country_event = {  ## additional recovery
 	trigger = {
 		tag = USA 
 		NOT = {
-			has_idea = USA_great_depression_10_law
-			has_idea = USA_last_bastion_of_democracy
-			has_idea = USA_last_bastion_of_democracy2
 			has_country_flag = additional_recovery_flag
 		}
+	
+		has_dynamic_modifier = {
+			modifier = USA_new_deal_modifier
+		}
+		
+
 		has_country_flag = USA_national_defense_mediation_formed_flag
 	}
 
@@ -2782,7 +2790,6 @@ country_event = {  ## additional recovery
 				NOT = {
 					has_idea = USA_great_depression_10_law
 				}
-				
 			}
 			add_to_variable = {
 				var = great_depression_var
