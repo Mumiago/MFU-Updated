@@ -3065,26 +3065,4438 @@ JAP_pacific_war_explanation_category = {
 	}
 
 }
+JAP_evac_cat = {
+	JAP_evacuate_hunan = {
+		name = "Plunder"
+		
+		available = {
+			602 = {
+				OR = {	
+					NOT = {
+						OR = {
+							is_controlled_by = RCC
+							is_controlled_by = JAP
+							is_controlled_by = MAN
+						}
+							
+					}
+					NOT = {
+						has_state_flag = JAP_plunder_state_flag
+					}	
+				}
+			}
+		}
+		visible = {
 
-JAP_intervene_in_china_decision = {
-	JAP_return_state = { 
-		icon = GFX_decision_infiltrate_state
+		}
+		activation = {
+			602 = {
+				has_state_flag = JAP_plunder_state_flag
+			}
+		}
+	
+		fire_only_once = no
+		fixed_random_seed = no
+		is_good = yes 
+		icon = GFX_decision_generic_confiscation
+		highlight_states = {
+ 			highlight_state_targets = { 
+				 state = 602
+			}
+		}
 
+		on_map_mode = map_only
+		days_mission_timeout = 20
+ 
+		timeout_effect = {
+			if = {
+				limit = {
+					602 = {
+						arms_factory > 0
+					}
+				}
+				602 = {
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+					
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -2
+					}
+				}
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 2
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					602 = {
+						industrial_complex > 0
+					}
+				}
+				602 = {
+					remove_building = {
+						type = industrial_complex
+						level = 1
+					}
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -2
+					}
+				}
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 2
+					}
+				}
+			}
+			else = {
+				custom_effect_tooltip = JAP_modify_marcopolo_tt
+				random_list = {
+					1 = {
+						
+						add_to_variable = {
+							JAP_research_speed_factor_modifier = 0.02
+							tooltip = research_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_production_speed_buildings_factor_modifier = 0.02
+							tooltip = buildings_build_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_consumer_goods_expected_value_modifier  = -0.005
+							tooltip = consumer_goods_tooltip
+						}
+					}
+					1 = {
+						
+						add_cic = 20000
+					}
+					0.5 = {
+						
+						add_fuel = 50000
+						add_cic = 8000
+					}
+				}
+				602 = {
+					if = {
+						limit = {
+							NOT = {
+							
+								has_dynamic_modifier = {
+									modifier = JAP_light_plunder_modifier
+								}
+								has_dynamic_modifier = {
+									modifier = JAP_medium_plunder_modifier
+								}
+							}
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+				
+					}
+					else_if = {
+						limit = {
+							
+						
+							has_dynamic_modifier = {
+								modifier = JAP_light_plunder_modifier
+							}
+						
+						}
+						remove_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+					
+					}
+					else_if = {
+						limit = {
+							has_dynamic_modifier = {
+								modifier = JAP_medium_plunder_modifier
+							}
+						}
+					
+
+						remove_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_heavy_plunder_modifier
+						}
+					}
+					
+				}
+
+			}
+			
+			if = {
+				limit = {
+					602 = {
+						OR = {
+							arms_factory > 0
+							industrial_complex > 0
+							602 = {
+								NOT = {
+									has_dynamic_modifier = {
+										modifier = JAP_heavy_plunder_modifier
+									}
+								}
+							}
+						}
+						
+					}
+				}
+				activate_mission = JAP_evacuate_hunan
+			}
+			else = {
+				602 = {
+					clr_state_flag = JAP_plunder_state_flag	
+				}
+				
+			}	
+			
+			
+		}
+	}
+	JAP_evacuate_jiangxi = {
+		name = "Plunder"
+		
+		available = {
+			600 = {
+				OR = {	
+					NOT = {
+						OR = {
+							is_controlled_by = RCC
+							is_controlled_by = JAP
+							is_controlled_by = MAN
+						}
+							
+					}
+					NOT = {
+						has_state_flag = JAP_plunder_state_flag
+					}	
+				}
+			}
+		}
+		visible = {
+
+		}
+		activation = {
+			600 = {
+				has_state_flag = JAP_plunder_state_flag
+			}
+		}
+	
+		fire_only_once = no
+		is_good = yes 
+		icon = GFX_decision_generic_confiscation
+		highlight_states = {
+ 			highlight_state_targets = { 
+				 state = 600
+			}
+		}
+
+		on_map_mode = map_only
+		days_mission_timeout = 20
+ 
+		timeout_effect = {
+			if = {
+				limit = {
+					600 = {
+						arms_factory > 0
+					}
+				}
+				600 = {
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+					
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -2
+					}
+				}
+				
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 2
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					600 = {
+						industrial_complex > 0
+					}
+				}
+				600 = {
+					remove_building = {
+						type = industrial_complex
+						level = 1
+					}
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -2
+					}
+				}
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 2
+					}
+				}
+			}
+			else = {
+				custom_effect_tooltip = JAP_modify_marcopolo_tt
+				random_list = {
+					1 = {
+						
+						add_to_variable = {
+							JAP_research_speed_factor_modifier = 0.02
+							tooltip = research_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_production_speed_buildings_factor_modifier = 0.02
+							tooltip = buildings_build_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_consumer_goods_expected_value_modifier  = -0.005
+							tooltip = consumer_goods_tooltip
+						}
+					}
+					1 = {
+						
+						add_cic = 20000
+					}
+					0.5 = {
+						
+						add_fuel = 50000
+						add_cic = 8000
+					}
+				}
+				600 = {
+					if = {
+						limit = {
+							NOT = {
+							
+								has_dynamic_modifier = {
+									modifier = JAP_light_plunder_modifier
+								}
+								has_dynamic_modifier = {
+									modifier = JAP_medium_plunder_modifier
+								}
+							}
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+				
+					}
+					else_if = {
+						limit = {
+							
+						
+							has_dynamic_modifier = {
+								modifier = JAP_light_plunder_modifier
+							}
+						
+						}
+						remove_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+					
+					}
+					else_if = {
+						limit = {
+							has_dynamic_modifier = {
+								modifier = JAP_medium_plunder_modifier
+							}
+						}
+					
+
+						remove_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_heavy_plunder_modifier
+						}
+					}
+					
+				}
+
+			}
+			
+			if = {
+				limit = {
+					600 = {
+						OR = {
+							arms_factory > 0
+							industrial_complex > 0
+							600 = {
+								NOT = {
+									has_dynamic_modifier = {
+										modifier = JAP_heavy_plunder_modifier
+									}
+								}
+							}
+						}
+						
+					}
+				}
+				activate_mission = JAP_evacuate_jiangxi
+			}
+			else = {
+				600 = {
+					clr_state_flag = JAP_plunder_state_flag	
+				}
+				
+			}	
+			
+			
+		}
+	}
+	
+	JAP_evacuate_fujian = {
+		name = "Plunder"
+		
+		available = {
+			595 = {
+				OR = {	
+					NOT = {
+						OR = {
+							is_controlled_by = RCC
+							is_controlled_by = JAP
+							is_controlled_by = MAN
+						}
+							
+					}
+					NOT = {
+						has_state_flag = JAP_plunder_state_flag
+					}	
+				}
+			}
+		}
+		visible = {
+
+		}
+		activation = {
+			595 = {
+				has_state_flag = JAP_plunder_state_flag
+			}
+		}
+	
+		fire_only_once = no
+		is_good = yes 
+		icon = GFX_decision_generic_confiscation
+		highlight_states = {
+ 			highlight_state_targets = { 
+				 state = 595
+			}
+		}
+
+		on_map_mode = map_only
+		days_mission_timeout = 20
+ 
+		timeout_effect = {
+			if = {
+				limit = {
+					595 = {
+						arms_factory > 0
+					}
+				}
+				595 = {
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+					
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					add_resource = {
+						type = aluminium
+						amount = -1
+					}
+				
+				}
+					
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					add_resource = {
+						type = aluminium
+						amount = 1
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					595 = {
+						industrial_complex > 0
+					}
+				}
+				595 = {
+					remove_building = {
+						type = industrial_complex
+						level = 1
+					}
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					add_resource = {
+						type = aluminium
+						amount = -1
+					}
+					
+				}
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					add_resource = {
+						type = aluminium
+						amount = 1
+					}
+				}
+			}
+			else = {
+				custom_effect_tooltip = JAP_modify_marcopolo_tt
+				random_list = {
+					1 = {
+						
+						add_to_variable = {
+							JAP_research_speed_factor_modifier = 0.02
+							tooltip = research_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_production_speed_buildings_factor_modifier = 0.02
+							tooltip = buildings_build_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_consumer_goods_expected_value_modifier  = -0.005
+							tooltip = consumer_goods_tooltip
+						}
+					}
+					1 = {
+						
+						add_cic = 20000
+					}
+					0.5 = {
+						
+						add_fuel = 50000
+						add_cic = 8000
+					}
+				}
+				595 = {
+					if = {
+						limit = {
+							NOT = {
+							
+								has_dynamic_modifier = {
+									modifier = JAP_light_plunder_modifier
+								}
+								has_dynamic_modifier = {
+									modifier = JAP_medium_plunder_modifier
+								}
+							}
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+				
+					}
+					else_if = {
+						limit = {
+							
+						
+							has_dynamic_modifier = {
+								modifier = JAP_light_plunder_modifier
+							}
+						
+						}
+						remove_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+					
+					}
+					else_if = {
+						limit = {
+							has_dynamic_modifier = {
+								modifier = JAP_medium_plunder_modifier
+							}
+						}
+					
+
+						remove_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_heavy_plunder_modifier
+						}
+					}
+					
+				}
+
+			}
+			
+			if = {
+				limit = {
+					595 = {
+						OR = {
+							arms_factory > 0
+							industrial_complex > 0
+							595 = {
+								NOT = {
+									has_dynamic_modifier = {
+										modifier = JAP_heavy_plunder_modifier
+									}
+								}
+							}
+						}
+						
+					}
+				}
+				activate_mission = JAP_evacuate_fujian
+			}
+			else = {
+				595 = {
+					clr_state_flag = JAP_plunder_state_flag	
+				}
+				
+			}	
+			
+			
+		}
+	}
+	JAP_evacuate_guangdong = {
+		name = "Plunder"
+		
+		available = {
+			595 = {
+				OR = {	
+					NOT = {
+						OR = {
+							is_controlled_by = RCC
+							is_controlled_by = JAP
+							is_controlled_by = MAN
+						}
+							
+					}
+					NOT = {
+						has_state_flag = JAP_plunder_state_flag
+					}	
+				}
+			}
+		}
+		visible = {
+
+		}
+		activation = {
+			593 = {
+				has_state_flag = JAP_plunder_state_flag
+			}
+		}
+	
+		fire_only_once = no
+		is_good = yes 
+		icon = GFX_decision_generic_confiscation
+		highlight_states = {
+ 			highlight_state_targets = { 
+				 state = 593
+			}
+		}
+
+		on_map_mode = map_only
+		days_mission_timeout = 20
+ 
+		timeout_effect = {
+			if = {
+				limit = {
+					593 = {
+						arms_factory > 0
+					}
+				}
+				593 = {
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+					
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					add_resource = {
+						type = aluminium
+						amount = -1
+					}
+				}
+				
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					add_resource = {
+						type = aluminium
+						amount = 1
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					593 = {
+						industrial_complex > 0
+					}
+				}
+				593 = {
+					remove_building = {
+						type = industrial_complex
+						level = 1
+					}
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					add_resource = {
+						type = aluminium
+						amount = -1
+					}
+				}
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					add_resource = {
+						type = aluminium
+						amount = 1
+					}
+				}
+			}
+			else = {
+				custom_effect_tooltip = JAP_modify_marcopolo_tt
+				random_list = {
+					1 = {
+						
+						add_to_variable = {
+							JAP_research_speed_factor_modifier = 0.02
+							tooltip = research_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_production_speed_buildings_factor_modifier = 0.02
+							tooltip = buildings_build_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_consumer_goods_expected_value_modifier  = -0.005
+							tooltip = consumer_goods_tooltip
+						}
+					}
+					1 = {
+						
+						add_cic = 20000
+					}
+					0.5 = {
+						
+						add_fuel = 50000
+						add_cic = 8000
+					}
+				}
+				593 = {
+					if = {
+						limit = {
+							NOT = {
+							
+								has_dynamic_modifier = {
+									modifier = JAP_light_plunder_modifier
+								}
+								has_dynamic_modifier = {
+									modifier = JAP_medium_plunder_modifier
+								}
+							}
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+				
+					}
+					else_if = {
+						limit = {
+							
+						
+							has_dynamic_modifier = {
+								modifier = JAP_light_plunder_modifier
+							}
+						
+						}
+						remove_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+					
+					}
+					else_if = {
+						limit = {
+							has_dynamic_modifier = {
+								modifier = JAP_medium_plunder_modifier
+							}
+						}
+					
+
+						remove_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_heavy_plunder_modifier
+						}
+					}
+					
+				}
+
+			}
+			
+			if = {
+				limit = {
+					593 = {
+						OR = {
+							arms_factory > 0
+							industrial_complex > 0
+							593 = {
+								NOT = {
+									has_dynamic_modifier = {
+										modifier = JAP_heavy_plunder_modifier
+									}
+								}
+							}
+						}
+						
+					}
+				}
+				activate_mission = JAP_evacuate_guangdong
+			}
+			else = {
+				593 = {
+					clr_state_flag = JAP_plunder_state_flag	
+				}
+				
+			}	
+			
+			
+		}
+	}
+	JAP_evacuate_guangzhou = {
+		name = "Plunder"
+		
+		available = {
+			592 = {
+				OR = {	
+					NOT = {
+						OR = {
+							is_controlled_by = RCC
+							is_controlled_by = JAP
+							is_controlled_by = MAN
+						}
+							
+					}
+					NOT = {
+						has_state_flag = JAP_plunder_state_flag
+					}	
+				}
+			}
+		}
+		visible = {
+
+		}
+		activation = {
+			592 = {
+				has_state_flag = JAP_plunder_state_flag
+			}
+		}
+	
+		fire_only_once = no
+		is_good = yes 
+		icon = GFX_decision_generic_confiscation
+		highlight_states = {
+ 			highlight_state_targets = { 
+				 state = 592
+			}
+		}
+
+		on_map_mode = map_only
+		days_mission_timeout = 20
+ 
+		timeout_effect = {
+			if = {
+				limit = {
+					592 = {
+						arms_factory > 0
+					}
+				}
+				592 = {
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+					
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					add_resource = {
+						type = tungsten
+						amount = -1
+					}
+				}
+				
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					add_resource = {
+						type = tungsten
+						amount = 1
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					592 = {
+						industrial_complex > 0
+					}
+				}
+				592 = {
+					remove_building = {
+						type = industrial_complex
+						level = 1
+					}
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					add_resource = {
+						type = tungsten
+						amount = -1
+					}
+				}
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					add_resource = {
+						type = tungsten
+						amount = 1
+					}
+				}
+			}
+			
+			else = {
+				custom_effect_tooltip = JAP_modify_marcopolo_tt
+				random_list = {
+					1 = {
+						
+						add_to_variable = {
+							JAP_research_speed_factor_modifier = 0.02
+							tooltip = research_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_production_speed_buildings_factor_modifier = 0.02
+							tooltip = buildings_build_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_consumer_goods_expected_value_modifier  = -0.005
+							tooltip = consumer_goods_tooltip
+						}
+					}
+					1 = {
+						
+						add_cic = 20000
+					}
+					0.5 = {
+						
+						add_fuel = 50000
+						add_cic = 8000
+					}
+				}
+				592 = {
+					if = {
+						limit = {
+							NOT = {
+							
+								has_dynamic_modifier = {
+									modifier = JAP_light_plunder_modifier
+								}
+								has_dynamic_modifier = {
+									modifier = JAP_medium_plunder_modifier
+								}
+							}
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+				
+					}
+					else_if = {
+						limit = {
+							
+						
+							has_dynamic_modifier = {
+								modifier = JAP_light_plunder_modifier
+							}
+						
+						}
+						remove_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+					
+					}
+					else_if = {
+						limit = {
+							has_dynamic_modifier = {
+								modifier = JAP_medium_plunder_modifier
+							}
+						}
+					
+
+						remove_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_heavy_plunder_modifier
+						}
+					}
+					
+				}
+
+			}
+			
+			if = {
+				limit = {
+					592 = {
+						OR = {
+							arms_factory > 0
+							industrial_complex > 0
+							592 = {
+								NOT = {
+									has_dynamic_modifier = {
+										modifier = JAP_heavy_plunder_modifier
+									}
+								}
+							}
+						}
+						
+					}
+				}
+				activate_mission = JAP_evacuate_guangzhou
+			}
+			else = {
+				592 = {
+					clr_state_flag = JAP_plunder_state_flag	
+				}
+				
+			}	
+			
+			
+		}
+	}
+	JAP_evacuate_guangxi= {
+		name = "Plunder"
+		
+		available = {
+			599 = {
+				OR = {	
+					NOT = {
+						OR = {
+							is_controlled_by = RCC
+							is_controlled_by = JAP
+							is_controlled_by = MAN
+						}
+							
+					}
+					NOT = {
+						has_state_flag = JAP_plunder_state_flag
+					}	
+				}
+			}
+		}
+		visible = {
+
+		}
+		activation = {
+			599 = {
+				has_state_flag = JAP_plunder_state_flag
+			}
+		}
+	
+		fire_only_once = no
+		is_good = yes 
+		icon = GFX_decision_generic_confiscation
+		highlight_states = {
+ 			highlight_state_targets = { 
+				 state = 599
+			}
+		}
+
+		on_map_mode = map_only
+		days_mission_timeout = 20
+ 
+		timeout_effect = {
+			if = {
+				limit = {
+					599 = {
+						arms_factory > 0
+					}
+				}
+				599 = {
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+					
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					add_resource = {
+						type = tungsten
+						amount = -1
+					}
+				}
+				
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					add_resource = {
+						type = tungsten
+						amount = 1
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					599 = {
+						industrial_complex > 0
+					}
+				}
+				599 = {
+					remove_building = {
+						type = industrial_complex
+						level = 1
+					}
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					add_resource = {
+						type = tungsten
+						amount = -1
+					}
+				}
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					add_resource = {
+						type = tungsten
+						amount = 1
+					}
+				}
+			}
+			
+			else = {
+				custom_effect_tooltip = JAP_modify_marcopolo_tt
+				random_list = {
+					1 = {
+						
+						add_to_variable = {
+							JAP_research_speed_factor_modifier = 0.02
+							tooltip = research_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_production_speed_buildings_factor_modifier = 0.02
+							tooltip = buildings_build_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_consumer_goods_expected_value_modifier  = -0.005
+							tooltip = consumer_goods_tooltip
+						}
+					}
+					1 = {
+						
+						add_cic = 20000
+					}
+					0.5 = {
+						
+						add_fuel = 50000
+						add_cic = 8000
+					}
+				}
+				599 = {
+					if = {
+						limit = {
+							NOT = {
+							
+								has_dynamic_modifier = {
+									modifier = JAP_light_plunder_modifier
+								}
+								has_dynamic_modifier = {
+									modifier = JAP_medium_plunder_modifier
+								}
+							}
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+				
+					}
+					else_if = {
+						limit = {
+							
+						
+							has_dynamic_modifier = {
+								modifier = JAP_light_plunder_modifier
+							}
+						
+						}
+						remove_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+					
+					}
+					else_if = {
+						limit = {
+							has_dynamic_modifier = {
+								modifier = JAP_medium_plunder_modifier
+							}
+						}
+					
+
+						remove_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_heavy_plunder_modifier
+						}
+					}
+					
+				}
+
+			}
+			
+			if = {
+				limit = {
+					599 = {
+						OR = {
+							arms_factory > 0
+							industrial_complex > 0
+							599 = {
+								NOT = {
+									has_dynamic_modifier = {
+										modifier = JAP_heavy_plunder_modifier
+									}
+								}
+							}
+						}
+						
+					}
+				}
+				activate_mission = JAP_evacuate_guangxi
+			}
+			else = {
+				599 = {
+					clr_state_flag = JAP_plunder_state_flag	
+				}
+				
+			}	
+			
+			
+		}
+	}
+	JAP_evacuate_yunan = {
+		name = "Plunder"
+		
+		available = {
+			325 = {
+				OR = {	
+					NOT = {
+						OR = {
+							is_controlled_by = RCC
+							is_controlled_by = JAP
+							is_controlled_by = MAN
+						}
+							
+					}
+					NOT = {
+						has_state_flag = JAP_plunder_state_flag
+					}	
+				}
+			}
+		}
+		visible = {
+
+		}
+		activation = {
+			325 = {
+				has_state_flag = JAP_plunder_state_flag
+			}
+		}
+		fixed_random_seed = no
+		fire_only_once = no
+		is_good = yes 
+		icon = GFX_decision_generic_confiscation
+		highlight_states = {
+ 			highlight_state_targets = { 
+				 state = 325
+			}
+		}
+
+		on_map_mode = map_only
+		days_mission_timeout = 20
+ 
+		timeout_effect = {
+			if = {
+				limit = {
+					325 = {
+						arms_factory > 0
+					}
+				}
+				325 = {
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+					
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					add_resource = {
+						type = chromium
+						amount = -1
+					}
+				}
+				
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					add_resource = {
+						type = chromium
+						amount = 1
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					325 = {
+						industrial_complex > 0
+					}
+				}
+				325 = {
+					remove_building = {
+						type = industrial_complex
+						level = 1
+					}
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					add_resource = {
+						type = chromium
+						amount = -1
+					}
+				}
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					add_resource = {
+						type = chromium
+						amount = 1
+					}
+				}
+			}
+			else = {
+				custom_effect_tooltip = JAP_modify_marcopolo_tt
+				random_list = {
+					1 = {
+						
+						add_to_variable = {
+							JAP_research_speed_factor_modifier = 0.02
+							tooltip = research_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_production_speed_buildings_factor_modifier = 0.02
+							tooltip = buildings_build_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_consumer_goods_expected_value_modifier  = -0.005
+							tooltip = consumer_goods_tooltip
+						}
+					}
+					1 = {
+						
+						add_cic = 20000
+					}
+					0.5 = {
+						
+						add_fuel = 50000
+						add_cic = 8000
+					}
+				}
+				325 = {
+					if = {
+						limit = {
+							NOT = {
+							
+								has_dynamic_modifier = {
+									modifier = JAP_light_plunder_modifier
+								}
+								has_dynamic_modifier = {
+									modifier = JAP_medium_plunder_modifier
+								}
+							}
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+				
+					}
+					else_if = {
+						limit = {
+							
+						
+							has_dynamic_modifier = {
+								modifier = JAP_light_plunder_modifier
+							}
+						
+						}
+						remove_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+					
+					}
+					else_if = {
+						limit = {
+							has_dynamic_modifier = {
+								modifier = JAP_medium_plunder_modifier
+							}
+						}
+					
+
+						remove_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_heavy_plunder_modifier
+						}
+					}
+					
+				}
+
+			}
+			
+			if = {
+				limit = {
+					325 = {
+						OR = {
+							arms_factory > 0
+							industrial_complex > 0
+							325 = {
+								NOT = {
+									has_dynamic_modifier = {
+										modifier = JAP_heavy_plunder_modifier
+									}
+								}
+							}
+						}
+						
+					}
+				}
+				activate_mission = JAP_evacuate_yunan
+			}
+			else = {
+				325 = {
+					clr_state_flag = JAP_plunder_state_flag	
+				}
+				
+			}	
+			
+			
+		}
+	}
+	JAP_evacuate_guizhou = {
+		name = "Plunder"
+		
+		available = {
+			603 = {
+				OR = {	
+					NOT = {
+						OR = {
+							is_controlled_by = RCC
+							is_controlled_by = JAP
+							is_controlled_by = MAN
+						}
+							
+					}
+					NOT = {
+						has_state_flag = JAP_plunder_state_flag
+					}	
+				}
+			}
+		}
+		visible = {
+
+		}
+		activation = {
+			603 = {
+				has_state_flag = JAP_plunder_state_flag
+			}
+		}
+	
+		fire_only_once = no
+		is_good = yes 
+		icon = GFX_decision_generic_confiscation
+		highlight_states = {
+ 			highlight_state_targets = { 
+				 state = 603
+			}
+		}
+
+		on_map_mode = map_only
+		days_mission_timeout = 20
+ 
+		timeout_effect = {
+			if = {
+				limit = {
+					603 = {
+						arms_factory > 0
+					}
+				}
+				603 = {
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+					
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					add_resource = {
+						type = chromium
+						amount = -1
+					}
+				}
+				
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					add_resource = {
+						type = chromium
+						amount = 1
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					603 = {
+						industrial_complex > 0
+					}
+				}
+				603 = {
+					remove_building = {
+						type = industrial_complex
+						level = 1
+					}
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					add_resource = {
+						type = chromium
+						amount = -1
+					}
+				}
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					add_resource = {
+						type = chromium
+						amount = 1
+					}
+				}
+			}
+			
+			else = {
+				custom_effect_tooltip = JAP_modify_marcopolo_tt
+				random_list = {
+					1 = {
+						
+						add_to_variable = {
+							JAP_research_speed_factor_modifier = 0.02
+							tooltip = research_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_production_speed_buildings_factor_modifier = 0.02
+							tooltip = buildings_build_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_consumer_goods_expected_value_modifier  = -0.005
+							tooltip = consumer_goods_tooltip
+						}
+					}
+					1 = {
+						
+						add_cic = 20000
+					}
+					0.5 = {
+						
+						add_fuel = 50000
+						add_cic = 8000
+					}
+				}
+				603 = {
+					if = {
+						limit = {
+							NOT = {
+							
+								has_dynamic_modifier = {
+									modifier = JAP_light_plunder_modifier
+								}
+								has_dynamic_modifier = {
+									modifier = JAP_medium_plunder_modifier
+								}
+							}
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+				
+					}
+					else_if = {
+						limit = {
+							
+						
+							has_dynamic_modifier = {
+								modifier = JAP_light_plunder_modifier
+							}
+						
+						}
+						remove_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+					
+					}
+					else_if = {
+						limit = {
+							has_dynamic_modifier = {
+								modifier = JAP_medium_plunder_modifier
+							}
+						}
+					
+
+						remove_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_heavy_plunder_modifier
+						}
+					}
+					
+				}
+
+			}
+			
+			if = {
+				limit = {
+					603 = {
+						OR = {
+							arms_factory > 0
+							industrial_complex > 0
+							603 = {
+								NOT = {
+									has_dynamic_modifier = {
+										modifier = JAP_heavy_plunder_modifier
+									}
+								}
+							}
+						}
+						
+					}
+				}
+				activate_mission = JAP_evacuate_guizhou
+			}
+			else = {
+				603 = {
+					clr_state_flag = JAP_plunder_state_flag	
+				}
+				
+			}	
+			
+			
+		}
+	}
+	JAP_evacuate_dali = {
+		name = "Plunder"
+		
+		available = {
+			747 = {
+				OR = {	
+					NOT = {
+						OR = {
+							is_controlled_by = RCC
+							is_controlled_by = JAP
+							is_controlled_by = MAN
+						}
+							
+					}
+					NOT = {
+						has_state_flag = JAP_plunder_state_flag
+					}	
+				}
+			}
+		}
+		visible = {
+
+		}
+		activation = {
+			747 = {
+				has_state_flag = JAP_plunder_state_flag
+			}
+		}
+	
+		fire_only_once = no
+		is_good = yes 
+		icon = GFX_decision_generic_confiscation
+		highlight_states = {
+ 			highlight_state_targets = { 
+				 state = 747
+			}
+		}
+
+		on_map_mode = map_only
+		days_mission_timeout = 20
+ 
+		timeout_effect = {
+			if = {
+				limit = {
+					747 = {
+						arms_factory > 0
+					}
+				}
+				747 = {
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+					
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -2
+					}
+					
+				}
+				
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 2
+					}
+					
+				}
+			}
+			else_if = {
+				limit = {
+					747 = {
+						industrial_complex > 0
+					}
+				}
+				747 = {
+					remove_building = {
+						type = industrial_complex
+						level = 1
+					}
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount =  -2
+					}
+					
+				}
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 2
+					}
+					
+				}
+			}
+			
+			else = {
+				custom_effect_tooltip = JAP_modify_marcopolo_tt
+				random_list = {
+					1 = {
+						
+						add_to_variable = {
+							JAP_research_speed_factor_modifier = 0.02
+							tooltip = research_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_production_speed_buildings_factor_modifier = 0.02
+							tooltip = buildings_build_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_consumer_goods_expected_value_modifier  = -0.005
+							tooltip = consumer_goods_tooltip
+						}
+					}
+					1 = {
+						
+						add_cic = 20000
+					}
+					0.5 = {
+						
+						add_fuel = 50000
+						add_cic = 8000
+					}
+				}
+				747 = {
+					if = {
+						limit = {
+							NOT = {
+							
+								has_dynamic_modifier = {
+									modifier = JAP_light_plunder_modifier
+								}
+								has_dynamic_modifier = {
+									modifier = JAP_medium_plunder_modifier
+								}
+							}
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+				
+					}
+					else_if = {
+						limit = {
+							
+						
+							has_dynamic_modifier = {
+								modifier = JAP_light_plunder_modifier
+							}
+						
+						}
+						remove_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+					
+					}
+					else_if = {
+						limit = {
+							has_dynamic_modifier = {
+								modifier = JAP_medium_plunder_modifier
+							}
+						}
+					
+
+						remove_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_heavy_plunder_modifier
+						}
+					}
+					
+				}
+
+			}
+			
+			if = {
+				limit = {
+					747 = {
+						OR = {
+							arms_factory > 0
+							industrial_complex > 0
+							747 = {
+								NOT = {
+									has_dynamic_modifier = {
+										modifier = JAP_heavy_plunder_modifier
+									}
+								}
+							}
+						}
+						
+					}
+				}
+				activate_mission = JAP_evacuate_dali
+			}
+			else = {
+				747 = {
+					clr_state_flag = JAP_plunder_state_flag	
+				}
+				
+			}	
+			
+			
+		}
+	}
+	JAP_evacuate_zunyi = {
+		name = "Plunder"
+		
+		available = {
+			748 = {
+				OR = {	
+					NOT = {
+						OR = {
+							is_controlled_by = RCC
+							is_controlled_by = JAP
+							is_controlled_by = MAN
+						}
+							
+					}
+					NOT = {
+						has_state_flag = JAP_plunder_state_flag
+					}	
+				}
+			}
+		}
+		visible = {
+
+		}
+		activation = {
+			748 = {
+				has_state_flag = JAP_plunder_state_flag
+			}
+		}
+	
+		fire_only_once = no
+		is_good = yes 
+		icon = GFX_decision_generic_confiscation
+		highlight_states = {
+ 			highlight_state_targets = { 
+				 state = 748
+			}
+		}
+
+		on_map_mode = map_only
+		days_mission_timeout = 20
+ 
+		timeout_effect = {
+			if = {
+				limit = {
+					748 = {
+						arms_factory > 0
+					}
+				}
+				748 = {
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+					
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					add_resource = {
+						type = aluminium
+						amount = -1
+					}
+				}
+				
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					add_resource = {
+						type = aluminium
+						amount = 1
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					748 = {
+						industrial_complex > 0
+					}
+				}
+				748 = {
+					remove_building = {
+						type = industrial_complex
+						level = 1
+					}
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					add_resource = {
+						type = aluminium
+						amount = -1
+					}
+				}
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					add_resource = {
+						type = aluminium
+						amount = 1
+					}
+				}
+			}
+			
+			else = {
+				custom_effect_tooltip = JAP_modify_marcopolo_tt
+				random_list = {
+					1 = {
+						
+						add_to_variable = {
+							JAP_research_speed_factor_modifier = 0.02
+							tooltip = research_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_production_speed_buildings_factor_modifier = 0.02
+							tooltip = buildings_build_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_consumer_goods_expected_value_modifier  = -0.005
+							tooltip = consumer_goods_tooltip
+						}
+					}
+					1 = {
+						
+						add_cic = 20000
+					}
+					0.5 = {
+						
+						add_fuel = 50000
+						add_cic = 8000
+					}
+				}
+				748 = {
+					if = {
+						limit = {
+							NOT = {
+							
+								has_dynamic_modifier = {
+									modifier = JAP_light_plunder_modifier
+								}
+								has_dynamic_modifier = {
+									modifier = JAP_medium_plunder_modifier
+								}
+							}
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+				
+					}
+					else_if = {
+						limit = {
+							
+						
+							has_dynamic_modifier = {
+								modifier = JAP_light_plunder_modifier
+							}
+						
+						}
+						remove_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+					
+					}
+					else_if = {
+						limit = {
+							has_dynamic_modifier = {
+								modifier = JAP_medium_plunder_modifier
+							}
+						}
+					
+
+						remove_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_heavy_plunder_modifier
+						}
+					}
+					
+				}
+
+			}
+			
+			if = {
+				limit = {
+					748 = {
+						OR = {
+							arms_factory > 0
+							industrial_complex > 0
+							748 = {
+								NOT = {
+									has_dynamic_modifier = {
+										modifier = JAP_heavy_plunder_modifier
+									}
+								}
+							}
+						}
+						
+					}
+				}
+				activate_mission = JAP_evacuate_zunyi
+			}
+			else = {
+				748 = {
+					clr_state_flag = JAP_plunder_state_flag	
+				}
+				
+			}	
+			
+			
+		}
+	}
+	JAP_evacuate_changde = {
+		name = "Plunder"
+		
+		available = {
+			750 = {
+				OR = {	
+					NOT = {
+						OR = {
+							is_controlled_by = RCC
+							is_controlled_by = JAP
+							is_controlled_by = MAN
+						}
+							
+					}
+					NOT = {
+						has_state_flag = JAP_plunder_state_flag
+					}	
+				}
+			}
+		}
+		visible = {
+
+		}
+		activation = {
+			750 = {
+				has_state_flag = JAP_plunder_state_flag
+			}
+		}
+	
+		fire_only_once = no
+		is_good = yes 
+		icon = GFX_decision_generic_confiscation
+		highlight_states = {
+ 			highlight_state_targets = { 
+				 state = 750
+			}
+		}
+
+		on_map_mode = map_only
+		days_mission_timeout = 20
+ 
+		timeout_effect = {
+			if = {
+				limit = {
+					750 = {
+						arms_factory > 0
+					}
+				}
+				750 = {
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+					
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					add_resource = {
+						type = aluminium
+						amount = -1
+					}
+				}
+				
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					add_resource = {
+						type = aluminium
+						amount = 1
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					750 = {
+						industrial_complex > 0
+					}
+				}
+				750 = {
+					remove_building = {
+						type = industrial_complex
+						level = 1
+					}
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					add_resource = {
+						type = aluminium
+						amount = -1
+					}
+				}
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					add_resource = {
+						type = aluminium
+						amount = 1
+					}
+				}
+			}
+			
+			else = {
+				custom_effect_tooltip = JAP_modify_marcopolo_tt
+				random_list = {
+					1 = {
+						
+						add_to_variable = {
+							JAP_research_speed_factor_modifier = 0.02
+							tooltip = research_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_production_speed_buildings_factor_modifier = 0.02
+							tooltip = buildings_build_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_consumer_goods_expected_value_modifier  = -0.005
+							tooltip = consumer_goods_tooltip
+						}
+					}
+					1 = {
+						
+						add_cic = 20000
+					}
+					0.5 = {
+						
+						add_fuel = 50000
+						add_cic = 8000
+					}
+				}
+				750 = {
+					if = {
+						limit = {
+							NOT = {
+							
+								has_dynamic_modifier = {
+									modifier = JAP_light_plunder_modifier
+								}
+								has_dynamic_modifier = {
+									modifier = JAP_medium_plunder_modifier
+								}
+							}
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+				
+					}
+					else_if = {
+						limit = {
+							
+						
+							has_dynamic_modifier = {
+								modifier = JAP_light_plunder_modifier
+							}
+						
+						}
+						remove_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+					
+					}
+					else_if = {
+						limit = {
+							has_dynamic_modifier = {
+								modifier = JAP_medium_plunder_modifier
+							}
+						}
+					
+
+						remove_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_heavy_plunder_modifier
+						}
+					}
+					
+				}
+
+			}
+			
+			if = {
+				limit = {
+					750 = {
+						OR = {
+							arms_factory > 0
+							industrial_complex > 0
+							750 = {
+								NOT = {
+									has_dynamic_modifier = {
+										modifier = JAP_heavy_plunder_modifier
+									}
+								}
+							}
+						}
+						
+					}
+				}
+				activate_mission = JAP_evacuate_changde
+			}
+			else = {
+				750 = {
+					clr_state_flag = JAP_plunder_state_flag	
+				}
+				
+			}	
+			
+			
+		}
+	}
+	JAP_evacuate_wuhan = {
+		name = "Plunder"
+		
+		available = {
+			620 = {
+				OR = {	
+					NOT = {
+						OR = {
+							is_controlled_by = RCC
+							is_controlled_by = JAP
+							is_controlled_by = MAN
+						}
+							
+					}
+					NOT = {
+						has_state_flag = JAP_plunder_state_flag
+					}	
+				}
+			}
+		}
+		visible = {
+
+		}
+		activation = {
+			620 = {
+				has_state_flag = JAP_plunder_state_flag
+			}
+		}
+	
+		fire_only_once = no
+		is_good = yes 
+		icon = GFX_decision_generic_confiscation
+		highlight_states = {
+ 			highlight_state_targets = { 
+				 state = 620
+			}
+		}
+
+		on_map_mode = map_only
+		days_mission_timeout = 20
+ 
+		timeout_effect = {
+			if = {
+				limit = {
+					620 = {
+						arms_factory > 0
+					}
+				}
+				620 = {
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+					
+					add_resistance_target = 2
+					add_resistance = 2
+					
+				}
+				
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					
+				}
+			}
+			else_if = {
+				limit = {
+					620 = {
+						industrial_complex > 0
+					}
+				}
+				620 = {
+					remove_building = {
+						type = industrial_complex
+						level = 1
+					}
+					add_resistance_target = 2
+					add_resistance = 2
+					
+				}
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+					
+				}
+			}
+			
+			else = {
+				custom_effect_tooltip = JAP_modify_marcopolo_tt
+				random_list = {
+					1 = {
+						
+						add_to_variable = {
+							JAP_research_speed_factor_modifier = 0.02
+							tooltip = research_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_production_speed_buildings_factor_modifier = 0.02
+							tooltip = buildings_build_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_consumer_goods_expected_value_modifier  = -0.005
+							tooltip = consumer_goods_tooltip
+						}
+					}
+					1 = {
+						
+						add_cic = 20000
+					}
+					0.5 = {
+						
+						add_fuel = 50000
+						add_cic = 8000
+					}
+				}
+				620 = {
+					if = {
+						limit = {
+							NOT = {
+							
+								has_dynamic_modifier = {
+									modifier = JAP_light_plunder_modifier
+								}
+								has_dynamic_modifier = {
+									modifier = JAP_medium_plunder_modifier
+								}
+							}
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+				
+					}
+					else_if = {
+						limit = {
+							
+						
+							has_dynamic_modifier = {
+								modifier = JAP_light_plunder_modifier
+							}
+						
+						}
+						remove_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+					
+					}
+					else_if = {
+						limit = {
+							has_dynamic_modifier = {
+								modifier = JAP_medium_plunder_modifier
+							}
+						}
+					
+
+						remove_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_heavy_plunder_modifier
+						}
+					}
+					
+				}
+
+			}
+			
+			if = {
+				limit = {
+					620 = {
+						OR = {
+							arms_factory > 0
+							industrial_complex > 0
+							620 = {
+								NOT = {
+									has_dynamic_modifier = {
+										modifier = JAP_heavy_plunder_modifier
+									}
+								}
+							}
+						}
+						
+					}
+				}
+				activate_mission = JAP_evacuate_wuhan
+			}
+			else = {
+				620 = {
+					clr_state_flag = JAP_plunder_state_flag	
+				}
+				
+			}	
+			
+			
+		}
+	}
+	JAP_evacuate_suizhou = {
+		name = "Plunder"
+		
+		available = {
+			820 = {
+				OR = {	
+					NOT = {
+						OR = {
+							is_controlled_by = RCC
+							is_controlled_by = JAP
+							is_controlled_by = MAN
+						}
+							
+					}
+					NOT = {
+						has_state_flag = JAP_plunder_state_flag
+					}	
+				}
+			}
+		}
+		visible = {
+
+		}
+		activation = {
+			820 = {
+				has_state_flag = JAP_plunder_state_flag
+			}
+		}
+	
+		fire_only_once = no
+		is_good = yes 
+		icon = GFX_decision_generic_confiscation
+		highlight_states = {
+ 			highlight_state_targets = { 
+				 state = 820
+			}
+		}
+
+		on_map_mode = map_only
+		days_mission_timeout = 20
+ 
+		timeout_effect = {
+			if = {
+				limit = {
+					820 = {
+						arms_factory > 0
+					}
+				}
+				820 = {
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+					
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					add_resource = {
+						type = chromium
+						amount = -1
+					}
+					
+				}
+				
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					add_resource = {
+						type = chromium
+						amount = 1
+					}
+					
+				}
+			}
+			else_if = {
+				limit = {
+					820 = {
+						industrial_complex > 0
+					}
+				}
+				820 = {
+					remove_building = {
+						type = industrial_complex
+						level = 1
+					}
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					add_resource = {
+						type = chromium
+						amount = -1
+					}
+					
+				}
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					add_resource = {
+						type = chromium
+						amount = 1
+					}
+					
+				}
+			}
+			
+			else = {
+				custom_effect_tooltip = JAP_modify_marcopolo_tt
+				random_list = {
+					1 = {
+						
+						add_to_variable = {
+							JAP_research_speed_factor_modifier = 0.02
+							tooltip = research_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_production_speed_buildings_factor_modifier = 0.02
+							tooltip = buildings_build_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_consumer_goods_expected_value_modifier  = -0.005
+							tooltip = consumer_goods_tooltip
+						}
+					}
+					1 = {
+						
+						add_cic = 20000
+					}
+					0.5 = {
+						
+						add_fuel = 50000
+						add_cic = 8000
+					}
+				}
+				820 = {
+					if = {
+						limit = {
+							NOT = {
+							
+								has_dynamic_modifier = {
+									modifier = JAP_light_plunder_modifier
+								}
+								has_dynamic_modifier = {
+									modifier = JAP_medium_plunder_modifier
+								}
+							}
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+				
+					}
+					else_if = {
+						limit = {
+							
+						
+							has_dynamic_modifier = {
+								modifier = JAP_light_plunder_modifier
+							}
+						
+						}
+						remove_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+					
+					}
+					else_if = {
+						limit = {
+							has_dynamic_modifier = {
+								modifier = JAP_medium_plunder_modifier
+							}
+						}
+					
+
+						remove_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_heavy_plunder_modifier
+						}
+					}
+					
+				}
+
+			}
+			
+			if = {
+				limit = {
+					820 = {
+						OR = {
+							arms_factory > 0
+							industrial_complex > 0
+							820 = {
+								NOT = {
+									has_dynamic_modifier = {
+										modifier = JAP_heavy_plunder_modifier
+									}
+								}
+							}
+						}
+						
+					}
+				}
+				activate_mission = JAP_evacuate_suizhou
+			}
+			else = {
+				820 = {
+					clr_state_flag = JAP_plunder_state_flag	
+				}
+				
+			}	
+			
+			
+		}
+	}
+	JAP_evacuate_xian = {
+		name = "Plunder"
+		
+		available = {
+			744 = {
+				OR = {	
+					NOT = {
+						OR = {
+							is_controlled_by = RCC
+							is_controlled_by = JAP
+							is_controlled_by = MAN
+						}
+							
+					}
+					NOT = {
+						has_state_flag = JAP_plunder_state_flag
+					}	
+				}
+			}
+		}
+		visible = {
+
+		}
+		activation = {
+			744 = {
+				has_state_flag = JAP_plunder_state_flag
+			}
+		}
+	
+		fire_only_once = no
+		is_good = yes 
+		icon = GFX_decision_generic_confiscation
+		highlight_states = {
+ 			highlight_state_targets = { 
+				 state = 744
+			}
+		}
+
+		on_map_mode = map_only
+		days_mission_timeout = 20
+ 
+		timeout_effect = {
+			if = {
+				limit = {
+					744 = {
+						arms_factory > 0
+					}
+				}
+				744 = {
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+					
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					
+					
+				}
+				
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					
+					
+				}
+			}
+			else_if = {
+				limit = {
+					744 = {
+						industrial_complex > 0
+					}
+				}
+				744 = {
+					remove_building = {
+						type = industrial_complex
+						level = 1
+					}
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					
+					
+				}
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					add_resource = {
+						type = chromium
+						amount = 1
+					}
+					
+				}
+			}
+			
+			else = {
+				custom_effect_tooltip = JAP_modify_marcopolo_tt
+				random_list = {
+					1 = {
+						
+						add_to_variable = {
+							JAP_research_speed_factor_modifier = 0.02
+							tooltip = research_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_production_speed_buildings_factor_modifier = 0.02
+							tooltip = buildings_build_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_consumer_goods_expected_value_modifier  = -0.005
+							tooltip = consumer_goods_tooltip
+						}
+					}
+					1 = {
+						
+						add_cic = 20000
+					}
+					0.5 = {
+						
+						add_fuel = 50000
+						add_cic = 8000
+					}
+				}
+				744 = {
+					if = {
+						limit = {
+							NOT = {
+							
+								has_dynamic_modifier = {
+									modifier = JAP_light_plunder_modifier
+								}
+								has_dynamic_modifier = {
+									modifier = JAP_medium_plunder_modifier
+								}
+							}
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+				
+					}
+					else_if = {
+						limit = {
+							
+						
+							has_dynamic_modifier = {
+								modifier = JAP_light_plunder_modifier
+							}
+						
+						}
+						remove_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+					
+					}
+					else_if = {
+						limit = {
+							has_dynamic_modifier = {
+								modifier = JAP_medium_plunder_modifier
+							}
+						}
+					
+
+						remove_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_heavy_plunder_modifier
+						}
+					}
+					
+				}
+
+			}
+			
+			if = {
+				limit = {
+					744 = {
+						OR = {
+							arms_factory > 0
+							industrial_complex > 0
+							744 = {
+								NOT = {
+									has_dynamic_modifier = {
+										modifier = JAP_heavy_plunder_modifier
+									}
+								}
+							}
+						}
+						
+					}
+				}
+				activate_mission = JAP_evacuate_xian
+			}
+			else = {
+				744 = {
+					clr_state_flag = JAP_plunder_state_flag	
+				}
+				
+			}	
+			
+			
+		}
+	}
+	JAP_evacuate_shaanxi = {
+		name = "Plunder"
+		
+		available = {
+			622 = {
+				OR = {	
+					NOT = {
+						OR = {
+							is_controlled_by = RCC
+							is_controlled_by = JAP
+							is_controlled_by = MAN
+						}
+							
+					}
+					NOT = {
+						has_state_flag = JAP_plunder_state_flag
+					}	
+				}
+			}
+		}
+		visible = {
+
+		}
+		activation = {
+			622 = {
+				has_state_flag = JAP_plunder_state_flag
+			}
+		}
+	
+		fire_only_once = no
+		is_good = yes 
+		icon = GFX_decision_generic_confiscation
+		highlight_states = {
+ 			highlight_state_targets = { 
+				 state = 622
+			}
+		}
+
+		on_map_mode = map_only
+		days_mission_timeout = 20
+ 
+		timeout_effect = {
+			if = {
+				limit = {
+					622 = {
+						arms_factory > 0
+					}
+				}
+				622 = {
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+					
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					add_resource = {
+						type = oil
+						amount = -1
+					}
+					
+				}
+				
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					add_resource = {
+						type = oil
+						amount = 1
+					}
+					
+				}
+			}
+			else_if = {
+				limit = {
+					622 = {
+						industrial_complex > 0
+					}
+				}
+				622 = {
+					remove_building = {
+						type = industrial_complex
+						level = 1
+					}
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					add_resource = {
+						type = oil
+						amount = -1
+					}
+					
+				}
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					add_resource = {
+						type = oil
+						amount = 1
+					}
+					
+				}
+			}
+			
+			else = {
+				custom_effect_tooltip = JAP_modify_marcopolo_tt
+				random_list = {
+					1 = {
+						
+						add_to_variable = {
+							JAP_research_speed_factor_modifier = 0.02
+							tooltip = research_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_production_speed_buildings_factor_modifier = 0.02
+							tooltip = buildings_build_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_consumer_goods_expected_value_modifier  = -0.005
+							tooltip = consumer_goods_tooltip
+						}
+					}
+					1 = {
+						
+						add_cic = 20000
+					}
+					0.5 = {
+						
+						add_fuel = 50000
+						add_cic = 8000
+					}
+				}
+				622 = {
+					if = {
+						limit = {
+							NOT = {
+							
+								has_dynamic_modifier = {
+									modifier = JAP_light_plunder_modifier
+								}
+								has_dynamic_modifier = {
+									modifier = JAP_medium_plunder_modifier
+								}
+							}
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+				
+					}
+					else_if = {
+						limit = {
+							
+						
+							has_dynamic_modifier = {
+								modifier = JAP_light_plunder_modifier
+							}
+						
+						}
+						remove_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+					
+					}
+					else_if = {
+						limit = {
+							has_dynamic_modifier = {
+								modifier = JAP_medium_plunder_modifier
+							}
+						}
+					
+
+						remove_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_heavy_plunder_modifier
+						}
+					}
+					
+				}
+
+			}
+			
+			if = {
+				limit = {
+					622 = {
+						OR = {
+							arms_factory > 0
+							industrial_complex > 0
+							622 = {
+								NOT = {
+									has_dynamic_modifier = {
+										modifier = JAP_heavy_plunder_modifier
+									}
+								}
+							}
+						}
+						
+					}
+				}
+				activate_mission = JAP_evacuate_shaanxi
+			}
+			else = {
+				622 = {
+					clr_state_flag = JAP_plunder_state_flag	
+				}
+				
+			}	
+			
+			
+		}
+	}
+	JAP_evacuate_sichuan = {
+		name = "Plunder"
+		
+		available = {
+			605 = {
+				OR = {	
+					NOT = {
+						OR = {
+							is_controlled_by = RCC
+							is_controlled_by = JAP
+							is_controlled_by = MAN
+						}
+							
+					}
+					NOT = {
+						has_state_flag = JAP_plunder_state_flag
+					}	
+				}
+			}
+		}
+		visible = {
+
+		}
+		activation = {
+			605 = {
+				has_state_flag = JAP_plunder_state_flag
+			}
+		}
+	
+		fire_only_once = no
+		is_good = yes 
+		icon = GFX_decision_generic_confiscation
+		highlight_states = {
+ 			highlight_state_targets = { 
+				 state = 605
+			}
+		}
+
+		on_map_mode = map_only
+		days_mission_timeout = 20
+ 
+		timeout_effect = {
+			if = {
+				limit = {
+					605 = {
+						arms_factory > 0
+					}
+				}
+				605 = {
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+					
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					
+					
+				}
+				
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					
+					
+				}
+			}
+			else_if = {
+				limit = {
+					605 = {
+						industrial_complex > 0
+					}
+				}
+				605 = {
+					remove_building = {
+						type = industrial_complex
+						level = 1
+					}
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					
+					
+				}
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+				
+					
+				}
+			}
+			
+			else = {
+				custom_effect_tooltip = JAP_modify_marcopolo_tt
+				random_list = {
+					1 = {
+						
+						add_to_variable = {
+							JAP_research_speed_factor_modifier = 0.02
+							tooltip = research_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_production_speed_buildings_factor_modifier = 0.02
+							tooltip = buildings_build_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_consumer_goods_expected_value_modifier  = -0.005
+							tooltip = consumer_goods_tooltip
+						}
+					}
+					1 = {
+						
+						add_cic = 20000
+					}
+					0.5 = {
+						
+						add_fuel = 50000
+						add_cic = 8000
+					}
+				}
+				605 = {
+					if = {
+						limit = {
+							NOT = {
+							
+								has_dynamic_modifier = {
+									modifier = JAP_light_plunder_modifier
+								}
+								has_dynamic_modifier = {
+									modifier = JAP_medium_plunder_modifier
+								}
+							}
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+				
+					}
+					else_if = {
+						limit = {
+							
+						
+							has_dynamic_modifier = {
+								modifier = JAP_light_plunder_modifier
+							}
+						
+						}
+						remove_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+					
+					}
+					else_if = {
+						limit = {
+							has_dynamic_modifier = {
+								modifier = JAP_medium_plunder_modifier
+							}
+						}
+					
+
+						remove_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_heavy_plunder_modifier
+						}
+					}
+					
+				}
+
+			}
+			
+			if = {
+				limit = {
+					605 = {
+						OR = {
+							arms_factory > 0
+							industrial_complex > 0
+							605 = {
+								NOT = {
+									has_dynamic_modifier = {
+										modifier = JAP_heavy_plunder_modifier
+									}
+								}
+							}
+						}
+						
+					}
+				}
+				activate_mission = JAP_evacuate_sichuan
+			}
+			else = {
+				605 = {
+					clr_state_flag = JAP_plunder_state_flag	
+				}
+				
+			}	
+			
+			
+		}
+	}
+	JAP_evacuate_nanning = {
+		name = "Plunder"
+		
+		available = {
+			594 = {
+				OR = {	
+					NOT = {
+						OR = {
+							is_controlled_by = RCC
+							is_controlled_by = JAP
+							is_controlled_by = MAN
+						}
+							
+					}
+					NOT = {
+						has_state_flag = JAP_plunder_state_flag
+					}	
+				}
+			}
+		}
+		visible = {
+
+		}
+		activation = {
+			594 = {
+				has_state_flag = JAP_plunder_state_flag
+			}
+		}
+	
+		fire_only_once = no
+		is_good = yes 
+		icon = GFX_decision_generic_confiscation
+		highlight_states = {
+ 			highlight_state_targets = { 
+				 state = 594
+			}
+		}
+
+		on_map_mode = map_only
+		days_mission_timeout = 20
+ 
+		timeout_effect = {
+			if = {
+				limit = {
+					594 = {
+						arms_factory > 0
+					}
+				}
+				594 = {
+					remove_building = {
+						type = arms_factory
+						level = 1
+					}
+					
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					
+					
+				}
+				
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+					
+					
+				}
+			}
+			else_if = {
+				limit = {
+					594 = {
+						industrial_complex > 0
+					}
+				}
+				594 = {
+					remove_building = {
+						type = industrial_complex
+						level = 1
+					}
+					add_resistance_target = 2
+					add_resistance = 2
+					add_resource = {
+						type = steel
+						amount = -1
+					}
+					
+					
+				}
+				
+				random_core_state = {
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = no
+						}
+						NOT = {
+							state = 526
+						}
+					}
+					#add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+					add_resource = {
+						type = steel
+						amount = 1
+					}
+				
+					
+				}
+			}
+			
+			else = {
+				custom_effect_tooltip = JAP_modify_marcopolo_tt
+				random_list = {
+					1 = {
+						
+						add_to_variable = {
+							JAP_research_speed_factor_modifier = 0.02
+							tooltip = research_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_production_speed_buildings_factor_modifier = 0.02
+							tooltip = buildings_build_speed_factor_tooltip
+						}
+					}
+					1 = {
+						
+						add_to_variable = {
+							JAP_consumer_goods_expected_value_modifier  = -0.005
+							tooltip = consumer_goods_tooltip
+						}
+					}
+					1 = {
+						
+						add_cic = 20000
+					}
+					0.5 = {
+						
+						add_fuel = 50000
+						add_cic = 8000
+					}
+				}
+				594 = {
+					if = {
+						limit = {
+							NOT = {
+							
+								has_dynamic_modifier = {
+									modifier = JAP_light_plunder_modifier
+								}
+								has_dynamic_modifier = {
+									modifier = JAP_medium_plunder_modifier
+								}
+							}
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+				
+					}
+					else_if = {
+						limit = {
+							
+						
+							has_dynamic_modifier = {
+								modifier = JAP_light_plunder_modifier
+							}
+						
+						}
+						remove_dynamic_modifier = {
+							modifier = JAP_light_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+					
+					}
+					else_if = {
+						limit = {
+							has_dynamic_modifier = {
+								modifier = JAP_medium_plunder_modifier
+							}
+						}
+					
+
+						remove_dynamic_modifier = {
+							modifier = JAP_medium_plunder_modifier
+						}
+						add_dynamic_modifier = {
+							modifier = JAP_heavy_plunder_modifier
+						}
+					}
+					
+				}
+
+			}
+			
+			if = {
+				limit = {
+					594 = {
+						OR = {
+							arms_factory > 0
+							industrial_complex > 0
+							594 = {
+								NOT = {
+									has_dynamic_modifier = {
+										modifier = JAP_heavy_plunder_modifier
+									}
+								}
+							}
+						}
+						
+					}
+				}
+				activate_mission = JAP_evacuate_nanning
+			}
+			else = {
+				594 = {
+					clr_state_flag = JAP_plunder_state_flag	
+				}
+				
+			}	
+			
+			
+		}
+	}
+	
+	JAP_plunder_state_trigger = { 
+		icon = GFX_decision_jap_conquer_china
+		priority = 100
 		target_trigger = {
 			FROM = {
-				is_core_of = CHI
+				OR = {
+					state = 620
+					state = 820
+					state = 744
+					state = 622
+					state = 605
+					state = 750
+					state = 748
+					state = 603
+					state = 325
+					state = 747
+					state = 599
+					state = 594
+					state = 592
+					state = 593
+					state = 602
+					state = 600
+					state = 595
+			
+				}
 				OR = {
 					is_controlled_by = JAP
 					is_controlled_by = MAN
 					is_controlled_by = RCC
 				}
-				any_neighbor_state = {
-					is_controlled_by = CHI
-				}
+
 				NOT = {
 					is_core_of = RCC
 					is_core_of = MAN
+					has_state_flag = JAP_plunder_state_flag
 				}
+				
+				
+				NOT = {
+					has_dynamic_modifier = {
+						modifier = JAP_heavy_plunder_modifier
+					}
+				}
+			
+				
+				
 			}
 		}
 
@@ -3109,7 +7521,7 @@ JAP_intervene_in_china_decision = {
 		}
 
 		visible = {
-
+			
 			NOT = {
 				JAP = {
 					#has_country_flag = just_returned_state_flag
@@ -3120,6 +7532,138 @@ JAP_intervene_in_china_decision = {
 		}
 
 		complete_effect = {
+			custom_effect_tooltip = JAP_plunder_state_tt
+			FROM = {
+				set_state_flag = JAP_plunder_state_flag
+			}
+
+
+		}
+			
+		ai_will_do = {
+			base = 0
+		}
+	}
+	JAP_plunder_state_stop_trigger = { 
+		icon = GFX_decision_jap_conquer_china
+		priority = 100
+		target_trigger = {
+			FROM = {
+				is_core_of = CHI
+				OR = {
+					is_controlled_by = JAP
+					is_controlled_by = MAN
+					is_controlled_by = RCC
+				}
+
+				NOT = {
+					is_core_of = RCC
+					is_core_of = MAN
+					
+				}
+				has_state_flag = JAP_plunder_state_flag
+				OR = {
+					industrial_complex > 0
+					arms_factory > 0
+					NOT = {
+						has_dynamic_modifier = {
+							modifier = JAP_heavy_plunder_modifier
+						}
+					}
+				}
+				
+			}
+		}
+
+		target_root_trigger = { tag = JAP } 
+		state_target = yes
+		on_map_mode = map_only
+		fire_only_once = no 
+
+		available = {
+			
+			
+			
+		}
+
+		visible = {
+
+			
+		}
+
+		complete_effect = {
+			FROM = {
+				clr_state_flag = JAP_plunder_state_flag
+			}
+
+
+		}
+			
+		ai_will_do = {
+			base = 0
+		}
+	}
+	
+	JAP_return_state = { 
+		icon = GFX_decision_infiltrate_state
+		priority = 0	
+		target_trigger = {
+			FROM = {
+				is_core_of = CHI
+				OR = {
+					is_controlled_by = JAP
+					is_controlled_by = MAN
+					is_controlled_by = RCC
+				}
+				any_neighbor_state = {
+					is_controlled_by = CHI
+				}
+				NOT = {
+					is_core_of = RCC
+					is_core_of = MAN
+					has_state_flag = JAP_plunder_state_flag
+				}
+			}
+		}
+
+		target_root_trigger = { tag = JAP } 
+		state_target = yes
+		on_map_mode = map_only
+		fire_only_once = no 
+
+		available = {
+		
+			JAP = {
+				NOT = {
+				
+					has_country_flag = just_returned_state_flag
+					has_war_with = USA
+				}
+				
+			}
+			
+			
+			
+		}
+
+		visible = {
+
+			NOT = {
+				JAP = {
+					has_country_flag = just_returned_state_flag
+					has_country_flag = sdaiasdjiasodnias
+					has_war_with = USA
+				}
+				
+			}
+		}
+
+		complete_effect = {
+			custom_effect_tooltip = JAP_can_only_return_tt
+			JAP = {
+				set_country_flag = { flag = just_returned_state_flag days = 30 value = 1 }
+			}
+			
 			FROM = {
 				teleport_armies = {
 					limit =  {
@@ -3135,13 +7679,7 @@ JAP_intervene_in_china_decision = {
 				transfer_state_to = CHI
 			}
 			hidden_effect = {
-				#JAP = {
-					#set_country_flag = {
-						#flag = just_returned_state_flag
-						#value = 1 
-						#days = 40
-					#}
-				#}
+				
 			
 			}
 
@@ -3152,6 +7690,10 @@ JAP_intervene_in_china_decision = {
 			base = 0
 		}
 	}
+}
+JAP_intervene_in_china_decision = {
+	
+	
 	JAP_lend_lease_flow_to_china = {
 
 		icon = infiltrate_state

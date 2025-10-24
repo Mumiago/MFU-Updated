@@ -748,7 +748,7 @@ NProduction = {
 
 	--AAT
 	INITIAL_ALLOWED_FACTORY_RATIO_FOR_REPAIRS = 1.0,					-- max % of factories allowed on autorepairs
-	CIC_BANK_SPEED_BOOST_FACTOR = 0.15,                 -- The CIC bank can boost production speed with this factor (0.5 means 50 %)
+	CIC_BANK_SPEED_BOOST_FACTOR = 0.2,                 -- The CIC bank can boost production speed with this factor (0.5 means 50 %)
 	MINIMUM_NUMBER_OF_FACTORIES_TAKEN_BY_CONSUMER_GOODS_VALUE = 0,		-- The minimum number of factories we have to put on consumer goods, by value.
 	MINIMUM_NUMBER_OF_FACTORIES_TAKEN_BY_CONSUMER_GOODS_PERCENT = 0,	-- The minimum number of factories we have to put on consumer goods, in percent.
 	--BBA
