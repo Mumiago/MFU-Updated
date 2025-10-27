@@ -98,6 +98,8 @@ operations = {
 		}
 
 		complete_effect = {
+			add_offsite_building = { type = arms_factory level = 15 }
+			add_offsite_building = { type = industrial_complex level = 10 }
 			annex_country = { 
 				target = IRE 
 				transfer_troops = no
@@ -2118,7 +2120,7 @@ ENG_budget_decisions = {
 						}
 					}
 					add_equipment_subsidy = {
-						cic = 70000
+						cic = 60000
 						equipment_type = light_tank_chassis
 						seller_tags = { USA }
 					}
@@ -2163,7 +2165,7 @@ ENG_budget_decisions = {
 						}
 					}
 					add_equipment_subsidy = {
-						cic = 70000
+						cic = 60000
 						equipment_type = medium_tank_chassis
 						seller_tags = { USA }
 					}
@@ -2210,7 +2212,7 @@ ENG_budget_decisions = {
 						}
 					}
 					add_equipment_subsidy = {
-						cic = 70000
+						cic = 60000
 						equipment_type = heavy_tank_chassis
 						seller_tags = { USA }
 					}
@@ -2322,7 +2324,7 @@ ENG_budget_decisions = {
 				}
 			}
 			add_equipment_subsidy = {
-				cic = 70000
+				cic = 60000
 				equipment_type = small_plane_airframe
 				seller_tags = { USA }
 			}
@@ -2390,7 +2392,7 @@ ENG_budget_decisions = {
 				}
 			}
 			add_equipment_subsidy = {
-				cic = 70000
+				cic = 60000
 				equipment_type = medium_plane_fighter_airframe
 				seller_tags = { USA }
 			}
@@ -2453,8 +2455,72 @@ ENG_budget_decisions = {
 				}	
 			}
 			add_equipment_subsidy = {
-				cic = 70000
+				cic = 60000
 				equipment_type = medium_plane_airframe
+				seller_tags = { USA }
+			}
+		}
+		remove_effect = {
+			custom_effect_tooltip = ENG_modify_main_spirit_tt
+			add_to_variable = {
+				ENG_industrial_capacity_factory_var = 0.01
+				tooltip = industrial_capacity_factory_tooltip
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+			USA = {
+				USA_aircraft_industry_level_up = yes		
+			}
+			
+				 
+		}
+		
+	}
+	ENG_order_heavy_bombers_in_USA = {
+		icon = generic_air
+		available = {
+			has_completed_focus = ENG_arms_purchases_in_the_us
+		}
+		visible = {
+
+		}
+		days_remove = 120
+		cost = 100
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				has_equipment = {
+					medium_plane_airframe < 1
+				}
+				factor = 5
+			}
+			modifier = {
+				has_manpower < 10000 
+				factor = 0 #need to up conscription laws
+			}
+		}
+		
+		custom_cost_text = ENG_600_british_money 
+
+		custom_cost_trigger = {
+			check_variable = {
+    			var = british_money
+   				value = 600
+    			compare = greater_than_or_equals
+			}
+		}
+
+		complete_effect = {
+			subtract_from_variable = { var = british_money value = 600 }
+			USA = {
+				
+				add_timed_idea = {
+					idea = USA_heavy_bomber_order_bonus
+					days = 60
+				}	
+			}
+			add_equipment_subsidy = {
+				cic = 60000
+				equipment_type = large_plane_airframe
 				seller_tags = { USA }
 			}
 		}

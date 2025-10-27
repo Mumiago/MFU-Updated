@@ -1,5 +1,52 @@
 
 PAR_instant_effect_decisions = {
+	JAP_remove_additional_debuffs_in_forward_states = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 6000			
+		}
+		available = {
+			OR = {
+				CHI = {
+					NOT = {
+						controls_state = 613
+						controls_state = 606
+						controls_state = 607
+						controls_state = 615
+					}
+				}
+				date > 1941.1.1
+			}
+			
+		}
+		fire_only_once = yes
+
+		complete_effect = {
+			every_state = {
+				limit = {
+					OR = {
+						state = 608
+						state = 621
+						state = 614
+						state = 615
+						state = 597
+						state = 613
+						state = 598
+						state = 607
+						state = 606
+						state = 821
+					
+					}
+				}
+				remove_province_modifier = {
+					static_modifiers = { china_speed_extra_at_start }
+					province = {
+						all_provinces = yes
+					}
+				}
+			}
+		}
+	}
 	PAR_overloaded_us_trade = {
 		icon = generic_megaphone
    
@@ -605,7 +652,7 @@ PAR_instant_effect_decisions = {
 						}
 					}
 					modifier = {
-						factor = 0.3
+						factor = 0.2
 						USA = {
 							check_variable = {
 								var = USA_new_deal_help
@@ -620,7 +667,7 @@ PAR_instant_effect_decisions = {
 						}
 					}
 					modifier = {
-						factor = 0.6
+						factor = 0.4
 						USA = {
 							check_variable = {
 								var = USA_new_deal_help
@@ -635,7 +682,7 @@ PAR_instant_effect_decisions = {
 						}
 					}
 					modifier = {
-						factor = 1.2
+						factor = 0.8
 						USA = {
 							check_variable = {
 								var = USA_new_deal_help
@@ -650,7 +697,7 @@ PAR_instant_effect_decisions = {
 						}
 					}
 					modifier = {
-						factor = 1.7
+						factor = 1.5
 						USA = {
 							check_variable = {
 								var = USA_new_deal_help
@@ -1363,7 +1410,7 @@ PAR_instant_effect_decisions = {
 							country_event = { id = usa.3417 }
 							set_country_flag = fourth_downturn_flag
 							add_to_variable = {
-								USA_number_of_recesions = 0.3
+								USA_number_of_recesions = 0.25
 							}
 							add_to_variable = {
 								USA_number_of_rolls =1
@@ -1418,6 +1465,9 @@ PAR_instant_effect_decisions = {
 				NOT = {
 					has_country_flag = just_defunded_flag
 				}
+				has_dynamic_modifier = {
+					modifier = USA_new_deal_modifier
+				}
 				
 				
 				
@@ -1443,7 +1493,7 @@ PAR_instant_effect_decisions = {
 						}
 					}
 					modifier = {
-						factor = 3.2
+						factor = 3.5
 						USA = {
 							check_variable = {
 								var = USA_new_deal_help
@@ -1458,7 +1508,7 @@ PAR_instant_effect_decisions = {
 						}
 					}
 					modifier = {
-						factor = 2.4
+						factor = 3
 						USA = {
 							check_variable = {
 								var = USA_new_deal_help
@@ -1473,7 +1523,7 @@ PAR_instant_effect_decisions = {
 						}
 					}
 					modifier = {
-						factor = 2
+						factor = 2.2
 						USA = {
 							check_variable = {
 								var = USA_new_deal_help
@@ -1503,7 +1553,7 @@ PAR_instant_effect_decisions = {
 						}
 					}
 					modifier = {
-						factor = 1.3
+						factor = 1.2
 						USA = {
 							check_variable = {
 								var = USA_new_deal_help
@@ -1518,7 +1568,7 @@ PAR_instant_effect_decisions = {
 						}
 					}
 					modifier = {
-						factor = 1
+						factor = 0.8
 						USA = {
 							check_variable = {
 								var = USA_new_deal_help
@@ -1533,7 +1583,7 @@ PAR_instant_effect_decisions = {
 						}
 					}
 					modifier = {
-						factor = 0.8
+						factor = 0.5
 						USA = {
 							check_variable = {
 								var = USA_new_deal_help
@@ -1548,7 +1598,7 @@ PAR_instant_effect_decisions = {
 						}
 					}
 					modifier = {
-						factor = 0.6
+						factor = 0.3
 						USA = {
 							check_variable = {
 								var = USA_new_deal_help
@@ -1563,7 +1613,7 @@ PAR_instant_effect_decisions = {
 						}
 					}
 					modifier = {
-						factor = 0.4
+						factor = 0.2
 						USA = {
 							check_variable = {
 								var = USA_new_deal_help
@@ -1578,7 +1628,7 @@ PAR_instant_effect_decisions = {
 						}
 					}
 					modifier = {
-						factor = 0.2
+						factor = 0
 						USA = {
 							check_variable = {
 								var = USA_new_deal_help
@@ -1593,6 +1643,199 @@ PAR_instant_effect_decisions = {
 							var = USA_new_deal_defunds
 							value = 1
 						}
+					}
+					
+				}
+				15 = {
+					
+
+				}
+			}
+		}
+	}
+	PAR_first_defund_new_deal_usa_reworked_from_event = {
+		allowed = { tag = PAR }
+		ai_will_do = {
+			base = 100	
+		}
+		available = {
+			USA = {
+				NOT = {
+					has_completed_focus = USA_defund_new_deal_programs
+				}
+				OR = {
+					check_variable = { USA_crisis_name = 4 }
+					check_variable = { USA_crisis_name = 5 }
+				}
+			}
+			
+		}	
+		fire_only_once = no
+		days_re_enable = 20
+		fixed_random_seed = no
+
+
+		complete_effect = {
+			random_list = {
+				5 = {
+					modifier = {
+						factor = 4
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 55
+								compare = greater_than_or_equals
+							}
+						}
+					}
+					modifier = {
+						factor = 3.6
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 55
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 50
+								compare = greater_than
+							}
+						}
+					}
+					modifier = {
+						factor = 3
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 50
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 45
+								compare = greater_than
+							}
+						}
+					}
+					modifier = {
+						factor = 2.2
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 45
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 40
+								compare = greater_than
+							}
+						}
+					}
+					modifier = {
+						factor = 1.6
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 40
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 35
+								compare = greater_than
+							}
+						}
+					}
+					modifier = {
+						factor = 1.2
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 35
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 30
+								compare = greater_than
+							}
+						}
+					}
+					modifier = {
+						factor = 0.8
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 30
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 25
+								compare = greater_than
+							}
+						}
+					}
+					modifier = {
+						factor = 0.6
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 25
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 20
+								compare = greater_than
+							}
+						}
+					}
+					modifier = {
+						factor = 0.4
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 20
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 15
+								compare = greater_than
+							}
+						}
+					}
+					modifier = {
+						factor = 0.2
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 15
+								compare = less_than_or_equals
+							}
+							check_variable = {
+								var = USA_new_deal_help
+								value = 10
+								compare = greater_than
+							}
+						}
+					}
+					modifier = {
+						factor = 0
+						USA = {
+							check_variable = {
+								var = USA_new_deal_help
+								value = 10
+								compare = less_than_or_equals
+							}
+						}
+					}
+					USA = {
+						country_event = { id = usa.428 } 	
+						
 					}
 					
 				}
@@ -7782,7 +8025,6 @@ PAR_instant_effect_decisions = {
 				transfer_state = 608
 				transfer_state = 609
 				transfer_state = 597
-				transfer_state = 743
 				transfer_state = 598
 				transfer_state = 613
 				transfer_state = 606

@@ -2180,29 +2180,62 @@ JAP_pacific_war_explanation_category = {
 		complete_effect = {
 			
 			hidden_effect = {
-				every_state = {
+				
+				while_loop_effect = {
 					limit = {
-						OR = {
-							state = 608
-							state = 621
-							state = 614
-							state = 615
-							state = 597
-							state = 743
-							state = 598
-							state = 607
-							state = 606
-							state = 821
-						
+						check_variable = {
+							var = JAP_current_occupied_states_var 
+							value = JAP_max_occupied_states_var
+							compare = greater_than
+						}
+
+					}
+					JAP = {
+						add_to_variable = {
+							var = JAP_current_occupied_states_var
+							value = -1
 						}
 					}
-					remove_province_modifier = {
-						static_modifiers = { china_speed_extra_at_start }
-						province = {
-							all_provinces = yes
+					RCC = {
+						add_to_variable = {
+							var = RCC_output
+							value = 0.05
 						}
+						add_to_variable = {
+							var = RCC_dock_output
+							value = 0.05
+						}    
+					}
+				}	
+				JAP = {
+					set_variable = {
+						var = JAP_current_occupied_states_var
+						value = 0
+					}
+					set_variable = {
+						var = JAP_max_occupied_states_var
+						value = 0
+					}
+					set_variable = {
+						var = JAP_factory_output_modifier
+						value = 0.3
+					}
+					set_variable = {
+						var = JAP_dockyard_output_modifier
+						value = 0.25
 					}
 				}
+				MAN = {
+					set_variable = {
+						var = JAP_factory_output_modifier
+						value = 0.3
+					}
+					set_variable = {
+						var = JAP_dockyard_output_modifier
+						value = 0.25
+					}
+				}
+				
 				if = {
 					limit = {
 						282 = {
@@ -2213,7 +2246,7 @@ JAP_pacific_war_explanation_category = {
 						}
 					}
 					every_state = {
-						limit={ OR = {state = 608 state = 614 state = 597 state = 743 state = 613 state = 840 state = 598 state = 606}}
+						limit={ OR = {state = 608 state = 614 state = 597 state = 613 state = 840 state = 598 state = 606}}
 						remove_province_modifier = {
 							static_modifiers = { JAP_ichi_go_static0 }
 							province = {
@@ -2222,7 +2255,7 @@ JAP_pacific_war_explanation_category = {
 						}
 					}
 					every_state = {
-						limit={ OR = {state = 608 state = 614 state = 597 state = 743 state = 613 state = 840 state = 598 state = 606}}
+						limit={ OR = {state = 608 state = 614 state = 597  state = 613 state = 840 state = 598 state = 606}}
 						remove_dynamic_modifier = { modifier = JAP_ichi_go0  }
 					
 					}
@@ -2330,7 +2363,7 @@ JAP_pacific_war_explanation_category = {
 								state = 607
 								state = 608
 								state = 597
-								state = 743
+							
 								state = 606
 								state = 613
 								state = 749
@@ -3034,6 +3067,91 @@ JAP_pacific_war_explanation_category = {
 }
 
 JAP_intervene_in_china_decision = {
+	JAP_return_state = { 
+		icon = GFX_decision_infiltrate_state
+
+		target_trigger = {
+			FROM = {
+				is_core_of = CHI
+				OR = {
+					is_controlled_by = JAP
+					is_controlled_by = MAN
+					is_controlled_by = RCC
+				}
+				any_neighbor_state = {
+					is_controlled_by = CHI
+				}
+				NOT = {
+					is_core_of = RCC
+					is_core_of = MAN
+				}
+			}
+		}
+
+		target_root_trigger = { tag = JAP } 
+		state_target = yes
+		on_map_mode = map_only
+		fire_only_once = no 
+
+		available = {
+		
+			
+			NOT = {
+				JAP = {
+					#has_country_flag = just_returned_state_flag
+					has_war_with = USA
+				}
+				
+			}
+			
+			
+			
+		}
+
+		visible = {
+
+			NOT = {
+				JAP = {
+					#has_country_flag = just_returned_state_flag
+					has_war_with = USA
+				}
+				
+			}
+		}
+
+		complete_effect = {
+			FROM = {
+				teleport_armies = {
+					limit =  {
+						OR = {
+							tag = JAP 
+							tag = MAN 
+							tag = RCC
+						}
+					}
+					
+					to_state = 609
+				}
+				transfer_state_to = CHI
+			}
+			hidden_effect = {
+				#JAP = {
+					#set_country_flag = {
+						#flag = just_returned_state_flag
+						#value = 1 
+						#days = 40
+					#}
+				#}
+			
+			}
+
+
+		}
+			
+		ai_will_do = {
+			base = 0
+		}
+	}
 	JAP_lend_lease_flow_to_china = {
 
 		icon = infiltrate_state
@@ -3287,8 +3405,6 @@ JAP_intervene_in_china_decision = {
 						state = 745
 						state = 608
 						state = 614
-						state = 597
-						state = 743
 						state = 598
 					}
 					is_controlled_by = CHI
@@ -3315,7 +3431,6 @@ JAP_intervene_in_china_decision = {
 					state = 745
 					state = 608
 					state = 614
-					state = 597
 					state = 598
 				}
 				is_controlled_by = CHI
@@ -3564,10 +3679,10 @@ JAP_intervene_in_china_decision = {
 				country_event = japan.25 
 				
 				JAP = {
-					transfer_state = 743
+					transfer_state = 597
 				}
 
-				743 = {
+				597 = {
 					set_resistance = 55
 					add_resistance_target = 30 
 				}
@@ -4042,62 +4157,6 @@ JAP_intervene_in_china_decision = {
 
 	
 
-	JAP_pacificy_qingdao_1 = {
-
-		icon = generic_decision
-
-		name = JAP_pacification_decision
-
-		available = {
-			controls_state = 743
-			743 = {
-				resistance_target > 1
-			}
-		}
-
-		highlight_states = {
- 			highlight_state_targets = { 
-				 state = 743
-			}
-		}
-
-		on_map_mode = map_only
-
-		cost = 30
-
-		fire_only_once = no
-
-		days_remove = 25
-
-		visible = {
-			NOT = {
-				has_war_with = CHI
-			}
-			
-			controls_state = 743
-			743 = {
-				resistance_target > 1
-			}
-		}
-
-		complete_effect = {
-		}
-
-		remove_effect = {
-			743 = {
-				add_resistance_target = -5 
-				add_resistance = -10
-				add_compliance = 5
-			}
-		}
-
-		ai_will_do = {
-			base = 110
-			modifier = {
-				factor = 10
-			}
-		}
-	}
 
 	
 	JAP_pacificy_jiangsu_1 = {
@@ -5770,7 +5829,7 @@ JAP_interservice_rivalry = {
 						state = 615
 						state = 607
 						state = 597
-						state = 743
+					
 						state = 598
 						state = 606
 						state = 613
@@ -5831,7 +5890,7 @@ JAP_interservice_rivalry = {
 						state = 615
 						state = 607
 						state = 597
-						state = 743
+			
 						state = 598
 						state = 606
 						state = 613
