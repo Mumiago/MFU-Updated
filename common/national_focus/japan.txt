@@ -2635,14 +2635,7 @@ focus_tree = {
 				JAP_planning_speed_var = 0.35
 				tooltip = JAP_planning_speed_bonus
 			}
-			add_to_variable = {
-				JAP_max_command_power_var = -40
-				tooltip = JAP_max_cp_nerf
-			}
-			add_to_variable = {
-				JAP_command_power_gain_mult_var = 0.7
-				tooltip = JAP_cp_gain_bonus
-			}		
+				
 			
 						
 		}
@@ -3022,7 +3015,7 @@ focus_tree = {
 		completion_reward = {
 		hidden_effect = {
                 country_event = { id = japan.30 days = 546 }
-				country_event = { id = japan.33 days = 40 }
+				country_event = { id = japan.33 days = 90 }
 			
         }				
 			if = {
@@ -4120,10 +4113,37 @@ focus_tree = {
 		}
 	
 		bypass = {
-	
+			
 		}
 		completion_reward = {
-			
+			custom_effect_tooltip = dev_of_china_jap_tt
+			hidden_effect = {
+				every_state = {
+				limit = {
+					NOT = {	
+						is_core_of = RCC
+						is_core_of = MAN
+						state = 745
+						state = 839
+					}
+					
+					is_core_of = CHI 
+					OR = {
+						is_fully_controlled_by = JAP 
+						is_fully_controlled_by = RCC 
+					}
+					has_dynamic_modifier = {
+						modifier = CHI_tougher_resistance0
+					}
+					
+				}
+				remove_dynamic_modifier = {
+					modifier = CHI_tougher_resistance0
+				}
+				add_dynamic_modifier = {
+					modifier = CHI_tougher_resistance0_imp
+				}
+			}
 			every_state = {
 				limit = {
 					NOT = {	
@@ -4138,19 +4158,108 @@ focus_tree = {
 						is_fully_controlled_by = JAP 
 						is_fully_controlled_by = RCC 
 					}
+					has_dynamic_modifier = {
+						modifier = CHI_tougher_resistance
+					}
 					
 				}
-				add_compliance = 10
+				remove_dynamic_modifier = {
+					modifier = CHI_tougher_resistance
 				}
-							
+				add_dynamic_modifier = {
+					modifier = CHI_tougher_resistance_imp
+				}
+			}
+			every_state = {
+				limit = {
+					NOT = {	
+						is_core_of = RCC
+						is_core_of = MAN
+						state = 745
+						state = 839
+					}
+					
+					is_core_of = CHI 
+					OR = {
+						is_fully_controlled_by = JAP 
+						is_fully_controlled_by = RCC 
+					}
+					has_dynamic_modifier = {
+						modifier = CHI_tougher_resistance2
+					}
+					
+				}
+				remove_dynamic_modifier = {
+					modifier = CHI_tougher_resistance2
+				}
+				add_dynamic_modifier = {
+					modifier = CHI_tougher_resistance2_imp
+				}
+			}
+			every_state = {
+				limit = {
+					NOT = {	
+						is_core_of = RCC
+						is_core_of = MAN
+						state = 745
+						state = 839
+					}
+					
+					is_core_of = CHI 
+					OR = {
+						is_fully_controlled_by = JAP 
+						is_fully_controlled_by = RCC 
+					}
+					has_dynamic_modifier = {
+						modifier = CHI_tougher_resistance3
+					}
+					
+				}
+				remove_dynamic_modifier = {
+					modifier = CHI_tougher_resistance3
+				}
+				add_dynamic_modifier = {
+					modifier = CHI_tougher_resistance3_imp
+				}
+			}
+			every_state = {
+				limit = {
+					NOT = {	
+						is_core_of = RCC
+						is_core_of = MAN
+						state = 745
+						state = 839
+					}
+					
+					is_core_of = CHI 
+					OR = {
+						is_fully_controlled_by = JAP 
+						is_fully_controlled_by = RCC 
+					}
+					has_dynamic_modifier = {
+						modifier = CHI_tougher_resistance4
+					}
+					
+				}
+				remove_dynamic_modifier = {
+					modifier = CHI_tougher_resistance4
+				}
+				add_dynamic_modifier = {
+					modifier = CHI_tougher_resistance4_imp
+				}
+			}
+
 			}
 			
-	
+							
 		}
+			
+	
+	}
 
 ################## THE CONQUEST OF CHINA ##################
 	focus = {
-		id = JAP_the_conquest_of_china
+		id = JAP_the_conquest_of_china	
 		icon = GFX_JAP_conquest
 		prerequisite = {
 			focus = JAP_intervene_in_china
@@ -4186,7 +4295,11 @@ focus_tree = {
 			else = {
 				has_war_with = CHI
 			}
-			has_global_flag = days_passed_from_chi_declaration_flag
+			OR = {
+				has_global_flag = days_passed_from_chi_declaration_flag
+				casualties_k > 150
+			}
+			
 			
 		
 		}
@@ -6483,33 +6596,6 @@ focus = {
 					
 				}
 			}
-			custom_effect_tooltip = JAP_coastal_states_tt
-			if = {
-				limit = {
-					controls_state = 596
-				}
-				596 = {
-					add_compliance = 10
-				}
-			}
-			if = {
-				limit = {
-					controls_state = 595
-				}
-				595 = {
-					add_compliance = 10
-				}
-			}
-			if = {
-				limit = {
-					controls_state = 593
-				}
-				593 = {
-					add_compliance = 10
-				}
-			}
-		}
-		else = {
 			custom_effect_tooltip = JAP_coastal_states_tt3
 			if = {
 				limit = {
@@ -6602,17 +6688,269 @@ focus = {
 					add_compliance = 10
 				}
 			}
+	
+			
 		}
-		if = {
-			limit = {
-				NOT = {
-					has_war_with = USA 
+			
+		else = {
+			custom_effect_tooltip = JAP_coastal_states_tt
+			hidden_effect = {
+				if = {
+					limit = {
+						596 = {
+							OR = {
+								is_controlled_by = JAP
+								is_controlled_by = RCC
+							}
+							has_dynamic_modifier = {
+								modifier = CHI_tougher_resistance
+							}
+						}
+					}
+					596 = {
+						remove_dynamic_modifier = {
+							modifier = CHI_tougher_resistance
+						}
+						add_dynamic_modifier = {
+							modifier = CHI_tougher_resistance12
+						}
+					}
+				}
+			else_if = {
+				limit = {
+					596 = {
+						OR = {
+							is_controlled_by = JAP
+							is_controlled_by = RCC
+						}
+						has_dynamic_modifier = {
+							modifier = CHI_tougher_resistance_imp
+						}
+					}
+				}
+				596 = {
+					remove_dynamic_modifier = {
+						modifier = CHI_tougher_resistance_imp
+					}
+					add_dynamic_modifier = {
+						modifier = CHI_tougher_resistance_imp2
+					}
 				}
 			}
-			JAP_change_of_max_states_just_one = yes
-			custom_effect_tooltip = generic_skip_one_line_tt
-			custom_effect_tooltip = JAP_increase_amount_of_occupied_states_one_tt
+			if = {
+				limit = {
+					595 = {
+						OR = {
+							is_controlled_by = JAP
+							is_controlled_by = RCC
+						}
+						has_dynamic_modifier = {
+							modifier = CHI_tougher_resistance
+						}
+					}
+				}
+				595 = {
+					remove_dynamic_modifier = {
+						modifier = CHI_tougher_resistance
+					}
+					add_dynamic_modifier = {
+						modifier = CHI_tougher_resistance12
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					595 = {
+						OR = {
+							is_controlled_by = JAP
+							is_controlled_by = RCC
+						}
+						has_dynamic_modifier = {
+							modifier = CHI_tougher_resistance_imp
+						}
+					}
+				}
+				595 = {
+					remove_dynamic_modifier = {
+						modifier = CHI_tougher_resistance_imp
+					}
+					add_dynamic_modifier = {
+						modifier = CHI_tougher_resistance_imp2
+					}
+				}
+			}
+			if = {
+				limit = {
+					593 = {
+						OR = {
+							is_controlled_by = JAP
+							is_controlled_by = RCC
+						}
+						has_dynamic_modifier = {
+							modifier = CHI_tougher_resistance
+						}
+					}
+				}
+				593 = {
+					remove_dynamic_modifier = {
+						modifier = CHI_tougher_resistance
+					}
+					add_dynamic_modifier = {
+						modifier = CHI_tougher_resistance12
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					593 = {
+						OR = {
+							is_controlled_by = JAP
+							is_controlled_by = RCC
+						}
+						has_dynamic_modifier = {
+							modifier = CHI_tougher_resistance_imp
+						}
+					}
+				}
+				593 = {
+					remove_dynamic_modifier = {
+						modifier = CHI_tougher_resistance_imp
+					}
+					add_dynamic_modifier = {
+						modifier = CHI_tougher_resistance_imp2
+					}
+				}
+			}
+			
+			if = {
+				limit = {
+					592 = {
+						OR = {
+							is_controlled_by = JAP
+							is_controlled_by = RCC
+						}
+						has_dynamic_modifier = {
+							modifier = CHI_tougher_resistance
+						}
+					}
+				}
+				592 = {
+					remove_dynamic_modifier = {
+						modifier = CHI_tougher_resistance
+					}
+					add_dynamic_modifier = {
+						modifier = CHI_tougher_resistance12
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					592 = {
+						OR = {
+							is_controlled_by = JAP
+							is_controlled_by = RCC
+						}
+						has_dynamic_modifier = {
+							modifier = CHI_tougher_resistance_imp
+						}
+					}
+				}
+				592 = {
+					remove_dynamic_modifier = {
+						modifier = CHI_tougher_resistance_imp
+					}
+					add_dynamic_modifier = {
+						modifier = CHI_tougher_resistance_imp2
+					}
+				}
+			}
+			if = {
+				limit = {
+					594 = {
+						OR = {
+							is_controlled_by = JAP
+							is_controlled_by = RCC
+						}
+						has_dynamic_modifier = {
+							modifier = CHI_tougher_resistance
+						}
+					}
+				}
+				594 = {
+					remove_dynamic_modifier = {
+						modifier = CHI_tougher_resistance
+					}
+					add_dynamic_modifier = {
+						modifier = CHI_tougher_resistance12
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					594 = {
+						OR = {
+							is_controlled_by = JAP
+							is_controlled_by = RCC
+						}
+						has_dynamic_modifier = {
+							modifier = CHI_tougher_resistance_imp
+						}
+					}
+				}
+				594 = {
+					remove_dynamic_modifier = {
+						modifier = CHI_tougher_resistance_imp
+					}
+					add_dynamic_modifier = {
+						modifier = CHI_tougher_resistance_imp2
+					}
+				}
+			}
+			if = {
+				limit = {
+					591 = {
+						OR = {
+							is_controlled_by = JAP
+							is_controlled_by = RCC
+						}
+						has_dynamic_modifier = {
+							modifier = CHI_tougher_resistance
+						}
+					}
+				}
+				591 = {
+					remove_dynamic_modifier = {
+						modifier = CHI_tougher_resistance
+					}
+					add_dynamic_modifier = {
+						modifier = CHI_tougher_resistance12
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					591 = {
+						OR = {
+							is_controlled_by = JAP
+							is_controlled_by = RCC
+						}
+						has_dynamic_modifier = {
+							modifier = CHI_tougher_resistance_imp
+						}
+					}
+				}
+				591 = {
+					remove_dynamic_modifier = {
+						modifier = CHI_tougher_resistance_imp
+					}
+					add_dynamic_modifier = {
+						modifier = CHI_tougher_resistance_imp2
+					}
+				}
+			}
 		}
+			
+	}
 	}
 
 	}
@@ -6903,68 +7241,190 @@ focus = {
 	}
 	completion_reward = {
 		custom_effect_tooltip = JAP_further_expansion_tt
-		if = {
+		
+		hidden_effect = {
+			if = {
 			limit = {
 				325 = {
 					OR = {
-						is_controlled_by = JAP 
+						is_controlled_by = JAP
 						is_controlled_by = RCC
+					}
+					has_dynamic_modifier = {
+						modifier = CHI_tougher_resistance2
 					}
 				}
 			}
 			325 = {
-				add_compliance = 15
+				remove_dynamic_modifier = {
+					modifier = CHI_tougher_resistance2
+				}
+				add_dynamic_modifier = {
+					modifier = CHI_tougher_resistance22
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				325 = {
+					OR = {
+						is_controlled_by = JAP
+						is_controlled_by = RCC
+					}
+					has_dynamic_modifier = {
+						modifier = CHI_tougher_resistance2_imp
+					}
+				}
+			}
+			325 = {
+				remove_dynamic_modifier = {
+					modifier = CHI_tougher_resistance2_imp
+				}
+				add_dynamic_modifier = {
+					modifier = CHI_tougher_resistance2_imp2
+				}
 			}
 		}
 		if = {
 			limit = {
 				599 = {
 					OR = {
-						is_controlled_by = JAP 
+						is_controlled_by = JAP
 						is_controlled_by = RCC
+					}
+					has_dynamic_modifier = {
+						modifier = CHI_tougher_resistance2
 					}
 				}
 			}
 			599 = {
-				add_compliance = 15
+				remove_dynamic_modifier = {
+					modifier = CHI_tougher_resistance2
+				}
+				add_dynamic_modifier = {
+					modifier = CHI_tougher_resistance22
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				599 = {
+					OR = {
+						is_controlled_by = JAP
+						is_controlled_by = RCC
+					}
+					has_dynamic_modifier = {
+						modifier = CHI_tougher_resistance2_imp
+					}
+				}
+			}
+			599 = {
+				remove_dynamic_modifier = {
+					modifier = CHI_tougher_resistance2_imp
+				}
+				add_dynamic_modifier = {
+					modifier = CHI_tougher_resistance2_imp2
+				}
 			}
 		}
 		if = {
 			limit = {
 				603 = {
 					OR = {
-						is_controlled_by = JAP 
+						is_controlled_by = JAP
 						is_controlled_by = RCC
+					}
+					has_dynamic_modifier = {
+						modifier = CHI_tougher_resistance2
 					}
 				}
 			}
 			603 = {
-				add_compliance = 15
+				remove_dynamic_modifier = {
+					modifier = CHI_tougher_resistance2
+				}
+				add_dynamic_modifier = {
+					modifier = CHI_tougher_resistance22
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				603 = {
+					OR = {
+						is_controlled_by = JAP
+						is_controlled_by = RCC
+					}
+					has_dynamic_modifier = {
+						modifier = CHI_tougher_resistance2_imp
+					}
+				}
+			}
+			603 = {
+				remove_dynamic_modifier = {
+					modifier = CHI_tougher_resistance2_imp
+				}
+				add_dynamic_modifier = {
+					modifier = CHI_tougher_resistance2_imp2
+				}
 			}
 		}
 		if = {
 			limit = {
 				747 = {
 					OR = {
-						is_controlled_by = JAP 
+						is_controlled_by = JAP
 						is_controlled_by = RCC
+					}
+					has_dynamic_modifier = {
+						modifier = CHI_tougher_resistance3
 					}
 				}
 			}
 			747 = {
-				add_compliance = 15
-			}
-		}
-		if = {
-			limit = {
-				NOT = {
-					has_war_with = USA 
+				remove_dynamic_modifier = {
+					modifier = CHI_tougher_resistance3
+				}
+				add_dynamic_modifier = {
+					modifier = CHI_tougher_resistance32
 				}
 			}
-			JAP_change_of_max_states_just_one = yes
-			custom_effect_tooltip = generic_skip_one_line_tt
-			custom_effect_tooltip = JAP_increase_amount_of_occupied_states_one_tt
 		}
+		else_if = {
+			limit = {
+				747 = {
+					OR = {
+						is_controlled_by = JAP
+						is_controlled_by = RCC
+					}
+					has_dynamic_modifier = {
+						modifier = CHI_tougher_resistance3_imp
+					}
+				}
+			}
+			747 = {
+				remove_dynamic_modifier = {
+					modifier = CHI_tougher_resistance3_imp
+				}
+				add_dynamic_modifier = {
+					modifier = CHI_tougher_resistance3_imp2
+				}
+			}
+		}
+		}
+		
+		
+		
+		#if = {
+			#limit = {
+				#NOT = {
+					#has_war_with = USA 
+				#}
+			#}
+			#JAP_change_of_max_states_just_one = yes
+			#custom_effect_tooltip = generic_skip_one_line_tt
+			#custom_effect_tooltip = JAP_increase_amount_of_occupied_states_one_tt
+		#}
 	}
 
 	}
@@ -7320,72 +7780,220 @@ focus = {
 				}
 			}
 			custom_effect_tooltip = JAP_interior_expansion_tt
-			if = {
-				limit = {
-					605 = {
-						OR = {
-							is_controlled_by = JAP 
-							is_controlled_by = RCC
+			hidden_effect = {
+				if = {
+					limit = {
+						820 = {
+							OR = {
+								is_controlled_by = JAP
+								is_controlled_by = RCC
+							}
+							has_dynamic_modifier = {
+								modifier = CHI_tougher_resistance2
+							}
 						}
 					}
-				}
-				605 = {
-					add_compliance = 10
-				}
-			}
-			if = {
-				limit = {
-					750 = {
-						OR = {
-							is_controlled_by = JAP 
-							is_controlled_by = RCC
-						}
+				820 = {
+					remove_dynamic_modifier = {
+						modifier = CHI_tougher_resistance2
+					}
+					add_dynamic_modifier = {
+						modifier = CHI_tougher_resistance22
 					}
 				}
-				750 = {
-					add_compliance = 10
-				}
 			}
-			if = {
+			else_if = {
 				limit = {
 					820 = {
 						OR = {
-							is_controlled_by = JAP 
+							is_controlled_by = JAP
 							is_controlled_by = RCC
+						}
+						has_dynamic_modifier = {
+							modifier = CHI_tougher_resistance2_imp
 						}
 					}
 				}
 				820 = {
-					add_compliance = 10
+					remove_dynamic_modifier = {
+						modifier = CHI_tougher_resistance2_imp
+					}
+					add_dynamic_modifier = {
+						modifier = CHI_tougher_resistance2_imp2
+					}
 				}
 			}
+			
 			if = {
 				limit = {
 					602 = {
 						OR = {
-							is_controlled_by = JAP 
+							is_controlled_by = JAP
 							is_controlled_by = RCC
+						}
+						has_dynamic_modifier = {
+							modifier = CHI_tougher_resistance2
 						}
 					}
 				}
-				602 = {
-					add_compliance = 10
+			602 = {
+				remove_dynamic_modifier = {
+					modifier = CHI_tougher_resistance2
 				}
-			}
-			if = {
-				limit = {
-					748 = {
-						OR = {
-							is_controlled_by = JAP 
-							is_controlled_by = RCC
-						}
-					}
-				}
-				748 = {
-					add_compliance = 10
+				add_dynamic_modifier = {
+					modifier = CHI_tougher_resistance22
 				}
 			}
 		}
+		else_if = {
+			limit = {
+				602 = {
+					OR = {
+						is_controlled_by = JAP
+						is_controlled_by = RCC
+					}
+					has_dynamic_modifier = {
+						modifier = CHI_tougher_resistance2_imp
+					}
+				}
+			}
+			602 = {
+				remove_dynamic_modifier = {
+					modifier = CHI_tougher_resistance2_imp
+				}
+				add_dynamic_modifier = {
+					modifier = CHI_tougher_resistance2_imp2
+				}
+			}
+		}
+			if = {
+				limit = {
+					600 = {
+						OR = {
+							is_controlled_by = JAP
+							is_controlled_by = RCC
+						}
+						has_dynamic_modifier = {
+							modifier = CHI_tougher_resistance2
+						}
+					}
+				}
+			600 = {
+				remove_dynamic_modifier = {
+					modifier = CHI_tougher_resistance2
+				}
+				add_dynamic_modifier = {
+					modifier = CHI_tougher_resistance22
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				600 = {
+					OR = {
+						is_controlled_by = JAP
+						is_controlled_by = RCC
+					}
+					has_dynamic_modifier = {
+						modifier = CHI_tougher_resistance2_imp
+					}
+				}
+			}
+			600 = {
+				remove_dynamic_modifier = {
+					modifier = CHI_tougher_resistance2_imp
+				}
+				add_dynamic_modifier = {
+					modifier = CHI_tougher_resistance2_imp2
+				}
+			}
+		}
+			if = {
+				limit = {
+					750 = {
+						OR = {
+							is_controlled_by = JAP
+							is_controlled_by = RCC
+						}
+						has_dynamic_modifier = {
+							modifier = CHI_tougher_resistance2
+						}
+					}
+				}
+			750 = {
+				remove_dynamic_modifier = {
+					modifier = CHI_tougher_resistance2
+				}
+				add_dynamic_modifier = {
+					modifier = CHI_tougher_resistance22
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				750 = {
+					OR = {
+						is_controlled_by = JAP
+						is_controlled_by = RCC
+					}
+					has_dynamic_modifier = {
+						modifier = CHI_tougher_resistance2_imp
+					}
+				}
+			}
+			750 = {
+				remove_dynamic_modifier = {
+					modifier = CHI_tougher_resistance2_imp
+				}
+				add_dynamic_modifier = {
+					modifier = CHI_tougher_resistance2_imp2
+				}
+			}
+		}
+		if = {
+			limit = {
+				748 = {
+					OR = {
+						is_controlled_by = JAP
+						is_controlled_by = RCC
+					}
+					has_dynamic_modifier = {
+						modifier = CHI_tougher_resistance3
+					}
+				}
+			}
+			748 = {
+				remove_dynamic_modifier = {
+					modifier = CHI_tougher_resistance3
+				}
+				add_dynamic_modifier = {
+					modifier = CHI_tougher_resistance32
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				748 = {
+					OR = {
+						is_controlled_by = JAP
+						is_controlled_by = RCC
+					}
+					has_dynamic_modifier = {
+						modifier = CHI_tougher_resistance3_imp
+					}
+				}
+			}
+			748 = {
+				remove_dynamic_modifier = {
+					modifier = CHI_tougher_resistance3_imp
+				}
+				add_dynamic_modifier = {
+					modifier = CHI_tougher_resistance3_imp2
+				}
+			}
+		}
+	}
+	}
 		else = {
 			custom_effect_tooltip = JAP_interior_expansion_tt2
 			if = {
@@ -7442,16 +8050,16 @@ focus = {
 			}
 			
 		}
-		if = {
-			limit = {
-				NOT = {
-					has_war_with = USA 
-				}
-			}
-			JAP_change_of_max_states_just_one = yes
-			custom_effect_tooltip = generic_skip_one_line_tt
-			custom_effect_tooltip = JAP_increase_amount_of_occupied_states_one_tt
-		}
+		#if = {
+			#limit = {
+			#	NOT = {
+					#has_war_with = USA 
+				#}
+			#}
+			#JAP_change_of_max_states_just_one = yes
+			#custom_effect_tooltip = generic_skip_one_line_tt
+			#custom_effect_tooltip = JAP_increase_amount_of_occupied_states_one_tt
+		#}
 		
 	}
 

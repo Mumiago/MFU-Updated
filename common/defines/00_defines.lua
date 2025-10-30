@@ -406,10 +406,10 @@ NCountry = {
 	BOMBING_WEEKLY_WAR_SUPPORT_PENALTY_DECAY = 0.001,		-- Weekly decay of bomber damage war support penalty
 	MAX_BOMBING_WAR_SUPPORT_IMPACT = -0.4,					-- Max total penalty from bomber's damage
 	
-	HEROES_BEING_KILLED_WAR_SUPPORT_PENALTY_SCALE = 0,			-- Scaling of war heroes manpower lost to war support impact, will be added weekly as a war support penalty
-	MAX_HEROES_BEING_KILLED_WEEKLY_WAR_SUPPORT_PENALTY = 0,		-- Max penalty that will gained per week from war heroes manpower lost
-	HEROES_BEING_KILLED_WEEKLY_WAR_SUPPORT_PENALTY_DECAY = 0,	-- Weekly decay of war heroes manpower lost war support penalty
-	MAX_HEROES_BEING_KILLED_WAR_SUPPORT_IMPACT = 0,				-- Max total penalty from war heroes manpower lost
+	HEROES_BEING_KILLED_WAR_SUPPORT_PENALTY_SCALE = -0.0005,			-- Scaling of war heroes manpower lost to war support impact, will be added weekly as a war support penalty
+	MAX_HEROES_BEING_KILLED_WEEKLY_WAR_SUPPORT_PENALTY = -0.002,		-- Max penalty that will gained per week from war heroes manpower lost
+	HEROES_BEING_KILLED_WEEKLY_WAR_SUPPORT_PENALTY_DECAY = 0.000,	-- Weekly decay of war heroes manpower lost war support penalty
+	MAX_HEROES_BEING_KILLED_WAR_SUPPORT_IMPACT = -0.6,				-- Max total penalty from war heroes manpower lost
 	
 	CONVOYS_BEING_RAIDED_WAR_SUPPORT_PENALTY_SCALE = -0.05,			-- Scaling of trade convoy raided to war support impact, will be added weekly as a war support penalty
 	MAX_CONVOYS_BEING_RAIDED_WEEKLY_WAR_SUPPORT_PENALTY = -0.025,	-- Max penalty that will gained per week from trade convoy raided
@@ -584,8 +584,8 @@ NResistance = {
 	SUPPRESSION_NEEDED_UPPER_CAP = 50.0, -- if resistance is greater than this value then we always act as though it is at the define for the purpose of suppresion requirements
 	
 	GARRISON_MANPOWER_LOST_BY_ATTACK = 0.05, 	-- Ratio of manpower lost by garrison at each attack on garrison (this number will be reduced by the hardness of garrison template)
-	GARRISON_EQUIPMENT_LOST_BY_ATTACK = 0.04, 	-- Ratio of equipment lost by garrison at each attack on garrison (this number will be reduced by the hardness of garrison template)
-	MAXIMUM_GARRISON_HARDNESS_WHEN_ATTACKED = 0.90,   -- Cap to be sure that garrison will suffer lost in attack, even with a almost 100% hardness
+	GARRISON_EQUIPMENT_LOST_BY_ATTACK = 0.05, 	-- Ratio of equipment lost by garrison at each attack on garrison (this number will be reduced by the hardness of garrison template)
+	MAXIMUM_GARRISON_HARDNESS_WHEN_ATTACKED = 0.80,   -- Cap to be sure that garrison will suffer lost in attack, even with a almost 100% hardness
 	
 	FOREIGN_MANPOWER_MIN_THRESHOLD = 5000,		 -- The minimum number of Manpower that AI will accept to give at once, in order to avoid many weird little transfer.
 	MANPOWER_BUFFER_TO_NOT_GIVE_MINOR = 0.3, -- To determine how much AI can give as foreign manpower, we calculate how much manpower we use, and add this buffer. The result is what we want to keep, for minor countries. So higher this number is, lower we will give Manpower.
@@ -1676,7 +1676,7 @@ NAir = {
     NAVAL_MINES_PLANTING_SPEED_MULT = 0.025,						-- Value used to overall balance of the speed of planting naval mines
 	NAVAL_MINES_SWEEPING_SPEED_MULT = 0.025,						-- Value used to overall balance of the speed of sweeping naval mines
 	NON_CORE_STRATEGIC_IMPACT = 1,                                -- multiplier for strategic impact of non-core bombing	
-	RECON_LAND_SPOT_CHANCE = 0.1,                     				-- scale factor on spotting lan
+	RECON_LAND_SPOT_CHANCE = 0.2,                     				-- scale factor on spotting lan
 },
 NSupply = {
 	--NEW SHIT*/
@@ -1770,10 +1770,10 @@ NSupply = {
 
 	SUPPLY_NODE_MIN_SUPPLY_THRESHOLD = 1.0, -- if supply of a node is below this value it will be set to 0 -- Currently unused?
 
-	INFRA_TO_SUPPLY = 0.5,							-- each level of infra gives this many supply
+	INFRA_TO_SUPPLY = 0.4,							-- each level of infra gives this many supply
 	VP_TO_SUPPLY_BASE = 0.4,							-- Bonus to supply from a VP, no matter the level
 	VP_TO_SUPPLY_BONUS_CONVERSION = 0.1,			-- Bonus to supply local supplies from Victory Points, multiplied by this aspect and rounded to closest integer
-	SUPPLY_FROM_DAMAGED_INFRA = 0.15,                -- damaged infrastructure counts as this in supply calcs
+	SUPPLY_FROM_DAMAGED_INFRA = 0.1,                -- damaged infrastructure counts as this in supply calcs
 	SUPPLY_BASE_MULT = 0.2,							-- multiplier on supply base values
 	SUPPLY_DISRUPTION_DAILY_RECOVERY = 1.5,		-- every day nodes recover this much of their accumulated disruption.
 
@@ -2062,7 +2062,7 @@ NNavy = {
 	CONVOY_EFFICIENCY_LOSS_MODIFIER = 1,							-- How much efficiency drops when losing convoys. If modifier is 0.5, then losing 100% of convoys in short period, the efficiency will drop by 50%.
 	CONVOY_EFFICIENCY_REGAIN_AFTER_DAYS = 7,						-- Convoy starts regaining it's efficiency after X days without any convoys being sink.
 	CONVOY_EFFICIENCY_REGAIN_BASE_SPEED = 0.05,						-- How much efficiency regains every day.
-	CONVOY_EFFICIENCY_MIN_VALUE = 0.65,								-- To avoid complete 0% efficiency, set the lower limit.
+	CONVOY_EFFICIENCY_MIN_VALUE = 0.63,								-- To avoid complete 0% efficiency, set the lower limit.
 	CONVOY_ROUTE_SIZE_CONVOY_SCALE = 0.4,                           -- scales impact of convoy route size (0 to turn off)
 	ANTI_AIR_TARGETTING_TO_CHANCE = 0.25,							-- Balancing value to convert averaged equipment stats (anti_air_targetting and naval_strike_agility) to probability chances of airplane being hit by navies AA.
 	ANTI_AIR_ATTACK_TO_AMOUNT = 0.0015,								-- Balancing value to convert equipment stat anti_air_attack to the random % value of airplanes being hit.
@@ -2393,7 +2393,7 @@ NNavy = {
 	ANTI_AIR_POW_ON_INCOMING_AIR_DAMAGE								= 0.75,	-- received air damage is calculated using following: 1 - ( (ship_anti_air + fleet_anti_air * SHIP_TO_FLEET_ANTI_AIR_RATIO )^ANTI_AIR_POW_ON_INCOMING_AIR_DAMAGE ) * ANTI_AIR_MULT_ON_INCOMING_AIR_DAMAGE
 	ANTI_AIR_MULT_ON_INCOMING_AIR_DAMAGE							= 0.08,
 	
-	MAX_ANTI_AIR_REDUCTION_EFFECT_ON_INCOMING_AIR_DAMAGE 			= 0.9,	-- damage reduction for incoming air attacks is clamped to this value at maximum.
+	MAX_ANTI_AIR_REDUCTION_EFFECT_ON_INCOMING_AIR_DAMAGE 			= 0.95,	-- damage reduction for incoming air attacks is clamped to this value at maximum.
 	
 	CHANCE_TO_DAMAGE_PART_ON_CRITICAL_HIT							= 0.1,	-- the game will roll between 0-1 and will damage a random part if below this val on naval critical hits
 	CHANCE_TO_DAMAGE_PART_ON_CRITICAL_HIT_FROM_AIR					= 0.1,	-- the game will roll between 0-1 and will damage a random part if below this val on air critical hits
