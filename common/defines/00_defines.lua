@@ -406,7 +406,7 @@ NCountry = {
 	BOMBING_WEEKLY_WAR_SUPPORT_PENALTY_DECAY = 0.001,		-- Weekly decay of bomber damage war support penalty
 	MAX_BOMBING_WAR_SUPPORT_IMPACT = -0.4,					-- Max total penalty from bomber's damage
 	
-	HEROES_BEING_KILLED_WAR_SUPPORT_PENALTY_SCALE = -0.0005,			-- Scaling of war heroes manpower lost to war support impact, will be added weekly as a war support penalty
+	HEROES_BEING_KILLED_WAR_SUPPORT_PENALTY_SCALE = -0.0013,			-- Scaling of war heroes manpower lost to war support impact, will be added weekly as a war support penalty
 	MAX_HEROES_BEING_KILLED_WEEKLY_WAR_SUPPORT_PENALTY = -0.002,		-- Max penalty that will gained per week from war heroes manpower lost
 	HEROES_BEING_KILLED_WEEKLY_WAR_SUPPORT_PENALTY_DECAY = 0.000,	-- Weekly decay of war heroes manpower lost war support penalty
 	MAX_HEROES_BEING_KILLED_WAR_SUPPORT_IMPACT = -0.6,				-- Max total penalty from war heroes manpower lost

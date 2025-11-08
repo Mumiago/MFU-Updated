@@ -205,6 +205,22 @@ on_actions = {
 	}
 	on_startup = {
 		effect = {
+			every_country = {
+				limit = {
+					is_ai = yes
+				}
+				destroy_ships = {
+					type = ship_hull_heavy
+					count = all
+				}
+			}
+			every_country = {
+				add_equipment_to_stockpile = {
+					type = explosive_ammo_equipment_1
+					amount = 12500
+					producer = GER
+				}
+			}
 			276 = { ############# Canada needs more slots ?
 				add_extra_state_shared_building_slots = 4
 			}
@@ -5300,6 +5316,39 @@ on_actions = {
 	on_state_control_changed = {
 		
 		effect = {
+			if = {
+				limit = {
+					ROOT = { 
+						
+						OR = { 
+							is_in_faction_with = ENG
+							tag = ENG
+						}
+					}
+					FROM = { 
+						OR = { 
+							is_in_faction_with = GER
+							tag = GER
+							tag = ITA
+						}
+						
+					}
+					FROM.FROM = {
+						OR = {
+							state = 447
+							state = 452
+						}
+					}
+					date > 1942.1.1
+					NOT = {
+						has_global_flag = africa_counter_speech
+					}
+				}
+				every_country = {limit = { check_variable= { speeches_enabled > 0}  }
+					play_song = "sp_africa_counter"
+				}
+				set_global_flag = africa_counter_speech
+			}
 			if = {
 			limit = {
 				ROOT = { 
