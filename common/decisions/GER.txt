@@ -6499,18 +6499,6 @@ foreign_politics = {
 		}
 
 		complete_effect = {
-			if = {
-				limit = {
-					has_dlc = "Death or Dishonor" 
-					BUL = {
-						is_in_faction_with = GER
-					}
-					is_subject = no
-				}
-				GER = {
-					set_autonomy = { target = BUL autonomy_state = autonomy_satellite }
-				}
-			}
 			BUL = {
 				48 = {
 					add_extra_state_shared_building_slots = 2
@@ -6614,7 +6602,7 @@ foreign_politics = {
 		}
 	}			
 
-	GER_integrate_war_economies = {
+	GER_sphere_of_influence = {
 		icon = ger_reichskommissariats
 		fire_only_once = yes
 		cost = 25 
@@ -6662,16 +6650,6 @@ foreign_politics = {
 		}
 
 		complete_effect = {
-			hidden_effect = {
-				complete_national_focus = GER_integrate_war_economies
-				if = {
-				limit = { HUN = { has_completed_focus = HUN_operation_panzerfaust }
-					}
-				}
-				else = {
-					HUN = { complete_national_focus = HUN_operation_panzerfaust }
-				}
-			}
 			53 = {
 				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
@@ -6694,9 +6672,9 @@ foreign_politics = {
 				}
 			}
 			HUN = {
-				add_stability = -0.2
+				add_stability = -0.1
 				155 = {
-					add_extra_state_shared_building_slots = 1
+					add_extra_state_shared_building_slots = 2
 					add_building_construction = {
 						type = arms_factory
 						level = 2
@@ -6713,7 +6691,7 @@ foreign_politics = {
 				}
 			}
 			ROM = {
-				add_stability = -0.2
+				add_stability = -0.1
 				81 = {
 					add_extra_state_shared_building_slots = 2
 					add_building_construction = {
@@ -6731,102 +6709,17 @@ foreign_politics = {
 					}
 				}
 			}
-				
-			if = {
-				limit = {
-					ROM = {
-						is_in_faction_with = GER
-						is_free_or_subject_of_root = yes
-					}
-				}
-				ROM = {
-					country_event = { id = wtt_germany.7 days = 1 }
+			HUN = {
+				swap_ideas = {
+					remove_idea = HUN_hungaro_german_trade_agreement_two
+					add_idea = HUN_hungaro_german_trade_agreement_3
 				}
 			}
-			if = {
-				limit = {
-					has_dlc = "Death or Dishonor" 
-					HUN = {
-						is_in_faction_with = GER
-						is_subject = no
-					}
-					is_subject = no
-
-					GER = { is_ai = no }
+			ROM = {
+				swap_ideas = {
+					remove_idea = ROM_agrarian_economy_effectivized
+					add_idea = ROM_agrarian_economy_effectivized_trade
 				}
-				GER = {
-					set_autonomy = { target = HUN autonomy_state = autonomy_satellite }
-				}
-			}
-			if = {
-				limit = { 
-					has_dlc = "Death or Dishonor" 
-					ROM = {
-						is_in_faction_with = GER
-					}
-					is_subject = no
-
-					GER = { is_ai = no }
-				}
-				GER = {
-					set_autonomy = { target = ROM autonomy_state = autonomy_satellite }
-				}
-			}
-			if = {
-				limit = { 
-					has_dlc = "Together for Victory"
-					NOT = { has_dlc = "Death or Dishonor" } 
-					HUN = {
-						is_in_faction_with = GER
-					}
-					is_subject = no
-
-					GER = { is_ai = no }
-				}
-				GER = {
-					set_autonomy = { target = HUN autonomy_state = autonomy_satellite }
-				}
-			}
-			if = {
-				limit = { 
-					has_dlc = "Together for Victory" 
-					NOT = { has_dlc = "Death or Dishonor" }
-					ROM = {
-						is_in_faction_with = GER
-					}
-					is_subject = no
-
-					GER = { is_ai = no }
-				}
-				GER = {
-					set_autonomy = { target = ROM autonomy_state = autonomy_satellite }
-				}
-			}
-			if = {
-				limit = { 
-					NOT = { has_dlc = "Together for Victory" }
-					NOT = { has_dlc = "Death or Dishonor" }
-					HUN = {
-						is_in_faction_with = GER
-					}
-					is_subject = no
-
-					GER = { is_ai = no }
-				}
-				puppet = HUN
-			}
-			if = {
-				limit = { 
-					NOT = { has_dlc = "Together for Victory" }
-					NOT = { has_dlc = "Death or Dishonor" }
-					ROM = {
-						is_in_faction_with = GER
-					}
-					is_subject = no
-					
-					GER = { is_ai = no }
-				}
-				puppet = ROM
 			}
 		}	
 			
@@ -6931,6 +6824,195 @@ foreign_politics = {
 		}
 	}
 
+	GER_integrate_war_economies = {
+		icon = ger_reichskommissariats
+		fire_only_once = yes
+		cost = 25 
+
+		allowed = {
+		   tag = GER
+		}
+		visible = {
+			has_war = yes
+		}
+
+		available = {
+			any_state = {
+				is_core_of = SOV 
+				NOT = {
+					is_controlled_by = ROM
+				}
+			}
+			AND = {
+				BUL = {
+					is_in_faction_with = ROOT
+					is_free_or_subject_of_root = yes
+					has_full_control_of_state = 48
+					has_full_control_of_state = 806
+					has_full_control_of_state = 212
+					has_full_control_of_state = 211
+				}
+			}
+			HUN = {
+				has_full_control_of_state = 155
+				has_full_control_of_state = 808
+				has_full_control_of_state = 43
+				has_full_control_of_state = 807
+				has_full_control_of_state = 154	
+			}
+			ROM = {
+				has_full_control_of_state = 46
+				has_full_control_of_state = 79
+			}
+			OR = {
+				HUN = {
+					is_in_faction_with = ROOT
+					is_free_or_subject_of_root = yes
+				}
+				ROM = {
+					is_in_faction_with = ROOT
+					is_free_or_subject_of_root = yes
+				}
+			}
+			has_war = yes
+			GER = {
+				has_completed_focus = GER_the_winter_of_1941
+			}
+		}
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		complete_effect = {
+			hidden_effect = {
+				complete_national_focus = GER_integrate_war_economies
+					if = {
+						limit = { HUN = { has_completed_focus = HUN_operation_panzerfaust }
+							}
+					}
+				else = {
+					HUN = { complete_national_focus = HUN_operation_panzerfaust }
+				}
+			}
+			HUN = {
+				add_stability = -0.1
+			}
+			ROM = {
+				add_stability = -0.1
+			}
+				
+			if = {
+				limit = {
+					ROM = {
+						is_in_faction_with = GER
+						is_free_or_subject_of_root = yes
+					}
+				}
+				ROM = {
+					country_event = { id = wtt_germany.7 days = 1 }
+				}
+			}
+			if = {
+				limit = {
+					has_dlc = "Death or Dishonor" 
+					HUN = {
+						is_in_faction_with = GER
+						is_subject = no
+					}
+					is_subject = no
+
+					GER = { is_ai = no }
+				}
+				GER = {
+					set_autonomy = { target = HUN autonomy_state = autonomy_satellite }
+				}
+			}
+			if = {
+				limit = { 
+					has_dlc = "Death or Dishonor" 
+					ROM = {
+						is_in_faction_with = GER
+					}
+					is_subject = no
+
+					GER = { is_ai = no }
+				}
+				GER = {
+					set_autonomy = { target = ROM autonomy_state = autonomy_satellite }
+				}
+			}
+			if = {
+				limit = { 
+					has_dlc = "Together for Victory"
+					NOT = { has_dlc = "Death or Dishonor" } 
+					HUN = {
+						is_in_faction_with = GER
+					}
+					is_subject = no
+
+					GER = { is_ai = no }
+				}
+				GER = {
+					set_autonomy = { target = HUN autonomy_state = autonomy_satellite }
+				}
+			}
+			if = {
+				limit = { 
+					has_dlc = "Together for Victory" 
+					NOT = { has_dlc = "Death or Dishonor" }
+					ROM = {
+						is_in_faction_with = GER
+					}
+					is_subject = no
+
+					GER = { is_ai = no }
+				}
+				GER = {
+					set_autonomy = { target = ROM autonomy_state = autonomy_satellite }
+				}
+			}
+			if = {
+				limit = { 
+					NOT = { has_dlc = "Together for Victory" }
+					NOT = { has_dlc = "Death or Dishonor" }
+					HUN = {
+						is_in_faction_with = GER
+					}
+					is_subject = no
+
+					GER = { is_ai = no }
+				}
+				puppet = HUN
+			}
+			if = {
+				limit = { 
+					NOT = { has_dlc = "Together for Victory" }
+					NOT = { has_dlc = "Death or Dishonor" }
+					ROM = {
+						is_in_faction_with = GER
+					}
+					is_subject = no
+					
+					GER = { is_ai = no }
+				}
+				puppet = ROM
+			}
+			if = {
+				limit = {
+					has_dlc = "Death or Dishonor" 
+					BUL = {
+						is_in_faction_with = GER
+					}
+					is_subject = no
+				}
+				GER = {
+					set_autonomy = { target = BUL autonomy_state = autonomy_satellite }
+				}
+			}
+		}	
+			
+	}
 	GER_befriend_nationalist_spain = {
 
 		icon = ger_reichskommissariats
@@ -6990,6 +7072,7 @@ foreign_politics = {
 			}
 		}
 	}
+	
 }
 
 GER_endsieg_category = {
