@@ -17,7 +17,7 @@ NGame = {
 	INFO_MESSAGE_TIMEOUT_DAYS = 2,					-- Same but for unimportant messages.
     OIL_RESOURCE= "oil",							-- Name of the oil resource
 	FUEL_RESOURCE = "oil",							-- resource that will give country fuel
-	ENERGY_RESOURCE = "coal",						-- resource that will give country energy 
+	ENERGY_RESOURCE = "oil",						-- resource that will give country energy 
 	MAX_EFFECT_ITERATION = 1000,					-- maximum allowed iteration for loop effects																			   
 	MAX_SCRIPTED_LOC_RECURSION = 30,				-- max recursion for scripted localizations																				
 	HANDS_OFF_START_TAG = "BRA",					-- tag for player country for -hands_off runs. use an existing tag that is less likely to affect the game
@@ -767,16 +767,17 @@ NRaids = {
 
 NProduction = {
 	--NOSUR
-	MILITARY_FACTORY_COHERENCY_BONUS = 250,							-- Value we add to the weight of a production line already in progress, if we only have one military factory. (to reduce fluctuating AI production)				
-	MILITARY_FACTORY_COHERENCY_BONUS = 250,							-- Value we add to the weight of a production line already in progress, if we only have one military factory. (to reduce fluctuating AI production)				
-	RESOURCE_TO_ENERGY_COEFFICIENT = 9.0,		-- How much energy per coal produces
-	BASE_COUNTRY_ENERGY_PRODUCTION = 10.0, 			-- The base energy production of a country
-	ENERGY_SCALING_COST_BY_FACTORY_COUNT = 0.0225, -- Scales energy cost based on the total number of factories
-	BASE_ENERGY_COST = 0.25,						-- How much energy per factory consumes
+	MILITARY_FACTORY_COHERENCY_BONUS = 0,							-- Value we add to the weight of a production line already in progress, if we only have one military factory. (to reduce fluctuating AI production)				
+	MILITARY_FACTORY_COHERENCY_BONUS = 0,							-- Value we add to the weight of a production line already in progress, if we only have one military factory. (to reduce fluctuating AI production)				
+	RESOURCE_TO_ENERGY_COEFFICIENT = 0.01,		-- How much energy per coal produces
+	BASE_COUNTRY_ENERGY_PRODUCTION = 0.0, 			-- The base energy production of a country
+	ENERGY_SCALING_COST_BY_FACTORY_COUNT = 0.00, -- Scales energy cost based on the total number of factories
+	BASE_ENERGY_COST = 0,						-- How much energy per factory consumes
 
 	POWERED_FACTORY_SPEED = 5, 					--Powered factory speed multiplier.
-	POWERED_FACTORY_SPEED_MIL = 4.5, 			--Powered factory speed multiplier.
-	POWERED_FACTORY_SPEED_NAV = 2.5, 			--Powered factory speed multiplier.
+	POWERED_FACTORY_SPEED_MIL = 3.7, 			--Powered factory speed multiplier.
+	POWERED_FACTORY_SPEED_NAV = 1.7, 			--Powered factory speed multiplier.
+
 
 	--GTT
 	MAX_MIL_FACTORIES_VISIBLE_FOR_MIL_EQUIPMENT_LINE = 15,
@@ -1469,6 +1470,8 @@ NMilitary = {
 
 NAir = {
 	--NOSURE
+	CARRIER_PERCENTAGE_DEFEND = 0.35,					-- Percentage of planes able to defend a carrier from air attacks (historically 15% - 35%)
+	CARRIER_COMBAT_DAMAGE_STATS_MULTIPLIER = 0.35,
 	SUBMARINE_CARRIER_SIZE_STAT_INCREMENT = 3,			-- Each Point of carrier_size state adds capacity for this many planes for submarines
 	BASE_AIR_INVASION_DIVISION_CAP = 1000,				-- base cap of divisions that can be assigned in a airborne invasion
 	NAVAL_MINES_PLANTING_SPEED_LOWER_BOUND = 0.001,					-- Speed of planting naval mines can not be lower than this
@@ -2064,6 +2067,9 @@ NRailwayGun = {
 
 NNavy = {
 	--NOSUR
+	NAVAL_HOMEBASE_OWNERSHIP_BONUS = 0.04,							-- Tuning parameter for homebase calculation. Adds to total score based on if the base is owned by the country doing the calculation.
+	NAVAL_HOMEBASE_BUILDING_SCORE_FACTOR = 0.02,					-- Tuning parameter for homebase calculation. Multiplier for how much the level of the naval base impacts its total score.
+	NAVAL_HOMEBASE_CALCULATION_DISTANCE_CUTOFF = 1000,				-- Tuning parameter for homebase calculation. Distance to normalize against. Everything above said value will be treated as score = 0.
 	COORDINATION_EFFECT_ON_MINE_SWEEPING = 1.0,      -- modifies coordination by multiplication for mine sweeping
 	COORDINATION_EFFECT_ON_MINE_PLANTING = 1.0,      -- modifies coordination by multiplication for mine laying
 	MINE_SWEEPING_REGION_TO_TASKFORCE_RATIO = 1.0,		-- ratio of taskforce to regions assigned ratio of efficiency, modified by coordination
@@ -2885,7 +2891,7 @@ NAI = {
 		0, -- tungsten
 		0, -- steel
 		0, -- chromium
-		10, -- coal
+		0, -- coal
 	},
 	AI_MIN_DOMINANCE_MARGIN = 200,                          -- When trying to get control of a region, AI will try to exceed the required dominance by at least this amount
     CONVOY_DANGER_FOR_MAX_IMPORTANCE = 50,                  -- When deciding whether to protect a convoy route, the importance will scale with convoy danger up to this value
