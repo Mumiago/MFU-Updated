@@ -769,10 +769,10 @@ NProduction = {
 	--NOSUR
 	MILITARY_FACTORY_COHERENCY_BONUS = 0,							-- Value we add to the weight of a production line already in progress, if we only have one military factory. (to reduce fluctuating AI production)				
 	MILITARY_FACTORY_COHERENCY_BONUS = 0,							-- Value we add to the weight of a production line already in progress, if we only have one military factory. (to reduce fluctuating AI production)				
-	RESOURCE_TO_ENERGY_COEFFICIENT = 0.01,		-- How much energy per coal produces
-	BASE_COUNTRY_ENERGY_PRODUCTION = 0.0, 			-- The base energy production of a country
-	ENERGY_SCALING_COST_BY_FACTORY_COUNT = 0.00, -- Scales energy cost based on the total number of factories
-	BASE_ENERGY_COST = 0,						-- How much energy per factory consumes
+	RESOURCE_TO_ENERGY_COEFFICIENT = 0,		-- How much energy per coal produces
+	BASE_COUNTRY_ENERGY_PRODUCTION = 0.01, 			-- The base energy production of a country
+	ENERGY_SCALING_COST_BY_FACTORY_COUNT = 0.0, -- Scales energy cost based on the total number of factories
+	BASE_ENERGY_COST = 0.01,						-- How much energy per factory consumes
 
 	POWERED_FACTORY_SPEED = 5, 					--Powered factory speed multiplier.
 	POWERED_FACTORY_SPEED_MIL = 3.7, 			--Powered factory speed multiplier.
