@@ -767,6 +767,8 @@ NRaids = {
 
 NProduction = {
 	--NOSUR
+	ENERGY_SCALE_PER_TRADE_FACTORY_EXPORT = 0, -- Factor of how many of the factories gained from trade is affects the energy cost scaling
+	ENERGY_COST_CAP = 0,						-- Maximum energy cost per factory
 	MILITARY_FACTORY_COHERENCY_BONUS = 0,							-- Value we add to the weight of a production line already in progress, if we only have one military factory. (to reduce fluctuating AI production)				
 	MILITARY_FACTORY_COHERENCY_BONUS = 0,							-- Value we add to the weight of a production line already in progress, if we only have one military factory. (to reduce fluctuating AI production)				
 	RESOURCE_TO_ENERGY_COEFFICIENT = 0,		-- How much energy per coal produces
@@ -2067,6 +2069,9 @@ NRailwayGun = {
 
 NNavy = {
 	--NOSUR
+	NAVY_REPAIR_BASE_PRIORITY_THRESHOLD_LOW = 2,					-- bases with a level above this value will be set to low prio	(bases between these levels will get medium prio)
+	NAVY_REPAIR_BASE_PRIORITY_THRESHOLD_HIGH = 7,					-- bases with a level above this value will be set to high prio (bases between these levels will get medium prio)
+	AI_MAX_TASKFORCES_PER_TRAINING_OBJECTIVE = 5,					-- Max number of taskforces we desire for AI to put in each fleet that is training.
 	NAVAL_HOMEBASE_OWNERSHIP_BONUS = 0.04,							-- Tuning parameter for homebase calculation. Adds to total score based on if the base is owned by the country doing the calculation.
 	NAVAL_HOMEBASE_BUILDING_SCORE_FACTOR = 0.02,					-- Tuning parameter for homebase calculation. Multiplier for how much the level of the naval base impacts its total score.
 	NAVAL_HOMEBASE_CALCULATION_DISTANCE_CUTOFF = 1000,				-- Tuning parameter for homebase calculation. Distance to normalize against. Everything above said value will be treated as score = 0.
@@ -2169,8 +2174,8 @@ NNavy = {
 	NAVAL_COMBAT_PLANE_MIN_STACKING_PENALTY = 10000,						-- How many planes flying in a naval combat before penalties are introduced
 	NAVAL_COMBAT_PLANE_STACKING_PENALTY_EFFECT = 0.005,					-- Each plane above the optimal amount decreases the amount of airplanes being able to takeoff by such %. Subject to diminishing returns
 	NAVAL_HEADQUARTERS_EXPERIENCE_SCALE = 0.125,					-- Characters assigned to a naval HQ will gain 15% of all experience from taskforces in their regions
-	NAVAL_INVASION_PREPARE_DAYS = 60,								-- base days needed to prepare a naval invasion
-	NAVAL_INVASION_PLAN_CAP = 1,									-- base cap of naval invasions can be planned at the same time
+	NAVAL_INVASION_PREPARE_DAYS = 1,								-- base days needed to prepare a naval invasion
+	NAVAL_INVASION_PLAN_CAP = 1000,									-- base cap of naval invasions can be planned at the same time
 	BASE_NAVAL_INVASION_DIVISION_CAP = 4,							-- base cap of divisions that can be assigned in a naval invasion
 
 
@@ -2881,6 +2886,11 @@ NAITheatre = {
 	AI_THEATRE_AI_FRONT_MIN_DESIRED_RATIO = 0.19,						-- Fronts are sorted based on priority, we nudge unit demand based on this sorting, the higher the value the more units the most important front gets
 },
 NAI = {
+	
+	NUM_FACTORIES_IN_STATE_TO_WANT_ENERGY_REDUCTION = 6,			-- How many mils should we want in a state before we think about building energy reduction cap building
+	TOTAL_STATE_EXTRACTED_RESOURCES_FOR_BUILDING_RESOURCE_CAP_BUILDING = 30.0,	--How many resources required for building a resource inproving infra cap building
+	INFRASTRUCTURE_PERCENTAGE_AT_WHICH_TO_BUILD_INFRA_CAP_BUILDING = 0.75,		-- When should we build a cap building on a state
+	NAVAL_COAST_DEFENSE_TENSION_THRESHOLD = 0.5,		-- The world tension threshold where countries start pre-emptively protecting their home coast
 	PATROL_FLEETS_PER_INVASION_REGION_ON_PATH = 2,			-- How many STL patrol fleet templates should the AI try to use when generating dominance
 	SUGGESTED_NUM_MAX_CARRIERS = 4,							-- We don't know exactly how many planes we should use when evaluating AI build so we need a suggested number to start things off. ALso used for task force suggestions list.
 	AI_GUARANTEE_DESIRE_WITH_PRESSURE_MODIFIER = 15, 	-- If we have an 'ideology drfit from guarantees' modifier, how much more likely will we be to guarantee nations?
