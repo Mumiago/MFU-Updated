@@ -2174,9 +2174,9 @@ NNavy = {
 	NAVAL_COMBAT_PLANE_MIN_STACKING_PENALTY = 10000,						-- How many planes flying in a naval combat before penalties are introduced
 	NAVAL_COMBAT_PLANE_STACKING_PENALTY_EFFECT = 0.005,					-- Each plane above the optimal amount decreases the amount of airplanes being able to takeoff by such %. Subject to diminishing returns
 	NAVAL_HEADQUARTERS_EXPERIENCE_SCALE = 0.125,					-- Characters assigned to a naval HQ will gain 15% of all experience from taskforces in their regions
-	NAVAL_INVASION_PREPARE_DAYS = 1,								-- base days needed to prepare a naval invasion
-	NAVAL_INVASION_PLAN_CAP = 1000,									-- base cap of naval invasions can be planned at the same time
-	BASE_NAVAL_INVASION_DIVISION_CAP = 4,							-- base cap of divisions that can be assigned in a naval invasion
+	NAVAL_INVASION_PREPARE_DAYS = 7,								-- base days needed to prepare a naval invasion
+	NAVAL_INVASION_PLAN_CAP = 100,									-- base cap of naval invasions can be planned at the same time
+	BASE_NAVAL_INVASION_DIVISION_CAP = 10,							-- base cap of divisions that can be assigned in a naval invasion
 
 
 	--gtd
@@ -4850,7 +4850,7 @@ NIntel = {
 	-- ~intel ledger defines
 },
 NDoctrines = {
-        DEFAULT_REWARD_MASTERY = 100.0,                         -- How much mastery is required for unlocking a doctrine reward, if no override is set
+        DEFAULT_REWARD_MASTERY = 80.0,                         -- How much mastery is required for unlocking a doctrine reward, if no override is set
         BASE_MASTERY_GAIN_TARGET_MANPOWER = 100000.0,           -- Beyond this amount of manpower contributing to mastery, mastery gain will start having diminishing returns (see doctrines documentation)
         TRAINING_MASTERY_GAIN_FACTOR = 0,                     -- How much training contributes to doctrine mastery relative to combat/missions
         MAX_MONTHLY_MASTERY_GAIN = 30.0,                        -- Monthly mastery gain will not exceed this value
