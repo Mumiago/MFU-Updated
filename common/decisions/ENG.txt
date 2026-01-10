@@ -98,31 +98,43 @@ operations = {
 		}
 
 		complete_effect = {
+			add_offsite_building = { type = arms_factory level = 15 }
+			add_offsite_building = { type = industrial_complex level = 10 }
 			annex_country = { 
 				target = IRE 
 				transfer_troops = no
 			} 
 			113 = {
+				strategic_state_location = {
+					favorable_approach5 = 3342 # Province ID
+				}
 				set_building_level = {
 					type = air_base
 					level = 20
 				}
 			}
 			134 = {
+				strategic_state_location = {
+					favorable_approach5 = 9255 # Province ID
+				}
 				set_building_level = {
 					type = air_base
 					level = 20
 				}
 			}
 			135 = {
-				
+				strategic_state_location = {
+					favorable_approach5 = 9284 # Province ID
+				}
 				set_building_level = {
 					type = air_base
 					level = 20
 				}
 			}
 			119 = {
-				
+				strategic_state_location = {
+					favorable_approach5 = 385 # Province ID
+				}
 				set_building_level = {
 					type = air_base
 					level = 20
@@ -1796,7 +1808,11 @@ ENG_budget_decisions = {
 		days_remove = 180
 
 		complete_effect = {
+			add_mastery = {
+				amount = 20
+				folder = land
 			
+			}
 			
 			subtract_from_variable = {
 				var = british_money
@@ -1962,6 +1978,12 @@ ENG_budget_decisions = {
 		}
 
 		remove_effect = {
+			custom_effect_tooltip = ENG_modify_main_spirit_tt
+			add_to_variable = {
+				ENG_industrial_capacity_factory_var = 0.01
+				tooltip = industrial_capacity_factory_tooltip
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
 			USA = {
 				USA_infantry_industry_level_up = yes 
 			}
@@ -2026,6 +2048,12 @@ ENG_budget_decisions = {
 		}
 
 		remove_effect = {
+			custom_effect_tooltip = ENG_modify_main_spirit_tt
+			add_to_variable = {
+				ENG_industrial_capacity_factory_var = 0.01
+				tooltip = industrial_capacity_factory_tooltip
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
 			USA = {
 				USA_infantry_industry_level_up = yes 
 			}
@@ -2069,6 +2097,7 @@ ENG_budget_decisions = {
 
 		days_remove = 120
 
+
 		ai_will_do = {
 			factor = 5
 			modifier = {
@@ -2092,13 +2121,6 @@ ENG_budget_decisions = {
 
 		complete_effect = {
 			subtract_from_variable = { var = british_money value = 400 }
-		}
-
-		remove_effect = {
-			USA = {
-				USA_armor_industry_level_up = yes 
-			}
-
 			if = {
 				limit = {
 					ENG = {
@@ -2111,10 +2133,43 @@ ENG_budget_decisions = {
 							has_country_flag = ENG_chose_light_tank_flag
 						}
 					}
-					add_equipment_to_stockpile = {
-						type = light_tank_chassis 
-						producer = ENG 
-						amount = 1100 #300
+					add_equipment_subsidy = {
+						cic = 60000
+						equipment_type = light_tank_chassis
+						seller_tags = { USA }
+					}
+					
+					hidden_effect = {
+						if = { 
+							limit = {
+								USA = {
+									
+									has_idea = USA_light_tank_order_bonus
+								}
+							}
+							USA = {
+								add_to_variable = {
+									var = overload_light_tank_purchase_flag
+									value = 1
+								}
+							}
+						}
+						else = {
+							USA = {
+								add_timed_idea = {
+									idea = USA_light_tank_order_bonus
+									days = 60
+								}
+							}
+						}
+					}
+					effect_tooltip = {
+						USA = {
+							add_timed_idea = {
+								idea = USA_light_tank_order_bonus
+								days = 60
+							}
+						}
 					}
 				}
 				if = {
@@ -2123,10 +2178,45 @@ ENG_budget_decisions = {
 							has_country_flag = ENG_chose_medium_tank_flag
 						}
 					}
-					add_equipment_to_stockpile = {
-						type = medium_tank_chassis
-						producer = ENG 
-						amount = 800 #300
+					add_equipment_subsidy = {
+						cic = 60000
+						equipment_type = medium_tank_chassis
+						seller_tags = { USA }
+					}
+				
+					hidden_effect = {
+						if = { 
+							limit = {
+								USA = {
+									
+									has_idea = USA_medium_tank_order_bonus
+								}
+							}
+							
+							
+							USA = {
+								add_to_variable = {
+									var = overload_medium_tank_purchase_flag
+									value = 1
+								}
+							}
+						}
+						else = {
+							USA = {
+								add_timed_idea = {
+									idea = USA_medium_tank_order_bonus
+									days = 60
+								}
+							}
+						}
+					}
+					effect_tooltip = {
+						USA = {
+							add_timed_idea = {
+								idea = USA_medium_tank_order_bonus
+								days = 60
+							}
+						}
 					}
 				}
 				if = {
@@ -2135,16 +2225,67 @@ ENG_budget_decisions = {
 							has_country_flag = ENG_chose_heavy_tank_flag
 						}
 					}
-					add_equipment_to_stockpile = {
-						type = heavy_tank_chassis
-						producer = ENG 
-						amount = 500 #200
+					add_equipment_subsidy = {
+						cic = 60000
+						equipment_type = heavy_tank_chassis
+						seller_tags = { USA }
 					}
+					hidden_effect = {
+						if = { 
+							limit = {
+								USA = {
+									
+									has_idea = USA_heavy_tank_order_bonus
+								}
+							}
+							USA = {
+								add_to_variable = {
+									var = overload_heavy_tank_purchase_flag
+									value = 1
+								}
+							}
+							
+						}
+						else = {
+							USA = {
+								add_timed_idea = {
+									idea = USA_heavy_tank_order_bonus
+									days = 60
+								}
+							}
+						}
+					}
+					effect_tooltip = {
+						USA = {
+							add_timed_idea = {
+								idea = USA_heavy_tank_order_bonus
+								days = 60
+							}
+						}
+					}
+					
+					
 				}
 			}
 			else = {
 				country_event = { id = britain.51 }
 			}	
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = ENG_modify_main_spirit_tt
+			add_to_variable = {
+				ENG_industrial_capacity_factory_var = 0.01
+				tooltip = industrial_capacity_factory_tooltip
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+			USA = {
+				USA_armor_industry_level_up = yes 
+				
+
+			}
+
+			
 		}
 	}
 
@@ -2189,14 +2330,29 @@ ENG_budget_decisions = {
 				var = british_money 
 				value = 600 
 			}
-		}
-		remove_effect = {
 			USA = {
 				USA_aircraft_industry_level_up = yes 
+				add_timed_idea = {
+					idea = USA_fighter_order_bonus
+					days = 60
+				}
 			}
-			add_equipment_to_stockpile = {
-				type = small_plane_airframe
-				amount = 330
+			add_equipment_subsidy = {
+				cic = 60000
+				equipment_type = small_plane_airframe
+				seller_tags = { USA }
+			}
+		}
+		remove_effect = {
+			custom_effect_tooltip = ENG_modify_main_spirit_tt
+			add_to_variable = {
+				ENG_industrial_capacity_factory_var = 0.01
+				tooltip = industrial_capacity_factory_tooltip
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+			
+			USA = {
+				USA_aircraft_industry_level_up = yes		
 			}
 		}
 	}
@@ -2225,8 +2381,7 @@ ENG_budget_decisions = {
 				factor = 0 #need to up conscription laws
 			}
 		}
-		modifier = {
-		}
+		
 		custom_cost_text = ENG_600_british_money 
 
 		custom_cost_trigger = {
@@ -2243,14 +2398,29 @@ ENG_budget_decisions = {
 				var = british_money 
 				value = 600 
 			}
-		}
-		remove_effect = {
 			USA = {
 				USA_aircraft_industry_level_up = yes 
+				add_timed_idea = {
+					idea = USA_heavy_fighter_order_bonus
+					days = 60
+				}
 			}
-			add_equipment_to_stockpile = {
-				type = medium_plane_fighter_airframe
-				amount = 200
+			add_equipment_subsidy = {
+				cic = 60000
+				equipment_type = medium_plane_fighter_airframe
+				seller_tags = { USA }
+			}
+		}
+		remove_effect = {
+			custom_effect_tooltip = ENG_modify_main_spirit_tt
+			add_to_variable = {
+				ENG_industrial_capacity_factory_var = 0.01
+				tooltip = industrial_capacity_factory_tooltip
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+			
+			USA = {
+				USA_aircraft_industry_level_up = yes		
 			}
 		}
 	}
@@ -2278,9 +2448,7 @@ ENG_budget_decisions = {
 				factor = 0 #need to up conscription laws
 			}
 		}
-		modifier = {
-			
-		}
+		
 		custom_cost_text = ENG_600_british_money 
 
 		custom_cost_trigger = {
@@ -2293,225 +2461,245 @@ ENG_budget_decisions = {
 
 		complete_effect = {
 			subtract_from_variable = { var = british_money value = 600 }
-				 
+			USA = {
+				
+				add_timed_idea = {
+					idea = USA_tactical_bomber_order_bonus
+					days = 60
+				}	
+			}
+			add_equipment_subsidy = {
+				cic = 60000
+				equipment_type = medium_plane_airframe
+				seller_tags = { USA }
+			}
 		}
 		remove_effect = {
-			USA = {
-				USA_aircraft_industry_level_up = yes			
+			custom_effect_tooltip = ENG_modify_main_spirit_tt
+			add_to_variable = {
+				ENG_industrial_capacity_factory_var = 0.01
+				tooltip = industrial_capacity_factory_tooltip
 			}
-			add_equipment_to_stockpile = {
-				type = medium_plane_airframe
-				amount = 150
+			custom_effect_tooltip = generic_skip_one_line_tt
+			USA = {
+				USA_aircraft_industry_level_up = yes		
+			}
+			
+				 
+		}
+		
+	}
+	ENG_order_heavy_bombers_in_USA = {
+		icon = generic_air
+		available = {
+			has_completed_focus = ENG_arms_purchases_in_the_us
+		}
+		visible = {
+
+		}
+		days_remove = 120
+		cost = 100
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				has_equipment = {
+					medium_plane_airframe < 1
+				}
+				factor = 5
+			}
+			modifier = {
+				has_manpower < 10000 
+				factor = 0 #need to up conscription laws
 			}
 		}
+		
+		custom_cost_text = ENG_600_british_money 
+
+		custom_cost_trigger = {
+			check_variable = {
+    			var = british_money
+   				value = 600
+    			compare = greater_than_or_equals
+			}
+		}
+
+		complete_effect = {
+			subtract_from_variable = { var = british_money value = 600 }
+			USA = {
+				
+				add_timed_idea = {
+					idea = USA_heavy_bomber_order_bonus
+					days = 60
+				}	
+			}
+			add_equipment_subsidy = {
+				cic = 60000
+				equipment_type = large_plane_airframe
+				seller_tags = { USA }
+			}
+		}
+		remove_effect = {
+			custom_effect_tooltip = ENG_modify_main_spirit_tt
+			add_to_variable = {
+				ENG_industrial_capacity_factory_var = 0.01
+				tooltip = industrial_capacity_factory_tooltip
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+			USA = {
+				USA_aircraft_industry_level_up = yes		
+			}
+			
+				 
+		}
+		
 	}
 }
 
 operations = {
-	ENG_dig_in_Tobruk = {
+	#ENG_dig_in_Tobruk = {
 	
-		icon = generic_operation
+		#icon = generic_operation
 
-		allowed = {
-			original_tag = ENG
-		}
+		#allowed = {
+		#	original_tag = ENG
+		#}
 
 	
-		available = {
-			OR = {
-				ITA = {
-					controls_province = 1130 
-				}
-				any_other_country = {
-					is_in_faction_with = GER
-					controls_province = 1130
-				}
-			}
+		#available = {
+		#	OR = {
+			#	ITA = {
+				#	controls_province = 1130 
+			#	}
+				#any_other_country = {
+				#	is_in_faction_with = GER
+				#	controls_province = 1130
+				#}
+			#}
 			
-		}
+		#}
 
-		days_mission_timeout = 20
+		#days_mission_timeout = 20
 
-		fire_only_once = yes
-		priority = 100
-		is_good = yes
+		#fire_only_once = yes
+		#priority = 100
+		#is_good = yes
 
-		activation = {
-			date < 1941.1.1
-			AND = {
-				OR = {
-					ENG = {
-						controls_province = 4136 
-					}
-					any_other_country = {
-						is_in_faction_with = ENG
-						controls_province = 4136
-					}
-				}
-				OR = {
-					ENG = {
-						controls_province = 13512 
-					}
-					any_other_country = {
-						is_in_faction_with = ENG
-						controls_province = 13512
-					}
-				}
-				OR = {
-					ENG = {
-						controls_province = 13078 
-					}
-					any_other_country = {
-						is_in_faction_with = ENG
-						controls_province = 13078
-					}
-				}
-				OR = {
-					ENG = {
-						controls_province = 13511 
-					}
-					any_other_country = {
-						is_in_faction_with = ENG
-						controls_province = 13511
-					}
-				}
-				OR = {
-					ENG = {
-						controls_province = 1130 
-					}
-					any_other_country = {
-						is_in_faction_with = ENG
-						controls_province = 1130
-					}
-				}
-			}
-		}
+		#activation = {
+			#date < 1941.1.1
+			#AND = {
+			#	OR = {
+					#ENG = {
+					#	controls_province = 4136 
+					#}
+					#any_other_country = {
+					#	is_in_faction_with = ENG
+					#	controls_province = 4136
+					#}
+			#	}
+				#OR = {
+					#ENG = {
+					#	controls_province = 13512 
+					#}
+					#any_other_country = {
+					#	is_in_faction_with = ENG
+					#	controls_province = 13512
+					#}
+				#}
+				#OR = {
+					#ENG = {
+						#controls_province = 13078 
+					#}
+					#any_other_country = {
+					#	is_in_faction_with = ENG
+					#	controls_province = 13078
+					#}
+				#}
+				#OR = {
+				#	ENG = {
+					#	controls_province = 13511 
+					#}
+					#any_other_country = {
+						#is_in_faction_with = ENG
+					#	controls_province = 13511
+					#}
+				#}
+				#OR = {
+					#ENG = {
+					#	controls_province = 1130 
+					#}
+					#any_other_country = {
+					#	is_in_faction_with = ENG
+					#	controls_province = 1130
+					#}
+				#}
+			#}
+		#}
 
-		modifier = {
-		}
-		cancel_trigger = {
-			OR = {
-				ITA = {
-					controls_province = 1130 
-				}
-				any_other_country = {
-					is_in_faction_with = GER
-					controls_state = 1130
-				}
-			}
- 		}
 		
-		timeout_effect = {
-			if = {
-				limit = {
-					451 = {
-						any_province_building_level = {
-							province = {
-								id = 1130
-							}
-							building = bunker
-							level < 6
-						}
-					}
-				}
-				451 = {
-					set_building_level = {
-						type = bunker
-						province = 1130
-						level = 6
-					}								
-				}
-			}
-			if = {
-				limit = {
-					451 = {
-						any_province_building_level = {
-							province = {
-								id = 13078
-							}
-							building = bunker
-							level < 6
-						}
-					}
-				}
-				451 = {
-					set_building_level = {
-						type = bunker
-						province = 13078
-						level = 6
-					}								
-				}
-			}
-			if = {
-				limit = {
-					451 = {
-						any_province_building_level = {
-							province = {
-								id = 4136
-							}
-							building = bunker
-							level < 6
-						}
-					}
-				}
-				451 = {
-					set_building_level = {
-						type = bunker
-						province = 4136
-						level = 6
-					}								
-				}
-			}
-			if = {
-				limit = {
-					451 = {
-						any_province_building_level = {
-							province = {
-								id = 13512
-							}
-							building = bunker
-							level < 6
-						}
-					}
-				}
-				451 = {
-					set_building_level = {
-						type = bunker
-						province = 13512
-						level = 6
-					}								
-				}
-			}
-			if = {
-				limit = {
-					663 = {
-						any_province_building_level = {
-							province = {
-								id = 13511
-							}
-							building = bunker
-							level < 6
-						}
-					}
-				}
-				663 = {
-					set_building_level = {
-						type = bunker
-						province = 13511
-						level = 6
-					}								
-				}
-			}
+		#cancel_trigger = {
+		#	OR = {
+				#ITA = {
+				#	controls_province = 1130 
+				#}
+				#any_other_country = {
+				#	is_in_faction_with = GER
+				#	controls_state = 1130
+				#}
+			#}
+ 		#}
+		
+		#timeout_effect = {
+			#if = {
+			#	limit = {
+				#	451 = {
+						#any_province_building_level = {
+						#	province = {
+							#	id = 1130  / 13078/ 4136/ 13512
+							#}
+							#building = bunker
+						#	level < 6
+					#	}
+					#}
+				#}
+				#451 = {
+					#set_building_level = {
+						#type = bunker
+						#province = 1130
+						#level = 6
+					#}								
+				#}
+			#}
+		
+			#if = {
+				#limit = {
+					#663 = {
+					#	any_province_building_level = {
+							#province = {
+							#	id = 13511
+							#}
+							#building = bunker
+							#level < 6
+						#}
+					#}
+				#}
+				#663 = {
+					#set_building_level = {
+					#	type = bunker
+						#province = 13511
+					#	level = 6
+					#}								
+				#}
+			#}
 			
-		}
+		#}
 			
 	
-		complete_effect = {
+		#complete_effect = {
 			
 
 			
-		}
-	}
+		#}
+	#}
 	titov_partisans = {
         icon = generic_civil_support
         

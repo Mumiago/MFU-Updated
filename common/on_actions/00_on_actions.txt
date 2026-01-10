@@ -1,100 +1,5 @@
 on_actions = {
-	on_daily_JAP = {
-		effect = {
-			if = {
-				limit = {
-					JAP = {
-						NOT = {
-							has_war_with = USA
-						}
-					}
-					282 = {
-                        NOT = {
-                            has_state_flag = no_china_war_state_flag
-							has_state_flag = no_partial_china_war_state_flag
-                        }
-                    }
-					OR = {
-						JAP = {
-							OR = {
-								divisions_in_state = {
-									type = infantry
-									size > 0
-									state = 760
-								}
-								divisions_in_state = {
-									type = infantry
-									size > 0
-									state = 759
-								}
-								
-							}
-						}
-						RCC = {
-							OR = {
-								divisions_in_state = {
-									type = infantry
-									size > 0
-									state = 760
-								}
-								divisions_in_state = {
-									type = infantry
-									size > 0
-									state = 759
-								}
-								
-							}
-						}
-						MAN = {
-							OR = {
-								divisions_in_state = {
-									type = infantry
-									size > 0
-									state = 760
-								}
-								divisions_in_state = {
-									type = infantry
-									size > 0
-									state = 759
-								}
-							}
-						}
-					}
-				}
-				JAP = {
-					delete_unit = {
-						state = 759
-						disband = yes #will refund equipment and manpower
-					}
-					delete_unit = {
-						state = 760
-						disband = yes #will refund equipment and manpower
-					}
-				}
-				MAN = {
-					delete_unit = {
-						state = 759
-						disband = yes #will refund equipment and manpower
-					}
-					delete_unit = {
-						state = 760
-						disband = yes #will refund equipment and manpower
-					}
-				}
-				RCC = {
-					delete_unit = {
-						state = 759
-						disband = yes #will refund equipment and manpower
-					}
-					delete_unit = {
-						state = 760
-						disband = yes #will refund equipment and manpower
-					}
-				}
-				
-			}
-		}
-	}
+	
 	on_daily_SOV = {
 		effect = {
 			if = {
@@ -300,6 +205,25 @@ on_actions = {
 	}
 	on_startup = {
 		effect = {
+			
+			276 = { ############# Canada needs more slots ?
+				add_extra_state_shared_building_slots = 4
+			}
+			468 = {
+				add_extra_state_shared_building_slots = 4
+			}
+			130 = {
+				add_extra_state_shared_building_slots = 2
+			}
+			131 = {
+				add_extra_state_shared_building_slots = 2
+			}
+			133 = {
+				add_extra_state_shared_building_slots = 2
+			}
+			132 = {
+				add_extra_state_shared_building_slots = 2
+			}
 			541 = {
 				set_compliance = 40
 			}
@@ -613,6 +537,9 @@ on_actions = {
 
 			}
 			
+			USA = {
+				country_event = { id = usa.415 } 	
+			}
 			IF = {
 				limit = {
 					has_dlc = "Gotterdammerung" 
@@ -833,22 +760,7 @@ on_actions = {
 				add_ideas = no_market	
 			}
 			
-			every_country = {
-				limit = { 
-					is_in_faction_with = ENG
-					NOT = {
-						tag = ENG
-						tag = AST
-						tag = SAF
-					}
-					
-				}
-				add_timed_idea = {
-					days = 1460
-					idea = ENG_prepare_for_the_inevitable_idea
-				}
-		
-			}
+			
 			
 			
 			JAP = {
@@ -2000,12 +1912,19 @@ on_actions = {
 					FROM = { tag = USA }
 					ROOT = { tag = JAP }
 				}
+				USA = {
+					USA_initiate_balance2_of_power_effect = yes 
+					USA_update_ui_effect = yes
+					set_variable = { USA_crisis_name = 6 }
+					set_variable = { USA_crisis_level = 0 }
+				}
 				hidden_effect = {
 					every_country = {limit = { check_variable= { speeches_enabled > 0}  }
 						scoped_sound_effect = "sp_usa_speech_japan_attack"
 					}	
 				}
 			}
+			
    		}   		
 		effect = {
 			
@@ -2285,6 +2204,194 @@ on_actions = {
 			limit = {
 				FROM = {
 					OR = {
+						tag = SPR
+						tag = EFR
+						tag = ITA
+						tag = MAN
+						tag = RCC
+						is_in_faction_with = JAP 
+						is_in_faction_with = GER 
+					} 
+				}
+				ROOT = { tag = RAJ }
+			}
+			287 = {
+				add_manpower = 5000000
+				add_core_of = RAJ 
+				transfer_state_to = RAJ 
+				set_state_category = rural
+				set_building_level = {
+					type = infrastructure
+					level = 6
+					instant_build = yes
+				}
+				add_resource = {
+					type = steel
+					amount = 75
+				}
+				add_resource = {
+					type = tungsten
+					amount = 30
+				}
+				add_resource = {
+					type = aluminium
+					amount = 30
+				}
+				add_resource = {
+					type = chromium
+					amount = 30
+				}
+				add_resource = {
+					type = oil
+					amount = 30
+				}
+				add_resource = {
+					type = rubber
+					amount = 40
+				}
+			}
+			RAJ = {
+				add_manpower = 1000000
+				add_offsite_building = {
+					type = arms_factory 
+					level = 40
+				}
+				add_offsite_building = {
+					type = industrial_complex 
+					level = 20
+				}
+				if = {
+					limit = {
+					
+						NOT = {
+							OR = {
+								has_tech = width_tech_chi
+								has_tech = width_tech_sov
+								has_tech = width_tech
+							}
+						}
+						
+					}
+					division_template = {
+						name = "Gurkhas"
+						division_names_group = RAJ_MNT_01
+						priority = 2
+		
+						regiments = {
+							mountaineers = { x = 0 y = 0 }
+							mountaineers = { x = 0 y = 1 }
+							mountaineers = { x = 0 y = 2 }
+							
+							mountaineers = { x = 1 y = 0 }
+							mountaineers = { x = 1 y = 1 }
+							mountaineers = { x = 1 y = 2 }
+							mountaineers = { x = 1 y = 3 }
+
+							mountaineers = { x = 2 y = 0 }
+							mountaineers = { x = 2 y = 1 }
+							mountaineers = { x = 2 y = 2 }
+										
+							mountain_gun_brigade = { x = 3 y = 0 }
+							mountain_gun_brigade = { x = 3 y = 1 }
+							mountain_gun_brigade = { x = 3 y = 2 }
+							mountain_gun_brigade = { x = 3 y = 3 }	
+							
+							mountain_gun_brigade = { x = 4 y = 0 }
+								
+						}
+		
+						support = {
+							artillery = { x = 0 y = 0 }
+							engineer = { x = 0 y = 1 }
+							recon = { x = 0 y = 2 }
+							anti_air_heavy_support = { x = 0 y = 3 }
+							maintenance_company = { x = 1 y = 0 }
+							logistics_company = { x = 1 y = 1 }
+							field_hospital = { x = 1 y = 2 }
+							signal_company = { x = 1 y = 3 }
+						}
+
+					}
+				}
+				else = {
+					division_template = {
+						name = "Gurkhas"
+						division_names_group = RAJ_MNT_01
+						priority = 2
+		
+						regiments = {
+							mountaineers = { x = 0 y = 0 }
+							mountaineers = { x = 0 y = 1 }
+							mountaineers = { x = 0 y = 2 }
+							mountaineers = { x = 0 y = 3 }
+
+							mountaineers = { x = 1 y = 0 }
+							mountaineers = { x = 1 y = 1 }
+							mountaineers = { x = 1 y = 2 }
+							mountaineers = { x = 1 y = 3 }
+					
+							mountaineers = { x = 2 y = 0 }
+							mountaineers = { x = 2 y = 1 }
+							mountaineers = { x = 2 y = 2 }
+							mountaineers = { x = 2 y = 3 }
+
+							mountain_gun_brigade = { x = 3 y = 0 }
+							mountain_gun_brigade = { x = 3 y = 1 }
+							mountain_gun_brigade = { x = 3 y = 2 }
+							mountain_gun_brigade = { x = 3 y = 3 }
+
+							mountain_gun_brigade = { x = 4 y = 0 }
+							mountain_gun_brigade = { x = 4 y = 1 }
+						}
+		
+						support = {
+							artillery = { x = 0 y = 0 }
+							engineer = { x = 0 y = 1 }
+							recon = { x = 0 y = 2 }
+							anti_air_heavy_support = { x = 0 y = 3 }
+							maintenance_company = { x = 1 y = 0 }
+							logistics_company = { x = 1 y = 1 }
+							field_hospital = { x = 1 y = 2 }
+							signal_company = { x = 1 y = 3 }
+						}
+
+					}
+
+				}
+				287 = {
+					create_unit = {
+						division = "division_template = \"Gurkhas\" start_experience_factor = 0.5 start_equipment_factor = 1"
+						owner = RAJ
+						count = 6
+					}
+				}
+				
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					OR = {
+						tag = GER
+						tag = EFR
+						tag = ITA
+						tag = SPR
+						tag = FIN
+						is_in_faction_with = GER 
+					} 
+				}
+				ROOT = { tag = ENG }
+			}
+			ENG = {
+				remove_dynamic_modifier = {
+					modifier = ENG_empire_bonus
+				}
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					OR = {
 						tag = JAP
 						is_in_faction_with = JAP 
 					} 
@@ -2542,6 +2649,10 @@ on_actions = {
 				}
 				ROOT = { tag = NOR }
 			}
+			USA = {
+				add_to_variable = { USA_crisis_level = 10 }
+				USA_update_ui_effect = yes
+			}
 			NOR = {
 		   		transfer_navy = {
 					target = ENG
@@ -2597,6 +2708,10 @@ on_actions = {
 		   		transfer_navy = {
 					target = ENG
 				}
+			}
+			USA = {
+				add_to_variable = { USA_crisis_level = 5 }
+				USA_update_ui_effect = yes
 			}	
 		}
 		if = {
@@ -2611,6 +2726,10 @@ on_actions = {
 				POL = {
 					is_ai = no
 				}
+			}
+			USA = {
+				add_to_variable = { USA_crisis_level = 5 }
+				USA_update_ui_effect = yes
 			}
 			
 			POL = {
@@ -2674,6 +2793,10 @@ on_actions = {
 					is_ai = yes
 				}
 			}
+			USA = {
+				add_to_variable = { USA_crisis_level = 10 }
+				USA_update_ui_effect = yes
+			}
 			POL = {
 				transfer_navy = {
 				    target = ENG
@@ -2733,6 +2856,7 @@ on_actions = {
 				}
 				ITA = {
 					add_to_variable = { ITA_re_experience_gain_army_factor = 0.3 }
+					add_to_variable = { ITA_land_mastery_gain_factor = 0.3 }
 				}
 				if = {
 					limit = {
@@ -2976,6 +3100,7 @@ on_actions = {
 				}
 				ITA = {
 					add_to_variable = { ITA_re_experience_gain_army_factor = 0.3 }
+					add_to_variable = { ITA_land_mastery_gain_factor = 0.3 }
 				}
 				if = {
 					limit = {
@@ -3515,6 +3640,10 @@ on_actions = {
 				}
 				ROOT = { tag = DEN }
 			}
+			USA = {
+				add_to_variable = { USA_crisis_level = 5 }
+				USA_update_ui_effect = yes
+			}
 			if = {
 				limit = {
 					FRA = {
@@ -3548,6 +3677,10 @@ on_actions = {
 					}
 				}
 				ROOT = { tag = HOL }
+			}
+			USA = {
+				add_to_variable = { USA_crisis_level = 5 }
+				USA_update_ui_effect = yes
 			}
 			if = {
 				limit = {
@@ -4320,6 +4453,20 @@ on_actions = {
 						}
 					}
 				}
+				USA = {
+					if = {
+						limit = {
+							NOT = {
+								has_country_flag = USA_council_nat_def_formed_flag
+								has_country_flag = second_rearm_flag
+							}
+						}
+						set_country_flag = { flag = USA_force_council_nat_def_flag value = 1 days = 40 }
+					}
+					
+					add_to_variable = { USA_crisis_level = 15 }
+					USA_update_ui_effect = yes
+				}
 		
 				ENG = {				
 					load_oob = ENG_France_Merchant_fleet 
@@ -4915,6 +5062,17 @@ on_actions = {
 		effect = {
 			if = {
 				limit = {
+					
+					ROOT = { tag = ENG }
+				}
+				ENG = {
+					add_dynamic_modifier = {
+						modifier = ENG_empire_bonus
+					}
+				}
+			}
+			if = {
+				limit = {
 					ROOT = { original_tag = RAJ }
 				}
 				every_country = {
@@ -5310,8 +5468,179 @@ on_actions = {
 	}
 
 	#ROOT is new controller #FROM is old controller #FROM.FROM is state ID
-	on_state_control_changed = {	
+	on_state_control_changed = {
+		
 		effect = {
+			if = {
+				limit = {
+					ROOT = { 
+						
+						OR = { 
+							is_in_faction_with = GER
+							tag = GER
+						}
+					}
+					FROM = { 
+						tag = NOR 
+						
+					}
+					FROM.FROM = {
+						is_core_of = NOR
+					}
+					NOR = {
+						NOT = {
+							has_country_flag = invasion_started_flag
+						}
+					}
+				}
+				NOR = {
+				
+					set_country_flag = invasion_started_flag
+					
+				}
+			}
+			if = {
+				limit = {
+					ROOT = { 
+						
+						OR = { 
+							is_in_faction_with = GER
+							tag = GER
+						}
+					}
+					FROM = { 
+						OR = { 
+							is_in_faction_with = ENG
+							tag = ENG
+							tag = POL
+						}
+						
+					}
+					FROM.FROM = {
+						is_core_of = POL
+					}
+					date < 1941.1.1
+					POL = {
+						has_capitulated = no
+						controls_state = 10
+					}
+				}
+				POL = {
+					set_capital = {state=10}
+					
+				}
+			}
+			if = {
+				limit = {
+					ROOT = { 
+						
+						OR = { 
+							is_in_faction_with = ENG
+							tag = ENG
+						}
+					}
+					FROM = { 
+						OR = { 
+							is_in_faction_with = GER
+							tag = GER
+							tag = ITA
+						}
+						
+					}
+					FROM.FROM = {
+						OR = {
+							state = 447
+							state = 452
+						}
+					}
+					date > 1942.1.1
+					NOT = {
+						has_global_flag = africa_counter_speech
+					}
+				}
+				every_country = {limit = { check_variable= { speeches_enabled > 0}  }
+					play_song = "sp_africa_counter"
+				}
+				set_global_flag = africa_counter_speech
+			}
+			if = {
+			limit = {
+				ROOT = { 
+					OR = { 
+						is_in_faction_with = GER
+						tag = GER
+						tag = ITA
+					}
+				}
+				FROM = { 
+					OR = { 
+						is_in_faction_with = ENG
+						tag = ENG
+					}
+				}
+				FROM.FROM = {
+					OR = {
+						state = 448
+						state = 449
+						state = 450
+						state = 451
+						state = 452
+						state = 447
+						state = 446
+						state = 456
+						state = 458
+						state = 461
+						state = 115
+						state = 114
+					}
+				}
+			}
+			ITA = {
+				add_power_balance_value = {
+					id = ITA_power_balance
+					value = 0.05
+				}
+			}
+		}	
+		if = {
+			limit = {
+				ROOT = { 
+					OR = { 
+						is_in_faction_with = ENG
+						tag = ENG
+					}
+				}
+				FROM = { 
+					OR = { 
+						is_in_faction_with = GER
+						tag = GER
+						tag = ITA
+					}
+				}
+				FROM.FROM = {
+					OR = {
+						state = 448
+						state = 449
+						state = 450
+						state = 451
+						state = 452
+						state = 447
+						state = 446
+						state = 456
+						state = 458
+						state = 461
+						state = 115
+						state = 114
+					}
+				}
+			}
+			ITA = {
+				add_power_balance_value = {
+					id = ITA_power_balance
+					value = -0.05
+				}
+			}
+		}
 			if = {
 				limit = {
 					date < 1941.4.1
@@ -6354,154 +6683,8 @@ on_actions = {
 		}
 	}
 	on_weekly = {
-		effect = {
-			if = {
-				limit = {
-					any_country = {
-						OR = {
-							tag = NZL 
-							tag = RAJ 
-							tag = AST 
-							tag = CAN 
-							tag = SAF 
-							tag = FRA 
-							tag = POL
-						}
-						has_navy_size = {
-							archetype = ship_hull_carrier
-							size > 3
-						}
-					}
-					NOT = {
-						OR = {
-							has_idea = no_more_carriers
-							has_idea = no_more_carriers2
-							has_idea = no_more_carriers3
-						}
-					}
-				}
-				add_ideas = no_more_carriers
-			}
-			if = {
-				limit = {
-					any_country = {
-						OR = {
-							tag = NZL 
-							tag = RAJ 
-							tag = AST 
-							tag = CAN 
-							tag = SAF 
-							tag = FRA 
-							tag = POL
-						}
-						has_navy_size = {
-							archetype = ship_hull_carrier
-							size > 4
-						}
-						has_idea = no_more_carriers
-					}
-				}
-				swap_ideas = {
-					remove_idea = no_more_carriers
-					add_idea = no_more_carriers2
-				}
-			}
-			if = {
-				limit = {
-					any_country = {
-						OR = {
-							tag = NZL 
-							tag = RAJ 
-							tag = AST 
-							tag = CAN 
-							tag = SAF 
-							tag = FRA 
-							tag = POL
-						}
-						has_navy_size = {
-							archetype = ship_hull_carrier
-							size > 5
-						}
-						has_idea = no_more_carriers2
-					}
-				}
-				swap_ideas = {
-					remove_idea = no_more_carriers2
-					add_idea = no_more_carriers3
-				}
-			}
-			if = {
-				limit = {
-					any_country = {
-						OR = {
-							tag = NZL 
-							tag = RAJ 
-							tag = AST 
-							tag = CAN 
-							tag = SAF 
-							tag = FRA 
-							tag = POL
-						}
-						has_navy_size = {
-							archetype = ship_hull_carrier
-							size < 6
-						}
-						has_idea = no_more_carriers3
-					}
-				}
-				swap_ideas = {
-					remove_idea = no_more_carriers3
-					add_idea = no_more_carriers2
-				}
-			}
-			if = {
-				limit = {
-					any_country = {
-						OR = {
-							tag = NZL 
-							tag = RAJ 
-							tag = AST 
-							tag = CAN 
-							tag = SAF 
-							tag = FRA 
-							tag = POL
-						}
-						has_navy_size = {
-							archetype = ship_hull_carrier
-							size < 5
-						}
-						has_idea = no_more_carriers2
-					}
-				}
-				swap_ideas = {
-					remove_idea = no_more_carriers2
-					add_idea = no_more_carriers
-				}
-			}
-			if = {
-				limit = {
-					any_country = {
-						OR = {
-							tag = NZL 
-							tag = RAJ 
-							tag = AST 
-							tag = CAN 
-							tag = SAF 
-							tag = FRA 
-							tag = POL
-						}
-						has_navy_size = {
-							archetype = ship_hull_carrier
-							size < 4
-						}
-						has_idea = no_more_carriers
-					}
-				}
-				
-				remove_ideas = no_more_carriers
-				
-			}
-		}
+	
+			
 		effect = {
 			if = {
 				limit = {
@@ -6598,14 +6781,16 @@ on_actions = {
 			
 				USA = {
 					#divide_variable = { casualties_against = 4000 }
-					add_to_variable = {
-						var = USA_popular_support_var
-						value = casualties_against
+					set_variable = {
+						var = actual_casualties_against
+						value = 0
 					}
+					
 					set_variable = {
 						variable = casualties_against
 						value = 0
 					}
+					
 					
 					while_loop_effect = {
 						limit = {
@@ -6664,10 +6849,134 @@ on_actions = {
 					}
 
 					divide_variable = { casualties_against = 4000 }
-					subtract_from_variable = {
-						var = USA_popular_support_var
+					#subtract_from_variable = {
+						#var = USA_popular_support_var
+						#value = casualties_against
+					#}
+					add_to_variable = {
+						var = actual_casualties_against
 						value = casualties_against
 					}
+					subtract_from_variable = {
+						var = actual_casualties_against
+						value = old_casualties_against
+					}
+					set_variable = {
+						var = old_casualties_against
+						value = casualties_against
+					}
+					add_to_variable = {
+						var = actual_casualties_against
+						value = old_casualties_against2
+					}
+					
+					
+					if = {
+						limit = {
+							check_variable = {
+								var = actual_casualties_against
+								value = 0.02
+								compare = greater_than_or_equals
+							}
+							check_variable = {
+								var = actual_casualties_against
+								value = 0.03
+								compare = less_than
+							}
+						}
+						subtract_from_variable = {
+							var = actual_casualties_against
+							value = 0.02
+						}
+						set_variable = {
+							var = old_casualties_against2
+							value = actual_casualties_against
+						}
+						add_power_balance_value = {
+							id = USA_power_balance2
+							value = -0.02
+						}
+					}
+					else_if = {
+						limit = {
+							check_variable = {
+								var = actual_casualties_against
+								value = 0.03
+								compare = greater_than_or_equals
+							}
+							check_variable = {
+								var = actual_casualties_against
+								value = 0.05
+								compare = less_than
+							}
+						}
+						subtract_from_variable = {
+							var = actual_casualties_against
+							value = 0.03
+						}
+						set_variable = {
+							var = old_casualties_against2
+							value = actual_casualties_against
+						}
+						add_power_balance_value = {
+							id = USA_power_balance2
+							value = -0.03
+						}
+					}
+					else_if = {
+						limit = {
+							check_variable = {
+								var = actual_casualties_against
+								value = 0.05
+								compare = greater_than_or_equals
+							}
+							check_variable = {
+								var = actual_casualties_against
+								value = 0.1
+								compare = less_than
+							}
+						}
+						subtract_from_variable = {
+							var = actual_casualties_against
+							value = 0.05
+						}
+						set_variable = {
+							var = old_casualties_against2
+							value = actual_casualties_against
+						}
+						add_power_balance_value = {
+							id = USA_power_balance2
+							value = -0.05
+						}
+					}
+					else_if = {
+						limit = {
+							check_variable = {
+								var = actual_casualties_against
+								value = 0.1
+								compare = greater_than_or_equals
+							}
+						}
+						subtract_from_variable = {
+							var = actual_casualties_against
+							value = 0.1
+						}
+						set_variable = {
+							var = old_casualties_against2
+							value = actual_casualties_against
+						}
+						add_power_balance_value = {
+							id = USA_power_balance2
+							value = -0.1
+						}
+					}
+					else = {
+						set_variable = {
+							var = old_casualties_against2
+							value = actual_casualties_against
+						}
+					}
+				
 				}
 			
 			}
@@ -6711,7 +7020,7 @@ on_actions = {
 					}
 					multiply_variable = {
 						var = budget_income_1
-						value = 69
+						value = 63
 					}
 					multiply_variable = {
 						var = budget_income_1
@@ -6730,7 +7039,7 @@ on_actions = {
 					}
 					multiply_variable = {
 						var = budget_income_1
-						value = 65
+						value = 61
 					}
 					multiply_variable = {
 						var = budget_income_1
@@ -6749,7 +7058,7 @@ on_actions = {
 					}
 					multiply_variable = {
 						var = budget_income_1
-						value = 64
+						value = 58
 					}
 					multiply_variable = {
 						var = budget_income_1
@@ -6768,7 +7077,7 @@ on_actions = {
 					}
 					multiply_variable = {
 						var = budget_income_1
-						value = 64
+						value = 58
 					}
 					multiply_variable = {
 						var = budget_income_1
@@ -6787,7 +7096,7 @@ on_actions = {
 					}
 					multiply_variable = {
 						var = budget_income_1
-						value = 69
+						value = 63
 					}
 					multiply_variable = {
 						var = budget_income_1
@@ -6806,7 +7115,7 @@ on_actions = {
 					}
 					multiply_variable = {
 						var = budget_income_1
-						value = 65
+						value = 59
 					}
 					multiply_variable = {
 						var = budget_income_1
@@ -6825,7 +7134,7 @@ on_actions = {
 					}
 					multiply_variable = {
 						var = budget_income_1
-						value = 64
+						value = 58
 					}
 					multiply_variable = {
 						var = budget_income_1
@@ -6844,7 +7153,7 @@ on_actions = {
 					}
 					multiply_variable = {
 						var = budget_income_1
-						value = 64
+						value = 58
 					}
 					multiply_variable = {
 						var = budget_income_1
@@ -6888,7 +7197,7 @@ on_actions = {
 				}
 				multiply_variable = {
 					var = budget_expenditure_1
-					value = 38
+					value = 30
 				}
 
 				if = {
@@ -6915,7 +7224,7 @@ on_actions = {
 					}
 					multiply_variable = {
 						var = budget_expenditure_1
-						value = 1.1
+						value = 1
 					}
 				}	
 				else_if = {
@@ -6924,7 +7233,7 @@ on_actions = {
 					}
 					multiply_variable = {
 						var = budget_expenditure_1
-						value = 1.4
+						value = 1.2
 					}
 				}
 
@@ -6934,7 +7243,7 @@ on_actions = {
 				}
 				multiply_variable = {
 					var = budget_expenditure_2
-					value = 19
+					value = 15
 				}								
 
 				if = {
@@ -6961,7 +7270,7 @@ on_actions = {
 					}
 					multiply_variable = {
 						var = budget_expenditure_2
-						value = 1
+						value = 0.9
 					}
 				}	
 				else_if = {
@@ -6970,7 +7279,7 @@ on_actions = {
 					}
 					multiply_variable = {
 						var = budget_expenditure_2
-						value = 1.1
+						value = 1
 					}
 				}
 
@@ -7187,542 +7496,6 @@ on_actions = {
 					SOV = {
 						has_country_flag = convoys400_flag
 						has_equipment = {
-							convoy > 200
-						}
-					}
-				}
-				set_variable = {
-					counting_convoys = 200
-				}
-				set_temp_variable={convoy_count=0}
-				while_loop_effect = {
-					limit = {
-
-					has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 100 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -100 }
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 10 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -10}
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 1 }
-				}
-				add_to_temp_variable={convoy_count=-200}
-				set_temp_variable={convoy_count2=convoy_count}
-				multiply_temp_variable={convoy_count2=-1}
-				add_equipment_to_stockpile = {
-					type = convoy_1
-					amount = convoy_count2
-				}
-				
-			}
-			if = {
-				limit = {
-					SOV = {
-						has_country_flag = convoys450_flag
-						has_equipment = {
-							convoy > 225
-						}
-					}
-				}
-				set_variable = {
-					counting_convoys = 225
-				}
-				set_temp_variable={convoy_count=0}
-				while_loop_effect = {
-					limit = {
-
-					has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 100 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -100 }
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 10 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -10}
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 1 }
-				}
-				add_to_temp_variable={convoy_count=-225}
-				set_temp_variable={convoy_count2=convoy_count}
-				multiply_temp_variable={convoy_count2=-1}
-				add_equipment_to_stockpile = {
-					type = convoy_1
-					amount = convoy_count2
-				}
-				
-			}
-			if = {
-				limit = {
-					SOV = {
-						has_country_flag = convoys500_flag
-						has_equipment = {
-							convoy > 250
-						}
-					}
-				}
-				set_variable = {
-					counting_convoys = 250
-				}
-				set_temp_variable={convoy_count=0}
-				while_loop_effect = {
-					limit = {
-
-					has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 100 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -100 }
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 10 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -10}
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 1 }
-				}
-				add_to_temp_variable={convoy_count=-250}
-				set_temp_variable={convoy_count2=convoy_count}
-				multiply_temp_variable={convoy_count2=-1}
-				add_equipment_to_stockpile = {
-					type = convoy_1
-					amount = convoy_count2
-				}
-				
-			}
-			if = {
-				limit = {
-					SOV = {
-						has_country_flag = convoys550_flag
-						has_equipment = {
-							convoy > 275
-						}
-					}
-				}
-				set_variable = {
-					counting_convoys = 275
-				}
-				set_temp_variable={convoy_count=0}
-				while_loop_effect = {
-					limit = {
-
-					has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 100 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -100 }
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 10 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -10}
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 1 }
-				}
-				add_to_temp_variable={convoy_count=-275}
-				set_temp_variable={convoy_count2=convoy_count}
-				multiply_temp_variable={convoy_count2=-1}
-				add_equipment_to_stockpile = {
-					type = convoy_1
-					amount = convoy_count2
-				}
-				
-			}
-			if = {
-				limit = {
-					SOV = {
-						has_country_flag = convoys600_flag
-						has_equipment = {
-							convoy > 300
-						}
-					}
-				}
-				set_variable = {
-					counting_convoys = 300
-				}
-				set_temp_variable={convoy_count=0}
-				while_loop_effect = {
-					limit = {
-
-					has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 100 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -100 }
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 10 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -10}
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 1 }
-				}
-				add_to_temp_variable={convoy_count=-300}
-				set_temp_variable={convoy_count2=convoy_count}
-				multiply_temp_variable={convoy_count2=-1}
-				add_equipment_to_stockpile = {
-					type = convoy_1
-					amount = convoy_count2
-				}
-				
-			}
-			if = {
-				limit = {
-					SOV = {
-						has_country_flag = convoys650_flag
-						has_equipment = {
-							convoy > 325
-						}
-					}
-				}
-				set_variable = {
-					counting_convoys = 325
-				}
-				set_temp_variable={convoy_count=0}
-				while_loop_effect = {
-					limit = {
-
-					has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 100 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -100 }
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 10 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -10}
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 1 }
-				}
-				add_to_temp_variable={convoy_count=-325}
-				set_temp_variable={convoy_count2=convoy_count}
-				multiply_temp_variable={convoy_count2=-1}
-				add_equipment_to_stockpile = {
-					type = convoy_1
-					amount = convoy_count2
-				}
-				
-			}
-			if = {
-				limit = {
-					SOV = {
-						has_country_flag = convoys700_flag
-						has_equipment = {
-							convoy > 350
-						}
-					}
-				}
-				set_variable = {
-					counting_convoys = 350
-				}
-				set_temp_variable={convoy_count=0}
-				while_loop_effect = {
-					limit = {
-
-					has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 100 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -100 }
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 10 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -10}
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 1 }
-				}
-				add_to_temp_variable={convoy_count=-350}
-				set_temp_variable={convoy_count2=convoy_count}
-				multiply_temp_variable={convoy_count2=-1}
-				add_equipment_to_stockpile = {
-					type = convoy_1
-					amount = convoy_count2
-				}
-				
-			}
-			if = {
-				limit = {
-					SOV = {
-						has_country_flag = convoys750_flag
-						has_equipment = {
-							convoy > 375
-						}
-					}
-				}
-				set_variable = {
-					counting_convoys = 375
-				}
-				set_temp_variable={convoy_count=0}
-				while_loop_effect = {
-					limit = {
-
-					has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 100 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -100 }
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 10 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -10}
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 1 }
-				}
-				add_to_temp_variable={convoy_count=-375}
-				set_temp_variable={convoy_count2=convoy_count}
-				multiply_temp_variable={convoy_count2=-1}
-				add_equipment_to_stockpile = {
-					type = convoy_1
-					amount = convoy_count2
-				}
-				
-			}
-			if = {
-				limit = {
-					SOV = {
-						has_country_flag = convoys800_flag
-						has_equipment = {
 							convoy > 400
 						}
 					}
@@ -7788,74 +7561,7 @@ on_actions = {
 			if = {
 				limit = {
 					SOV = {
-						has_country_flag = convoys850_flag
-						has_equipment = {
-							convoy > 425
-						}
-					}
-				}
-				set_variable = {
-					counting_convoys = 425
-				}
-				set_temp_variable={convoy_count=0}
-				while_loop_effect = {
-					limit = {
-
-					has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 100 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -100 }
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 10 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -10}
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 1 }
-				}
-				add_to_temp_variable={convoy_count=-425}
-				set_temp_variable={convoy_count2=convoy_count}
-				multiply_temp_variable={convoy_count2=-1}
-				add_equipment_to_stockpile = {
-					type = convoy_1
-					amount = convoy_count2
-				}
-				
-			}
-			if = {
-				limit = {
-					SOV = {
-						has_country_flag = convoys900_flag
+						has_country_flag = convoys450_flag
 						has_equipment = {
 							convoy > 450
 						}
@@ -7922,74 +7628,7 @@ on_actions = {
 			if = {
 				limit = {
 					SOV = {
-						has_country_flag = convoys950_flag
-						has_equipment = {
-							convoy > 475
-						}
-					}
-				}
-				set_variable = {
-					counting_convoys = 475
-				}
-				set_temp_variable={convoy_count=0}
-				while_loop_effect = {
-					limit = {
-
-					has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 100 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -100 }
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 10 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -10}
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 1 }
-				}
-				add_to_temp_variable={convoy_count=-475}
-				set_temp_variable={convoy_count2=convoy_count}
-				multiply_temp_variable={convoy_count2=-1}
-				add_equipment_to_stockpile = {
-					type = convoy_1
-					amount = convoy_count2
-				}
-				
-			}
-			if = {
-				limit = {
-					SOV = {
-						has_country_flag = convoys1000_flag
+						has_country_flag = convoys500_flag
 						has_equipment = {
 							convoy > 500
 						}
@@ -8056,74 +7695,7 @@ on_actions = {
 			if = {
 				limit = {
 					SOV = {
-						has_country_flag = convoys1050_flag
-						has_equipment = {
-							convoy > 525
-						}
-					}
-				}
-				set_variable = {
-					counting_convoys = 525
-				}
-				set_temp_variable={convoy_count=0}
-				while_loop_effect = {
-					limit = {
-
-					has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 100 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -100 }
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 10 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -10}
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 1 }
-				}
-				add_to_temp_variable={convoy_count=-525}
-				set_temp_variable={convoy_count2=convoy_count}
-				multiply_temp_variable={convoy_count2=-1}
-				add_equipment_to_stockpile = {
-					type = convoy_1
-					amount = convoy_count2
-				}
-				
-			}
-			if = {
-				limit = {
-					SOV = {
-						has_country_flag = convoys1100_flag
+						has_country_flag = convoys550_flag
 						has_equipment = {
 							convoy > 550
 						}
@@ -8190,74 +7762,7 @@ on_actions = {
 			if = {
 				limit = {
 					SOV = {
-						has_country_flag = convoys1150_flag
-						has_equipment = {
-							convoy > 575
-						}
-					}
-				}
-				set_variable = {
-					counting_convoys = 575
-				}
-				set_temp_variable={convoy_count=0}
-				while_loop_effect = {
-					limit = {
-
-					has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 100 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -100 }
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 10 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -10}
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 1 }
-				}
-				add_to_temp_variable={convoy_count=-575}
-				set_temp_variable={convoy_count2=convoy_count}
-				multiply_temp_variable={convoy_count2=-1}
-				add_equipment_to_stockpile = {
-					type = convoy_1
-					amount = convoy_count2
-				}
-				
-			}
-			if = {
-				limit = {
-					SOV = {
-						has_country_flag = convoys1200_flag
+						has_country_flag = convoys600_flag
 						has_equipment = {
 							convoy > 600
 						}
@@ -8324,14 +7829,14 @@ on_actions = {
 			if = {
 				limit = {
 					SOV = {
-						has_country_flag = convoys1250_flag
+						has_country_flag = convoys650_flag
 						has_equipment = {
-							convoy > 625
+							convoy > 650
 						}
 					}
 				}
 				set_variable = {
-					counting_convoys = 625
+					counting_convoys = 650
 				}
 				set_temp_variable={convoy_count=0}
 				while_loop_effect = {
@@ -8379,7 +7884,7 @@ on_actions = {
 					}
 					add_to_temp_variable = { convoy_count = 1 }
 				}
-				add_to_temp_variable={convoy_count=-625}
+				add_to_temp_variable={convoy_count=-650}
 				set_temp_variable={convoy_count2=convoy_count}
 				multiply_temp_variable={convoy_count2=-1}
 				add_equipment_to_stockpile = {
@@ -8391,7 +7896,74 @@ on_actions = {
 			if = {
 				limit = {
 					SOV = {
-						has_country_flag = convoys1300_flag
+						has_country_flag = convoys700_flag
+						has_equipment = {
+							convoy > 700
+						}
+					}
+				}
+				set_variable = {
+					counting_convoys = 700
+				}
+				set_temp_variable={convoy_count=0}
+				while_loop_effect = {
+					limit = {
+
+					has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 100 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -100 }
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 10 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -10}
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 1 }
+				}
+				add_to_temp_variable={convoy_count=-700}
+				set_temp_variable={convoy_count2=convoy_count}
+				multiply_temp_variable={convoy_count2=-1}
+				add_equipment_to_stockpile = {
+					type = convoy_1
+					amount = convoy_count2
+				}
+				
+			}
+			if = {
+				limit = {
+					SOV = {
+						has_country_flag = convoys750_flag
 						has_equipment = {
 							convoy > 750
 						}
@@ -8458,74 +8030,7 @@ on_actions = {
 			if = {
 				limit = {
 					SOV = {
-						has_country_flag = convoys1350_flag
-						has_equipment = {
-							convoy > 775
-						}
-					}
-				}
-				set_variable = {
-					counting_convoys = 775
-				}
-				set_temp_variable={convoy_count=0}
-				while_loop_effect = {
-					limit = {
-
-					has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 100 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -100 }
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 10 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -10}
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 1 }
-				}
-				add_to_temp_variable={convoy_count=-775}
-				set_temp_variable={convoy_count2=convoy_count}
-				multiply_temp_variable={convoy_count2=-1}
-				add_equipment_to_stockpile = {
-					type = convoy_1
-					amount = convoy_count2
-				}
-				
-			}
-			if = {
-				limit = {
-					SOV = {
-						has_country_flag = convoys1400_flag
+						has_country_flag = convoys800_flag
 						has_equipment = {
 							convoy > 800
 						}
@@ -8592,74 +8097,7 @@ on_actions = {
 			if = {
 				limit = {
 					SOV = {
-						has_country_flag = convoys1450_flag
-						has_equipment = {
-							convoy > 825
-						}
-					}
-				}
-				set_variable = {
-					counting_convoys = 825
-				}
-				set_temp_variable={convoy_count=0}
-				while_loop_effect = {
-					limit = {
-
-					has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 100 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -100 }
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 10 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -10}
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 1 }
-				}
-				add_to_temp_variable={convoy_count=-825}
-				set_temp_variable={convoy_count2=convoy_count}
-				multiply_temp_variable={convoy_count2=-1}
-				add_equipment_to_stockpile = {
-					type = convoy_1
-					amount = convoy_count2
-				}
-				
-			}
-			if = {
-				limit = {
-					SOV = {
-						has_country_flag = convoys1500_flag
+						has_country_flag = convoys850_flag
 						has_equipment = {
 							convoy > 850
 						}
@@ -8726,74 +8164,7 @@ on_actions = {
 			if = {
 				limit = {
 					SOV = {
-						has_country_flag = convoys1550_flag
-						has_equipment = {
-							convoy > 875
-						}
-					}
-				}
-				set_variable = {
-					counting_convoys = 875
-				}
-				set_temp_variable={convoy_count=0}
-				while_loop_effect = {
-					limit = {
-
-					has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 100 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -100 }
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 10 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -10}
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 1 }
-				}
-				add_to_temp_variable={convoy_count=-875}
-				set_temp_variable={convoy_count2=convoy_count}
-				multiply_temp_variable={convoy_count2=-1}
-				add_equipment_to_stockpile = {
-					type = convoy_1
-					amount = convoy_count2
-				}
-				
-			}
-			if = {
-				limit = {
-					SOV = {
-						has_country_flag = convoys1600_flag
+						has_country_flag = convoys900_flag
 						has_equipment = {
 							convoy > 900
 						}
@@ -8860,76 +8231,9 @@ on_actions = {
 			if = {
 				limit = {
 					SOV = {
-						has_country_flag = convoys1650_flag
+						has_country_flag = convoys950_flag
 						has_equipment = {
-							convoy > 925
-						}
-					}
-				}
-				set_variable = {
-					counting_convoys = 925
-				}
-				set_temp_variable={convoy_count=0}
-				while_loop_effect = {
-					limit = {
-
-					has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 100 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -100 }
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 10 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -10}
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 1 }
-				}
-				add_to_temp_variable={convoy_count=-925}
-				set_temp_variable={convoy_count2=convoy_count}
-				multiply_temp_variable={convoy_count2=-1}
-				add_equipment_to_stockpile = {
-					type = convoy_1
-					amount = convoy_count2
-				}
-				
-			}
-			if = {
-				limit = {
-					SOV = {
-						has_country_flag = convoys1700_flag
-						has_equipment = {
-							convoy > 950
+							convoy > 9500
 						}
 					}
 				}
@@ -8994,76 +8298,9 @@ on_actions = {
 			if = {
 				limit = {
 					SOV = {
-						has_country_flag = convoys1750_flag
+						has_country_flag = convoys1000_flag
 						has_equipment = {
-							convoy > 975
-						}
-					}
-				}
-				set_variable = {
-					counting_convoys = 975
-				}
-				set_temp_variable={convoy_count=0}
-				while_loop_effect = {
-					limit = {
-
-					has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 100 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -100 }
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 10 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -10}
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 1 }
-				}
-				add_to_temp_variable={convoy_count=-975}
-				set_temp_variable={convoy_count2=convoy_count}
-				multiply_temp_variable={convoy_count2=-1}
-				add_equipment_to_stockpile = {
-					type = convoy_1
-					amount = convoy_count2
-				}
-				
-			}
-			if = {
-				limit = {
-					SOV = {
-						has_country_flag = convoys1800_flag
-						has_equipment = {
-							convoy >  1000
+							convoy > 1000
 						}
 					}
 				}
@@ -9128,74 +8365,7 @@ on_actions = {
 			if = {
 				limit = {
 					SOV = {
-						has_country_flag = convoys1850_flag
-						has_equipment = {
-							convoy > 1025
-						}
-					}
-				}
-				set_variable = {
-					counting_convoys = 1025
-				}
-				set_temp_variable={convoy_count=0}
-				while_loop_effect = {
-					limit = {
-
-					has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 100 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -100 }
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 10 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -10}
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 1 }
-				}
-				add_to_temp_variable={convoy_count=-1025}
-				set_temp_variable={convoy_count2=convoy_count}
-				multiply_temp_variable={convoy_count2=-1}
-				add_equipment_to_stockpile = {
-					type = convoy_1
-					amount = convoy_count2
-				}
-				
-			}
-			if = {
-				limit = {
-					SOV = {
-						has_country_flag = convoys1900_flag
+						has_country_flag = convoys1050_flag
 						has_equipment = {
 							convoy > 1050
 						}
@@ -9262,74 +8432,7 @@ on_actions = {
 			if = {
 				limit = {
 					SOV = {
-						has_country_flag = convoys1950_flag
-						has_equipment = {
-							convoy > 1075
-						}
-					}
-				}
-				set_variable = {
-					counting_convoys = 1075
-				}
-				set_temp_variable={convoy_count=0}
-				while_loop_effect = {
-					limit = {
-
-					has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 100 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -100 }
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 10 }
-				}
-				if= {
-					limit = {
-
-						has_equipment = {
-							convoy < convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = -10}
-				}
-				while_loop_effect = {
-					limit = {
-
-						has_equipment = {
-							convoy > convoy_count
-						}
-					}
-					add_to_temp_variable = { convoy_count = 1 }
-				}
-				add_to_temp_variable={convoy_count=-1075}
-				set_temp_variable={convoy_count2=convoy_count}
-				multiply_temp_variable={convoy_count2=-1}
-				add_equipment_to_stockpile = {
-					type = convoy_1
-					amount = convoy_count2
-				}
-				
-			}
-			if = {
-				limit = {
-					SOV = {
-						has_country_flag = convoys2000_flag
+						has_country_flag = convoys1100_flag
 						has_equipment = {
 							convoy > 1100
 						}
@@ -9385,6 +8488,1212 @@ on_actions = {
 					add_to_temp_variable = { convoy_count = 1 }
 				}
 				add_to_temp_variable={convoy_count=-1100}
+				set_temp_variable={convoy_count2=convoy_count}
+				multiply_temp_variable={convoy_count2=-1}
+				add_equipment_to_stockpile = {
+					type = convoy_1
+					amount = convoy_count2
+				}
+				
+			}
+			if = {
+				limit = {
+					SOV = {
+						has_country_flag = convoys1150_flag
+						has_equipment = {
+							convoy > 1150
+						}
+					}
+				}
+				set_variable = {
+					counting_convoys = 1150
+				}
+				set_temp_variable={convoy_count=0}
+				while_loop_effect = {
+					limit = {
+
+					has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 100 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -100 }
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 10 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -10}
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 1 }
+				}
+				add_to_temp_variable={convoy_count=-1150}
+				set_temp_variable={convoy_count2=convoy_count}
+				multiply_temp_variable={convoy_count2=-1}
+				add_equipment_to_stockpile = {
+					type = convoy_1
+					amount = convoy_count2
+				}
+				
+			}
+			if = {
+				limit = {
+					SOV = {
+						has_country_flag = convoys1200_flag
+						has_equipment = {
+							convoy > 1200
+						}
+					}
+				}
+				set_variable = {
+					counting_convoys = 1200
+				}
+				set_temp_variable={convoy_count=0}
+				while_loop_effect = {
+					limit = {
+
+					has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 100 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -100 }
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 10 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -10}
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 1 }
+				}
+				add_to_temp_variable={convoy_count=-1200}
+				set_temp_variable={convoy_count2=convoy_count}
+				multiply_temp_variable={convoy_count2=-1}
+				add_equipment_to_stockpile = {
+					type = convoy_1
+					amount = convoy_count2
+				}
+				
+			}
+			if = {
+				limit = {
+					SOV = {
+						has_country_flag = convoys1250_flag
+						has_equipment = {
+							convoy > 1250
+						}
+					}
+				}
+				set_variable = {
+					counting_convoys = 1250
+				}
+				set_temp_variable={convoy_count=0}
+				while_loop_effect = {
+					limit = {
+
+					has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 100 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -100 }
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 10 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -10}
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 1 }
+				}
+				add_to_temp_variable={convoy_count=-1250}
+				set_temp_variable={convoy_count2=convoy_count}
+				multiply_temp_variable={convoy_count2=-1}
+				add_equipment_to_stockpile = {
+					type = convoy_1
+					amount = convoy_count2
+				}
+				
+			}
+			if = {
+				limit = {
+					SOV = {
+						has_country_flag = convoys1300_flag
+						has_equipment = {
+							convoy > 1300
+						}
+					}
+				}
+				set_variable = {
+					counting_convoys = 1300
+				}
+				set_temp_variable={convoy_count=0}
+				while_loop_effect = {
+					limit = {
+
+					has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 100 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -100 }
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 10 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -10}
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 1 }
+				}
+				add_to_temp_variable={convoy_count=-1300}
+				set_temp_variable={convoy_count2=convoy_count}
+				multiply_temp_variable={convoy_count2=-1}
+				add_equipment_to_stockpile = {
+					type = convoy_1
+					amount = convoy_count2
+				}
+				
+			}
+			if = {
+				limit = {
+					SOV = {
+						has_country_flag = convoys1350_flag
+						has_equipment = {
+							convoy > 1350
+						}
+					}
+				}
+				set_variable = {
+					counting_convoys = 1350
+				}
+				set_temp_variable={convoy_count=0}
+				while_loop_effect = {
+					limit = {
+
+					has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 100 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -100 }
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 10 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -10}
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 1 }
+				}
+				add_to_temp_variable={convoy_count=-1350}
+				set_temp_variable={convoy_count2=convoy_count}
+				multiply_temp_variable={convoy_count2=-1}
+				add_equipment_to_stockpile = {
+					type = convoy_1
+					amount = convoy_count2
+				}
+				
+			}
+			if = {
+				limit = {
+					SOV = {
+						has_country_flag = convoys1400_flag
+						has_equipment = {
+							convoy > 1400
+						}
+					}
+				}
+				set_variable = {
+					counting_convoys = 1400
+				}
+				set_temp_variable={convoy_count=0}
+				while_loop_effect = {
+					limit = {
+
+					has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 100 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -100 }
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 10 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -10}
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 1 }
+				}
+				add_to_temp_variable={convoy_count=-1400}
+				set_temp_variable={convoy_count2=convoy_count}
+				multiply_temp_variable={convoy_count2=-1}
+				add_equipment_to_stockpile = {
+					type = convoy_1
+					amount = convoy_count2
+				}
+				
+			}
+			if = {
+				limit = {
+					SOV = {
+						has_country_flag = convoys1450_flag
+						has_equipment = {
+							convoy > 1450
+						}
+					}
+				}
+				set_variable = {
+					counting_convoys = 1450
+				}
+				set_temp_variable={convoy_count=0}
+				while_loop_effect = {
+					limit = {
+
+					has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 100 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -100 }
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 10 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -10}
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 1 }
+				}
+				add_to_temp_variable={convoy_count=-1450}
+				set_temp_variable={convoy_count2=convoy_count}
+				multiply_temp_variable={convoy_count2=-1}
+				add_equipment_to_stockpile = {
+					type = convoy_1
+					amount = convoy_count2
+				}
+				
+			}
+			if = {
+				limit = {
+					SOV = {
+						has_country_flag = convoys1500_flag
+						has_equipment = {
+							convoy > 1500
+						}
+					}
+				}
+				set_variable = {
+					counting_convoys = 1500
+				}
+				set_temp_variable={convoy_count=0}
+				while_loop_effect = {
+					limit = {
+
+					has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 100 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -100 }
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 10 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -10}
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 1 }
+				}
+				add_to_temp_variable={convoy_count=-1500}
+				set_temp_variable={convoy_count2=convoy_count}
+				multiply_temp_variable={convoy_count2=-1}
+				add_equipment_to_stockpile = {
+					type = convoy_1
+					amount = convoy_count2
+				}
+				
+			}
+			if = {
+				limit = {
+					SOV = {
+						has_country_flag = convoys1550_flag
+						has_equipment = {
+							convoy > 1550
+						}
+					}
+				}
+				set_variable = {
+					counting_convoys = 1550
+				}
+				set_temp_variable={convoy_count=0}
+				while_loop_effect = {
+					limit = {
+
+					has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 100 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -100 }
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 10 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -10}
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 1 }
+				}
+				add_to_temp_variable={convoy_count=-1550}
+				set_temp_variable={convoy_count2=convoy_count}
+				multiply_temp_variable={convoy_count2=-1}
+				add_equipment_to_stockpile = {
+					type = convoy_1
+					amount = convoy_count2
+				}
+				
+			}
+			if = {
+				limit = {
+					SOV = {
+						has_country_flag = convoys1600_flag
+						has_equipment = {
+							convoy > 1600
+						}
+					}
+				}
+				set_variable = {
+					counting_convoys = 1600
+				}
+				set_temp_variable={convoy_count=0}
+				while_loop_effect = {
+					limit = {
+
+					has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 100 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -100 }
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 10 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -10}
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 1 }
+				}
+				add_to_temp_variable={convoy_count=-1600}
+				set_temp_variable={convoy_count2=convoy_count}
+				multiply_temp_variable={convoy_count2=-1}
+				add_equipment_to_stockpile = {
+					type = convoy_1
+					amount = convoy_count2
+				}
+				
+			}
+			if = {
+				limit = {
+					SOV = {
+						has_country_flag = convoys1650_flag
+						has_equipment = {
+							convoy > 1650
+						}
+					}
+				}
+				set_variable = {
+					counting_convoys = 1650
+				}
+				set_temp_variable={convoy_count=0}
+				while_loop_effect = {
+					limit = {
+
+					has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 100 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -100 }
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 10 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -10}
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 1 }
+				}
+				add_to_temp_variable={convoy_count=-1650}
+				set_temp_variable={convoy_count2=convoy_count}
+				multiply_temp_variable={convoy_count2=-1}
+				add_equipment_to_stockpile = {
+					type = convoy_1
+					amount = convoy_count2
+				}
+				
+			}
+			if = {
+				limit = {
+					SOV = {
+						has_country_flag = convoys1700_flag
+						has_equipment = {
+							convoy > 1700
+						}
+					}
+				}
+				set_variable = {
+					counting_convoys = 1700
+				}
+				set_temp_variable={convoy_count=0}
+				while_loop_effect = {
+					limit = {
+
+					has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 100 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -100 }
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 10 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -10}
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 1 }
+				}
+				add_to_temp_variable={convoy_count=-1700}
+				set_temp_variable={convoy_count2=convoy_count}
+				multiply_temp_variable={convoy_count2=-1}
+				add_equipment_to_stockpile = {
+					type = convoy_1
+					amount = convoy_count2
+				}
+				
+			}
+			if = {
+				limit = {
+					SOV = {
+						has_country_flag = convoys1750_flag
+						has_equipment = {
+							convoy > 1750
+						}
+					}
+				}
+				set_variable = {
+					counting_convoys = 1750
+				}
+				set_temp_variable={convoy_count=0}
+				while_loop_effect = {
+					limit = {
+
+					has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 100 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -100 }
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 10 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -10}
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 1 }
+				}
+				add_to_temp_variable={convoy_count=-1750}
+				set_temp_variable={convoy_count2=convoy_count}
+				multiply_temp_variable={convoy_count2=-1}
+				add_equipment_to_stockpile = {
+					type = convoy_1
+					amount = convoy_count2
+				}
+				
+			}
+			if = {
+				limit = {
+					SOV = {
+						has_country_flag = convoys1800_flag
+						has_equipment = {
+							convoy >  1800
+						}
+					}
+				}
+				set_variable = {
+					counting_convoys = 1800
+				}
+				set_temp_variable={convoy_count=0}
+				while_loop_effect = {
+					limit = {
+
+					has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 100 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -100 }
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 10 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -10}
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 1 }
+				}
+				add_to_temp_variable={convoy_count=-1800}
+				set_temp_variable={convoy_count2=convoy_count}
+				multiply_temp_variable={convoy_count2=-1}
+				add_equipment_to_stockpile = {
+					type = convoy_1
+					amount = convoy_count2
+				}
+				
+			}
+			if = {
+				limit = {
+					SOV = {
+						has_country_flag = convoys1850_flag
+						has_equipment = {
+							convoy > 1850
+						}
+					}
+				}
+				set_variable = {
+					counting_convoys = 1850
+				}
+				set_temp_variable={convoy_count=0}
+				while_loop_effect = {
+					limit = {
+
+					has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 100 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -100 }
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 10 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -10}
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 1 }
+				}
+				add_to_temp_variable={convoy_count=-1850}
+				set_temp_variable={convoy_count2=convoy_count}
+				multiply_temp_variable={convoy_count2=-1}
+				add_equipment_to_stockpile = {
+					type = convoy_1
+					amount = convoy_count2
+				}
+				
+			}
+			if = {
+				limit = {
+					SOV = {
+						has_country_flag = convoys1900_flag
+						has_equipment = {
+							convoy > 1900
+						}
+					}
+				}
+				set_variable = {
+					counting_convoys = 1900
+				}
+				set_temp_variable={convoy_count=0}
+				while_loop_effect = {
+					limit = {
+
+					has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 100 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -100 }
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 10 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -10}
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 1 }
+				}
+				add_to_temp_variable={convoy_count=-1900}
+				set_temp_variable={convoy_count2=convoy_count}
+				multiply_temp_variable={convoy_count2=-1}
+				add_equipment_to_stockpile = {
+					type = convoy_1
+					amount = convoy_count2
+				}
+				
+			}
+			if = {
+				limit = {
+					SOV = {
+						has_country_flag = convoys1950_flag
+						has_equipment = {
+							convoy > 1950
+						}
+					}
+				}
+				set_variable = {
+					counting_convoys = 1950
+				}
+				set_temp_variable={convoy_count=0}
+				while_loop_effect = {
+					limit = {
+
+					has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 100 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -100 }
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 10 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -10}
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 1 }
+				}
+				add_to_temp_variable={convoy_count=-1950}
+				set_temp_variable={convoy_count2=convoy_count}
+				multiply_temp_variable={convoy_count2=-1}
+				add_equipment_to_stockpile = {
+					type = convoy_1
+					amount = convoy_count2
+				}
+				
+			}
+			if = {
+				limit = {
+					SOV = {
+						has_country_flag = convoys2000_flag
+						has_equipment = {
+							convoy > 2000
+						}
+					}
+				}
+				set_variable = {
+					counting_convoys = 2000
+				}
+				set_temp_variable={convoy_count=0}
+				while_loop_effect = {
+					limit = {
+
+					has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 100 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -100 }
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 10 }
+				}
+				if= {
+					limit = {
+
+						has_equipment = {
+							convoy < convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = -10}
+				}
+				while_loop_effect = {
+					limit = {
+
+						has_equipment = {
+							convoy > convoy_count
+						}
+					}
+					add_to_temp_variable = { convoy_count = 1 }
+				}
+				add_to_temp_variable={convoy_count=-2000}
 				set_temp_variable={convoy_count2=convoy_count}
 				multiply_temp_variable={convoy_count2=-1}
 				add_equipment_to_stockpile = {

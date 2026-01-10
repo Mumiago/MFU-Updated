@@ -4133,6 +4133,9 @@ country_event = {
 				add_to_variable = {
 					ENG_experience_gain_army_factor_var = -0.1
 				}
+				add_to_variable = {
+					ENG_land_mastery_gain_factor_var = -0.1
+				}
 				set_variable = {
 					ENG_production_cost_max_ship_hull_cruiser_var = 0
 				}
@@ -6852,17 +6855,60 @@ country_event = {
 	}
 	option = {
 		name = germany.702.b
-		hidden_effect = {
 		every_country = {
 			limit = {
-				is_allies = yes
+				is_axis = yes
 			}
-			white_peace = {
-				tag = GER
-			}
+			white_peace = ENG
 		}
+		hidden_effect = {
 		GER = {
 			dismantle_faction = yes
+			white_peace = {
+				tag  = ENG
+			}
+		}
+		ROM = {
+			white_peace = {
+				tag  = ENG
+			}
+			set_political_party = {
+				ideology = democratic
+				popularity = 30
+			}
+				kill_country_leader = yes
+				create_country_leader = {
+					name = "Mihai I"
+					desc = ""
+					picture = gfx/leaders/ROM/Portrait_romania_michael_i.dds
+					expire = "1965.1.1.1"
+					ideology = conservatism
+		
+				}
+		}
+		BUL = {
+			white_peace = {
+				tag  = ENG
+			}
+			set_political_party = {
+				ideology = democratic
+				popularity = 30
+			}
+		}
+		HUN = {
+			white_peace = {
+				tag  = ENG
+			}
+		}
+		SLO = {
+			white_peace = {
+				tag  = ENG
+			}
+		}
+		SPR = {
+			white_peace = {
+				tag  = ENG
+			}
 		}
 		LUX = {
 			transfer_state = 8
@@ -6886,24 +6932,6 @@ country_event = {
 			transfer_state = 143
 			transfer_state = 144
 		}
-		YUG = {
-			transfer_state = 102
-			transfer_state = 736
-			transfer_state = 103
-			transfer_state = 163
-			transfer_state = 104
-			transfer_state = 109
-			transfer_state = 45
-			transfer_state = 764
-			transfer_state = 107
-			transfer_state = 108
-			transfer_state = 105
-			transfer_state = 106
-			transfer_state = 187
-		}
-		ALB = {
-			transfer_state = 44
-		}
 		GRE = {
 			transfer_state = 184
 			transfer_state = 731
@@ -6913,29 +6941,18 @@ country_event = {
 			transfer_state = 182
 			transfer_state = 164
 		}
-		SOV = {
-			annex_country = {
-				target = ROM
-			}
-			annex_country = {
-				target = BUL
-			}
-			annex_country = {
-				target = HUN
-			}
-			annex_country = {
-				target = ALB
-			}
-			annex_country = {
-				target = CZE
-			}
-			annex_country = {
-				target = POL
-			}
-			annex_country = {
-				target = SLO
-			}
-			transfer_state = 73
+		ETH = {
+				white_peace = ENG
+				white_peace = USA
+				white_peace = SOV
+				set_politics = {
+					ruling_party = neutrality
+				}
+				drop_cosmetic_tag = yes
+				transfer_state = 271
+				transfer_state = 834
+				transfer_state = 835
+				transfer_state = 550
 		}
 		FRA = {
 			annex_country = {
@@ -6954,11 +6971,6 @@ country_event = {
 			transfer_state = 662
 			transfer_state = 448
 			transfer_state = 661
-			transfer_state = 830
-			transfer_state = 831
-			annex_country = {
-				target = ITA
-			}
 			release_puppet = ITA
 			add_to_faction = GER
 			add_to_faction = LUX
@@ -6966,11 +6978,74 @@ country_event = {
 			add_to_faction = HOL
 			add_to_faction = NOR
 			add_to_faction = DEN
-			complete_national_focus = ENG_operation_unthinkable
+			add_to_faction = GRE
+			add_to_faction = ROM
+			add_to_faction = BUL
+			add_to_faction = SLO
+			add_to_faction = HUN
+			add_to_faction = SPR
 			}
+			every_country = {
+				limit = {
+					AND = {
+						is_in_faction_with = ENG
+						NOT = {
+							tag = CHI
+						}
+					}
+				}
+				declare_war_on = {
+					target = SOV
+					type = topple_government
+				}
+			}
+
+			every_country = {
+				set_variable = { var = super_event value = 16 }			
+			}
+			every_country = {
+					limit = { 
+						AND = {
+							check_variable= { 
+								speeches_enabled > 0
+							} 
+							check_variable= { 
+								music_enabled < 2
+							} 
+						}
+					}
+					play_song = "se_operation_unthinkable"
+				}
+				every_country = {
+					limit = { 
+						AND = {
+							check_variable= { 
+								music_enabled > 0
+							} 
+							check_variable= { 
+								speeches_enabled < 2
+							} 
+						}
+					}
+					scoped_sound_effect = "se_operation_unthinkable"
+				}
+				every_country = {
+					limit = { 
+						AND = {
+							check_variable= {
+								music_enabled > 0
+							} 
+							check_variable= { 
+								speeches_enabled > 0
+							} 
+						}
+					}
+					play_song = "se_operation_unthinkable"
+				}
+		}
+		set_global_flag = flag_untinkable_dec
 		}
 	}
-}
 country_event = {
 	id = germany.703
 	title = germany.703.t

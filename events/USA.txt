@@ -88,11 +88,19 @@ country_event = {
 			if = {
 				limit = { not = { has_dlc = "Man the Guns" } }
 				ENG = {	load_oob = "ENG_destroyers_for_bases" }
+				
 				CAN = { load_oob = "CAN_destroyers_for_bases" }
 			}
 			else = {
 				ENG = {	load_oob = "ENG_destroyers_for_bases_mtg" }
 				CAN = { load_oob = "CAN_destroyers_for_bases_mtg" }
+				USA = {
+					destroy_ships = {
+						type = ship_hull_light_1
+						count = 50
+					}
+				}
+
 			}
 			ENG = {
 				if = { limit = { 696 = { is_controlled_by = ENG } }
@@ -113,6 +121,7 @@ country_event = {
 				if = { limit = { 691 = { is_controlled_by = ENG } } 
 					remove_state_core = 691
 				}
+				
 			}
 		}
 		USA = {
@@ -134,19 +143,15 @@ country_event = {
 			if = { limit = { 691 = { is_controlled_by = ENG } } 
 				transfer_state = 691
 			}
-			add_opinion_modifier = {
-				target = ROOT
-				modifier = destroyers_for_bases_opinion
+			if = { limit = { 687 = { is_controlled_by = ENG } } 
+				transfer_state = 687
 			}
+			
 			country_event = { id = usa.401 days = 3 }
 		}
 	}
 
-	option = {
-		name = usa.4.b
-		USA = { country_event = { id = usa.5 days = 1 } }
-		ai_chance = { factor = 0 }
-	}
+	
 
 }
 
@@ -172,73 +177,54 @@ country_event = {
 	desc = usa.6.d
 	picture = GFX_report_event_usa_election_generic
 
-	is_triggered_only = yes
+	trigger = {
+		tag = USA 
+		date > 1936.11.3
+	}
 
 	fire_only_once = yes 
 
 	option = { 	
 		name = usa.6.a
-
-		
+		complete_national_focus = USA_1937_election
 
 		ai_chance = {
 			factor = 100
 		}		
 	}
 }
-# Election of 1936: Roosevelt vs Alf Landon
-country_event = {
-	id = usa.611
-	title = usa.611.t
-	desc = usa.611.d
-	picture = GFX_report_event_usa_election_generic
 
-	is_triggered_only = yes
-
-	fire_only_once = yes 
-
-	option = { 	
-		name = usa.611.a
-
-	
-
-		
-		ai_chance = {
-			factor = 100
-		}		
-	}
-}
-
-# Election of 1940: Roosevelt vs Wendell Wilkie
+# Election of 1940
 country_event = {
 	id = usa.7
 	title = usa.7.t
 	desc = usa.7.d
-	picture = GFX_report_event_usa_election_roosevelt_wilkie
+	picture = GFX_report_event_usa_election_generic
 
-	is_triggered_only = yes
+	trigger = {
+		tag = USA
+		date > 1940.11.5
+	}
 
 	fire_only_once = yes 
 
+	immediate = {
+		hidden_effect = {
+			set_country_flag = election_1940_happened_flag
+			set_country_flag = USA_US_british_conference_happened_flag
+			complete_national_focus = USA_focus_on_europe
+		}
+	}
 	option = {
 		name = usa.7.a
+		
+		add_country_leader_trait = dislikes_germany
 
-		custom_effect_tooltip = USA_gain_stab_democratic_tt
-
-		ai_chance = {
-			factor = 100
-		}
-		set_temp_variable = {
-			var = USA_voter_var
-			value = party_popularity@democratic
-		}
-		multiply_temp_variable = {
-			var = USA_voter_var
-			value = 0.25
-		}
-		add_stability = USA_voter_var
-
-		add_political_power = 100
+	}
+	option = {
+		name = usa.7.b
+		add_country_leader_trait = dislikes_japan
+			
 	}
 }
 
@@ -274,6 +260,70 @@ country_event = {
 		add_stability = USA_voter_var
 
 		add_political_power = 100
+	}
+}
+
+# Floods 1936, Ohio River Valley
+
+country_event = {
+	id = usa.10
+	title = usa.10.t
+	desc = usa.10.d
+	picture = GFX_USA_report_event_floods_1936
+
+	
+
+	is_triggered_only = yes 
+
+	fire_only_once = yes 
+
+	option = {
+		name = usa.10.a
+		ai_chance = {
+			factor = 100
+		}
+		every_state = {
+			limit = {
+				OR = {
+					state = 361
+					state = 360
+					state = 362
+					state = 261
+					state = 369
+					state = 358
+					state = 357
+					state = 359
+				}
+			}
+			damage_building = {
+			  type = infrastructure
+			  damage = 3
+			}
+			damage_building = {
+			  type = industrial_complex
+			  damage = 1
+			}
+			set_state_flag = USA_risk_of_flood_flag
+		}
+		hidden_effect = {
+			every_state = {
+				limit = {
+					OR = {
+						state = 364
+						state = 365 
+						state = 371 
+						state = 370 
+						state = 372 
+						state = 368
+					}
+				}
+				set_state_flag = USA_risk_of_flood_flag
+			}
+		}
+		set_country_flag = USA_st_patricks_day_floods_flag
+		custom_effect_tooltip = USA_increase_crisis_level_by_20_tt
+		add_to_variable = { USA_crisis_level = 20 }
+		USA_update_ui_effect = yes 
 	}
 }
 
@@ -313,10 +363,7 @@ country_event = { #Alf Landon Speaks out#
 
 	trigger = {
 		tag = USA
-		NOT = {
-
-			has_completed_focus = USA_landon
-		}
+		
 		date > 1936.5.1
 		date < 1937.1.1
 		has_government = democratic
@@ -331,11 +378,7 @@ country_event = { #Alf Landon Speaks out#
 			ideology = neutrality
 			popularity = 0.02 
 		}
-		hidden_effect = {
-			USA = {
-				country_event = { id = usa.25 days = 90 }
-			}
-		}
+		
 	}
 }
 
@@ -349,34 +392,11 @@ country_event = { #defence against Alf Landon#
 
 	option = {
 		name = usa.25.a
-		add_to_variable = {
-			var = USA_stability_factor_var
-			value = 0.05
-			tooltip = stability_factor_tooltip
-		}
+		add_stability = 0.05
 	}
 }
 
-country_event = { #Sit-Down Strikes Event# 
-	id = usa.26
-	title = usa.26.t
-	desc = usa.26.d
-	picture = GFX_report_event_usa_election_generic
 
-	trigger = {
-		tag = USA
-		date > 1936.6.1
-		date < 1937.1.1
-		has_government = democratic
-	}
-
-	fire_only_once = yes
-
-	option = {
-		name = usa.26.a
-		add_ideas = USA_factory_strikes
-	}
-}
 
 country_event = {
 	id = usa.27
@@ -515,9 +535,18 @@ country_event = {
 
 	option = {
 		name = usa.31.a
-		add_ideas = USA_infantry_industry1
-		add_ideas = USA_armor_industry1
-		add_ideas = USA_aircraft_industry1
+		hidden_effect = {
+			add_dynamic_modifier = {
+				modifier = USA_ic_bonuses
+			}
+		}
+		
+		#hidden_effect = {
+			add_ideas = USA_infantry_industry1
+			add_ideas = USA_armor_industry1
+			add_ideas = USA_aircraft_industry1
+		#}
+		
 	}
 }
 
@@ -739,6 +768,7 @@ country_event = {
 		}
 	}
 }
+
 
 ##vanilla bullshit ignore this###
 country_event = {
@@ -1140,6 +1170,56 @@ country_event = {
 		}		
 	}
 }
+country_event = { #### Landslides and floods in Los Angeles, California, USA cause over 200 deaths March 2 38
+	id = usa.4031
+	title = usa.4031.t
+	desc = usa.4031.d
+	picture = GFX_event_event_USA_28
+
+	is_triggered_only = yes
+	
+	option = { 
+		name = usa.4031.a
+		custom_effect_tooltip = USA_increase_crisis_level_by_15_tt
+		add_to_variable = { USA_crisis_level = 15 }
+		USA_update_ui_effect = yes
+		378 = {
+			damage_building = {
+			  type = infrastructure
+			  damage = 2
+			}		
+		}
+				
+	}
+}
+country_event = { #### September 21 1938 Hurricane (winds 183 MPH) in New England (Long Island, New York, New Jersey) kills 500-700, wrecking tens of millions of dollars in property. [1] [500.E10]
+	id = usa.4032
+	title = usa.4032.t
+	desc = usa.4032.d
+	picture = GFX_event_USA_tornada_outbreak
+
+	is_triggered_only = yes
+	
+	option = { 
+		name = usa.4032.a
+		custom_effect_tooltip = USA_increase_crisis_level_by_15_tt
+		add_to_variable = { USA_crisis_level = 15 }
+		USA_update_ui_effect = yes
+		358 = {
+			damage_building = {
+			  type = infrastructure
+			  damage = 2
+			}		
+		}
+		359 = {
+			damage_building = {
+			  type = infrastructure
+			  damage = 2
+			}		
+		}
+				
+	}
+}
 
 country_event = {
 	id = usa.404
@@ -1151,13 +1231,15 @@ country_event = {
 	
 	option = {
 		name = usa.404.a
-		add_stability = -0.025
-		add_political_power = 30
+		custom_effect_tooltip = USA_increase_crisis_level_by_10_tt
+		add_to_variable = { USA_crisis_level = 10 }
+		USA_update_ui_effect = yes
+
 	}
 	option = {
 		name = usa.404.b
-		add_stability = 0.025
-		add_political_power = -30
+		
+		add_political_power = -100
 	}	
 }
 ######death of westover
@@ -1171,89 +1253,15 @@ country_event = {
 	
 	option = {
 		name = usa.405.a
+		#unlock_national_focus = USA_expand_the_airforce
+
 	}
 	immediate = {
 		set_country_flag = USA_the_death_of_westover
-	}
-}
-######1940 elections
-country_event = {
-	id = usa.406
-	title = usa.406.t
-	desc = usa.406.d
-	picture = GFX_report_event_usa_election_generic
-
-	trigger = {
-		tag = USA
-		date > 1940.11.5
-	}
-	fire_only_once = yes
-	
-	option = {
-		name = usa.406.a
-		USA = {
-			set_country_flag = USA_fdr_in_charge_flag
-		}
-		if = {
-			limit = {
-				USA = {
-					has_completed_focus = USA_landon
-				}
-			}
-			retire_country_leader = yes
-			create_country_leader = {
-				name="Franklin Delano Roosevelt"
-				#id = 845xa
-				#desc = ""
-				picture = "Portrait_USA_Franklin_Roosevelt.dds"
-				expire="1947.1.1.1"
-				ideology=liberalism
-				traits={ dislikes_germany }
-			}
-			hidden_effect = {
-				add_country_leader_trait = dislikes_germany
-			}
-		}
-		else = {
-			add_country_leader_trait = dislikes_germany
-		}
-		
-
-	}
-	option = {
-		name = usa.406.b
-		USA = {
-			set_country_flag = USA_alf_landon_in_charge_flag
-		}
-		if = {
-			limit = {
-				USA = {
-					has_completed_focus = USA_landon
-				}
-			}
-			add_country_leader_trait = dislikes_japan
-			
-		}
-		else = {
-			retire_country_leader = yes
-			create_country_leader = {
-				name="Wendell Willkie"
-				#id = 845xa
-				#desc = ""
-				picture = "Portrait_USA_Wendell_Willkie.dds"
-				expire="1947.1.1.1"
-				ideology=liberalism
-				traits={ dislikes_japan }
-			}
-			hidden_effect = {
-				add_country_leader_trait = dislikes_japan
-			}
-		}
-	}
-	immediate = {
 
 	}
 }
+
 country_event = {
 	id = usa.407
 	title = usa.407.t
@@ -1313,7 +1321,7 @@ country_event = {
 		name = usa.408.a	
 
 		every_state = {
-			limit={ OR = {state = 608 state = 614 state = 597 state = 743 state = 613 state = 840}}
+			limit={ OR = {state = 608 state = 614 state = 597 state = 613 state = 840}}
 			remove_province_modifier = {
 				static_modifiers = { JAP_ichi_go_static0 }
 				province = {
@@ -1424,22 +1432,1841 @@ country_event = {
 	}
 }
 country_event = {
-    id = usa.413
-    title = "The Sino-Japanese War Escalates"
-    desc = "The Japanese have mobilized further for their war against the Chinese. We should consider lending them our aid."
-    picture = GFX_news_event_japan_mobilization
-    
-    is_triggered_only = yes
-    
-    fire_only_once = yes
-    
-    option = {
-        name = "We must consider our options carefully"
-    }
+	id = usa.413
+	title = usa.413.t
+	desc = usa.413.d
+	picture = GFX_
+	hidden = yes 
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+
+	immediate = {
+		every_state = {
+			limit={
+				has_state_flag = looming_strike_flag
+				has_dynamic_modifier = {
+					modifier = USA_looming_strike_state_modifier
+				}
+			}
+			remove_dynamic_modifier = {
+				modifier = USA_looming_strike_state_modifier
+			}
+			add_dynamic_modifier = {
+				modifier = USA_strike_state_modifier
+			}
+		}
+	}
+
+	option = {
+		name = usa.413.a	
+
+		
+	}
+}
+country_event = {
+	id = usa.414
+	title = usa.414.t
+	desc = usa.414.d
+	picture = GFX_USA_end_of_dustbowl
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		date > 1941.1.1
+	}
+	mean_time_to_happen = { 
+		days = 300 
+		modifier = {
+			check_variable = { var = USA_dust_bowl_relief_states_var value = 1 compare = equals }
+			factor = 0.96 
+		}
+		modifier = {
+			check_variable = { var = USA_dust_bowl_relief_states_var value = 2 compare = equals }
+			factor = 0.92
+		}
+		modifier = {
+			check_variable = { var = USA_dust_bowl_relief_states_var value = 3 compare = equals }
+			factor = 0.88
+		}
+		modifier = {
+			check_variable = { var = USA_dust_bowl_relief_states_var value = 4 compare = equals }
+			factor = 0.84
+		}
+		modifier = {
+			check_variable = { var = USA_dust_bowl_relief_states_var value = 5 compare = equals }
+			factor = 0.8
+		}
+		modifier = {
+			check_variable = { var = USA_dust_bowl_relief_states_var value = 6 compare = equals }
+			factor = 0.76
+		}
+		modifier = {
+			check_variable = { var = USA_dust_bowl_relief_states_var value = 7 compare = equals }
+			factor = 0.72
+		}
+		modifier = {
+			check_variable = { var = USA_dust_bowl_relief_states_var value = 8 compare = equals }
+			factor = 0.68
+		}
+	} 
+
+	immediate = {
+		
+	}
+
+	option = {
+		name = usa.414.a	
+		every_state = {
+			limit={
+				OR = {
+					has_dynamic_modifier = {
+						modifier = USA_dust_bowl_modifier
+					}
+					
+				}
+				
+			}
+			remove_dynamic_modifier = {
+				modifier = USA_dust_bowl_modifier
+			}
+			
+		}
+		every_state = {
+			limit={
+				OR = {
+					
+					has_dynamic_modifier = {
+						modifier = USA_dust_bowl_modifier_relief
+					}
+				}
+				
+			}
+			
+			remove_dynamic_modifier = {
+				modifier = USA_dust_bowl_modifier_relief
+			}
+		}
+
+		
+	}
+}
+country_event = {
+	id = usa.415
+	title = usa.415.t
+	desc = usa.415.d
+	picture = GFX_event_USA_dustbowl3
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+
+	immediate = {
+		
+	}
+
+	option = {
+		name = usa.415.a	
+		custom_effect_tooltip = USA_set_crissis_lvl_60_tt
+		effect_tooltip = {
+			every_state = {
+				limit = {
+					OR = {
+						state = 374
+						state = 382
+						state = 381
+						state = 390
+						state = 391
+						state = 392
+						state = 373
+						state = 395
+					}
+				}
+				add_dynamic_modifier = {
+					modifier = USA_dust_bowl_modifier
+				}
+			}
+		}	
+	}
+}
+country_event = {
+	id = usa.416
+	title = usa.416.t
+	desc = usa.416.d
+	picture = GFX_event_USA_sitdownstrike
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+
+	immediate = {
+		
+	}
+
+	option = {
+		name = usa.416.a	
+		custom_effect_tooltip = USA_set_crissis_lvl_90_tt
+		effect_tooltip = {
+			every_state = {
+				limit = {
+					has_state_flag = big_strike_flag
+				}
+				add_dynamic_modifier = {
+					modifier = USA_strike_state_modifier
+				}
+			}
+			every_state = {
+				limit = {
+						has_state_flag = looming_strike_flag
+				}
+				add_dynamic_modifier = {
+					modifier = USA_looming_strike_state_modifier
+				}
+			}
+		}
+
+	}
+}
+country_event = {
+	id = usa.417
+	title = usa.417.t
+	desc = usa.417.d
+	picture = GFX_event_event_USA_16
+
+	fire_only_once = yes
+
+	is_triggered_only = yes 
+
+	immediate = {
+		hidden_effect = {
+			USA = {
+				set_country_flag = first_downturn
+				set_country_flag = { flag = first_downturn_timer value = 1 days = 80 }
+			}
+		}
+	}
+
+	
+
+	option = {
+		name = usa.417.a	
+		add_stability = -0.05
+		add_to_variable = {
+			var = great_depression_var
+			value = -1
+		}
+		custom_effect_tooltip = USA_set_crissis_lvl_90_tt
+
+		USA_great_depression_level_set_idea = yes
+		custom_effect_tooltip = USA_spacer_tooltip_tt 
+		custom_effect_tooltip = USA_upgrade_economic_law3
+		USA_display_depression_idea_effect3 = yes 
+	
+
+		hidden_effect = {
+			
+			
+			add_to_variable = {
+				USA_number_of_recesions = 0.1
+			}
+		}
+	}
+}
+country_event = {
+	id = usa.1417
+	title = usa.1417.t
+	desc = usa.1417.d
+	picture = GFX_event_event_USA_12
+
+	fire_only_once = yes
+
+	is_triggered_only = yes 
+
+	immediate = {
+		
+	}
+
+	
+
+	option = {
+		name = usa.1417.a	
+		add_to_variable = {
+			var = great_depression_var
+			value = -1
+		}
+		USA_great_depression_level_set_idea = yes
+		custom_effect_tooltip = USA_spacer_tooltip_tt 
+		custom_effect_tooltip = USA_upgrade_economic_law3
+		USA_display_depression_idea_effect3 = yes
+		custom_effect_tooltip = USA_increase_crisis_level_by_10_tt
+		add_to_variable = { USA_crisis_level = 10 }
+		USA_update_ui_effect = yes
+	}
+}
+country_event = {
+	id = usa.2417
+	title = usa.2417.t
+	desc = usa.2417.d
+	picture = GFX_event_event_USA_11
+
+	fire_only_once = yes
+
+	is_triggered_only = yes 
+
+	immediate = {
+		
+	}
+
+	
+
+	option = {
+		name = usa.2417.a	
+		add_to_variable = {
+			var = great_depression_var
+			value = -1
+		}
+		USA_great_depression_level_set_idea = yes
+		custom_effect_tooltip = USA_spacer_tooltip_tt 
+		custom_effect_tooltip = USA_upgrade_economic_law3
+		USA_display_depression_idea_effect3 = yes
+		custom_effect_tooltip = USA_increase_crisis_level_by_10_tt
+		add_to_variable = { USA_crisis_level = 10 }
+		USA_update_ui_effect = yes
+	}
+}
+country_event = {
+	id = usa.3417
+	title = usa.3417.t
+	desc = usa.3417.d
+	picture = GFX_event_USA_rooseveltrecession
+
+	fire_only_once = yes
+
+	is_triggered_only = yes 
+
+	immediate = {
+		
+	}
+
+	
+
+	option = {
+		name = usa.3417.a	
+		add_to_variable = {
+			var = great_depression_var
+			value = -1
+		}
+	
+
+		USA_great_depression_level_set_idea = yes
+		custom_effect_tooltip = USA_spacer_tooltip_tt 
+		custom_effect_tooltip = USA_upgrade_economic_law3
+		USA_display_depression_idea_effect3 = yes
+		custom_effect_tooltip = USA_increase_crisis_level_by_10_tt
+		add_to_variable = { USA_crisis_level = 10 }
+		USA_update_ui_effect = yes
+	}
+}
+country_event = {
+	id = usa.4417
+	title = usa.4417.t
+	desc = usa.4417.d
+	picture = GFX_event_USA_rooseveltrecession
+
+	fire_only_once = yes
+
+	is_triggered_only = yes 
+
+	immediate = {
+		
+	}
+
+	
+
+	option = {
+		name = usa.4417.a	
+		add_to_variable = {
+			var = great_depression_var
+			value = -1
+		}
+		USA_great_depression_level_set_idea = yes
+		custom_effect_tooltip = USA_spacer_tooltip_tt 
+		custom_effect_tooltip = USA_upgrade_economic_law3
+		USA_display_depression_idea_effect3 = yes
+		custom_effect_tooltip = USA_increase_crisis_level_by_10_tt
+		add_to_variable = { USA_crisis_level = 10 }
+		USA_update_ui_effect = yes
+	}
+}
+country_event = { #start of Radicalization
+	id = usa.418
+	title = usa.418.t
+	desc = usa.418.d
+	picture = GFX_event_event_USA_1
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+
+	immediate = {
+		
+	}
+
+	option = {
+		name = usa.418.a	
+		custom_effect_tooltip = USA_set_crissis_lvl_50_tt
+		
+	}
 }
 
+country_event = { #Radicalization left
+	id = usa.419
+	title = usa.419.t
+	desc = usa.419.d
+	picture = GFX_event_event_USA_7
+
+	fire_only_once = no
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			random_core_state = {
+				limit = {
+					OR = {
+						state = 358
+						state = 378
+						state = 395
+						state = 391
+						state = 360
+						state = 393
+						state = 375
+						state = 369
+						state = 357
+						state = 261
+						state = 393
+					}
+					NOT = {
+						has_dynamic_modifier = {
+							modifier = USA_radical_rallies
+						}
+					}
+				}
+				set_state_flag = communist_happening_here_flag
+			}
+		}
+		
+	}
+
+	option = {
+		name = usa.419.a	
+		add_stability = -0.02
+		add_popularity = {
+			ideology = communism
+			popularity = 0.02
+		}
+		custom_effect_tooltip = USA_increase_crisis_level_by_10_tt
+		add_to_variable = { USA_crisis_level = 10 }
+		USA_update_ui_effect = yes
+		
+		every_controlled_state = {
+			limit = {
+				has_state_flag = communist_happening_here_flag
+			}
+			add_dynamic_modifier = {
+				modifier = USA_radical_rallies 
+			}
+			clr_state_flag = communist_happening_here_flag
+		}	
+	}
+}
+
+country_event = { #New sitdown strike 
+	id = usa.420
+	title = usa.420.t
+	desc = usa.420.d
+	picture = GFX_event_event_USA_6
+
+	fire_only_once = no
+	
+	is_triggered_only = yes
+
+	immediate = {
+		
+	}
+
+	option = {
+		name = usa.420.a	
+
+		random_core_state = {
+			limit = {
+				arms_factory > 4
+			}
+			damage_building = {
+				type = arms_factory
+				damage = 3
+			}
+			set_state_flag = mils_damaged_flag
+		}
+		random_core_state = {
+			limit = {
+				dockyard > 3
+			}
+			damage_building = {
+				type = dockyard
+				damage = 3
+			}
+			set_state_flag = docks_damaged_flag
+		}
+		random_core_state = {
+			limit = {
+				dockyard > 3
+			}
+			damage_building = {
+				type = dockyard
+				damage = 3
+			}
+			set_state_flag = docks_damaged_flag
+		}
+		random_core_state = {
+			limit = {
+				dockyard > 3
+			}
+			damage_building = {
+				type = dockyard
+				damage = 3
+			}
+		}
+		custom_effect_tooltip = USA_increase_crisis_level_by_10_tt
+		add_to_variable = { USA_crisis_level = 10 }
+		USA_update_ui_effect = yes
+		
+	}
+}
+
+country_event = { #fascist rallies
+	id = usa.421
+	title = usa.421.t
+	desc = usa.421.d
+	picture = GFX_event_event_USA_9
+
+	fire_only_once = no
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			random_core_state = {
+				limit = {
+					OR = {
+						state = 358
+						state = 359
+						state = 395
+						state = 394
+						state = 378
+						state = 375
+						state = 369
+						state = 357
+						state = 261
+						state = 393
+					}
+					NOT = {
+						has_dynamic_modifier = {
+							modifier = USA_radical_rallies
+						}
+					}
+				}
+				set_state_flag = fascist_happening_here_flag
+			}
+		}
+		
+	}
+
+	option = {
+		name = usa.421.a	
+		add_stability = -0.02
+		add_popularity = {
+			ideology = fascism
+			popularity = 0.02
+		}
+		
+		custom_effect_tooltip = USA_increase_crisis_level_by_10_tt
+		add_to_variable = { USA_crisis_level = 10 }
+		USA_update_ui_effect = yes
+		every_controlled_state = {
+			limit = {
+				has_state_flag = fascist_happening_here_flag
+			}
+			add_dynamic_modifier = {
+				modifier = USA_radical_rallies 
+			}
+			clr_state_flag = fascist_happening_here_flag
+		}
+		
+		
+		
+	}
+}
+country_event = { #fascist engage communists 
+	id = usa.422
+	title = usa.422.t
+	desc = usa.422.d
+	picture = GFX_
+
+	fire_only_once = no
+	
+	is_triggered_only = yes
+
+	hidden = yes 
+
+	immediate = {
+		
+	}
+
+	option = {
+		name = usa.422.a	
+		random_list = {
+			10 = {
+				country_event = { id = usa.425 }
+			}
+			10 = {
+				modifier = {
+					factor = 10
+					any_state = {
+						has_state_flag = docks_damaged_flag
+					}
+					USA = {
+						NOT = {
+							has_country_flag  = strikes_engaged_flag 
+						}
+					}
+				}
+				country_event = { id = usa.426 }
+				USA = {
+					set_country_flag = strikes_engaged_flag
+				}
+			}
+			10 = {
+				country_event = { id = usa.427 }
+			}
+			
+		}
+		
+		
+	}
+}
+country_event = {#  Nazi rally at Madison Square Garden
+	id = usa.423
+	title = usa.423.t
+	desc = usa.423.d
+	picture = GFX_event_event_USA_14
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA 
+		date > 1939.2.19
+	}
+
+	immediate = {
+		hidden_effect = {
+			add_to_variable = {
+				var = something_happened_var 
+				value = 1
+			}
+		}
+	}
+
+	option = {
+		name = usa.423.a	
+		add_stability = -0.02
+		add_popularity = {
+				ideology = fascism
+				popularity = 0.02
+			}
+		custom_effect_tooltip = USA_increase_crisis_level_by_10_tt
+		add_to_variable = { USA_crisis_level = 10 }
+		USA_update_ui_effect = yes
+		
+		
+	}
+}
+country_event = {#  Father Coughlin’s Broadcasts
+	id = usa.424
+	title = usa.424.t
+	desc = usa.424.d
+	picture = GFX_event_event_USA_8
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA 
+		USA = {
+			check_variable = {
+				USA_crisis_name = 4
+			}
+		}
+		
+	}
+	mean_time_to_happen = {
+		days = 60
+	}
+
+	immediate = {
+		
+	}
+
+	option = {
+		name = usa.424.a	
+
+		add_political_power = -50
+		add_popularity = {
+				ideology = fascism
+				popularity = 0.02
+			}
+		custom_effect_tooltip = USA_increase_crisis_level_by_10_tt
+		add_to_variable = { USA_crisis_level = 10 }
+		USA_update_ui_effect = yes
+	}
+}
+country_event = { #Bund vs. anti-fascists
+	id = usa.425
+	title = usa.425.t
+	desc = usa.425.d
+	picture = GFX_event_event_USA_3
+
+	fire_only_once = no
+	
+	is_triggered_only = yes
 
 
+	immediate = {
+		
+	}
+
+	option = {
+		name = usa.425.a	
+		add_stability = -0.05
+		add_political_power = -50
+		add_popularity = {
+			ideology = fascism
+			popularity = 0.03
+		}
+		
+		
+	}
+}
+country_event = { #Silver Shirts vs. unionists:
+	id = usa.426
+	title = usa.426.t
+	desc = usa.426.d
+	picture = GFX_event_event_USA_4
+
+	fire_only_once = no
+	
+	is_triggered_only = yes
+
+
+	immediate = {
+		
+	}
+
+	option = {
+		name = usa.426.a	
+		add_stability = -0.03
+		add_political_power = -25
+		every_state = {
+			limit = {
+				OR = {
+					has_state_flag = docks_damaged_flag
+					has_state_flag = mils_damaged_flag
+				}
+				
+			}
+			add_dynamic_modifier = {
+				modifier = USA_the_left_strikes_attacked
+				days = 500
+			}
+			damage_building = {
+			  type = infrastructure
+			  damage = 3
+			}
+		}
+		
+		
+	}
+}
+country_event = { #The International Longshoremen’s Association and Communist-led dockworker factions sometimes faced harassment from right-wing mobs, and fights broke out during picket-line crossings.
+	id = usa.427
+	title = usa.427.t
+	desc = usa.427.d
+	picture = GFX_event_event_USA_2
+
+	fire_only_once = no
+	
+	is_triggered_only = yes
+
+
+	immediate = {
+		
+	}
+
+	option = {
+		name = usa.427.a	
+		add_stability = -0.03
+		add_political_power = -25
+		custom_effect_tooltip = USA_modify_new_deal_tt
+		add_to_variable = {
+			USA_industrial_capacity_dockyard_var = -0.04
+			tooltip = industrial_dockyard_capacity_factory_tooltip
+		}
+		
+		
+	}
+}
+country_event = {  #Midterm elections of November 1938 were a turning point — Republicans gained 81 seats in the House and 8 in the Senate, joining with conservative Democrats to form a powerful anti–New Deal majority.
+	id = usa.428
+	title = usa.428.t
+	desc = usa.428.d
+	picture = GFX_event_event_USA_15
+
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes 
+	
+
+	immediate = {
+		
+	}
+
+	option = {
+		name = usa.428.a	
+	
+		activate_mission = USA_defund_new_deal_mission
+		hidden_effect = {
+			USA = {
+				set_country_flag = finally_defund_new_deal_flag
+			}
+			
+		}	
+		
+		
+		
+	}
+}
+country_event = {  #further decrease new deal 
+	id = usa.429
+	title = usa.429.t
+	desc = usa.429.d
+	picture = GFX_event_event_USA_17
+
+	fire_only_once = no
+	
+	is_triggered_only = yes
+
+	
+
+	immediate = {
+		
+	}
+
+	option = {
+		name = usa.429.a	
+	
+		
+		
+		custom_effect_tooltip = USA_modify_new_deal_tt
+		add_to_variable = {
+			USA_production_speed_industrial_complex_factor_var = -0.2
+			tooltip = industrial_complex_build_speed_factor_tooltip
+		}
+		add_to_variable = {
+			USA_production_speed_infrastructure_factor_var = -0.1
+			tooltip = infrastructure_build_speed_factor_tooltip
+		}
+		add_to_variable = {
+			USA_consumer_goods_factor_var = -0.01
+			tooltip = consumer_goods_tooltip
+		}	
+		
+		
+		
+	}
+}
+country_event = {  #more new deal funding during recession
+	id = usa.430
+	title = usa.430.t
+	desc = usa.430.d
+	picture = GFX_event_event_USA_13
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		check_variable = {
+			USA_crisis_name = 3
+		}
+		check_variable = {
+			USA_number_of_rolls > 2
+		}
+
+	}
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	
+
+	immediate = {
+		
+	}
+
+	option = {
+		name = usa.430.a	
+	
+		
+		custom_effect_tooltip = USA_modify_new_deal_tt
+		
+		set_temp_variable_to_random = my_var
+
+		set_temp_variable = {
+			var = infraspeed_from_reces
+			value = USA_number_of_recesions
+		}
+		multiply_temp_variable = { infraspeed_from_reces = 0.5 }
+
+		add_to_variable = {
+			var = USA_production_speed_industrial_complex_factor_var 
+			value = USA_number_of_recesions
+			tooltip = industrial_complex_build_speed_factor_tooltip
+		}
+		add_to_variable = {
+			USA_production_speed_infrastructure_factor_var = infraspeed_from_reces
+			tooltip = infrastructure_build_speed_factor_tooltip
+		}
+		custom_effect_tooltip = USA_increase_crisis_level_by_20_tt
+		add_to_variable = { USA_crisis_level = 20 }
+		USA_update_ui_effect = yes
+		hidden_effect = {
+			set_country_flag = new_deal_injection_flag
+		}
+		
+			
+	}
+}
+country_event = {  ## recovery 
+	id = usa.431
+	title = usa.431.t
+	desc = usa.431.d
+	picture = GFX_event_event_USA_10
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		OR = {
+			check_variable = {
+				USA_crisis_name = 3
+			}
+			check_variable = {
+				USA_crisis_name = 4
+			}
+		}
+		check_variable = {
+			USA_number_of_rolls > 2
+		}
+		has_country_flag = new_deal_injection_flag
+
+	}
+	mean_time_to_happen = {
+		days = 20
+	}
+
+	
+
+	immediate = {
+		
+	}
+
+	option = {
+		name = usa.431.a	
+		add_to_variable = {
+			var = great_depression_var
+			value = 1 
+		}
+		USA_great_depression_level_set_idea = yes
+		custom_effect_tooltip = USA_spacer_tooltip_tt 
+		custom_effect_tooltip = USA_upgrade_economic_law
+		USA_display_depression_idea_effect = yes 
+			
+	}
+}
+country_event = {  ## recovery 2
+	id = usa.432
+	title = usa.432.t
+	desc = usa.432.d
+	picture = GFX_event_event_USA_10
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		OR = {
+			check_variable = {
+				USA_crisis_name = 3
+			}
+			check_variable = {
+				USA_crisis_name = 4
+			}
+		}
+		
+		check_variable = {
+			USA_number_of_rolls > 2
+		}
+		has_country_flag = new_deal_injection_flag
+		date > 1938.9.15
+
+	}
+	mean_time_to_happen = {
+		days = 40
+	}
+
+	
+
+	immediate = {
+		
+	}
+
+	option = {
+		name = usa.432.a	
+		add_to_variable = {
+			var = great_depression_var
+			value = 1 
+		}
+		USA_great_depression_level_set_idea = yes
+		custom_effect_tooltip = USA_spacer_tooltip_tt 
+		custom_effect_tooltip = USA_upgrade_economic_law
+		USA_display_depression_idea_effect = yes 
+			
+	}
+}
+country_event = {  ## recovery 3
+	id = usa.433
+	title = usa.433.t
+	desc = usa.433.d
+	picture = GFX_event_event_USA_10
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		OR = {
+			check_variable = {
+				USA_crisis_name = 3
+			}
+			check_variable = {
+				USA_crisis_name = 4
+			}
+		}
+		check_variable = {
+			USA_number_of_rolls > 2
+		}
+		has_country_flag = new_deal_injection_flag
+		date > 1939.1.15
+
+	}
+	mean_time_to_happen = {
+		days = 40
+	}
+
+	
+
+	immediate = {
+		
+	}
+
+	option = {
+		name = usa.433.a	
+		add_to_variable = {
+			var = great_depression_var
+			value = 1 
+		}
+		USA_great_depression_level_set_idea = yes
+		custom_effect_tooltip = USA_spacer_tooltip_tt 
+		custom_effect_tooltip = USA_upgrade_economic_law
+		USA_display_depression_idea_effect = yes 
+			
+	}
+}
+country_event = {  ## Council of National Defense Advisory Commission / UNLOCKS Two-Ocean Navy Act, 5-Year Amortization Law
+	id = usa.434
+	title = usa.434.t
+	desc = usa.434.d
+	picture = GFX_event_event_USA_19
+
+	fire_only_once = yes
+	is_triggered_only = yes 
+
+	
+
+	immediate = {
+	
+	}
+
+	option = {
+		name = usa.434.a	
+		set_country_flag = USA_council_nat_def_formed_flag
+		if = {
+			limit = {
+				NOT = {
+					has_idea = USA_great_depression_10_law
+				}
+				
+			}
+			add_to_variable = {
+				var = great_depression_var
+				value = 1 
+			}
+			USA_great_depression_level_set_idea = yes
+			custom_effect_tooltip = USA_spacer_tooltip_tt 
+			custom_effect_tooltip = USA_upgrade_economic_law
+			USA_display_depression_idea_effect = yes 
+			
+		}
+
+		
+			
+	}
+}
+country_event = {  ## Office of Production Management / UNLOCKS Lend-Lease Administration, Selective Service System, Office of Production Management (OPM)
+	id = usa.435
+	title = usa.435.t
+	desc = usa.435.d
+	picture = GFX_event_event_USA_22
+
+	fire_only_once = yes
+	is_triggered_only = yes 
+
+	
+
+	immediate = {
+		
+	}
+
+	option = {
+		name = usa.435.a	
+		set_country_flag = USA_office_of_production_formed_flag
+		
+		
+			
+	}
+}
+country_event = {  ## National Defense Mediation Board / UNLOCKS Henderson or OPM 
+	id = usa.436
+	title = usa.436.t
+	desc = usa.436.d
+	picture = GFX_event_event_USA_18
+
+	fire_only_once = yes
+	is_triggered_only = yes 
+
+	
+
+	immediate = {
+		
+	}
+
+	option = {
+		name = usa.436.a	
+		set_country_flag = USA_national_defense_mediation_formed_flag
+		if = {
+			limit = {
+				NOT = {
+					has_idea = USA_great_depression_10_law
+				}
+				
+			}
+			add_to_variable = {
+				var = great_depression_var
+				value = 1 
+			}
+			USA_great_depression_level_set_idea = yes
+			custom_effect_tooltip = USA_spacer_tooltip_tt 
+			custom_effect_tooltip = USA_upgrade_economic_law
+			USA_display_depression_idea_effect = yes 
+			
+		}
+		
+			
+	}
+}
+country_event = {  ## additional recovery 
+	id = usa.437
+	title = usa.437.t
+	desc = usa.437.d
+	picture = GFX_event_event_USA_20
+
+	fire_only_once = no
+
+	trigger = {
+		tag = USA 
+		NOT = {
+			has_country_flag = additional_recovery_flag
+		}
+	
+		has_dynamic_modifier = {
+			modifier = USA_new_deal_modifier
+		}
+		
+
+		has_country_flag = USA_national_defense_mediation_formed_flag
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = { flag = additional_recovery_flag value = 1 days = 30 }
+		}
+		
+	}
+
+	option = {
+		name = usa.437.a	
+		if = {
+			limit = {
+				NOT = {
+					has_idea = USA_great_depression_10_law
+				}
+			}
+			add_to_variable = {
+				var = great_depression_var
+				value = 1 
+			}
+			USA_great_depression_level_set_idea = yes
+			custom_effect_tooltip = USA_spacer_tooltip_tt 
+			custom_effect_tooltip = USA_upgrade_economic_law
+			USA_display_depression_idea_effect = yes 
+			
+		}
+			
+	}
+}
+
+country_event = {  ## Council of National Defense Advisory Commission / UNLOCKS Two-Ocean Navy Act, 5-Year Amortization Law /// FORCE FIRE 
+	id = usa.438
+	title = usa.434.t
+	desc = usa.434.d
+	picture = GFX_event_event_USA_19
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_country_flag = USA_force_council_nat_def_flag
+		NOT = {
+			has_country_flag = USA_council_nat_def_formed_flag
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 5
+	}
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = second_rearm_flag
+		}
+	}
+
+	option = {
+		name = usa.434.a	
+		set_country_flag = USA_council_nat_def_formed_flag
+		if = {
+			limit = {
+				NOT = {
+					has_idea = USA_great_depression_10_law
+				}
+				
+			}
+			add_to_variable = {
+				var = great_depression_var
+				value = 1 
+			}
+			USA_great_depression_level_set_idea = yes
+			custom_effect_tooltip = USA_spacer_tooltip_tt 
+			custom_effect_tooltip = USA_upgrade_economic_law
+			USA_display_depression_idea_effect = yes 
+			
+		}	
+	}
+}
+country_event = {  ## Office of Production Management / UNLOCKS Lend-Lease Administration, Selective Service System, Office of Production Management (OPM) /// FORCE FIRE 
+	id = usa.439
+	title = usa.435.t
+	desc = usa.435.d
+	picture = GFX_event_event_USA_22
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		date > 1940.6.1
+		has_country_flag = USA_council_nat_def_formed_flag
+		NOT = {
+			has_country_flag = USA_office_of_production_formed_flag
+			has_country_flag = third_rearm_flag
+		}
+
+	}
+
+	mean_time_to_happen = {
+		days = 60
+	}
+
+	
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = third_rearm_flag
+			set_country_flag = { flag = USA_force_office_of_production_flag value = 1 days = 30 }
+		}
+	}
+
+	option = {
+		name = usa.435.a	
+		set_country_flag = USA_office_of_production_formed_flag
+		
+		
+			
+	}
+}
+country_event = {  ## ## National Defense Mediation Board / UNLOCKS Henderson or OPM /// FORCE FIRE 
+	id = usa.440
+	title = usa.436.t
+	desc = usa.436.d
+	picture = GFX_event_event_USA_18
+
+	fire_only_once = yes
+	
+	trigger = {
+		tag = USA
+		date > 1940.10.1
+		has_country_flag = USA_office_of_production_formed_flag
+		NOT = {
+			has_country_flag = USA_national_defense_mediation_formed_flag
+			has_country_flag = fourth_rearm_flag
+		}
+
+	}
+
+	mean_time_to_happen = {
+		days = 60
+	}
+
+	
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = fourth_rearm_flag
+		}
+	}
+
+	option = {
+		name = usa.436.a	
+		set_country_flag = USA_national_defense_mediation_formed_flag
+		if = {
+			limit = {
+				NOT = {
+					has_idea = USA_great_depression_10_law
+				}
+				
+			}
+			add_to_variable = {
+				var = great_depression_var
+				value = 1 
+			}
+			USA_great_depression_level_set_idea = yes
+			custom_effect_tooltip = USA_spacer_tooltip_tt 
+			custom_effect_tooltip = USA_upgrade_economic_law
+			USA_display_depression_idea_effect = yes 
+			
+		}
+	}
+}
+
+country_event = { # Iceland/ greenland
+	id = usa.441
+	title = usa.441.t
+	desc = usa.441.d
+	picture = GFX_report_event_generic_sign_treaty2
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+
+	option = {
+		name = usa.441.a	
+		USA = {
+			country_event = { id = usa.442 }
+		}
+		
+	}
+	option = {
+		name = usa.441.b 
+		USA = {
+			country_event = { id = usa.443 }
+		}
+	}
+}
+country_event = { # Iceland/ greenland
+	id = usa.442
+	title = usa.442.t
+	desc = usa.442.d
+	picture = GFX_report_event_generic_sign_treaty2
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+
+	option = {
+		name = usa.442.a
+		if = {
+			limit = {
+				ENG = {
+					controls_state = 100
+				}
+			}
+			USA = { 
+				transfer_state = 100
+			}
+		}	
+		if = {
+			limit = {
+				ENG = {
+					controls_state = 101
+				}
+			}
+			USA = { 
+				transfer_state = 101
+			}
+		}
+		
+		every_state = {
+			limit = {
+				is_core_of = DEN
+				is_controlled_by = ROOT
+			}
+			set_compliance = 100
+		}
+		USA_decrease_crisis_level_by_5 = yes 
+		USA_update_ui_effect = yes
+		custom_effect_tooltip = USA_lower_crisis_level_by_5_tt
+	}
+}
+country_event = { # Iceland/ greenland
+	id = usa.443
+	title = usa.443.t
+	desc = usa.443.d
+	picture = GFX_report_event_generic_sign_treaty2
+
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+
+	option = {
+		name = usa.443.a	
+	}
+	
+}
+country_event = {  ## rise of evil
+	id = usa.444
+	title = usa.444.t
+	desc = usa.444.d
+	picture = GFX_event_event_USA_21
+
+	fire_only_once = yes
+
+	is_triggered_only = yes
+
+
+	
+
+	option = {
+		name = usa.444.a	
+
+		custom_effect_tooltip = USA_set_crissis_lvl_60_tt
+	
+
+	}
+}
+
+country_event = {  ## garner angry
+	id = usa.445
+	title = usa.445.t
+	desc = usa.445.d
+	picture = GFX_event_event_USA_23
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA 
+		date > 1937.6.1
+		check_variable = { var = USA_new_deal_help value = 20 compare = greater_than }
+		has_idea = USA_john_nance_garner
+	}
+	immediate = {
+		hidden_effect = {
+			remove_ideas = USA_john_nance_garner 
+			add_ideas = USA_john_nance_garner2
+			set_country_flag = garner_angry_flag
+		}
+		
+	}
+	mean_time_to_happen = { 
+		days = 350
+		modifier = {
+			factor = 0.1
+			USA = {
+				check_variable = {
+					var = USA_new_deal_help
+					value = 41
+					compare = greater_than_or_equals
+				}
+			}
+		}
+		
+		
+		modifier = {
+			factor = 0.3
+			USA = {
+				check_variable = {
+					var = USA_new_deal_help
+					value = 40
+					compare = less_than_or_equals
+				}
+				check_variable = {
+					var = USA_new_deal_help
+					value = 35
+					compare = greater_than
+				}
+			}
+		}
+		modifier = {
+			factor = 0.5
+			USA = {
+				check_variable = {
+					var = USA_new_deal_help
+					value = 35
+					compare = less_than_or_equals
+				}
+				check_variable = {
+					var = USA_new_deal_help
+					value = 30
+					compare = greater_than
+				}
+			}
+		}
+		modifier = {
+			factor = 0.7
+			USA = {
+				check_variable = {
+					var = USA_new_deal_help
+					value = 30
+					compare = less_than_or_equals
+				}
+				check_variable = {
+					var = USA_new_deal_help
+					value = 25
+					compare = greater_than
+				}
+			}
+		}
+		modifier = {
+			factor = 0.9
+			USA = {
+				check_variable = {
+					var = USA_new_deal_help
+					value = 25
+					compare = less_than_or_equals
+				}
+				check_variable = {
+					var = USA_new_deal_help
+					value = 20
+					compare = greater_than
+				}
+			}
+		}
+		
+
+	} 
+
+	option = {
+		name = usa.445.a	
+		custom_effect_tooltip = USA_change_garner_tt
+		
+	}
+}
+
+country_event = {  ## first lady events
+	id = usa.446
+	title = usa.446.t
+	desc = usa.446.d
+	picture = GFX_event_event_USA_24
+
+	fire_only_once = no
+
+	is_triggered_only = yes
+
+
+	
+
+	option = {
+		name = usa.446.a		
+		add_stability = -0.03
+		add_manpower = 3000
+
+		custom_effect_tooltip = USA_modify_main_spirit_tt
+		add_to_variable = {
+			var = USA_research_speed_factor_var2
+			value = 0.03
+			tooltip = research_speed_factor_tooltip
+		}
+		
+
+	
+
+	}
+}
+country_event = {  ## swanson dies
+	id = usa.447
+	title = usa.447.t
+	desc = usa.447.d
+	picture = GFX_event_event_USA_25
+
+	fire_only_once = yes
+
+	trigger = {
+		date > 1939.9.1
+		tag = USA
+
+	}
+	mean_time_to_happen = {
+		days = 100
+	}
+
+
+	
+
+	option = {
+		name = usa.447.a		
+		retire_character = USA_claude_swanson
+		
+
+	
+
+	}
+}
+country_event = {  ## chaffe dies
+	id = usa.448
+	title = usa.448.t
+	desc = usa.448.d
+	picture = GFX_event_event_USA_26
+
+	fire_only_once = yes
+
+	trigger = {
+		date > 1941.7.1
+		tag = USA
+
+	}
+	mean_time_to_happen = {
+		days = 50
+	}
+
+
+	
+
+	option = {
+		name = usa.448.a		
+		retire_character = USA_adna_r_chaffee_jr
+	
+
+	}
+	option = {
+		name = usa.448.b		
+		add_political_power = -100	
+
+	}
+}
+country_event = {  ## admiral level up
+	id = usa.449
+	title = usa.449.t
+	desc = usa.449.d
+	picture = GFX_event_event_USA_27
+
+	fire_only_once = no
+
+	is_triggered_only = yes
+
+	option = {
+		name = usa.449.a
+		every_navy_leader = {
+			limit = {
+				has_character_flag = current_seawolf_flag
+			}
+			add_trait = {
+				slot = navy_leader
+				trait = seawolf
+			}
+			clr_character_flag = current_seawolf_flag
+
+		}	
+		every_navy_leader = {
+			limit = {
+				has_character_flag = current_protector_flag
+			}
+			add_trait = {
+				slot = navy_leader
+				trait = fleet_protector
+			}
+			clr_character_flag = current_protector_flag
+		}
+		every_navy_leader = {
+			limit = {
+				has_character_flag = current_fly_green_water_expert_flag
+			}
+			add_trait = {
+				slot = navy_leader
+				trait = green_water_expert
+			}
+			clr_character_flag = current_fly_green_water_expert_flag
+		}
+		every_navy_leader = {
+			limit = {
+				has_character_flag = current_fly_blue_water_expert_flag
+			}
+			add_trait = {
+				slot = navy_leader
+				trait = blue_water_expert
+			}
+			clr_character_flag = current_fly_blue_water_expert_flag
+		}
+		every_navy_leader = {
+			limit = {
+				has_character_flag = current_inshore_fighter_flag
+			}
+			add_trait = {
+				slot = navy_leader
+				trait = inshore_fighter
+			}
+			clr_character_flag = current_inshore_fighter_flag
+		}
+		every_navy_leader = {
+			limit = {
+				has_character_flag = current_air_controller_flag
+			}
+			add_trait = {
+				slot = navy_leader
+				trait = air_controller
+			}
+			clr_character_flag = current_air_controller_flag
+		}
+		every_navy_leader = {
+			limit = {
+				has_character_flag = current_ironside_flag
+			}
+			add_trait = {
+				slot = navy_leader
+				trait = ironside
+			}
+			clr_character_flag = current_ironside_flag
+		}
+		every_navy_leader = {
+			limit = {
+				has_character_flag = current_fly_swatter_flag
+			}
+			add_trait = {
+				slot = navy_leader
+				trait = fly_swatter
+			}
+			clr_character_flag = current_fly_swatter_flag
+		}
+		every_navy_leader = {
+			limit = {
+				has_character_flag = current_spotter_flag
+			}
+			add_trait = {
+				slot = navy_leader
+				trait = spotter
+			}
+			clr_character_flag = current_spotter_flag
+		}
+		every_navy_leader = {
+			limit = {
+				has_character_flag = current_superior_tactician_flag
+			}
+			add_trait = {
+				slot = navy_leader
+				trait = superior_tactician
+			}
+			clr_character_flag = current_superior_tactician_flag
+		}
+		every_navy_leader = {
+			limit = {
+				has_character_flag = current_blockade_runner_flag
+			}
+			add_trait = {
+				slot = navy_leader
+				trait = blockade_runner
+			}
+			clr_character_flag = current_blockade_runner_flag
+		}
+		
+		every_navy_leader = {
+			limit = {
+				has_character_flag = current_xp_flag
+				has_character_flag = good_admiral_flag
+				NOT = {
+					has_character_flag = realgood_admiral_flag
+					has_character_flag = hellnah_admiral_flag
+				}
+
+			}
+			gain_xp = 3000
+			clr_character_flag = current_xp_flag
+		}
+		every_navy_leader = {
+			limit = {
+				has_character_flag = current_xp_flag
+				has_character_flag = realgood_admiral_flag
+				NOT = {
+					has_character_flag = hellnah_admiral_flag
+				}
+
+			}
+			gain_xp = 6401
+			clr_character_flag = current_xp_flag
+		}
+		every_navy_leader = {
+			limit = {
+				has_character_flag = current_xp_flag
+				has_character_flag = hellnah_admiral_flag
+
+			}
+			gain_xp = 25601
+
+			clr_character_flag = current_xp_flag
+		}
+		
+	}
+	
+}
 
 
 
