@@ -17651,14 +17651,12 @@ SOV_great_patriotic_war = {
 		
 		available = {
 			tag = SOV
-			has_war_with = GER
-			or = { AND = { date > 1940.11.29 date < 1941.01.20 } AND = { date > 1941.11.29 date < 1942.01.20} AND = { date > 1942.11.29 date < 1943.01.20} AND = { date > 1943.11.29 date < 1944.01.20 } AND = { date > 1944.11.29 date < 1945.01.20 } }
+
 			
 		}
 
 		visible = {
-			has_war_with = GER
-			or = { AND = { date > 1940.9.29 date < 1941.01.20 } AND = { date > 1941.9.29 date < 1942.01.20} AND = { date > 1942.9.29 date < 1943.01.20} AND = { date > 1943.9.29 date < 1944.01.20 } AND = { date > 1944.9.29 date < 1945.01.20 } }
+
 			tag = SOV
 		}
 		icon = decision_generic_SOV
@@ -17670,10 +17668,24 @@ SOV_great_patriotic_war = {
 			fire_only_once = yes
 		
 		complete_effect = { 
-		   	add_timed_idea = {	
-		   		idea = winter_offensive
-		   		days = 70
-		   	}
+			if = {
+				limit = {
+                    NOT = { has_completed_focus = SOV_hero_of_the_union }
+				}
+		         add_timed_idea = {	
+		   		    idea = winter_offensive
+		   		    days = 70
+		        }
+			}
+			if = {
+				limit = {
+                         has_completed_focus = SOV_hero_of_the_union 
+				}
+		        add_timed_idea = {	
+		   		    idea = winter_offensive_zhukov
+		   		    days = 70
+		        }
+			}
 			every_country = {limit = { check_variable= { speeches_enabled > 0}  }
 				scoped_sound_effect = "sp_sov_stalin"
 			}
@@ -17693,6 +17705,430 @@ SOV_great_patriotic_war = {
 				remove_dynamic_modifier = { modifier = GER_war_zone_modifier }
 			}
 			set_country_flag = SOVwintercounteroffense	
+
+####zhukov stuff
+			if = {
+				limit = {
+					SOV = {
+						OR = {
+								has_tech = width_tech_chi
+								has_tech = width_tech_sov
+								has_tech = width_tech
+							}
+							has_completed_focus = SOV_hero_of_the_union
+						    has_completed_focus = SOV_morozov_will_show_the_way						
+					}
+				}
+				hidden_effect = {
+					division_template = {
+						name = "Tankovy Divizya Far East"
+						priority = 1  
+						regiments = {
+							medium_armor = { x = 0 y = 0 }
+							medium_armor = { x = 0 y = 1 }
+							medium_armor = { x = 0 y = 2 }
+							
+							medium_armor = { x = 1 y = 0 }
+							medium_armor = { x = 1 y = 1 }
+							medium_armor = { x = 1 y = 2 }
+								
+							medium_armor = { x = 2 y = 0 }
+							medium_armor = { x = 2 y = 1 }
+							medium_armor = { x = 2 y = 2 }
+							medium_armor = { x = 2 y = 3 }
+					
+							motorized = { x = 3 y = 0 }		
+							motorized = { x = 3 y = 1 }		
+							motorized = { x = 3 y = 2 }		
+							motorized = { x = 3 y = 3 }
+	
+							motorized = { x = 4 y = 0 }		
+							motorized = { x = 4 y = 1 }	
+						}
+
+						support = {
+							artillery = { x = 0 y = 0 }
+							recon_ac = { x = 0 y = 1 }
+							engineer = { x = 0 y = 2 }
+							logistics_company_mot = { x = 0 y = 3 }
+							anti_air_heavy_support = { x = 1 y = 0 }
+							anti_air_company = { x = 1 y = 1 }
+							anti_tank = { x = 1 y = 2 }
+							military_police = { x = 1 y = 3 }
+						}
+					}
+					random_owned_controlled_state = {
+						limit = {
+							OR = {
+								state = 219
+								state = 195
+								state = 217
+								state = 252
+								state = 249
+							}
+							ROOT = { has_full_control_of_state = PREV } 
+						} 
+						prioritize = { 219 }	
+						create_unit = {
+							division = "name = \"6ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"9ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"26ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"11ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"16ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"28ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"5ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"8ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"19ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}
+
+                    }						
+				}
+			}
+			if = {
+				limit = {
+					SOV = {
+						NOT = {
+							OR = {
+								has_tech = width_tech_chi
+								has_tech = width_tech_sov
+								has_tech = width_tech
+							}
+
+
+						}
+					}
+					has_completed_focus = SOV_hero_of_the_union
+				    has_completed_focus = SOV_morozov_will_show_the_way
+				}
+				hidden_effect = {
+					division_template = {
+						name = "Tankovy Divizya Far East"
+						priority = 1  
+						regiments = {
+							medium_armor = { x = 0 y = 0 }
+							medium_armor = { x = 0 y = 1 }
+							medium_armor = { x = 0 y = 2 }
+							
+							medium_armor = { x = 1 y = 0 }
+							medium_armor = { x = 1 y = 1 }
+							medium_armor = { x = 1 y = 2 }
+								
+							medium_armor = { x = 2 y = 0 }
+							medium_armor = { x = 2 y = 1 }
+							medium_armor = { x = 2 y = 2 }
+							medium_armor = { x = 2 y = 3 }
+					
+							motorized = { x = 3 y = 0 }		
+							motorized = { x = 3 y = 1 }		
+							motorized = { x = 3 y = 2 }		
+							motorized = { x = 3 y = 3 }
+	
+							motorized = { x = 4 y = 0 }	
+						}
+
+						support = {
+							artillery = { x = 0 y = 0 }
+							recon_ac = { x = 0 y = 1 }
+							engineer = { x = 0 y = 2 }
+							logistics_company_mot = { x = 0 y = 3 }
+							anti_air_heavy_support = { x = 1 y = 0 }
+							anti_air_company = { x = 1 y = 1 }
+							anti_tank = { x = 1 y = 2 }
+							military_police = { x = 1 y = 3 }
+						}
+					}
+					random_owned_controlled_state = {
+						limit = {
+							OR = {
+								state = 219
+								state = 195
+								state = 217
+								state = 252
+								state = 249
+							}
+							ROOT = { has_full_control_of_state = PREV } 
+						} 
+						prioritize = { 219 }	
+						create_unit = {
+							division = "name = \"6ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"9ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"26ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"11ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"16ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"28ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"5ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"8ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"19ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}
+
+                    }						
+				}
+			}			
+			if = {
+				limit = {
+					SOV = {
+						OR = {
+								has_tech = width_tech_chi
+								has_tech = width_tech_sov
+								has_tech = width_tech
+							}
+
+					}
+					has_completed_focus = SOV_hero_of_the_union
+				    has_completed_focus = SOV_okmo_will_show_the_way
+				}
+				hidden_effect = {
+					division_template = {
+						name = "Tankovy Divizya Far East"
+						priority = 1  
+						regiments = {
+							heavy_armor = { x = 0 y = 0 }
+							heavy_armor = { x = 0 y = 1 }
+							heavy_armor = { x = 0 y = 2 }
+							
+							heavy_armor = { x = 1 y = 0 }
+							heavy_armor = { x = 1 y = 1 }
+							heavy_armor = { x = 1 y = 2 }
+								
+							heavy_armor = { x = 2 y = 0 }
+							heavy_armor = { x = 2 y = 1 }
+							heavy_armor = { x = 2 y = 2 }
+							heavy_armor = { x = 2 y = 3 }
+					
+							motorized = { x = 3 y = 0 }		
+							motorized = { x = 3 y = 1 }		
+							motorized = { x = 3 y = 2 }		
+							motorized = { x = 3 y = 3 }
+	
+							motorized = { x = 4 y = 0 }		
+							motorized = { x = 4 y = 1 }	
+						}
+
+						support = {
+							artillery = { x = 0 y = 0 }
+							recon_ac = { x = 0 y = 1 }
+							engineer = { x = 0 y = 2 }
+							logistics_company_mot = { x = 0 y = 3 }
+							anti_air_heavy_support = { x = 1 y = 0 }
+							anti_air_company = { x = 1 y = 1 }
+							anti_tank = { x = 1 y = 2 }
+							military_police = { x = 1 y = 3 }
+						}
+					}
+					random_owned_controlled_state = {
+						limit = {
+							OR = {
+								state = 219
+								state = 195
+								state = 217
+								state = 252
+								state = 249
+							}
+							ROOT = { has_full_control_of_state = PREV } 
+						} 
+						prioritize = { 219 }	
+						create_unit = {
+							division = "name = \"6ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"9ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"26ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"11ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"16ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"28ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"5ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"8ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"19ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}
+
+                    }						
+				}
+			}
+			if = {
+				limit = {
+					SOV = {
+						NOT = {
+							OR = {
+								has_tech = width_tech_chi
+								has_tech = width_tech_sov
+								has_tech = width_tech
+							}
+
+
+
+						}
+						has_completed_focus = SOV_hero_of_the_union
+						has_completed_focus = SOV_okmo_will_show_the_way
+					}
+
+				}
+				hidden_effect = {
+					division_template = {
+						name = "Tankovy Divizya Far East"
+						priority = 1 
+						regiments = {
+							heavy_armor = { x = 0 y = 0 }
+							heavy_armor = { x = 0 y = 1 }
+							heavy_armor = { x = 0 y = 2 }
+							
+							heavy_armor = { x = 1 y = 0 }
+							heavy_armor = { x = 1 y = 1 }
+							heavy_armor = { x = 1 y = 2 }
+								
+							heavy_armor = { x = 2 y = 0 }
+							heavy_armor = { x = 2 y = 1 }
+							heavy_armor = { x = 2 y = 2 }
+							heavy_armor = { x = 2 y = 3 }
+					
+							motorized = { x = 3 y = 0 }		
+							motorized = { x = 3 y = 1 }		
+							motorized = { x = 3 y = 2 }		
+							motorized = { x = 3 y = 3 }
+	
+							motorized = { x = 4 y = 0 }	
+						}
+
+						support = {
+							artillery = { x = 0 y = 0 }
+							recon_ac = { x = 0 y = 1 }
+							engineer = { x = 0 y = 2 }
+							logistics_company_mot = { x = 0 y = 3 }
+							anti_air_heavy_support = { x = 1 y = 0 }
+							anti_air_company = { x = 1 y = 1 }
+							anti_tank = { x = 1 y = 2 }
+							military_police = { x = 1 y = 3 }
+						}
+					}
+					random_owned_controlled_state = {
+						limit = {
+							OR = {
+								state = 219
+								state = 195
+								state = 217
+								state = 252
+								state = 249
+							}
+							ROOT = { has_full_control_of_state = PREV } 
+						} 
+						prioritize = { 219 }	
+						create_unit = {
+							division = "name = \"6ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"9ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"26ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"11ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}	
+						create_unit = {
+							division = "name = \"16ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}				
+						create_unit = {
+							division = "name = \"28ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"5ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"8ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}
+						create_unit = {
+							division = "name = \"19ya Tankovy Diviziya\" division_template = \"Tankovy Divizya Far East\" start_experience_factor = 0.7 start_equipment_factor = 1" 
+							owner = SOV
+						}
+
+                    }						
+				}
+			}						
+			
+			
+			
+			
+			
 			if = {
 				limit = {
 					NOT = {
