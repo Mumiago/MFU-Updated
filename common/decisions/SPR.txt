@@ -8483,91 +8483,6 @@ SPR_expand_resource_extraction = {
 }
 
 
-
-
-SPR_recovering_from_civil_war = {
-
-	SPR_eliminate_guerrillas = {
-
-		icon = generic_civil_support
-
-		allowed = {
-			original_tag = SPR
-		}
-
-		available = {
-		
-			has_equipment = {
-				infantry_equipment > 200
-			}
-			
-		}
-
-		state_target = yes
-
-		targets = { 41 165 166 167 168 169 170 171 172 173 174 175 176 177 178 788 789 790 791 792 793 794 }
-
-		target_trigger = {
-			OR = {
-				has_completed_focus = SPA_stamp_out_the_maquis
-				has_completed_focus = SPA_stamp_out_the_maquis_id
-				has_completed_focus = SPR_the_inevitable_counterblow
-				has_completed_focus = SPR_all_must_do_their_part
-				has_completed_focus = SPR_red_bulwark_in_the_west
-				has_completed_focus = SPR_stabilize_the_nation
-			}
-			FROM = {
-				is_owned_by = ROOT
-				NOT = {
-					is_core_of = ROOT
-				}
-			}
-		}
-
-		cost = 40
-
-		fire_only_once = yes
-
-		days_remove = 70
-
-		ai_will_do = {
-			base = 200
-		}
-
-		modifier = {
-			weekly_manpower = -300
-		}
-
-		visible = {
-			OR = {
-				has_completed_focus = SPA_stamp_out_the_maquis
-				has_completed_focus = SPA_stamp_out_the_maquis_id
-				has_completed_focus = SPR_the_inevitable_counterblow
-				has_completed_focus = SPR_all_must_do_their_part
-				has_completed_focus = SPR_red_bulwark_in_the_west
-				has_completed_focus = SPR_stabilize_the_nation
-			}
-		}
-
-		complete_effect = {
-			add_equipment_to_stockpile = {
-				type = infantry_equipment
-				amount = -200
-			}
-			army_experience = 10
-		}
-
-		remove_effect = {
-			FROM = {
-				add_core_of = ROOT
-			}
-		}
-	}
-
-}
-
-
-
 SPR_navy_prepare_the_armata = {
 	SPR_battleship_mission = {
 
@@ -8590,7 +8505,7 @@ SPR_navy_prepare_the_armata = {
 			}					
 		}
 
-		days_mission_timeout = 550
+		days_mission_timeout = 800
 		is_good = no
 		fire_only_once = yes
 
@@ -8614,7 +8529,7 @@ SPR_navy_prepare_the_armata = {
 		complete_effect = {
 			add_political_power = 100
 			add_stability = 0.2
-			navy_experience = 200
+			navy_experience = 250
 		}	
 	}
 	SPR_battlecruisers_mission = {
@@ -8625,16 +8540,22 @@ SPR_navy_prepare_the_armata = {
 			SPR = {
 				has_navy_size = {
 						archetype = ship_hull_heavy
-						size > 5
+						size > 3
 				}
-				has_navy_size = {
-					archetype = ship_hull_cruiser
-					size > 14
+				or = {
+					has_navy_size = {
+						archetype = ship_hull_cruiser
+					size > 12
+					}
+					has_navy_size = {
+						archetype = ship_hull_light
+						size > 24
+					}
 				}
 			}					
 		}
 
-		days_mission_timeout = 450
+		days_mission_timeout = 600
 		is_good = no
 		fire_only_once = yes
 
@@ -8656,8 +8577,8 @@ SPR_navy_prepare_the_armata = {
 		}		
 
 		complete_effect = {
-			add_political_power = 150
-			add_stability = 0.10
+			add_political_power = 125
+			add_stability = 0.075
 			navy_experience = 100
 		}	
 	}
@@ -8669,7 +8590,7 @@ SPR_navy_prepare_the_armata = {
 			SPR = {
 				has_navy_size = {
 					archetype = ship_hull_heavy
-					size > 2
+					size > 1
 				}
 				has_navy_size = {
 					archetype = ship_hull_cruiser
@@ -8677,7 +8598,7 @@ SPR_navy_prepare_the_armata = {
 				}
 				has_navy_size = {
 					archetype = ship_hull_light
-					size > 20
+					size > 15
 				}
 				has_navy_size = {
 					archetype = ship_hull_submarine
@@ -8686,7 +8607,7 @@ SPR_navy_prepare_the_armata = {
 			}					
 		}
 
-		days_mission_timeout = 450
+		days_mission_timeout = 550
 		is_good = no
 		fire_only_once = yes
 
@@ -8709,7 +8630,6 @@ SPR_navy_prepare_the_armata = {
 
 		complete_effect = {
 			add_political_power = 200
-			add_stability = 0.05
 			navy_experience = 50
 		}	
 	}
@@ -9401,12 +9321,12 @@ SPR_1_dev_year_plan_decisions = {
 		icon = GFX_decision_generic_merge_plant_ship
 
 		available = {
-			num_of_naval_factories > 39
-			fuel_silo > 14
+			num_of_naval_factories > 19
+			fuel_silo > 7
 		}	
 
 		activation = {
-			has_completed_focus = SPA_reorganise_the_economy
+			has_completed_focus = SPA_begin_the_first_development_plan
 		}
 
 		days_mission_timeout = 800
@@ -9417,8 +9337,7 @@ SPR_1_dev_year_plan_decisions = {
 			#has_completed_focus = SPA_reorganise_the_economy
 		}
 
-		modifier = {
-		}
+		modifier = {}
 
 		timeout_effect = {
 			add_stability = -0.075
@@ -9430,11 +9349,11 @@ SPR_1_dev_year_plan_decisions = {
 			}
 			custom_effect_tooltip = MANspace
 			SPR_increase_level_2_csg_gain_effect = yes
-			custom_effect_tooltip = remove_days_from_colapse_2
+			custom_effect_tooltip = remove_days_from_colapse_1
 			hidden_effect = {
 				add_days_mission_timeout = {
 					mission = COLAPSE_WILL_HAPPNE_WE_GOONA_DIE
-					days = -100
+					days = -150
 				}
 			}
 		}
@@ -9604,7 +9523,6 @@ SPR_1_dev_year_plan_decisions = {
 				}
 			}
 			custom_effect_tooltip = CSG_LIMIT_SPR
-			set_country_flag = SPR_2_dev_plan_completed	
 
 			set_variable = {
 				var = SPR_1_dev_plan
@@ -9734,6 +9652,8 @@ SPR_1_dev_year_plan_decisions = {
  
 		 remove_effect = {
 			add_stability = -0.005
+			custom_effect_tooltip = MANspace
+			custom_effect_tooltip = reduce_csg_mouth_gain_for_fix
 		 }
 	}
 	SPR_colapse_of_the_noob_2 = {
@@ -9777,6 +9697,8 @@ SPR_1_dev_year_plan_decisions = {
  
 		 remove_effect = {
 			add_stability = -0.005
+			custom_effect_tooltip = MANspace
+			custom_effect_tooltip = reduce_csg_mouth_gain_for_fix
 		 }
 	}
 	SPR_colapse_of_the_noob_3 = {
@@ -9820,6 +9742,8 @@ SPR_1_dev_year_plan_decisions = {
  
 		 remove_effect = {
 			add_stability = -0.005
+			custom_effect_tooltip = MANspace
+			custom_effect_tooltip = reduce_csg_mouth_gain_for_fix
 		 }
 	}
 	SPR_colapse_of_the_noob_4 = {
@@ -9863,6 +9787,8 @@ SPR_1_dev_year_plan_decisions = {
  
 		 remove_effect = {
 			add_stability = -0.005
+			custom_effect_tooltip = MANspace
+			custom_effect_tooltip = reduce_csg_mouth_gain_for_fix
 		 }
 	}
 
@@ -11646,7 +11572,7 @@ SPR_1_dev_year_plan_decisions = {
 		fixed_random_seed = no
 		is_good = no
 		fire_only_once = no
- 		days_mission_timeout = 1
+ 		days_mission_timeout = 30
 		days_remove = 2
 		timeout_effect = {
 			if = {
@@ -11750,7 +11676,7 @@ SPR_1_dev_year_plan_decisions = {
 		fixed_random_seed = no
 		is_good = no
 		fire_only_once = no
- 		days_mission_timeout = 1
+ 		days_mission_timeout = 30
 		days_remove = 2
 		timeout_effect = {
 			if = {
@@ -11879,7 +11805,7 @@ SPR_1_dev_year_plan_decisions = {
 		fixed_random_seed = no
 		is_good = no
 		fire_only_once = no
- 		days_mission_timeout = 1
+ 		days_mission_timeout = 30
 		days_remove = 2
 		timeout_effect = {
 			if = {
@@ -12015,7 +11941,7 @@ SPR_1_dev_year_plan_decisions = {
 		fixed_random_seed = no
 		is_good = no
 		fire_only_once = no
- 		days_mission_timeout = 1
+ 		days_mission_timeout = 50
 		days_remove = 2
 		timeout_effect = {
 			if = {
@@ -12118,7 +12044,7 @@ SPR_1_dev_year_plan_decisions = {
 		fixed_random_seed = no
 		is_good = no
 		fire_only_once = no
- 		days_mission_timeout = 1
+ 		days_mission_timeout = 50
 		days_remove = 2
 		timeout_effect = {
 			if = {
@@ -12246,7 +12172,7 @@ SPR_1_dev_year_plan_decisions = {
 		fixed_random_seed = no
 		is_good = no
 		fire_only_once = no
- 		days_mission_timeout = 1
+ 		days_mission_timeout = 50
 		days_remove = 2
 		timeout_effect = {
 			if = {
@@ -14154,7 +14080,7 @@ SPR_parlament_system ={
 					}
 					add_building_construction = {
 						type = coastal_bunker
-						level = 2
+						level = 1
 						province = 758
 					}
 					add_building_construction = {
@@ -14181,7 +14107,7 @@ SPR_parlament_system ={
 						}
 						add_building_construction = {
 							type = coastal_bunker
-							level = 2
+							level = 1
 							province = 6906
 						}
 						add_building_construction = {
@@ -14204,7 +14130,7 @@ SPR_parlament_system ={
 					165 = {
 						add_building_construction = {
 							type = coastal_bunker
-							level = 2
+							level = 1
 							province = 9764
 						}
 						add_building_construction = {
@@ -14233,12 +14159,12 @@ SPR_parlament_system ={
 					794 = {
 						add_building_construction = {
 							type = bunker
-							level = 2
+							level = 1
 							province = 915
 						}
 						add_building_construction = {
 							type = bunker
-							level = 2
+							level = 1
 							province = 899
 						}
 					}
@@ -14252,12 +14178,12 @@ SPR_parlament_system ={
 					172 = {
 						add_building_construction = {
 							type = bunker
-							level = 2
+							level = 1
 							province = 3931
 						}
 						add_building_construction = {
 							type = bunker
-							level = 2
+							level = 1
 							province = 3737
 						}
 					}
@@ -14271,12 +14197,12 @@ SPR_parlament_system ={
 					792 = {
 						add_building_construction = {
 							type = bunker
-							level = 2
+							level = 1
 							province = 6756
 						}
 						add_building_construction = {
 							type = coastal_bunker
-							level = 2
+							level = 1
 							province = 740
 						}
 					}
@@ -15367,6 +15293,9 @@ SPR_parlament_system ={
 		}
 
 		activation = {
+			not = {
+				has_country_flag = silo_2_flag
+			}
 			has_country_flag = silo_1_flag
 			has_country_flag = silo_mission
 		}
@@ -15421,6 +15350,9 @@ SPR_parlament_system ={
 		}
 
 		activation = {
+			not = {
+				has_country_flag = silo_3_flag
+			}
 			has_country_flag = silo_1_flag
 			has_country_flag = silo_2_flag
 			has_country_flag = silo_mission
@@ -15532,6 +15464,9 @@ SPR_parlament_system ={
 		}
 
 		activation = {
+			not = {
+				has_country_flag = refinery_2_flag
+			}
 			has_country_flag = refinery_1_flag
 			has_country_flag = oil_ref_mission
 		}
@@ -15586,6 +15521,9 @@ SPR_parlament_system ={
 		}
 
 		activation = {
+			not = {
+				has_country_flag = refinery_3_flag
+			}
 			has_country_flag = refinery_1_flag
 			has_country_flag = refinery_2_flag
 			has_country_flag = oil_ref_mission
@@ -15697,6 +15635,9 @@ SPR_parlament_system ={
 		}
 
 		activation = {
+			not = {
+				has_country_flag = refinery_rub_2_flag
+			}
 			has_country_flag = refinery_rub_1_flag
 			has_country_flag = rubber_ref_mission
 		}
@@ -15751,6 +15692,9 @@ SPR_parlament_system ={
 		}
 
 		activation = {
+			not = {
+				has_country_flag = refinery_rub_3_flag
+			}
 			has_country_flag = refinery_rub_1_flag
 			has_country_flag = refinery_rub_2_flag
 			has_country_flag = rubber_ref_mission
@@ -16453,7 +16397,7 @@ SPR_parlament_system ={
 							has_state_flag = DEVELOPMENT_PROGRAM_7
 						}
 						
-						clr_state_flag = DEVELOPMENT_PROGRAM_6
+						clr_state_flag = DEVELOPMENT_PROGRAM_7
 
 					}
 				}
@@ -16478,12 +16422,12 @@ SPR_arms_deal = {
 		icon = GFX_decision_generic_industry
 		available = {
 			has_equipment = {
-				infantry_equipment > 2799
+				infantry_equipment > 1999
 			}
 
 		}
 		days_re_enable = 1
-		days_remove = 90
+		days_remove = 60
 		fire_only_once = no
 		
 		modifier = {
@@ -16520,12 +16464,12 @@ SPR_arms_deal = {
 			icon = GFX_decision_generic_industry
 		available = {
 			has_equipment = {
-				artillery_equipment > 249
+				artillery_equipment > 199
 			}
 
 		}
 		days_re_enable = 1
-		days_remove = 90
+		days_remove = 60
 		fire_only_once = no
 		
 		modifier = {
@@ -16535,13 +16479,13 @@ SPR_arms_deal = {
 			add_cic = 6000
 			send_equipment = {
 					equipment = artillery_equipment
-					amount = 200
+					amount = 180
 					target = GER
 					new_prioritised = yes
 			}
 			add_equipment_to_stockpile = {
 				type = artillery_equipment
-				amount = -50
+				amount = -20
 			}
 			add_to_variable = {
 				var = export_points
@@ -16560,14 +16504,14 @@ SPR_arms_deal = {
 			icon = GFX_decision_generic_industry
 		available = {
 			has_equipment = {
-				support_equipment > 249
+				support_equipment > 180
 			}
 			has_equipment = {
-				radio_equipment > 249
+				radio_equipment > 180
 			}
 		}
 		days_re_enable = 1
-		days_remove = 90
+		days_remove = 60
 		fire_only_once = no
 		
 		modifier = {
@@ -16577,23 +16521,23 @@ SPR_arms_deal = {
 			add_cic = 6000
 			send_equipment = {
 					equipment = support_equipment
-					amount = 200
+					amount = 160
 					target = GER
 					new_prioritised = yes
 			}
 			send_equipment = {
 					equipment = radio_equipment
-					amount = 200
+					amount = 160
 					target = GER
 					new_prioritised = yes
 			}
 			add_equipment_to_stockpile = {
 				type = support_equipment
-				amount = -50
+				amount = -20
 			}
 			add_equipment_to_stockpile = {
 				type = radio_equipment
-				amount = -50
+				amount = -20
 			}
 			add_to_variable = {
 				var = export_points
@@ -16612,14 +16556,14 @@ SPR_arms_deal = {
 			icon = GFX_decision_generic_industry
 		available = {
 			has_equipment = {
-				horse_equipment > 1199
+				horse_equipment > 999
 			}
 			has_equipment = {
 				motorized_equipment > 149
 			}
 		}
 		days_re_enable = 1
-		days_remove = 90
+		days_remove = 60
 		fire_only_once = no
 		
 		modifier = {
@@ -16629,13 +16573,13 @@ SPR_arms_deal = {
 			add_cic = 6000
 			send_equipment = {
 					equipment = horse_equipment
-					amount = 1050
+					amount = 950
 					target = GER
 					new_prioritised = yes
 			}
 			add_equipment_to_stockpile = {
 				type = horse_equipment
-				amount = -150
+				amount = -50
 			}
 			add_to_variable = {
 				var = export_points
@@ -16660,7 +16604,7 @@ SPR_arms_deal = {
 
 		}
 		days_re_enable = 1
-		days_remove = 90
+		days_remove = 60
 		fire_only_once = no
 		
 		modifier = {
@@ -16670,7 +16614,7 @@ SPR_arms_deal = {
 			add_cic = 12000
 			send_equipment = {
 					equipment = medium_tank_chassis
-					amount = 100
+					amount = 90
 					target = GER
 					new_prioritised = yes
 			}
@@ -16690,6 +16634,46 @@ SPR_arms_deal = {
 		}
 		
 	}
+	Send_the_tanks_axis_2 = {
+		icon = GFX_decision_generic_industry
+			icon = GFX_decision_generic_industry
+		available = {
+			has_equipment = {
+				heavy_tank_chassis > 69
+			}
+
+		}
+		days_re_enable = 1
+		days_remove = 60
+		fire_only_once = no
+		
+		modifier = {
+			consumer_goods_factor = -0.15
+		}
+		remove_effect = {
+			add_cic = 12000
+			send_equipment = {
+					equipment = heavy_tank_chassis
+					amount = 65
+					target = GER
+					new_prioritised = yes
+			}
+			add_equipment_to_stockpile = {
+				type = heavy_tank_chassis
+				amount = -5
+			}
+			add_to_variable = {
+				var = export_points
+				value = 1
+			}
+			add_to_variable = {
+				var = export_points_expanding_reward
+				value = 3
+				tooltip = export_points_3_tooltip
+			}
+		}
+		
+	}
 	Send_the_planes_axis = {
 		icon = GFX_decision_generic_industry
 			icon = GFX_decision_generic_industry
@@ -16700,7 +16684,7 @@ SPR_arms_deal = {
 
 		}
 		days_re_enable = 1
-		days_remove = 90
+		days_remove = 60
 		fire_only_once = no
 		
 		modifier = {
@@ -16737,7 +16721,7 @@ SPR_arms_deal = {
 
 		}
 		days_re_enable = 1
-		days_remove = 90
+		days_remove = 60
 		fire_only_once = no
 		
 		modifier = {
@@ -16792,7 +16776,6 @@ SPR_arms_deal = {
 
 		timeout_effect = {
 			add_political_power = 25
-			army_experience = -10
 		}
 
 		complete_effect = {
@@ -16954,7 +16937,7 @@ SPR_arms_deal = {
 					}
 					add_to_variable = {
 						var = SPR_LEFT_industry_industrial_capacity_factory
-						value = 0.004
+						value = 0.005
 						tooltip = industrial_capacity_factory_tooltip
 					}
 				}
@@ -16972,7 +16955,7 @@ SPR_arms_deal = {
 					}
 					add_to_variable = {
 						var = SPR_LEFT_industry_industrial_capacity_factory
-						value = 0.005
+						value = 0.05
 						tooltip = industrial_capacity_factory_tooltip
 					}
 				}

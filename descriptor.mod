@@ -40,5 +40,6 @@ tags={
 	"Technologies"
 }
 picture="thumbnail.png"
-name="MFU-Github"
-supported_version="1.12.11"
+name="OAK-spain-rework-test"
+supported_version="1.17.3.0"
+remote_file_id="3644126739"
