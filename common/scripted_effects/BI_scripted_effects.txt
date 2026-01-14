@@ -83,20 +83,6 @@ update_state_mechanics = {
 	clear_variable = num_tank_assembly
 
 	
-	for_each_loop = {
-		array = global.storage
-		
-		clear_variable = num_storage@var:v
-	}
-	
-	clear_array = refinery_states@steel
-	clear_array = refinery_states@aluminium
-	clear_array = refinery_states@fuel
-	clear_array = refinery_states@rubber
-	
-	clear_variable = assign_storage
-	clear_array = assign_storage_state
-	
 	if = {
 		limit = {
 			has_damaged_buildings = yes
@@ -137,11 +123,9 @@ update_state_mechanics = {
 				multiply_temp_variable = { t = local }
 				add_to_variable = { PREV.num_tank_assembly = t }
 				
-			
 
 			}
 			
-			state_update_on_end = yes
 		}
 	}
 	else = {
@@ -161,15 +145,6 @@ update_state_mechanics = {
 			
 				
 				
-				if = {
-					limit = {
-						is_coastal = yes
-					}
-					set_temp_variable = { factor = PREV.modifier@food_need_coastal }
-					add_to_temp_variable = { factor = 1 }
-					multiply_temp_variable = { t = factor }
-					add_to_variable = { PREV.num_coastal_states = 1 }
-				}
 				
 
 			}
@@ -202,15 +177,8 @@ update_state_mechanics = {
 		update_resource_assembly = yes
 	}
 
-	if = {
-		limit = {
-			NOT = { has_country_flag = ai_is_useless_country }
-			NOT = { has_country_flag = ai_very_low_update }
-			NOT = { has_country_flag = ai_low_update }
-		}
-		set_storage_flags = yes
-	}
 	
 	if = { limit = { check_variable = { num_tank_assembly = 0 } } clear_variable = num_tank_assembly }
 	if = { limit = { check_variable = { num_air_assembly = 0 } } clear_variable = num_air_assembly }
+}
 	

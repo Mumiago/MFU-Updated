@@ -1232,7 +1232,7 @@ NMilitary = {
 	SUPPLY_GRACE_MAX_REDUCE_PER_HOUR = 2,          -- supply grace is not decreased instantly when it is buffed temporarily and buff is removed
 	MAX_OUT_OF_SUPPLY_DAYS = 30, 				   -- how many days of shitty supply until max penalty achieved
 	OUT_OF_SUPPLY_ATTRITION = 0.5,                 -- max attrition when out of supply
-	OUT_OF_SUPPLY_SPEED = -0.2,                    -- max speed reduction from supply
+	OUT_OF_SUPPLY_SPEED = -0.15,                    -- max speed reduction from supply
 	NON_CORE_SUPPLY_SPEED = -0.1,				   -- we are not running on our own VP supply so need to steal stuff along the way
 	NON_CORE_SUPPLY_AIR_SPEED = -0.05,			   -- we are not running on our own VP supply so need to steal stuff along the way, a bit less due to air supply
 	OUT_OF_SUPPLY_MORALE = -0.3,                   -- max org regain reduction from supply
@@ -4859,7 +4859,7 @@ NDoctrines = {
         MASTERY_BAR_MAX_ANIMATION_SPEED = 50.0,               -- Max speed of the mastery bar animation
         MASTERY_BANK_CONVERSION_RATE = 0.0,                    -- The rate at which mastery gained when a track is finished or empty is "banked"
         MASTERY_BANK_MAX = 0.0,                               -- The maximum amount of mastery that can be banked
-        MILITARY_ATTACHE_MASTERY_TRANSFER_FACTOR = 0.1,         -- For each mastery track, military attaches will add this fraction of their visiting country's mastery gain (from units only) in that track
+        MILITARY_ATTACHE_MASTERY_TRANSFER_FACTOR = 0,         -- For each mastery track, military attaches will add this fraction of their visiting country's mastery gain (from units only) in that track
         THEATER_COMMANDER_UNITS_MASTERY_GAIN_FACTOR_PER_SKILL = 0.01,  -- Unit in a theater commander's theater will contribute this fraction of their mastery gain to the theater commander's country, for each skill point they have in attack + defense
 	NAVAL_MISSION_MASTERY_GAIN_FACTORS = {  -- Mastery gain from naval missions is reduced, just like training
 		0.0, -- HOLD
