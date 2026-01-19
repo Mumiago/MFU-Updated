@@ -802,7 +802,7 @@ NProduction = {
 	RAILWAY_GUN_MAX_MIL_FACTORIES_PER_LINE = 15,
 	RAILWAY_GUN_REPAIR_SPEED = 8.0,			-- Railway gun strength repair speed per factory
 
-	MAX_EQUIPMENT_RESOURCES_NEED = 4, 	-- Max number of different strategic resources an equipment can be dependent on.
+	MAX_EQUIPMENT_RESOURCES_NEED = 5, 	-- Max number of different strategic resources an equipment can be dependent on.
 	MAX_CIV_FACTORIES_PER_LINE = 15,	-- Max number of factories that can be assigned a single production line.
 	GENERATED_SHIP_NAMES_PER_LINE_MAX = 5, -- Above this naval lines will stop generating new names for the list																											 
     DEFAULT_MAX_NAV_FACTORIES_PER_LINE = 20,
@@ -2889,7 +2889,7 @@ NAI = {
 	
 	NUM_FACTORIES_IN_STATE_TO_WANT_ENERGY_REDUCTION = 6,			-- How many mils should we want in a state before we think about building energy reduction cap building
 	TOTAL_STATE_EXTRACTED_RESOURCES_FOR_BUILDING_RESOURCE_CAP_BUILDING = 30.0,	--How many resources required for building a resource inproving infra cap building
-	INFRASTRUCTURE_PERCENTAGE_AT_WHICH_TO_BUILD_INFRA_CAP_BUILDING = 0.75,		-- When should we build a cap building on a state
+	INFRASTRUCTURE_PERCENTAGE_AT_WHICH_TO_BUILD_INFRA_CAP_BUILDING = 0.74,		-- When should we build a cap building on a state
 	NAVAL_COAST_DEFENSE_TENSION_THRESHOLD = 0.5,		-- The world tension threshold where countries start pre-emptively protecting their home coast
 	PATROL_FLEETS_PER_INVASION_REGION_ON_PATH = 2,			-- How many STL patrol fleet templates should the AI try to use when generating dominance
 	SUGGESTED_NUM_MAX_CARRIERS = 4,							-- We don't know exactly how many planes we should use when evaluating AI build so we need a suggested number to start things off. ALso used for task force suggestions list.
