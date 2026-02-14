@@ -40,6 +40,6 @@ tags={
 	"Technologies"
 }
 picture="thumbnail.png"
-name="OAK-spain-rework-test"
+name="MFU-Updated"
 supported_version="1.17.3.0"
 remote_file_id="3644126739"
