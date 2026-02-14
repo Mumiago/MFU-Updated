@@ -3622,6 +3622,42 @@ PAR_instant_effect_decisions = {
 				}
 				
 			}
+			if = {
+				limit = {
+					SPR = {
+						has_idea = SPA_crush_the_republic_idea
+					}
+					has_global_flag = scw_over
+				}
+				SPR = {
+					remove_ideas = SPA_crush_the_republic_idea
+				}
+				
+			}
+			if = {
+				limit = {
+					SPR = {
+						has_idea = SPA_war_fast_radical_spain
+					}
+					has_global_flag = scw_over
+				}
+				SPR = {
+					remove_ideas = SPA_war_fast_radical_spain
+				}
+				
+			}
+			if = {
+				limit = {
+					SPR = {
+						has_idea = SPA_crush_the_republic_idea_2
+					}
+					has_global_flag = scw_over
+				}
+				SPR = {
+					remove_ideas = SPA_crush_the_republic_idea_2
+				}
+				
+			}
 			
 		}	
 	}
@@ -4937,7 +4973,7 @@ PAR_instant_effect_decisions = {
 				SPN = {
 					set_equipment_fraction = 0
 				}
-				hidden_effect = { 
+				hidden_effect = {
 					set_global_flag = scw_over
 					every_country = {
 						set_variable = { var = super_event value = 7 }			
@@ -5038,7 +5074,7 @@ PAR_instant_effect_decisions = {
 							can_access_market = yes
 						}
 						annex_country = { target = SPN transfer_troops = no }
-						add_ideas = SPA_recovering_from_civil_war
+						#add_ideas = SPA_recovering_from_civil_war
 						remove_ideas = CHI_train_hp
 						remove_ideas = SPR_death_before_surrender
 						delete_unit_template_and_units = {
@@ -5056,7 +5092,11 @@ PAR_instant_effect_decisions = {
 						delete_unit_template_and_units = {
 							division_template = "Brigada de Juventudes Sindicales"
 							disband = yes
-						}	
+						}
+						delete_unit_template_and_units = {
+							division_template = "División de Remanentes Republicanos"
+							disband = yes
+						}
 						delete_unit_template_and_units = {
 							division_template = "Guarnición Nacionalista"
 							disband = yes
@@ -5112,6 +5152,44 @@ PAR_instant_effect_decisions = {
 					set_equipment_fraction = 0
 				}
 				hidden_effect = { 
+
+					if = {
+						limit = {
+							date < 1937.01.01
+						}
+							add_political_power = 350
+							SOV = {
+								add_timed_idea = {
+									idea = SPR_sov_spanish_gold_idea_1
+									days = 120
+								}
+							}
+							
+						else_if = {
+							limit = {
+								date < 1938.01.01
+							}
+							add_political_power = 200
+							SOV = {
+								add_timed_idea = {
+									idea = SPR_sov_spanish_gold_idea_1
+									days = 180
+								}
+							}
+						}
+						else_if = {
+							limit = {
+								date < 1939.01.01
+							}
+							add_political_power = 75
+							SOV = {
+								add_timed_idea = {
+									idea = SPR_sov_spanish_gold_idea_1
+									days = 300
+								}
+							}
+						}
+					}
 					add_named_threat = { threat = 5 name = RepublicanVictory }
 					every_country = {
 						set_variable = { var = super_event value = 6 }			
@@ -5215,7 +5293,7 @@ PAR_instant_effect_decisions = {
 						can_access_market = yes
 					}
 					annex_country = { target = SPN transfer_troops = no }
-					add_ideas = SPA_recovering_from_civil_war
+					#add_ideas = SPA_recovering_from_civil_war
 					remove_ideas = CHI_train_hp
 					remove_ideas = SPR_death_before_surrender
 					delete_unit_template_and_units = {
@@ -5233,7 +5311,11 @@ PAR_instant_effect_decisions = {
 					delete_unit_template_and_units = {
 						division_template = "Brigada de Juventudes Sindicales"
 						disband = yes
-					}	
+					}
+					delete_unit_template_and_units = {
+						division_template = "División de Remanentes Republicanos"
+						disband = yes
+					}
 					delete_unit_template_and_units = {
 						division_template = "Guarnición Nacionalista"
 						disband = yes
@@ -13483,5 +13565,37 @@ PAR_instant_effect_decisions = {
 			base = 1000
 			
 		}
+	}
+	SPR_STAB_FIX_CIVIL_WAR = {
+
+
+		fire_only_once = yes
+		
+		icon = generic_megaphone
+   
+		allowed = {
+		   tag = PAR 
+		}
+		available = {	
+			SPR = {
+        		has_global_flag = spanish_civil_war
+        	}		
+		}	
+		cost = 0
+
+		complete_effect = {
+        	SPR = {
+				add_to_variable = {
+					SPR_stability_weekly_factor = 0.003
+					tooltip = MAN_kempeitai_var_stability_factor_tooltip
+				}
+        	}	
+		}
+
+		ai_will_do = {
+			base = 1000
+			
+		}
+
 	}
 }
