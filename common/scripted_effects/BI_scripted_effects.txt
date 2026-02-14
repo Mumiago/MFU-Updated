@@ -1,0 +1,196 @@
+update_resource_assembly = {
+
+	#Prepare
+	set_temp_variable = {production_share = 1}
+	subtract_from_temp_variable = {production_share = Root.modifier@min_export}
+
+	#Air assembly
+	if = {
+		limit = { check_variable = { num_air_assembly > 0} }
+		set_temp_variable = { t = num_air_assembly }
+			
+		set_temp_variable = { damaged = num_air_assembly_damaged }
+		set_temp_variable = { resilience = 1 }
+		subtract_from_temp_variable = { resilience = modifier@assembly_resilience }
+		clamp_temp_variable = { var = resilience min = 0.5 }
+		multiply_temp_variable = { damaged = resilience }
+		
+		subtract_from_temp_variable = { t = damaged }
+		round_temp_variable = t
+		multiply_temp_variable = { t = Root.modifier@air_production_capacity }
+		divide_temp_variable = { t = production_share }
+		multiply_temp_variable = { t = -1 }
+
+		set_variable = { assembly_production@air_production = t }
+		add_to_temp_variable = { ap = 1 }
+	}
+	else = {
+		clear_variable = assembly_production@air_production
+	}
+	
+
+	#Tank assembly
+	if = {
+		limit = { check_variable = { num_tank_assembly > 0} }
+		set_temp_variable = { t = num_tank_assembly }
+		
+		set_temp_variable = { damaged = num_tank_assembly_damaged }
+		set_temp_variable = { resilience = 1 }
+		subtract_from_temp_variable = { resilience = modifier@assembly_resilience }
+		clamp_temp_variable = { var = resilience min = 0.5 }
+		multiply_temp_variable = { damaged = resilience }
+		
+		subtract_from_temp_variable = { t = damaged }
+		round_temp_variable = t
+		multiply_temp_variable = { t = Root.modifier@tank_production_capacity }
+		divide_temp_variable = { t = production_share }
+		multiply_temp_variable = { t = -1 }
+
+		set_variable = { assembly_production@tank_production = t }
+		add_to_temp_variable = { ap = 1 }
+	}
+	else = {
+		clear_variable = assembly_production@tank_production
+	}
+	if = { 
+		limit = {
+			check_variable = { ap > 0 }
+			NOT = {
+				has_dynamic_modifier = {
+					modifier = assembly_production
+				}
+			}
+		}
+		add_dynamic_modifier = {
+			modifier = assembly_production
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { ap = 0 }
+			has_dynamic_modifier = {
+				modifier = assembly_production
+			}
+		}
+		remove_dynamic_modifier = {
+			modifier = assembly_production
+		}
+	}
+}
+update_state_mechanics = {
+	
+	clear_variable = num_air_assembly
+	clear_variable = num_tank_assembly
+	clear_variable = num_air_assembly_damaged
+	clear_variable = num_tank_assembly_damaged
+
+	
+	if = {
+		limit = {
+			has_damaged_buildings = yes
+		}
+		
+		every_controlled_state = {
+		
+			if = {
+				limit = {
+					check_variable = { modifier@local_factories = 0 }
+				}
+			
+		
+				## assemblies
+				
+				add_to_variable = { PREV.num_air_assembly = building_level@air_assembly }
+				add_to_variable = { PREV.num_tank_assembly = building_level@tank_assembly }
+				add_to_variable = { PREV.num_air_assembly_damaged = damaged_building_level@air_assembly }
+				add_to_variable = { PREV.num_tank_assembly_damaged = damaged_building_level@tank_assembly }
+			
+				
+				
+			
+				
+			}
+			else = {
+			
+				set_temp_variable = { local = modifier@local_factories }
+				add_to_temp_variable = { local = 1 }
+					
+			
+				
+				## assemblies
+				
+				set_temp_variable = { t = building_level@air_assembly }
+				multiply_temp_variable = { t = local }
+				add_to_variable = { PREV.num_air_assembly = t }
+				
+				set_temp_variable = { t = building_level@tank_assembly }
+				multiply_temp_variable = { t = local }
+				add_to_variable = { PREV.num_tank_assembly = t }
+
+				set_temp_variable = { t = damaged_building_level@air_assembly }
+				multiply_temp_variable = { t = local }
+				add_to_variable = { PREV.num_air_assembly_damaged = t }
+				
+				set_temp_variable = { t = damaged_building_level@tank_assembly }
+				multiply_temp_variable = { t = local }
+				add_to_variable = { PREV.num_tank_assembly_damaged = t }
+				
+
+			}
+			
+		}
+	}
+	else = {
+		every_controlled_state = {
+		
+			if = {
+				limit = {
+					check_variable = { modifier@local_factories = 0 }
+				}
+				
+			
+		
+				## assemblies
+				
+				add_to_variable = { PREV.num_air_assembly = building_level@air_assembly }
+				add_to_variable = { PREV.num_tank_assembly = building_level@tank_assembly }
+			
+				
+				
+				
+
+			}
+			else = {	
+				set_temp_variable = { local = modifier@local_factories }
+				add_to_temp_variable = { local = 1 }
+					
+			
+				## assemblies
+				
+				set_temp_variable = { t = building_level@air_assembly }
+				multiply_temp_variable = { t = local }
+				add_to_variable = { PREV.num_air_assembly = t }
+				
+				set_temp_variable = { t = building_level@tank_assembly }
+				multiply_temp_variable = { t = local }
+				add_to_variable = { PREV.num_tank_assembly = t }
+				
+			
+			}
+			
+		
+		}
+	}
+	
+	if = {
+		limit = {
+			is_ai = no
+		}
+		update_resource_assembly = yes
+	}
+
+	
+	if = { limit = { check_variable = { num_tank_assembly = 0 } } clear_variable = num_tank_assembly }
+	if = { limit = { check_variable = { num_air_assembly = 0 } } clear_variable = num_air_assembly }
+}
+	
