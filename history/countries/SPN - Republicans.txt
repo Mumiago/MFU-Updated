@@ -3,18 +3,49 @@ capital = 41
 
 oob = "SPN_1936"
 set_country_flag = SPR_no_grinding_flag
+if = {
+	limit = { has_dlc = "Man the Guns" }
+		set_naval_oob = "SPR_republic_1936_naval_mtg"
+	else = {
+		set_naval_oob = "SPR_1936_naval_legacy"
+	}
+}
 add_political_power = 100
 set_research_slots = 4
 add_ideas = {
 	limited_exports
 	limited_conscription
 	CHI_train_hp
+	SPR_navy_incompatanceeeee
 }
 set_rule = {
 	can_access_market = no
 }
 starting_train_buffer = 20
 complete_national_focus = SPR_the_popular_front
+add_dynamic_modifier = {
+	modifier = SPA_military
+}
+
+set_variable = { var = SPA_rep_recruitable_population_factor_var value  = -0.3 }
+set_variable = { var = SPA_rep_experience_gain_army_factor_var value  = 0.0 }
+set_variable = { var = SPA_rep_army_org_factor_var value  = 0.00 }
+set_variable = { var = SPA_rep_army_morale_factor value  = -0.05 }
+set_variable = { var = SPA_rep_army_speed_factor_var value  = 0.0 }
+set_variable = { var = SPA_rep_conscription_factor_var value  = 0.0 }
+set_variable = { var = SPA_rep_army_attack_factor_var value  = 0.05 }
+set_variable = { var = SPA_rep_army_defence_factor_var value  = 0.05 }
+set_variable = { var = SPA_rep_industry_industrial_capacity_factory value  = 0.00 }
+set_variable = { var = SPA_rep_special_forces_min_var value  = 0.0 }
+set_variable = { var = SPA_rep_mobilization_law_cost value  = -0.1 }
+set_variable = { var = SPA_rep_cavalry_attack_factor_var value  = 0 }
+set_variable = { var = SPA_rep_reinforce_rate_factor value  = 0 }
+set_variable = { var = SPA_rep_max_planning_var value  = 0 }
+set_variable = { var = SPA_rep_planning_speed_var value  = 0 }
+set_variable = { var = SPA_rep_arty_attc value  = 0.0 }
+set_variable = { var = SPA_rep_armor_attack value  = 0.0 }
+set_variable = { var = SPA_rep_armor_defense value  = 0.0 }
+set_variable = { var = republic_naval_invasion_capacity value  = -24 }
 
 
 recruit_character = SPN_manuel_azana
@@ -62,7 +93,6 @@ building_tech = 1
 	
 	################# economy ############
 	starting_industry = 1
-	
 }
 	################ Armor ###########
 	if = {
@@ -132,34 +162,22 @@ building_tech = 1
 		
 	}
 if = {
-	limit = { not = { has_dlc = "Man the Guns" } }
+	limit = { has_dlc = "Man the Guns"  }
 	set_technology = {
-		early_submarine = 1
-		early_destroyer = 1
-		basic_destroyer = 1
-		early_light_cruiser = 1
-		early_heavy_cruiser = 1
-		basic_heavy_cruiser = 1
-		early_battleship = 1
-	}
-}
-if = {
-	limit = { has_dlc = "Man the Guns" }
-	set_technology = {
-
-		
+		basic_torpedo = 1
+		basic_battery = 1
+		basic_light_battery = 1
+		basic_dp_light_battery = 1
+		improved_secondary_battery = 1		
+		early_ship_hull_submarine = 1
 		early_ship_hull_light = 1
 		basic_ship_hull_light = 1
-		early_ship_hull_submarine = 1
-		basic_ship_hull_submarine = 1
 		early_ship_hull_cruiser = 1
 		basic_ship_hull_cruiser = 1
 		early_ship_hull_heavy = 1
-		basic_battery = 1
-		basic_medium_battery = 1
 		basic_secondary_battery = 1
-		basic_torpedo = 1
 		basic_depth_charges = 1
+		basic_cruiser_armor_scheme = 1
 	}
 }
 
@@ -204,11 +222,104 @@ if = {
 		SPR_fuck_joining
 		SPR_military_disloyalty
 		SPR_political_violence
-
-		SPR_no_navy
 	}
 
 }
 
-set_convoys = 50
+
+	if = {
+		limit = {
+			has_dlc = "Man the Guns"
+		}
+		create_equipment_variant = {
+			name = "España Class"
+			type = ship_hull_heavy_1
+			name_group = SPR_BB_HISTORICAL
+			parent_version = 1
+			modules = {
+				fixed_ship_anti_air_slot = ship_anti_air_1
+				fixed_ship_battery_slot = ship_heavy_battery_1
+				fixed_ship_secondaries_slot = ship_secondaries_1
+				fixed_ship_armor_slot = ship_armor_bb_1
+				fixed_ship_fire_control_system_slot = ship_fire_control_system_1
+				fixed_ship_engine_slot = heavy_ship_engine_1
+				rear_1_custom_slot = ship_heavy_battery_1
+				mid_2_custom_slot = ship_secondaries_1
+				front_1_custom_slot = ship_anti_air_1
+				mid_1_custom_slot = ship_secondaries_1
+			}
+		}
+		create_equipment_variant = {
+			name = "Príncipe Alfonso Class"
+			type = ship_hull_cruiser_1
+			name_group = SPR_CL_HISTORICAL
+			parent_version = 1
+			modules = {
+				fixed_ship_battery_slot = ship_light_medium_battery_1
+				fixed_ship_anti_air_slot = ship_anti_air_1
+				fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+				fixed_ship_radar_slot = empty
+				fixed_ship_engine_slot = cruiser_ship_engine_2
+				fixed_ship_armor_slot = ship_armor_cruiser_1
+				front_1_custom_slot = empty
+				mid_1_custom_slot = ship_anti_air_1
+				mid_2_custom_slot = ship_torpedo_1
+				rear_1_custom_slot = ship_light_medium_battery_1
+			}
+		}
+		create_equipment_variant = {
+			name = "Churucca Class"
+			type = ship_hull_light_2
+			name_group = SPR_DD_HISTORICAL
+			modules = {
+				fixed_ship_battery_slot = ship_light_battery_1
+				fixed_ship_anti_air_slot = ship_anti_air_1
+				fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+				fixed_ship_radar_slot = ship_sonar_1
+				fixed_ship_engine_slot = light_ship_engine_1
+				fixed_ship_torpedo_slot = ship_torpedo_1
+				mid_1_custom_slot = ship_anti_air_1
+				rear_1_custom_slot = ship_light_battery_1
+			}
+		}
+		create_equipment_variant = {
+			name = "Alsedo Class"
+			type = ship_hull_light_1
+			name_group = SPR_DD_HISTORICAL
+			modules = {
+				fixed_ship_battery_slot = ship_light_battery_1
+				fixed_ship_anti_air_slot = ship_anti_air_1
+				fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+				fixed_ship_radar_slot = ship_sonar_1
+				fixed_ship_engine_slot = light_ship_engine_1
+				fixed_ship_torpedo_slot = ship_torpedo_1
+				mid_1_custom_slot = ship_anti_air_1
+				rear_1_custom_slot = ship_depth_charge_1
+			}
+		}
+		create_equipment_variant = {
+			name = "B Class"
+			type = ship_hull_submarine_1
+			name_group = SPR_SS_HISTORICAL
+			parent_version = 0
+			modules = {
+				fixed_ship_torpedo_slot = ship_torpedo_sub_1
+				fixed_ship_engine_slot = sub_ship_engine_1
+				rear_1_custom_slot = empty
+			}
+		}
+		create_equipment_variant = {
+			name = "C Class"
+			type = ship_hull_submarine_2
+			name_group = SPR_SS_HISTORICAL
+			parent_version = 0
+			modules = {
+				fixed_ship_torpedo_slot = ship_torpedo_sub_2
+				fixed_ship_engine_slot = sub_ship_engine_2
+				rear_1_custom_slot = empty
+			}
+		}
+	}
+
+set_convoys = 200
 set_stability = 0.6
