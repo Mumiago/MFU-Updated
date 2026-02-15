@@ -2209,9 +2209,9 @@ NNavy = {
 	NAVAL_COMBAT_PLANE_MIN_STACKING_PENALTY = 80,						-- How many planes flying in a naval combat before penalties are introduced
 	NAVAL_COMBAT_PLANE_STACKING_PENALTY_EFFECT = 0.005,					-- Each plane above the optimal amount decreases the amount of airplanes being able to takeoff by such %. Subject to diminishing returns
 	NAVAL_HEADQUARTERS_EXPERIENCE_SCALE = 0.125,					-- Characters assigned to a naval HQ will gain 15% of all experience from taskforces in their regions
-	NAVAL_INVASION_PREPARE_DAYS = 7,								-- base days needed to prepare a naval invasion
-	NAVAL_INVASION_PLAN_CAP = 100,									-- base cap of naval invasions can be planned at the same time
-	BASE_NAVAL_INVASION_DIVISION_CAP = 10,							-- base cap of divisions that can be assigned in a naval invasion
+	NAVAL_INVASION_PREPARE_DAYS = 1,								-- base days needed to prepare a naval invasion
+	NAVAL_INVASION_PLAN_CAP = 0,									-- base cap of naval invasions can be planned at the same time
+	BASE_NAVAL_INVASION_DIVISION_CAP = 0,							-- base cap of divisions that can be assigned in a naval invasion
 
 
 	--gtd
