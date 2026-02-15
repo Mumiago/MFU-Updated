@@ -3258,7 +3258,7 @@ focus_tree = {
 			custom_effect_tooltip = MANspace
 			add_offsite_building = {
 				type = industrial_complex
-				level = 5
+				level = 4
 			}
 
 						GER = {
@@ -3834,7 +3834,7 @@ focus_tree = {
 		cost = 5
 
 		available_if_capitulated = yes
-		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_SPA_CARLIST_UPRISING }
+		search_filters = { FOCUS_FILTER_POLITICAL  }
 		completion_reward = {
 			add_political_power = 125
 			add_stability = -0.1
@@ -4204,6 +4204,7 @@ focus_tree = {
 				SPR_MIDDLE_STAB_FACTOR = 0.1
 				tooltip = stability_tooltip_general
 			}
+			add_stability = 0.075
 			add_war_support = 0.075
 		}
 	}
@@ -5958,6 +5959,7 @@ focus_tree = {
 			mio:SPR_INI_NATIONALISATION = {
 				add_mio_funds = 1000
 				add_mio_funds_gain_factor = 0.05
+				add_mio_size_up_requirement_factor = -0.05
 			}
 		}
 	}
@@ -6145,19 +6147,19 @@ focus_tree = {
 			custom_effect_tooltip = MANspace
 			459 = {
 				add_extra_state_shared_building_slots = 4
-				add_dynamic_modifier = { modifier = ITA_state_development_africa3 days = 210 scope = SPR }
+				add_dynamic_modifier = { modifier = ITA_state_development_africa3 days = 400 scope = SPR }
 			}
 			513 = {
 				add_extra_state_shared_building_slots = 4
-				add_dynamic_modifier = { modifier = ITA_state_development_africa3 days = 210 scope = SPR }
+				add_dynamic_modifier = { modifier = ITA_state_development_africa3 days = 400 scope = SPR }
 			}
 			462 = {
 				add_extra_state_shared_building_slots = 4
-				add_dynamic_modifier = { modifier = ITA_state_development_africa3 days = 210 scope = SPR }
+				add_dynamic_modifier = { modifier = ITA_state_development_africa3 days = 400 scope = SPR }
 			}
 			461 = {
 				add_extra_state_shared_building_slots = 4
-				add_dynamic_modifier = { modifier = ITA_state_development_africa3 days = 210 scope = SPR }
+				add_dynamic_modifier = { modifier = ITA_state_development_africa3 days = 400 scope = SPR }
 			}
 		}
 	}
@@ -6199,6 +6201,10 @@ focus_tree = {
 				value = 0.05
 				tooltip = industrial_capacity_factory_tooltip
 			}
+			mio:SPR_INI_NATIONALISATION = {
+				add_mio_funds =500
+				add_mio_funds_gain_factor = 0.1
+			}
 		}
 	}
 
@@ -6236,22 +6242,22 @@ focus_tree = {
 		completion_reward = {	
 			custom_effect_tooltip = SPR_eco_modif
 			add_to_variable = {
-				SPR_MIDDLE_industry_consumer_goods_factor = 0.06
+				SPR_MIDDLE_industry_consumer_goods_factor = 0.04
 				tooltip = consumer_goods_tooltip
 			}
 			add_to_variable = {
 				var = SPR_MIDDLE_industry_production_speed_industrial_complex_factor
-				value = 0.075
+				value = 0.15
 				tooltip = industrial_complex_build_speed_factor_tooltip
 			}
 			add_to_variable = {
 				var = SPR_MIDDLE_industry_production_speed_arms_factory_factor
-				value = 0.075
+				value = 0.15
 				tooltip = arms_factory_build_speed_factor_tooltip
 			}
 			add_to_variable = {
 				var = SPR_MIDDLE_industry_industrial_capacity_factory
-				value = -0.15
+				value = -0.05
 				tooltip = industrial_capacity_factory_tooltip
 			}
 			add_to_variable = {
@@ -6568,12 +6574,56 @@ focus_tree = {
 			custom_effect_tooltip = MANspace
 			if = {
 				limit = {
+					SPR = {
+						has_idea = SPR_INI_1
+					}
+				}
+				SPR = {
+					swap_ideas = {
+						remove_idea = SPR_INI_1
+						add_idea = SPR_INI_2
+					}
+				}
+				else_if = {
+					limit = {
+						SPR = {
+							has_idea = SPR_INI_2
+						}
+					}
+					SPR = {
+						swap_ideas = {
+							remove_idea = SPR_INI_2
+							add_idea = SPR_INI_3
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						SPR = {
+							has_idea = SPR_INI_3
+						}
+					}
+					SPR = {
+						swap_ideas = {
+							remove_idea = SPR_INI_3
+							add_idea = SPR_INI_4
+						}
+					}
+				}	
+			}
+			if = {
+				limit = {
 					NOT = {
 						has_country_flag = SPR_INI_1_complete
 					}
 				}
 				set_country_flag = SPR_INI_1_complete
-				custom_effect_tooltip = spr_INI_1_complete_tooltip
+				#custom_effect_tooltip = spr_INI_1_complete_tooltip
+				custom_effect_tooltip = MANspace
+				swap_ideas = {
+					remove_idea = SPR_INI_1
+					add_idea = SPR_INI_2
+				}
 				else_if = {
 					limit = {
 						has_country_flag = SPR_INI_1_complete
@@ -6582,7 +6632,12 @@ focus_tree = {
 						}
 					}
 					set_country_flag = SPR_INI_2_complete
-					custom_effect_tooltip = spr_INI_2_complete_tooltip
+					#custom_effect_tooltip = spr_INI_2_complete_tooltip
+					custom_effect_tooltip = MANspace
+					swap_ideas = {
+						remove_idea = SPR_INI_2
+						add_idea = SPR_INI_3
+					}
 				}
 				else_if = {
 					limit = {
@@ -6593,7 +6648,12 @@ focus_tree = {
 						}
 					}
 					set_country_flag = SPR_INI_3_complete
-					custom_effect_tooltip = spr_INI_3_complete_tooltip
+					#custom_effect_tooltip = spr_INI_3_complete_tooltip
+					custom_effect_tooltip = MANspace
+					swap_ideas = {
+						remove_idea = SPR_INI_2
+						add_idea = SPR_INI_3
+					}
 				}
 			}
 			custom_effect_tooltip = MANspace
