@@ -899,7 +899,7 @@ NBuildings = {
 
 
 
-	SUPPLY_ROUTE_RESOURCE_BONUS = 3,   -- multiplicative resource bonus for having a railway/naval connection to the capital
+	SUPPLY_ROUTE_RESOURCE_BONUS = 0,   -- multiplicative resource bonus for having a railway/naval connection to the capital
 	INFRASTRUCTURE_MUD_EFFECT = -0.8, -- multiplicative effect on mud growth for max infra
 	ANTI_AIR_SUPERIORITY_MULT = 5.0,	-- How much air superiority reduction to the enemy does our AA guns? Normally each building level = -1 reduction. With this multiplier.
 	MAX_BUILDING_LEVELS = 15,			-- Max levels a building can have.
