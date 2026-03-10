@@ -2924,7 +2924,7 @@ NAITheatre = {
 NAI = {
 	STRIKE_FORCE_TARGET_RECALC_DAYS = 5,					-- Each X days, the AI will reevaluate which regions to put strike forces in (because patrol coverage will change)
 	NAVAL_STRIKE_FORCE_OBJECTIVE_IMPORTANCE = {				-- ordering of this list is important!
-		0.1875,	-- invasion suppport
+		0.1876,	-- invasion suppport
 		0.25,	-- invasion defense
 		0,0,	-- others ( MineSweeping, MineLaying )
 		0.0625,	-- generic coast defense
