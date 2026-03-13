@@ -180,16 +180,18 @@ focus_tree = {
 		completion_reward = {
 
 			hidden_effect = {
-				173 = {
-					set_variable = { var = SPA_garrison_control value = 3 }
-					SPA_garrison_control_tooltip = yes
-					SPA_garrison_control_cost_calculation = yes
-
-				}
+				#173 = {
+				#	set_variable = { var = SPA_garrison_control value = 3 }
+				#}
 				170 = {
 					subtract_from_variable = { var = SPA_garrison_control value = 3 }
-					SPA_garrison_control_tooltip = yes
-					SPA_garrison_control_cost_calculation = yes
+					transfer_state_to = SPN
+					add_core_of = SPN
+				}
+				173 = {
+					add_to_variable = { var = SPA_garrison_control value = 3 }
+					transfer_state_to = SPR
+					add_core_of = SPR
 				}
 			}
 			custom_effect_tooltip = secure_granada
@@ -254,8 +256,6 @@ focus_tree = {
 			hidden_effect = {
 				169 = {
 					set_variable = { var = SPA_garrison_control value = 3 }
-					SPA_garrison_control_tooltip = yes
-					SPA_garrison_control_cost_calculation = yes
 				}
 			}
 			custom_effect_tooltip = secure_sevilla
@@ -3503,11 +3503,6 @@ focus_tree = {
 				}
 				add_core_of = SPR
 			}
-			hidden_effect = {
-				168 = {
-					add_core_of = SPR
-				}	
-			}
 			
 			
 		}
@@ -6389,11 +6384,6 @@ focus_tree = {
 				}
 				add_core_of = SPR
 			}
-			hidden_effect = {
-				168 = {
-					add_core_of = SPR
-				}	
-			}
 			custom_effect_tooltip = MANspace
 			custom_effect_tooltip = SPR_army_modif
 			add_to_variable = {
@@ -7735,11 +7725,6 @@ focus_tree = {
 					is_core_of = SPN
 				}
 				add_core_of = SPR
-			}
-			hidden_effect = {
-				168 = {
-					add_core_of = SPR
-				}	
 			}
 			add_stability = -0.05
 		}
@@ -11051,6 +11036,88 @@ focus_tree = {
 
 		completion_reward = {
 			add_equipment_to_stockpile = { type = transport_plane_equipment_1 amount = 150 producer = GER } 
+			hidden_effect = {
+				division_template = {
+					name = "División de Paracaidistas"
+					priority = 2
+					division_names_group = GER_PAR_01
+
+					regiments = {
+						paratrooper = { x = 0 y = 0 }
+						paratrooper = { x = 0 y = 1 }
+						paratrooper = { x = 0 y = 2 }
+						paratrooper = { x = 0 y = 3 }
+						
+						paratrooper = { x = 1 y = 0 }
+						paratrooper = { x = 1 y = 1 }
+						paratrooper = { x = 1 y = 2 }
+						paratrooper = { x = 1 y = 3 }
+						
+						paratrooper = { x = 2 y = 0 }
+						paratrooper = { x = 2 y = 1 }
+						paratrooper = { x = 2 y = 2 }
+						paratrooper = { x = 2 y = 3 }
+
+						paratrooper = { x = 3 y = 0 }
+						paratrooper = { x = 3 y = 1 }
+						paratrooper = { x = 3 y = 2 }
+
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+						engineer = { x = 0 y = 1 }
+						field_hospital = { x = 1 y = 0 }
+						recon = { x = 1 y = 1 }
+					}
+				}	
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT ={
+							has_completed_focus = SPA_secure_sevila
+							has_completed_focus = SPA_secure_granada
+						}
+					}
+					290 = {	
+						create_unit = {
+							division = "division_template = \"División de Paracaidistas\" start_experience_factor = 0.6 start_equipment_factor = 1"
+							owner = SPR
+							allow_spawning_on_enemy_provs = yes
+							prioritize_location = 9945
+						}
+					}
+				}
+				if = {
+					limit = {
+						has_completed_focus = SPA_secure_sevila
+					}
+					169 = {	
+						create_unit = {
+							division = "division_template = \"División de Paracaidistas\" start_experience_factor = 0.6 start_equipment_factor = 1"
+							owner = SPR
+							allow_spawning_on_enemy_provs = yes
+							prioritize_location = 7183
+						}
+					}
+				}
+				if = {
+					limit = {
+						has_completed_focus = SPA_secure_granada
+					}
+					173 = {	
+						create_unit = {
+							division = "division_template = \"División de Paracaidistas\" start_experience_factor = 0.6 start_equipment_factor = 1"
+							owner = SPR
+							allow_spawning_on_enemy_provs = yes
+							prioritize_location = 9979
+						}
+					}
+				}	
+			}
+			custom_effect_tooltip = MANspace
+			custom_effect_tooltip = german_para_in_spain
+			
 		}
 	}
 	focus = { 
@@ -11129,11 +11196,11 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			add_equipment_to_stockpile = { type = heavy_anti_air_equipment_1 amount = 272 producer = GER }
+			add_equipment_to_stockpile = { type = heavy_anti_air_equipment_1 amount = 400 producer = GER }
 			custom_effect_tooltip = MANspace
 			add_tech_bonus = {
 				name = GER_artillery_expansion
-				bonus = 0.75
+				bonus = 1
 				uses = 2
 				technology = heavy_antiair_2
 				technology = heavy_antiair_5
@@ -11236,7 +11303,7 @@ focus_tree = {
 
 		completion_reward = {
 			air_experience = 50	
-			add_equipment_to_stockpile = { type = tac_bomber_equipment_1934 amount = 77 producer = GER }   
+			add_equipment_to_stockpile = { type = tac_bomber_equipment_1934 amount = 120 producer = GER }   
 		}
 	}
 	focus = { 
@@ -11454,7 +11521,7 @@ focus_tree = {
 
 		completion_reward = {
 			air_experience = 50	
-			add_equipment_to_stockpile = { type = fighter_equipment_1936 amount = 80 producer = GER } 
+			add_equipment_to_stockpile = { type = fighter_equipment_1936 amount = 160 producer = GER } 
 			add_ideas = SPR_terror_bombing_1
 		}
 	}
