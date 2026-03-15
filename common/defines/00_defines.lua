@@ -570,7 +570,7 @@ NResistance = {
 		10, -50, -- below 10% it has a -50% modifier on decay
 		20, -25, -- below 20% it has a -25% modifier on decay
 	},
-	MIN_DAMAGE_TO_GARRISONS_MODIFIER = 0.1, -- modifier that applies to losses from resistance attack to garrisons at most can be reduced to this amount
+	MIN_DAMAGE_TO_GARRISONS_MODIFIER = 0.15, -- modifier that applies to losses from resistance attack to garrisons at most can be reduced to this amount
 	RESISTANCE_GROWTH_BASE = 0.2, -- base resistance grow
 	RESISTANCE_GROWTH_MIN = 0.01, -- min resistance grow
 	RESISTANCE_GROWTH_MAX = 100.0, -- max resistance grow
@@ -588,7 +588,7 @@ NResistance = {
 	RESISTANCE_RATIO_DIFF_TO_SPREAD = 0.5, -- resistance diff between two neighbour states will spread by this ratio ( from highest resistance states to lower ones and it will only spread once to a state)
 	
 	RESISTANCE_ACTIVITY_CHANCE_AT_MAX_RESISTANCE = 0.312,
-	RESISTANCE_ACTIVITY_MIN_GARRISON_PENETRATE_CHANCE = 0.02,
+	RESISTANCE_ACTIVITY_MIN_GARRISON_PENETRATE_CHANCE = 0.04,
 	
 	RESISTANCE_TARGET_TO_REENABLE_RESISTANCE = 10, -- resistance will be disabled once it reaches zero and will not be reenabled until resistance target reaches above this value
 	GARRISON_LOG_MAX_MONTHS = 12,				
@@ -4898,9 +4898,9 @@ NIntel = {
 },
 NDoctrines = {
         DEFAULT_REWARD_MASTERY = 80.0,                         -- How much mastery is required for unlocking a doctrine reward, if no override is set
-        BASE_MASTERY_GAIN_TARGET_MANPOWER = 100000.0,           -- Beyond this amount of manpower contributing to mastery, mastery gain will start having diminishing returns (see doctrines documentation)
+        BASE_MASTERY_GAIN_TARGET_MANPOWER = 200000.0,           -- Beyond this amount of manpower contributing to mastery, mastery gain will start having diminishing returns (see doctrines documentation)
         TRAINING_MASTERY_GAIN_FACTOR = 0,                     -- How much training contributes to doctrine mastery relative to combat/missions
-        MAX_MONTHLY_MASTERY_GAIN = 30.0,                        -- Monthly mastery gain will not exceed this value
+        MAX_MONTHLY_MASTERY_GAIN = 50.0,                        -- Monthly mastery gain will not exceed this value
         MIN_MASTERY_GAIN_PER_DAY = 0.0,                         -- If we have any mastery gain, it will be boosted to be at least this much per day (lower cap)
         MASTERY_BAR_ANIMATION_SPEED_PER_DAILY_MASTERY = 5.0, -- Multiplier of how fast the mastery bar animates based on daily mastery gain
         MASTERY_BAR_MAX_ANIMATION_SPEED = 50.0,               -- Max speed of the mastery bar animation
@@ -4910,12 +4910,12 @@ NDoctrines = {
         THEATER_COMMANDER_UNITS_MASTERY_GAIN_FACTOR_PER_SKILL = 0.01,  -- Unit in a theater commander's theater will contribute this fraction of their mastery gain to the theater commander's country, for each skill point they have in attack + defense
 	NAVAL_MISSION_MASTERY_GAIN_FACTORS = {  -- Mastery gain from naval missions is reduced, just like training
 		0.0, -- HOLD
-		0.2, -- PATROL
+		0.0, -- PATROL
 		0.0, -- STRIKE FORCE
-		0.2, -- CONVOY RAIDING
-		0.2, -- CONVOY ESCORT
-		0.2, -- MINES PLANTING
-		0.2, -- MINES SWEEPING
+		0.0, -- CONVOY RAIDING
+		0.0, -- CONVOY ESCORT
+		0.0, -- MINES PLANTING
+		0.0, -- MINES SWEEPING
 		0.0, -- TRAIN # NOT USED - handled by TRAINING_MASTERY_GAIN_FACTOR
 		0.0, -- RESERVE_FLEET
 		0.0, -- NAVAL_INVASION_SUPPORT
