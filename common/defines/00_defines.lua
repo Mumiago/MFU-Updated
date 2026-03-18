@@ -835,7 +835,7 @@ NProduction = {
 	CAPITULATE_STOCKPILES_RATIO = 0.5, -- How much equipment from deployed divisions will be transferred on capitulation
 	CAPITULATE_FUEL_RATIO = 0.5, -- How much fuel will be transferred on capitulation																				  
 	INFRA_MAX_CONSTRUCTION_COST_EFFECT = 1, 		-- Building in a state with higher infrastructure will reduce the cost of shared buildings.
-	PRODUCTION_RESOURCE_LACK_PENALTY = -0.016,			-- Penalty decrease while lack of resource per factory
+	PRODUCTION_RESOURCE_LACK_PENALTY = -0.015,			-- Penalty decrease while lack of resource per factory
 	MIN_LICENSE_ACTIVE_DAYS = 1,						-- Min days for license to be active
 	BASE_LICENSE_IC_COST = 0,							-- Base IC cost for lended license
 	LICENSE_IC_COST_YEAR_INCREASE = 0,					-- IC cost equipment for every year of equipment after 1936
@@ -1749,6 +1749,7 @@ NAir = {
 	RECON_LAND_SPOT_CHANCE = 0.2,                     				-- scale factor on spotting lan
 },
 NFactions = {
+	FACTION_INFLUENCE_SCIENTIST_CONTRIBUTION_VALUE = 0.5,				-- how much contribution one scientists gives to you if it is working for somebody else.
 	FACTION_INITIATIVE_CHANGE_RULE_COST = 1,				-- Cost of changing a faction rule (FI points)
 	FACTION_DOCTRINE_SHARING_UNLOCK_COST = 1,               -- Cost of unlocking doctrine sharing for one folder
 	DOCTRINE_SHARING_BASE_MASTERY_GAIN_MONTHLY = 10,        -- When doctrine sharing is enabled, this is the base amount of mastery gained monthly
