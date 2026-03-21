@@ -298,7 +298,7 @@ NCountry = {
 	--NOSUR
 	CONVOY_CONTROLLED_ROUTE_COST_REDUCTION_FACTOR = 0.25,	-- How much fewer convoys you need shipping through areas you control
 	NAVY_USE_HOME_BASE_FOR_RANGE = false,			-- If true, will calculate task force range from home base, otherwise will calculate from any friendly naval base
-	DEFAULT_COASTAL_PROTECTION_STABILITY = 0.1,		-- Default stability when the coastal states are fully protected
+	DEFAULT_COASTAL_PROTECTION_STABILITY = 0.0,		-- Default stability when the coastal states are fully protected
 	--GTT
 	THERMONUCLEAR_BOMB_DROP_WAR_SUPPORT_EFFECT_MAX_INFRA = 0.2,	-- Reduce enemy national war support on nuking a province, the value scales with infrastructure up to this number
 	THERMONUCLEAR_BOMB_DROP_WAR_SUPPORT_EFFECT_MAX_VP = 3,		-- War support will be scaled down if there's less VP than this in the province
@@ -1580,7 +1580,7 @@ NAir = {
 	COMBAT_SUP_VS_SUP_ATTACK_CHANCE_SPEED_DIFF = 0.25, 	-- How much diff in speed between aircrafts affects the chance of who attacks first in superiority vs superiority.( Naval air combat only )
 	COMBAT_MULTIPLANE_CAP = 1.40,						-- How many planes can shoot at each plane on other side ( if there are 100 planes we are atttacking COMBAT_MULTIPLANE_CAP * 100 of our planes can shoot )
 	COMBAT_DAMAGE_SCALE = 0.3,							-- Higher value = more shot down planes
-	COMBAT_DAMAGE_SCALE_CARRIER = 9,                    -- same as above but used inside naval combat for carrier battles																								   
+	COMBAT_DAMAGE_SCALE_CARRIER = 8,                    -- same as above but used inside naval combat for carrier battles																								   
 	DETECT_CHANCE_FROM_OCCUPATION = 0.15, 				-- How much the controlled provinces in area affects the air detection base value.
 	DETECT_CHANCE_FROM_RADARS = 0.7, 					-- How much the radars in area affects detection chance.
 	DETECT_CHANCE_FROM_AIRCRAFTS_EFFECTIVE_COUNT = 2400, -- Max amount of aircrafts in region to give full detection bonus.
@@ -2399,7 +2399,7 @@ NNavy = {
 	CONVOY_EFFICIENCY_REGAIN_BASE_SPEED = 0.05,						-- How much efficiency regains every day.
 	CONVOY_EFFICIENCY_MIN_VALUE = 0.5,								-- To avoid complete 0% efficiency, set the lower limit.
 	CONVOY_ROUTE_SIZE_CONVOY_SCALE = 0.4,                           -- scales impact of convoy route size (0 to turn off)
-	ANTI_AIR_TARGETTING_TO_CHANCE = 0.25,							-- Balancing value to convert averaged equipment stats (anti_air_targetting and naval_strike_agility) to probability chances of airplane being hit by navies AA.
+	ANTI_AIR_TARGETTING_TO_CHANCE = 0.22,							-- Balancing value to convert averaged equipment stats (anti_air_targetting and naval_strike_agility) to probability chances of airplane being hit by navies AA.
 	ANTI_AIR_ATTACK_TO_AMOUNT = 0.0015,								-- Balancing value to convert equipment stat anti_air_attack to the random % value of airplanes being hit.
 	CONVOY_SINKING_SPILLOVER = 0.5,                 				-- Damaged convoys roll for if they sink in the end of combat by accumulating the damage. This scales that chance. 
 	UNIT_EXPERIENCE_PER_COMBAT_HOUR = 10,
