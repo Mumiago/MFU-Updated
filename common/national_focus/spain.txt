@@ -6949,11 +6949,11 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = SPR_army_modif
 			add_to_variable = {
-				SPR_army_attack_factor_var = 0.025
+				SPR_army_attack_factor_var = 0.05
 				tooltip = army_attack_factor_tooltip
 			}
 			add_to_variable = {
-				SPR_army_defence_factor_var = 0.025
+				SPR_army_defence_factor_var = 0.05
 				tooltip = army_defense_factor_tooltip
 			}
 			add_to_variable = {
@@ -11159,13 +11159,8 @@ focus_tree = {
 				SPR_army_attack_factor_var = 0.03
 				tooltip = army_attack_factor_tooltip
 			}
-			add_to_variable = {
-				SPR_army_morale_factor = 0.05
-				tooltip = army_morale_factor_tooltip
-			}
 			custom_effect_tooltip = MANspace
 			custom_effect_tooltip = galicia_german_units_tooltip
-			custom_effect_tooltip = oskar_diddler_tooltip
 
 			hidden_effect = {
 				create_equipment_variant = {
@@ -11213,7 +11208,7 @@ focus_tree = {
 			custom_effect_tooltip = MANspace
 			add_doctrine_cost_reduction = {
 				name = land_doc_bonus
-				cost_reduction = 0.4
+				cost_reduction = 0.2
 				uses = 1
 				category = land_doctrine
 			}
@@ -11228,7 +11223,7 @@ focus_tree = {
 		x = -2
 		y = 1
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_legoin_condor_leads_the_way
@@ -11252,7 +11247,8 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			add_equipment_to_stockpile = { type = transport_plane_equipment_1 amount = 150 producer = GER } 
+			add_equipment_to_stockpile = { type = transport_plane_equipment_1 amount = 100 producer = GER } 
+			add_equipment_to_stockpile = { type = fighter_equipment_1934 amount = 20 producer = GER } 
 			hidden_effect = {
 				division_template = {
 					name = "División de Paracaidistas"
@@ -11289,48 +11285,14 @@ focus_tree = {
 				}	
 			}
 			hidden_effect = {
-				if = {
-					limit = {
-						NOT ={
-							has_completed_focus = SPA_secure_sevila
-							has_completed_focus = SPA_secure_granada
-						}
-					}
-					290 = {	
+				290 = {	
 						create_unit = {
-							division = "division_template = \"División de Paracaidistas\" start_experience_factor = 0.6 start_equipment_factor = 0.67"
+							division = "division_template = \"División de Paracaidistas\" start_experience_factor = 0.6 start_equipment_factor = 1"
 							owner = SPR
 							allow_spawning_on_enemy_provs = yes
 							prioritize_location = 9945
 						}
 					}
-				}
-				if = {
-					limit = {
-						has_completed_focus = SPA_secure_sevila
-					}
-					169 = {	
-						create_unit = {
-							division = "division_template = \"División de Paracaidistas\" start_experience_factor = 0.6 start_equipment_factor = 0.67"
-							owner = SPR
-							allow_spawning_on_enemy_provs = yes
-							prioritize_location = 7183
-						}
-					}
-				}
-				if = {
-					limit = {
-						has_completed_focus = SPA_secure_granada
-					}
-					173 = {	
-						create_unit = {
-							division = "division_template = \"División de Paracaidistas\" start_experience_factor = 0.6 start_equipment_factor = 0.67"
-							owner = SPR
-							allow_spawning_on_enemy_provs = yes
-							prioritize_location = 9979
-						}
-					}
-				}	
 			}
 			custom_effect_tooltip = MANspace
 			custom_effect_tooltip = german_para_in_spain
@@ -11339,19 +11301,21 @@ focus_tree = {
 	}
 	focus = { 
 		id = SPA_import_german_tools
-		icon = GFX_GER_curtail_steel_barons
+		icon = GFX_GER_kesselschlacht
 
-		relative_position_id = SPA_spanish_macc_company
-		x = 0
+		relative_position_id = SPA_expand_bomber_fleet
+		x = 1
 		y = 1
 
-		cost = 5
+		cost = 7.15
 
 		prerequisite = {
-			focus = SPA_spanish_macc_company
+			focus = SPA_trial_modern_figters
+			focus = SPA_expand_bomber_fleet
 		}
-
-		cost = 5
+		prerequisite = {
+			focus = SPA_trial_armor_spearhead
+		}
 
 		ai_will_do = {
 			factor = 1
@@ -11371,11 +11335,17 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			add_tech_bonus = {
-				technology = improved_machine_tools
-				technology = advanced_machine_tools
-				uses = 1 
-				bonus = 1.5
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.4
+				uses = 1
+				category = land_doctrine
+			}
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.4
+				uses = 1
+				category = cat_mobile_warfare
 			}
 		}
 	}
@@ -11383,17 +11353,15 @@ focus_tree = {
 		id = SPA_flak_kanone
 		icon = GFX_focus_spr_support_at_aa
 
-		relative_position_id = SPA_import_german_tools
-		x = 0
-		y = 1
+		relative_position_id = SPA_trial_armor_spearhead
+		x = 1
+		y = 2
 
-		cost = 5
+		cost = 7.15
 
 		prerequisite = {
-			focus = SPA_import_german_tools
+			focus = SPA_trial_armor_spearhead
 		}
-
-		cost = 5
 
 		ai_will_do = {
 			factor = 1
@@ -11423,7 +11391,13 @@ focus_tree = {
 				technology = heavy_antiair_5
 			}
 			custom_effect_tooltip = MANspace
-
+			hidden_effect = {
+				set_technology = {
+						SPR_heavy_aa_reduction = 1
+					}	
+			}
+				
+				custom_effect_tooltip = spr_reduce_mot_req
 		}
 	}
 
@@ -11431,14 +11405,15 @@ focus_tree = {
 		id = SPA_strumkampffungeng
 		icon = GFX_GER_junker
 
-		relative_position_id = SPA_legoin_condor_leads_the_way
-		x = 0
+		relative_position_id = SPA_trial_modern_figters
+		x = 1
 		y = 1
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
-			focus = SPA_legoin_condor_leads_the_way
+			focus = SPA_expand_bomber_fleet
+			focus = SPA_trial_modern_figters
 		}
 
 		ai_will_do = {
@@ -11483,23 +11458,26 @@ focus_tree = {
 				}
 				add_equipment_to_stockpile = { type = CAS_equipment_1937 amount = 100 producer = GER }   
 			}
+			custom_effect_tooltip = MANspace
+			add_ideas = effective_training_programs_spirit
 		}
 	}
 	focus = { 
 		id = SPA_expand_bomber_fleet
 		icon = GFX_GER_long_range_escorts
 
-		relative_position_id = SPA_strumkampffungeng
-		x = 0
+		relative_position_id = SPA_spanish_macc_company
+		x = 1
 		y = 1
 
-		cost = 5
+		cost = 7.15
 
 		prerequisite = {
-			focus = SPA_strumkampffungeng
+			focus = SPA_spanish_macc_company
 		}
-
-		cost = 5
+		mutually_exclusive = {
+			focus = SPA_trial_modern_figters
+		}
 
 		ai_will_do = {
 			factor = 1
@@ -11527,24 +11505,15 @@ focus_tree = {
 		id = SPA_deploy_heavy_artillery
 		icon = GFX_GER_artillery_expansion
 
-		relative_position_id = SPA_expand_bomber_fleet
-		x = 0
-		y = 1
+		relative_position_id = SPA_trial_armor_spearhead
+		x = -1
+		y = 2
 
-		cost = 5
+		cost = 7.15
 
 		prerequisite = {
-			focus = SPA_trial_modern_figters
+			focus = SPA_trial_armor_spearhead
 		}
-		prerequisite = {
-			focus = SPA_expand_bomber_fleet
-		}
-
-		mutually_exclusive = {
-			focus = SPA_rial_terror_bombing
-		}
-
-		cost = 5
 
 		ai_will_do = {
 			factor = 1
@@ -11564,8 +11533,8 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			add_equipment_to_stockpile = { type = heavy_artillery_equipment_2 amount = 350 producer = GER }
-			add_equipment_to_stockpile = { type = heavy_artillery_equipment_1 amount = 3 producer = GER }
+			add_equipment_to_stockpile = { type = heavy_artillery_equipment_2 amount = 250 producer = GER }
+			add_equipment_to_stockpile = { type = heavy_artillery_equipment_1 amount = 100 producer = GER }
 			custom_effect_tooltip = MANspace
 			add_tech_bonus = {
 				name = GER_artillery_expansion
@@ -11583,16 +11552,67 @@ focus_tree = {
 			
 		}
 	}
-	
 	focus = { 
-		id = SPA_trial_armor_spearhead
+		id = SPA_condor_leagion_advisors
 		icon = GFX_GER_achtung_panzer
 
 		relative_position_id = SPA_legoin_condor_leads_the_way
 		x = 2
 		y = 1
 
-		cost = 5
+		cost = 10
+
+		prerequisite = {
+			focus = SPA_legoin_condor_leads_the_way
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			has_global_flag = spanish_civil_war
+				NOT = {
+				has_global_flag = scw_over
+			}
+		}
+
+		bypass = {}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+			custom_effect_tooltip = SPR_army_modif
+			add_to_variable = {
+				SPR_army_org_factor_var = 0.05
+				tooltip = army_org_factor_tooltip
+			}
+			add_to_variable = {
+				SPR_army_morale_factor = 0.05
+				tooltip = army_morale_factor_tooltip
+			}
+			custom_effect_tooltip = MANspace
+			SRN_emilion_esteban_blue = {
+				add_unit_leader_trait = spr_condor_blue_legion_trait
+			}
+			custom_effect_tooltip = MANspace
+			custom_effect_tooltip = oskar_diddler_tooltip
+			custom_effect_tooltip = MANspace
+			custom_effect_tooltip = manuel_diddler_tooltip
+		}
+	}
+
+	focus = { 
+		id = SPA_trial_armor_spearhead
+		icon = GFX_GER_light_tanks
+
+		relative_position_id = SPA_legoin_condor_leads_the_way
+		x = 2
+		y = 2
+
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_legoin_condor_leads_the_way
@@ -11708,17 +11728,18 @@ focus_tree = {
 		id = SPA_trial_modern_figters
 		icon = GFX_GER_modern_fighter
 
-		relative_position_id = SPA_trial_armor_spearhead
-		x = 0
+		relative_position_id = SPA_spanish_macc_company
+		x = -1
 		y = 1
 
-		cost = 5
+		cost = 7.15
 
 		prerequisite = {
-			focus = SPA_trial_armor_spearhead
+			focus = SPA_spanish_macc_company
 		}
-
-		cost = 5
+		mutually_exclusive = {
+			focus = SPA_expand_bomber_fleet
+		}
 
 		ai_will_do = {
 			factor = 1
@@ -11741,8 +11762,7 @@ focus_tree = {
 			air_experience = 50	
 			add_equipment_to_stockpile = { type = fighter_equipment_1936 amount = 100 producer = GER } 
 			add_ideas = SPR_terror_bombing_1
-			custom_effect_tooltip = MANspace
-			add_ideas = effective_training_programs_spirit
+
 		}
 	}
 
@@ -11750,24 +11770,16 @@ focus_tree = {
 		id = SPA_rial_terror_bombing
 		icon = GFX_GER_strategic_bombing_doctrine
 
-		relative_position_id = SPA_trial_modern_figters
+		relative_position_id = SPA_strumkampffungeng
 		x = 0
 		y = 1
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
-			focus = SPA_trial_modern_figters
-		}
-		prerequisite = {
-			focus = SPA_expand_bomber_fleet
+			focus = SPA_strumkampffungeng
 		}
 
-		mutually_exclusive = {
-			focus = SPA_deploy_heavy_artillery
-		}
-
-		cost = 5
 
 		ai_will_do = {
 			factor = 1
@@ -11790,7 +11802,7 @@ focus_tree = {
 
 			add_ideas = SPR_terror_bombing_2
 
-			add_equipment_to_stockpile = { type = tac_bomber_equipment_1936 amount = 150 producer = GER }   
+			add_equipment_to_stockpile = { type = tac_bomber_equipment_1936 amount = 80 producer = GER }   
 		}
 	}
 
@@ -11798,18 +11810,18 @@ focus_tree = {
 		id = SPA_the_future_of_warfare
 		icon = GFX_GER_armor_design_competition
 
-		relative_position_id = SPA_deploy_heavy_artillery
-		x = 0
+		relative_position_id = SPA_rial_terror_bombing
+		x = 1
 		y = 1
 
 		cost = 7.15
 
 		prerequisite = {
-			focus = SPA_flak_kanone
+			focus = SPA_rial_terror_bombing
 		}
 		prerequisite = {
 			focus = SPA_deploy_heavy_artillery
-			focus = SPA_rial_terror_bombing
+			focus = SPA_flak_kanone
 		}
 
 		ai_will_do = {
@@ -11831,10 +11843,6 @@ focus_tree = {
 
 		completion_reward = {
 			custom_effect_tooltip = SPR_army_modif
-			add_to_variable = {
-				SPR_army_org_factor_var = -0.05
-				tooltip = army_org_factor_tooltip
-			}
 			add_to_variable = {
 				SPR_army_morale_factor = 0.05
 				tooltip = army_morale_factor_tooltip
@@ -11941,9 +11949,12 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
+			ITA = {
+				add_political_power = 50
+			}
 			custom_effect_tooltip = SPR_army_modif
 			add_to_variable = {
-				SPR_army_defence_factor_var = -0.05
+				SPR_army_defence_factor_var = -0.06
 				tooltip = army_defense_factor_tooltip
 			}
 			add_to_variable = {
@@ -11953,9 +11964,6 @@ focus_tree = {
 			add_to_variable = {
 				SPR_max_planning_var = -0.25
 				tooltip = max_planning_tooltip
-			}
-			ITA = {
-				add_political_power = 50
 			}
 			
 			hidden_effect = {
@@ -12067,7 +12075,7 @@ focus_tree = {
 		x = -3
 		y = 1
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_ctv_in_charge
@@ -12110,7 +12118,7 @@ focus_tree = {
 		x = 1
 		y = 1
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_re_equip_the_carabineros
@@ -12149,7 +12157,7 @@ focus_tree = {
 		x = 1
 		y = 2
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_empty_the_great_war_eq
@@ -12197,7 +12205,7 @@ focus_tree = {
 		x = -1
 		y = 1
 
-		cost = 5
+		cost = 7.15
 
 		prerequisite = {
 			focus = SPA_ctv_in_charge
@@ -12227,7 +12235,7 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = SPR_army_modif
 			add_to_variable = {
-				SPR_army_attack_factor_var = 0.025
+				SPR_army_attack_factor_var = 0.03
 				tooltip = army_attack_factor_tooltip
 			}
 				custom_effect_tooltip = MANspace
@@ -12331,8 +12339,12 @@ focus_tree = {
 		completion_reward = {
 				custom_effect_tooltip = SPR_army_modif
 				add_to_variable = {
-					SPR_army_defence_factor_var = 0.05
+					SPR_army_defence_factor_var = 0.06
 					tooltip = army_defense_factor_tooltip
+				}
+				add_to_variable = {
+					SPR_army_speed_factor_var = 0.05
+					tooltip = army_speed_tooltip
 				}
 				custom_effect_tooltip = MANspace
 			hidden_effect = {
@@ -12368,7 +12380,7 @@ focus_tree = {
 		x = 0
 		y = 2
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_regulars_spr
@@ -12407,7 +12419,7 @@ focus_tree = {
 		x = 0
 		y = 1
 
-		cost = 7.15
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_aviaziune_legionaria
@@ -12447,7 +12459,7 @@ focus_tree = {
 		x = 3
 		y = 1
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_ctv_in_charge
@@ -12490,7 +12502,7 @@ focus_tree = {
 		x = -1
 		y = 1
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_mass_motorization_spr
@@ -12547,7 +12559,7 @@ focus_tree = {
 		x = -1
 		y = 2
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_modify_tankettes
@@ -12620,6 +12632,14 @@ focus_tree = {
 			}
 			custom_effect_tooltip = SPR_army_modif
 			add_to_variable = {
+				SPR_armor_attack = -0.05
+				tooltip = army_armor_attack_tooltip
+			}
+			add_to_variable = {
+				SPR_armor_defense = -0.05
+				tooltip = army_armor_defense_tooltip
+			}
+			add_to_variable = {
 				SPR_max_planning_var = 0.15
 				tooltip = max_planning_tooltip
 			}
@@ -12676,20 +12696,12 @@ focus_tree = {
 
 			custom_effect_tooltip = SPR_army_modif
 			add_to_variable = {
-				SPR_army_attack_factor_var = 0.05
+				SPR_army_attack_factor_var = 0.03
 				tooltip = army_attack_factor_tooltip
 			}
 			add_to_variable = {
-				SPR_army_defence_factor_var = 0.05
+				SPR_army_defence_factor_var = 0.03
 				tooltip = army_defense_factor_tooltip
-			}
-			add_to_variable = {
-				SPR_armor_attack = -0.05
-				tooltip = army_armor_attack_tooltip
-			}
-			add_to_variable = {
-				SPR_armor_defense = -0.05
-				tooltip = army_armor_defense_tooltip
 			}
 			add_to_variable = {
 				SPR_army_org_factor_var = 0.1
@@ -12698,10 +12710,6 @@ focus_tree = {
 			add_to_variable = {
 				SPR_army_morale_factor = 0.05
 				tooltip = army_morale_factor_tooltip
-			}
-			add_to_variable = {
-				SPR_army_speed_factor_var = 0.05
-				tooltip = army_speed_tooltip
 			}
 			add_to_variable = {
 				SPR_max_planning_var = 0.2
@@ -12766,7 +12774,11 @@ focus_tree = {
 			}
 			custom_effect_tooltip = SPR_army_modif
 			add_to_variable = {
-				SPR_recruitable_population_factor_var = 0.05
+				SPR_army_defence_factor_var = 0.03
+				tooltip = army_defense_factor_tooltip
+			}
+			add_to_variable = {
+				SPR_recruitable_population_factor_var = 0.1
 				tooltip = CAN_recruitable_tt1
 			}
 			custom_effect_tooltip = MANspace
@@ -12787,7 +12799,7 @@ focus_tree = {
 		x = -3
 		y = 1
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_every_man_for_spain
@@ -12826,7 +12838,7 @@ focus_tree = {
 		x = 1
 		y = 1
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_secure_the_arsenale
@@ -12866,7 +12878,7 @@ focus_tree = {
 		x = 1
 		y = 2
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_emergency_munitions_corporations
@@ -12896,6 +12908,10 @@ focus_tree = {
 			custom_effect_tooltip = SPR_industry_modif_spr_1_post
 			set_variable = {
 				var_spr_arty_idea = 1
+			}
+			mio:SPR_esperanza_y_cia_organization = {
+				add_mio_funds = 2500
+				add_mio_funds_gain_factor = 0.1
 			}
 		}
 	}
@@ -12941,10 +12957,6 @@ focus_tree = {
 			add_to_variable = {
 				SPR_army_org_factor_var = 0.05
 				tooltip = army_org_factor_tooltip
-			}
-			add_to_variable = {
-				SPR_recruitable_population_factor_var = 0.05
-				tooltip = CAN_recruitable_tt1
 			}
 			
 		}
@@ -13054,7 +13066,7 @@ focus_tree = {
 		x = 1
 		y = 1
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_rape_republican_soldiers
@@ -13092,7 +13104,7 @@ focus_tree = {
 		x = 0
 		y = 1
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_foreign_training_staff
@@ -13130,7 +13142,7 @@ focus_tree = {
 		x = 3
 		y = 1
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_every_man_for_spain
@@ -13172,7 +13184,7 @@ focus_tree = {
 		x = -1
 		y = 1
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_integrate_por_units
@@ -13258,6 +13270,10 @@ focus_tree = {
 				SPR_cavalry_attack_factor_var = 0.1
 				tooltip = horse_attack_tooltip
 			}
+			add_to_variable = {
+				SPR_army_speed_factor_var = 0.025
+				tooltip = army_speed_tooltip
+			}
 			add_equipment_to_stockpile = {
 				type = horse_equipment
 				amount = 6000
@@ -13274,7 +13290,7 @@ focus_tree = {
 		x = -1
 		y = 2
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_new_calvarary_division
@@ -13366,15 +13382,15 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = SPR_army_modif
 			add_to_variable = {
+				SPR_arty_attc = 0.1
+				tooltip = army_artillery_attack_tooltip
+			}
+			add_to_variable = {
 				SPR_army_defence_factor_var = 0.03
 				tooltip = army_defense_factor_tooltip
 			}
 			add_to_variable = {
-				SPR_arty_attc = 0.05
-				tooltip = army_artillery_attack_tooltip
-			}
-			add_to_variable = {
-				SPR_army_org_factor_var = 0.1
+				SPR_army_org_factor_var = 0.05
 				tooltip = army_org_factor_tooltip
 			}
 			add_to_variable = {
@@ -13509,7 +13525,7 @@ focus_tree = {
 		x = -2
 		y = 1
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_army_of_africa_leads_the_way
@@ -13570,7 +13586,7 @@ focus_tree = {
 		x = 0
 		y = 1
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_consolidate_the_north
@@ -13617,13 +13633,12 @@ focus_tree = {
 		x = 0
 		y = 1
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_organise_armor_car_prodution
 		}
 
-		cost = 5
 
 		ai_will_do = {
 			factor = 1
@@ -13668,7 +13683,7 @@ focus_tree = {
 		x = 0
 		y = 1
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_army_of_africa_leads_the_way
@@ -13713,13 +13728,11 @@ focus_tree = {
 		x = 0
 		y = 1
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_expand_the_legion
 		}
-
-		cost = 5
 
 		ai_will_do = {
 			factor = 1
@@ -13762,7 +13775,7 @@ focus_tree = {
 		x = 0
 		y = 1
 
-		cost = 5
+		cost = 7.15
 
 		prerequisite = {
 			focus = SPA_fuerzas_regulated_indiginous
@@ -13775,7 +13788,6 @@ focus_tree = {
 			focus = SPA_formant_carlist_spirit
 		}
 
-		cost = 5
 
 		ai_will_do = {
 			factor = 1
@@ -13813,7 +13825,7 @@ focus_tree = {
 		x = 2
 		y = 1
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_army_of_africa_leads_the_way
@@ -13852,13 +13864,11 @@ focus_tree = {
 		x = 0
 		y = 1
 
-		cost = 5
+		cost = 10
 
 		prerequisite = {
 			focus = SPA_africanist_spirit
 		}
-
-		cost = 5
 
 		ai_will_do = {
 			factor = 1
@@ -13940,9 +13950,7 @@ focus_tree = {
 		x = 0
 		y = 1
 
-		cost = 5
-
-
+		cost = 7.15
 
 		prerequisite = {
 			focus = SPA_fuerzas_regulated_indiginous
@@ -13955,7 +13963,6 @@ focus_tree = {
 			focus = SPA_unite_the_requetes
 		}
 
-		cost = 5
 
 		ai_will_do = {
 			factor = 1
@@ -13991,7 +13998,7 @@ focus_tree = {
 		x = 0
 		y = 1
 
-		cost = 5
+		cost = 7.15
 
 		prerequisite = {
 			focus = SPA_secure_key_industries
