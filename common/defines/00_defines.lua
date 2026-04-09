@@ -867,7 +867,7 @@ NTechnology = {
 	BASE_RESEARCH_POINTS_SAVED = 25.0,		-- Base amount of research points a country can save per slot.
 	BASE_YEAR_AHEAD_PENALTY_FACTOR = 4,		-- 3 Base year ahead penalty
 	BASE_TECH_COST = 78,					-- base cost for a tech. multiplied with tech cost and ahead of time penalties
-	MAX_TECH_SHARING_BONUS = 0.5, 			-- Max technology sharing bonus that can be applied instantly
+	MAX_TECH_SHARING_BONUS = 1, 			-- Max technology sharing bonus that can be applied instantly
 	LICENSE_PRODUCTION_TECH_BONUS = 0.15,	-- License production tech bonus
  
 	DEFAULT_XP_RESEARCH_COST = 100,			-- default xp cost of a research to speed up the process
@@ -2212,8 +2212,8 @@ NNavy = {
 	NAVAL_COMBAT_PLANE_STACKING_PENALTY_EFFECT = 0.005,					-- Each plane above the optimal amount decreases the amount of airplanes being able to takeoff by such %. Subject to diminishing returns
 	NAVAL_HEADQUARTERS_EXPERIENCE_SCALE = 0.125,					-- Characters assigned to a naval HQ will gain 15% of all experience from taskforces in their regions
 	NAVAL_INVASION_PREPARE_DAYS = 1,								-- base days needed to prepare a naval invasion
-	NAVAL_INVASION_PLAN_CAP = 0,									-- base cap of naval invasions can be planned at the same time
-	BASE_NAVAL_INVASION_DIVISION_CAP = 0,							-- base cap of divisions that can be assigned in a naval invasion
+	NAVAL_INVASION_PLAN_CAP = 6,									-- base cap of naval invasions can be planned at the same time
+	BASE_NAVAL_INVASION_DIVISION_CAP = 3,							-- base cap of divisions that can be assigned in a naval invasion
 
 
 	--gtd
