@@ -10365,14 +10365,31 @@ SPR_1_dev_year_plan_decisions = {
 			icon = GFX_decision_SOV_place_hq
 
 			available = {
-				any_core_state = {
-					naval_headquarters > 0
+				#has_dlc = "No Compromise, No Surrender"
+				if = {
+					limit = { 
+						has_dlc = "No Compromise, No Surrender"
+					}
+					any_core_state = {
+						naval_headquarters > 0
+					}
+					
+					any_core_state = {
+						naval_supply_hub > 0
+					}
+					fuel_silo > 9
+				}
+				if = {
+					limit = { 
+						NOT = {
+							has_dlc = "No Compromise, No Surrender"
+						}
+					}
+					dockyard > 24
+					
+					fuel_silo > 9
 				}
 				
-				any_core_state = {
-					naval_supply_hub > 0
-				}
-				fuel_silo > 9
 			}	
 
 			days_mission_timeout = 365
@@ -10381,6 +10398,7 @@ SPR_1_dev_year_plan_decisions = {
 
 			visible = {
 				#has_completed_focus = SPA_reorganise_the_economy
+				has_dlc = "No Compromise, No Surrender"
 			}
 			activation = {
 				always = no
@@ -10410,6 +10428,11 @@ SPR_1_dev_year_plan_decisions = {
 			}
 
 			complete_effect = {
+				if = {
+					limit = { 
+						
+					}
+				}
 				every_navy_leader = {
 					gain_xp = 500
 				}
@@ -13635,12 +13658,19 @@ SPR_parlament_system ={
 			NOT = {
 				has_country_flag = check_fuck_off_1
 			}
+			NOT = {
+				AND = {
+					has_tech = construction3
+					has_tech = improved_equipment_conversion
+				}
+			}
 		}
 
 		visible = {
-			NOT = {
-				has_tech = construction3
-			}
+			#NOT = {
+			#	has_tech = construction3
+			#	has_tech = improved_equipment_conversion
+			#}
 			has_country_flag = toggle_button_industial_point
 		}
 
@@ -13649,7 +13679,7 @@ SPR_parlament_system ={
 		modifier = {
 			civilian_factory_use = 3
 			stability_weekly = -0.003
-			war_support_weekly = -0.001
+			#war_support_weekly = -0.001
 		}
 			
 		custom_cost_trigger = {
@@ -13689,6 +13719,7 @@ SPR_parlament_system ={
 					}
 				}
 				add_stability = 0.02
+
 				else_if = {
 					limit = {
 						any_state = {
@@ -13699,10 +13730,10 @@ SPR_parlament_system ={
 						limit = {
 							has_state_flag = DEVELOPMENT_PROGRAM_2
 						}
-						add_extra_state_shared_building_slots = 2
+						add_extra_state_shared_building_slots = 1
 						add_building_construction = {
 							type = industrial_complex
-							level = 2
+							level = 1
 						}
 					}
 					add_stability = -0.01
@@ -13710,20 +13741,63 @@ SPR_parlament_system ={
 				else_if = {
 					limit = {
 						any_state = {
-							NOT = {
-								has_state_flag = DEVELOPMENT_PROGRAM_1
+							OR = {
+								has_state_flag = DEVELOPMENT_PROGRAM_3
+								has_state_flag = DEVELOPMENT_PROGRAM_4
+								has_state_flag = DEVELOPMENT_PROGRAM_5
+								has_state_flag = DEVELOPMENT_PROGRAM_6
+								has_state_flag = DEVELOPMENT_PROGRAM_7
 							}
 						}
 					}
 					random_owned_state = {
-						add_extra_state_shared_building_slots = 2
+						limit = {
+							OR = {
+								has_state_flag = DEVELOPMENT_PROGRAM_3
+								has_state_flag = DEVELOPMENT_PROGRAM_4
+								has_state_flag = DEVELOPMENT_PROGRAM_5
+								has_state_flag = DEVELOPMENT_PROGRAM_6
+								has_state_flag = DEVELOPMENT_PROGRAM_7
+							}
+						}
+						add_extra_state_shared_building_slots = 1
 						add_building_construction = {
 							type = industrial_complex
-							level = 2
+							level = 1
 						}
 					}
 					add_stability = -0.03
 				}
+				else_if = {
+					limit = {
+						any_state = {
+							OR = {
+								NOT = {
+									has_state_flag = DEVELOPMENT_PROGRAM_1
+									has_state_flag = DEVELOPMENT_PROGRAM_2
+									has_state_flag = DEVELOPMENT_PROGRAM_3
+									has_state_flag = DEVELOPMENT_PROGRAM_4
+									has_state_flag = DEVELOPMENT_PROGRAM_5
+									has_state_flag = DEVELOPMENT_PROGRAM_6
+									has_state_flag = DEVELOPMENT_PROGRAM_7	
+								}
+							}
+						}
+					}
+					random_owned_state = {
+						limit = {
+							is_core_of = SPR
+						}
+						add_extra_state_shared_building_slots = 1
+						add_building_construction = {
+							type = industrial_complex
+							level = 1
+						}
+					}
+					add_stability = -0.03
+					add_cic = 1
+				}
+				
 			}
 
 			if = {
@@ -13771,6 +13845,7 @@ SPR_parlament_system ={
 				has_country_flag = check_fuck_off_1
 			}
 			has_tech = construction3
+			has_tech = improved_equipment_conversion
 		}
 
 		visible = {
@@ -13782,7 +13857,7 @@ SPR_parlament_system ={
 		modifier = {
 			civilian_factory_use = 3
 			stability_weekly = -0.003
-			war_support_weekly = -0.001
+			#war_support_weekly = -0.001
 		}
 			
 		custom_cost_trigger = {
@@ -13843,12 +13918,25 @@ SPR_parlament_system ={
 				else_if = {
 					limit = {
 						any_state = {
-							NOT = {
-								has_state_flag = DEVELOPMENT_PROGRAM_1
+							OR = {
+								has_state_flag = DEVELOPMENT_PROGRAM_3
+								has_state_flag = DEVELOPMENT_PROGRAM_4
+								has_state_flag = DEVELOPMENT_PROGRAM_5
+								has_state_flag = DEVELOPMENT_PROGRAM_6
+								has_state_flag = DEVELOPMENT_PROGRAM_7
 							}
 						}
 					}
 					random_owned_state = {
+						limit = {
+							OR = {
+								has_state_flag = DEVELOPMENT_PROGRAM_3
+								has_state_flag = DEVELOPMENT_PROGRAM_4
+								has_state_flag = DEVELOPMENT_PROGRAM_5
+								has_state_flag = DEVELOPMENT_PROGRAM_6
+								has_state_flag = DEVELOPMENT_PROGRAM_7
+							}
+						}
 						add_extra_state_shared_building_slots = 2
 						add_building_construction = {
 							type = industrial_complex
@@ -13856,6 +13944,34 @@ SPR_parlament_system ={
 						}
 					}
 					add_stability = -0.03
+				}
+				else_if = {
+					limit = {
+						any_state = {
+							NOT = {
+								has_state_flag = DEVELOPMENT_PROGRAM_1
+								has_state_flag = DEVELOPMENT_PROGRAM_2
+								has_state_flag = DEVELOPMENT_PROGRAM_3
+								has_state_flag = DEVELOPMENT_PROGRAM_4
+								has_state_flag = DEVELOPMENT_PROGRAM_5
+								has_state_flag = DEVELOPMENT_PROGRAM_6
+								has_state_flag = DEVELOPMENT_PROGRAM_7	
+							}
+						}
+					}
+					random_owned_state = {
+						limit = {
+							is_core_of = SPR
+						}
+						add_extra_state_shared_building_slots = 2
+						add_building_construction = {
+							type = industrial_complex
+							level = 2
+						}
+
+					}
+					add_stability = -0.03
+					add_cic = 1
 				}
 			}
 
@@ -13906,12 +14022,14 @@ SPR_parlament_system ={
 			NOT = {
 				has_country_flag = check_fuck_off_2
 			}
-		}
-
-		visible = {
 			NOT = {
 				has_tech = construction3
 			}
+			
+			
+		}
+
+		visible = {
 			has_country_flag = toggle_button_industial_point
 		}
 
@@ -13920,7 +14038,7 @@ SPR_parlament_system ={
 		modifier = {
 			civilian_factory_use = 2
 			stability_weekly = -0.002
-			war_support_weekly = -0.001
+			#war_support_weekly = -0.001
 		}
 			
 		custom_cost_trigger = {
@@ -13987,14 +14105,23 @@ SPR_parlament_system ={
 				else_if = {
 					limit = {
 						any_state = {
-							NOT = {
-								has_state_flag = DEVELOPMENT_PROGRAM_1
-								has_state_flag = DEVELOPMENT_PROGRAM_2
-								has_state_flag = DEVELOPMENT_PROGRAM_3
+							OR = {
+								has_state_flag = DEVELOPMENT_PROGRAM_4
+								has_state_flag = DEVELOPMENT_PROGRAM_5
+								has_state_flag = DEVELOPMENT_PROGRAM_6
+								has_state_flag = DEVELOPMENT_PROGRAM_7	
 							}
 						}
 					}
 					random_owned_state = {
+						limit = {
+							OR = {
+								has_state_flag = DEVELOPMENT_PROGRAM_4
+								has_state_flag = DEVELOPMENT_PROGRAM_5
+								has_state_flag = DEVELOPMENT_PROGRAM_6
+								has_state_flag = DEVELOPMENT_PROGRAM_7	
+							}
+						}
 						add_extra_state_shared_building_slots = 1
 						add_building_construction = {
 							type = infrastructure
@@ -14002,6 +14129,34 @@ SPR_parlament_system ={
 						}
 					}
 					add_stability = -0.03
+				}
+				else_if = {
+					limit = {
+						any_state = {
+							NOT = {
+								has_state_flag = DEVELOPMENT_PROGRAM_1
+								has_state_flag = DEVELOPMENT_PROGRAM_2
+								has_state_flag = DEVELOPMENT_PROGRAM_3
+								has_state_flag = DEVELOPMENT_PROGRAM_4
+								has_state_flag = DEVELOPMENT_PROGRAM_5
+								has_state_flag = DEVELOPMENT_PROGRAM_6
+								has_state_flag = DEVELOPMENT_PROGRAM_7	
+							}
+						}
+					}
+					random_owned_state = {
+						limit = {
+							is_core_of = SPR
+						}
+						add_extra_state_shared_building_slots = 1
+						add_building_construction = {
+							type = infrastructure
+							level = 1
+						}
+
+					}
+					add_stability = -0.03
+					add_cic = 1
 				}
 			}
 
@@ -14065,7 +14220,7 @@ SPR_parlament_system ={
 		modifier = {
 			civilian_factory_use = 2
 			stability_weekly = -0.002
-			war_support_weekly = -0.001
+			#war_support_weekly = -0.001
 		}
 			
 		custom_cost_trigger = {
@@ -14108,10 +14263,8 @@ SPR_parlament_system ={
 				else_if = {
 					limit = {
 						any_state = {
-							OR = {
-								has_state_flag = DEVELOPMENT_PROGRAM_1
-								has_state_flag = DEVELOPMENT_PROGRAM_3
-							}
+							has_state_flag = DEVELOPMENT_PROGRAM_1
+							has_state_flag = DEVELOPMENT_PROGRAM_3
 						}
 					}
 					random_owned_state = {
@@ -14132,14 +14285,23 @@ SPR_parlament_system ={
 				else_if = {
 					limit = {
 						any_state = {
-							NOT = {
-								has_state_flag = DEVELOPMENT_PROGRAM_1
-								has_state_flag = DEVELOPMENT_PROGRAM_2
-								has_state_flag = DEVELOPMENT_PROGRAM_3
+							OR = {
+								has_state_flag = DEVELOPMENT_PROGRAM_4
+								has_state_flag = DEVELOPMENT_PROGRAM_5
+								has_state_flag = DEVELOPMENT_PROGRAM_6
+								has_state_flag = DEVELOPMENT_PROGRAM_7	
 							}
 						}
 					}
 					random_owned_state = {
+						limit = {
+							OR = {
+								has_state_flag = DEVELOPMENT_PROGRAM_4
+								has_state_flag = DEVELOPMENT_PROGRAM_5
+								has_state_flag = DEVELOPMENT_PROGRAM_6
+								has_state_flag = DEVELOPMENT_PROGRAM_7	
+							}
+						}
 						add_extra_state_shared_building_slots = 1
 						add_building_construction = {
 							type = infrastructure
@@ -14149,6 +14311,34 @@ SPR_parlament_system ={
 					add_stability = -0.03
 				}
 			}
+			else_if = {
+					limit = {
+						any_state = {
+							NOT = {
+								has_state_flag = DEVELOPMENT_PROGRAM_1
+								has_state_flag = DEVELOPMENT_PROGRAM_2
+								has_state_flag = DEVELOPMENT_PROGRAM_3
+								has_state_flag = DEVELOPMENT_PROGRAM_4
+								has_state_flag = DEVELOPMENT_PROGRAM_5
+								has_state_flag = DEVELOPMENT_PROGRAM_6
+								has_state_flag = DEVELOPMENT_PROGRAM_7	
+							}
+						}
+					}
+					random_owned_state = {
+						limit = {
+							is_core_of = SPR
+						}
+						add_extra_state_shared_building_slots = 1
+						add_building_construction = {
+							type = infrastructure
+							level = 1
+						}
+
+					}
+					add_stability = -0.03
+					add_cic = 1
+				}
 
 		if = {
 				limit = { 
@@ -14205,7 +14395,7 @@ SPR_parlament_system ={
 
 		visible = {
 			NOT = {
-				has_tech = construction3
+				has_tech = excavation3
 			}
 			has_country_flag = toggle_button_industial_point
 		}
@@ -14215,7 +14405,7 @@ SPR_parlament_system ={
 		modifier = {
 			civilian_factory_use = 3
 			stability_weekly = -0.002
-			war_support_weekly = -0.001
+			#war_support_weekly = -0.001
 		}
 			
 		custom_cost_trigger = {
@@ -14320,42 +14510,128 @@ SPR_parlament_system ={
 				else_if = {
 					limit = {
 						any_state = {
-							NOT = {
-								has_state_flag = DEVELOPMENT_PROGRAM_3
-								has_state_flag = DEVELOPMENT_PROGRAM_2
+							OR = {
+								has_state_flag = DEVELOPMENT_PROGRAM_1
+								has_state_flag = DEVELOPMENT_PROGRAM_4
+								has_state_flag = DEVELOPMENT_PROGRAM_5
+								has_state_flag = DEVELOPMENT_PROGRAM_6
+								has_state_flag = DEVELOPMENT_PROGRAM_7
 							}
 						}
 					}
 				 	random_owned_state = {
 						 random_list = {
-						2 = {
-							add_resource = {
-								type = steel
-								amount = 12
+							2 = {
+								add_resource = {
+									type = steel
+									amount = 12
+								}
 							}
-						}
-						3 = {
-							add_resource = {
-								type = aluminium
-								amount = 6
+							3 = {
+								add_resource = {
+									type = aluminium
+									amount = 6
+								}
 							}
-						}
-						2 = {
-							add_resource = {
-								type = tungsten
-								amount = 3
-							}
+							2 = {
+								add_resource = {
+									type = tungsten
+									amount = 3
+								}
 
-						}
-						1 = {
-							add_resource = {
-								type = chromium
-								amount = 9
+							}
+							1 = {
+								add_resource = {
+									type = chromium
+									amount = 9
+								}
 							}
 						}
 					}
-				}
 					add_stability = -0.03
+				}
+				else_if = {
+					limit = {
+						any_state = {
+							NOT = {
+								has_state_flag = DEVELOPMENT_PROGRAM_1
+								has_state_flag = DEVELOPMENT_PROGRAM_2
+								has_state_flag = DEVELOPMENT_PROGRAM_3
+								has_state_flag = DEVELOPMENT_PROGRAM_4
+								has_state_flag = DEVELOPMENT_PROGRAM_5
+								has_state_flag = DEVELOPMENT_PROGRAM_6
+								has_state_flag = DEVELOPMENT_PROGRAM_7	
+							}
+						}
+					}
+					random_owned_state = {
+						limit = {
+							is_core_of = SPR
+						}
+						 random_list = {
+							2 = {
+								add_resource = {
+									type = steel
+									amount = 12
+								}
+							}
+							3 = {
+								add_resource = {
+									type = aluminium
+									amount = 6
+								}
+							}
+							2 = {
+								add_resource = {
+									type = tungsten
+									amount = 3
+								}
+
+							}
+							1 = {
+								add_resource = {
+									type = chromium
+									amount = 9
+								}
+							}
+						}
+
+					}
+					random_owned_state = {
+						limit = {
+							is_core_of = SPR
+						}
+						 random_list = {
+							2 = {
+								add_resource = {
+									type = steel
+									amount = 12
+								}
+							}
+							3 = {
+								add_resource = {
+									type = aluminium
+									amount = 6
+								}
+							}
+							2 = {
+								add_resource = {
+									type = tungsten
+									amount = 3
+								}
+
+							}
+							1 = {
+								add_resource = {
+									type = chromium
+									amount = 9
+								}
+							}
+						}
+						
+					}
+					add_stability = -0.01
+					add_cic = 1
 				}
 			}
 
@@ -14407,7 +14683,7 @@ SPR_parlament_system ={
 			NOT = {
 				has_country_flag = check_fuck_off_3
 			}
-			has_tech = construction3
+			has_tech = excavation3
 		}
 
 		visible = {
@@ -14419,7 +14695,7 @@ SPR_parlament_system ={
 		modifier = {
 			civilian_factory_use = 3
 			stability_weekly = -0.002
-			war_support_weekly = -0.001
+			#war_support_weekly = -0.001
 		}
 			
 		custom_cost_trigger = {
@@ -14451,6 +14727,33 @@ SPR_parlament_system ={
 				random_owned_state = {
 					limit = {
 						has_state_flag = DEVELOPMENT_PROGRAM_3
+					}
+					random_list = {
+						3 = {
+							add_resource = {
+								type = steel
+								amount = 12
+							}
+						}
+						1 = {
+							add_resource = {
+								type = aluminium
+								amount = 6
+							}
+						}
+						1 = {
+							add_resource = {
+								type = tungsten
+								amount = 3
+							}
+
+						}
+						3 = {
+							add_resource = {
+								type = chromium
+								amount = 12
+							}
+						}
 					}
 					random_list = {
 						3 = {
@@ -14518,20 +14821,81 @@ SPR_parlament_system ={
 							}
 						}
 					}
+					random_list = {
+						2 = {
+							add_resource = {
+								type = steel
+								amount = 12
+							}
+						}
+						2 = {
+							add_resource = {
+								type = aluminium
+								amount = 6
+							}
+						}
+						2 = {
+							add_resource = {
+								type = tungsten
+								amount = 3
+							}
+
+						}
+						2 = {
+							add_resource = {
+								type = chromium
+								amount = 9
+							}
+						}
+					}
 				}
 					add_stability = -0.01
 				}
 				else_if = {
 					limit = {
 						any_state = {
-							NOT = {
-								has_state_flag = DEVELOPMENT_PROGRAM_3
+							OR = {
+								has_state_flag = DEVELOPMENT_PROGRAM_1
 								has_state_flag = DEVELOPMENT_PROGRAM_2
+								has_state_flag = DEVELOPMENT_PROGRAM_3
+								has_state_flag = DEVELOPMENT_PROGRAM_4
+								has_state_flag = DEVELOPMENT_PROGRAM_5
+								has_state_flag = DEVELOPMENT_PROGRAM_6
+								has_state_flag = DEVELOPMENT_PROGRAM_7	
 							}
 						}
 					}
-					 random_owned_state = {
+					random_owned_state = {
 						 random_list = {
+							2 = {
+								add_resource = {
+									type = steel
+									amount = 12
+								}
+							}
+							3 = {
+								add_resource = {
+									type = aluminium
+									amount = 6
+								}
+							}
+							2 = {
+								add_resource = {
+									type = tungsten
+									amount = 3
+								}
+
+							}
+							1 = {
+								add_resource = {
+									type = chromium
+									amount = 9
+								}
+							}
+						}
+				 }
+				 random_owned_state = {
+					 random_list = {
 						2 = {
 							add_resource = {
 								type = steel
@@ -14561,6 +14925,35 @@ SPR_parlament_system ={
 				}
 					add_stability = -0.03
 				}
+
+				else_if = {
+					limit = {
+						any_state = {
+							NOT = {
+								has_state_flag = DEVELOPMENT_PROGRAM_1
+								has_state_flag = DEVELOPMENT_PROGRAM_2
+								has_state_flag = DEVELOPMENT_PROGRAM_3
+								has_state_flag = DEVELOPMENT_PROGRAM_4
+								has_state_flag = DEVELOPMENT_PROGRAM_5
+								has_state_flag = DEVELOPMENT_PROGRAM_6
+								has_state_flag = DEVELOPMENT_PROGRAM_7	
+							}
+						}
+					}
+					random_owned_state = {
+						limit = {
+							is_core_of = SPR
+						}
+						add_extra_state_shared_building_slots = 1
+						add_building_construction = {
+							type = arms_factory
+							level = 1
+						}
+					}
+					add_stability = -0.01
+					add_cic = 1
+				}
+
 			}
 
 		if = {
@@ -14857,26 +15250,36 @@ SPR_parlament_system ={
 					limit = {
 						has_state_flag = DEVELOPMENT_PROGRAM_5
 					}
-					add_extra_state_shared_building_slots = 1
+					add_extra_state_shared_building_slots = 2
 					add_building_construction = {
 						type = arms_factory
-						level = 1
+						level = 2
 					}
 				}
 				add_stability = 0.02
-					else_if = {
+				else_if = {
 					limit = {
 						any_state = {
-							NOT = {
-								has_state_flag = DEVELOPMENT_PROGRAM_5
+							OR = {
+								has_state_flag = DEVELOPMENT_PROGRAM_1
+								has_state_flag = DEVELOPMENT_PROGRAM_2
+								has_state_flag = DEVELOPMENT_PROGRAM_3
+								has_state_flag = DEVELOPMENT_PROGRAM_4
+								has_state_flag = DEVELOPMENT_PROGRAM_6
+								has_state_flag = DEVELOPMENT_PROGRAM_7	
 							}
 							
 						}
 					}
 					random_owned_state = {
 						limit = {
-							NOT = {
-								has_state_flag = DEVELOPMENT_PROGRAM_5
+							OR ={
+									has_state_flag = DEVELOPMENT_PROGRAM_1
+									has_state_flag = DEVELOPMENT_PROGRAM_2
+									has_state_flag = DEVELOPMENT_PROGRAM_3
+									has_state_flag = DEVELOPMENT_PROGRAM_4
+									has_state_flag = DEVELOPMENT_PROGRAM_6
+									has_state_flag = DEVELOPMENT_PROGRAM_7	
 							}
 						}
 						add_extra_state_shared_building_slots = 1
@@ -14885,7 +15288,34 @@ SPR_parlament_system ={
 							level = 1
 						}
 					}
-					add_stability = -0.03
+					add_stability = -0.01
+				}
+				else_if = {
+					limit = {
+						any_state = {
+							NOT = {
+								has_state_flag = DEVELOPMENT_PROGRAM_1
+								has_state_flag = DEVELOPMENT_PROGRAM_2
+								has_state_flag = DEVELOPMENT_PROGRAM_3
+								has_state_flag = DEVELOPMENT_PROGRAM_4
+								has_state_flag = DEVELOPMENT_PROGRAM_5
+								has_state_flag = DEVELOPMENT_PROGRAM_6
+								has_state_flag = DEVELOPMENT_PROGRAM_7	
+							}
+						}
+					}
+					random_owned_state = {
+						limit = {
+							is_core_of = SPR
+						}
+						add_extra_state_shared_building_slots = 1
+						add_building_construction = {
+							type = arms_factory
+							level = 1
+						}
+					}
+					add_stability = -0.01
+					add_cic = 1
 				}
 			}
 
@@ -14965,27 +15395,64 @@ SPR_parlament_system ={
 					limit = {
 						has_state_flag = DEVELOPMENT_PROGRAM_5
 					}
-					add_extra_state_shared_building_slots = 1
+					add_extra_state_shared_building_slots = 2
 					add_building_construction = {
 						type = arms_factory
-						level = 1
+						level = 2
 					}
 				}
 				add_stability = 0.02
 					else_if = {
 					limit = {
 						any_state = {
-							NOT = {
-								has_state_flag = DEVELOPMENT_PROGRAM_5
+							OR ={
+								has_state_flag = DEVELOPMENT_PROGRAM_1
+								has_state_flag = DEVELOPMENT_PROGRAM_2
+								has_state_flag = DEVELOPMENT_PROGRAM_3
+								has_state_flag = DEVELOPMENT_PROGRAM_4
+								has_state_flag = DEVELOPMENT_PROGRAM_6
+								has_state_flag = DEVELOPMENT_PROGRAM_7	
 							}
 							
 						}
 					}
 					random_owned_state = {
 						limit = {
-							NOT = {
-								has_state_flag = DEVELOPMENT_PROGRAM_5
+							OR ={
+								has_state_flag = DEVELOPMENT_PROGRAM_1
+								has_state_flag = DEVELOPMENT_PROGRAM_2
+								has_state_flag = DEVELOPMENT_PROGRAM_3
+								has_state_flag = DEVELOPMENT_PROGRAM_4
+								has_state_flag = DEVELOPMENT_PROGRAM_6
+								has_state_flag = DEVELOPMENT_PROGRAM_7	
 							}
+							
+						}
+						add_extra_state_shared_building_slots = 2
+						add_building_construction = {
+							type = arms_factory
+							level = 2
+						}
+					}
+					add_stability = -0.03
+				}
+				else_if = {
+					limit = {
+						any_state = {
+							NOT = {
+								has_state_flag = DEVELOPMENT_PROGRAM_1
+								has_state_flag = DEVELOPMENT_PROGRAM_2
+								has_state_flag = DEVELOPMENT_PROGRAM_3
+								has_state_flag = DEVELOPMENT_PROGRAM_4
+								has_state_flag = DEVELOPMENT_PROGRAM_5
+								has_state_flag = DEVELOPMENT_PROGRAM_6
+								has_state_flag = DEVELOPMENT_PROGRAM_7	
+							}
+						}
+					}
+					random_owned_state = {
+						limit = {
+							is_core_of = SPR
 						}
 						add_extra_state_shared_building_slots = 1
 						add_building_construction = {
@@ -14993,7 +15460,8 @@ SPR_parlament_system ={
 							level = 1
 						}
 					}
-					add_stability = -0.03
+					add_stability = -0.01
+					add_cic = 1
 				}
 			}
 
@@ -15071,12 +15539,12 @@ SPR_parlament_system ={
 			if = {
 				limit = {
 					any_state = {
-						has_state_flag = DEVELOPMENT_PROGRAM_5
+						has_state_flag = DEVELOPMENT_PROGRAM_6
 					}
 				}
 				random_owned_state = {
 					limit = {
-						has_state_flag = DEVELOPMENT_PROGRAM_5
+						has_state_flag = DEVELOPMENT_PROGRAM_6
 						is_coastal = yes
 					}
 					add_extra_state_shared_building_slots = 2
@@ -15090,7 +15558,7 @@ SPR_parlament_system ={
 					limit = {
 						any_state = {
 							NOT = {
-								has_state_flag = DEVELOPMENT_PROGRAM_5
+								has_state_flag = DEVELOPMENT_PROGRAM_6
 							}
 							
 						}
@@ -15098,8 +15566,9 @@ SPR_parlament_system ={
 					random_owned_state = {
 						limit = {
 							NOT = {
-								has_state_flag = DEVELOPMENT_PROGRAM_5
+								has_state_flag = DEVELOPMENT_PROGRAM_6
 							}
+							
 							is_coastal = yes
 							NOT  = {
 								state = 178
@@ -15190,12 +15659,12 @@ SPR_parlament_system ={
 			if = {
 				limit = {
 					any_state = {
-						has_state_flag = DEVELOPMENT_PROGRAM_5
+						has_state_flag = DEVELOPMENT_PROGRAM_6
 					}
 				}
 				random_owned_state = {
 					limit = {
-						has_state_flag = DEVELOPMENT_PROGRAM_5
+						has_state_flag = DEVELOPMENT_PROGRAM_6
 						is_coastal = yes
 					}
 					add_extra_state_shared_building_slots = 2
@@ -15209,7 +15678,7 @@ SPR_parlament_system ={
 					limit = {
 						any_state = {
 							NOT = {
-								has_state_flag = DEVELOPMENT_PROGRAM_5
+								has_state_flag = DEVELOPMENT_PROGRAM_6
 							}
 							
 						}
@@ -15217,7 +15686,7 @@ SPR_parlament_system ={
 					random_owned_state = {
 						limit = {
 							NOT = {
-								has_state_flag = DEVELOPMENT_PROGRAM_5
+								has_state_flag = DEVELOPMENT_PROGRAM_6
 							}
 							is_coastal = yes
 							NOT  = {
@@ -16494,6 +16963,7 @@ SPR_parlament_system ={
 		timeout_effect = {
 			add_political_power = -50
 			add_stability = -0.05
+			clr_country_flag = silo_mission
 		}
 
 		complete_effect = {
@@ -16515,6 +16985,7 @@ SPR_parlament_system ={
 				}		
 			}
 			set_country_flag = silo_1_flag
+			clr_country_flag = silo_mission
 			add_cic = 12000
 		}
 
@@ -16550,6 +17021,7 @@ SPR_parlament_system ={
 		timeout_effect = {
 			add_political_power = -50
 			add_stability = -0.05
+			clr_country_flag = silo_mission
 		}
 
 		complete_effect = {
@@ -16572,6 +17044,7 @@ SPR_parlament_system ={
 			}
 			add_cic = 40000
 			set_country_flag = silo_2_flag
+			clr_country_flag = silo_mission
 		}
 
 		
@@ -16608,6 +17081,7 @@ SPR_parlament_system ={
 		timeout_effect = {
 			add_political_power = -50
 			add_stability = -0.05
+			clr_country_flag = silo_mission
 		}
 
 		complete_effect = {
@@ -16630,6 +17104,7 @@ SPR_parlament_system ={
 			}
 			add_cic = 60000
 			set_country_flag = silo_3_flag
+			clr_country_flag = silo_mission
 		}
 
 		
@@ -16665,6 +17140,7 @@ SPR_parlament_system ={
 		timeout_effect = {
 			add_political_power = -50
 			add_stability = -0.05
+			clr_country_flag = oil_ref_mission
 		}
 
 		complete_effect = {
@@ -16687,6 +17163,7 @@ SPR_parlament_system ={
 			}
 			add_cic = 12000
 			set_country_flag = refinery_1_flag
+			clr_country_flag = oil_ref_mission
 		}
 
 
@@ -16721,6 +17198,7 @@ SPR_parlament_system ={
 		timeout_effect = {
 			add_political_power = -50
 			add_stability = -0.05
+			clr_country_flag = oil_ref_mission
 		}
 
 		complete_effect = {
@@ -16743,6 +17221,7 @@ SPR_parlament_system ={
 			}
 			add_cic = 40000
 			set_country_flag = refinery_2_flag
+			clr_country_flag = oil_ref_mission
 		}
 
 		
@@ -16779,6 +17258,7 @@ SPR_parlament_system ={
 		timeout_effect = {
 			add_political_power = -50
 			add_stability = -0.05
+			clr_country_flag = oil_ref_mission
 		}
 
 		complete_effect = {
@@ -16801,6 +17281,7 @@ SPR_parlament_system ={
 			}
 			add_cic = 60000
 			set_country_flag = refinery_3_flag
+			clr_country_flag = oil_ref_mission
 		}
 
 		
@@ -16836,6 +17317,7 @@ SPR_parlament_system ={
 		timeout_effect = {
 			add_political_power = -50
 			add_stability = -0.05
+			clr_country_flag = rubber_ref_mission
 		}
 
 		complete_effect = {
@@ -16858,6 +17340,7 @@ SPR_parlament_system ={
 			}
 			add_cic = 12000
 			set_country_flag = refinery_rub_1_flag
+			clr_country_flag = rubber_ref_mission
 		}
 
 
@@ -16892,6 +17375,7 @@ SPR_parlament_system ={
 		timeout_effect = {
 			add_political_power = -50
 			add_stability = -0.05
+			clr_country_flag = rubber_ref_mission
 		}
 
 		complete_effect = {
@@ -16914,6 +17398,7 @@ SPR_parlament_system ={
 			}
 			add_cic = 40000
 			set_country_flag = refinery_rub_2_flag
+			clr_country_flag = rubber_ref_mission
 		}
 
 		
@@ -16950,6 +17435,7 @@ SPR_parlament_system ={
 		timeout_effect = {
 			add_political_power = -50
 			add_stability = -0.05
+			clr_country_flag = rubber_ref_mission
 		}
 
 		complete_effect = {
@@ -16972,6 +17458,7 @@ SPR_parlament_system ={
 			}
 			add_cic = 60000
 			set_country_flag = refinery_rub_3_flag
+			clr_country_flag = rubber_ref_mission
 		}
 
 		
@@ -17010,8 +17497,8 @@ SPR_parlament_system ={
 		days_remove = 1 #1
 
 		timeout_effect = {
-			army_experience = -35
-			add_stability = -0.05
+			#army_experience = -35
+			#add_stability = -0.05
 			add_war_support = -0.05
 
 			clr_country_flag = radical_wing_request
@@ -17236,8 +17723,8 @@ SPR_parlament_system ={
 		days_remove = 1 #1
 
 		timeout_effect = {
-			army_experience = -35
-			add_stability = -0.05
+			#army_experience = -35
+			#add_stability = -0.05
 			add_war_support = -0.05
 
 			if = {
@@ -17444,7 +17931,7 @@ SPR_parlament_system ={
 					
 				check_variable = {
 					var = military_points
-					value > 3
+					value > 1
 				}
 			}
 		}
@@ -17461,8 +17948,8 @@ SPR_parlament_system ={
 		days_remove = 1 #1
 
 		timeout_effect = {
-			army_experience = -35
-			add_stability = -0.05
+			#army_experience = -35
+			#add_stability = -0.05
 			add_war_support = -0.05
 
 			if = {
@@ -17681,33 +18168,6 @@ SPR_arms_deal = {
 				value = 1
 				tooltip = export_points_tooltip
 			}
-			hidden_effect = {
-				add_equipment_to_stockpile = {
-					type = convoy
-					amount = -50
-				}	
-			}
-			
-		}
-		remove_effect = {
-			hidden_effect = {
-				add_equipment_to_stockpile = {
-					type = convoy
-					amount = 50
-				}	
-			}
-			
-			add_cic = 8000
-			send_equipment = {
-					equipment = infantry_equipment
-					amount = 2000
-					target = GER
-					new_prioritised = yes
-			}
-			add_equipment_to_stockpile = {
-					type = infantry_equipment
-					amount = -800
-			}
 			add_to_variable = {
 				var = export_points_actual_points
 				value = 1
@@ -17716,7 +18176,33 @@ SPR_arms_deal = {
 				var = export_points
 				value = 1
 			}
-
+			send_equipment = {
+					equipment = infantry_equipment
+					amount = 1800
+					target = GER
+					new_prioritised = yes
+			}
+			add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = -200
+			}
+			#hidden_effect = {
+			#	add_equipment_to_stockpile = {
+			#		type = convoy
+			#		amount = -50
+			#	}	
+			#}
+			
+		}
+		remove_effect = {
+			#hidden_effect = {
+			#	add_equipment_to_stockpile = {
+			#		type = convoy
+			#		amount = 50
+			#	}	
+			#}
+			
+			add_cic = 8000
 		}
 	}
 	Send_the_arty_axis = {
@@ -17741,24 +18227,17 @@ SPR_arms_deal = {
 		complete_effect = {
 			add_to_variable = {
 				var = export_points_expanding_reward
+				value = 2
+				tooltip = export_points_2_tooltip
+			}
+			add_to_variable = {
+				var = export_points_actual_points
+				value = 2
+			}
+			add_to_variable = {
+				var = export_points
 				value = 1
-				tooltip = export_points_tooltip
 			}
-			hidden_effect = {
-				add_equipment_to_stockpile = {
-					type = convoy
-					amount = -50
-				}	
-			}	
-		}
-		remove_effect = {
-			hidden_effect = {
-				add_equipment_to_stockpile = {
-					type = convoy
-					amount = 50
-				}	
-			}
-			add_cic = 8000
 			send_equipment = {
 					equipment = artillery_equipment
 					amount = 180
@@ -17769,14 +18248,21 @@ SPR_arms_deal = {
 				type = artillery_equipment
 				amount = -20
 			}
-			add_to_variable = {
-				var = export_points_actual_points
-				value = 1
-			}
-			add_to_variable = {
-				var = export_points
-				value = 1
-			}
+			#hidden_effect = {
+			#	add_equipment_to_stockpile = {
+			#		type = convoy
+			#		amount = -50
+			#	}	
+			#}	
+		}
+		remove_effect = {
+			#hidden_effect = {
+			#	add_equipment_to_stockpile = {
+			#		type = convoy
+			#		amount = 50
+			#	}	
+			#}
+			add_cic = 8000
 		}
 		
 	}
@@ -17802,26 +18288,25 @@ SPR_arms_deal = {
 			consumer_goods_factor = -0.05
 		}
 		complete_effect = {
-			hidden_effect = {
-				add_equipment_to_stockpile = {
-					type = convoy
-					amount = -50
-				}	
-			}
+			#hidden_effect = {
+			#	add_equipment_to_stockpile = {
+			#		type = convoy
+			#		amount = -50
+			#	}	
+			#}
 			add_to_variable = {
 				var = export_points_expanding_reward
 				value = 1
 				tooltip = export_points_tooltip
 			}		
-		}
-		remove_effect = {
-			hidden_effect = {
-				add_equipment_to_stockpile = {
-					type = convoy
-					amount = 50
-				}	
+			add_to_variable = {
+				var = export_points_actual_points
+				value = 1
 			}
-			add_cic = 6000
+			add_to_variable = {
+				var = export_points
+				value = 1
+			}
 			send_equipment = {
 					equipment = support_equipment
 					amount = 160
@@ -17842,14 +18327,15 @@ SPR_arms_deal = {
 				type = radio_equipment
 				amount = -20
 			}
-			add_to_variable = {
-				var = export_points_actual_points
-				value = 1
-			}
-			add_to_variable = {
-				var = export_points
-				value = 1
-			}
+		}
+		remove_effect = {
+			#hidden_effect = {
+			#	add_equipment_to_stockpile = {
+			#		type = convoy
+			#		amount = 50
+			#	}	
+			#}
+			add_cic = 6000
 		}
 		
 	}
@@ -17863,7 +18349,7 @@ SPR_arms_deal = {
 				horse_equipment > 999
 			}
 			has_equipment = {
-				motorized_equipment > 149
+				motorized_equipment > 99
 			}
 		}
 		days_re_enable = 1
@@ -17874,26 +18360,27 @@ SPR_arms_deal = {
 			consumer_goods_factor = -0.05
 		}
 		complete_effect = {
-			hidden_effect = {
-				add_equipment_to_stockpile = {
-					type = convoy
-					amount = -50
-				}	
-			}
+			#hidden_effect = {
+			#	add_equipment_to_stockpile = {
+			#		type = convoy
+			#		amount = -50
+			#	}	
+			#}
 			add_to_variable = {
 				var = export_points_expanding_reward
-				value = 1
-				tooltip = export_points_tooltip
+				value = 2
+				tooltip = export_points_2_tooltip
 			}		
-		}
-		remove_effect = {
-			hidden_effect = {
-				add_equipment_to_stockpile = {
-					type = convoy
-					amount = 50
-				}	
+			add_to_variable = {
+				var = export_points
+				value = 1
 			}
-			add_cic = 6000
+			send_equipment = {
+					equipment = motorized_equipment
+					amount = 100
+					target = GER
+					new_prioritised = yes
+			}
 			send_equipment = {
 					equipment = horse_equipment
 					amount = 950
@@ -17904,14 +18391,19 @@ SPR_arms_deal = {
 				type = horse_equipment
 				amount = -50
 			}
-			add_to_variable = {
-				var = export_points_actual_points
-				value = 1
+			add_equipment_to_stockpile = {
+				type = motorized_equipment
+				amount = -10
 			}
-			add_to_variable = {
-				var = export_points
-				value = 1
-			}
+		}
+		remove_effect = {
+			#hidden_effect = {
+			#	add_equipment_to_stockpile = {
+			#		type = convoy
+			#		amount = 50
+			#	}	
+			#}
+			add_cic = 6000
 		}
 		
 	}
@@ -17923,7 +18415,7 @@ SPR_arms_deal = {
 				convoy > 74
 			}
 			has_equipment = {
-				medium_tank_chassis > 99
+				medium_tank_chassis > 69
 			}
 
 		}
@@ -17935,44 +18427,45 @@ SPR_arms_deal = {
 			consumer_goods_factor = -0.10
 		}
 		complete_effect = {
-			hidden_effect = {
-				add_equipment_to_stockpile = {
-					type = convoy
-					amount = -75
-				}	
-			}
+			#hidden_effect = {
+			#	add_equipment_to_stockpile = {
+			#		type = convoy
+			#		amount = -75
+			#	}	
+			#}
 			add_to_variable = {
 				var = export_points_expanding_reward
-				value = 2
-				tooltip = export_points_2_tooltip
-			}		
-		}
-		remove_effect = {
-			hidden_effect = {
-				add_equipment_to_stockpile = {
-					type = convoy
-					amount = 75
-				}	
-			}
-			add_cic = 12500
-			send_equipment = {
-					equipment = medium_tank_chassis
-					amount = 90
-					target = GER
-					new_prioritised = yes
-			}
-			add_equipment_to_stockpile = {
-				type = medium_tank_chassis
-				amount = -10
+				value = 3
+				tooltip = export_points_3_tooltip
 			}
 			add_to_variable = {
 				var = export_points_actual_points
-				value = 2
+				value = 3
 			}
 			add_to_variable = {
 				var = export_points
 				value = 1
 			}
+
+			send_equipment = {
+				equipment = medium_tank_chassis
+				amount = 65
+				target = GER
+				new_prioritised = yes
+			}
+			add_equipment_to_stockpile = {
+				type = medium_tank_chassis
+				amount = -5
+			}
+		}
+		remove_effect = {
+			#hidden_effect = {
+			#	add_equipment_to_stockpile = {
+			#		type = convoy
+			#		amount = 75
+			#	}	
+			#}
+			add_cic = 14000
 		}
 		
 	}
@@ -17992,7 +18485,7 @@ SPR_arms_deal = {
 		fire_only_once = no
 		
 		modifier = {
-			consumer_goods_factor = -0.15
+			consumer_goods_factor = -0.1
 		}
 		complete_effect = {
 			add_to_variable = {
@@ -18000,21 +18493,14 @@ SPR_arms_deal = {
 				value = 3
 				tooltip = export_points_3_tooltip
 			}
-			hidden_effect = {
-				add_equipment_to_stockpile = {
-					type = convoy
-					amount = -100
-				}	
+			add_to_variable = {
+				var = export_points_actual_points
+				value = 3
 			}
-		}
-		remove_effect = {
-			hidden_effect = {
-				add_equipment_to_stockpile = {
-					type = convoy
-					amount = 100
-				}	
+			add_to_variable = {
+				var = export_points
+				value = 1
 			}
-			add_cic = 18000
 			send_equipment = {
 					equipment = heavy_tank_chassis
 					amount = 65
@@ -18025,14 +18511,22 @@ SPR_arms_deal = {
 				type = heavy_tank_chassis
 				amount = -5
 			}
-			add_to_variable = {
-				var = export_points_actual_points
-				value = 3
-			}
-			add_to_variable = {
-				var = export_points
-				value = 1
-			}
+
+			#hidden_effect = {
+			#	add_equipment_to_stockpile = {
+			#		type = convoy
+			#		amount = -100
+			#	}	
+			#}
+		}
+		remove_effect = {
+			#hidden_effect = {
+			#	add_equipment_to_stockpile = {
+			#		type = convoy
+			#		amount = 100
+			#	}	
+			#}
+			add_cic = 20000
 		}
 		
 	}
@@ -18043,13 +18537,8 @@ SPR_arms_deal = {
 			has_equipment = {
 				convoy > 74
 			}
-			or = {
-				has_equipment = {
-					small_plane_airframe > 99
-				}
-				has_equipment = {
-					jet_fighter_equipment_1947 > 9
-				}
+			has_equipment = {
+				small_plane_airframe > 49
 			}
 
 		}
@@ -18066,53 +18555,6 @@ SPR_arms_deal = {
 				value = 3
 				tooltip = export_points_3_tooltip
 			}
-			hidden_effect = {
-				add_equipment_to_stockpile = {
-					type = convoy
-					amount = -75
-				}	
-			}
-		}
-		remove_effect = {
-			hidden_effect = {
-				add_equipment_to_stockpile = {
-					type = convoy
-					amount = 75
-				}	
-			}
-			add_cic = 25000
-			if = {
-				limit = { 
-					has_equipment = {
-						small_plane_airframe > 99
-					}
-					not = {
-						has_equipment = {
-							jet_fighter_equipment_1947 > 9
-						}
-					}
-				}
-				send_equipment = {
-					equipment = small_plane_airframe
-					amount = 100
-					target = GER
-					new_prioritised = yes
-				}
-			}
-			if = {
-				limit = { 
-					has_equipment = {
-						jet_fighter_equipment_1947 > 9
-					}
-				}
-				send_equipment = {
-					equipment = jet_fighter_equipment
-					amount = 10
-					target = GER
-					new_prioritised = yes
-				}
-			}
-
 			add_to_variable = {
 				var = export_points_actual_points
 				value = 3
@@ -18121,6 +18563,28 @@ SPR_arms_deal = {
 				var = export_points
 				value = 1
 			}
+			send_equipment = {
+				equipment = small_plane_airframe
+				amount = 50
+				target = GER
+				new_prioritised = yes
+			}
+			#hidden_effect = {
+			#	add_equipment_to_stockpile = {
+			#		type = convoy
+			#		amount = -75
+			#	}	
+			#}
+		}
+		remove_effect = {
+			#hidden_effect = {
+			#	add_equipment_to_stockpile = {
+			#		type = convoy
+			#		amount = 75
+			#	}	
+			#}
+			add_cic = 20000
+
 		}
 		
 	}
@@ -18131,34 +18595,11 @@ SPR_arms_deal = {
 			has_equipment = {
 				convoy > 99
 			}
-			or = {
-				custom_trigger_tooltip = {
-					tooltip = at_least_70_tactical_bombers
-					or = {
-						has_equipment = {
-							tac_bomber_equipment_1934 > 49
-						}
-						has_equipment = {
-							tac_bomber_equipment_1936 > 49
-						}
-						has_equipment = {
-							tac_bomber_equipment_1937 > 49
-						}
-						has_equipment = {
-							tac_bomber_equipment_1940 > 49
-						}
-						has_equipment = {
-							tac_bomber_equipment_1942 > 49
-						}
-						has_equipment = {
-							tac_bomber_equipment_1944 > 49
-						}
-					}
-				}
-				has_equipment = {
-					jet_tac_bomber_equipment > 9
-				}
+			has_equipment = {
+				#tac_bomber_equipment > 25
+				medium_plane_airframe > 25
 			}
+
 		}
 		days_re_enable = 1
 		days_remove = 60
@@ -18173,54 +18614,6 @@ SPR_arms_deal = {
 				value = 4
 				tooltip = export_points_4_tooltip
 			}
-			hidden_effect = {
-				add_equipment_to_stockpile = {
-					type = convoy
-					amount = -100
-				}	
-			}
-		}
-		remove_effect = {
-			hidden_effect = {
-				add_equipment_to_stockpile = {
-					type = convoy
-					amount = 1000
-				}	
-			}
-			add_cic = 38000
-
-			if = {
-				limit = { 
-					has_equipment = {
-						tac_bomber_equipment >49
-					}
-					not = {
-						has_equipment = {
-							jet_tac_bomber_equipment_1947 > 9
-						}
-					}
-				}
-				send_equipment = {
-					equipment = tac_bomber_equipment
-					amount = 50
-					target = GER
-					new_prioritised = yes
-				}
-			}
-			if = {
-				limit = { 
-					has_equipment = {
-						jet_tac_bomber_equipment_1947 > 9
-					}
-				}
-				send_equipment = {
-					equipment = jet_tac_bomber_equipment
-					amount = 10
-					target = GER
-					new_prioritised = yes
-				}
-			}
-
 			add_to_variable = {
 				var = export_points_actual_points
 				value = 4
@@ -18229,6 +18622,29 @@ SPR_arms_deal = {
 				var = export_points
 				value = 1
 			}
+			
+			send_equipment = {
+				equipment = medium_plane_airframe
+				amount = 25
+				target = GER
+				new_prioritised = yes
+			}
+			
+			#hidden_effect = {
+			#	add_equipment_to_stockpile = {
+			#		type = convoy
+			#		amount = -100
+			#	}	
+			#}
+		}
+		remove_effect = {
+			#hidden_effect = {
+			#	add_equipment_to_stockpile = {
+			#		type = convoy
+			#		amount = 1000
+			#	}	
+			#}
+			add_cic = 20000
 		}
 		
 	}
@@ -18238,12 +18654,17 @@ SPR_arms_deal = {
 
 		available = {
 			custom_trigger_tooltip = {
-				tooltip = gun_export_points_needed_4
-					
-				check_variable = {
-					var = export_points
-					value > 3
-				}
+				tooltip = gun_export_points_needed_4_new_thing
+					OR = {
+						check_variable = {
+							var = export_points
+							value > 3
+						}
+						check_variable = {
+							var = export_points_actual_points
+							value > 11
+						}
+					}
 			}
 			
 		}
@@ -18256,7 +18677,7 @@ SPR_arms_deal = {
 			always = no
 		}
 		
-		days_mission_timeout = 190 #180
+		days_mission_timeout = 120 #180 -> 120 -> maybe 90 days to even 60
 		days_remove = 1 #1
 		is_good = no
 
@@ -18265,7 +18686,7 @@ SPR_arms_deal = {
 		}
 
 		complete_effect = {
-			army_experience = 5
+			army_experience = 10
 			if = {
 				limit = { 
 					check_variable = {
