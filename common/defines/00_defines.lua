@@ -459,7 +459,7 @@ NCountry = {
 	PROPAGANDA_WAR_SUPPORT_DAILY_DECAY = 0.001,		-- Amount of war support recovered daily from war support effort																														 
 
 	NUM_DAYS_TO_FULLY_DELETE_STOCKPILED_EQUIPMENT = 900,	 -- time in days to fully delete equipments from stockpile. when you delete an equipment, they go to a temporary hidden pool which still can be seized 
-	AIR_SUPPLY_CONVERSION_SCALE = 0.1,				-- Conversion scale for planes to air supply
+	AIR_SUPPLY_CONVERSION_SCALE = 0.07,				-- Conversion scale for planes to air supply
 	AIR_SUPPLY_DROP_EXPIRATION_HOURS = 168,			-- Air drop length after being dropped
 	STARTING_COMMAND_POWER = 50,					-- starting command power for every country
 	BASE_MAX_COMMAND_POWER = 100.0,					-- base value for maximum command power
@@ -1149,7 +1149,7 @@ NMilitary = {
 	LAND_COMBAT_FORT_DAMAGE_CHANCE = 13,		-- chance to get a hit to damage on forts. (out of 100)
 	ATTRITION_DAMAGE_ORG = 0.1,					   -- damage from attrition to Organisation
 	ATTRITION_EQUIPMENT_LOSS_CHANCE = 0.003,		   -- Chance for loosing equipment when suffer attrition. Scaled up the stronger attrition is. Then scaled down by equipment reliability.
-	ATTRITION_EQUIPMENT_PER_TYPE_LOSS_CHANCE =  0.05, -- Chance for loosing equipment when suffer attrition. Scaled up the stronger attrition is. Then scaled down by equipment reliability.
+	ATTRITION_EQUIPMENT_PER_TYPE_LOSS_CHANCE =  0.03, -- Chance for loosing equipment when suffer attrition. Scaled up the stronger attrition is. Then scaled down by equipment reliability.
 	ATTRITION_WHILE_MOVING_FACTOR = 1,
 	BASE_CHANCE_TO_AVOID_HIT = 90,                 -- Base chance to avoid hit if defences left.
 	CHANCE_TO_AVOID_HIT_AT_NO_DEF = 68,	           -- chance to avoid hit if no defences left.
@@ -2933,7 +2933,7 @@ NAI = {
 
 	STRIKE_FORCE_TARGET_RECALC_DAYS = 5,					-- Each X days, the AI will reevaluate which regions to put strike forces in (because patrol coverage will change)
 	NAVAL_STRIKE_FORCE_OBJECTIVE_IMPORTANCE = {				-- ordering of this list is important!
-		0.1876,	-- invasion suppport
+		0.188,	-- invasion suppport
 		0.25,	-- invasion defense
 		0,0,	-- others ( MineSweeping, MineLaying )
 		0.0625,	-- generic coast defense
