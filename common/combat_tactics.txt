@@ -21,7 +21,7 @@ tactic_basic_attack = {
 	
 	active = yes
 
-	base =  { factor = 4 }
+	base = { factor = 4 }
 	picture = attack
 	
 	countered_by = tactic_counterattack
@@ -38,7 +38,7 @@ tactic_basic_defend = {
 	
 	active = yes
 	
-	base =  { factor = 4 }
+	base = { factor = 4 }
 	picture = defend
 	
 	defender = 0.05
@@ -54,13 +54,8 @@ tactic_counterattack = { # counters basic attack, assault
 	
 	active = yes
 	
-	base =  {
-		factor = 4
-		modifier = {
-			add = 4
-			has_trait = unyielding_defender
-		}
-	}
+	base = {factor = 4}
+	countered_by = tactic_encirclement
 	picture = counterattack
 	
 	defender = 0.25
@@ -72,24 +67,19 @@ tactic_assault = {
 	trigger = {
 		is_attacker = yes
 		phase = no
-		has_artillery_ratio > 0.1
+		has_artillery_ratio < 0.21
+		NOT = {
+			tag = CHI 
+		}
+		has_global_flag = scw_over
+		
 	}
 	
 	active = yes
 	
-	base =  {
-		factor = 2
-		modifier = {
-			add = 2
-
-			has_trait = aggressive_assaulter
-		}
-
-		modifier = {
-			factor = 0.2
-
-			NOT = { is_fighting_in_terrain = urban }
-		}
+	base = {
+		factor = 6
+		
 
 	} #Revisit ideally this should be more common in urban terrain
 	
@@ -98,7 +88,37 @@ tactic_assault = {
 	
 	phase = close_combat #changes phase to close combat
 	
-	attacker = 0.25			#attacker gets a bonus to doing damage
+	attacker = 0.2		#attacker gets a bonus to doing damage
+	defender = 0.2
+}
+tactic_assault_defender = { 
+	is_attacker = no
+	trigger = {
+		is_attacker = no
+		phase = no
+		has_artillery_ratio < 0.21
+		NOT = {
+			tag = CHI 
+		}
+		has_global_flag = scw_over
+		
+	}
+	
+	active = yes
+	
+	base = {
+		factor = 6
+		
+
+	} #Revisit ideally this should be more common in urban terrain
+	
+	picture = cc_defend
+	countered_by = tactic_counterattack
+	
+	phase = close_combat #changes phase to close combat
+	
+	attacker = 0.2		#attacker gets a bonus to doing damage
+	defender = 0.2
 }
 ###close combat tactics here
 tactic_cc_attack = { 
@@ -110,12 +130,15 @@ tactic_cc_attack = {
 	
 	active = yes
 	
-	base =  { factor = 4 }
+	base = { factor = 2 }
 	picture = cc_attack
 	display_phase = close_combat
 
-	attacker = 0.1			#attacker gets a bonus to doing damage
-	defender = 0.05
+	countered_by = tactic_cc_local_strong_point
+
+	attacker = 0.2		#attacker gets a bonus to doing damage
+	defender = 0.2
+	
 }
 tactic_cc_defend = { 
 	is_attacker = no
@@ -126,43 +149,55 @@ tactic_cc_defend = {
 	
 	active = yes
 	
-	base =  { factor = 4 }
+	base = { factor = 4 }
 	picture = cc_defend
 	display_phase = close_combat
 
-	attacker = 0.05
-	defender = 0.1			#defender gets a bonus to doing damage
+	countered_by = tactic_cc_storm
+
+	attacker = 0.2	  #attacker gets a bonus to doing damage
+	defender = 0.2
 }
 tactic_cc_storm = { 
 	is_attacker = yes
 	trigger = {
 		is_attacker = yes
 		phase = close_combat
+		has_artillery_ratio > 0.2
 	}
 	
 	active = yes
 	
-	base =  { factor = 2 }
+	base = { 
+		factor = 4
+		
+	}
 	picture = cc_storm
 	display_phase = close_combat
 
-	attacker = 0.2			#attacker gets a bonus to doing damage
+	attacker = 0.2	#attacker gets a bonus to doing damage
 	defender = 0.2
+	attacker_org_damage_modifier = 0.2
+	
 }
 tactic_cc_local_strong_point = { 
 	is_attacker = no
 	trigger = {
 		is_attacker = no
 		phase = close_combat
+		has_artillery_ratio > 0.2
 	}
 	
 	active = yes
 	display_phase = close_combat
-
-	base =  { factor = 2 }
+	base = { 
+		factor = 4 
+	}
 	picture = cc_local_strong_point
-	
-	attacker = -0.2			#attacker gets a penalty to doing damage
+		
+	attacker = 0.2	#attacker gets a bonus to doing damage
+	defender = 0.2
+	defender_org_damage_modifier = 0.2
 }
 tactic_cc_withdraw = { 
 	is_attacker = yes
@@ -173,14 +208,15 @@ tactic_cc_withdraw = {
 	
 	active = yes
 	
-	base =  { factor = 1 }
+	base = { 
+		factor = 1
+	
+	}
 	picture = cc_withdraw
 	display_phase = close_combat
 
 	phase = no #changes phase to no
 	
-	attacker = -0.05
-	defender = -0.05
 }
 
 
@@ -191,30 +227,23 @@ tactic_encirclement = {
 		phase = no
 		frontage_full = yes
 		has_reserves = yes
+		has_flanked_opponent = yes
 		OR = {
 			skill_advantage > 0
 			has_trait = panzer_leader
+			has_trait = motorized_leader
 			has_trait = trickster
 		}
 	}
 	
 	active = yes
 	
-	base =  { 
-		factor = 4
-		modifier = {
-			add = 4
-			OR = {
-				has_trait = panzer_expert
-				has_trait = combined_arms_expert
-			}
-		}
-	}
+	base = {factor = 4}
 	
 	picture = encircle
 	countered_by = tactic_tactical_withdrawal
 
-	combat_width = 0.5		#increased combat_width
+	combat_width = 0.33		#increased combat_width
 	attacker = 0.25
 	defender = 0.05
 }
@@ -228,9 +257,7 @@ tactic_delay = {
 	
 	active = no
 	
-	base =  {
-		factor = 4
-	}
+	base = {factor = 4}
 	picture = delay
 	countered_by = tactic_shock
 	
@@ -248,13 +275,8 @@ tactic_shock = { #counters delay
 	
 	active = yes
 	
-	base =  {
-		factor = 4
-		modifier = {
-			add = 4
-			has_trait = aggressive_assaulter
-		}
-	}
+	base = {factor = 4}
+
 	picture = shock
 	countered_by = tactic_ambush
 	
@@ -274,14 +296,12 @@ tactic_tactical_withdrawal = { #counters encirclement
 	
 	active = no
 	
-	base =  {
-		factor = 4
-	}
+	base = { factor = 4 }
 	picture = withdraw
 	
 	phase = tactical_withdrawal
 	
-	combat_width = -0.25
+	combat_width = -0.16
 	attacker = -0.25
 	defender = -0.05
 }
@@ -293,11 +313,13 @@ tactic_tw_attack = {
 		phase = tactical_withdrawal
 	}
 	
-	base =  { factor = 4 }
+	base = { factor = 4 }
 	picture = tw_attack
 	display_phase = tactical_withdrawal
+
+	countered_by = tactic_tw_evade
 	
-	combat_width = -0.25	
+	combat_width = -0.16	
 	attacker = -0.25
 	defender = -0.1
 }
@@ -308,11 +330,13 @@ tactic_tw_defend = {
 		phase = tactical_withdrawal
 	}
 	
-	base =  { factor = 4 }
+	base = { factor = 4 }
 	picture = tw_defend
 	display_phase = tactical_withdrawal
+
+	countered_by = tactic_tw_chase
 	
-	combat_width = -0.25
+	combat_width = -0.17		
 	attacker = -0.3
 	defender = -0.05
 }
@@ -323,12 +347,12 @@ tactic_tw_chase = {
 		phase = tactical_withdrawal
 	}
 	
-	base =  { factor = 4 }
+	base = { factor = 4 }
 	picture = tw_chase
 	display_phase = tactical_withdrawal
 	
 	
-	combat_width = -0.25		
+	combat_width = -0.16		
 	attacker = -0.15
 	defender = -0.05
 }
@@ -339,12 +363,12 @@ tactic_tw_evade = {
 		phase = tactical_withdrawal
 	}
 	
-	base =  { factor = 4 }
+	base = { factor = 4 }
 	picture = tw_evade
 	display_phase = tactical_withdrawal
 	
 	
-	combat_width = -0.25		
+	combat_width = -0.17		
 	attacker = -0.4
 	defender = -0.1
 }
@@ -355,7 +379,7 @@ tactic_tw_intercept = {
 		phase = tactical_withdrawal
 	}
 	
-	base =  { factor = 4 }
+	base = { factor = 4 }
 	picture = tw_intercept
 	display_phase = tactical_withdrawal
 	
@@ -380,7 +404,15 @@ tactic_breakthrough = { #counters ambush
 	
 	active = no
 	
-	base =  { factor = 4 }
+	base = { factor = 4
+		modifier = {
+			add = 2
+			OR = {
+				has_trait = panzer_expert
+			}
+		}
+	}
+
 	picture = breakthrough
 	
 	countered_by = tactic_backhand_blow
@@ -404,7 +436,14 @@ tactic_ambush = { #counters shock
 	
 	active = yes
 	
-	base =  { factor = 4 }
+	base =  { factor = 4 
+		modifier = {
+			add = 2
+			OR = {
+				has_trait = ambusher		
+			 }
+		}
+	}
 	picture = ambush
 	countered_by = tactic_breakthrough
 	
@@ -420,9 +459,9 @@ tactic_blitz = {
 		OR = {
 			skill > 2
 			has_trait = panzer_leader
+			has_trait = motorized_leader
 			skill_advantage > 1
 		}
-		OWNER = { NOT = { has_tactic = tactic_masterful_blitz } } #Soviet improved version of blitz will replace this
 	}
 	
 	active = no
@@ -430,9 +469,8 @@ tactic_blitz = {
 	base =  { 
 		factor = 4
 		modifier = {
-			add = 4
+			add = 2
 			OR = {
-				has_trait = panzer_expert
 				has_trait = combined_arms_expert
 			}
 		}
@@ -460,10 +498,17 @@ tactic_elastic_defense = { #counters blitz
 	
 	active = no
 	
-	base =  {
+	base =  { 
 		factor = 4
+		modifier = {
+			add = 2
+			OR = {
+				has_trait = combined_arms_expert
+			}
+		}
 	}
 	picture = elastic_defence
+	countered_by = tactic_unexpected_thrust
 	
 	attacker_movement_speed = -0.25
 	attacker = -0.15
@@ -486,8 +531,17 @@ tactic_backhand_blow = { #counters breakthrough
 	
 	active = no
 	
-	base =  { factor = 4 }
+	base =  { 
+		factor = 4
+		modifier = {
+			add = 2
+			OR = {
+				has_trait = panzer_expert
+			}
+		}
+	}
 	picture = backhand_blow
+	countered_by = tactic_relentless_assault
 	
 	attacker_movement_speed = -0.3
 	attacker = -0.2
@@ -509,15 +563,21 @@ tactic_seize_bridge = {
 		}
 	}
 	
-	base =  {
+	base =  { 
 		factor = 2
+		modifier = {
+			add = 2
+			OR = {
+				has_trait = expert_improviser
+			}
+		}
 	}
 	picture = seize_bridge
 	
 	phase = seize_bridge
 	
 	attacker_movement_speed = 0.1
-	combat_width = -0.25
+	combat_width = -0.16
 	attacker = 0.2
 	defender = -0.05
 }
@@ -528,11 +588,11 @@ tactic_attacker_sb_hold = {
 		phase = seize_bridge
 	}
 	
-	base =  { factor = 4 }
+	base = { factor = 4 }
 	picture = attacker_sb_hold
 	display_phase = seize_bridge
 	
-	combat_width = -0.25
+	combat_width = -0.16
 	attacker = 0.2
 }
 tactic_attacker_sb_skillful_defence = { 
@@ -543,11 +603,11 @@ tactic_attacker_sb_skillful_defence = {
 		skill > 4
 	}
 	
-	base =  { factor = 4 }
+	base = { factor = 4 }
 	picture = attacker_sb_skillful_defence
 	display_phase = seize_bridge
 
-	combat_width = -0.25
+	combat_width = -0.16
 	attacker = 0.2
 	defender = -0.1
 }
@@ -558,11 +618,11 @@ tactic_defender_sb_assault = {
 		phase = seize_bridge
 	}
 	
-	base =  { factor = 4 }
+	base = { factor = 4 }
 	picture = defender_sb_assault
 	display_phase = seize_bridge
 
-	combat_width = -0.25
+	combat_width = -0.17
 	defender = -0.05
 }
 tactic_defender_sb_reckless_assault = { 
@@ -573,11 +633,11 @@ tactic_defender_sb_reckless_assault = {
 		skill < 3
 	}
 	
-	base =  { factor = 4 }
+	base = { factor = 4 }
 	picture = defender_sb_reckless_assault
 	display_phase = seize_bridge
 
-	combat_width = -0.25
+	combat_width = -0.17
 	attacker = 0.25
 	defender = -0.1
 }
@@ -595,11 +655,19 @@ tactic_defender_sb_retake_bridge = {
 	countered_by = tactic_attacker_sb_skillful_defence
 	phase = hold_bridge
 	
-	base =  { factor = 4 }
+	base =  { 
+		factor = 4
+		modifier = {
+			add = 2
+			OR = {
+				has_trait = expert_improviser
+			}
+		}
+	}
 	picture = defender_sb_retake_bridge
 	display_phase = seize_bridge
 
-	combat_width = -0.25
+	combat_width = -0.17
 	attacker = 0.1
 	defender = -0.05
 }
@@ -616,13 +684,21 @@ tactic_hold_bridge = {
 		}
 	}
 	
-	base =  { factor = 2 }
+	base =  { 
+		factor = 2
+		modifier = {
+			add = 2
+			OR = {
+				has_trait = expert_improviser
+			}
+		}
+	}
 	picture = tactic_hold_bridge
 	
 	phase = hold_bridge
 	
 	attacker_movement_speed = 0.1
-	combat_width = -0.25
+	combat_width = -0.17
 	attacker = 0.2
 	defender = -0.05
 }
@@ -633,11 +709,11 @@ tactic_attacker_hb_attack = {
 		phase = hold_bridge
 	}
 	
-	base =  { factor = 4 }
+	base = { factor = 4 }
 	picture = attacker_hb_attack
 	display_phase = hold_bridge
 
-	combat_width = -0.25
+	combat_width = -0.16
 	attacker = 0.1
 }
 tactic_attacker_hb_rush = { 
@@ -648,11 +724,11 @@ tactic_attacker_hb_rush = {
 		skill > 4
 	}
 	
-	base =  { factor = 4 }
+	base = { factor = 4 }
 	picture = attacker_hb_rush
 	display_phase = hold_bridge
 
-	combat_width = -0.25
+	combat_width = -0.16
 	attacker = 0.2
 }
 tactic_attacker_hb_storm = { 
@@ -662,7 +738,15 @@ tactic_attacker_hb_storm = {
 		phase = hold_bridge
 	}
 	
-	base =  { factor = 2 }
+	base =  { 
+		factor = 2
+		modifier = {
+			add = 2
+			OR = {
+				has_trait = expert_improviser
+			}
+		}
+	}
 	picture = attacker_hb_storm
 	display_phase = hold_bridge
 
@@ -670,7 +754,7 @@ tactic_attacker_hb_storm = {
 	
 	phase = seize_bridge
 	
-	combat_width = -0.25
+	combat_width = -0.16
 	attacker = 0.2
 	defender = 0.05
 }
@@ -682,11 +766,11 @@ tactic_defender_hb_hold = {
 		skill < 3
 	}
 	
-	base =  { factor = 2 }
+	base = { factor = 2 }
 	picture = defender_hb_hold
 	display_phase = hold_bridge
 
-	combat_width = -0.25
+	combat_width = -0.17
 	attacker = 0.2
 	defender = -0.1
 }
@@ -701,11 +785,11 @@ tactic_defender_hb_skillful_defence = {
 		}
 	}
 	
-	base =  { factor = 2 }
+	base = { factor = 2 }
 	picture = defender_hb_skillful_defence
 	display_phase = hold_bridge
 	
-	combat_width = -0.25
+	combat_width = -0.17
 	attacker = 0.1
 	defender = 0.05
 }
@@ -723,14 +807,20 @@ tactic_guerrilla_tactics = { #People's army defender tactic. also for German vol
 	
 	active = no
 	
-	base =  {
+	base =  { 
 		factor = 4
+		modifier = {
+			add = 2
+			OR = {
+				has_trait = guerilla_fighter
+			}
+		}
 	}
 	picture = tactic_guerrilla_tactics
 	
-	combat_width = -0.5
-	attacker = -0.7
-	defender = -0.6
+	combat_width = -0.33
+	attacker = -0.4
+	defender = -0.3
 }
 
 tactic_human_wave_tactics = { #People's army attacker tactic
@@ -744,13 +834,11 @@ tactic_human_wave_tactics = { #People's army attacker tactic
 	
 	active = no
 	
-	base =  {
-		factor = 4
-	}
+	base = { factor = 4 }
 	picture = tactic_human_wave_tactics
 	
-	combat_width = 0.5
-	attacker = 0.1 
+	combat_width = 0.67
+	attacker = 0.15
 	defender = 0.1
 }
 
@@ -760,41 +848,25 @@ tactic_banzai_charge = { #Special Japan attacker tactic
 		tag = JAP
 		is_attacker = yes
 		phase = no
-		OWNER = { NOT = { has_tactic = tactic_grand_banzai_charge } } #Japanese improved version of Banzai Charge will replace this
 	}
 	
 	active = yes
 	
 	countered_by = tactic_overwhelming_fire
 	
-	base =  { factor = 4 }
+	base =  { 
+		factor = 4
+		modifier = {
+			add = 2
+			OR = {
+				has_trait = JAP_samurai_lineage
+			}
+		}
+	}
 	picture = tactic_banzai_charge
 	
 	attacker_movement_speed = 0.1
 	attacker = 0.25 
-	defender = 0.1
-}
-
-tactic_grand_banzai_charge = { #Special Japan attacker tactic
-	only_show_for = JAP
-
-	is_attacker = yes
-
-	trigger = {
-		tag = JAP
-		is_attacker = yes
-		phase = no
-	}
-	
-	active = no 
-	
-	countered_by = tactic_overwhelming_fire
-	
-	base =  { factor = 4 }
-	picture = tactic_banzai_charge
-	
-	attacker_movement_speed = 0.1
-	attacker = 0.3 
 	defender = 0.1
 }
 
@@ -807,12 +879,18 @@ tactic_infantry_charge = { #GBP -> Infantry attacker tactic
 	
 	active = no
 	
-	base =  {
+	base =  { 
 		factor = 4
+		modifier = {
+			add = 1
+			OR = {
+				has_trait = organizer
+			}
+		}
 	}
 	picture = tactic_infantry_charge
 	
-	attacker = 0.1 
+	attacker = 0.15
 	defender = -0.05
 }
 
@@ -825,12 +903,32 @@ tactic_planned_attack = { #GBP -> Armor attacker tactic
 	
 	active = no
 	
-	base =  {
-		factor = 4
+	base =  { 
+		factor = 2
+		modifier = {
+			add = 0.4
+			min_planning > 0.2
+		}
+		modifier = {
+			add = 0.4
+			
+		}
+		modifier = {
+			add = 0.4
+			min_planning > 0.4
+		}
+		modifier = {
+			add = 0.4
+			min_planning > 0.5
+		}
+		modifier = {
+			add = 0.4
+			min_planning > 0.6
+		}
 	}
 	picture = tactic_planned_attack
 	
-	attacker = 0.15 
+	attacker = 0.2
 }
 
 tactic_relentless_assault = { #Deep battle attacker tactic
@@ -842,13 +940,11 @@ tactic_relentless_assault = { #Deep battle attacker tactic
 	
 	active = no
 	
-	base =  {
-		factor = 4
-	}
+	base = { factor = 4 }
 	picture = tactic_relentless_assault
 	
 	attacker_movement_speed = 0.15
-	attacker = 0.2
+	attacker = 0.25
 	defender = 0.05	
 }
 
@@ -861,13 +957,11 @@ tactic_unexpected_thrust = { #Mobile warfare attacker tactic
 	
 	active = no
 	
-	base =  {
-		factor = 4
-	}
+	base = { factor = 4 }
 	picture = tactic_unexpected_thrust
 	
 	attacker_movement_speed = 0.15
-	attacker = 0.15 
+	attacker = 0.2
 }
 
 tactic_overwhelming_fire = { # Counters Banzai charge
@@ -875,12 +969,22 @@ tactic_overwhelming_fire = { # Counters Banzai charge
 	trigger = {
 		is_attacker = no
 		phase = no
+		OR = {
+			skill_advantage > 0
+			has_trait = bearer_of_artillery
+		}
 	}
 	
 	active = no
 	
-	base =  {
+	base =  { 
 		factor = 2
+		modifier = {
+			add = 2
+			OR = {
+				has_trait = engineer
+			}
+		}
 	}
 	picture = tactic_overwhelming_fire
 	
@@ -897,83 +1001,58 @@ tactic_barrage = { #Superior firepower attacker tactic
 	
 	active = no
 	
-	base =  {
+	base =  { 
 		factor = 4
+		modifier = {
+			add = 2
+			OR = {
+				has_trait = fortress_buster
+			}
+		}
 	}
 	picture = tactic_barrage
 	
 	attacker = 0.1
 	defender = -0.2	
 }
-
-tactic_masterful_blitz = { #Improved version of Blitz for Soviets
-	only_show_for = SOV
-	
-	is_attacker = yes
+tactic_double_envelopment = { 
+	is_attacker = no
 	trigger = {
-		is_attacker = yes
-		hardness > 0.5
+		is_attacker = no
 		phase = no
+		OWNER = { has_tech = ambush_tactics_doctrine } 
+		is_amphibious_invasion = no
 		OR = {
-			skill > 2
-			has_trait = panzer_leader
-			skill_advantage > 1
+			is_fighting_in_terrain = hills
+			is_fighting_in_terrain = mountain
+			is_fighting_in_terrain = forest
+			
 		}
 	}
 	
 	active = no
 	
 	base =  { 
-		factor = 4
+		factor = 3
 		modifier = {
-			add = 4
-			OR = {
-				has_trait = panzer_expert
-				has_trait = combined_arms_expert
-			}
+			add = 1
+			recon_advantage > 1
 		}
-	}
-	
-	picture = SOV_tank_desant_blitz
-	countered_by = tactic_elastic_defense
-	
-	attacker_movement_speed = 0.5
-	combat_width = 0.1
-	attacker = 0.2
-	defender = -0.2
-}
-
-
-tactic_masterful_delay = { #Improved version of Delay for Czechs
-	only_show_for = CZE
-
-	is_attacker = no
-	trigger = {
-		is_attacker = no
-		phase = no
-		OR = {
-			skill > 2
-			has_trait = trickster
-			has_trait = fast_planner
-			has_trait = ambusher
-			NOT = {
-				has_trait = unyielding_defender
-			}
-			skill_advantage > 1
+		modifier = {
+			add = 2
+			recon_advantage > 3
 		}
+	
 	}
-	
-	active = no
-	
-	base =  {
-		factor = 4
-	}
-	picture = delay
-	countered_by = tactic_shock
-	
-	attacker_movement_speed = -0.30		#
-	attacker = -0.30
-	defender = -0.20
+	picture = double_envelopement
+
+	attacker = -0.15
+	attacker_movement_speed = -0.5
+	combat_width = -0.5
+	defender = 0.15
+
+
+	countered_by = tactic_overwhelming_fire
 }
 
 
@@ -988,23 +1067,17 @@ tactic_urban_defense = {
 	active = yes
 	
 	base =  {
-		factor = 2
+		factor = 12
 		modifier = {
 			factor = 0
 			NOT = { is_fighting_in_terrain = urban }
 		}
-		modifier = {
-			factor = 2
-			province_vp > 5
-		}
-		modifier = {
-			factor = 3
-			has_trait = urban_assault_specialist
-		}
-		modifier = {
-			factor = 1.5
-			has_trait = trait_engineer
-		}
+		#modifier = {
+			#factor = 10
+			#province_vp > 5
+		#}
+		
+		
 
 	} 
 	
@@ -1013,11 +1086,11 @@ tactic_urban_defense = {
 	
 	phase = street_fighting #changes phase to Street Fighting
 	
-	attacker = -0.05
-	defender = 0.05
-	attacker_movement_speed = -0.05
-	attacker_org_damage_modifier = -0.1
-	#combat_width = -0.1
+	attacker = 0.15
+	defender = 0.25
+	attacker_org_damage_modifier = -0.6
+	attacker_movement_speed = -0.25
+
 }
 
 tactic_sf_storm = { #Basic Urban assault tactic
@@ -1035,10 +1108,9 @@ tactic_sf_storm = { #Basic Urban assault tactic
 	}
 	picture = tactic_sf_storm
 	
-	attacker = 0.05
-	defender = 0.1
-	defender_org_damage_modifier = -0.05
-	combat_width = 0.05
+	attacker = 0.2	#attacker gets a bonus to doing damage
+	defender = 0.15
+	defender_org_damage_modifier = -0.4
 	
 }
 
@@ -1047,21 +1119,27 @@ tactic_sf_barrage = { #Slow moving assault using heavy artillery barrage and art
 	trigger = {
 		is_attacker = yes
 		phase = street_fighting
-		has_artillery_ratio > 0.1
+		has_artillery_ratio > 0.3
 	}
 	
-	active = no
+	active = yes
 	display_phase = street_fighting
+
+	countered_by = tactic_sf_ambush
 	
-	base =  {
+	base = { 
 		factor = 2
+		modifier = {
+			add = 1
+			frontage_full = yes
+			has_flanked_opponent = yes
+		}
 	}
 	picture = tactic_sf_barrage
 	
-	attacker = 0.1
-	defender = -0.05
-	combat_width = -0.05
-	defender_org_damage_modifier = -0.1
+	attacker = 0.15	#attacker gets a bonus to doing damage
+	combat_width = -0.25
+	defender_org_damage_modifier = -0.4
 	
 }
 
@@ -1076,6 +1154,11 @@ tactic_sf_armor_supported_assault = { #Assault using specialist armoured vehicle
 				has_unit_type = light_flame_tank
 				has_unit_type = medium_flame_tank
 				has_unit_type = heavy_flame_tank
+				has_unit_type = super_heavy_flame_tank
+				has_unit_type = light_assault_gun_company
+				has_unit_type = medium_assault_gun_company
+				has_unit_type = heavy_assaut_gun_company
+				has_unit_type = super_heavy_assault_gun_company
 			}
 		}
 	}
@@ -1083,14 +1166,18 @@ tactic_sf_armor_supported_assault = { #Assault using specialist armoured vehicle
 	active = yes 
 	display_phase = street_fighting
 	
-	base =  {
+	base = { 
 		factor = 2
+		modifier = {
+			add = 1
+			frontage_full = yes
+			has_flanked_opponent = yes
+		}
 	}
 	picture = tactic_sf_armor_supported_assault
 	
-	attacker = 0.15
-	combat_width = -0.1
-	defender_org_damage_modifier = -0.1
+	attacker = 0.25
+	defender_org_damage_modifier = -0.4
 }
 
 tactic_sf_mouse_holing = { #House to House assaul, avoiding open streets where possible # Counters fortify
@@ -1098,24 +1185,31 @@ tactic_sf_mouse_holing = { #House to House assaul, avoiding open streets where p
 	trigger = {
 		is_attacker = yes
 		phase = street_fighting
-		OR = {
-			has_unit_type = engineer
-			has_unit_type = pioneer_support
-		}
+		
 	}
 	
 	active = yes
 	display_phase = street_fighting
 	
 	base =  {
-		factor = 2
+		factor = 0.5
+		modifier = {
+			factor = 1
+			has_trait = urban_assault_specialist
+		}
+		modifier = {
+			add = 3
+			frontage_full = yes
+			has_flanked_opponent = yes
+		}
+		
 	}
+	
 	picture = tactic_sf_mouse_holing
 	
-	#attacker = 0.05
-	defender = -0.1
-	attacker_movement_speed = -0.05
-	defender_org_damage_modifier = -0.1
+	attacker = 0.15
+	attacker_movement_speed = -0.25
+	defender_org_damage_modifier = -0.6
 }
 
 tactic_sf_defense = { #Basic Urban defensive tactic
@@ -1133,9 +1227,10 @@ tactic_sf_defense = { #Basic Urban defensive tactic
 	}
 	picture = tactic_sf_defense
 	
-	attacker = -0.05
-	defender = 0.1	
-	attacker_org_damage_modifier = -0.1
+	attacker = 0.15
+	defender = 0.2
+	attacker_org_damage_modifier = -0.4
+	attacker_movement_speed = -0.25
 }
 
 tactic_sf_fortify = { #countered by mouse holing
@@ -1148,34 +1243,49 @@ tactic_sf_fortify = { #countered by mouse holing
 	active = yes
 	display_phase = street_fighting
 	
-	base =  {
-		factor = 2
+	base = { 
+		factor = 1 
+		modifier = {
+			add = 5
+			frontage_full = yes
+			reserves > 7
+		}
 	}
 	picture = tactic_sf_fortify
 	countered_by = tactic_sf_mouse_holing
 	
-	attacker = -0.10
-	defender = 0.05	
-	attacker_org_damage_modifier = -0.15
+	
+	defender = 0.1
+	combat_width = 0.5	
+	attacker_org_damage_modifier = -0.4
+	attacker_movement_speed = -0.5
 }
 
-tactic_sf_ambush = { #countered by mouse holing
+tactic_sf_ambush = { 
 	is_attacker = no
 	trigger = {
 		is_attacker = no
 		phase = street_fighting
 	}
 	
-	active = no
+	active = yes
 	display_phase = street_fighting
 	
 	base =  {
-		factor = 2
+		factor = 1
+		modifier = {
+			factor = 1
+			has_trait = urban_assault_specialist
+		}
+		modifier = {
+			add = 2
+			frontage_full = yes
+			reserves > 7
+		}
 	}
 	picture = tactic_sf_ambush
 	
 	defender = 0.25
-	attacker_org_damage_modifier = -0.10
+	attacker_org_damage_modifier = -0.4
+	attacker_movement_speed = -0.5
 }
-
-
