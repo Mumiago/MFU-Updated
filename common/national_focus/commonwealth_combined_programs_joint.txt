@@ -1,0 +1,917 @@
+joint_focus = {
+	id = COMMON_commonwealth_combined_programs
+	icon = GFX_goal_generic_production
+
+	# Root placement with per-tag offsets.
+	# Coordinates are set to match "below Convert Locomotive Industrym" for each tree.
+	x = 0
+	y = 0
+
+	offset = {
+		# UK
+		x = 42
+		y = 9
+		trigger = { tag = ENG }
+	}
+
+	offset = {
+		# South Africa
+		x = 36
+		y = 11
+		trigger = { tag = SAF }
+	}
+
+	offset = {
+		# Canada
+		x = 28
+		y = 3
+		trigger = { tag = CAN }
+	}
+
+	offset = {
+		# Raj
+		x = 38
+		y = 10
+		trigger = { tag = RAJ }
+	}
+
+	offset = {
+		# Australia
+		x = 32
+		y = 10
+		trigger = { tag = AST }
+	}
+
+	offset = {
+		# France 
+		x = 32
+		y = 15
+		trigger = { tag = FRA }
+	}
+
+	offset = {
+		# Poland 
+		x = 41
+		y = 10
+		trigger = { tag = POL }	
+	}
+
+	cost = 5
+
+	allow_branch = {
+		OR = {
+			tag = ENG
+			tag = SAF
+			tag = CAN
+			tag = RAJ
+			tag = AST
+			tag = FRA
+			tag = POL
+		}
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+
+	available = {
+		has_war = yes
+	}
+
+	completion_reward = {
+		add_offsite_building = { type = arms_factory level = 1 }
+	}
+
+	completion_reward_joint_originator = { }
+
+	completion_reward_joint_member = { }
+}
+
+joint_focus = {
+	id = COMMON_requisition_commonwealth_passenger_planes
+	icon = GFX_goal_generic_air_fighter
+
+	prerequisite = { focus = COMMON_commonwealth_combined_programs }
+
+	relative_position_id = COMMON_commonwealth_combined_programs
+	x = 0
+	y = 1
+
+	cost = 5
+
+	allow_branch = {
+		OR = {
+			tag = ENG
+			tag = SAF
+			tag = CAN
+			tag = RAJ
+			tag = AST
+			tag = FRA
+			tag = POL
+		}
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+
+	available = { }
+
+	completion_reward_joint_originator = {
+		add_equipment_to_stockpile = {
+			type = transport_plane_equipment_1
+			amount = 200
+		}
+	}
+
+	completion_reward_joint_member = { }
+}
+
+joint_focus = {
+	id = COMMON_form_tiger_force
+	icon = GFX_goal_generic_air_bomber
+
+	prerequisite = { focus = COMMON_commonwealth_combined_programs }
+
+	# Down 1 and left 1 from Requisition Commonwealth Passenger Planes.
+	relative_position_id = COMMON_requisition_commonwealth_passenger_planes
+	x = -1
+	y = 1
+
+	cost = 5
+
+	allow_branch = {
+		OR = {
+			tag = ENG
+			tag = SAF
+			tag = CAN
+			tag = RAJ
+			tag = AST
+			tag = FRA
+			tag = POL
+		}
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	available = {
+		OR = {
+			has_tech = tactical_bomber_1934
+			has_tech = eng_tactical_bomber_1934
+		}
+	}
+
+	completion_reward_joint_originator = {
+		custom_effect_tooltip = COMMON_form_tiger_force_tt
+
+		# Latest tactical bomber model researched (UK branch vs shared tree).
+		if = {
+			limit = { has_tech = eng_tactical_bomber_1944 }
+			add_equipment_to_stockpile = { type = tac_bomber_equipment_1944 amount = 150 producer = ROOT }
+		}
+		else_if = {
+			limit = { has_tech = tactical_bomber_1943 }
+			add_equipment_to_stockpile = { type = tac_bomber_equipment_1943 amount = 150 producer = ROOT }
+		}
+		else_if = {
+			limit = { has_tech = eng_tactical_bomber_1942 }
+			add_equipment_to_stockpile = { type = tac_bomber_equipment_1942 amount = 150 producer = ROOT }
+		}
+		else_if = {
+			limit = { has_tech = tactical_bomber_1941 }
+			add_equipment_to_stockpile = { type = tac_bomber_equipment_1941 amount = 150 producer = ROOT }
+		}
+		else_if = {
+			limit = { has_tech = eng_tactical_bomber_1940 }
+			add_equipment_to_stockpile = { type = tac_bomber_equipment_1940 amount = 150 producer = ROOT }
+		}
+		else_if = {
+			limit = { has_tech = tactical_bomber_1939 }
+			add_equipment_to_stockpile = { type = tac_bomber_equipment_1939 amount = 150 producer = ROOT }
+		}
+		else_if = {
+			limit = { has_tech = eng_tactical_bomber_1938 }
+			add_equipment_to_stockpile = { type = tac_bomber_equipment_1938 amount = 150 producer = ROOT }
+		}
+		else_if = {
+			limit = { has_tech = tactical_bomber_1937 }
+			add_equipment_to_stockpile = { type = tac_bomber_equipment_1937 amount = 150 producer = ROOT }
+		}
+		else_if = {
+			limit = { has_tech = eng_tactical_bomber_1936 }
+			add_equipment_to_stockpile = { type = tac_bomber_equipment_1936 amount = 150 producer = ROOT }
+		}
+		else_if = {
+			limit = {
+				OR = {
+					has_tech = tactical_bomber_1934
+					has_tech = eng_tactical_bomber_1934
+				}
+			}
+			add_equipment_to_stockpile = { type = tac_bomber_equipment_1934 amount = 150 producer = ROOT }
+		}
+
+		# hidden_effect = {
+		# 	# FAFL-style: load an OOB air wing file.
+		# 	if = { limit = { tag = ENG } load_oob = "ENG_tiger_force" }
+		# 	else_if = { limit = { tag = SAF } load_oob = "SAF_tiger_force" }
+		# 	else_if = { limit = { tag = CAN } load_oob = "CAN_tiger_force" }
+		# 	else_if = { limit = { tag = RAJ } load_oob = "RAJ_tiger_force" }
+		# 	else_if = { limit = { tag = AST } load_oob = "AST_tiger_force" }
+		# 	else_if = { limit = { tag = FRA } load_oob = "FRA_tiger_force" }
+		# 	else_if = { limit = { tag = POL } load_oob = "POL_tiger_force" }
+		# }
+	}
+
+	completion_reward_joint_member = { }
+}
+
+joint_focus = {
+	id = COMMON_fund_arms_industry
+	icon = GFX_goal_generic_production
+
+	prerequisite = { focus = COMMON_commonwealth_combined_programs }
+
+	# Two focuses to the right of Tiger Force (first one).
+	relative_position_id = COMMON_form_tiger_force
+	x = 2
+	y = 0
+
+	cost = 5
+
+	mutually_exclusive = { focus = COMMON_fund_tank_industry }
+
+	allow_branch = {
+		OR = {
+			tag = ENG
+			tag = SAF
+			tag = CAN
+			tag = RAJ
+			tag = AST
+			tag = FRA
+			tag = POL
+		}
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	available = { }
+
+	completion_reward = {
+			every_military_industrial_organization = {
+				limit = {
+					OR = {
+						has_mio_research_category = artillery
+						has_mio_research_category = infantry_weapons
+						has_mio_research_category = infantry_equipment
+						has_mio_research_category = motorized_equipment
+					}
+				}
+				add_mio_funds = 1000
+			}
+	}
+
+	# Cost paid by the focus taker.
+	completion_reward_joint_originator = {
+		# Remove 1 civilian factory from each of 2 random core states (owned & controlled).
+		random_owned_controlled_state = {
+			limit = {
+				is_core_of = ROOT
+				industrial_complex > 0
+			}
+			save_event_target_as = COMMON_removed_civ_state_1
+			remove_building = { type = industrial_complex level = 1 }
+		}
+		random_owned_controlled_state = {
+			limit = {
+				is_core_of = ROOT
+				industrial_complex > 0
+				NOT = { state = event_target:COMMON_removed_civ_state_1 }
+			}
+			remove_building = { type = industrial_complex level = 1 }
+		}
+	}
+
+	completion_reward_joint_member = { }
+}
+
+joint_focus = {
+	id = COMMON_fund_tank_industry
+	icon = GFX_goal_generic_army_tanks
+
+	prerequisite = { focus = COMMON_commonwealth_combined_programs }
+
+	# Two focuses to the right of Tiger Force (second one).
+	relative_position_id = COMMON_form_tiger_force
+	x = 4
+	y = 0
+
+	cost = 5
+
+	mutually_exclusive = { focus = COMMON_fund_arms_industry }
+
+	allow_branch = {
+		OR = {
+			tag = ENG
+			tag = SAF
+			tag = CAN
+			tag = RAJ
+			tag = AST
+			tag = FRA
+			tag = POL
+		}
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	available = { }
+
+	# Tank MIO funding for all branch nations.
+	completion_reward = {
+			every_military_industrial_organization = {
+				limit = { has_mio_research_category = armor }
+				add_mio_funds = 500
+			}
+		}
+
+	# Cost paid by the focus taker.
+	completion_reward_joint_originator = {
+		# Remove 1 civilian factory from each of 2 random core states (owned & controlled).
+		random_owned_controlled_state = {
+			limit = {
+				is_core_of = ROOT
+				industrial_complex > 0
+			}
+			save_event_target_as = COMMON_removed_civ_state_1
+			remove_building = { type = industrial_complex level = 1 }
+		}
+		random_owned_controlled_state = {
+			limit = {
+				is_core_of = ROOT
+				industrial_complex > 0
+				NOT = { state = event_target:COMMON_removed_civ_state_1 }
+			}
+			remove_building = { type = industrial_complex level = 1 }
+		}
+	}
+
+	completion_reward_joint_member = { }
+}
+
+joint_focus = {
+	id = COMMON_emergency_draft
+	icon = GFX_goal_generic_allies_build_infantry
+
+	prerequisite = { focus = COMMON_commonwealth_combined_programs }
+
+	# Under the joint programs focus, to the right of the transport-plane focus.
+	relative_position_id = COMMON_commonwealth_combined_programs
+	x = 2
+	y = 1
+
+	cost = 5
+
+	allow_branch = {
+		OR = {
+			tag = ENG
+			tag = SAF
+			tag = CAN
+			tag = RAJ
+			tag = AST
+			tag = FRA
+			tag = POL
+		}
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+
+	available = {
+		custom_trigger_tooltip = {
+			tooltip = COMMON_emergency_draft_casualties_tt
+			casualties > 1000000
+		}
+	}
+
+	completion_reward_joint_originator = {
+		custom_effect_tooltip = COMMON_emergency_draft_tt
+		add_stability = -0.2
+		add_war_support = -0.2
+
+		hidden_effect = {
+			# Use the same template logic as France's "Protect the Colonies" focus.
+			if = {
+				limit = {
+					NOT = {
+						OR = {
+							has_tech = width_tech_chi
+							has_tech = width_tech_sov
+							has_tech = width_tech
+						}
+					}
+				}
+				division_template = {
+					name = "Colonial Troops"
+					priority = 0
+					is_locked = yes
+					regiments = {
+						volkssturm_infantry = { x = 0 y = 0 }
+						volkssturm_infantry = { x = 0 y = 1 }
+						volkssturm_infantry = { x = 0 y = 2 }
+						volkssturm_infantry = { x = 0 y = 3 }
+
+						volkssturm_infantry = { x = 1 y = 0 }
+						volkssturm_infantry = { x = 1 y = 1 }
+						volkssturm_infantry = { x = 1 y = 2 }
+						volkssturm_infantry = { x = 1 y = 3 }
+
+						volkssturm_infantry = { x = 2 y = 0 }
+						volkssturm_infantry = { x = 2 y = 1 }
+						artillery_brigade = { x = 2 y = 2 }
+						artillery_brigade = { x = 2 y = 3 }
+
+						artillery_brigade = { x = 3 y = 0 }
+						artillery_brigade = { x = 3 y = 1 }
+						anti_tank_brigade = { x = 3 y = 2 }
+					}
+					support = {
+						pack_artillery = { x = 0 y = 0 }
+						engineer = { x = 0 y = 1 }
+						anti_air_company = { x = 0 y = 2 }
+						recon = { x = 0 y = 3 }
+						military_police = { x = 1 y = 0 }
+						logistics_company = { x = 1 y = 1 }
+						anti_tank = { x = 1 y = 2 }
+					}
+				}
+			}
+			else = {
+				division_template = {
+					name = "Colonial Troops"
+					priority = 0
+					is_locked = yes
+					regiments = {
+						volkssturm_infantry = { x = 0 y = 0 }
+						volkssturm_infantry = { x = 0 y = 1 }
+						volkssturm_infantry = { x = 0 y = 2 }
+						volkssturm_infantry = { x = 0 y = 3 }
+
+						volkssturm_infantry = { x = 1 y = 0 }
+						volkssturm_infantry = { x = 1 y = 1 }
+						volkssturm_infantry = { x = 1 y = 2 }
+						volkssturm_infantry = { x = 1 y = 3 }
+
+						volkssturm_infantry = { x = 2 y = 0 }
+						volkssturm_infantry = { x = 2 y = 1 }
+						artillery_brigade = { x = 2 y = 2 }
+						artillery_brigade = { x = 2 y = 3 }
+
+						artillery_brigade = { x = 3 y = 0 }
+						artillery_brigade = { x = 3 y = 1 }
+						anti_tank_brigade = { x = 3 y = 2 }
+					}
+					support = {
+						pack_artillery = { x = 0 y = 0 }
+						engineer = { x = 0 y = 1 }
+						anti_air_company = { x = 0 y = 2 }
+						recon = { x = 0 y = 3 }
+						military_police = { x = 1 y = 0 }
+						logistics_company = { x = 1 y = 1 }
+						anti_tank = { x = 1 y = 2 }
+					}
+				}
+			}
+
+			random_owned_controlled_state = {
+				limit = { is_controlled_by = ROOT }
+				hidden_effect = {
+					create_unit = { division = "name = \"Emergency Draft\" division_template = \"Colonial Troops\" start_experience_factor = 0.1" owner = ROOT }
+					create_unit = { division = "name = \"Emergency Draft\" division_template = \"Colonial Troops\" start_experience_factor = 0.1" owner = ROOT }
+					create_unit = { division = "name = \"Emergency Draft\" division_template = \"Colonial Troops\" start_experience_factor = 0.1" owner = ROOT }
+					create_unit = { division = "name = \"Emergency Draft\" division_template = \"Colonial Troops\" start_experience_factor = 0.1" owner = ROOT }
+					create_unit = { division = "name = \"Emergency Draft\" division_template = \"Colonial Troops\" start_experience_factor = 0.1" owner = ROOT }
+					create_unit = { division = "name = \"Emergency Draft\" division_template = \"Colonial Troops\" start_experience_factor = 0.1" owner = ROOT }
+					create_unit = { division = "name = \"Emergency Draft\" division_template = \"Colonial Troops\" start_experience_factor = 0.1" owner = ROOT }
+					create_unit = { division = "name = \"Emergency Draft\" division_template = \"Colonial Troops\" start_experience_factor = 0.1" owner = ROOT }
+					create_unit = { division = "name = \"Emergency Draft\" division_template = \"Colonial Troops\" start_experience_factor = 0.1" owner = ROOT }
+					create_unit = { division = "name = \"Emergency Draft\" division_template = \"Colonial Troops\" start_experience_factor = 0.1" owner = ROOT }
+					create_unit = { division = "name = \"Emergency Draft\" division_template = \"Colonial Troops\" start_experience_factor = 0.1" owner = ROOT }
+					create_unit = { division = "name = \"Emergency Draft\" division_template = \"Colonial Troops\" start_experience_factor = 0.1" owner = ROOT }
+					create_unit = { division = "name = \"Emergency Draft\" division_template = \"Colonial Troops\" start_experience_factor = 0.1" owner = ROOT }
+					create_unit = { division = "name = \"Emergency Draft\" division_template = \"Colonial Troops\" start_experience_factor = 0.1" owner = ROOT }
+					create_unit = { division = "name = \"Emergency Draft\" division_template = \"Colonial Troops\" start_experience_factor = 0.1" owner = ROOT }
+				}
+			}
+		}
+	}
+
+	completion_reward_joint_member = { }
+}
+
+joint_focus = {
+	id = COMMON_continue_the_fight
+	icon = GFX_goal_generic_propaganda
+
+	prerequisite = { focus = COMMON_commonwealth_combined_programs }
+
+	# To the right of Emergency Draft.
+	relative_position_id = COMMON_emergency_draft
+	x = 2
+	y = 0
+
+	cost = 5
+
+	allow_branch = {
+		OR = {
+			tag = ENG
+			tag = SAF
+			tag = CAN
+			tag = RAJ
+			tag = AST
+		}
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+
+	available = {
+		has_capitulated = yes
+	}
+
+	completion_reward_joint_originator = {
+		add_offsite_building = { type = arms_factory level = 20 }
+		add_offsite_building = { type = industrial_complex level = 10 }
+
+		add_manpower = 100000
+
+		custom_effect_tooltip = COMMON_continue_the_fight_divisions_tt
+
+		hidden_effect = {
+			division_template = {
+				name = "War Hero Heavy Infantry"
+				division_names_group = GENERIC_INFANTRY
+				is_locked = yes
+				regiments = {
+					infantry = { x = 0 y = 0 }
+					infantry = { x = 0 y = 1 }
+					infantry = { x = 0 y = 2 }
+					infantry = { x = 1 y = 0 }
+					infantry = { x = 1 y = 1 }
+					infantry = { x = 1 y = 2 }
+					infantry = { x = 2 y = 0 }
+					infantry = { x = 2 y = 1 }
+					infantry = { x = 2 y = 2 }
+
+					artillery = { x = 3 y = 0 }
+					artillery = { x = 3 y = 1 }
+					artillery = { x = 3 y = 2 }
+					artillery = { x = 3 y = 3 }
+
+					anti_air = { x = 4 y = 0 }
+					anti_tank = { x = 4 y = 1 }
+				}
+				support = {
+					engineer = { x = 0 y = 0 }
+					recon = { x = 0 y = 1 }
+					logistics_company = { x = 0 y = 2 }
+					anti_air = { x = 0 y = 3 }
+					anti_tank = { x = 0 y = 4 }
+					artillery_heavy_support = { x = 0 y = 5 }
+					field_hospital = { x = 0 y = 6 }
+					military_police = { x = 0 y = 7 }
+				}
+			}
+
+			if = {
+				limit = { 126 = { is_controlled_by = ENG } }
+				126 = {
+					create_unit = { division = "name = \"War Hero Heavy Infantry\" division_template = \"War Hero Heavy Infantry\" start_experience_factor = 1.0 start_equipment_factor = 1" owner = ROOT }
+					create_unit = { division = "name = \"War Hero Heavy Infantry\" division_template = \"War Hero Heavy Infantry\" start_experience_factor = 1.0 start_equipment_factor = 1" owner = ROOT }
+					create_unit = { division = "name = \"War Hero Heavy Infantry\" division_template = \"War Hero Heavy Infantry\" start_experience_factor = 1.0 start_equipment_factor = 1" owner = ROOT }
+					create_unit = { division = "name = \"War Hero Heavy Infantry\" division_template = \"War Hero Heavy Infantry\" start_experience_factor = 1.0 start_equipment_factor = 1" owner = ROOT }
+					create_unit = { division = "name = \"War Hero Heavy Infantry\" division_template = \"War Hero Heavy Infantry\" start_experience_factor = 1.0 start_equipment_factor = 1" owner = ROOT }
+				}
+			}
+			else = {
+				# Maldives
+				281 = {
+					create_unit = { division = "name = \"War Hero Heavy Infantry\" division_template = \"War Hero Heavy Infantry\" start_experience_factor = 1.0 start_equipment_factor = 1" owner = ROOT }
+					create_unit = { division = "name = \"War Hero Heavy Infantry\" division_template = \"War Hero Heavy Infantry\" start_experience_factor = 1.0 start_equipment_factor = 1" owner = ROOT }
+					create_unit = { division = "name = \"War Hero Heavy Infantry\" division_template = \"War Hero Heavy Infantry\" start_experience_factor = 1.0 start_equipment_factor = 1" owner = ROOT }
+					create_unit = { division = "name = \"War Hero Heavy Infantry\" division_template = \"War Hero Heavy Infantry\" start_experience_factor = 1.0 start_equipment_factor = 1" owner = ROOT }
+					create_unit = { division = "name = \"War Hero Heavy Infantry\" division_template = \"War Hero Heavy Infantry\" start_experience_factor = 1.0 start_equipment_factor = 1" owner = ROOT }
+				}
+			}
+		}
+	}
+
+	completion_reward_joint_member = { }
+}
+
+joint_focus = {
+	id = COMMON_organize_convoy_escort_task_force
+	icon = GFX_focus_generic_destroyer
+
+	prerequisite = { focus = COMMON_commonwealth_combined_programs }
+
+	# Place to the left of the plane focus (which sits at x=0,y=1 under the root).
+	relative_position_id = COMMON_commonwealth_combined_programs
+	x = -2
+	y = 1
+
+	cost = 5
+
+	allow_branch = {
+		OR = {
+			tag = ENG
+			tag = SAF
+			tag = CAN
+			tag = RAJ
+			tag = AST
+			tag = FRA
+			tag = POL
+		}
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+
+	available = {
+		has_completed_focus = COMMON_commonwealth_convoy_escort_program
+	}
+
+	completion_reward_joint_originator = {
+		custom_effect_tooltip = COMMON_asw_task_force_spawn_tt
+
+		hidden_effect = {
+			# Ensure the taker has the hulls/modules needed for the spawned ships.
+			set_technology = {
+				# Interwar + 1936 hull techs (requested).
+				early_ship_hull_light = 1
+				basic_ship_hull_light = 1			# ship_hull_light_2 + light_ship_engine_2
+
+				early_ship_hull_carrier = 1
+				basic_ship_hull_carrier = 1		# ship_hull_carrier_1
+
+				# Hull used by the spawned carriers.
+				improved_ship_hull_carrier = 1		# ship_hull_carrier_2 + carrier_ship_engine_3
+
+				# ASW modules (requested: Sonar II + Depth Charges II).
+				improved_sonar = 1					# ship_sonar_2 module
+				improved_depth_charges = 1			# ship_depth_charge_2 module
+
+				# Radar module tech.
+				basic_gun_laying_radar = 1			# ship_radar_2 module
+			}
+
+			# Create standardized escorts (DD2) with radar/sonar and depth charges.
+			create_equipment_variant = {
+				name = "Commonwealth Escort Destroyer"
+				type = ship_hull_light_2
+				parent_version = 0
+				modules = {
+					fixed_ship_battery_slot = dp_light_battery_1
+					fixed_ship_anti_air_slot = ship_anti_air_1
+					fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+					fixed_ship_radar_slot = ship_radar_2
+					fixed_ship_engine_slot = light_ship_engine_2
+					fixed_ship_torpedo_slot = ship_torpedo_1
+					mid_1_custom_slot = ship_sonar_2
+					rear_1_custom_slot = ship_depth_charge_2
+				}
+			}
+
+			# Create standardized carriers (CV2) with ~36 deck-space worth of modules.
+			create_equipment_variant = {
+				name = "Commonwealth Escort Carrier"
+				type = ship_hull_carrier_2
+				parent_version = 0
+				modules = {
+					fixed_ship_deck_slot_1 = ship_deck_space
+					fixed_ship_deck_slot_2 = ship_deck_space
+					fixed_ship_anti_air_slot = ship_anti_air
+					fixed_ship_engine_slot = carrier_ship_engine_3
+					fixed_ship_secondaries_slot = ship_dp_secondaries
+					front_1_custom_slot = ship_deck_space
+					mid_1_custom_slot = ship_deck_space
+				}
+			}
+
+			# Spawn the task force ships for the country taking the focus.
+			create_ship = { type = ship_hull_carrier_2 equipment_variant = "Commonwealth Escort Carrier" creator = ROOT name = "CVE Task Force Carrier I" }
+			create_ship = { type = ship_hull_carrier_2 equipment_variant = "Commonwealth Escort Carrier" creator = ROOT name = "CVE Task Force Carrier II" }
+
+			create_ship = { type = ship_hull_light_2 equipment_variant = "Commonwealth Escort Destroyer" creator = ROOT name = "Escort Destroyer 1" }
+			create_ship = { type = ship_hull_light_2 equipment_variant = "Commonwealth Escort Destroyer" creator = ROOT name = "Escort Destroyer 2" }
+			create_ship = { type = ship_hull_light_2 equipment_variant = "Commonwealth Escort Destroyer" creator = ROOT name = "Escort Destroyer 3" }
+			create_ship = { type = ship_hull_light_2 equipment_variant = "Commonwealth Escort Destroyer" creator = ROOT name = "Escort Destroyer 4" }
+			create_ship = { type = ship_hull_light_2 equipment_variant = "Commonwealth Escort Destroyer" creator = ROOT name = "Escort Destroyer 5" }
+			create_ship = { type = ship_hull_light_2 equipment_variant = "Commonwealth Escort Destroyer" creator = ROOT name = "Escort Destroyer 6" }
+			create_ship = { type = ship_hull_light_2 equipment_variant = "Commonwealth Escort Destroyer" creator = ROOT name = "Escort Destroyer 7" }
+			create_ship = { type = ship_hull_light_2 equipment_variant = "Commonwealth Escort Destroyer" creator = ROOT name = "Escort Destroyer 8" }
+			create_ship = { type = ship_hull_light_2 equipment_variant = "Commonwealth Escort Destroyer" creator = ROOT name = "Escort Destroyer 9" }
+			create_ship = { type = ship_hull_light_2 equipment_variant = "Commonwealth Escort Destroyer" creator = ROOT name = "Escort Destroyer 10" }
+			create_ship = { type = ship_hull_light_2 equipment_variant = "Commonwealth Escort Destroyer" creator = ROOT name = "Escort Destroyer 11" }
+			create_ship = { type = ship_hull_light_2 equipment_variant = "Commonwealth Escort Destroyer" creator = ROOT name = "Escort Destroyer 12" }
+			create_ship = { type = ship_hull_light_2 equipment_variant = "Commonwealth Escort Destroyer" creator = ROOT name = "Escort Destroyer 13" }
+			create_ship = { type = ship_hull_light_2 equipment_variant = "Commonwealth Escort Destroyer" creator = ROOT name = "Escort Destroyer 14" }
+			create_ship = { type = ship_hull_light_2 equipment_variant = "Commonwealth Escort Destroyer" creator = ROOT name = "Escort Destroyer 15" }
+			create_ship = { type = ship_hull_light_2 equipment_variant = "Commonwealth Escort Destroyer" creator = ROOT name = "Escort Destroyer 16" }
+			create_ship = { type = ship_hull_light_2 equipment_variant = "Commonwealth Escort Destroyer" creator = ROOT name = "Escort Destroyer 17" }
+			create_ship = { type = ship_hull_light_2 equipment_variant = "Commonwealth Escort Destroyer" creator = ROOT name = "Escort Destroyer 18" }
+		}
+	}
+
+	completion_reward_joint_member = { }
+}
+
+joint_focus = {
+	id = COMMON_requisition_commonwealth_merchant_marine
+	icon = GFX_goal_generic_navy_cruiser
+
+	prerequisite = { focus = COMMON_commonwealth_combined_programs }
+
+	# Place to the left of the escort task force focus.
+	relative_position_id = COMMON_organize_convoy_escort_task_force
+	x = -2
+	y = 0
+
+	cost = 5
+
+	allow_branch = {
+		OR = {
+			tag = ENG
+			tag = SAF
+			tag = CAN
+			tag = RAJ
+			tag = AST
+			tag = FRA
+			tag = POL
+		}
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+
+	available = {
+		has_completed_focus = COMMON_commonwealth_convoy_escort_program
+	}
+
+	completion_reward_joint_originator = {
+		# Pay 50 PP to requisition the merchant marine.
+		add_political_power = -50
+
+		# Remove 1 civilian factory from the taker's capital.
+		capital_scope = {
+			if = {
+				limit = { num_of_civilian_factories > 0 }
+				remove_building = { type = industrial_complex level = 1 }
+			}
+		}
+
+		add_equipment_to_stockpile = {
+			type = convoy
+			amount = 100
+		}
+	}
+
+	completion_reward_joint_member = {
+		add_equipment_to_stockpile = {
+			type = convoy
+			amount = 10
+		}
+	}
+}
+
+joint_focus = {
+	id = COMMON_support_china
+	icon = GFX_goal_generic_foreign_support
+
+	# A new root focus (no prerequisite), placed to the right of the existing branch.
+	relative_position_id = COMMON_commonwealth_combined_programs
+	x = 6
+	y = 0
+
+	cost = 5
+
+	allow_branch = {
+		OR = { tag = ENG tag = SAF tag = CAN tag = RAJ tag = AST tag = FRA tag = POL }
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+
+	available = {
+		country_exists = CHI
+	}
+
+	completion_reward_joint_originator = {
+		# Cost paid by the focus taker: one civilian factory from a random owned core state.
+		random_owned_controlled_state = {
+			limit = {
+				is_core_of = ROOT
+				industrial_complex > 0
+			}
+			remove_building = { type = industrial_complex level = 1 }
+		}
+
+		CHI = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 4000
+				producer = CHI
+			}
+			add_equipment_to_stockpile = {
+				type = artillery_equipment
+				amount = 300
+				producer = CHI
+			}
+			add_equipment_to_stockpile = {
+				type = support_equipment
+				amount = 200
+				producer = CHI
+			}
+			add_equipment_to_stockpile = {
+				type = radio_equipment
+				amount = 200
+				producer = CHI
+			}
+			add_equipment_to_stockpile = {
+				type = motorized_equipment
+				amount = 50
+				producer = CHI
+			}
+			add_equipment_to_stockpile = {
+				type = anti_air_equipment
+				amount = 100
+				producer = CHI
+			}
+			add_equipment_to_stockpile = {
+				type = horse_equipment
+				amount = 500
+				producer = CHI
+			}
+		}
+	}
+
+	completion_reward_joint_member = { }
+}
+
+joint_focus = {
+	id = COMMON_allow_volunteers_to_china
+	icon = GFX_goal_generic_allies_build_infantry
+
+	prerequisite = { focus = COMMON_support_china }
+
+	relative_position_id = COMMON_support_china
+	x = 0
+	y = 1
+
+	cost = 5
+
+	allow_branch = {
+		OR = { tag = ENG tag = SAF tag = CAN tag = RAJ tag = AST tag = FRA tag = POL }
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	available = { }
+
+	completion_reward_joint_originator = {
+		custom_effect_tooltip = COMMON_allow_volunteers_to_china_tt
+		set_country_flag = Vols_china_allowed
+	}
+
+	completion_reward_joint_member = { }
+}
