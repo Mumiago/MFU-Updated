@@ -329,17 +329,19 @@ joint_focus = {
 	# Cost paid by the focus taker.
 	completion_reward_joint_originator = {
 		# Remove 1 civilian factory from each of 2 random core states (owned & controlled).
-		random_owned_controlled_state = {
+		random_owned_state = {
 			limit = {
 				is_core_of = ROOT
+				is_controlled_by = ROOT
 				industrial_complex > 0
 			}
 			save_event_target_as = COMMON_removed_civ_state_1
 			remove_building = { type = industrial_complex level = 1 }
 		}
-		random_owned_controlled_state = {
+		random_owned_state = {
 			limit = {
 				is_core_of = ROOT
+				is_controlled_by = ROOT
 				industrial_complex > 0
 				NOT = { state = event_target:COMMON_removed_civ_state_1 }
 			}
@@ -395,17 +397,19 @@ joint_focus = {
 	# Cost paid by the focus taker.
 	completion_reward_joint_originator = {
 		# Remove 1 civilian factory from each of 2 random core states (owned & controlled).
-		random_owned_controlled_state = {
+		random_owned_state = {
 			limit = {
 				is_core_of = ROOT
+				is_controlled_by = ROOT
 				industrial_complex > 0
 			}
 			save_event_target_as = COMMON_removed_civ_state_1
 			remove_building = { type = industrial_complex level = 1 }
 		}
-		random_owned_controlled_state = {
+		random_owned_state = {
 			limit = {
 				is_core_of = ROOT
+				is_controlled_by = ROOT
 				industrial_complex > 0
 				NOT = { state = event_target:COMMON_removed_civ_state_1 }
 			}
@@ -547,15 +551,15 @@ joint_focus = {
 
 		if = {
 			limit = {
-				any_owned_controlled_state = {
-					limit = {
-						is_core_of = ROOT
-						is_controlled_by = ROOT
-					}
+				any_state = {
+					is_owned_by = ROOT
+					is_core_of = ROOT
+					is_controlled_by = ROOT
 				}
 			}
-			random_owned_controlled_state = {
+			random_state = {
 				limit = {
+					is_owned_by = ROOT
 					is_core_of = ROOT
 					is_controlled_by = ROOT
 				}
@@ -577,8 +581,11 @@ joint_focus = {
 			}
 		}
 		else = {
-			random_owned_controlled_state = {
-				limit = { is_controlled_by = ROOT }
+			random_state = {
+				limit = {
+					is_owned_by = ROOT
+					is_controlled_by = ROOT
+				}
 				create_unit = { division = "name = \"Emergency Draft\" division_template = \"Colonial Troops\" start_experience_factor = 0.1" owner = ROOT }
 				create_unit = { division = "name = \"Emergency Draft\" division_template = \"Colonial Troops\" start_experience_factor = 0.1" owner = ROOT }
 				create_unit = { division = "name = \"Emergency Draft\" division_template = \"Colonial Troops\" start_experience_factor = 0.1" owner = ROOT }
@@ -645,7 +652,6 @@ joint_focus = {
 		hidden_effect = {
 			division_template = {
 				name = "War Hero Heavy Infantry"
-				division_names_group = GENERIC_INFANTRY
 				is_locked = yes
 				regiments = {
 					infantry = { x = 0 y = 0 }
@@ -658,19 +664,19 @@ joint_focus = {
 					infantry = { x = 2 y = 1 }
 					infantry = { x = 2 y = 2 }
 
-					artillery = { x = 3 y = 0 }
-					artillery = { x = 3 y = 1 }
-					artillery = { x = 3 y = 2 }
-					artillery = { x = 3 y = 3 }
+					artillery_brigade = { x = 3 y = 0 }
+					artillery_brigade = { x = 3 y = 1 }
+					artillery_brigade = { x = 3 y = 2 }
+					artillery_brigade = { x = 3 y = 3 }
 
 					anti_air = { x = 4 y = 0 }
-					anti_tank = { x = 4 y = 1 }
+					anti_tank_brigade = { x = 4 y = 1 }
 				}
 				support = {
 					engineer = { x = 0 y = 0 }
 					recon = { x = 0 y = 1 }
 					logistics_company = { x = 0 y = 2 }
-					anti_air = { x = 0 y = 3 }
+					anti_air_company = { x = 0 y = 3 }
 					anti_tank = { x = 0 y = 4 }
 					artillery_heavy_support = { x = 0 y = 5 }
 					field_hospital = { x = 0 y = 6 }
@@ -791,9 +797,9 @@ joint_focus = {
 				modules = {
 					fixed_ship_deck_slot_1 = ship_deck_space
 					fixed_ship_deck_slot_2 = ship_deck_space
-					fixed_ship_anti_air_slot = ship_anti_air
+					fixed_ship_anti_air_slot = ship_anti_air_1
 					fixed_ship_engine_slot = carrier_ship_engine_3
-					fixed_ship_secondaries_slot = ship_dp_secondaries
+					fixed_ship_secondaries_slot = dp_ship_secondaries_1
 					front_1_custom_slot = ship_deck_space
 					mid_1_custom_slot = ship_deck_space
 				}
@@ -869,7 +875,7 @@ joint_focus = {
 		# Remove 1 civilian factory from the taker's capital.
 		capital_scope = {
 			if = {
-				limit = { num_of_civilian_factories > 0 }
+				limit = { industrial_complex > 0 }
 				remove_building = { type = industrial_complex level = 1 }
 			}
 		}
@@ -922,9 +928,10 @@ joint_focus = {
 
 	completion_reward_joint_originator = {
 		# Cost paid by the focus taker: one civilian factory from a random owned core state.
-		random_owned_controlled_state = {
+		random_owned_state = {
 			limit = {
 				is_core_of = ROOT
+				is_controlled_by = ROOT
 				industrial_complex > 0
 			}
 			remove_building = { type = industrial_complex level = 1 }
