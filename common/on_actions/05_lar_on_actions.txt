@@ -381,6 +381,65 @@ on_actions = {
 	# ROOT is sender, FROM is receiver
 	on_send_volunteers = {
 		effect = {
+			# Volunteer target restriction 
+			#
+			# - Axis tag list -> can only send to Nationalist Spain (SPR)
+			# - Allies (ENG-faction) + FRA + POL -> can only send to Republican Spain (SPN)
+			# - Everyone else: Spain is allowed (either side)
+			# - Exception: can send to China if sender has flag Vols_china_allowed
+			# - Exception: can send to Japan if sender has flag Vols_japan_allowed
+			# - Any other target gets recalled
+			if = {
+				limit = {
+					NOT = {
+						OR = {
+							# Exceptions first
+							AND = { FROM = { tag = CHI } ROOT = { has_country_flag = Vols_china_allowed } }
+							AND = { FROM = { tag = JAP } ROOT = { has_country_flag = Vols_japan_allowed } }
+
+							# Spain (either side)
+							FROM = { tag = SPR }
+							FROM = { tag = SPN }
+						}
+					}
+				}
+				ROOT = { recall_volunteers_from = FROM }
+			}
+
+			# Enforce side-specific rules when the target is Spain.
+			if = {
+				limit = {
+					OR = {
+						FROM = { tag = SPR }
+						FROM = { tag = SPN }
+					}
+				}
+				if = {
+					# Axis-tag list can only send to Nationalist Spain (SPR)
+					limit = {
+						ROOT = {
+							OR = { tag = GER tag = POR tag = BUL tag = ITA tag = ROM tag = CZE tag = SLO tag = HUN }
+						}
+						FROM = { NOT = { tag = SPR } }
+					}
+					ROOT = { recall_volunteers_from = FROM }
+				}
+				else_if = {
+					# Allies group can only send to Republican Spain (SPN)
+					limit = {
+						ROOT = {
+							OR = {
+								is_in_faction_with = ENG
+								tag = FRA
+								tag = POL
+							}
+						}
+						FROM = { NOT = { tag = SPN } }
+					}
+					ROOT = { recall_volunteers_from = FROM }
+				}
+			}
+
 			if = {
 				limit = {
 					SPR_scw_in_progress = yes

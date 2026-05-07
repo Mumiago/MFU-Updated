@@ -1,0 +1,598 @@
+### Commonwealth joint area starter: Strengthen Commonwealth Ties
+
+# Shared joint focus definition. Hooked into each tree via:
+# shared_focus = COMMON_strengthen_commonwealth_ties
+joint_focus = {
+	id = COMMON_strengthen_commonwealth_ties
+	icon = GFX_AAST_commonwealth_ties
+
+	# Base coordinates. Member trees are positioned via offsets, like ENG_RAJ_burma_joint.
+	x = 0
+	y = 0
+
+	offset = {
+		# UK: below "Britannia Rules the Waves" (`uk_waves_focus`)
+		x = 37
+		y = 6
+		trigger = { tag = ENG }
+	}
+
+	offset = {
+		# South Africa: below Agricultural Development (`SAF_agricultural_diversification`)
+		# Moved: below "Experts of Desert Warfare" (`SAF_experts_of_desert_warfare`)
+		x = 33
+		y = 8
+		trigger = { tag = SAF }
+	}
+
+	offset = {
+		# Canada: above "Rebuild the Airforce" (`CAN_rebuild_the_royal_canadian_airforce`)
+		x = 25
+		y = 0
+		trigger = { tag = CAN }
+	}
+
+	offset = {
+		# Raj: below National Wartime Procedures (`RAJ_prince_military_production_expansion`)
+		x = 35
+		y = 7
+		trigger = { tag = RAJ }
+	}
+
+	offset = {
+		# - COMMON_joint_commonwealth_training at (31,7)
+		x = 29
+		y = 7
+		trigger = { tag = AST }
+	}
+
+	cost = 5
+
+	allow_branch = {
+		OR = {
+			tag = ENG
+			tag = SAF
+			tag = CAN
+			tag = RAJ
+			tag = AST
+		}
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	available = { }
+
+	completion_reward = {
+		add_political_power = 50
+	}
+}
+
+joint_focus = {
+	id = COMMON_commonwealth_industrial_coordination
+	icon = GFX_AST_allied_works
+
+	prerequisite = { focus = COMMON_strengthen_commonwealth_ties }
+
+	relative_position_id = COMMON_strengthen_commonwealth_ties
+	x = 0
+	y = 1
+
+	cost = 5
+
+	allow_branch = {
+		OR = {
+			tag = ENG
+			tag = SAF
+			tag = CAN
+			tag = RAJ
+			tag = AST
+			AND = { tag = FRA has_completed_focus = FRA_refus_absurde }
+			AND = { tag = POL has_completed_focus = POL_poland_is_not_yet_lost has_capitulated = yes }
+		}
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	available = {
+		OR = {
+			ENG = { has_completed_focus = ENG_appeasement }
+			ENG = { has_completed_focus = ENG_containment }
+		}
+	}
+
+	completion_reward = {
+		custom_effect_tooltip = COMMON_commonwealth_industrial_coordination_tt
+	}
+
+	completion_reward_joint_originator = {
+		if = {
+			limit = { ENG = { has_completed_focus = ENG_appeasement } }
+			every_country = {
+				limit = { OR = { tag = ENG tag = SAF tag = CAN tag = RAJ tag = AST } }
+				capital_scope = {
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = { ENG = { has_completed_focus = ENG_containment } }
+			every_country = {
+				limit = { OR = { tag = ENG tag = SAF tag = CAN tag = RAJ tag = AST } }
+				army_experience = 15
+				capital_scope = {
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+		}
+	}
+
+	completion_reward_joint_member = { }
+}
+
+joint_focus = {
+	id = COMMON_commonwealth_emergency_civilian_buildout
+	icon = GFX_focus_eng_imperial_federation
+
+	prerequisite = { focus = COMMON_commonwealth_industrial_coordination }
+
+	relative_position_id = COMMON_commonwealth_industrial_coordination
+	x = -1
+	y = 1
+
+	cost = 5
+
+	allow_branch = {
+		OR = {
+			tag = ENG
+			tag = SAF
+			tag = CAN
+			tag = RAJ
+			tag = AST
+			AND = { tag = FRA has_completed_focus = FRA_refus_absurde }
+			AND = { tag = POL has_completed_focus = POL_poland_is_not_yet_lost has_capitulated = yes }
+		}
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	available = { }
+
+	# Originator-only reward.
+	completion_reward_joint_originator = {
+		capital_scope = {
+			add_building_construction = {
+				type = industrial_complex
+				level = 3
+				instant_build = yes
+			}
+		}
+	}
+
+	completion_reward_joint_member = { }
+}
+
+joint_focus = {
+	id = COMMON_commonwealth_convoy_escort_program
+	icon = GFX_goal_generic_construct_naval_dockyard
+
+	prerequisite = { focus = COMMON_commonwealth_industrial_coordination }
+
+	relative_position_id = COMMON_commonwealth_industrial_coordination
+	x = 1
+	y = 1
+
+	cost = 5
+
+	allow_branch = {
+		OR = {
+			tag = ENG
+			tag = SAF
+			tag = CAN
+			tag = RAJ
+			tag = AST
+			AND = { tag = FRA has_completed_focus = FRA_refus_absurde }
+			AND = { tag = POL has_completed_focus = POL_poland_is_not_yet_lost has_capitulated = yes }
+		}
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	available = { }
+
+	# Originator-only reward.
+	completion_reward_joint_originator = {
+		capital_scope = {
+			add_building_construction = {
+				type = dockyard
+				level = 5
+				instant_build = yes
+			}
+		}
+
+		navy_experience = 50
+
+		add_tech_bonus = {
+			name = COMMON_commonwealth_convoy_escort_program
+			bonus = 0.5
+			uses = 1
+			category = naval_equipment
+		}
+	}
+
+	completion_reward_joint_member = { }
+}
+
+joint_focus = {
+	id = COMMON_commonwealth_industrial_burden_sharing
+	icon = GFX_goal_CAN_depression_recovery
+
+	prerequisite = { focus = COMMON_commonwealth_industrial_coordination }
+
+	# Two focuses under Industrial Coordination.
+	relative_position_id = COMMON_commonwealth_industrial_coordination
+	x = 0
+	y = 2
+
+	cost = 3
+
+	allow_branch = {
+		OR = {
+			tag = ENG
+			tag = SAF
+			tag = CAN
+			tag = RAJ
+			tag = AST
+			AND = { tag = FRA has_completed_focus = FRA_refus_absurde }
+			AND = { tag = POL has_completed_focus = POL_poland_is_not_yet_lost has_capitulated = yes }
+		}
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	available = { }
+
+	# Cost paid by the focus taker.
+	completion_reward_joint_originator = {
+		# Remove 1 civilian factory from each of 2 random core states (owned & controlled).
+		random_owned_controlled_state = {
+			limit = {
+				is_core_of = ROOT
+				industrial_complex > 0
+			}
+			save_event_target_as = COMMON_removed_civ_state_1
+			remove_building = { type = industrial_complex level = 1 }
+		}
+		random_owned_controlled_state = {
+			limit = {
+				is_core_of = ROOT
+				industrial_complex > 0
+				NOT = { state = event_target:COMMON_removed_civ_state_1 }
+			}
+			remove_building = { type = industrial_complex level = 1 }
+		}
+	}
+
+	# Reward for each other member.
+	completion_reward_joint_member = {
+		add_offsite_building = { type = industrial_complex level = 1 }
+	}
+}
+
+joint_focus = {
+	id = COMMON_joint_commonwealth_training
+	icon = GFX_together2
+
+	relative_position_id = COMMON_strengthen_commonwealth_ties
+	x = 4
+	y = 0
+
+	cost = 5
+
+	allow_branch = {
+		OR = {
+			tag = ENG
+			tag = SAF
+			tag = CAN
+			tag = RAJ
+			tag = AST
+		}
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	available = { }
+
+	completion_reward = {
+		every_country = {
+			limit = {
+				OR = {
+					tag = ENG
+					tag = SAF
+					tag = CAN
+					tag = RAJ
+					tag = AST
+				}
+			}
+			army_experience = 20
+		}
+	}
+}
+
+joint_focus = {
+	id = COMMON_convert_locomotive_industrym
+	icon = GFX_focus_generic_railway_gun
+
+	prerequisite = { focus = COMMON_joint_commonwealth_training }
+
+	relative_position_id = COMMON_joint_commonwealth_training
+	x = -1
+	y = 2
+
+	cost = 5
+
+	allow_branch = {
+		OR = {
+			tag = ENG
+			tag = SAF
+			tag = CAN
+			tag = RAJ
+			tag = AST
+		}
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	available = { }
+
+	completion_reward_joint_originator = {
+		if = {
+			limit = { NOT = { has_tech = railway_gun } }
+			set_technology = { railway_gun = 1 }
+		}
+
+		create_railway_gun = {
+			equipment = railway_gun_equipment_1
+			name = RailwayGun
+			location = 7011
+		}
+
+		add_timed_idea = {
+			idea = COMMON_railway_gun_idea
+			days = 120
+		}
+	}
+
+	completion_reward_joint_member = { }
+}
+
+joint_focus = {
+	id = COMMON_commonwealth_weapons_development
+	icon = GFX_ENG_british_colonial_research_committee
+
+	prerequisite = { focus = COMMON_joint_commonwealth_training }
+
+	relative_position_id = COMMON_convert_locomotive_industrym
+	x = 2
+	y = 0
+
+	cost = 5
+
+	allow_branch = {
+		OR = {
+			tag = ENG
+			tag = SAF
+			tag = CAN
+			tag = RAJ
+			tag = AST
+		}
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	available = { }
+
+	# Originator-only bonuses.
+	completion_reward_joint_originator = {
+		add_tech_bonus = {
+			name = COMMON_commonwealth_weapons_development_infantry
+			ahead_reduction = 0.75
+			uses = 1
+			category = infantry_weapons
+		}
+		add_tech_bonus = {
+			name = COMMON_commonwealth_weapons_development_artillery
+			ahead_reduction = 0.75
+			uses = 1
+			category = artillery
+		}
+	}
+
+	completion_reward_joint_member = { }
+}
+
+joint_focus = {
+	id = COMMON_focus_on_heavy_tanks
+	icon = GFX_centurion
+
+	prerequisite = { focus = COMMON_joint_commonwealth_training }
+
+	relative_position_id = COMMON_joint_commonwealth_training
+	x = -2
+	y = 1
+
+	cost = 5
+
+	allow_branch = {
+		OR = {
+			tag = ENG
+			tag = SAF
+			tag = CAN
+			tag = RAJ
+			tag = AST
+		}
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	available = { }
+
+	completion_reward_joint_originator = {
+		add_tech_bonus = {
+			name = COMMON_focus_on_heavy_tanks
+			bonus = 0.5
+			uses = 1
+			category = cat_heavy_armor
+		}
+
+		random_owned_controlled_state = {
+			limit = {
+				is_controlled_by = ROOT
+				can_construct_building = tank_assembly
+			}
+			add_building_construction = {
+				type = tank_assembly
+				level = 1
+				instant_build = yes
+			}
+		}
+
+		add_ideas = COMMON_focus_on_heavy_tanks_idea
+	}
+
+	completion_reward_joint_member = { }
+}
+
+joint_focus = {
+	id = COMMON_focus_on_medium_tanks
+	icon = GFX_goal_generic_army_tanks
+
+	prerequisite = { focus = COMMON_joint_commonwealth_training }
+
+	relative_position_id = COMMON_joint_commonwealth_training
+	x = 2
+	y = 1
+
+	cost = 5
+
+	allow_branch = {
+		OR = {
+			tag = ENG
+			tag = SAF
+			tag = CAN
+			tag = RAJ
+			tag = AST
+		}
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	available = { }
+
+	completion_reward_joint_originator = {
+		add_tech_bonus = {
+			name = COMMON_focus_on_medium_tanks
+			bonus = 0.5
+			uses = 1
+			category = cat_medium_armor
+		}
+
+		random_owned_controlled_state = {
+			limit = {
+				is_controlled_by = ROOT
+				can_construct_building = tank_assembly
+			}
+			add_building_construction = {
+				type = tank_assembly
+				level = 1
+				instant_build = yes
+			}
+		}
+
+		add_ideas = COMMON_focus_on_medium_tanks_idea
+	}
+
+	completion_reward_joint_member = { }
+}
+
+joint_focus = {
+	id = COMMON_focus_on_special_forces
+	icon = GFX_focus_generic_commonwealth_build_infantry
+
+	prerequisite = { focus = COMMON_joint_commonwealth_training }
+
+	relative_position_id = COMMON_joint_commonwealth_training
+	x = 0
+	y = 1
+
+	cost = 5
+
+	allow_branch = {
+		OR = {
+			tag = ENG
+			tag = SAF
+			tag = CAN
+			tag = RAJ
+			tag = AST
+		}
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	available = { }
+
+	completion_reward_joint_originator = {
+		
+		add_ideas = COMMON_focus_on_special_forces_gear_idea
+		add_ideas = COMMON_focus_on_special_forces_cap_idea
+
+		add_doctrine_cost_reduction = {
+			name = COMMON_focus_on_special_forces
+			cost_reduction = 0.5
+			uses = 2
+			category = special_forces_doctrine
+		}
+	}
+
+	completion_reward_joint_member = { }
+}
