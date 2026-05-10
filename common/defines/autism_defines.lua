@@ -46,6 +46,3 @@ NDefines_Graphics.NGraphics.NAVAL_MINES_CLUMPING = 150 --The higher value, the m
 NDefines_Graphics.NGraphics.NAVAL_MINES_CLUMP_NEAR_TERRITORY = 60 -- Higher chance to spawn 3d naval mine near our territory
 NDefines_Graphics.NGraphics.MAPICON_GROUP_PASSES = 10 -- how many mapicons get processed per frame for grouping. more = quicker response, fewer = better performance
 NDefines_Graphics.NGraphics.WEATHER_DISTANCE_CUTOFF = 1000 -- At what distance weather effects are hidden
-
-NDefines.NAir.AIR_WING_ATTACK_LOGISTICS_TRUCK_DAMAGE_FACTOR = 10000
-NDefines.NAir.AIR_WING_ATTACK_LOGISTICS_TRAIN_DAMAGE_FACTOR =10000
