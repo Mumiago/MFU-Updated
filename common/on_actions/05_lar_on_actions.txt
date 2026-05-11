@@ -388,6 +388,7 @@ on_actions = {
 			# - Everyone else: Spain is allowed (either side)
 			# - Exception: can send to China if sender has flag Vols_china_allowed
 			# - Exception: can send to Japan if sender has flag Vols_japan_allowed
+			# - China/Japan authorization focuses: cannot send volunteers to Spain (SPR/SPN); flag Vols_expedition_no_spain
 			# - Any other target gets recalled
 			if = {
 				limit = {
@@ -397,9 +398,15 @@ on_actions = {
 							AND = { FROM = { tag = CHI } ROOT = { has_country_flag = Vols_china_allowed } }
 							AND = { FROM = { tag = JAP } ROOT = { has_country_flag = Vols_japan_allowed } }
 
-							# Spain (either side)
-							FROM = { tag = SPR }
-							FROM = { tag = SPN }
+							# Spain (either side), unless blocked by abroad-volunteer authorization focus
+							AND = {
+								FROM = { tag = SPR }
+								ROOT = { NOT = { has_country_flag = Vols_expedition_no_spain } }
+							}
+							AND = {
+								FROM = { tag = SPN }
+								ROOT = { NOT = { has_country_flag = Vols_expedition_no_spain } }
+							}
 						}
 					}
 				}
