@@ -1159,7 +1159,7 @@ NMilitary = {
 	BASE_COMBAT_WIDTH = 90,                       -- base combat width
 	ADDITIONAL_COMBAT_WIDTH = 30,                  -- more opened up by support attack
 	AMPHIBIOUS_INVADE_MOVEMENT_COST = 24.0,        -- total progress cost of movement while amphibious invading
-	LAND_SPEED_MODIFIER = 0.031,                    -- basic speed control
+	LAND_SPEED_MODIFIER = 0.029,                    -- basic speed control
 	RIVER_CROSSING_PENALTY = -0.275,                 -- small river crossing
 	RIVER_CROSSING_PENALTY_LARGE = -0.35,           -- large river crossing
 	RIVER_CROSSING_SPEED_PENALTY = -0.2,          -- small river crossing
@@ -1334,7 +1334,7 @@ NMilitary = {
 	BATALION_NOT_CHANGED_EXPERIENCE_DROP = 0.0,		-- Division experience drop if unit has same batalion
 	BATALION_CHANGED_EXPERIENCE_DROP = 0.0,			-- Division experience drop if unit has different batalion
 	ARMOR_VS_AVERAGE = 0.05,			                -- how to weight in highest armor & pen vs the division average
-	PEN_VS_AVERAGE = 0.1,
+	PEN_VS_AVERAGE = 0.15,
 
 	DECRYPTION_ADVANTAGE_BONUS = 0.05,				-- How much unit base damage and base defense is increased per decryption level compared to enemies average encryption level (ex: dec. level is 5 and enemy average enc. level is 3 then 5-3 = 2 which gives 10 % increase)
 	
