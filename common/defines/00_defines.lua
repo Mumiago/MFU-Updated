@@ -1159,7 +1159,7 @@ NMilitary = {
 	BASE_COMBAT_WIDTH = 90,                       -- base combat width
 	ADDITIONAL_COMBAT_WIDTH = 30,                  -- more opened up by support attack
 	AMPHIBIOUS_INVADE_MOVEMENT_COST = 24.0,        -- total progress cost of movement while amphibious invading
-	LAND_SPEED_MODIFIER = 0.029,                    -- basic speed control
+	LAND_SPEED_MODIFIER = 0.031,                    -- basic speed control
 	RIVER_CROSSING_PENALTY = -0.275,                 -- small river crossing
 	RIVER_CROSSING_PENALTY_LARGE = -0.35,           -- large river crossing
 	RIVER_CROSSING_SPEED_PENALTY = -0.2,          -- small river crossing
@@ -1950,8 +1950,8 @@ NSupply = {
 
 
 	-- used for calculating "flow" for railways.
-	RAILWAY_BASE_FLOW = 5, 		-- how much base flow railway gives when a node connected to its capital/a naval node by a railway
-	RAILWAY_FLOW_PER_LEVEL = 3, 	-- how much additional flow a railway level gives
+	RAILWAY_BASE_FLOW = 4, 		-- how much base flow railway gives when a node connected to its capital/a naval node by a railway
+	RAILWAY_FLOW_PER_LEVEL = 4, 	-- how much additional flow a railway level gives
 	RAILWAY_FLOW_PENALTY_PER_DAMAGED = 2.0, -- penalty to flow per damaged railway
 	RAILWAY_MIN_FLOW = 6.0, 		-- minimum railway flow can be reduced to
 
