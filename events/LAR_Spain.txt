@@ -22,13 +22,6 @@ country_event = {
 			SPN = {
 				set_cosmetic_tag = SPR_republican_spain
 			}
-			SOV = {
-				diplomatic_relation = {
-					country = SPN
-					relation = military_access
-					active = yes
-				}
-			}
 			every_country = {
 				set_variable = { var = super_event value = 5 }			
 			}
@@ -1818,6 +1811,54 @@ country_event = {
 				}
 				add_ideas = SPA_death_before_surrender
 				set_global_flag = spanish_civil_war # Start civil war - used in many triggers
+				every_country = {
+					limit = {
+						NOT = { original_tag = SPR }
+						OR = {
+							tag = GER
+							tag = POR
+							tag = BUL
+							tag = ITA
+							tag = ROM
+							tag = CZE
+							tag = SLO
+							tag = HUN
+						}
+						NOT = { has_war_with = SPR }
+					}
+					diplomatic_relation = {
+						country = SPR
+						relation = military_access
+						active = yes
+					}
+				}
+				 
+				every_country = {
+					limit = {
+						NOT = { original_tag = SPR }
+						OR = {
+							is_in_faction_with = ENG
+							tag = FRA
+							tag = POL
+						}
+						NOT = { has_war_with = SPN }
+					}
+					diplomatic_relation = {
+						country = SPN
+						relation = military_access
+						active = yes
+					}
+				}
+				SOV = {
+					if = {
+						limit = { NOT = { has_war_with = SPN } }
+						diplomatic_relation = {
+							country = SPN
+							relation = military_access
+							active = yes
+						}
+					}
+				}
 				country_event = { id = lar_spain.6 days = 7 } # SCW notification event for the player
 			}
 		}
@@ -7525,7 +7566,7 @@ country_event = {
 				set_rule = {
 					can_access_market = yes
 				}
-				add_offsite_building = { type = industrial_complex level = 5 }
+				#add_offsite_building = { type = industrial_complex level = 5 }
 				add_political_power = 50
 				
 			
