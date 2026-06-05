@@ -2073,6 +2073,8 @@ NRailwayGun = {
 },
 
 NNavy = {
+	NAVY_REPAIR_BASE_SEARCH_NON_OPERATIONAL_STR = 0.4,				-- strength factor at or below which a fleet is considered non-operational by the AI, causing it to cancel the mission and send the fleet to repair
+	CAPITAL_SHIP_COMBAT_RETREAT_MULT = 0.5,							-- Multiplier on combat retreat threshold for capital ships and carriers (they can take more punishment)
 	NAVAL_MISSION_AI_RANGE_THRESHOLD_EPSILON = 0.25,				-- Epsilon tolerance for AI naval range threshold checks.
 	NAVAL_MISSION_AI_CONVOY_NORMALIZATION_TARGET = 150,			-- Number of convoys to normalize against when scoring convoy raiding missions.
 	SUBMARINE_BASE_STEALTH_VALUE = 100,		-- Used in the reworked formula, sub_visiblity is subtracted from SUBMARINE_BASE_STEALTH_VALUE for the divider. The higher the define, the lower the chance for detection to happen
@@ -2929,6 +2931,23 @@ NAITheatre = {
 	AI_THEATRE_AI_FRONT_MIN_DESIRED_RATIO = 0.19,						-- Fronts are sorted based on priority, we nudge unit demand based on this sorting, the higher the value the more units the most important front gets
 },
 NAI = {
+
+		AI_NAVAL_GOALS_UPDATE_FREQUENCY_DAYS = 30;           -- Regenerate naval AI objectives this often in days (affects performance)
+
+	INVASION_UNITS_READY_AT_MIN_PLAN = 0.75,                -- units ready ratio required when plan value is at minimum threshold
+	INVASION_UNITS_READY_AT_MAX_PLAN = 0.25,                -- units ready ratio required when plan value is very high (1.0+)
+		AI_SHIP_SWAP_MIN_DAMAGED_SHIPS = 2,							-- minimum number of damaged ships in a taskforce before AI considers swapping them to reserves
+AI_SHIP_SWAP_DAMAGE_THRESHOLD = 0.33,						-- per-ship strength threshold below which the AI considers a capital/carrier damaged enough to swap to reserves
+	AI_REPAIR_CANCEL_MIN_STRENGTH = 0.75,						-- AI will pull non-reserve task forces out of repair and back on mission once they reach this strength
+	AI_SURFACE_COMBAT_FUEL_RATIO = 0.70,						-- fraction of navy fuel reserved for surface combat (patrols, strike forces, dominance)
+	AI_CONVOY_DEFENSE_FUEL_RATIO = 0.15,						-- fraction of navy fuel reserved for convoy escorts (remaining goes to convoy raiding)
+		CONVOY_DEFICIT_BUILD_BOOST_MAX = 150,				-- Cap on the convoy-deficit-driven boost added to the convoy build target. Prevents convoy panic from starving warship production when many convoys are lost at once.
+
+		STOP_TRAINING_ACTIVE_COMBAT_RATIO = 0.10,            -- ai halts all training when more than this share of its divisions are in active combat (reinforce instead)
+
+		AI_TASKFORCE_REQUIRED_RESERVE_RATIO = 0.2,	-- Fraction of required TF optimal composition held in reserve for reinforcement (rounded up per type)
+	LENDLEASE_CONVOY_OVERCOMMIT_PENALTY_INTERVAL = 3, -- For every N convoys the receiver is over capacity (including this lend-lease), apply -1 to AI acceptance score
+
 		MINIMUM_MONTHLY_LEND_LEASE_EQUIPMENT = 10,	-- AI will not offer lend-lease if the monthly amount would be less than this
 
 	STRIKE_FORCE_TARGET_RECALC_DAYS = 5,					-- Each X days, the AI will reevaluate which regions to put strike forces in (because patrol coverage will change)
