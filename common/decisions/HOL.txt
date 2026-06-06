@@ -1,3 +1,127 @@
+HOL_german_arms_purchases = {
+
+	HOL_german_arms_shipment = {
+
+		allowed = { always = yes }
+
+		icon = ger_military_buildup
+		priority = 100
+
+		available = {
+			hidden_trigger = { always = no }
+		}
+
+		cancel_trigger = {
+			OR = {
+				has_war_with = GER
+				NOT = { country_exists = GER }
+				AND = {
+					NOT = { has_country_flag = HOL_german_arms_shipments_active }
+					NOT = { has_completed_focus = HOL_buy_arms_from_germany }
+				}
+			}
+		}
+
+		selectable_mission = no
+		days_mission_timeout = 100
+		is_good = yes
+		fire_only_once = no
+
+		visible = {
+			OR = {
+				has_country_flag = HOL_german_arms_shipments_active
+				has_completed_focus = HOL_buy_arms_from_germany
+			}
+			NOT = { has_war_with = GER }
+			country_exists = GER
+		}
+
+		timeout_effect = {
+			if = {
+				limit = {
+					GER = {
+						has_tech = ger_fighter_1936
+						NOT = { has_tech = ger_fighter_1938 }
+					}
+				}
+				add_equipment_to_stockpile = {
+					type = fighter_equipment_1936
+					amount = 30
+					producer = GER
+				}
+			}
+			if = {
+				limit = {
+					GER = {
+						has_tech = ger_fighter_1938
+						NOT = { has_tech = ger_fighter_1940 }
+					}
+				}
+				add_equipment_to_stockpile = {
+					type = fighter_equipment_1938
+					amount = 30
+					producer = GER
+				}
+			}
+			if = {
+				limit = {
+					GER = {
+						has_tech = ger_fighter_1940
+					}
+				}
+				add_equipment_to_stockpile = {
+					type = fighter_equipment_1940
+					amount = 30
+					producer = GER
+				}
+			}
+			if = {
+				limit = {
+					GER = {
+						NOT = { has_tech = ger_fighter_1936 }
+					}
+				}
+				add_equipment_to_stockpile = {
+					type = fighter_equipment_1936
+					amount = 30
+					producer = GER
+				}
+			}
+			add_equipment_to_stockpile = {
+				type = infantry_equipment_1
+				amount = 2000
+				producer = GER
+			}
+			add_equipment_to_stockpile = {
+				type = artillery_equipment_2
+				amount = 200
+				producer = GER
+			}
+			add_cic = -3000
+			GER = {
+				add_cic = 3000
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						OR = {
+							has_country_flag = HOL_german_arms_shipments_active
+							has_completed_focus = HOL_buy_arms_from_germany
+						}
+						NOT = { has_war_with = GER }
+						country_exists = GER
+					}
+					activate_mission = HOL_german_arms_shipment
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+}
+
 HOL_obtain_foreign_colonial_investments = {
 
 	HOL_attract_foreign_investors = {
