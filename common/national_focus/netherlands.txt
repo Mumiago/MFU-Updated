@@ -147,6 +147,62 @@ focus_tree = {
 	}
 
 	focus = {
+		id = HOL_increase_military_preparedness
+		icon = GFX_focus_hol_prepare_the_inundation_lines
+		prerequisite = { focus = HOL_abandon_the_gold_standard }
+		relative_position_id = HOL_increase_dutch_defenses
+		x = 4
+		y = 0
+		cost = 5
+
+		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_WAR_SUPPORT }
+
+		available = {
+			GER = {
+				has_completed_focus = GER_anschluss
+			}
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = HOL_increase_military_preparedness_effect_tt
+			if = {
+				limit = {
+					OR = {
+						has_idea = HOL_shell_shocked_spectator_1
+						has_idea = HOL_shell_shocked_spectator_2
+						has_idea = HOL_shell_shocked_spectator_3
+						has_idea = HOL_shell_shocked_spectator_4
+						has_idea = HOL_shell_shocked_spectator_5
+					}
+				}
+				remove_ideas = {
+					HOL_shell_shocked_spectator_1
+					HOL_shell_shocked_spectator_2
+					HOL_shell_shocked_spectator_3
+					HOL_shell_shocked_spectator_4
+					HOL_shell_shocked_spectator_5
+				}
+				add_ideas = HOL_shell_shocked_spectator_military_preparedness
+			}
+		}
+	}
+
+	focus = {
+		id = HOL_purchase_arms_from_the_allies
+		icon = GFX_goal_generic_allies_build_infantry
+		prerequisite = { focus = HOL_increase_dutch_defenses }
+		relative_position_id = HOL_increase_dutch_defenses
+		x = -2
+		y = 1
+		cost = 7.15
+
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_WAR_SUPPORT }
+
+		completion_reward = {
+		}
+	}
+
+	focus = {
 		id = HOL_buy_arms_from_germany
 		icon = GFX_goal_generic_axis_build_infantry
 		prerequisite = { focus = HOL_increase_dutch_defenses }
@@ -203,6 +259,57 @@ focus_tree = {
 				value = 0.05
 				tooltip = production_factory_max_efficiency_tooltip
 			}
+		}
+	}
+
+	focus = {
+		id = HOL_prepare_the_inundation_lines
+		icon = GFX_focus_hol_prepare_the_inundation_lines
+		prerequisite = { focus = HOL_purchase_arms_from_the_allies focus = HOL_buy_arms_from_germany focus = HOL_bolster_domestic_arms_industry }
+		relative_position_id = HOL_increase_dutch_defenses
+		x = -2
+		y = 2
+		cost = 5
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+		}
+	}
+
+	focus = {
+		id = HOL_expand_reservists
+		icon = GFX_goal_generic_military_sphere
+		prerequisite = { focus = HOL_purchase_arms_from_the_allies focus = HOL_buy_arms_from_germany focus = HOL_bolster_domestic_arms_industry }
+		relative_position_id = HOL_increase_dutch_defenses
+		x = 0
+		y = 2
+		cost = 5
+
+		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_POLITICAL }
+
+		completion_reward = {
+			if = {
+				limit = {
+					has_idea = disarmed_nation
+				}
+				add_ideas = volunteer_only
+			}
+		}
+	}
+
+	focus = {
+		id = HOL_fortress_holland
+		icon = GFX_goal_generic_fortify_city
+		prerequisite = { focus = HOL_purchase_arms_from_the_allies focus = HOL_buy_arms_from_germany focus = HOL_bolster_domestic_arms_industry }
+		relative_position_id = HOL_increase_dutch_defenses
+		x = 2
+		y = 2
+		cost = 5
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
 		}
 	}
 
@@ -369,7 +476,6 @@ focus_tree = {
 		id = HOL_prioritize_dutch_east_indies
 		icon = GFX_goal_generic_construct_civilian
 		prerequisite = { focus = HOL_invest_in_the_dutch_east_indies }
-		prerequisite = { focus = HOL_invest_in_the_caribbean_colonies }
 		mutually_exclusive = { focus = HOL_prioritize_the_atlantic }
 		relative_position_id = HOL_increase_colonial_investments
 		x = -1
@@ -409,7 +515,6 @@ focus_tree = {
 	focus = {
 		id = HOL_prioritize_the_atlantic
 		icon = GFX_goal_generic_construct_civilian
-		prerequisite = { focus = HOL_invest_in_the_dutch_east_indies }
 		prerequisite = { focus = HOL_invest_in_the_caribbean_colonies }
 		mutually_exclusive = { focus = HOL_prioritize_dutch_east_indies }
 		relative_position_id = HOL_increase_colonial_investments
@@ -425,6 +530,27 @@ focus_tree = {
 			}
 			695 = {
 				add_extra_state_shared_building_slots = 5
+			}
+		}
+	}
+
+	focus = {
+		id = HOL_increase_curacao_oil_production
+		icon = GFX_goal_generic_oil_refinery
+		prerequisite = { focus = HOL_invest_in_the_caribbean_colonies }
+		relative_position_id = HOL_prioritize_the_atlantic
+		x = 2
+		y = 0
+		cost = 5
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+			695 = {
+				add_resource = {
+					type = oil
+					amount = 50
+				}
 			}
 		}
 	}
