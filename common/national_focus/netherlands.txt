@@ -296,9 +296,16 @@ focus_tree = {
 		y = 1
 		cost = 5
 
-		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_AIR_XP }
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_AIR_XP FOCUS_FILTER_RESEARCH }
 
 		completion_reward = {
+			add_tech_bonus = {
+				name = HOL_expand_fokker
+				bonus = 0.5
+				ahead_reduction = 1
+				uses = 1
+				category = light_fighter
+			}
 		}
 	}
 
@@ -367,6 +374,54 @@ focus_tree = {
 				add_cic = 3500
 			}
 			custom_effect_tooltip = HOL_rush_order_planes_tt
+		}
+	}
+
+	focus = {
+		id = HOL_develop_new_light_airframes
+		icon = GFX_goal_generic_air_fighter
+		prerequisite = { focus = HOL_expand_domestic_fighter_industry focus = HOL_rush_order_planes }
+		mutually_exclusive = { focus = HOL_develop_new_heavy_airframes }
+		relative_position_id = HOL_expand_domestic_fighter_industry
+		x = 0
+		y = 1
+		cost = 5
+
+		search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_AIR_XP }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = HOL_develop_new_light_airframes
+				bonus = 0.75
+				uses = 1
+				category = light_fighter
+				category = naval_bomber
+				category = cas_bomber
+			}
+		}
+	}
+
+	focus = {
+		id = HOL_develop_new_heavy_airframes
+		icon = GFX_goal_generic_air_bomber
+		prerequisite = { focus = HOL_expand_domestic_fighter_industry focus = HOL_rush_order_planes }
+		mutually_exclusive = { focus = HOL_develop_new_light_airframes }
+		relative_position_id = HOL_rush_order_planes
+		x = 0
+		y = 1
+		cost = 5
+
+		search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_AIR_XP }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = HOL_develop_new_heavy_airframes
+				bonus = 0.6
+				uses = 1
+				category = cat_heavy_fighter
+				category = tactical_bomber
+				category = cat_strategic_bomber
+			}
 		}
 	}
 
@@ -440,9 +495,12 @@ focus_tree = {
 		y = 2
 		cost = 5
 
-		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_POLITICAL }
+		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_POLITICAL FOCUS_FILTER_ARMY_XP }
 
 		completion_reward = {
+			army_experience = 25
+			set_country_flag = hol_trained_reservists_draw_up_bonus
+			custom_effect_tooltip = HOL_train_reservists_tt
 		}
 	}
 
@@ -569,6 +627,8 @@ focus_tree = {
 				}
 				add_ideas = volunteer_only
 			}
+			set_country_flag = hol_expanded_reservists_draw_up_bonus
+			custom_effect_tooltip = HOL_expand_reservists_tt
 		}
 	}
 
@@ -606,6 +666,7 @@ focus_tree = {
 
 		completion_reward = {
 			add_ideas = partial_economic_mobilisation
+			add_ideas = limited_conscription
 			if = {
 				limit = {
 					country_exists = INS
@@ -613,6 +674,102 @@ focus_tree = {
 				}
 				INS = {
 					add_ideas = partial_economic_mobilisation
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = HOL_draw_up_the_reservists
+		icon = GFX_goal_generic_military_sphere
+		prerequisite = { focus = HOL_prepare_for_war }
+		relative_position_id = HOL_prepare_for_war
+		x = -3
+		y = 1
+		cost = 5
+
+		search_filters = { FOCUS_FILTER_MANPOWER }
+
+		completion_reward = {
+			custom_effect_tooltip = HOL_draw_up_the_reservists_tt
+			if = {
+				limit = {
+					has_country_flag = hol_trained_reservists_draw_up_bonus
+				}
+				add_manpower = 50000
+			}
+			if = {
+				limit = {
+					has_country_flag = hol_expanded_reservists_draw_up_bonus
+				}
+				add_manpower = 50000
+			}
+		}
+	}
+
+	focus = {
+		id = HOL_coordinate_with_french
+		icon = GFX_goal_generic_allies_build_infantry
+		prerequisite = { focus = HOL_prepare_for_war }
+		relative_position_id = HOL_prepare_for_war
+		x = -1
+		y = 1
+		cost = 5
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		completion_reward = {
+		}
+	}
+
+	focus = {
+		id = HOL_prepare_infrastructure_demolition
+		icon = GFX_focus_hol_prepare_the_inundation_lines
+		prerequisite = { focus = HOL_prepare_for_war }
+		relative_position_id = HOL_prepare_for_war
+		x = 1
+		y = 1
+		cost = 5
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+		}
+	}
+
+	focus = {
+		id = HOL_emergency_equipment_purchases
+		icon = GFX_goal_generic_axis_build_infantry
+		prerequisite = { focus = HOL_prepare_for_war }
+		relative_position_id = HOL_prepare_for_war
+		x = 3
+		y = 1
+		cost = 5
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+			custom_effect_tooltip = HOL_emergency_equipment_purchases_tt
+			hidden_effect = {
+				add_equipment_subsidy = {
+					cic = 4000
+					equipment_type = small_plane_airframe
+					seller_tags = { USA }
+				}
+				add_equipment_subsidy = {
+					cic = 4000
+					equipment_type = infantry_equipment
+					seller_tags = { USA }
+				}
+				add_equipment_subsidy = {
+					cic = 3000
+					equipment_type = anti_tank_equipment
+					seller_tags = { USA }
+				}
+				add_equipment_subsidy = {
+					cic = 3000
+					equipment_type = artillery_equipment
+					seller_tags = { USA }
 				}
 			}
 		}
@@ -966,7 +1123,7 @@ focus_tree = {
 		icon = GFX_focus_research
 		prerequisite = { focus = HOL_prioritize_dutch_east_indies focus = HOL_prioritize_the_atlantic }
 		relative_position_id = HOL_increase_colonial_investments
-		x = 1
+		x = 2
 		y = 3
 		cost = 5
 
@@ -1256,6 +1413,84 @@ focus_tree = {
 				requested_factories = 1
 				progress = 0.5
 				amount = 1
+			}
+		}
+	}
+
+	focus = {
+		id = HOL_expand_east_indies_naval_yards
+		icon = GFX_goal_generic_construct_naval_dockyard
+		prerequisite = { focus = HOL_focus_on_submarines focus = HOL_focus_on_destroyers }
+		relative_position_id = HOL_focus_on_submarines
+		x = 0
+		y = 1
+		cost = 5
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+			7 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+			672 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+			334 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+			667 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = HOL_expand_java_naval_yards
+		icon = GFX_goal_generic_construct_naval_dockyard
+		prerequisite = { focus = HOL_focus_on_submarines focus = HOL_focus_on_destroyers }
+		relative_position_id = HOL_focus_on_destroyers
+		x = 0
+		y = 1
+		cost = 5
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+			7 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+			335 = {
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = dockyard
+					level = 3
+					instant_build = yes
+				}
 			}
 		}
 	}
