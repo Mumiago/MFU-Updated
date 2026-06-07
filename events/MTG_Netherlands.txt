@@ -2901,3 +2901,136 @@ country_event = {
 		name = mtg_netherlands.80.a
 	}
 }
+
+# Germany offered DEI rubber purchase (from HOL focus)
+country_event = {
+	id = mtg_netherlands.81
+	title = mtg_netherlands.81.t
+	desc = mtg_netherlands.81.d
+	picture = GFX_report_event_generic_sign_treaty3
+
+	is_triggered_only = yes
+
+	option = {
+		name = mtg_netherlands.81.a
+		ai_chance = {
+			base = 80
+		}
+		effect_tooltip = {
+			if = {
+				limit = {
+					country_exists = INS
+					INS = { is_subject_of = FROM }
+					334 = { is_owned_and_controlled_by = INS }
+				}
+				INS = {
+					give_resource_rights = { receiver = GER state = 334 }
+				}
+			}
+			else_if = {
+				limit = {
+					334 = { is_owned_and_controlled_by = FROM }
+				}
+				FROM = {
+					give_resource_rights = { receiver = GER state = 334 }
+				}
+			}
+			64 = {
+				remove_building = {
+					type = industrial_complex
+					level = 2
+				}
+			}
+			FROM = {
+				add_cic = 20000
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					country_exists = INS
+					INS = { is_subject_of = FROM }
+					334 = { is_owned_and_controlled_by = INS }
+				}
+				INS = {
+					give_resource_rights = { receiver = GER state = 334 }
+				}
+			}
+			else_if = {
+				limit = {
+					334 = { is_owned_and_controlled_by = FROM }
+				}
+				FROM = {
+					give_resource_rights = { receiver = GER state = 334 }
+				}
+			}
+			64 = {
+				remove_building = {
+					type = industrial_complex
+					level = 2
+				}
+			}
+			FROM = {
+				set_country_flag = hol_ger_kalimantan_rubber
+				add_cic = 20000
+				country_event = { id = mtg_netherlands.82 hours = 6 }
+			}
+		}
+	}
+
+	option = {
+		name = mtg_netherlands.81.b
+		ai_chance = {
+			base = 20
+		}
+		effect_tooltip = {
+			FROM = {
+				complete_national_focus = HOL_international_rubber_regulation_agreement
+			}
+		}
+		hidden_effect = {
+			FROM = {
+				country_event = { id = mtg_netherlands.83 hours = 6 }
+			}
+		}
+	}
+}
+
+# Netherlands notified Germany accepted rubber deal
+country_event = {
+	id = mtg_netherlands.82
+	title = mtg_netherlands.82.t
+	desc = mtg_netherlands.82.d
+	picture = GFX_report_event_generic_sign_treaty3
+
+	is_triggered_only = yes
+
+	option = {
+		name = mtg_netherlands.82.a
+	}
+}
+
+# Netherlands notified Germany declined rubber deal
+country_event = {
+	id = mtg_netherlands.83
+	title = mtg_netherlands.83.t
+	desc = mtg_netherlands.83.d
+	picture = GFX_report_event_generic_sign_treaty3
+
+	is_triggered_only = yes
+
+	option = {
+		name = mtg_netherlands.83.a
+		effect_tooltip = {
+			complete_national_focus = HOL_international_rubber_regulation_agreement
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					NOT = { has_completed_focus = HOL_international_rubber_regulation_agreement }
+				}
+				complete_national_focus = HOL_international_rubber_regulation_agreement
+			}
+		}
+	}
+}
