@@ -84,9 +84,19 @@ joint_focus = {
 		add_offsite_building = { type = arms_factory level = 1 }
 	}
 
-	completion_reward_joint_originator = { }
-
-
+	completion_reward_joint_originator = {
+		hidden_effect = {
+			if = {
+				limit = {
+					country_exists = NZL
+					NOT = { tag = NZL }
+				}
+				NZL = {
+					add_offsite_building = { type = arms_factory level = 1 }
+				}
+			}
+		}
+	}
 }
 
 joint_focus = {
@@ -246,7 +256,8 @@ joint_focus = {
 	x = -2
 	y = 0
 
-	cost = 5
+	# 7 days (FOCUS_POINT_DAYS = 7 → cost = days / 7)
+	cost = 1
 
 	allow_branch = {
 		OR = {
@@ -337,6 +348,27 @@ joint_focus = {
 			}
 			remove_building = { type = industrial_complex level = 1 }
 		}
+		hidden_effect = {
+			if = {
+				limit = {
+					country_exists = NZL
+					NOT = { tag = NZL }
+				}
+				NZL = {
+					every_military_industrial_organization = {
+						limit = {
+							OR = {
+								has_mio_research_category = artillery
+								has_mio_research_category = infantry_weapons
+								has_mio_research_category = infantry_equipment
+								has_mio_research_category = motorized_equipment
+							}
+						}
+						add_mio_funds = 1000
+					}
+				}
+			}
+		}
 	}
 
 	completion_reward_joint_member = { }
@@ -395,6 +427,20 @@ joint_focus = {
 			}
 			remove_building = { type = industrial_complex level = 1 }
 		}
+		hidden_effect = {
+			if = {
+				limit = {
+					country_exists = NZL
+					NOT = { tag = NZL }
+				}
+				NZL = {
+					every_military_industrial_organization = {
+						limit = { has_mio_research_category = armor }
+						add_mio_funds = 750
+					}
+				}
+			}
+		}
 	}
 
 	completion_reward_joint_member = { }
@@ -421,7 +467,6 @@ joint_focus = {
 			tag = CAN
 			tag = RAJ
 			tag = AST
-
 		}
 	}
 
@@ -687,6 +732,18 @@ joint_focus = {
 				}
 			}
 		}
+		hidden_effect = {
+			if = {
+				limit = {
+					country_exists = NZL
+					NOT = { tag = NZL }
+				}
+				NZL = {
+					add_stability = -0.1
+					add_war_support = -0.1
+				}
+			}
+		}
 	}
 
 	completion_reward_joint_member = {
@@ -745,7 +802,7 @@ joint_focus = {
 				basic_ship_hull_carrier = 1		# ship_hull_carrier_1
 
 				# Engine used by the spawned carriers.
-				carrier_ship_engine_2 = 1
+				# carrier_ship_engine_2 is a module, not a tech; it is already enabled by basic_ship_hull_carrier above (removed invalid set_technology entry)
 
 				# ASW modules (requested: Sonar II + Depth Charges II).
 				improved_sonar = 1					# ship_sonar_2 module
@@ -890,6 +947,20 @@ joint_focus = {
 			type = convoy
 			amount = 100
 		}
+		hidden_effect = {
+			if = {
+				limit = {
+					country_exists = NZL
+					NOT = { tag = NZL }
+				}
+				NZL = {
+					add_equipment_to_stockpile = {
+						type = convoy
+						amount = 10
+					}
+				}
+			}
+		}
 	}
 
 	completion_reward_joint_member = {
@@ -909,7 +980,7 @@ joint_focus = {
 	x = 6
 	y = 0
 
-	cost = 5
+	cost = 2.8
 
 	allow_branch = {
 		OR = {
@@ -918,7 +989,6 @@ joint_focus = {
 			tag = CAN
 			tag = RAJ
 			tag = AST
-
 		}
 	}
 
@@ -1032,6 +1102,214 @@ joint_focus = {
 			MFU_recall_all_volunteers_and_forbid_spain_volunteers = yes
 			set_country_flag = Vols_china_allowed
 			add_ideas = COMMON_abroad_volunteers_china_expedition
+		}
+	}
+
+	completion_reward_joint_member = { }
+}
+
+joint_focus = {
+	id = COMMON_invade_iraq
+	icon = GFX_goal_ENG_attack_iraq
+
+	relative_position_id = COMMON_allow_volunteers_to_china
+	x = 0
+	y = 1
+
+	cost = 5
+
+	allow_branch = {
+		OR = {
+			tag = ENG
+			tag = SAF
+			tag = CAN
+			tag = RAJ
+			tag = AST
+		}
+	}
+
+	cancel_if_invalid = yes
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	will_lead_to_war_with = IRQ
+
+	ai_will_do = {
+		factor = 0
+		modifier = {
+			add = 100
+			tag = ENG
+			date > 1941.4.1
+			has_full_control_of_state = 453 # Sinai
+			has_full_control_of_state = 446 # Cairo
+			has_full_control_of_state = 457 # Eastern Desert
+		}
+	}
+
+	available = {
+		country_exists = IRQ
+		OR = {
+			FRA = { has_capitulated = yes }
+		}
+	}
+
+	bypass = {
+		IRQ = { exists = no }
+	}
+
+	completion_reward_joint_originator = {
+		declare_war_on = {
+			target = IRQ
+			type = annex_everything
+		}
+		GER = { add_to_faction = IRQ }
+		IRQ = {
+			add_to_war = {
+				targeted_alliance = GER
+				enemy = ROOT
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					RAJ = { exists = yes }
+					NOT = { tag = RAJ }
+				}
+				RAJ = {
+					add_to_war = {
+						targeted_alliance = ROOT
+						enemy = IRQ
+					}
+				}
+			}
+			if = {
+				limit = {
+					USA = {
+						has_war_with = GER
+					}
+					NOT = { tag = USA }
+				}
+				USA = {
+					add_to_war = {
+						targeted_alliance = ROOT
+						enemy = IRQ
+					}
+				}
+			}
+			if = {
+				limit = {
+					AST = { exists = yes }
+					NOT = { tag = AST }
+				}
+				AST = {
+					add_to_war = {
+						targeted_alliance = ROOT
+						enemy = IRQ
+					}
+				}
+			}
+			if = {
+				limit = {
+					CAN = { exists = yes }
+					NOT = { tag = CAN }
+				}
+				CAN = {
+					add_to_war = {
+						targeted_alliance = ROOT
+						enemy = IRQ
+					}
+				}
+			}
+			if = {
+				limit = {
+					country_exists = NZL
+					NOT = { tag = NZL }
+				}
+				NZL = {
+					add_to_war = {
+						targeted_alliance = ROOT
+						enemy = IRQ
+					}
+				}
+			}
+			if = {
+				limit = {
+					MEX = {
+						is_in_faction_with = ROOT
+					}
+					NOT = { tag = MEX }
+				}
+				MEX = {
+					add_to_war = {
+						targeted_alliance = ROOT
+						enemy = IRQ
+					}
+				}
+			}
+			if = {
+				limit = {
+					BRA = {
+						is_in_faction_with = ROOT
+					}
+					NOT = { tag = BRA }
+				}
+				BRA = {
+					add_to_war = {
+						targeted_alliance = ROOT
+						enemy = IRQ
+					}
+				}
+			}
+			if = {
+				limit = {
+					country_exists = SAF
+					NOT = { tag = SAF }
+				}
+				SAF = {
+					add_to_war = {
+						targeted_alliance = ROOT
+						enemy = IRQ
+					}
+				}
+			}
+			if = {
+				limit = {
+					IRE = {
+						is_in_faction_with = ROOT
+					}
+					NOT = { tag = IRE }
+				}
+				IRE = {
+					add_to_war = {
+						targeted_alliance = ROOT
+						enemy = IRQ
+					}
+				}
+			}
+			if = {
+				limit = {
+					country_exists = FRA
+					NOT = { tag = FRA }
+				}
+				FRA = {
+					add_to_war = {
+						targeted_alliance = ROOT
+						enemy = IRQ
+					}
+				}
+			}
+			if = {
+				limit = {
+					country_exists = POL
+					NOT = { tag = POL }
+				}
+				POL = {
+					add_to_war = {
+						targeted_alliance = ROOT
+						enemy = IRQ
+					}
+				}
+			}
 		}
 	}
 
