@@ -2268,7 +2268,7 @@ types = {
 		}
 	}
 
-	industrial_sector_raid = {
+	industrial_sector_raid_air_assembly = {
 		days_to_prepare = 21
 
 		category = air_raids
@@ -2309,17 +2309,11 @@ types = {
 
 		target_type = {
 			state = {
-				or = {
-					OR = {	
-						air_assembly > 1
-						tank_assembly > 1
-					}
-					AND = {
-						air_assembly > 0
-						tank_assembly > 0
-					}
-					
+				air_assembly > 1
 				}
+			}
+			NOT = {
+				has_state_flag = industrial_raid_happened
 			}
 		}
 
@@ -2439,6 +2433,14 @@ types = {
 					entity = "raid_failed_entity"
 					animation = "attack"
 					}
+				var:target_state = {
+					
+					set_state_flag = {
+						flag = industrial_raid_happened
+						days = 60
+						value = 1
+					}
+				}
 			}
 			limited_success = {
 			    victim_effects = {
@@ -2456,11 +2458,12 @@ types = {
 								repair_speed_modifier = -0.1
 							}
 							damage_building = {
-								tags = assembly
-								damage = 3 # levels of damage
+								tags = air_assembly_tag
+								damage = 2 # levels of damage
 								province = var:ROOT.target_province
 								repair_speed_modifier = -0.5
 							}
+							
 					}
 
 			    }
@@ -2472,6 +2475,14 @@ types = {
 					raid_add_unit_experience = 0.1
 					var:actor_country = {
 						add_command_power = 40
+					}
+				}
+				var:target_state = {
+					
+					set_state_flag = {
+						flag = industrial_raid_happened
+						days = 60
+						value = 1
 					}
 				}
 				visual_effect = {
@@ -2495,12 +2506,20 @@ types = {
 								repair_speed_modifier = -0.1
 							}
 							damage_building = {
-								tags = assembly
-								damage = 4 # levels of damage
+								tags = air_assembly_tag
+								damage = 3 # levels of damage
 								province = var:ROOT.target_province
 								repair_speed_modifier = -0.5
 							}
 
+					}
+				}
+				var:target_state = {
+					
+					set_state_flag = {
+						flag = industrial_raid_happened
+						days = 60
+						value = 1
 					}
 				}
 				actor_effects = {
@@ -2534,13 +2553,338 @@ types = {
 							repair_speed_modifier = -0.1
 						}
 						damage_building = {
-							tags = assembly
-							damage = 5 # levels of damage
+							tags = air_assembly_tag
+							damage = 4 # levels of damage
 							province = var:ROOT.target_province
 							repair_speed_modifier = -0.5
 						}
 					}
 			    }
+				var:target_state = {
+					
+					set_state_flag = {
+						flag = industrial_raid_happened
+						days = 60
+						value = 1
+					}
+				}
+				actor_effects = {
+						raid_damage_units = {
+						plane_loss = 10
+						ratio = no
+					}
+					raid_add_unit_experience = 0.35
+					var:actor_country = {
+						add_command_power = 20
+					}
+				}
+				visual_effect = {
+					entity = "air_raids_2_critical_success_entity"
+					animation = "attack"
+				}
+			}
+		}
+	}
+	industrial_sector_raid_tank_assembly = {
+		days_to_prepare = 21
+
+		category = air_raids
+
+		command_power = 20 # command power allocation cost
+
+		ai_will_do = {
+			base = 1
+		}
+
+		allowed = {
+			has_dlc = "Gotterdammerung"
+		}
+		# Raid Type is visible
+		visible = {
+
+		}
+
+		# Specific Target is visible
+		show_target = {
+			NOT = {
+				is_in_faction_with = FROM
+			}
+		}
+
+		# Can prepare
+		available = {
+			intel_level_over = {
+				target = FROM
+				civilian_intel > 0.4
+			}
+			has_war_with = FROM
+		}
+
+		launchable = {
+			has_war_with = FROM
+		}
+
+		target_type = {
+			state = {
+				air_assembly > 1
+				}
+			}
+			NOT = {
+				has_state_flag = industrial_raid_happened
+			}
+		}
+
+		custom_map_icon = GFX_raid_type_icon_industrial_complex_raid
+		target_icon = GFX_industrial_complex_target_icon
+
+		arrow = {
+		    type = air
+		}
+        
+
+		unit_requirements = {
+			equipment = {
+				type = { tactical_bomber }
+				amount = { min = 90 }
+			}
+		}
+		unit_requirements = {
+			equipment = {
+				type = { strategic_bomber }
+				amount = { min = 90 }
+			}
+		}
+
+		starting_point = {
+		    types = { air_base }
+		}
+
+		success_factors = {
+			success = {
+				base = 0.45
+
+				# Raiding unit modifiers
+				air_superiority = {
+					reference = 1
+					start_reference = 0.5
+					weight = 0.25
+					start_weight = -0.25
+				}
+				experience = {
+					weight = 0.1
+					start_weight = -0.1
+					reference = 1.0
+				}
+				strategic_bomber = {
+					reference = 100
+					weight = 0.2
+					start_weight = -0.2
+				}
+				air_defence = {
+					reference = 35
+					weight = 0.2
+					start_weight = -0.2
+				}
+				reliability = {
+					reference = 0.9
+					weight = 0.05
+					start_weight = -0.05
+				}
+
+
+				### Target Modifiers
+				anti_air = {
+					reference = 8
+					weight = -0.4
+				}
+				interception = {
+					reference = 1000 
+					weight = -0.4
+				}
+				radar = {
+					weight = -0.1
+				}
+			
+				intel = {
+					weight = 0.2
+					reference = 100
+				}
+			}
+
+			critical = {
+				base = 0.15
+			}
+		}
+
+
+
+		success_levels = {
+			failure = {
+					victim_effects = {
+						var:target_state = {
+							damage_building = {
+								tags = civilian_factories
+								damage = 1 # levels of damage
+								province = var:ROOT.target_province
+								repair_speed_modifier = -0.1
+							}
+							damage_building = {
+								tags = military_factories
+								damage = 1 # levels of damage
+								province = var:ROOT.target_province
+								repair_speed_modifier = -0.1
+							}
+							
+						}
+
+					}
+				actor_effects = {
+					raid_damage_units = {
+						plane_loss = 70
+						ratio = no
+					}
+					raid_add_unit_experience = 0.05
+
+				}
+				visual_effect = {
+					entity = "raid_failed_entity"
+					animation = "attack"
+					}
+				var:target_state = {
+					
+					set_state_flag = {
+						flag = industrial_raid_happened
+						days = 60
+						value = 1
+					}
+				}
+			}
+			limited_success = {
+			    victim_effects = {
+					var:target_state = {
+							damage_building = {
+								tags = civilian_factories
+								damage = 2 # levels of damage
+								province = var:ROOT.target_province
+								repair_speed_modifier = -0.1
+							}
+							damage_building = {
+								tags = military_factories
+								damage = 2 # levels of damage
+								province = var:ROOT.target_province
+								repair_speed_modifier = -0.1
+							}
+							damage_building = {
+								tags = tank_assembly_tag
+								damage = 2 # levels of damage
+								province = var:ROOT.target_province
+								repair_speed_modifier = -0.5
+							}
+							
+					}
+
+			    }
+				actor_effects = {
+					raid_damage_units = {
+						plane_loss = 40
+						ratio = no
+					}
+					raid_add_unit_experience = 0.1
+					var:actor_country = {
+						add_command_power = 40
+					}
+				}
+				var:target_state = {
+					
+					set_state_flag = {
+						flag = industrial_raid_happened
+						days = 60
+						value = 1
+					}
+				}
+				visual_effect = {
+					entity = "air_raids_2_limited_success_entity"
+					animation = "attack"
+				}
+			}
+			success = {
+				victim_effects = {
+					var:target_state = {
+							damage_building = {
+								tags = civilian_factories
+								damage = 6 # levels of damage
+								province = var:ROOT.target_province
+								repair_speed_modifier = -0.1
+							}
+							damage_building = {
+								tags = military_factories
+								damage = 8 # levels of damage
+								province = var:ROOT.target_province
+								repair_speed_modifier = -0.1
+							}
+							damage_building = {
+								tags = tank_assembly_tag
+								damage = 3 # levels of damage
+								province = var:ROOT.target_province
+								repair_speed_modifier = -0.5
+							}
+
+					}
+				}
+				var:target_state = {
+					
+					set_state_flag = {
+						flag = industrial_raid_happened
+						days = 60
+						value = 1
+					}
+				}
+				actor_effects = {
+					raid_damage_units = {
+						plane_loss = 25
+						ratio = no
+					}
+					raid_add_unit_experience = 0.2
+					var:actor_country = {
+						add_command_power = 50
+					}
+				}
+				visual_effect = {
+					entity = "air_raids_2_success_entity"
+					animation = "attack"
+				}
+			}
+			critical_success = {
+			    victim_effects = {
+					var:target_state = {
+						damage_building = {
+							tags = civilian_factories
+							damage = 12 # levels of damage
+							province = var:ROOT.target_province
+							repair_speed_modifier = -0.1
+						}
+						damage_building = {
+							tags = military_factories
+							damage = 18 # levels of damage
+							province = var:ROOT.target_province
+							repair_speed_modifier = -0.1
+						}
+						damage_building = {
+							tags = tank_assembly_tag
+							damage = 4 # levels of damage
+							province = var:ROOT.target_province
+							repair_speed_modifier = -0.5
+						}
+					}
+			    }
+				var:target_state = {
+					
+					set_state_flag = {
+						flag = industrial_raid_happened
+						days = 60
+						value = 1
+					}
+				}
 				actor_effects = {
 						raid_damage_units = {
 						plane_loss = 10
