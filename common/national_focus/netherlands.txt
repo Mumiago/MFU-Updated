@@ -1148,12 +1148,19 @@ focus_tree = {
 
 	focus = {
 		id = HOL_move_government_to_batavia
-		icon = GFX_goal_generic_position_armies
-		prerequisite = { focus = HOL_increase_colonial_militia }
+		icon = GFX_focus_hol_continue_the_war_in_batavia
 		relative_position_id = HOL_increase_colonial_militia
 		x = 0
-		y = 1
+		y = 4
 		cost = 5
+
+		available = {
+			has_capitulated = yes
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
 
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER }
 
@@ -1165,15 +1172,40 @@ focus_tree = {
 				}
 				custom_effect_tooltip = HOL_move_government_to_batavia_modernize_tt
 			}
-			hidden_effect = {
-				hol_spawn_colonial_garrisons = yes
-				if = {
-					limit = {
-						has_country_flag = hol_modernized_colonial_holdings
-					}
-					add_research_slot = 1
-					country_event = { id = mtg_netherlands.84 hours = 6 }
+			remove_dynamic_modifier = { modifier = HOL_dutch_army_dynamic_modifier }
+			remove_dynamic_modifier = { modifier = HOL_dutch_economy_dynamic_modifier }
+			remove_ideas = HOL_curtail_colonial_autonomy_overlord
+			hol_spawn_colonial_garrisons = yes
+			INS = {
+				hidden_effect = {
+					country_event = { id = mtg_netherlands.22 }
 				}
+			}
+			INS = {
+				every_unit_leader = {
+					set_nationality = HOL
+				}
+			}
+			annex_country = {
+				target = INS
+				transfer_troops = yes
+			}
+			every_state = {
+				limit = {
+					is_core_of = INS
+				}
+				add_compliance = 70
+			}
+			set_capital = { state = 335 }
+			if = {
+				limit = {
+					has_country_flag = hol_modernized_colonial_holdings
+				}
+				add_research_slot = 1
+				country_event = { id = mtg_netherlands.84 hours = 6 }
+			}
+			hidden_effect = {
+				news_event = { id = mtg_news.46 days = 1 }
 			}
 		}
 	}
