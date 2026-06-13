@@ -49,59 +49,60 @@ NDefines_Graphics.NGraphics.WEATHER_DISTANCE_CUTOFF = 1000 -- At what distance w
 
 --- New defines added for HOI4 version update (vanilla values)
 --- NMilitary
-NDefines.NMilitary.CAPTAIN_EXPERIENCE_ON_SHIP_MULT = 1.55
-NDefines.NMilitary.MAX_CAPTAIN_EXPERIENCE_ON_SHIP = 8000
-NDefines.NMilitary.CAPTAIN_EXPERIENCE_ON_SHIP_PER_MEDAL_MULT = 0.1
-NDefines.NMilitary.MAX_REGIMENTAL_SUPPORT_WIDTH = 5
-NDefines.NMilitary.MAX_REGIMENTAL_SUPPORT_HEIGHT = 1
-NDefines.NMilitary.MAX_HQ_BATTALION_WIDTH = 1
-NDefines.NMilitary.MAX_HQ_BATTALION_HEIGHT = 4
-NDefines.NMilitary.MAX_HQ_SUPPORT_WIDTH = 1
-NDefines.NMilitary.MAX_HQ_SUPPORT_HEIGHT = 4
-NDefines.NMilitary.MAX_HQ_REGIMENTAL_SUPPORT_WIDTH = 0
-NDefines.NMilitary.MAX_HQ_REGIMENTAL_SUPPORT_HEIGHT = 0
-NDefines.NMilitary.REGIMENTAL_SUPPORT_REQUIRED_BATTALIONS = { 3 }
+NDefines.NMilitary.CAPTAIN_EXPERIENCE_ON_SHIP_MULT = 1.55 -- XP multiplier a ship captain gains while serving aboard a ship
+NDefines.NMilitary.MAX_CAPTAIN_EXPERIENCE_ON_SHIP = 8000 -- cap on experience a captain can accumulate from ship service
+NDefines.NMilitary.CAPTAIN_EXPERIENCE_ON_SHIP_PER_MEDAL_MULT = 0.1 -- extra captain-XP multiplier per naval medal the captain holds
+NDefines.NMilitary.MAX_REGIMENTAL_SUPPORT_WIDTH = 5 -- division designer: columns in the regimental-support slot grid
+NDefines.NMilitary.MAX_REGIMENTAL_SUPPORT_HEIGHT = 1 -- division designer: rows in the regimental-support slot grid
+NDefines.NMilitary.MAX_HQ_BATTALION_WIDTH = 1 -- Army HQ designer: columns in the HQ line-battalion grid
+NDefines.NMilitary.MAX_HQ_BATTALION_HEIGHT = 4 -- Army HQ designer: rows in the HQ line-battalion grid (so up to 1x4 line battalions)
+NDefines.NMilitary.MAX_HQ_SUPPORT_WIDTH = 1 -- Army HQ designer: columns in the HQ support-company grid
+NDefines.NMilitary.MAX_HQ_SUPPORT_HEIGHT = 4 -- Army HQ designer: rows in the HQ support-company grid (so up to 1x4 support)
+NDefines.NMilitary.MAX_HQ_REGIMENTAL_SUPPORT_WIDTH = 0 -- Army HQ designer: regimental-support columns (0 = HQs cannot take regimental support)
+NDefines.NMilitary.MAX_HQ_REGIMENTAL_SUPPORT_HEIGHT = 0 -- Army HQ designer: regimental-support rows (0 = disabled for HQs)
+NDefines.NMilitary.REGIMENTAL_SUPPORT_REQUIRED_BATTALIONS = { 3 } -- line battalions of a type required before its regimental-support slot unlocks
+-- AI_BATTALION_BUILD_ORDER: grid-cell priority order the AI uses when filling division-designer battalion slots
 NDefines.NMilitary.AI_BATTALION_BUILD_ORDER = { 	1,  6,  11, 16, 21,
 												2,  7,  12, 17, 22,
 												3,  8,  13, 18, 23,
 												4,  9,  14, 19, 24,
 												5,  10, 15, 20, 25 }
-NDefines.NMilitary.REGIMENTAL_SUPPORT_SLOT_COST_MULTIPLIER = 0.5
-NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_ON_DEPLOY = 3
-NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_ON_DEPLOY_MIN = 1
-NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_ON_REDEPLOY = 15
-NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_ON_WITHDRAW = 3
-NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_ON_WITHDRAW_MIN = 1
-NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_REFERENCE_MANPOWER = 9600
-NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_MANPOWER_EXPONENT = 1.5
-NDefines.NMilitary.FIGHTING_STRENGTH_DEATH_THRESHOLD = 0.001
-NDefines.NMilitary.FIGHTING_STRENGTH_HQ_ALERT_THRESHOLD = 0.2
-NDefines.NMilitary.COMMANDER_ABILITY_BASE_RANGE = 20
-NDefines.NMilitary.COMMS_MAX_DISTANCE = 4
-NDefines.NMilitary.PLANNING_CAP_COMMS_SCALING = { 1.0, 0.95, 0.9, 0.85, 0.8 }
-NDefines.NMilitary.PLANNING_CAP_NO_HQ_SCALING = 0.8
-NDefines.NMilitary.PLANNING_SPEED_COMMS_SCALING = { 1.0, 0.95, 0.9, 0.85, 0.8 }
-NDefines.NMilitary.PLANNING_SPEED_NO_HQ_SCALING = 0.8
-NDefines.NMilitary.LEADER_MOD_COMMS_SCALING = { 1.06, 1.04, 1.02, 1.01, 1.0 }
-NDefines.NMilitary.LEADER_MOD_NO_HQ_SCALING = 1.0
-NDefines.NMilitary.ABILITY_COMMS_SCALING = { 1.06, 1.04, 1.02, 1.01, 1.0 }
-NDefines.NMilitary.ABILITY_NO_HQ_SCALING = 1.0
-NDefines.NMilitary.GENERAL_PROXIMITY_CLOSE = 1
-NDefines.NMilitary.GENERAL_PROXIMITY_MEDIUM = 2
-NDefines.NMilitary.GENERAL_PROXIMITY_FAR = 3
-NDefines.NMilitary.GENERAL_PROXIMITY_DEFAULT = 1
-NDefines.NMilitary.GENERAL_RANK_TO_ARMY_HQ_EXP_LEVEL_FACTOR = 0.5
-NDefines.NMilitary.ARMY_HQ_REQUISITION_MINIMUM_REMAINING_PERCENTAGE = 10
-NDefines.NMilitary.PREFERRED_PRISON_VP = 5
+NDefines.NMilitary.REGIMENTAL_SUPPORT_SLOT_COST_MULTIPLIER = 0.5 -- production/equipment cost multiplier applied to units in regimental-support slots
+NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_ON_DEPLOY = 3 -- days an Army HQ's leader modifiers are on cooldown after first deploying
+NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_ON_DEPLOY_MIN = 1 -- minimum deploy cooldown in days regardless of manpower scaling
+NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_ON_REDEPLOY = 15 -- cooldown in days when an already-deployed HQ is moved/redeployed
+NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_ON_WITHDRAW = 3 -- cooldown in days applied when an HQ is withdrawn
+NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_ON_WITHDRAW_MIN = 1 -- minimum withdraw cooldown in days
+NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_REFERENCE_MANPOWER = 9600 -- reference HQ manpower used to scale the cooldown durations above
+NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_MANPOWER_EXPONENT = 1.5 -- exponent scaling cooldown length by HQ manpower relative to the reference
+NDefines.NMilitary.FIGHTING_STRENGTH_DEATH_THRESHOLD = 0.001 -- fighting-strength fraction below which an HQ/unit is treated as destroyed
+NDefines.NMilitary.FIGHTING_STRENGTH_HQ_ALERT_THRESHOLD = 0.2 -- HQ fighting-strength fraction below which the UI shows a low-strength alert
+NDefines.NMilitary.COMMANDER_ABILITY_BASE_RANGE = 20 -- base range (provinces) of a commander/HQ ability's area of effect
+NDefines.NMilitary.COMMS_MAX_DISTANCE = 4 -- max communication distance (hops from the Army HQ) before units count as out of comms
+NDefines.NMilitary.PLANNING_CAP_COMMS_SCALING = { 1.0, 0.95, 0.9, 0.85, 0.8 } -- max-planning multiplier indexed by comms distance (0..4 hops from HQ)
+NDefines.NMilitary.PLANNING_CAP_NO_HQ_SCALING = 0 -- max-planning multiplier for units that have no Army HQ
+NDefines.NMilitary.PLANNING_SPEED_COMMS_SCALING = { 1.0, 0.95, 0.9, 0.85, 0.8 } -- planning-speed multiplier indexed by comms distance
+NDefines.NMilitary.PLANNING_SPEED_NO_HQ_SCALING = 0 -- planning-speed multiplier for units with no Army HQ
+NDefines.NMilitary.LEADER_MOD_COMMS_SCALING = { 1.1, 0.9, 0.5, 0.2, 0} -- HQ leader-modifier effectiveness multiplier by comms distance
+NDefines.NMilitary.LEADER_MOD_NO_HQ_SCALING = 0 -- HQ leader-modifier effectiveness when no HQ
+NDefines.NMilitary.ABILITY_COMMS_SCALING = { 1.06, 1.04, 1.02, 1.01, 1.0 } -- HQ ability effectiveness multiplier by comms distance
+NDefines.NMilitary.ABILITY_NO_HQ_SCALING = 1.0 -- HQ ability effectiveness when no HQ
+NDefines.NMilitary.GENERAL_PROXIMITY_CLOSE = 1 -- proximity tier value: general/HQ is close to its units
+NDefines.NMilitary.GENERAL_PROXIMITY_MEDIUM = 2 -- proximity tier value: medium distance
+NDefines.NMilitary.GENERAL_PROXIMITY_FAR = 3 -- proximity tier value: far
+NDefines.NMilitary.GENERAL_PROXIMITY_DEFAULT = 1 -- default proximity tier used when none is computed
+NDefines.NMilitary.GENERAL_RANK_TO_ARMY_HQ_EXP_LEVEL_FACTOR = 0.5 -- converts a general's rank into the deployed Army HQ's starting experience level
+NDefines.NMilitary.ARMY_HQ_REQUISITION_MINIMUM_REMAINING_PERCENTAGE = 10 -- min % of equipment kept in the stockpile when an HQ requisitions equipment
+NDefines.NMilitary.PREFERRED_PRISON_VP = 5 -- victory-point weight used when choosing which state to hold captured generals in
 
 --- NAI
-NDefines.NAI.ARMY_LEADER_ASSIGN_WITHDRAW_DAYS = 7
-NDefines.NAI.ARMY_LEADER_MIN_DIVISIONS_FOR_HQ = 10
-NDefines.NAI.MAX_DEPLOYED_ARMY_HQS = 5
-NDefines.NAI.MAX_CAPTURED_GENERALS_TO_STOP_HQ_DEPLOY = 3
+NDefines.NAI.ARMY_LEADER_ASSIGN_WITHDRAW_DAYS = 7 -- AI: days to wait before withdrawing/reassigning an army leader's HQ
+NDefines.NAI.ARMY_LEADER_MIN_DIVISIONS_FOR_HQ = 10 -- AI: minimum divisions in an army before the AI deploys an Army HQ for it
+NDefines.NAI.MAX_DEPLOYED_ARMY_HQS = 5 -- AI: maximum number of Army HQs the AI keeps deployed at once
+NDefines.NAI.MAX_CAPTURED_GENERALS_TO_STOP_HQ_DEPLOY = 3 -- AI: stops deploying new HQs once this many of its generals are captured
 
 --- NNavy
-NDefines.NNavy.NAVAL_COMBAT_MEDAL_CHANCE = 24
-NDefines.NNavy.NAVAL_COMBAT_MEDAL_MIN_DURATION = 48
-NDefines.NNavy.NAVAL_COMBAT_MEDAL_LAST_MEDAL_LIMIT = 30
-NDefines.NNavy.NAVAL_COMBAT_MEDAL_ALLOW_CONVOY = false
+NDefines.NNavy.NAVAL_COMBAT_MEDAL_CHANCE = 24 -- base chance/weight for a ship captain to be awarded a medal after a naval battle
+NDefines.NNavy.NAVAL_COMBAT_MEDAL_MIN_DURATION = 48 -- minimum naval-combat duration (hours) required to be eligible for a medal
+NDefines.NNavy.NAVAL_COMBAT_MEDAL_LAST_MEDAL_LIMIT = 30 -- minimum days since the captain's last medal before another can be awarded
+NDefines.NNavy.NAVAL_COMBAT_MEDAL_ALLOW_CONVOY = false -- whether combat involving only convoys can award captain medals
