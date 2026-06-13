@@ -16,11 +16,17 @@ HOL_german_arms_purchases = {
 				has_war_with = GER
 				NOT = { country_exists = GER }
 				has_country_flag = HOL_german_shipments_halted
+				GER = { has_completed_focus = GER_danzig_or_war }
 				AND = {
 					NOT = { has_country_flag = HOL_german_arms_shipments_active }
 					NOT = { has_completed_focus = HOL_buy_arms_from_germany }
 				}
 			}
+		}
+
+		cancel_effect = {
+			set_country_flag = HOL_german_shipments_halted
+			clr_country_flag = HOL_german_arms_shipments_active
 		}
 
 		selectable_mission = no
@@ -36,12 +42,14 @@ HOL_german_arms_purchases = {
 			NOT = { has_country_flag = HOL_german_shipments_halted }
 			NOT = { has_war_with = GER }
 			country_exists = GER
+			GER = { NOT = { has_completed_focus = GER_danzig_or_war } }
 		}
 
 		timeout_effect = {
 			if = {
 				limit = {
 					NOT = { has_country_flag = HOL_german_shipments_halted }
+					GER = { NOT = { has_completed_focus = GER_danzig_or_war } }
 				}
 				if = {
 					limit = {
@@ -118,6 +126,7 @@ HOL_german_arms_purchases = {
 						}
 						NOT = { has_war_with = GER }
 						country_exists = GER
+						GER = { NOT = { has_completed_focus = GER_danzig_or_war } }
 					}
 					activate_mission = HOL_german_arms_shipment
 				}
@@ -1871,6 +1880,296 @@ political_actions = {
 			LUX = {
 				country_event = { id = mtg_netherlands.77 days = 1 random_days = 3 }
 			}
+		}
+	}
+
+}
+
+HOL_defense_of_netherlands = {
+
+	HOL_prevent_capture_dutch_ships = {
+
+		icon = generic_naval
+		priority = 100
+
+		allowed = {
+			always = no
+			original_tag = HOL
+		}
+
+		selectable_mission = no
+
+		activation = {
+		}
+
+		available = {
+			OR = {
+				NOT = { controls_province = 9498 }
+				has_capitulated = yes
+			}
+		}
+
+		visible = {
+			original_tag = HOL
+			has_country_flag = HOL_defense_missions_active
+			NOT = { has_country_flag = HOL_prevent_capture_dutch_ships_resolved }
+		}
+
+		days_mission_timeout = 7
+		is_good = yes
+		fire_only_once = yes
+
+		highlight_states = {
+			highlight_state_targets = {
+				state = 7
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = HOL_prevent_capture_dutch_ships_resolved
+			custom_effect_tooltip = HOL_prevent_capture_dutch_ships_fail_tt
+			hidden_effect = {
+				HOL = {
+					add_equipment_to_stockpile = {
+						type = convoy_1
+						amount = -50
+						producer = HOL
+					}
+				}
+				GER = {
+					add_equipment_to_stockpile = {
+						type = convoy_1
+						amount = 50
+						producer = GER
+					}
+					if = {
+						limit = { has_dlc = "Man the Guns" }
+						create_ship = { type = ship_hull_submarine_1 equipment_variant = "O9 Class" creator = "HOL" name = "HrMs O-9" }
+						create_ship = { type = ship_hull_submarine_1 equipment_variant = "O9 Class" creator = "HOL" name = "HrMs O-10" }
+						create_ship = { type = ship_hull_submarine_1 equipment_variant = "O9 Class" creator = "HOL" name = "HrMs O-11" }
+						create_ship = { type = ship_hull_submarine_1 equipment_variant = "O9 Class" creator = "HOL" name = "HrMs O-12" }
+						create_ship = { type = ship_hull_submarine_1 equipment_variant = "O9 Class" creator = "HOL" name = "HrMs O-13" }
+						create_ship = { type = ship_hull_submarine_1 equipment_variant = "O9 Class" creator = "HOL" name = "HrMs O-14" }
+						add_equipment_production = {
+							equipment = {
+								type = ship_hull_cruiser_3
+								creator = "HOL"
+							}
+							requested_factories = 1
+							progress = 0.6
+							amount = 3
+						}
+					}
+					else = {
+						create_ship = { type = submarine_1 equipment_variant = "K-XIV Class" creator = "HOL" name = "HrMs O-9" }
+						create_ship = { type = submarine_1 equipment_variant = "K-XIV Class" creator = "HOL" name = "HrMs O-10" }
+						create_ship = { type = submarine_1 equipment_variant = "K-XIV Class" creator = "HOL" name = "HrMs O-11" }
+						create_ship = { type = submarine_1 equipment_variant = "K-XIV Class" creator = "HOL" name = "HrMs O-12" }
+						create_ship = { type = submarine_1 equipment_variant = "K-XIV Class" creator = "HOL" name = "HrMs O-13" }
+						create_ship = { type = submarine_1 equipment_variant = "K-XIV Class" creator = "HOL" name = "HrMs O-14" }
+						add_equipment_production = {
+							equipment = {
+								type = light_cruiser_2
+								creator = "HOL"
+								version_name = "De Ruyter Class"
+							}
+							requested_factories = 1
+							progress = 0.6
+							amount = 3
+						}
+					}
+				}
+			}
+		}
+
+		timeout_effect = {
+			set_country_flag = HOL_prevent_capture_dutch_ships_resolved
+			custom_effect_tooltip = HOL_prevent_capture_dutch_ships_success_tt
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	HOL_evacuate_dutch_gold_reserves = {
+
+		icon = hol_draw_up_staff_plans
+		priority = 99
+
+		allowed = {
+			always = no
+			original_tag = HOL
+		}
+
+		selectable_mission = no
+
+		activation = {
+		}
+
+		available = {
+			OR = {
+				NOT = { controls_province = 391 }
+				has_capitulated = yes
+			}
+		}
+
+		visible = {
+			original_tag = HOL
+			has_country_flag = HOL_defense_missions_active
+			NOT = { has_country_flag = HOL_evacuate_dutch_gold_reserves_resolved }
+		}
+
+		days_mission_timeout = 10
+		is_good = yes
+		fire_only_once = yes
+
+		highlight_states = {
+			highlight_provinces = {
+				391
+			}
+		}
+
+		on_map_mode = map_only
+
+		complete_effect = {
+			set_country_flag = HOL_evacuate_dutch_gold_reserves_resolved
+			custom_effect_tooltip = HOL_evacuate_dutch_gold_reserves_fail_tt
+			hidden_effect = {
+				GER = {
+					add_cic = 25000
+				}
+			}
+		}
+
+		timeout_effect = {
+			set_country_flag = HOL_evacuate_dutch_gold_reserves_resolved
+			custom_effect_tooltip = HOL_evacuate_dutch_gold_reserves_success_tt
+			hidden_effect = {
+				ENG = {
+					add_cic = 400000
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	HOL_evacuate_the_government = {
+
+		icon = generic_political_actions
+		priority = 98
+
+		allowed = {
+			always = no
+			original_tag = HOL
+		}
+
+		selectable_mission = no
+
+		activation = {
+		}
+
+		available = {
+			OR = {
+				NOT = { controls_province = 3211 }
+				has_capitulated = yes
+			}
+		}
+
+		visible = {
+			original_tag = HOL
+			has_country_flag = HOL_defense_missions_active
+			NOT = { has_country_flag = HOL_evacuate_the_government_resolved }
+		}
+
+		days_mission_timeout = 7
+		is_good = yes
+		fire_only_once = yes
+
+		highlight_states = {
+			highlight_state_targets = {
+				state = 7
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = HOL_evacuate_the_government_resolved
+			custom_effect_tooltip = HOL_evacuate_the_government_fail_tt
+			hidden_effect = {
+				GER = {
+					add_collaboration = {
+						target = HOL
+						value = 0.2
+					}
+				}
+			}
+		}
+
+		timeout_effect = {
+			set_country_flag = HOL_evacuate_the_government_resolved
+			set_country_flag = HOL_evacuate_government_success
+			custom_effect_tooltip = HOL_evacuate_the_government_success_tt
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	HOL_hold_open_corridor_with_french = {
+
+		icon = hol_secret_staff_talks
+		priority = 97
+
+		allowed = {
+			always = no
+			original_tag = HOL
+		}
+
+		selectable_mission = no
+
+		activation = {
+		}
+
+		available = {
+			OR = {
+				GER = { controls_province = 3262 }
+				has_capitulated = yes
+			}
+		}
+
+		visible = {
+			original_tag = HOL
+			has_country_flag = HOL_defense_missions_active
+			NOT = { has_country_flag = HOL_hold_open_corridor_with_french_resolved }
+		}
+
+		days_mission_timeout = 100
+		is_good = yes
+		fire_only_once = yes
+
+		highlight_states = {
+			highlight_state_targets = {
+				state = 35
+			}
+		}
+
+		complete_effect = {
+			set_country_flag = HOL_hold_open_corridor_with_french_resolved
+			custom_effect_tooltip = HOL_hold_open_corridor_with_french_fail_tt
+			add_ideas = HOL_severed_french_corridor
+		}
+
+		timeout_effect = {
+			set_country_flag = HOL_hold_open_corridor_with_french_resolved
+			custom_effect_tooltip = HOL_hold_open_corridor_with_french_success_tt
+		}
+
+		ai_will_do = {
+			factor = 100
 		}
 	}
 
