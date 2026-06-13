@@ -4476,8 +4476,8 @@ NIntel = {
 	INTEL_TO_SHOW_SUBDOCTRINES = { 0.5, 0.5, 0.5 }, -- minimum value to show subdoctrines { army, navy, air }
 	INTEL_TO_SHOW_MASTERY = { 0.7, 0.7, 0.7 }, -- minimum value to show mastery levels { army, navy, air }
 	--GTD
-	RAID_MIN_INTEL_FOR_WARNING_ON_LAUNCH = 0.5,           -- how much intel (of the relevant type) is needed to show a warning when raid is launched
-	RAID_MIN_INTEL_FOR_WARNING_HALFWAY_TO_LAUNCH = 0.7,   -- how much intel (of the relevant type) is needed to show a warning halfway through preparation
+	RAID_MIN_INTEL_FOR_WARNING_ON_LAUNCH = 0.0,           -- how much intel (of the relevant type) is needed to show a warning when raid is launched
+	RAID_MIN_INTEL_FOR_WARNING_HALFWAY_TO_LAUNCH = 0.6,   -- how much intel (of the relevant type) is needed to show a warning halfway through preparation
 	--     (this limit is a dummy value only used for communicating the role of intel in the intel ledger )
 	--     (in reality, detection scales linearly with intel. 70% intel = detection at 30% preparation, 50% intel = detection at 50% preparation, etc.
 	RAID_MIN_INTEL_FOR_WARNING_EARLY_PREPARATION = 0.8,   -- how much intel (of the relevant type) is needed to show a warning early in the preparation
