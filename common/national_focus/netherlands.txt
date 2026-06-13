@@ -18,7 +18,7 @@ focus_tree = {
 	focus = {
 		id = HOL_increase_colonial_investments
 		icon = GFX_goal_generic_construct_infrastructure
-		x = 0
+		x = 1
 		y = 0
 		cost = 7.2
 
@@ -925,7 +925,7 @@ focus_tree = {
 		icon = GFX_goal_generic_construct_civilian
 		prerequisite = { focus = HOL_increase_colonial_investments }
 		relative_position_id = HOL_increase_colonial_investments
-		x = -2
+		x = -1
 		y = 1
 		cost = 5
 
@@ -964,7 +964,7 @@ focus_tree = {
 		icon = GFX_goal_generic_construct_civilian
 		prerequisite = { focus = HOL_increase_colonial_investments }
 		relative_position_id = HOL_increase_colonial_investments
-		x = 2
+		x = 3
 		y = 1
 		cost = 5
 
@@ -1081,7 +1081,7 @@ focus_tree = {
 		prerequisite = { focus = HOL_invest_in_the_dutch_east_indies }
 		mutually_exclusive = { focus = HOL_prioritize_the_atlantic }
 		relative_position_id = HOL_increase_colonial_investments
-		x = -1
+		x = 0
 		y = 2
 		cost = 5
 
@@ -1121,7 +1121,7 @@ focus_tree = {
 		prerequisite = { focus = HOL_invest_in_the_caribbean_colonies }
 		mutually_exclusive = { focus = HOL_prioritize_dutch_east_indies }
 		relative_position_id = HOL_increase_colonial_investments
-		x = 1
+		x = 2
 		y = 2
 		cost = 5
 
@@ -1142,7 +1142,7 @@ focus_tree = {
 		icon = GFX_goal_generic_allies_build_infantry
 		prerequisite = { focus = HOL_prioritize_dutch_east_indies focus = HOL_prioritize_the_atlantic }
 		relative_position_id = HOL_increase_colonial_investments
-		x = 0
+		x = 1
 		y = 3
 		cost = 5
 
@@ -1158,7 +1158,7 @@ focus_tree = {
 		icon = GFX_focus_research
 		prerequisite = { focus = HOL_prioritize_dutch_east_indies focus = HOL_prioritize_the_atlantic }
 		relative_position_id = HOL_increase_colonial_investments
-		x = 2
+		x = 3
 		y = 3
 		cost = 5
 
@@ -1232,6 +1232,85 @@ focus_tree = {
 			hidden_effect = {
 				news_event = { id = mtg_news.46 days = 1 }
 			}
+		}
+	}
+
+	focus = {
+		id = HOL_no_320_squadron_raf
+		icon = GFX_goal_generic_air_fighter
+		prerequisite = { focus = HOL_move_government_to_batavia }
+		relative_position_id = HOL_move_government_to_batavia
+		x = -4
+		y = 1
+		cost = 5
+
+		available_if_capitulated = yes
+
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_AIR_XP }
+
+		completion_reward = {
+			custom_effect_tooltip = HOL_no_320_squadron_raf_tt
+			add_equipment_to_stockpile = {
+				type = fighter_equipment
+				amount = 100
+				producer = ENG
+			}
+			695 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = air_assembly
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = HOL_new_naval_bombers
+		icon = GFX_goal_generic_air_bomber_new
+		prerequisite = { focus = HOL_no_320_squadron_raf }
+		relative_position_id = HOL_no_320_squadron_raf
+		x = 0
+		y = 2
+		cost = 5
+
+		available_if_capitulated = yes
+
+		search_filters = { FOCUS_FILTER_RESEARCH FOCUS_FILTER_AIR_XP }
+
+		completion_reward = {
+			custom_effect_tooltip = HOL_new_naval_bombers_tt
+			add_equipment_to_stockpile = {
+				type = small_plane_naval_bomber_airframe
+				amount = 100
+				producer = ENG
+			}
+			add_tech_bonus = {
+				name = HOL_new_naval_bombers
+				bonus = 1.0
+				uses = 1
+				category = naval_bomber
+			}
+		}
+	}
+
+	focus = {
+		id = HOL_het_verzet
+		icon = GFX_focus_POL_resistance
+		prerequisite = { focus = HOL_move_government_to_batavia }
+		relative_position_id = HOL_move_government_to_batavia
+		x = -2
+		y = 1
+		cost = 5
+
+		available_if_capitulated = yes
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		completion_reward = {
+			custom_effect_tooltip = HOL_het_verzet_tt
+			add_ideas = HOL_het_verzet
 		}
 	}
 
@@ -1724,6 +1803,31 @@ focus_tree = {
 	}
 
 	focus = {
+		id = HOL_build_up_curacao
+		icon = GFX_goal_generic_construct_infrastructure
+		prerequisite = { focus = HOL_fortify_curacao }
+		relative_position_id = HOL_fortify_curacao
+		x = 0
+		y = 1
+		cost = 5
+
+		available_if_capitulated = yes
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+			695 = {
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
 		id = HOL_buy_equipment_from_the_usa
 		icon = GFX_goal_generic_trade
 		prerequisite = { focus = HOL_move_government_to_batavia }
@@ -1748,7 +1852,7 @@ focus_tree = {
 		icon = GFX_goal_generic_navy_doctrines_tactics
 		prerequisite = { focus = HOL_move_government_to_batavia }
 		relative_position_id = HOL_move_government_to_batavia
-		x = 6
+		x = 8
 		y = 1
 		cost = 5
 
@@ -1808,11 +1912,60 @@ focus_tree = {
 	}
 
 	focus = {
+		id = HOL_expand_colonial_shipyards
+		icon = GFX_goal_generic_construct_naval_dockyard
+		prerequisite = { focus = HOL_take_over_convoy_escort focus = HOL_bolster_submarine_fleet }
+		relative_position_id = HOL_coordinate_navy_with_allies
+		x = 0
+		y = 2
+		cost = 5
+
+		available_if_capitulated = yes
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+			335 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+			334 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+			672 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+			695 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
 		id = HOL_increase_curacao_oil_production
 		icon = GFX_goal_generic_oil_refinery
 		prerequisite = { focus = HOL_invest_in_the_caribbean_colonies }
 		relative_position_id = HOL_prioritize_the_atlantic
-		x = 2
+		x = 3
 		y = 0
 		cost = 5
 
