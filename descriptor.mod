@@ -41,5 +41,5 @@ tags={
 }
 picture="thumbnail.png"
 name="MFU-Updated"
-supported_version="1.17.3.0"
+supported_version="1.19.0.1"
 remote_file_id="3644126739"
