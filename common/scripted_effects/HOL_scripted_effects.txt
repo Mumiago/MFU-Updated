@@ -240,10 +240,90 @@ hol_colonial_garrison_cost_25_500_2500 = {
 
 hol_activate_defense_of_netherlands_missions = {
 	set_country_flag = HOL_defense_missions_active
+	set_variable = { HOL_defense_days_held = 0 }
+	set_variable = { HOL_defense_ger_casualties = 0 }
 	activate_mission = HOL_prevent_capture_dutch_ships
 	activate_mission = HOL_evacuate_dutch_gold_reserves
 	activate_mission = HOL_evacuate_the_government
 	activate_mission = HOL_hold_open_corridor_with_french
+}
+
+hol_update_defense_ger_casualties = {
+	if = {
+		limit = {
+			country_exists = GER
+			has_war_with = GER
+		}
+		GER = {
+			set_variable = { hol_cas_search = 0 }
+			while_loop_effect = {
+				limit = {
+					casualties_inflicted_by = {
+						opponent = HOL
+						thousands > hol_cas_search
+					}
+				}
+				add_to_variable = { hol_cas_search = 1000 }
+			}
+			if = {
+				limit = {
+					casualties_inflicted_by = {
+						opponent = HOL
+						thousands < hol_cas_search
+					}
+				}
+				subtract_from_variable = { hol_cas_search = 1000 }
+			}
+			while_loop_effect = {
+				limit = {
+					casualties_inflicted_by = {
+						opponent = HOL
+						thousands > hol_cas_search
+					}
+				}
+				add_to_variable = { hol_cas_search = 100 }
+			}
+			if = {
+				limit = {
+					casualties_inflicted_by = {
+						opponent = HOL
+						thousands < hol_cas_search
+					}
+				}
+				subtract_from_variable = { hol_cas_search = 100 }
+			}
+			while_loop_effect = {
+				limit = {
+					casualties_inflicted_by = {
+						opponent = HOL
+						thousands > hol_cas_search
+					}
+				}
+				add_to_variable = { hol_cas_search = 10 }
+			}
+			if = {
+				limit = {
+					casualties_inflicted_by = {
+						opponent = HOL
+						thousands < hol_cas_search
+					}
+				}
+				subtract_from_variable = { hol_cas_search = 10 }
+			}
+			while_loop_effect = {
+				limit = {
+					casualties_inflicted_by = {
+						opponent = HOL
+						thousands > hol_cas_search
+					}
+				}
+				add_to_variable = { hol_cas_search = 1 }
+			}
+			set_variable = { global.HOL_defense_ger_cas_temp = hol_cas_search }
+		}
+		set_variable = { HOL_defense_ger_casualties = global.HOL_defense_ger_cas_temp }
+		multiply_variable = { HOL_defense_ger_casualties = 1000 }
+	}
 }
 
 hol_apply_grebbelinie_effect = {
