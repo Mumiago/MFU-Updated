@@ -1063,7 +1063,7 @@ NMilitary = {
 
 	PLAN_PROVINCE_VP_PORT_FACTOR = 0.25,
 
-	NAVAL_INVASION_PLANNING_BONUS_MALUS = -0.9,		-- Malus in percentage for the planning bonus gain for naval invasions
+	NAVAL_INVASION_PLANNING_BONUS_MALUS = -0.3,		-- Malus in percentage for the planning bonus gain for naval invasions
 
 	NAVAL_INVASION_PLANNING_BONUS_GAIN = 0.04,		-- Planning Bonus gain per day for naval invasions
 
@@ -1254,8 +1254,8 @@ NMilitary = {
 	ORG_LOSS_FACTOR_ON_CONQUER = 0.2,              -- percentage of (max) org loss on takign enemy province
 	LOW_ORG_FOR_ATTACK = 0.5,                      -- at what org % we start affecting speed when doign hostile moves. scales down ZERO_ORG_MOVEMENT_MODIFIER
 
-	PLANNING_DECAY = 0.02,
-	PLAYER_ORDER_PLANNING_DECAY = 0.02,				-- Amount of planning lost due to player manual order
+	PLANNING_DECAY = 0.03,
+	PLAYER_ORDER_PLANNING_DECAY = 0.03,				-- Amount of planning lost due to player manual order
 	PLANNING_GAIN = 0.025,
 	PLANNING_MAX = 0.15,                           	-- can get more from techs
 	CIVILWAR_ORGANIZATION_FACTOR = 0.3,			  	-- Multiplier of org for both sides when civilwar.
@@ -2421,7 +2421,7 @@ NNavy = {
 	BATTLE_NAME_VP_FACTOR = 100,									-- Name is given by ((VP value) * BATTLE_NAME_VP_FACTOR) / (Distance VP -> battle)
 	BATTLE_NAME_VP_CUTOFF = 1.0,									-- If best score of above calculation is below this, name will be that of region.
 	AMPHIBIOUS_LANDING_PENALTY = -0.7,								-- amphibious landing penalty
-	AMPHIBIOUS_INVADE_SPEED_BASE = 0.5, 							-- every hour movement progress on amphibious invasion
+	AMPHIBIOUS_INVADE_SPEED_BASE = 0.1, 							-- every hour movement progress on amphibious invasion
 	AMPHIBIOUS_INVADE_MOVEMENT_COST = 24.0, 						-- total progress cost of movement while amphibious invading
 	AMPHIBIOUS_INVADE_ATTACK_LOW = 0.2, 							-- low and high cap of attack modifier scale. Scale interpolated by invasion progress.
 	AMPHIBIOUS_INVADE_ATTACK_HIGH = 1.0,
