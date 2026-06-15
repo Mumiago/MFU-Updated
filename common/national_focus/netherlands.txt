@@ -469,7 +469,6 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			custom_effect_tooltip = HOL_increase_military_preparedness_effect_tt
 			if = {
 				limit = {
 					has_idea = HOL_shell_shocked_spectator
@@ -750,8 +749,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_ideas = partial_economic_mobilisation
-			add_ideas = limited_conscription
+			custom_effect_tooltip = HOL_prepare_for_war_partial_mobilisation_tt
 			custom_effect_tooltip = HOL_prepare_for_war_cic_tt
 			custom_effect_tooltip = HOL_prepare_for_war_leader_tt
 			if = {
@@ -761,31 +759,33 @@ focus_tree = {
 				custom_effect_tooltip = HOL_grebbelinie_active_tt
 			}
 			hidden_effect = {
+				add_war_support = 0.15
+				add_ideas = partial_economic_mobilisation
+				add_ideas = limited_conscription
 				hol_apply_grebbelinie_effect = yes
-			}
-			set_party_name = { ideology = democratic long_name = HOL_CHU_party_long name = HOL_CHU_party }
-			retire_country_leader = yes
-			promote_character = {
-				character = HOL_dirk_jan_de_geer
-				ideology = conservatism
-			}
-			if = {
-				limit = {
-					has_idea = HOL_weak_government
+				country_event = { id = mtg_netherlands.86 hours = 1 }
+				if = {
+					limit = {
+						OR = {
+							has_idea = HOL_weak_government
+							has_idea = HOL_weak_government_mitigated
+						}
+					}
+					remove_ideas = HOL_weak_government
+					remove_ideas = HOL_weak_government_mitigated
 				}
-				remove_ideas = HOL_weak_government
-			}
-			set_variable = {
-				var = HOL_economy_cic_construction_boost_var
-				value = 0
-			}
-			if = {
-				limit = {
-					country_exists = INS
-					INS = { is_subject_of = ROOT }
+				set_variable = {
+					var = HOL_economy_cic_construction_boost_var
+					value = 0
 				}
-				INS = {
-					add_ideas = partial_economic_mobilisation
+				if = {
+					limit = {
+						country_exists = INS
+						INS = { is_subject_of = ROOT }
+					}
+					INS = {
+						add_ideas = partial_economic_mobilisation
+					}
 				}
 			}
 		}
@@ -1075,7 +1075,7 @@ focus_tree = {
 		relative_position_id = HOL_prioritize_dutch_east_indies
 		x = -2
 		y = 0
-		cost = 5
+		cost = 10
 
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 
@@ -1238,7 +1238,7 @@ focus_tree = {
 		relative_position_id = HOL_increase_colonial_militia
 		x = -3
 		y = 1
-		cost = 50
+		cost = 7.15
 
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 
@@ -1266,7 +1266,7 @@ focus_tree = {
 		relative_position_id = HOL_increase_colonial_militia
 		x = -1
 		y = 1
-		cost = 50
+		cost = 7.15
 
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 
@@ -1294,7 +1294,7 @@ focus_tree = {
 		relative_position_id = HOL_increase_colonial_militia
 		x = 1
 		y = 1
-		cost = 50
+		cost = 7.15
 
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 
@@ -1322,7 +1322,7 @@ focus_tree = {
 		relative_position_id = HOL_increase_colonial_militia
 		x = 3
 		y = 1
-		cost = 50
+		cost = 7.15
 
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 
@@ -1401,7 +1401,8 @@ focus_tree = {
 			}
 			remove_dynamic_modifier = { modifier = HOL_dutch_army_dynamic_modifier }
 			remove_dynamic_modifier = { modifier = HOL_dutch_economy_dynamic_modifier }
-			hol_spawn_colonial_garrisons = yes
+			set_cosmetic_tag = HOL_FREE
+			hol_prepare_ins_annexation_for_batavia = yes
 			INS = {
 				hidden_effect = {
 					country_event = { id = mtg_netherlands.22 }
@@ -1416,6 +1417,7 @@ focus_tree = {
 				target = INS
 				transfer_troops = yes
 			}
+			hol_spawn_colonial_garrisons = yes
 			every_state = {
 				limit = {
 					is_core_of = INS
@@ -2517,7 +2519,7 @@ focus_tree = {
 		icon = GFX_goal_generic_construct_military
 		relative_position_id = HOL_move_government_to_batavia
 		x = 5
-		y = 3
+		y = 5
 		cost = 5
 
 		available = {
