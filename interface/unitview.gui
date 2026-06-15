@@ -765,6 +765,15 @@ guiTypes = {
 			quadTextureSprite ="GFX_tiled_window_1b_thin_border"
 		}
 
+
+		### MFU 1.19: HQ select keyboard-shortcut anchor
+		buttonType = {
+			name = "select_hq_shortcut_anchor"
+			position = { x=-1000 y=-1000 }
+			quadTextureSprite = "GFX_group_marker3"
+			shortcut = "ctrl+g+s"
+		}
+
 		containerWindowType = {
 			name = "content_window"
 			position = {x=0 y=0}
@@ -1074,6 +1083,132 @@ guiTypes = {
 						spriteType = "GFX_division_list_column_button"
 						alwaystransparent = yes
 					}
+				}
+			}
+
+
+			### MFU 1.19: deploy/spawn Army HQ button (hq_window) - was missing from this override
+			containerWindowType = {
+				name = "hq_window"
+				position = { x=8 y=-37 }
+				size = { width=423 height=45 }
+				clipping = no
+
+				background = {
+					name = "Background"
+					position = { x=-4 y=-5 }
+					quadTextureSprite ="GFX_army_hq_bg"
+					alwaystransparent = yes
+				}
+
+				containerWindowType = {
+					name = "empty_slot"
+
+					# Off-screen ctrl+g+d chord anchor
+					buttonType = {
+						name = "deploy_hq_shortcut_anchor"
+						position = { x=-1000 y=-1000 }
+						quadTextureSprite = "GFX_group_marker3"
+						shortcut = "ctrl+g+d"
+					}
+
+					# Deploy button lives inside the dropdown (so opening-click counts as "inside"); expand_button is parked off-screen and C++ drives toggling.
+					dropDownBoxType = {
+						name = "deploy_dropdown"
+						position = { x = 45 y = 2 }
+
+						containerWindowType = {
+							name = "deploy_button_container_window"
+							position = { x=0 y=0 }
+
+							buttonType = {
+								name = "deploy"
+								quadTextureSprite = "GFX_deploy_hq_button"
+								font = "hoi_16mbs"
+							}
+
+							instantTextboxType = {
+								name = "deploy_button_label"
+								position = { x = 0 y = 7 }
+								font = "hoi_16mbs"
+								maxWidth = 110
+								format = center
+								alwaystransparent = yes
+							}
+
+							iconType = {
+								name = "template_icon"
+								spriteType = "GFX_unit_infantry_icon_medium" # <- Replaced in code
+								position = { x=97 y=-6 }
+								alwaystransparent = yes
+							}
+
+							instantTextboxType = {
+								name = "deploy_button_template_name"
+								position = { x = 168 y = 8 }
+								font = "hoi_16mbs"
+								maxWidth = 85
+								maxHeight = 20
+								format = left
+								truncate = yes
+								fixedsize = yes
+								alwaystransparent = yes
+							}
+
+							instantTextboxType = {
+								name = "deploy_button_cost"
+								position = { x = 226 y = 8 }
+								font = "hoi_16mbs"
+								maxWidth = 60
+								format = right
+								alwaystransparent = yes
+							}
+						}
+
+						expandButton = {
+							name = "expand_button"
+							spriteType = "GFX_hq_template_selector_button"
+							position = { x=-1000 y=-1000 }
+							clicksound = click_default
+						}
+
+						expandedWindow = {
+							name = "expanded_window"
+							position = { x = 96 y = -280 }
+							show_position = { x = 96 y = 20 }
+							show_animation_type = decelerated
+							hide_animation_type = accelerated
+							animation_time = 300
+							size = { width=230 height=250 }
+							verticalScrollbar = "right_vertical_slider"
+							scroll_wheel_factor = 50
+							smooth_scrolling = yes
+							margin = { top = 18 bottom = 2 right = 6 }
+
+							background = {
+								name = "Background"
+								quadTextureSprite ="GFX_tiled_window_1b_thin_border"
+								position = { x = 0 y = 10 }
+							}
+
+							gridBoxType = {
+								name = "templates_grid"
+								position = { x = 8 y = 0 }
+								size = { width = 199 height = 100%% }
+								slotsize = { width = 220 height = 50 }
+								max_slots_horizontal = 1
+								format = "UPPER_LEFT"
+							}
+						}
+					}
+				}
+				
+				buttonType = {
+					name = "undeploy"
+					position = { x=393 y=0 }
+					spriteType = "GFX_NV_btn_delete"
+					clicksound = disband
+					shortcut = "ctrl+g+w"
 				}
 			}
 
@@ -1403,6 +1538,15 @@ guiTypes = {
 			name = "unitinfo_button"
 			spriteType = "GFX_unitlist_unitinfo_button"
 			position = { x=22 y=1 }
+		}
+
+
+		### MFU 1.19: HQ template frame (shown for army HQ units)
+		iconType = {
+			name = "hq_template_frame"
+			spriteType = "GFX_hq_template_selector_button"
+			position = { x=18 y=-3 }
+			alwaystransparent = yes
 		}
 
 		buttonType = {
@@ -2082,6 +2226,122 @@ guiTypes = {
 				slotsize = { width = 82 height = 51 }
 				format = "UPPER_LEFT"
 			}
+
+		### MFU 1.19: HQ template composition view (HQ-gated; coexists with normal composition)
+			iconType = {
+				name = "unit_template_hq_bg"
+				quadTextureSprite = "GFX_unit_stats_template_hq_bg"
+				position = { x = -1 y = 28 }
+				Orientation = "UPPER_LEFT"
+				alwaystransparent = yes
+			}
+
+			containerWindowType = {
+				name = "subunits_hq"
+												
+				instantTextboxType = {
+					name = "division_composition_header"
+					position = { x = 18 y = 3 }
+					font = "hoi_18mbs"
+					text = "DESIGNER_HQ_COMPOSITION"		
+					pdx_tooltip = "DESIGNER_HQ_COMPOSITION_DESC"					
+					maxWidth = 372
+					maxHeight = 20
+					format = left
+				}
+
+				instantTextboxType = {
+					position = { x = 135 y = 84 }
+					name = "combat_width_text"
+					font = "hoi_18mbs"
+					maxWidth = 40
+					format = center
+				}
+
+				instantTextboxType = {
+					name = "hq_battalions_label"
+					position = { x = 100 y = 165 }
+					font = "hoi_16mbs"
+					text = "DESIGNER_HQ_BATTALIONS_HEADER"
+					maxWidth = 110
+					maxHeight = 20
+					format = centre
+				}
+
+				instantTextboxType = {
+					name = "hq_support_header"
+					position = { x = 15 y = 273 }
+					font = "hoi_16mbs"
+					text = "DESIGNER_HQ_SUPPORT_HEADER"
+					maxWidth = 280
+					maxHeight = 20
+					format = centre
+				}
+
+				instantTextboxType = {
+					name = "hq_modifiers_header"
+					position = { x = 328 y = 3 }
+					font = "hoi_18mbs"
+					text = "DESIGNER_HQ_MODIFIERS_HEADER"
+					maxWidth = 180
+					maxHeight = 20
+					pdx_tooltip = "DESIGNER_HQ_MODIFIERS_HEADER_DESC"
+				}
+
+				# Dynamically populated from C++.
+				containerWindowType = {
+					name = "hq_modifiers_list"
+					position = { x = 328 y = 40 }
+					size = { width = 216 height = 352 }
+					verticalScrollbar = "right_vertical_slider"
+
+					# An (invisible) background is required so the list reports its content bounds
+					# and the scrollbar gets a non-zero range.
+					background = {
+						name = "Background"  
+						spriteType = "GFX_tiled_window_transparent"
+					}
+
+					# Inner workspace whose height C++ stretches to total content size so the
+					# scrollbar gets a non-zero range.
+					containerWindowType = {
+						name = "content"
+						position = { x = 0 y = 0 }
+						size = { width = 100%% height = 100%% }
+					}
+				}
+
+				gridboxtype = {
+					name = "regiments_grid_lead"
+					position = { x = 117 y = 107 }
+					size = { width = 85 height = 46 }
+					slotsize = { width = 85 height = 46 }
+					max_slots_horizontal = 1
+					max_slots_vertical = 1
+					format = "UPPER_LEFT"
+				}
+
+				gridboxtype = {
+					name = "regiments_grid"
+					position = { x = 18 y = 202 }
+					size = { width = 255 height = 46 }
+					slotsize = { width = 98 height = 46 }
+					max_slots_horizontal = 3
+					max_slots_vertical = 1
+					format = "UPPER_LEFT"
+				}
+
+				gridboxtype = {
+					name = "support_grid"
+					position = { x = 14 y = 300 }
+					size = { width = 328 height = 34 }
+					slotsize = { width = 72 height = 34 }
+					max_slots_horizontal = 4
+					max_slots_vertical = 1
+					format = "UPPER_LEFT"
+				}
+			}
+
 		}
 
 		containerWindowType = {
@@ -2519,41 +2779,43 @@ guiTypes = {
 		}
 	}
 
+	### MFU 1.19: HQ-deploy list row - rebased to vanilla (Background is now a buttonType the deploy code binds click to; +cp_cost). No custom content here.
 	containerWindowType = {
 		name = "unit_template_entry"
-		size = { width = 188 height = 50 }
+		size = { width = 198 height = 50 }
 		clipping = no
 
-		background = {
+		buttonType = {
 			name = "Background"
 			quadTextureSprite ="GFX_mini_tooltip"
+			size = { x = 198 y = 50 }
 		}
 
 		iconType = {
 			name ="division"
-			spriteType = "GFX_technology_medium"
-			position = { x=-6 y=3 }
+			spriteType = "GFX_technology_medium" # division icon
+			position = { x=-6 y=6 }
 			alwaystransparent = yes
 		}
 
 		iconType = {
 			name = "unitlist_priority_icon"
 			spriteType = "GFX_unitlist_priority_icon_strip"
-			position = { x=50 y=-1 }
+			position = { x=46 y=2 }
 			frame = 1
 			alwaystransparent = yes
 		}
 
 		instantTextboxType = {
 			name = "name"
-			position = { x = 65 y = 5 }
-			textureFile = ""
-			font = "hoi_18mbs"
-			borderSize = {x = 0 y = 0}
-			text = "Maus"
-			maxWidth = 120
-			maxHeight = 15
+			position = { x = 64 y = 10 }
+			font = "hoi_16mbs"
+			maxWidth = 88
+			maxHeight = 40
 			format = left
+			truncate = yes
+			fixedsize = yes
+			alwaystransparent = yes
 		}
 
 		iconType = {
@@ -2573,8 +2835,26 @@ guiTypes = {
 			quadTextureSprite ="GFX_mapicon_unit_flag_stripe_visible"
 			position = { x=25 y=38 }
 		}
+
+		iconType = {
+			name = "cp_cost_icon"
+			spriteType = "GFX_command_power"
+			position = { x=150 y=18 }
+			alwaystransparent = yes
+		}
+
+		instantTextboxType = {
+			name = "cp_cost_text"
+			position = { x=174 y=20 }
+			font = "hoi_16mbs"
+			maxWidth = 28
+			maxHeight = 20
+			format = left
+			alwaystransparent = yes
+		}
 	}
 
+		### MFU 1.19: ship_stats_window rebased to vanilla (Ship Details panel was garbled/overlapping)
 	containerWindowType = {
 		name = "ship_stats_window"
 		moveable = yes
@@ -2630,17 +2910,8 @@ guiTypes = {
 		}
 
 		buttonType = {
-			name = "tab_terrain"
-			position = { x = 230 y = -10 }
-			Orientation = "LOWER_LEFT"
-			quadTextureSprite = "GFX_unit_stats_view_tabs"
-			buttonText = "NAVAL_TERRAIN_LABEL"
-			font = "hoi_18mbs"
-		}
-
-		buttonType = {
 			name = "tab_design"
-			position = { x = 340 y = -10 }
+			position = { x = 227 y = -10 }
 			Orientation = "LOWER_LEFT"
 			quadTextureSprite = "GFX_unit_stats_view_tabs"
 			buttonText = "NAVAL_DESIGN_LABEL"
@@ -2681,11 +2952,13 @@ guiTypes = {
 			spriteType = "GFX_unit_level"
 			position = { x = 496 y = 38 }
 		}
+		
 		iconType = {
 			name = "dominance_icon"
 			position = {x=20 y=330}
 			spriteType = "GFX_naval_dominance_texticon"
 		}
+
 		instantTextboxType = {
 			name = "dominance_value"
 			position = { x = 50 y = 332 }
@@ -2697,6 +2970,7 @@ guiTypes = {
 			maxHeight = 20
 			format = left
 		}
+		
 		iconType = {
 			name = "support_icon"
 			position = {x=20 y=300}
@@ -2719,61 +2993,110 @@ guiTypes = {
 		iconType = {
 			name = "manpower_icon"
 			spriteType = "GFX_manpower_icon"
-			position = { x=20 y=364 }
+			position = { x=600 y=3 }
 		}
 
 		instantTextboxType = {
 			name = "current_manpower"
-			position = { x = 50 y = 369 }
+			position = { x = 643 y = 8 }
 			font = "hoi_18mbs"
 			text = "Stuff"
 			maxWidth = 60
 			maxHeight = 20
 			format = center
 		}
+		
+		iconType = {
+			name = "fuel_icon"
+			spriteType = "GFX_fuel"
+			position = { x = 735 y = 8 }
+		}
 
+		instantTextboxType = {
+			name = "fuel_consumption"
+			position = { x = 768 y = 8 }
+			font = "hoi_18mbs"
+			text = "Stuff"
+			maxWidth = 60
+			maxHeight = 20
+			format = left
+		}
+
+		# captain
 		containerWindowType = {
-			name = "history"
-			position = { x=2 y=70}
-			size = { width=100% height=210}
-			margin = { top = 13 left = 13 bottom = 15 right = 25}
-			verticalScrollbar = "right_vertical_slider"
-			scroll_wheel_factor = 40
-			smooth_scrolling = yes
+			name = "captain_window"
+			containerWindowType = {
+				name = "captain_header_list_entry"
+				position = { x = 562 y = 34 }
+				size = { width = 270 height = 30 }
 
-			background = {
-				name = "Background"
-				quadTextureSprite ="GFX_ship_history_bg"
+				Background = {
+					name = "captain_list_entry_bg"
+					quadTextureSprite = "GFX_unit_stats_list_entry_bg2"
+					alwaystransparent = yes
+				}
 			}
 
-			gridboxtype = {
-				name = "history_grid"
-				position = { x = 0 y = 0 }
-				size = { width = 500 height = 100% }
-				slotsize = { width = 500 height = 29 }
-				max_slots_horizontal = 1
-				format = "UPPER_LEFT"
+			instantTextboxType = {
+				name = "captain_title_text"
+				position = { x = 574 y = 39 }
+				font = "hoi_18mbs"
+				text = "CAPTAIN_TITLE_TEXT"
+				maxWidth = 340
+				maxHeight = 20
+				format = left
+			}
+
+			buttonType = {
+				name = "portraittime"
+				position = { x = 568 y = 60 }
+				quadTextureSprite = "GFX_idea_HOL_wilhelmina"
+				alwaystransparent= yes
+			}
+
+			buttonType = {
+				name = "promote_captain"
+				quadTextureSprite ="GFX_leader_selection_button"
+				position = { x=740 y=34 }
+				buttonText = "PROMOTE"
+				font = "hoi_16mbs"
+				frame = 1
+			}
+
+			iconType = {
+				name = "idea_traits"
+				position = { x = 611 y = 104 }
+				spriteType = "GFX_chevrons"
+				centerposition = yes
+				alwaystransparent = yes
+				frame = 1
+				scale = 0.68
+			}
+
+			instantTextboxType = {
+				name = "captain"
+				position = { x = 632  y = 72 }
+				font = "hoi_18mbs"
+				text = "captain haddock"
+				maxWidth = 190
+				maxHeight = 20
+				format = left
 			}
 		}
 
 		containerWindowType = {
 			name = "terrain"
-			position = { x=2 y=70}
-			size = { width=100% height=210}
+			position = { x=370 y=262}
+			size = { width=200 height=210}
 			margin = { top = 13 left = 13 bottom = 15 right = 25}
 			verticalScrollbar = "right_vertical_slider"
-
-			background = {
-				name = "Background"
-				quadTextureSprite ="GFX_ship_history_bg"
-			}
 
 			gridboxtype = {
 				name = "terrain_grid"
 				position = { x = 0 y = -2 }
 				size = { width = 100%% height = 100%% }
-				slotsize = { width = 110 height = 62 }
-				max_slots_horizontal = 5
+				slotsize = { width = 70 height = 58 }
+				max_slots_horizontal = 2
 				max_slots_vertical = 2
 				format = "UPPER_LEFT"
 			}
@@ -2882,12 +3205,33 @@ guiTypes = {
 			}
 		}
 
+		positionType = {
+			name = "carrier_air_wings_list_position"
+			position = { x=547 y=0 }
+		}
+		positionType = {
+			name = "taog_carrier_air_wings_list_position"
+			position = { x=547 y=90 }
+		}
+
 		containerWindowType = {
 			name = "air_wings"
-			position = { x=547 y=0}
-			size = { width=300 height=100%% }
+			position = { x=547 y=90 }
+			size = { width=300 height=-4 }
 			margin = { bottom = 8 }
 			clipping = no
+
+			containerWindowType = {
+				name = "captain_header_list_entry"
+				position = { x = 15 y = 34 }
+				size = { width = 270 height = 30 }
+
+				Background = {
+					name = "captain_list_entry_bg"
+					quadTextureSprite = "GFX_unit_stats_list_entry_bg2"
+					alwaystransparent = yes
+				}
+			}
 
 			background = {
 				name = "Background"
@@ -2896,7 +3240,7 @@ guiTypes = {
 
 			instantTextboxType = {
 				name = "title"
-				position = { x = 15 y = 7 }
+				position = { x = 27 y = 39 }
 				textureFile = ""
 				font = "hoi_18mbs"
 				borderSize = {x = 0 y = 0}
@@ -2904,12 +3248,11 @@ guiTypes = {
 				maxWidth = 210
 				maxHeight = 20
 				fixedsize = yes
-				format = center
 			}
 
 			containerWindowType = {
 				name = "list_window"
-				position = { x=0 y=40}
+				position = { x=0 y=65}
 				size = { width=310 height=100%% }
 				clipping = yes
 				verticalScrollbar = "right_vertical_slider"
@@ -2926,6 +3269,84 @@ guiTypes = {
 					slotsize = { width = 280 height = 46 }
 					max_slots_horizontal = 1
 					format = "UPPER_LEFT"
+				}
+			}
+		}
+
+		containerWindowType = {
+			name = "history"
+			position = { x=2 y=70}
+			size = { width=100% height=210}
+
+			containerWindowType = {
+				name = "medal_instance_container"
+				position = { x = 4 y = 0 }
+				size = { width = 100% height = 30 }
+
+				background = {
+					name = "Background"
+					quadTextureSprite ="GFX_deployment_binding"
+					alwaysTransparent = yes
+				}
+
+				instantTextboxType = {
+					name = "base_medals_label"
+					position = { x = 19 y = 5 }
+					font = "hoi_18mbs"
+					text = "INSTANCED_MEDALS"
+					maxWidth = 100
+					maxHeight = 20
+					format = left
+				}
+
+				gridboxtype = {
+					name = "medals_grid"
+					position = { x = 105 y = -6 }
+					size = { width = 155 height = 80 }
+					slotsize = { width = 40 height = 60 }
+					max_slots_horizontal = 9
+					format = "UPPER_LEFT"
+				}
+				
+				instantTextboxType = {
+					name = "captain_experience"
+					position = { x = 230 y = 5 }
+					font = "hoi_18mbs"
+					text = "Experience Count"
+					maxWidth = 250
+					maxHeight = 20
+					format = right
+				}
+
+			}
+
+			containerWindowType = {
+				name = "history_grid_container"
+				position = { x=-2 y=28}
+				size = { width=100% height=310 }
+				margin = { top = 13 left = 13 bottom = 0 }
+
+				background = {
+					name = "Background"
+					quadTextureSprite ="GFX_tiled_paper_w_frame_one_border_2"
+					alwaysTransparent = yes
+				}
+
+				# history_grid needs to be a listbox because army history is one too and the entries are shared
+				# listboxes don't accept extended scrollbars such as right_vertical_slider, so code handles the scrollbar background manually to behave as expected
+				buttonType = {
+					name = "scrollbar_background"
+					quadTextureSprite = "GFX_scrollbar_vertical_bg"
+					position = { x = 521 y = 0 }
+					size = { x=18 y=288 }
+					alwaystransparent = yes
+				}
+
+				listboxType = {
+					name = "history_grid"
+					position = { x = 0 y = 2 }
+					size = { x = 522 y = 283 }
+					scrollbartype = "standardlistbox_slider"
 				}
 			}
 		}
@@ -3175,5 +3596,28 @@ guiTypes = {
 		}
 
 	}
+
+	### MFU 1.19: HQ modifier list entry widget (spawned in HQ template/modifier display)
+	containerWindowType = {
+		name = "unit_hq_modifier_entry"
+		size = { width = 188 height = 20 }
+		clipping = no
+
+		# y is the vertical gap between consecutive rows; negative values tighten the spacing.
+		positionType = {
+			name = "row_padding"
+			position = { x = 0 y = 6 }
+		}
+
+		instantTextboxType = {
+			name = "text"
+			font = "hoi_16mbs"
+			maxWidth = 188
+			maxHeight = 60
+			format = left
+			multiline = yes
+		}
+	}
+
 
 }
