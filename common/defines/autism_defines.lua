@@ -67,17 +67,17 @@ NDefines.NMilitary.AI_BATTALION_BUILD_ORDER = { 	1,  6,  11, 16, 21,
 												3,  8,  13, 18, 23,
 												4,  9,  14, 19, 24,
 												5,  10, 15, 20, 25 }
-NDefines.NMilitary.REGIMENTAL_SUPPORT_SLOT_COST_MULTIPLIER = 0.5 -- production/equipment cost multiplier applied to units in regimental-support slots
+NDefines.NMilitary.REGIMENTAL_SUPPORT_SLOT_COST_MULTIPLIER = 1 -- production/equipment cost multiplier applied to units in regimental-support slots
 NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_ON_DEPLOY = 3 -- days an Army HQ's leader modifiers are on cooldown after first deploying
-NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_ON_DEPLOY_MIN = 1 -- minimum deploy cooldown in days regardless of manpower scaling
+NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_ON_DEPLOY_MIN = 7 -- minimum deploy cooldown in days regardless of manpower scaling
 NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_ON_REDEPLOY = 15 -- cooldown in days when an already-deployed HQ is moved/redeployed
 NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_ON_WITHDRAW = 14 -- cooldown in days applied when an HQ is withdrawn
-NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_ON_WITHDRAW_MIN = 7 -- minimum withdraw cooldown in days
+NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_ON_WITHDRAW_MIN = 14 -- minimum withdraw cooldown in days
 NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_REFERENCE_MANPOWER = 9600 -- reference HQ manpower used to scale the cooldown durations above
 NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_MANPOWER_EXPONENT = 1.5 -- exponent scaling cooldown length by HQ manpower relative to the reference
 NDefines.NMilitary.FIGHTING_STRENGTH_DEATH_THRESHOLD = 0.001 -- fighting-strength fraction below which an HQ/unit is treated as destroyed
 NDefines.NMilitary.FIGHTING_STRENGTH_HQ_ALERT_THRESHOLD = 0.2 -- HQ fighting-strength fraction below which the UI shows a low-strength alert
-NDefines.NMilitary.COMMANDER_ABILITY_BASE_RANGE = 20 -- base range (provinces) of a commander/HQ ability's area of effect
+NDefines.NMilitary.COMMANDER_ABILITY_BASE_RANGE = 1 -- base range (provinces) of a commander/HQ ability's area of effect
 NDefines.NMilitary.COMMS_MAX_DISTANCE = 4 -- max communication distance (hops from the Army HQ) before units count as out of comms
 NDefines.NMilitary.PLANNING_CAP_COMMS_SCALING = { 1.3, 1, 0.6, 0.3, 0} -- max-planning multiplier indexed by comms distance (0..4 hops from HQ)
 NDefines.NMilitary.PLANNING_CAP_NO_HQ_SCALING = 0 -- max-planning multiplier for units that have no Army HQ
@@ -91,8 +91,8 @@ NDefines.NMilitary.GENERAL_PROXIMITY_CLOSE = 1 -- proximity tier value: general/
 NDefines.NMilitary.GENERAL_PROXIMITY_MEDIUM = 2 -- proximity tier value: medium distance
 NDefines.NMilitary.GENERAL_PROXIMITY_FAR = 3 -- proximity tier value: far
 NDefines.NMilitary.GENERAL_PROXIMITY_DEFAULT = 1 -- default proximity tier used when none is computed
-NDefines.NMilitary.GENERAL_RANK_TO_ARMY_HQ_EXP_LEVEL_FACTOR = 0.5 -- converts a general's rank into the deployed Army HQ's starting experience level
-NDefines.NMilitary.ARMY_HQ_REQUISITION_MINIMUM_REMAINING_PERCENTAGE = 10 -- min % of equipment kept in the stockpile when an HQ requisitions equipment
+NDefines.NMilitary.GENERAL_RANK_TO_ARMY_HQ_EXP_LEVEL_FACTOR = 1.5 -- converts a general's rank into the deployed Army HQ's starting experience level
+NDefines.NMilitary.ARMY_HQ_REQUISITION_MINIMUM_REMAINING_PERCENTAGE = 1 -- min % of equipment kept in the stockpile when an HQ requisitions equipment
 NDefines.NMilitary.PREFERRED_PRISON_VP = 5 -- victory-point weight used when choosing which state to hold captured generals in
 
 --- NAI
