@@ -50,6 +50,17 @@ sub_units = {
 			motorized_equipment = 10
 		}
 
+		battalion_mult = {
+			category = category_front_line
+			soft_attack = 0.1
+			hard_attack =  0.1
+			breakthrough =  0.1
+			defence =  0.1
+			max_organisation=  0.1 
+			max_strength=  0.1
+			add = no
+		}
+
 		division_3d_model_priority = 99999
 	}
 
@@ -601,420 +612,765 @@ sub_units = {
 		}
 
 	}
-
-
-	# MFU: HQ copies of line battalions (exact copies, allow_in_army_hq kept; icons GFX_unit_hq_<base>_* already present)
-	hq_infantry = {
-		sprite = infantry
+	hq_artillery = {
+		abbreviation = "ART"
+		sprite = artillery
 		map_icon_category = infantry
-		priority = 600
+		priority = 0
+		ai_priority = 0
 		active = yes
+		affects_speed = no
 
 		type = {
-			infantry
+			artillery
+			support
 		}
 		
-		group = infantry
+		group = support
+		regimental = no
+		allow_in_army_hq = yes
+		allow_in_non_army_hq = no
+		required_dlc = { "Thunder at Our Gates" }
 		
 		categories = {
-			category_front_line
-			category_all_infantry
+			category_support_battalions
 			category_army
-			category_leg_infantry
-			category_heavy_infantry
+			category_light_artillery
 		}
+
+		combat_width = 0
+		essential = {
+			artillery_equipment
 		
-		combat_width = 2
+		}
 
 		need = {
-			infantry_equipment = 150
+			artillery_equipment = 10
 			horse_equipment = 20
-			motorized_equipment = 9
-			radio_equipment = 2
 		}
 
-		essential = {
-			infantry_equipment
-			horse_equipment
-			motorized_equipment
-		}
-
-		allow_in_army_hq = yes
-		hardness = -0.2
-		#Size Definitions
-		max_strength = 17
-		max_organisation = 53
-		default_morale = 0.25
-		manpower = 1200
-		maximum_speed = -0.58
-		initiative = 0.005
-		own_equipment_fuel_consumption_mult = 0.3
-		breakthrough = 0.2
-		defense = 0.2
-		soft_attack = 0.2
-		hard_attack = 0.2
-		
-		#Misc Abilities
+		manpower = 300
 		training_time = 80
-		suppression = 1.5
-		weight = 0.4
-		supply_consumption = 0.03
-	
-		urban = {
+		max_organisation = -10
+		default_morale = 0.2
+		max_strength = 2
+		weight = 0.08
+		
+		supply_consumption = 0.06
+		supply_consumption_factor = 0.04
+
+		# Support nerfs to combat abilities
+		defense = -0.6
+		breakthrough = -0.6
+		soft_attack = 0.05
+		hard_attack = -0.6
+
+		plains = {
 			attack = 0.05
 		}
-		marsh = {
+
+
+		can_be_parachuted = no
+	}
+
+	hq_field_gun_support = {
+		abbreviation = "FGS"
+		sprite = artillery
+		map_icon_category = infantry
+		priority = 0
+		ai_priority = 0
+		active = yes
+		affects_speed = no
+
+		type = {
+			artillery
+			support
+		}
+		
+		group = support
+		regimental = no
+		allow_in_army_hq = yes
+		allow_in_non_army_hq = no
+		required_dlc = { "Thunder at Our Gates" }
+		
+		categories = {
+			category_support_battalions
+			category_army
+			category_field_gun
+		}
+
+		combat_width = 0
+		essential = {
+			field_gun_equipment
+		
+		}
+		need = {
+			field_gun_equipment = 10
+			horse_equipment = 20
+		}
+
+		manpower = 300
+		training_time = 80
+		max_organisation = -10
+		default_morale = 0.2
+		max_strength = 2
+		weight = 0.08
+		
+		supply_consumption = 0.06
+		supply_consumption_factor = 0.04
+
+		# Support nerfs to combat abilities
+		defense = -0.6
+		breakthrough = -0.6
+		soft_attack = 0.05
+		ap_attack = -0.6
+		hard_attack = 0.05
+
+		hills = {
 			attack = 0.05
 		}
+
+
+		can_be_parachuted = no
+	}
+
+	hq_rocket_artillery = {
+		abbreviation = "ROC"
+		sprite = artillery
+		map_icon_category = infantry
+		priority = 0
+		ai_priority = 0
+		active = yes
+		affects_speed = no
+		type = {
+			artillery
+			support
+		}
+		
+		group = support
+		regimental = no
+		allow_in_army_hq = yes
+		allow_in_non_army_hq = no
+		required_dlc = { "Thunder at Our Gates" }
+
+		categories = {
+			category_support_battalions
+			category_army
+			category_rocket_artillery
+		}		
+
+		combat_width = 0
+		essential = {
+			rocket_artillery_equipment
+		
+		}
+
+		need = {
+			rocket_artillery_equipment = 10
+			horse_equipment = 20
+		}
+
+		manpower = 300
+		training_time = 80
+		max_organisation = -10
+		default_morale = 0.2
+		max_strength = 2
+		weight = 0.08
+		supply_consumption = 0.06
+		supply_consumption_factor = 0.04
+
+		# Support nerfs to combat abilities
+		defense = -0.6
+		breakthrough = 0.25
+		soft_attack = -0.6
+		hard_attack = -0.6
+
 		amphibious = {
-			attack = 0.25
+			attack = 0.05
+		}		
+
+		can_be_parachuted = no
+	}
+
+	hq_artillery_heavy_support = {
+		abbreviation = "HEV"
+		sprite = artillery
+		map_icon_category = infantry
+		priority = 0
+		ai_priority = 0
+		active = yes
+		affects_speed = no
+		type = {
+			artillery
+			support
 		}
-		river = {
-			attack = 0.1
+		
+		group = support
+		regimental = no
+		allow_in_army_hq = yes
+		allow_in_non_army_hq = no
+		required_dlc = { "Thunder at Our Gates" }
+
+		categories = {
+			category_support_battalions
+			category_army
+			category_heavy_artillery
+		}		
+
+		combat_width = 0
+		essential = {
+			heavy_artillery_equipment
+		
+		}
+
+		need = {
+			heavy_artillery_equipment = 10
+			horse_equipment = 32
+		}
+
+		manpower = 350
+		training_time = 90
+		max_organisation = -10
+		default_morale = 0.2
+		max_strength = 2
+		weight = 0.08
+		
+		supply_consumption = 0.06
+		supply_consumption_factor = 0.04
+
+		# Support nerfs to combat abilities
+		defense = -0.05
+		breakthrough = -0.05
+		soft_attack = -0.05	
+		hard_attack = -0.05
+		fort = {
+			attack = 0.05
+		}
+				
+		same_support_type = category_assault_gun_company
+
+		can_be_parachuted = no
+	}
+
+	hq_artillery_siege_support = {
+		sprite = artillery
+		map_icon_category = infantry
+		priority = 0
+		ai_priority = 0
+		active = yes
+		affects_speed = yes
+		type = {
+			artillery
+			support
+		}
+		
+		group = support
+		regimental = no
+		allow_in_army_hq = yes
+		allow_in_non_army_hq = no
+		required_dlc = { "Thunder at Our Gates" }
+		
+		categories = {
+			category_support_battalions
+			category_army
+			category_siege_artillery
+		}
+
+		combat_width = 0
+		essential = {
+			siege_artillery_equipment
+		
+		}
+
+		need = {
+			siege_artillery_equipment = 25
+			motorized_equipment = 50
+		}
+		
+		manpower = 1000
+		training_time = 120
+		max_organisation = -10
+		default_morale = 0.2
+		max_strength = 2
+		weight = 0.08
+		
+		supply_consumption = 0.18
+		supply_consumption_factor = 0.1
+		
+		maximum_speed = -0.62
+
+		# Support nerfs to combat abilities
+		defense = -0.19
+		breakthrough = -0.19
+		soft_attack = -0.25
+		hard_attack = -0.25
+
+		battalion_mult = {
+			category = category_line_artillery
+			soft_attack = 0.05
+			hard_attack = 0.05
+		}
+	
+
+		fort = {
+			attack = 0.4
+		}
+		urban = {
+			attack = 0.025
+		}
+		plains = {
+			defence = -0.1
+		}
+		desert = {
+			defence = -0.1
+		}
+		forest = {
+			movement = -0.15
+			defence = -0.1
 		}
 		hills = {
-			attack = 0.15
+			movement = -0.15
+			defence = -0.1
+		}
+		jungle = {
+			attack = -0.05
+			movement = -0.25
+			defence = -0.15
+		}
+		marsh = {
+			attack = -0.05
+			movement = -0.25
+			defence = -0.15
 		}
 		mountain = {
-			attack = 0.2
+			attack = -0.1
+			movement = -0.25
+			defence = -0.15
 		}
-		forest = {
-			attack = 0.05
+		amphibious = {
+			attack = -0.1
 		}
-		jungle = {
-			attack = 0.05
+		river = {
+			movement = -0.1
 		}
-		
+		can_be_parachuted = no
 	}
 
-	hq_motorized = {
-		sprite = motorized
+	hq_anti_air_heavy_support = {
+		sprite = infantry
 		map_icon_category = infantry
-
-		priority = 609
+		priority = 0
+		ai_priority = 0
 		active = yes
-
+		affects_speed = no
 		type = {
-			motorized
+			infantry
+			support
+		}
+
+		group = support
+		regimental = no
+		allow_in_army_hq = yes
+		allow_in_non_army_hq = no
+		required_dlc = { "Thunder at Our Gates" }
+
+		categories = {
+			category_support_battalions
+			category_army
+			category_heavy_anti_air
+		}
+
+		
+		combat_width = 0
+		training_time = 80
+		essential = {
+			heavy_anti_air_equipment
+		}
+		need = {
+			heavy_anti_air_equipment = 10
+			motorized_equipment = 20
 		}
 		
-		group = mobile
+
+		can_be_parachuted = no
+		
+		#Size Definitions
+		max_organisation = -10
+		default_morale = 0.2
+		max_strength = 2
+		training_time = 80
+		manpower = 300
+		weight = 0.08
+		fuel_capacity = 50
+		
+		supply_consumption = 0.04
+		supply_consumption_factor = 0.04
+
+		# Support nerfs to combat abilities
+		defense = -0.2
+		breakthrough = -0.2
+		soft_attack = -0.2
+		hard_attack = 0.05
+		air_attack = -0.05
+		ap_attack = -0.6
+
+		desert = {
+			attack = 0.05
+		}
+		plains = {
+			attack = 0.05
+		}
+	}
+
+	hq_anti_tank_brigade = {
+		sprite = anti_tank
+		map_icon_category = infantry
+		priority = 0
+		ai_priority = 0
+		active = yes
+		affects_speed = no
+		group = support
+		regimental = no
+		allow_in_army_hq = yes
+		allow_in_non_army_hq = no
+		required_dlc = { "Thunder at Our Gates" }
+		divisional = no
+		
+		type = {
+			infantry
+			support
+		}
 		
 		categories = {
+			category_regimental_support_battalions
 			category_front_line
-			category_all_infantry
 			category_army
-			category_motorised
+			category_line_artillery
+			category_anti_tank
 		}
-		
-		combat_width = 2
-		allow_in_army_hq = yes
-		#Size Definitions
-		max_strength = 19.5
-		max_organisation = 57
-		default_morale = 0.25
-		manpower = 1300
 
-		#Misc Abilities
-		training_time = 80
-		suppression = 2.2
-		initiative = 0.01
-		weight = 0.6
-		supply_consumption = 0.05
-		experience_loss_factor = 0.01
-		defense = 0.4
-		breakthrough = 0.6
+
+		combat_width = 0
+
 		need = {
-			infantry_equipment = 100
-			motorized_equipment = 37
-			radio_equipment = 2
+			anti_tank_equipment = 12
+			horse_equipment = 24
 		}
+		manpower = 300
+		max_organisation = -10
+		is_artillery_brigade = no
+		default_morale = 0.2
+		max_strength = 2
+		training_time = 80
+		weight = 0.08
 
-	
-		desert = {
-			attack = 0.1
-			defence = 0.1
-		}	
-		plains = {
-			attack = 0.1
-			defence = 0.1
-		}
-		forest = {
-			attack = -0.1
-			defence = -0.2
-			movement = -0.1
-		}
-		hills = {
-			attack = -0.1
-			defence = -0.2
-			movement = -0.1
-		}
-		mountain = 	{
-			attack = -0.25
-			defence = -0.55
-			movement = -0.25
-		}
-		jungle = {
-			attack = -0.15
-			defence = -0.2
-			movement = -0.15
-		}
-		marsh = {
-			attack = -0.15
-			defence = -0.2
-			movement = -0.25
-		}
-		urban = {
-			attack = -0.1
-			defence = -0.25
-		}
-		river = { 
-			movement = -0.15
-		}
-		amphibious = { 
-			attack = -0.35
-		}
+		can_be_parachuted = no
+		
+		supply_consumption = 0.03
+
+		
 	}
 
-	hq_light_armor = {
+	hq_anti_air = {
+		sprite = infantry
+		map_icon_category = infantry
+		priority = 0
+		ai_priority = 0
+		active = yes
+		affects_speed = no
+		group = support
+		regimental = no
+		allow_in_army_hq = yes
+		allow_in_non_army_hq = no
+		required_dlc = { "Thunder at Our Gates" }
+		divisional = no
+		type = {
+			infantry
+			support
+		}
+
+		categories = {
+			category_regimental_support_battalions
+			category_front_line
+			category_army
+			category_line_artillery
+			category_anti_air
+		}
+
+		
+		combat_width = 0
+		training_time = 80
+
+		need = {
+			anti_air_equipment = 10
+			horse_equipment = 20
+		}
+
+		can_be_parachuted = no
+		is_artillery_brigade = no
+		#Size Definitions
+		max_strength = 10
+		max_organisation = 3
+		default_morale = 0.05
+		manpower = 300
+		initiative = 0.01
+		weight = 0.4
+
+		supply_consumption = 0.02
+
+	}
+
+	hq_light_sp_anti_air_company = {
 		sprite = light_armor
 		map_icon_category = armored
-		priority = 2501
+		priority = 301
 		active = yes
-		is_artillery_brigade = yes
-
+		
 		type = {
 			armor
+			support
 		}
 		
-		group = armor
+		group = support
+		regimental = no
+		allow_in_army_hq = yes
+		allow_in_non_army_hq = no
+		required_dlc = { "Thunder at Our Gates" }
+		divisional = no
 		
 		categories = {
-			category_tanks
-			category_front_line
 			category_all_armor
 			category_army
+			category_anti_air
+			category_support_battalions
+			category_support_spaa
 		}
-		allow_in_army_hq = yes
 
-		combat_width = 2
+		combat_width = 0
 
 		need = {
-			light_tank_chassis = 30
+			light_tank_aa_chassis = 25
 		}
 		manpower = 500
-		max_organisation = 3
-		default_morale = 0.12
+		max_organisation = -10
+		default_morale = 0.2
+		max_strength = 0.2
 		training_time = 80
-		max_strength = 3
-		weight = 0.8
-		initiative = 0.007
+		weight = 0.6
 
-		#Tanks are awesome
-		suppression = 1.5
-		
-		forest = {
-			attack = -0.05
-			defence = -0.15
-			movement = -0.1
-		}
-		hills = {
-			attack = -0.05
-			defence = -0.25
-			movement = -0.1
-		}
-		mountain = 	{
-			attack = -0.3
-			defence = -0.4
-			movement = -0.2
-		}
-		jungle = {
-			attack = -0.15
-			defence = -0.15
-			movement = -0.1
-		}
-		marsh = {
-			attack = -0.2
-			defence = -0.2
-			movement = -0.2
-		}
-		urban = {
-			attack = -0.1
-			defence = -0.25
-		}
-		river = { 
-			attack = -0.1
-			movement = -0.1
-		}
-		amphibious = { 
-			attack = -4.0
-		}
-		
-				
+		supply_consumption_factor = 0.04
+
+
+		soft_attack = -0.35
+		hard_attack = -0.35
+		defense = -0.35
+		#air_attack = -0.35
+		breakthrough = -0.35
+		armor_value = -0.25
+		#fuel_capacity = 50
+		affects_speed = no
 	}
 
-	hq_medium_armor = {
-		sprite = "medium_armor"
+	hq_medium_sp_anti_air_company = {
+		sprite = medium_armor
 		map_icon_category = armored
-		priority = 2502
+		priority = 301
 		active = yes
-		is_artillery_brigade = yes
 		
 		type = {
 			armor
+			support
 		}
 		
-		group = armor
+		group = support
+		regimental = no
+		allow_in_army_hq = yes
+		allow_in_non_army_hq = no
+		required_dlc = { "Thunder at Our Gates" }
+		divisional = no
 		
 		categories = {
-			category_tanks
-			category_front_line
 			category_all_armor
 			category_army
+			category_anti_air
+			category_support_battalions
+			category_support_spaa
 		}
 
-		combat_width = 2
+		combat_width = 0
 
 		need = {
-			medium_tank_chassis = 30
+			medium_tank_aa_chassis = 25
 		}
-		
-		manpower = 600
-		max_organisation = 3
-		max_strength = 3
-		default_morale = 0.08
+		manpower = 500
+		max_organisation = -10
+		default_morale = 0.2
+		max_strength = 0.2
 		training_time = 80
-		weight = 1.2
-		initiative = 0.007
-		allow_in_army_hq = yes
-		suppression = 1.5
+		weight = 0.6
 
-		#Tanks are awesome
-		#soft_attack = 0.5
-		
-		forest = {
-			attack = -0.15
-			defence = -0.25
-			movement = -0.3
-		}
-		hills = {
-			attack = -0.15
-			defence = -0.35
-			movement = -0.15
-		}
-		mountain = 	{
-			attack = -0.45
-			defence = -0.8
-			movement = -0.4
-		}
-		jungle = {
-			attack = -0.2
-			defence = -0.3
-			movement = -0.3
-		}
-		marsh = {
-			attack = -0.4 
-			defence = -0.4
-			movement = -0.4
-		}
-		urban = {
-			attack = -0.25
-			defence = -0.4
-		}
-		river = { 
-			attack = -0.2 
-			movement = -0.2
-		}
-		amphibious = { 
-			attack = -5.0
-		}
+		supply_consumption_factor = 0.04
 
+
+		soft_attack = -0.35
+		hard_attack = -0.35
+		defense = -0.35
+		#air_attack = -0.35
+		breakthrough = -0.35
+		armor_value = -0.25
+		affects_speed = no
+		#fuel_capacity = 50
 	}
 
-	hq_heavy_armor = {
+	hq_heavy_sp_anti_air_company = {
 		sprite = heavy_armor
 		map_icon_category = armored
-		priority = 2505
+		priority = 301
 		active = yes
-		is_artillery_brigade = yes
 		
 		type = {
 			armor
+			support
 		}
 		
-		group = armor
+		group = support
+		regimental = no
+		allow_in_army_hq = yes
+		allow_in_non_army_hq = no
+		required_dlc = { "Thunder at Our Gates" }
+		divisional = no
 		
 		categories = {
-			category_tanks
-			category_front_line
 			category_all_armor
 			category_army
-			category_heavy_and_super_heavy_tanks
+			category_anti_air
+			category_support_battalions
+			
+			category_support_spaa
 		}
 
-		combat_width = 2
+		combat_width = 0
 
 		need = {
-			heavy_tank_chassis = 30
+			heavy_tank_aa_chassis = 25
 		}
-		allow_in_army_hq = yes
-		manpower = 550
-		max_organisation = 3
-		default_morale = 0.08
+		manpower = 500
+		max_organisation = -10
+		default_morale = 0.2
+		max_strength = 0.2
 		training_time = 80
-		initiative = 0.007
-		max_strength = 3
-		weight = 1.6
-		suppression = 1.5
+		weight = 0.6
 
-		desert = {
-			attack = 0.15
-			defence = 0.15
-		}	
-		plains = {
-			attack = 0.15
-			defence = 0.15
-		}		
-		forest = {
-			attack = -0.40
-			defence = -0.5
-			movement = -0.4
-		}
-		hills = {
-			attack = -0.25
-			defence = -0.5
-			movement = -0.2
-		}
-		mountain = 	{
-			attack = -0.5
-			defence = -0.9
-			movement = -0.4
-		}
-		jungle = {
-			attack = -0.3
-			defence = -0.45
-			movement = -0.3
-		}
-		marsh = {
-			attack = -0.45
-			defence = -0.5
-			movement = -0.4
-		}
-		urban = {
-			attack = -0.35
-			defence = -0.5
-		}
-		river = { 
-			attack = -0.25
-			movement = -0.2
-		}
-		amphibious = { 
-			attack = -10.0
+		supply_consumption_factor = 0.04
+
+
+		soft_attack = -0.35
+		hard_attack = -0.35
+		defense = -0.35
+		#air_attack = -0.35
+		breakthrough = -0.35
+		armor_value = -0.25
+		affects_speed = no
+		#fuel_capacity = 50
+	}
+
+	hq_super_heavy_sp_anti_air_company = {
+		sprite = heavy_armor
+		map_icon_category = armored
+		priority = 301
+		active = yes
+		
+		type = {
+			armor
+			support
 		}
 		
+		group = support
+		regimental = no
+		allow_in_army_hq = yes
+		allow_in_non_army_hq = no
+		required_dlc = { "Thunder at Our Gates" }
+		divisional = no
 		
-		fort = {
-			attack = 0.1
+		categories = {
+			category_all_armor
+			category_army
+			category_anti_air
+			category_support_battalions
+			
+			category_support_spaa
 		}
+
+		combat_width = 0
+
+		need = {
+			super_heavy_tank_aa_chassis = 25
+		}
+		manpower = 500
+		max_organisation = -10
+		default_morale = 0.2
+		max_strength = 0.2
+		training_time = 80
+		weight = 0.6
+
+		supply_consumption_factor = 0.04
+
+
+		soft_attack = -0.35
+		hard_attack = -0.35
+		defense = -0.35
+		#air_attack = -0.35
+		breakthrough = -0.35
+		armor_value = -0.25
+		affects_speed = no
+		#fuel_capacity = 50
+	}
+
+
+	hq_pack_artillery_brigade = {
+		abbreviation = "PAC"
+		sprite = artillery
+		map_icon_category = infantry
+		priority = 0
+		ai_priority = 0
+		active = yes
+		affects_speed = no
+		type = {
+			artillery
+			support
+		}
+		
+		group = support
+		regimental = no
+		allow_in_army_hq = yes
+		allow_in_non_army_hq = no
+		required_dlc = { "Thunder at Our Gates" }
+		divisional = no
+		
+		categories = {
+			category_regimental_support_battalions
+			category_front_line
+			category_army
+			category_line_artillery
+			category_pack_artillery		
+		}
+
+
+		combat_width = 0
+
+		need = {
+			pack_artillery_equipment = 10
+			horse_equipment = 20
+		}
+		manpower = 250
+		training_time = 70
+		max_organisation = -10
+		default_morale = 0.2
+		max_strength = 2
+		weight = 0.08
+	
+		supply_consumption = 0.05
+
+		can_be_parachuted = yes
 	}
 }
