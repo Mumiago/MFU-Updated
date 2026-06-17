@@ -203,6 +203,7 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		completion_reward = {
+			custom_effect_tooltip = HOL_form_a_new_cabinet_tt
 		}
 	}
 
@@ -621,6 +622,23 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_WAR_SUPPORT }
 
 		completion_reward = {
+			custom_effect_tooltip = HOL_purchase_arms_from_allies_tt
+			if = {
+				limit = {
+					country_exists = FRA
+				}
+				FRA = {
+					country_event = { id = mtg_netherlands.87 hours = 6 }
+				}
+			}
+			if = {
+				limit = {
+					country_exists = ENG
+				}
+				ENG = {
+					country_event = { id = mtg_netherlands.88 hours = 6 }
+				}
+			}
 		}
 	}
 
@@ -1475,7 +1493,6 @@ focus_tree = {
 				target = INS
 				transfer_troops = yes
 			}
-			hol_spawn_colonial_garrisons = yes
 			every_state = {
 				limit = {
 					is_core_of = INS
@@ -1491,6 +1508,7 @@ focus_tree = {
 				country_event = { id = mtg_netherlands.84 hours = 6 }
 			}
 			hidden_effect = {
+				hol_spawn_colonial_garrisons = yes
 				news_event = { id = mtg_news.46 days = 1 }
 			}
 		}
@@ -2594,11 +2612,34 @@ focus_tree = {
 	}
 
 	focus = {
+		id = HOL_abda_command
+		icon = GFX_goal_generic_allies_build_infantry
+		prerequisite = { focus = HOL_mobilize_for_war_with_japan }
+		relative_position_id = HOL_mobilize_for_war_with_japan
+		x = 0
+		y = 1
+		cost = 5
+
+		available = {
+			has_war_with = JAP
+		}
+
+		available_if_capitulated = yes
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		completion_reward = {
+			custom_effect_tooltip = HOL_abda_command_tt
+			hol_apply_abda_coastal_defense = yes
+		}
+	}
+
+	focus = {
 		id = HOL_deny_japanese_resources
 		icon = GFX_GER_implement_scorched_earth_tactics
 		prerequisite = { focus = HOL_mobilize_for_war_with_japan }
 		relative_position_id = HOL_mobilize_for_war_with_japan
-		x = 0
+		x = -2
 		y = 1
 		cost = 5
 
@@ -2615,9 +2656,9 @@ focus_tree = {
 		id = HOL_move_industry_west
 		icon = GFX_goal_generic_industry_evacuations
 		prerequisite = { focus = HOL_mobilize_for_war_with_japan }
-		relative_position_id = HOL_deny_japanese_resources
+		relative_position_id = HOL_mobilize_for_war_with_japan
 		x = 2
-		y = 0
+		y = 1
 		cost = 5
 
 		available_if_capitulated = yes
@@ -2627,6 +2668,61 @@ focus_tree = {
 		completion_reward = {
 			activate_mission = HOL_move_industry_west_mission
 			custom_effect_tooltip = HOL_move_industry_west_tt
+		}
+	}
+
+	focus = {
+		id = HOL_reform_colonial_doctrines
+		icon = GFX_goal_generic_army_doctrines
+		prerequisite = { focus = HOL_abda_command }
+		relative_position_id = HOL_abda_command
+		x = 0
+		y = 1
+		cost = 5
+
+		available_if_capitulated = yes
+
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = HOL_reform_colonial_doctrines
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine
+			}
+			add_doctrine_cost_reduction = {
+				name = HOL_reform_colonial_doctrines
+				cost_reduction = 0.5
+				uses = 1
+				category = naval_doctrine
+			}
+			add_doctrine_cost_reduction = {
+				name = HOL_reform_colonial_doctrines
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}
+		}
+	}
+
+	focus = {
+		id = HOL_integrated_doctrine_mastery
+		icon = GFX_goal_generic_navy_doctrines_tactics
+		prerequisite = { focus = HOL_abda_command }
+		relative_position_id = HOL_reform_colonial_doctrines
+		x = 0
+		y = 1
+		cost = 5
+
+		available_if_capitulated = yes
+
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_mastery = {
+				amount = 25
+			}
 		}
 	}
 
