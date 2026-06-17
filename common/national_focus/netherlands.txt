@@ -13,7 +13,7 @@ focus_tree = {
 	
 	default = no
 
-	continuous_focus_position = { x = 60 y = 1500 }
+	continuous_focus_position = { x = 2000 y = 1320 }
 
 	focus = {
 		id = HOL_increase_colonial_investments
@@ -1311,7 +1311,6 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_INDUSTRY }
 
 		completion_reward = {
-			unlock_decision_category_tooltip = HOL_colonial_resource_prospecting
 			custom_effect_tooltip = HOL_increase_colonial_resource_extraction_tt
 		}
 	}
@@ -1501,8 +1500,10 @@ focus_tree = {
 				}
 				custom_effect_tooltip = HOL_move_government_to_batavia_modernize_tt
 			}
-			remove_dynamic_modifier = { modifier = HOL_dutch_army_dynamic_modifier }
 			remove_dynamic_modifier = { modifier = HOL_dutch_economy_dynamic_modifier }
+			set_variable = { HOL_army_max_dig_in_var = 0 }
+			set_variable = { HOL_army_core_attack_factor_var = 0 }
+			set_variable = { HOL_army_core_defence_factor_var = 0 }
 			set_cosmetic_tag = HOL_FREE
 			hol_prepare_ins_annexation_for_batavia = yes
 			INS = {
@@ -1630,7 +1631,6 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_MANPOWER }
 
 		completion_reward = {
-			custom_effect_tooltip = HOL_integrate_colonial_high_command_tt
 			recruit_character = HOL_gerardus_berenschot
 			recruit_character = HOL_pieter_scholten
 		}
@@ -2068,7 +2068,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = HOL_fortify_curacao
+		id = HOL_fortify_caribbean
 		icon = GFX_goal_generic_fortify_city
 		prerequisite = { focus = HOL_move_government_to_batavia }
 		relative_position_id = HOL_move_government_to_batavia
@@ -2103,15 +2103,37 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
+			309 = {
+				add_building_construction = {
+					type = coastal_bunker
+					province = {
+						all_provinces = yes
+						limit_to_coastal = yes
+					}
+					level = 3
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = bunker
+					province = 10906
+					level = 2
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = anti_air_building
+					level = 2
+					instant_build = yes
+				}
+			}
 		}
 	}
 
 	focus = {
 		id = HOL_build_up_curacao
 		icon = GFX_goal_generic_construct_infrastructure
-		prerequisite = { focus = HOL_fortify_curacao }
-		relative_position_id = HOL_fortify_curacao
-		x = 0
+		prerequisite = { focus = HOL_fortify_caribbean }
+		relative_position_id = HOL_fortify_caribbean
+		x = -1
 		y = 1
 		cost = 5
 
@@ -2121,6 +2143,31 @@ focus_tree = {
 
 		completion_reward = {
 			695 = {
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = HOL_build_up_suriname
+		icon = GFX_goal_generic_construct_infrastructure
+		prerequisite = { focus = HOL_fortify_caribbean }
+		relative_position_id = HOL_fortify_caribbean
+		x = 1
+		y = 1
+		cost = 5
+
+		available_if_capitulated = yes
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+			309 = {
 				add_extra_state_shared_building_slots = 5
 				add_building_construction = {
 					type = infrastructure
@@ -2638,6 +2685,118 @@ focus_tree = {
 	}
 
 	focus = {
+		id = HOL_prepare_to_take_back_homeland
+		icon = GFX_focus_hol_prepare_the_inundation_lines
+		relative_position_id = HOL_mobilize_for_war_with_japan
+		x = 6
+		y = 0
+		cost = 5
+
+		available = {
+			has_capitulated = yes
+		}
+
+		available_if_capitulated = yes
+
+		search_filters = { FOCUS_FILTER_ARMY_XP }
+
+		completion_reward = {
+			add_to_variable = {
+				var = HOL_army_core_defence_factor_var
+				value = 0.1
+				tooltip = HOL_prepare_to_take_back_homeland_core_defence_tt
+			}
+		}
+	}
+
+	focus = {
+		id = HOL_liberation_of_the_netherlands
+		icon = GFX_goal_generic_political_pressure
+		prerequisite = { focus = HOL_prepare_to_take_back_homeland }
+		relative_position_id = HOL_prepare_to_take_back_homeland
+		x = 1
+		y = 2
+		cost = 5
+
+		available = {
+			controls_state = 7
+		}
+
+		available_if_capitulated = yes
+
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		completion_reward = {
+			custom_effect_tooltip = HOL_liberation_of_the_netherlands_tt
+			add_stability = 0.2
+			add_war_support = 0.2
+			add_political_power = 150
+			hol_reinstate_dutch_government = yes
+		}
+	}
+
+	focus = {
+		id = HOL_rebuild_dutch_industry
+		icon = GFX_goal_generic_construct_civilian
+		prerequisite = { focus = HOL_liberation_of_the_netherlands }
+		relative_position_id = HOL_liberation_of_the_netherlands
+		x = 0
+		y = 2
+		cost = 5
+
+		available_if_capitulated = yes
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+			custom_effect_tooltip = HOL_rebuild_dutch_industry_tt
+			hol_rebuild_dutch_industry = yes
+		}
+	}
+
+	focus = {
+		id = HOL_mobilize_resistance_groups
+		icon = GFX_focus_POL_resistance
+		prerequisite = { focus = HOL_prepare_to_take_back_homeland }
+		relative_position_id = HOL_prepare_to_take_back_homeland
+		x = 0
+		y = 1
+		cost = 5
+
+		available_if_capitulated = yes
+
+		search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_ARMY_XP }
+
+		completion_reward = {
+			custom_effect_tooltip = HOL_mobilize_resistance_groups_tt
+			hidden_effect = {
+				hol_create_resistance_light_infantry_template = yes
+				hol_apply_mobilize_resistance_fort_damage = yes
+				set_country_flag = HOL_mobilize_resistance_groups_active
+			}
+		}
+	}
+
+	focus = {
+		id = HOL_repair_the_dikes
+		icon = GFX_focus_hol_prepare_the_inundation_lines
+		prerequisite = { focus = HOL_mobilize_resistance_groups focus = HOL_prepare_to_take_back_homeland }
+		relative_position_id = HOL_mobilize_resistance_groups
+		x = 2
+		y = -1
+		cost = 5
+
+		available_if_capitulated = yes
+
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		completion_reward = {
+			custom_effect_tooltip = HOL_repair_the_dikes_tt
+			hol_repair_the_dikes = yes
+		}
+	}
+
+	focus = {
 		id = HOL_abda_command
 		icon = GFX_goal_generic_allies_build_infantry
 		prerequisite = { focus = HOL_mobilize_for_war_with_japan }
@@ -2736,7 +2895,6 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		completion_reward = {
-			custom_effect_tooltip = HOL_move_government_to_curacao_tt
 			set_capital = { state = 695 }
 		}
 	}
@@ -2812,6 +2970,14 @@ focus_tree = {
 			}
 		}
 
+		bypass = {
+			NOT = {
+				335 = {
+					is_owned_and_controlled_by = ROOT
+				}
+			}
+		}
+
 		available_if_capitulated = yes
 
 		search_filters = { FOCUS_FILTER_INDUSTRY }
@@ -2835,6 +3001,14 @@ focus_tree = {
 		available = {
 			334 = {
 				is_owned_and_controlled_by = ROOT
+			}
+		}
+
+		bypass = {
+			NOT = {
+				334 = {
+					is_owned_and_controlled_by = ROOT
+				}
 			}
 		}
 
@@ -2864,6 +3038,14 @@ focus_tree = {
 			}
 		}
 
+		bypass = {
+			NOT = {
+				672 = {
+					is_owned_and_controlled_by = ROOT
+				}
+			}
+		}
+
 		available_if_capitulated = yes
 
 		search_filters = { FOCUS_FILTER_INDUSTRY }
@@ -2890,6 +3072,14 @@ focus_tree = {
 			}
 		}
 
+		bypass = {
+			NOT = {
+				673 = {
+					is_owned_and_controlled_by = ROOT
+				}
+			}
+		}
+
 		available_if_capitulated = yes
 
 		search_filters = { FOCUS_FILTER_INDUSTRY }
@@ -2897,6 +3087,138 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = HOL_organize_island_defense_tt
 			hol_organize_defense_eastern_islands = yes
+		}
+	}
+
+	focus = {
+		id = HOL_take_back_java
+		icon = GFX_goal_generic_position_armies
+		prerequisite = { focus = HOL_organize_defense_of_java }
+		relative_position_id = HOL_organize_defense_of_java
+		x = 0
+		y = 1
+		cost = 35
+
+		available = {
+			335 = {
+				NOT = {
+					is_fully_controlled_by = ROOT
+				}
+			}
+		}
+
+		bypass = {
+			335 = {
+				is_fully_controlled_by = ROOT
+			}
+		}
+
+		available_if_capitulated = yes
+
+		search_filters = { FOCUS_FILTER_ANNEXATION }
+
+		completion_reward = {
+			custom_effect_tooltip = HOL_take_back_island_focus_tt
+			hol_take_back_java = yes
+		}
+	}
+
+	focus = {
+		id = HOL_take_back_borneo
+		icon = GFX_goal_generic_position_armies
+		prerequisite = { focus = HOL_organize_defense_of_borneo }
+		relative_position_id = HOL_organize_defense_of_borneo
+		x = 0
+		y = 1
+		cost = 35
+
+		available = {
+			334 = {
+				NOT = {
+					is_fully_controlled_by = ROOT
+				}
+			}
+		}
+
+		bypass = {
+			334 = {
+				is_fully_controlled_by = ROOT
+			}
+		}
+
+		available_if_capitulated = yes
+
+		search_filters = { FOCUS_FILTER_ANNEXATION }
+
+		completion_reward = {
+			custom_effect_tooltip = HOL_take_back_island_focus_tt
+			hol_take_back_borneo = yes
+		}
+	}
+
+	focus = {
+		id = HOL_take_back_sumatra
+		icon = GFX_goal_generic_position_armies
+		prerequisite = { focus = HOL_organize_defense_of_sumatra }
+		relative_position_id = HOL_organize_defense_of_sumatra
+		x = 0
+		y = 1
+		cost = 35
+
+		available = {
+			672 = {
+				NOT = {
+					is_fully_controlled_by = ROOT
+				}
+			}
+		}
+
+		bypass = {
+			672 = {
+				is_fully_controlled_by = ROOT
+			}
+		}
+
+		available_if_capitulated = yes
+
+		search_filters = { FOCUS_FILTER_ANNEXATION }
+
+		completion_reward = {
+			custom_effect_tooltip = HOL_take_back_island_focus_tt
+			hol_take_back_sumatra = yes
+		}
+	}
+
+	focus = {
+		id = HOL_take_back_eastern_islands
+		icon = GFX_goal_generic_position_armies
+		prerequisite = { focus = HOL_organize_defense_of_eastern_islands }
+		relative_position_id = HOL_organize_defense_of_eastern_islands
+		x = 0
+		y = 1
+		cost = 35
+
+		available = {
+			673 = {
+				NOT = {
+					is_fully_controlled_by = ROOT
+				}
+			}
+		}
+
+		bypass = {
+			673 = {
+				is_fully_controlled_by = ROOT
+			}
+		}
+
+		available_if_capitulated = yes
+
+		search_filters = { FOCUS_FILTER_ANNEXATION }
+
+		completion_reward = {
+			custom_effect_tooltip = HOL_take_back_island_focus_tt
+			hol_take_back_eastern_islands = yes
 		}
 	}
 
