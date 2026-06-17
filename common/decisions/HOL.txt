@@ -507,208 +507,6 @@ HOL_obtain_foreign_colonial_investments = {
 	}
 }
 
-HOL_prepare_the_inundation_lines = {
-	
-	HOL_inundate_the_water_lines = {
-
-		icon = hol_inundate_water_lines
-
-		allowed = {
-			tag = HOL
-		}
-
-		available = {
-			has_war = yes
-			7 = { is_fully_controlled_by = ROOT }
-		}
-
-		cost = 25
-
-		fire_only_once = no
-
-		days_remove = 14
-
-		highlight_states = {
-			highlight_state_targets = { state = 7 }
-			highlight_provinces = {
-				9498
-				391
-				11456
-				6241
-			}
-		}
-
-		modifier = {
-		}
-
-		visible = {
-			HOL = { has_completed_focus = HOL_prepare_the_inundation_lines }
-			7 = { is_fully_controlled_by = ROOT }
-			NOT = { has_global_flag = HOL_inundation_lines_flooded }
-		}
-
-		remove_effect = {
-			if = {
-				limit = {
-					7 = { is_fully_controlled_by = ROOT }
-				}
-				7 = {
-					add_province_modifier = {
-						static_modifiers = { flooded }
-						province = {
-							id = 9498
-							id = 391
-						}
-					}
-					damage_building = {
-					    type = infrastructure
-					    damage = 2
-					}
-					damage_building = {
-					    type = industrial_complex
-					    damage = 0.5
-					}
-					damage_building = {
-					    type = arms_factory
-					    damage = 0.5
-					}
-				}
-				35 = {
-					add_province_modifier = {
-						static_modifiers = { flooded }
-						province = {
-							id = 11456
-						}
-					}
-					damage_building = {
-					    type = infrastructure
-					    damage = 3
-					}
-					damage_building = {
-					    type = industrial_complex
-					    damage = 1.5
-					}
-					damage_building = {
-					    type = arms_factory
-					    damage = 1.5
-					}
-				}
-				36 = {
-					add_province_modifier = {
-						static_modifiers = { flooded }
-						province = {
-							id = 6241
-						}
-					}
-					damage_building = {
-					    type = infrastructure
-					    damage = 3
-					}
-					damage_building = {
-					    type = industrial_complex
-					    damage = 1.5
-					}
-					damage_building = {
-					    type = arms_factory
-					    damage = 1.5
-					}
-				}
-			}
-			set_global_flag = HOL_inundation_lines_flooded
-			set_global_flag = { flag = HOL_inundation_lines_flooded_unhappiness_timer value = 1 days = 180 }
-		}
-
-		complete_effect = {
-		}
-
-		ai_will_do = {
-			factor = 500
-		}
-
-	}
-
-	HOL_drain_the_water_lines = {
-
-		icon = hol_drain_water_lines
-
-		allowed = {
-			tag = HOL
-		}
-
-		available = {
-			7 = { is_fully_controlled_by = ROOT }
-		}
-
-		cost = 25
-
-		fire_only_once = no
-
-		days_remove = 14
-
-		highlight_states = {
-			highlight_state_targets = { state = 7 }
-			highlight_provinces = {
-				9498
-				391
-				11456
-				6241
-			}
-		}
-		
-		modifier = {
-		}
-
-		visible = {
-			HOL = { has_completed_focus = HOL_prepare_the_inundation_lines }
-			7 = { is_fully_controlled_by = ROOT }
-			has_global_flag = HOL_inundation_lines_flooded
-		}
-
-		remove_effect = {
-			7 = {
-				remove_province_modifier = {
-					static_modifiers = { flooded }
-					province = {
-						id = 9498
-						id = 391
-					}
-				}
-			}
-			35 = {
-				remove_province_modifier = {
-					static_modifiers = { flooded }
-					province = {
-						id = 11456
-					}
-				}
-			}
-			36 = {
-				remove_province_modifier = {
-					static_modifiers = { flooded }
-					province = {
-						id = 6241
-					}
-				}
-			}
-			clr_global_flag = HOL_inundation_lines_flooded
-			set_variable = {
-				var = HOL_inundation_lines_flooding_unhappiness_var
-				value = 0
-			}
-		}
-
-		complete_effect = {
-			set_country_flag = { flag = HOL_draining_in_progress value = 1 days = 14 }
-		}
-
-		ai_will_do = {
-			factor = 0
-		}
-
-	}
-
-}
-
 HOL_war_on_pacifism = {
 	
 	HOL_crack_down_on_pacifist_movements = {
@@ -1773,6 +1571,160 @@ HOL_colonial_militia = {
 
 		ai_will_do = {
 			factor = 30
+		}
+	}
+
+}
+
+HOL_colonial_resource_prospecting = {
+
+	HOL_increase_suriname_bauxite = {
+		icon = aluminium
+
+		allowed = {
+			original_tag = HOL
+		}
+
+		highlight_states = {
+			highlight_state_targets = {
+				state = 309
+			}
+		}
+
+		available = {
+			has_tech = excavation1
+			has_full_control_of_state = 309
+		}
+
+		visible = {
+			has_completed_focus = HOL_increase_colonial_resource_extraction
+			309 = {
+				NOT = { has_state_flag = hol_suriname_bauxite_expanded }
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 25
+		days_remove = 60
+
+		modifier = {
+			civilian_factory_use = 3
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = HOL_increase_suriname_bauxite_tt
+			309 = {
+				set_state_flag = hol_suriname_bauxite_expanded
+				add_resource = {
+					type = aluminium
+					amount = 40
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 50
+		}
+	}
+
+	HOL_develop_java_iron_sands = {
+		icon = steel
+
+		allowed = {
+			original_tag = HOL
+		}
+
+		highlight_states = {
+			highlight_state_targets = {
+				state = 335
+			}
+		}
+
+		available = {
+			has_tech = excavation2
+			has_full_control_of_state = 335
+		}
+
+		visible = {
+			has_completed_focus = HOL_increase_colonial_resource_extraction
+			335 = {
+				NOT = { has_state_flag = hol_java_iron_sands_developed }
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 25
+		days_remove = 60
+
+		modifier = {
+			civilian_factory_use = 4
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = HOL_develop_java_iron_sands_tt
+			335 = {
+				set_state_flag = hol_java_iron_sands_developed
+				add_resource = {
+					type = steel
+					amount = 24
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 50
+		}
+	}
+
+	HOL_prospect_dutch_new_guinea_tungsten = {
+		icon = tungsten
+
+		allowed = {
+			original_tag = HOL
+		}
+
+		highlight_states = {
+			highlight_state_targets = {
+				state = 669
+			}
+		}
+
+		available = {
+			has_tech = excavation2
+			has_full_control_of_state = 669
+		}
+
+		visible = {
+			has_completed_focus = HOL_increase_colonial_resource_extraction
+			669 = {
+				NOT = { has_state_flag = hol_dutch_new_guinea_tungsten_prospected }
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 25
+		days_remove = 90
+
+		modifier = {
+			civilian_factory_use = 3
+		}
+
+		remove_effect = {
+			custom_effect_tooltip = HOL_prospect_dutch_new_guinea_tungsten_tt
+			669 = {
+				set_state_flag = hol_dutch_new_guinea_tungsten_prospected
+				add_resource = {
+					type = tungsten
+					amount = 20
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 40
 		}
 	}
 
