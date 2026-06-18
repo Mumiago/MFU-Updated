@@ -2080,7 +2080,11 @@ HOL_agricultural_exports_trade = {
 		}
 
 		visible = {
-			has_completed_focus = HOL_increase_agricultural_exports_trade
+			NOT = { has_capitulated = yes }
+			OR = {
+				has_country_flag = HOL_agricultural_exports_trade_unlocked
+				has_completed_focus = HOL_increase_agricultural_exports_trade
+			}
 		}
 
 		cost = 50
@@ -2093,6 +2097,82 @@ HOL_agricultural_exports_trade = {
 			GER = {
 				add_cic = 3000
 			}
+		}
+
+		ai_will_do = {
+			factor = 25
+		}
+	}
+
+	HOL_export_agricultural_goods_to_britain = {
+
+		icon = generic_trade
+
+		allowed = {
+			original_tag = HOL
+		}
+
+		available = {
+			country_exists = ENG
+			NOT = { has_war_with = ENG }
+			NOT = { has_country_flag = HOL_agricultural_trade_eng_cooldown }
+		}
+
+		visible = {
+			NOT = { has_capitulated = yes }
+			OR = {
+				has_country_flag = HOL_agricultural_exports_trade_unlocked
+				has_completed_focus = HOL_increase_agricultural_exports_trade
+			}
+		}
+
+		cost = 50
+
+		complete_effect = {
+			custom_effect_tooltip = HOL_export_agricultural_goods_to_britain_tt
+			add_cic = 3000
+			ENG = {
+				add_cic = 200000
+			}
+			set_country_flag = { flag = HOL_agricultural_trade_eng_cooldown days = 180 }
+		}
+
+		ai_will_do = {
+			factor = 25
+		}
+	}
+
+	HOL_export_agricultural_goods_to_france = {
+
+		icon = generic_trade
+
+		allowed = {
+			original_tag = HOL
+		}
+
+		available = {
+			country_exists = FRA
+			NOT = { has_war_with = FRA }
+			NOT = { has_country_flag = HOL_agricultural_trade_fra_cooldown }
+		}
+
+		visible = {
+			NOT = { has_capitulated = yes }
+			OR = {
+				has_country_flag = HOL_agricultural_exports_trade_unlocked
+				has_completed_focus = HOL_increase_agricultural_exports_trade
+			}
+		}
+
+		cost = 50
+
+		complete_effect = {
+			custom_effect_tooltip = HOL_export_agricultural_goods_to_france_tt
+			add_cic = 3000
+			FRA = {
+				add_cic = 3000
+			}
+			set_country_flag = { flag = HOL_agricultural_trade_fra_cooldown days = 180 }
 		}
 
 		ai_will_do = {
@@ -2383,15 +2463,8 @@ HOL_defense_of_netherlands = {
 
 		complete_effect = {
 			set_country_flag = HOL_evacuate_the_government_resolved
+			set_country_flag = HOL_evacuate_government_failed
 			custom_effect_tooltip = HOL_evacuate_the_government_fail_tt
-			hidden_effect = {
-				GER = {
-					add_collaboration = {
-						target = HOL
-						value = 0.2
-					}
-				}
-			}
 		}
 
 		timeout_effect = {
@@ -2446,8 +2519,13 @@ HOL_defense_of_netherlands = {
 
 		complete_effect = {
 			set_country_flag = HOL_hold_open_corridor_with_french_resolved
-			custom_effect_tooltip = HOL_hold_open_corridor_with_french_fail_tt
-			add_ideas = HOL_severed_french_corridor
+			if = {
+				limit = {
+					has_capitulated = no
+				}
+				custom_effect_tooltip = HOL_hold_open_corridor_with_french_fail_tt
+				add_ideas = HOL_severed_french_corridor
+			}
 		}
 
 		timeout_effect = {

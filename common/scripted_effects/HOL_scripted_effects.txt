@@ -557,6 +557,22 @@ hol_prepare_for_war_leader_change = {
 	}
 }
 
+hol_apply_evacuate_government_fail_compliance = {
+	if = {
+		limit = {
+			country_exists = GER
+		}
+		every_state = {
+			limit = {
+				is_core_of = HOL
+				is_controlled_by = GER
+			}
+			add_compliance = 30
+		}
+	}
+	clr_country_flag = HOL_evacuate_government_failed
+}
+
 hol_apply_abda_coastal_defense = {
 	every_state = {
 		limit = {
@@ -756,6 +772,529 @@ hol_take_back_eastern_islands = {
 				modifier = HOL_take_back_assault
 				days = 35
 			}
+		}
+	}
+}
+
+hol_integrate_give_offsite_civilian_to_ally = {
+	if = {
+		limit = {
+			check_variable = { hol_offsite_rot = 0 }
+			country_exists = AST
+			AST = { NOT = { has_capitulated = yes } }
+		}
+		AST = {
+			add_offsite_building = {
+				type = industrial_complex
+				level = 1
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { hol_offsite_rot = 1 }
+			country_exists = RAJ
+			RAJ = { NOT = { has_capitulated = yes } }
+		}
+		RAJ = {
+			add_offsite_building = {
+				type = industrial_complex
+				level = 1
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { hol_offsite_rot = 2 }
+			country_exists = SAF
+			SAF = { NOT = { has_capitulated = yes } }
+		}
+		SAF = {
+			add_offsite_building = {
+				type = industrial_complex
+				level = 1
+			}
+		}
+	}
+	if = {
+		limit = {
+			check_variable = { hol_offsite_rot = 2 }
+		}
+		set_variable = { hol_offsite_rot = 0 }
+	}
+	else = {
+		add_to_variable = { hol_offsite_rot = 1 }
+	}
+}
+
+hol_integrate_give_offsite_military_to_ally = {
+	if = {
+		limit = {
+			check_variable = { hol_offsite_rot = 0 }
+			country_exists = AST
+			AST = { NOT = { has_capitulated = yes } }
+		}
+		AST = {
+			add_offsite_building = {
+				type = arms_factory
+				level = 1
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { hol_offsite_rot = 1 }
+			country_exists = RAJ
+			RAJ = { NOT = { has_capitulated = yes } }
+		}
+		RAJ = {
+			add_offsite_building = {
+				type = arms_factory
+				level = 1
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { hol_offsite_rot = 2 }
+			country_exists = SAF
+			SAF = { NOT = { has_capitulated = yes } }
+		}
+		SAF = {
+			add_offsite_building = {
+				type = arms_factory
+				level = 1
+			}
+		}
+	}
+	if = {
+		limit = {
+			check_variable = { hol_offsite_rot = 2 }
+		}
+		set_variable = { hol_offsite_rot = 0 }
+	}
+	else = {
+		add_to_variable = { hol_offsite_rot = 1 }
+	}
+}
+
+hol_integrate_give_offsite_dockyard_to_ally = {
+	if = {
+		limit = {
+			check_variable = { hol_offsite_rot = 0 }
+			country_exists = AST
+			AST = { NOT = { has_capitulated = yes } }
+		}
+		AST = {
+			add_offsite_building = {
+				type = dockyard
+				level = 1
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { hol_offsite_rot = 1 }
+			country_exists = RAJ
+			RAJ = { NOT = { has_capitulated = yes } }
+		}
+		RAJ = {
+			add_offsite_building = {
+				type = dockyard
+				level = 1
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			check_variable = { hol_offsite_rot = 2 }
+			country_exists = SAF
+			SAF = { NOT = { has_capitulated = yes } }
+		}
+		SAF = {
+			add_offsite_building = {
+				type = dockyard
+				level = 1
+			}
+		}
+	}
+	if = {
+		limit = {
+			check_variable = { hol_offsite_rot = 2 }
+		}
+		set_variable = { hol_offsite_rot = 0 }
+	}
+	else = {
+		add_to_variable = { hol_offsite_rot = 1 }
+	}
+}
+
+hol_integrate_distribute_offsite_civilian = {
+	set_variable = { hol_offsite_rot = 0 }
+	set_variable = { hol_offsite_i = 0 }
+	while_loop_effect = {
+		limit = {
+			check_variable = { hol_offsite_i < 25 }
+		}
+		add_offsite_building = {
+			type = industrial_complex
+			level = -1
+		}
+		hol_integrate_give_offsite_civilian_to_ally = yes
+		add_to_variable = { hol_offsite_i = 1 }
+	}
+}
+
+hol_integrate_distribute_offsite_military = {
+	set_variable = { hol_offsite_rot = 0 }
+	set_variable = { hol_offsite_i = 0 }
+	while_loop_effect = {
+		limit = {
+			check_variable = { hol_offsite_i < 25 }
+		}
+		add_offsite_building = {
+			type = arms_factory
+			level = -1
+		}
+		hol_integrate_give_offsite_military_to_ally = yes
+		add_to_variable = { hol_offsite_i = 1 }
+	}
+}
+
+hol_integrate_distribute_offsite_dockyard = {
+	set_variable = { hol_offsite_rot = 0 }
+	set_variable = { hol_offsite_i = 0 }
+	while_loop_effect = {
+		limit = {
+			check_variable = { hol_offsite_i < 25 }
+		}
+		add_offsite_building = {
+			type = dockyard
+			level = -1
+		}
+		hol_integrate_give_offsite_dockyard_to_ally = yes
+		add_to_variable = { hol_offsite_i = 1 }
+	}
+}
+
+hol_integrate_transfer_navy_to_allies = {
+	if = {
+		limit = {
+			country_exists = USA
+			USA = { NOT = { has_capitulated = yes } }
+		}
+		while_loop_effect = {
+			limit = {
+				has_navy_size = {
+					size > 0
+					type = battleship
+				}
+			}
+			transfer_ship = {
+				type = battleship
+				target = USA
+			}
+		}
+		while_loop_effect = {
+			limit = {
+				has_navy_size = {
+					size > 0
+					type = battle_cruiser
+				}
+			}
+			transfer_ship = {
+				type = battle_cruiser
+				target = USA
+			}
+		}
+		while_loop_effect = {
+			limit = {
+				has_navy_size = {
+					size > 0
+					type = heavy_cruiser
+				}
+			}
+			transfer_ship = {
+				type = heavy_cruiser
+				target = USA
+			}
+		}
+		while_loop_effect = {
+			limit = {
+				has_navy_size = {
+					size > 0
+					type = light_cruiser
+				}
+			}
+			transfer_ship = {
+				type = light_cruiser
+				target = USA
+			}
+		}
+		while_loop_effect = {
+			limit = {
+				has_navy_size = {
+					size > 0
+					type = carrier
+				}
+			}
+			transfer_ship = {
+				type = carrier
+				target = USA
+			}
+		}
+		while_loop_effect = {
+			limit = {
+				has_navy_size = {
+					size > 0
+					type = submarine
+				}
+			}
+			transfer_ship = {
+				type = submarine
+				target = USA
+			}
+		}
+	}
+	if = {
+		limit = {
+			country_exists = ENG
+			ENG = { NOT = { has_capitulated = yes } }
+		}
+		while_loop_effect = {
+			limit = {
+				has_navy_size = {
+					size > 0
+					type = destroyer
+				}
+			}
+			transfer_ship = {
+				type = destroyer
+				target = ENG
+			}
+		}
+	}
+}
+
+hol_integrate_transfer_convoys_to_usa = {
+	if = {
+		limit = {
+			country_exists = USA
+			USA = { NOT = { has_capitulated = yes } }
+			has_equipment = {
+				convoy > 0
+			}
+		}
+		set_temp_variable = { hol_convoy_count = 0 }
+		while_loop_effect = {
+			limit = {
+				has_equipment = {
+					convoy > hol_convoy_count
+				}
+			}
+			add_to_temp_variable = { hol_convoy_count = 1 }
+		}
+		set_temp_variable = { hol_convoy_remove = hol_convoy_count }
+		multiply_temp_variable = { hol_convoy_remove = -1 }
+		add_equipment_to_stockpile = {
+			type = convoy_1
+			amount = hol_convoy_remove
+		}
+		USA = {
+			add_equipment_to_stockpile = {
+				type = convoy_1
+				amount = hol_convoy_count
+				producer = ROOT
+			}
+		}
+	}
+}
+
+hol_integrate_transfer_island_divisions_to_ast = {
+	if = {
+		limit = {
+			country_exists = AST
+			AST = { NOT = { has_capitulated = yes } }
+			NOT = {
+				any_state = {
+					NOT = {
+						OR = {
+							AND = {
+								is_core_of = INS
+								NOT = {
+									OR = {
+										state = 335
+										state = 334
+										state = 672
+									}
+								}
+							}
+							state = 695
+							state = 309
+						}
+					}
+					owner = { tag = ROOT }
+					ROOT = {
+						divisions_in_state = {
+							state = PREV
+							size > 0
+						}
+					}
+				}
+			}
+		}
+		transfer_units_fraction = {
+			target = AST
+			size = 1
+			army_ratio = 1
+			navy_ratio = 0
+			air_ratio = 0
+			stockpile_ratio = 0
+			keep_unit_leaders_trigger = {
+				always = yes
+			}
+		}
+	}
+}
+
+hol_integrate_transfer_remaining_dei_to_ast = {
+	if = {
+		limit = {
+			country_exists = AST
+			AST = { NOT = { has_capitulated = yes } }
+		}
+		hol_integrate_transfer_island_divisions_to_ast = yes
+		every_state = {
+			limit = {
+				is_core_of = INS
+				NOT = {
+					OR = {
+						state = 335
+						state = 334
+						state = 672
+					}
+				}
+				OR = {
+					is_owned_by = ROOT
+					owner = {
+						tag = INS
+						is_subject_of = ROOT
+					}
+				}
+			}
+			AST = {
+				transfer_state = PREV
+			}
+		}
+	}
+}
+
+hol_integrate_with_the_allies = {
+	set_country_flag = HOL_integrated_with_allies
+	if = {
+		limit = {
+			country_exists = ENG
+			ENG = { NOT = { has_capitulated = yes } }
+		}
+		transfer_units_fraction = {
+			target = ENG
+			size = 0
+			army_ratio = 0
+			navy_ratio = 0
+			air_ratio = 1
+			stockpile_ratio = 0
+			keep_unit_leaders_trigger = {
+				always = yes
+			}
+		}
+	}
+	hol_integrate_transfer_convoys_to_usa = yes
+	if = {
+		limit = {
+			country_exists = RAJ
+			RAJ = { NOT = { has_capitulated = yes } }
+		}
+		transfer_units_fraction = {
+			target = RAJ
+			size = 0
+			army_ratio = 0
+			navy_ratio = 0
+			air_ratio = 0
+			stockpile_ratio = 1
+			keep_unit_leaders_trigger = {
+				always = yes
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			country_exists = ENG
+			ENG = { NOT = { has_capitulated = yes } }
+		}
+		transfer_units_fraction = {
+			target = ENG
+			size = 0
+			army_ratio = 0
+			navy_ratio = 0
+			air_ratio = 0
+			stockpile_ratio = 1
+			keep_unit_leaders_trigger = {
+				always = yes
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			country_exists = USA
+			USA = { NOT = { has_capitulated = yes } }
+		}
+		transfer_units_fraction = {
+			target = USA
+			size = 0
+			army_ratio = 0
+			navy_ratio = 0
+			air_ratio = 0
+			stockpile_ratio = 1
+			keep_unit_leaders_trigger = {
+				always = yes
+			}
+		}
+	}
+	hol_integrate_transfer_navy_to_allies = yes
+	hol_integrate_transfer_remaining_dei_to_ast = yes
+	if = {
+		limit = {
+			695 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			country_exists = USA
+			USA = { NOT = { has_capitulated = yes } }
+		}
+		USA = {
+			transfer_state = 695
+		}
+	}
+	if = {
+		limit = {
+			309 = {
+				is_owned_and_controlled_by = ROOT
+			}
+			country_exists = USA
+			USA = { NOT = { has_capitulated = yes } }
+		}
+		USA = {
+			transfer_state = 309
+		}
+	}
+	hol_integrate_distribute_offsite_civilian = yes
+	hol_integrate_distribute_offsite_military = yes
+	hol_integrate_distribute_offsite_dockyard = yes
+	if = {
+		limit = {
+			country_exists = SOV
+		}
+		SOV = {
+			change_tag_from = ROOT
 		}
 	}
 }
