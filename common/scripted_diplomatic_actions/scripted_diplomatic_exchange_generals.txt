@@ -1,0 +1,198 @@
+
+scripted_diplomatic_actions = {
+
+	exchange_generals = {
+	
+		# root is the initiator of action and this is the target country
+		allowed = { #if action is valid
+			always = yes
+		}
+		
+		visible = {
+			OR = {
+				has_war_with = ROOT
+				ROOT = {
+					has_any_general_captured_by = PREV
+				}
+				THIS = {
+					has_any_general_captured_by = ROOT
+				}
+			}
+		}
+		
+		selectable = {
+			THIS = {
+				has_any_general_captured_by = ROOT
+			}
+			ROOT = {
+				has_any_general_captured_by = PREV
+			}
+		} 
+
+		requires_acceptance = yes
+		cost = 0 # pp cost, can be zero
+
+		show_acceptance_on_action_button = yes
+
+		icon = 1
+
+		complete_effect = {
+			release_captured_generals_from = ROOT
+			ROOT = { release_captured_generals_from = PREV }
+		}
+
+		reject_effect = {
+		}
+
+
+		can_be_sent = {
+			always = yes
+		}
+		send_description = exchange_generals_send
+
+		can_be_accepted = {
+			always = yes
+		}
+		receive_description = exchange_generals_receive
+
+		
+		accept_title = exchange_generals_accept
+		accept_description = exchange_generals_accept_desc
+		reject_title = exchange_generals_reject
+		reject_description = exchange_generals_reject_desc
+	
+		
+		ai_acceptance = {
+			base_desire_fg = {
+				modifier = { factor = -20 }
+			}
+			war_length_fg = {
+				base = 0
+				modifier = {
+					war_length_with = {
+						tag = ROOT
+						months < 1
+					}
+					add = -5
+				}
+				modifier = {
+					war_length_with = {
+						tag = ROOT
+						months > 3
+					}
+					add = 10
+				}
+				modifier = {
+					war_length_with = {
+						tag = ROOT
+						months > 12
+					}
+					add = 10
+				}
+			}
+			generals_level_fg = {
+				base = 0
+				modifier = {
+					NOT = {
+						any_character = {
+							skill > 2
+							is_general_captured = yes
+						}
+						any_character = {
+							OR = { is_field_marshal = yes skill > 4 }
+							is_general_captured = yes
+						}
+					}
+					add = -5
+				}
+				modifier = {
+					any_character = {
+						skill > 2
+						is_general_captured = yes
+					}
+					add = 10
+				}
+				modifier = {
+					any_character = {
+						OR = { is_field_marshal = yes skill > 4 }
+						is_general_captured = yes
+					}
+					add = 20
+				}
+			}
+			country_major_fg = {
+				base = 0
+				modifier = {
+					ROOT = { is_major = yes }
+					THIS = { is_major = yes }
+					
+					add = -80
+				}
+				modifier = {
+					ROOT = { is_major = no }
+					THIS = { is_major = no }
+					
+					add = 20
+				}
+				modifier = {
+					ROOT = { is_major = yes }
+					THIS = { is_major = no }
+					
+					add = 20
+				}
+				modifier = {
+					ROOT = { is_major = no }
+					THIS = { is_major = yes }
+					
+					add = -10
+				}
+			}
+			country_capped_fg = {
+				base = 0
+				modifier = {
+					ROOT = { OR = { has_capitulated = yes surrender_progress > 0.5 } }
+					add = -60
+				}
+			}
+		}
+
+		ai_desire = {
+		
+			base = -20
+			
+			modifier = {
+				war_length_with = {
+					tag = ROOT
+					months > 3
+				}
+				add = 20
+			}
+			modifier = {
+				any_character = {
+					OR = { is_field_marshal = yes skill > 3 }
+					is_general_captured = yes
+				}
+				add = 20
+			}
+			
+			
+			modifier = {
+				ROOT = { is_major = yes }
+				THIS = { is_major = yes }
+				
+				add = -80
+			}
+			modifier = {
+				ROOT = { is_major = no }
+				THIS = { is_major = no }
+				
+				add = 20
+			}
+			modifier = {
+				THIS = { has_capitulated = yes }
+				
+				add = -100
+			}
+		}
+	}
+}
