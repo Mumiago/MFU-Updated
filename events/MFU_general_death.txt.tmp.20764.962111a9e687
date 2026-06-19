@@ -1,0 +1,31 @@
+add_namespace = mfu_general_death
+
+# Hidden router for the "general killed" toasts (custom scripted_gui notifications, NOT a full event).
+# Fired via unit_leader_event, so: ROOT = the general's owner (the loser), FROM = the dead general.
+# event_target:general_killer_country = the country that overran the HQ (saved before firing).
+country_event = {
+	id = mfu_general_death.1
+	hidden = yes
+	is_triggered_only = yes
+
+	immediate = {
+		# Remember the victim country (ROOT) explicitly so the killer's side can name it.
+		save_global_event_target_as = general_victim_country
+
+		# Loser (this country): store the general in a VARIABLE (event targets collapse a unit
+		# leader to its country; variables keep the leader so its name resolves), then show the toast.
+		set_variable = { gk_general = FROM }
+		set_variable = { gk_other = event_target:general_killer_country }
+		set_country_flag = ui_show_general_killed
+
+		# Killer: FROM is still the general here; reference the victim via the saved target (NOT PREV).
+		event_target:general_killer_country = {
+			set_variable = { gk_general = FROM }
+			set_variable = { gk_other = event_target:general_victim_country }
+			set_country_flag = ui_show_enemy_general_killed
+		}
+
+		# The "death": permanently remove the general from play.
+		FROM = { retire = yes }
+	}
+}

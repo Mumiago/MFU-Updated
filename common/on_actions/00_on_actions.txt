@@ -6594,41 +6594,21 @@ on_actions = {
 			if = {
 				limit = { can_be_captured = yes }
 
-				# is_in_state requires the leader to still be deployed, so check before capture_by
+				# MFU: chance for the general to DIE (retire = permanently removed) instead of being
+				# captured. 10% for most commanders; 90% for Japanese commanders (death before capture).
+				# Uses random_list (not check_variable=random) because the `random` magic-var proved
+				# unreliable here. Capture logic = scripted_effect mfu_capture_defeated_leader.
 				if = {
-					limit = {
-						is_in_state = 224
-						FROM = { is_ai = no }
-					}
-					FROM = {
-						set_country_flag = achievement_captured_general_in_bryansk
+					limit = { tag = JAP }
+					random_list = {
+						90 = { mfu_kill_defeated_leader = yes }
+						10 = { mfu_capture_defeated_leader = yes }
 					}
 				}
-
-				capture_by = FROM
-				FROM = {
-					if = {
-						limit = { is_ai = no }
-						set_country_flag = achievement_captured_a_general
-					}
-				}
-				if = {
-					limit = {
-						is_field_marshal = yes
-						FROM = { is_ai = no }
-					}
-					FROM = {
-						set_country_flag = achievement_captured_a_field_marshal
-					}
-				}
-				if = {
-					limit = {
-						tag = GER
-						FROM = { is_ai = no }
-					}
-					if = {
-						limit = { is_character = GER_erwin_rommel }
-						FROM = { set_country_flag = achievement_captured_rommel }
+				else = {
+					random_list = {
+						10 = { mfu_kill_defeated_leader = yes }
+						90 = { mfu_capture_defeated_leader = yes }
 					}
 				}
 			}

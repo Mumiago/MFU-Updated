@@ -1,0 +1,52 @@
+# MFU: defeated army-leader outcomes for on_deployed_leader_defeated (00_on_actions.txt).
+# Both are called in the LEADER scope with FROM = the capturing/killing country
+# (scopes are inherited from the call site, so ROOT/FROM here match the on_action).
+
+# --- CAPTURE (verbatim vanilla capture logic, extracted so the random_list doesn't duplicate it) ---
+mfu_capture_defeated_leader = {
+	# is_in_state requires the leader to still be deployed, so check before capture_by
+	if = {
+		limit = {
+			is_in_state = 224
+			FROM = { is_ai = no }
+		}
+		FROM = {
+			set_country_flag = achievement_captured_general_in_bryansk
+		}
+	}
+
+	capture_by = FROM
+	FROM = {
+		if = {
+			limit = { is_ai = no }
+			set_country_flag = achievement_captured_a_general
+		}
+	}
+	if = {
+		limit = {
+			is_field_marshal = yes
+			FROM = { is_ai = no }
+		}
+		FROM = {
+			set_country_flag = achievement_captured_a_field_marshal
+		}
+	}
+	if = {
+		limit = {
+			tag = GER
+			FROM = { is_ai = no }
+		}
+		if = {
+			limit = { is_character = GER_erwin_rommel }
+			FROM = { set_country_flag = achievement_captured_rommel }
+		}
+	}
+}
+
+# --- KILLED --- ROOT = the defeated general, FROM = the country that overran the HQ (killer).
+# Route through a hidden unit_leader_event so the general is reliably FROM there (the only scope
+# from which its NAME resolves). That event sets the toast flags on both sides and retires it.
+mfu_kill_defeated_leader = {
+	FROM = { save_global_event_target_as = general_killer_country }
+	unit_leader_event = { id = mfu_general_death.1 }
+}
