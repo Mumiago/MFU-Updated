@@ -328,7 +328,7 @@ NCountry = {
 	SUPPLY_FROM_DAMAGED_INFRA = 0.6,                -- damaged infrastructure counts as this in supply calcs
 	SUPPLY_BASE_MULT = 2,							-- multiplier on supply base values
 	SUPPLY_BONUS_FROM_INPUT = 0.25,					-- % of supply bonus from input area.
-	SUPPLY_PATH_MAX_DISTANCE = 10,					-- When supply route reach more than X nodes, the manpower+equipment delivery speed reach 100% penalty.
+	-- SUPPLY_PATH_MAX_DISTANCE = 20,				-- MFU: DEAD COPY — this is in NCountry; the engine ignores it. The live one is in NSupply (search "max time it can take"). Commented out to avoid confusion.
 	POPULATION_YEARLY_GROWTH_BASE = 0.015,			-- basic population growth per year, used for monthly manpower gain
 	RESISTANCE_STRENGTH_FROM_VP = 0.0015,			-- How much strength ticking speed gives each VP score.
 	RESISTANCE_STRENGTH_FROM_NEIGHBORS = 0.5, 		-- Multiplies how much resistance can spread from one state to its neighbors, a state will spread whatever is highest of its victorypoints resistance increase or half of any of its neighbors spread, multiplied by this
@@ -340,7 +340,7 @@ NCountry = {
 	REINFORCEMENT_THEATRE_PRIORITY_DEFAULT = 1,
 	REINFORCEMENT_AIRBASE_PRIORITY_COUNT = 3,
 	REINFORCEMENT_AIRBASE_PRIORITY_DEFAULT = 1,
-	REINFORCEMENT_DELIVERY_SPEED_MIN = 0.35,			-- The distance from the supply region to capital should affect the speed only a little bit. Main factor for penalty is overcrowded areas, and not the route length.
+	REINFORCEMENT_DELIVERY_SPEED_MIN = 0.2,			-- The distance from the supply region to capital should affect the speed only a little bit. Main factor for penalty is overcrowded areas, and not the route length.
 	REINFORCEMENT_EQUIPMENT_DELIVERY_SPEED = 0.3,	-- Modifier for army equipment reinforcement speed
 	REINFORCEMENT_MANPOWER_DELIVERY_SPEED = 50.0,	-- Modifier for army manpower reinforcement delivery speed (travel time)
 	REINFORCEMENT_MANPOWER_CHUNK = 0.25,				-- Chunk size of manpower reinforcement delivery, in % of total manpower needed by the template.
@@ -1354,7 +1354,7 @@ NMilitary = {
 	MIN_DIVISION_DEPLOYMENT_TRAINING = 0.3,			-- Min level of division training
 	
 	FRONT_MIN_PATH_TO_REDEPLOY = 4,					-- If a units path is at least this long to reach its front location, it will strategically redeploy.
-	ARMY_INITIATIVE_REINFORCE_FACTOR = 2.4,		-- scales initiative for reinforce chance
+	ARMY_INITIATIVE_REINFORCE_FACTOR = 2,		-- scales initiative for reinforce chance
 		
 	BASE_CAPTURE_EQUIPMENT_RATIO = 0.00,				-- after a successful land combat, ratio of the equipments that are being captured/salvaged from enemy's lost equipment
 
@@ -2026,10 +2026,10 @@ NSupply = {
 	LOCAL_SUPPLY_PER_AIR_MISSION = 0.1, -- each assigned plane gives this much supply at full efficiency
 
 	-- reinforcements depends on distance to capital and following defines are used for calculating reinforcement time
-	SUPPLY_PATH_MAX_DISTANCE = 15,	-- max time it can take
-	RAILWAY_DISTANCE_FACTOR_FOR_REINFORCEMENT_SPEED = 0.4, -- time factor for total railway distance
-	TRUCK_DISTANCE_FACTOR_FOR_REINFORCEMENT_SPEED = 0.02, -- time factor for total truck distance
-	NAVAL_DISTANCE_FACTOR_FOR_REINFORCEMENT_SPEED = 0.1, -- time factor for total naval distance
+	SUPPLY_PATH_MAX_DISTANCE = 20,	-- max time it can take  (THIS is the live one the engine reads, in NSupply)
+	RAILWAY_DISTANCE_FACTOR_FOR_REINFORCEMENT_SPEED = 0.5, -- time factor for total railway distance
+	TRUCK_DISTANCE_FACTOR_FOR_REINFORCEMENT_SPEED = 0.025, -- time factor for total truck distance
+	NAVAL_DISTANCE_FACTOR_FOR_REINFORCEMENT_SPEED = 0.125, -- time factor for total naval distance
 
 	ALERT_VERY_LOW_SUPPLY_LEVEL = 0.75,			   -- At which point we show up the low and very low supply level alert. Value is in % of supplies supported vs required.
 	ALERT_LOW_SUPPLY_LEVEL = 0.95,
@@ -2211,14 +2211,14 @@ NNavy = {
 	
 	SHIP_SUPPORT_NEED_FACTOR = 0.1,									-- The support need for a ship. This factor is multiplied with the ships dominance value
 	MAX_ADMIRAL_HEADQUARTER_ASSIGNMENTS = 3,						-- Max amount of admirals that can be assigned to naval headquarters
-	NAVAL_HEADQUARTER_ADJACENCY = 2,								-- How many extra steps of strategic regions from the first the naval headquarter provides benefits. 
+	NAVAL_HEADQUARTER_ADJACENCY = 1,								-- How many extra steps of strategic regions from the first the naval headquarter provides benefits. 
 	SELECTED_SORTIE_INITIAL_TIME = 24,								-- Amount of hours from combat start where the selected sortie will override the default one
 	SUPPORT_SHIP_RECOVERY_BASE_STRENGTH_FACTOR = 0.01,				-- Percentage of strength of max strength a recovered ship gets on recovery.
 	STRIKE_FORCE_ON_BASE_FUEL_COST_FACTOR = 0.25,					-- fuel cost for naval strike mission in port
 	NAVAL_DOMINANCE_CHANCE_OF_ACCIDENT_REDUCTION = 0.25,			-- The chance to encounter an accident during naval training would be reduced when having naval dominance in the region
 	NAVAL_COMBAT_PLANE_MIN_STACKING_PENALTY = 80,						-- How many planes flying in a naval combat before penalties are introduced
 	NAVAL_COMBAT_PLANE_STACKING_PENALTY_EFFECT = 0.005,					-- Each plane above the optimal amount decreases the amount of airplanes being able to takeoff by such %. Subject to diminishing returns
-	NAVAL_HEADQUARTERS_EXPERIENCE_SCALE = 0.125,					-- Characters assigned to a naval HQ will gain 15% of all experience from taskforces in their regions
+	NAVAL_HEADQUARTERS_EXPERIENCE_SCALE = 0.15,					-- Characters assigned to a naval HQ will gain 15% of all experience from taskforces in their regions
 	NAVAL_INVASION_PREPARE_DAYS = 1,								-- base days needed to prepare a naval invasion
 	NAVAL_INVASION_PLAN_CAP = 6,									-- base cap of naval invasions can be planned at the same time
 	BASE_NAVAL_INVASION_DIVISION_CAP = 3,							-- base cap of divisions that can be assigned in a naval invasion
@@ -2374,8 +2374,8 @@ NNavy = {
 	COMBAT_TORPEDO_CRITICAL_CHANCE = 0.12,							-- chance for critical hit from torpedo.
 	COMBAT_TORPEDO_CRITICAL_DAMAGE_MULT = 2.0,						-- multiplier to damage when got critical hit from torpedo. (Critical hits are devastating as usualy torpedo_attack are pretty high base values).
 	
-	COMBAT_DAMAGE_TO_STR_FACTOR = 0.34,								-- casting damage value to ship strength multiplier. Use it ot balance the game difficulty.
-	COMBAT_DAMAGE_TO_ORG_FACTOR = 0.25,							-- casting damage value to ship organisation multiplier. Use it to balance the game difficulty.
+	COMBAT_DAMAGE_TO_STR_FACTOR = 0.32,								-- casting damage value to ship strength multiplier. Use it ot balance the game difficulty.
+	COMBAT_DAMAGE_TO_ORG_FACTOR = 0.24,							-- casting damage value to ship organisation multiplier. Use it to balance the game difficulty.
 	
 	NAVY_MAX_XP = 100,
 	COMBAT_ON_THE_WAY_INIT_DISTANCE_BALANCE = 0.25, 					-- Value to balance initial distance to arrive for ships that are "on the way"	
