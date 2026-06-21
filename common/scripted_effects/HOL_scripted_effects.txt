@@ -424,9 +424,11 @@ hol_activate_defense_of_netherlands_missions = {
 	set_country_flag = HOL_defense_missions_active
 	set_variable = { HOL_defense_days_held = 0 }
 	set_variable = { HOL_defense_ger_casualties = 0 }
+	set_variable = { HOL_gold_evacuation_ticks = 0 }
 	activate_mission = HOL_prevent_capture_dutch_ships
 	activate_mission = HOL_evacuate_dutch_gold_reserves
 	activate_mission = HOL_evacuate_the_government
+	activate_mission = HOL_evacuate_leeuwarden_air_wing
 	activate_mission = HOL_hold_open_corridor_with_french
 	hol_auto_start_dutch_line_inundation = yes
 	if = {
@@ -434,6 +436,88 @@ hol_activate_defense_of_netherlands_missions = {
 			has_country_flag = hol_infrastructure_demolition_prepared
 		}
 		activate_mission = HOL_demolish_prepared_infrastructure
+	}
+}
+
+hol_gold_evacuation_tick = {
+	add_to_variable = { HOL_gold_evacuation_ticks = 1 }
+	set_country_flag = HOL_evacuate_dutch_gold_reserves_success
+	custom_effect_tooltip = HOL_evacuate_dutch_gold_reserves_tick_tt
+	hidden_effect = {
+		if = {
+			limit = {
+				country_exists = ENG
+			}
+			ENG = {
+				add_to_variable = { var = british_money value = 100 }
+			}
+		}
+		if = {
+			limit = {
+				has_country_flag = HOL_defense_missions_active
+				controls_province = 391
+				NOT = { has_capitulated = yes }
+				NOT = { has_country_flag = HOL_evacuate_dutch_gold_reserves_resolved }
+			}
+			activate_mission = HOL_evacuate_dutch_gold_reserves
+		}
+	}
+}
+
+hol_apply_gold_evacuation_fail = {
+	if = {
+		limit = {
+			country_exists = GER
+			check_variable = { HOL_gold_evacuation_ticks < 1 }
+		}
+		GER = {
+			add_cic = 30000
+		}
+	}
+	else_if = {
+		limit = {
+			country_exists = GER
+			check_variable = { HOL_gold_evacuation_ticks = 1 }
+		}
+		GER = {
+			add_cic = 25000
+		}
+	}
+	else_if = {
+		limit = {
+			country_exists = GER
+			check_variable = { HOL_gold_evacuation_ticks = 2 }
+		}
+		GER = {
+			add_cic = 20000
+		}
+	}
+	else_if = {
+		limit = {
+			country_exists = GER
+			check_variable = { HOL_gold_evacuation_ticks = 3 }
+		}
+		GER = {
+			add_cic = 15000
+		}
+	}
+	else_if = {
+		limit = {
+			country_exists = GER
+			check_variable = { HOL_gold_evacuation_ticks = 4 }
+		}
+		GER = {
+			add_cic = 10000
+		}
+	}
+	else_if = {
+		limit = {
+			country_exists = GER
+			check_variable = { HOL_gold_evacuation_ticks = 5 }
+		}
+		GER = {
+			add_cic = 5000
+		}
 	}
 }
 
@@ -571,6 +655,20 @@ hol_apply_evacuate_government_fail_compliance = {
 		}
 	}
 	clr_country_flag = HOL_evacuate_government_failed
+}
+
+hol_apply_leeuwarden_air_wing_success_rewards = {
+	add_equipment_to_stockpile = {
+		type = fighter_equipment_1936
+		amount = 50
+		producer = HOL
+	}
+	add_ace = {
+		name = "Jacob"
+		surname = "van Helsdingen"
+		callsign = "Helsdingen"
+		type = fighter_genius
+	}
 }
 
 hol_apply_abda_coastal_defense = {
