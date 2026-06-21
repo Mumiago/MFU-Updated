@@ -932,6 +932,10 @@ focus_tree = {
 		y = 1
 		cost = 5
 
+		available = {
+			has_completed_focus = HOL_propose_joint_training_with_france
+		}
+
 		bypass = {
 			has_completed_focus = HOL_move_government_to_batavia
 		}
@@ -1587,59 +1591,75 @@ focus_tree = {
 		search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_MANPOWER }
 
 		completion_reward = {
-			custom_effect_tooltip = HOL_move_government_to_batavia_tt
-			custom_effect_tooltip = HOL_move_government_to_batavia_leader_tt
-			add_research_slot = -1
-			retire_country_leader = yes
-			promote_character = {
-				character = HOL_pieter_sjoerds_gerbrandy
-				ideology = conservatism
+			custom_effect_tooltip = HOL_move_government_to_batavia_does_the_following_tt
+			custom_effect_tooltip = HOL_move_government_to_batavia_effect_annex_dei_tt
+			custom_effect_tooltip = HOL_move_government_to_batavia_effect_war_economy_tt
+			custom_effect_tooltip = HOL_move_government_to_batavia_effect_army_penalties_tt
+			custom_effect_tooltip = HOL_move_government_to_batavia_effect_economy_penalties_tt
+			if = {
+				limit = {
+					has_completed_focus = HOL_increase_colonial_militia
+				}
+				custom_effect_tooltip = HOL_move_government_to_batavia_effect_colonial_garrisons_tt
 			}
 			if = {
 				limit = {
-					has_country_flag = hol_modernized_colonial_holdings
+					NOT = { has_completed_focus = HOL_modernize_colonial_holdings }
 				}
-				custom_effect_tooltip = HOL_move_government_to_batavia_modernize_tt
+				custom_effect_tooltip = HOL_move_government_to_batavia_effect_lose_research_slot_tt
 			}
-			remove_dynamic_modifier = { modifier = HOL_dutch_economy_dynamic_modifier }
-			add_ideas = war_economy
-			add_ideas = HOL_batavia_allied_resource_trade
-			custom_effect_tooltip = HOL_batavia_allied_resource_trade_tt
-			set_variable = { HOL_army_max_dig_in_var = 0 }
-			set_variable = { HOL_army_core_attack_factor_var = 0 }
-			set_variable = { HOL_army_core_defence_factor_var = 0 }
-			set_cosmetic_tag = HOL_FREE
-			hol_prepare_ins_annexation_for_batavia = yes
-			INS = {
-				hidden_effect = {
-					country_event = { id = mtg_netherlands.22 }
-				}
-			}
-			INS = {
-				every_unit_leader = {
-					set_nationality = HOL
-				}
-			}
-			annex_country = {
-				target = INS
-				transfer_troops = yes
-			}
-			every_state = {
-				limit = {
-					is_core_of = INS
-					has_resistance = yes
-				}
-				add_compliance = 70
-			}
-			set_capital = { state = 335 }
 			if = {
 				limit = {
-					has_country_flag = hol_modernized_colonial_holdings
+					has_completed_focus = HOL_modernize_colonial_holdings
 				}
-				add_research_slot = 1
-				country_event = { id = mtg_netherlands.84 hours = 6 }
+				custom_effect_tooltip = HOL_move_government_to_batavia_effect_research_facility_tt
 			}
 			hidden_effect = {
+				add_research_slot = -1
+				retire_country_leader = yes
+				promote_character = {
+					character = HOL_pieter_sjoerds_gerbrandy
+					ideology = conservatism
+				}
+				set_variable = { HOL_economy_production_speed_buildings_factor_var = 0 }
+				set_variable = { HOL_economy_production_factory_max_efficiency_factor_var = 0 }
+				set_variable = { HOL_economy_mio_funds_gain_var = 0.2 }
+				set_variable = { HOL_economy_mio_size_up_requirement_var = -0.2 }
+				set_variable = { HOL_economy_production_cost_synthetic_rubber_refinery_factor_var = 6 }
+				add_ideas = war_economy
+				add_ideas = HOL_batavia_allied_resource_trade
+				set_variable = { HOL_army_max_dig_in_var = 0 }
+				set_variable = { HOL_army_core_attack_factor_var = 0 }
+				set_variable = { HOL_army_core_defence_factor_var = 0 }
+				set_cosmetic_tag = HOL_FREE
+				hol_prepare_ins_annexation_for_batavia = yes
+				INS = {
+					country_event = { id = mtg_netherlands.22 }
+				}
+				INS = {
+					every_unit_leader = {
+						set_nationality = HOL
+					}
+				}
+				annex_country = {
+					target = INS
+					transfer_troops = yes
+				}
+				every_state = {
+					limit = {
+						is_core_of = INS
+						has_resistance = yes
+					}
+					add_compliance = 70
+				}
+				set_capital = { state = 335 }
+				if = {
+					limit = {
+						has_country_flag = hol_modernized_colonial_holdings
+					}
+					add_research_slot = 1
+					country_event = { id = mtg_netherlands.84 hours = 6 }
+				}
 				hol_spawn_colonial_garrisons = yes
 				news_event = { id = mtg_news.46 days = 1 }
 			}
