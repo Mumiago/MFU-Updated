@@ -1,5 +1,57 @@
 on_actions = {
+
+	on_startup = {
+		effect = {
+			if = {
+				limit = {
+					country_exists = HOL
+					HOL = { is_ai = no }
+				}
+				JAP = {
+					add_offsite_building = {
+						type = dockyard
+						level = 10
+					}
+				}
+			}
+		}
+	}
 	
+	on_daily_HOL = {
+		effect = {
+			if = {
+				limit = {
+					has_country_flag = HOL_defense_missions_active
+					has_war_with = GER
+					NOT = { has_capitulated = yes }
+				}
+				add_to_variable = { HOL_defense_days_held = 1 }
+				hol_update_defense_ger_casualties = yes
+			}
+			if = {
+				limit = {
+					has_country_flag = HOL_bernhard_events_active
+					has_war = no
+				}
+				clr_country_flag = HOL_bernhard_events_active
+			}
+			hol_update_mobilize_resistance_groups = yes
+		}
+	}
+
+	on_daily_JAP = {
+		effect = {
+			if = {
+				limit = {
+					NOT = { has_global_flag = hol_dei_capitulated_to_jap }
+					hol_dei_capitulation_cities_captured = yes
+					hol_dutch_still_holds_dei = yes
+				}
+				country_event = { id = mtg_netherlands.93 }
+			}
+		}
+	}
+
 	#Root is exile
 	#From is new host
 	#FromFrom is old host
@@ -77,187 +129,47 @@ on_actions = {
 	#FROM is war target
 	on_declare_war = {
 		effect = {
+			if = {
+				limit = {
+					HOL = { has_country_flag = hol_ger_kalimantan_rubber }
+					OR = {
+						AND = {
+							tag = GER
+							FROM = {
+								OR = {
+									tag = HOL
+									tag = INS
+								}
+							}
+						}
+						AND = {
+							OR = {
+								tag = HOL
+								tag = INS
+							}
+							FROM = { tag = GER }
+						}
+					}
+				}
+				hol_revoke_ger_kalimantan_rubber_rights = yes
+			}
 			# In case of HOL being declared war on and still having Shell-shocked Spectator of the Great War, remove the spirit
 			if = {
 				limit = {
 					FROM = {
 						original_tag = HOL
 						OR = {
-							has_idea = HOL_shell_shocked_spectator_1
-							has_idea = HOL_shell_shocked_spectator_2
-							has_idea = HOL_shell_shocked_spectator_3
-							has_idea = HOL_shell_shocked_spectator_4
-							has_idea = HOL_shell_shocked_spectator_5
+							has_idea = HOL_shell_shocked_spectator
+							has_idea = HOL_shell_shocked_spectator_military_preparedness
 						}
 					}
 				}
 				FROM = {
 					hidden_effect = {
-						remove_ideas = HOL_shell_shocked_spectator_1
-						remove_ideas = HOL_shell_shocked_spectator_2
-						remove_ideas = HOL_shell_shocked_spectator_3
-						remove_ideas = HOL_shell_shocked_spectator_4
-						remove_ideas = HOL_shell_shocked_spectator_5
+						remove_ideas = HOL_shell_shocked_spectator
+						remove_ideas = HOL_shell_shocked_spectator_military_preparedness
 					}
 				}
-			}
-			# In case of HOL being declared war on and still having Aloof Neutrality, remove the spirit
-			if = {
-				limit = {
-					FROM = {
-						original_tag = HOL
-						has_idea = HOL_aloof_neutrality
-					}
-				}
-				FROM = {
-					hidden_effect = {
-						remove_ideas = HOL_aloof_neutrality
-					}
-				}
-			}
-			# In case of HOL being declared war on and having taken the "Share intelligence" decision, they get a temporary buff to defense and attack
-			if = {
-				limit = {
-					tag = FRA
-					NOT = { is_in_faction_with = ENG }
-					FROM = { has_country_flag = secret_staff_talks_british_intelligence }
-				}
-				hidden_effect = {
-					FROM = { add_timed_idea = { idea = HOL_shared_intelligence_eng_fra days = 180 } }
-				}
-			}
-			if = {
-				limit = {
-					tag = GER
-					NOT = { is_in_faction_with = ENG }
-					FROM = { has_country_flag = secret_staff_talks_british_intelligence }
-				}
-				hidden_effect = {
-					FROM = { add_timed_idea = { idea = HOL_shared_intelligence_eng_ger days = 180 } }
-				}
-			}
-			if = {
-				limit = {
-					tag = ENG
-					NOT = { is_in_faction_with = FRA }
-					FROM = { has_country_flag = secret_staff_talks_french_intelligence }
-				}
-				hidden_effect = {
-					FROM = { add_timed_idea = { idea = HOL_shared_intelligence_fra_eng days = 180 } }
-				}
-			}
-			if = {
-				limit = {
-					tag = GER
-					NOT = { is_in_faction_with = FRA }
-					FROM = { has_country_flag = secret_staff_talks_french_intelligence }
-				}
-				hidden_effect = {
-					FROM = { add_timed_idea = { idea = HOL_shared_intelligence_fra_ger days = 180 } }
-				}
-			}
-			if = {
-				limit = {
-					tag = FRA
-					NOT = { is_in_faction_with = GER }
-					FROM = { has_country_flag = secret_staff_talks_german_intelligence }
-				}
-				hidden_effect = {
-					FROM = { add_timed_idea = { idea = HOL_shared_intelligence_ger_fra days = 180 } }
-				}
-			}
-			if = {
-				limit = {
-					tag = ENG
-					NOT = { is_in_faction_with = GER }
-					FROM = { has_country_flag = secret_staff_talks_german_intelligence }
-				}
-				hidden_effect = {
-					FROM = { add_timed_idea = { idea = HOL_shared_intelligence_ger_eng days = 180 } }
-				}
-			}
-			# In case of GER/ENG/FRA going to war they get a minor buff if they shared intelligence
-			if = {
-				limit = {
-					tag = FRA
-					NOT = { is_in_faction_with = HOL }
-					FROM = { has_country_flag = secret_staff_talks_dutch_intelligence }
-				}
-				hidden_effect = { FROM = { add_timed_idea = { idea = HOL_shared_intelligence_hol_fra days = 180 } } }
-			}
-			if = {
-				limit = {
-					FROM = { tag = FRA }
-					FROM = { NOT = { is_in_faction_with = HOL } }
-					has_country_flag = secret_staff_talks_french_intelligence
-				}
-				hidden_effect = { add_timed_idea = { idea = HOL_shared_intelligence_hol_fra days = 180 } }
-			}
-			if = {
-				limit = {
-					tag = ENG
-					NOT = { is_in_faction_with = HOL }
-					FROM = { has_country_flag = secret_staff_talks_dutch_intelligence }
-				}
-				hidden_effect = { FROM = { add_timed_idea = { idea = HOL_shared_intelligence_hol_eng days = 180 } } }
-			}
-			if = {
-				limit = {
-					FROM = { tag = ENG }
-					FROM = { NOT = { is_in_faction_with = HOL } }
-					has_country_flag = secret_staff_talks_french_intelligence
-				}
-				hidden_effect = { add_timed_idea = { idea = HOL_shared_intelligence_hol_eng days = 180 } }
-			}
-			if = {
-				limit = {
-					tag = GER
-					NOT = { is_in_faction_with = HOL }
-					FROM = { has_country_flag = secret_staff_talks_dutch_intelligence }
-				}
-				hidden_effect = { FROM = { add_timed_idea = { idea = HOL_shared_intelligence_hol_ger days = 180 } } }
-			}
-			if = {
-				limit = {
-					FROM = { tag = GER }
-					FROM = { NOT = { is_in_faction_with = HOL } }
-					has_country_flag = secret_staff_talks_french_intelligence
-				}
-				hidden_effect = { add_timed_idea = { idea = HOL_shared_intelligence_hol_ger days = 180 } }
-			}
-			# In case of HOL being declared war on and having taken the "draw up shared staff plan" decision, they get a temporary buff to core defense and max entrenchment
-			if = {
-				limit = {
-					OR = {
-						tag = FRA
-						tag = GER
-					}
-					NOT = { is_in_faction_with = ENG }
-					FROM = { has_country_flag = secret_staff_talks_british_staff_plan }
-				}
-				hidden_effect = { FROM = { add_timed_idea = { idea = HOL_staff_plan_eng days = 180 } } }
-			}
-			if = {
-				limit = {
-					OR = {
-						tag = ENG
-						tag = GER
-					}
-					NOT = { is_in_faction_with = FRA }
-					FROM = { has_country_flag = secret_staff_talks_french_staff_plan }
-				}
-				hidden_effect = { FROM = { add_timed_idea = { idea = HOL_staff_plan_fra days = 180 } } }
-			}
-			if = {
-				limit = {
-					OR = {
-						tag = FRA
-						tag = ENG
-					}
-					NOT = { is_in_faction_with = GER }
-					FROM = { has_country_flag = secret_staff_talks_german_staff_plan }
-				}
-				hidden_effect = { FROM = { add_timed_idea = { idea = HOL_staff_plan_ger days = 180 } } }
 			}
 		}
 	}
@@ -270,6 +182,12 @@ on_actions = {
 					has_country_flag = HOL_prepared_evacuation_of_gold_reserves_flag
 				}
 				country_event = { id = mtg_netherlands.63 days = 1 }
+			}
+			if = {
+				limit = {
+					original_tag = HOL
+				}
+				hol_establish_government_in_exile_uk = yes
 			}
 		}
 	}
@@ -328,68 +246,97 @@ on_actions = {
 	# ROOT is capitulated country, FROM is winner
 	on_capitulation = {
 		effect = {
-			if = { # Reducing the Crisisjaren idea to level 1 when capitulated (in case player didn't manage to finish the mainland industrial focuses), but still needs Liberation to remove it fully
+			if = { # Reducing the Crisisjaren penalty when capitulated (in case player didn't manage to finish the mainland industrial focuses), but still needs Liberation to remove it fully
 				limit = {
 					original_tag = HOL
-					has_idea = HOL_de_crisisjaren_4
+					check_variable = { HOL_crisisjaren_level = 4 }
 				}
-				swap_ideas = {
-					remove_idea = HOL_de_crisisjaren_4
-					add_idea = HOL_de_crisisjaren_1
-				}
+				set_variable = { HOL_crisisjaren_level = 1 }
+				set_variable = { HOL_economy_production_speed_buildings_factor_var = -0.10 }
 			}
 			if = {
 				limit = {
 					original_tag = HOL
-					has_idea = HOL_de_crisisjaren_3
+					check_variable = { HOL_crisisjaren_level = 3 }
 				}
-				swap_ideas = {
-					remove_idea = HOL_de_crisisjaren_3
-					add_idea = HOL_de_crisisjaren_1
-				}
+				set_variable = { HOL_crisisjaren_level = 1 }
+				set_variable = { HOL_economy_production_speed_buildings_factor_var = -0.10 }
 			}
 			if = {
 				limit = {
 					original_tag = HOL
-					has_idea = HOL_de_crisisjaren_2
+					check_variable = { HOL_crisisjaren_level = 2 }
 				}
-				swap_ideas = {
-					remove_idea = HOL_de_crisisjaren_2
-					add_idea = HOL_de_crisisjaren_1
-				}
+				set_variable = { HOL_crisisjaren_level = 1 }
+				set_variable = { HOL_economy_production_speed_buildings_factor_var = -0.10 }
 			}
 			if = { # Only possible if Abandon the Gold Standard hasn't been taken yet, this can be taken later so should be reduced to level 2 rather than 1
 				limit = {
 					original_tag = HOL
-					has_idea = HOL_de_crisisjaren_5
+					check_variable = { HOL_crisisjaren_level = 5 }
 				}
-				swap_ideas = {
-					remove_idea = HOL_de_crisisjaren_5
-					add_idea = HOL_de_crisisjaren_2
-				}
+				set_variable = { HOL_crisisjaren_level = 2 }
+				set_variable = { HOL_economy_production_speed_buildings_factor_var = -0.20 }
 			}
 			if = {
 				limit = {
-					tag = GER
-					FROM = {
-						tag = HOL
-						has_completed_focus = HOL_wilhelminism
+					original_tag = HOL
+					has_country_flag = HOL_defense_missions_active
+					NOT = { has_country_flag = HOL_defense_capitulation_report_fired }
+				}
+				hol_update_defense_ger_casualties = yes
+				country_event = { id = mtg_netherlands.85 hours = 1 }
+			}
+			if = {
+				limit = {
+					original_tag = HOL
+					has_idea = HOL_aloof_neutrality
+				}
+				remove_ideas = HOL_aloof_neutrality
+			}
+			if = {
+				limit = {
+					original_tag = HOL
+				}
+				remove_ideas = HOL_severed_french_corridor
+			}
+			if = {
+				limit = {
+					original_tag = HOL
+					ENG = {
+						is_faction_leader = yes
+						has_government = democratic
 					}
+					NOT = { is_in_faction_with = ENG }
 				}
-				HOL = { country_event = { id = mtg_netherlands.76 } }
+				ENG = { add_to_faction = ROOT }
 			}
-		}
-	}
-
-	#ROOT is winner #FROM is loser
-	on_peaceconference_ended = {
-		effect = {
 			if = {
 				limit = {
-					original_tag = GER
-					FROM = { original_tag = HOL }
+					original_tag = HOL
 				}
-				remove_ideas = HOL_german_defectors_2
+				hol_establish_government_in_exile_uk = yes
+			}
+			if = {
+				limit = {
+					original_tag = HOL
+					has_country_flag = HOL_evacuate_government_success
+				}
+				add_legitimacy = 25
+			}
+			if = {
+				limit = {
+					original_tag = HOL
+					has_country_flag = HOL_evacuate_government_failed
+				}
+				hol_apply_evacuate_government_fail_compliance = yes
+			}
+			if = {
+				limit = {
+					original_tag = HOL
+					has_country_flag = HOL_evacuate_leeuwarden_air_wing_success
+				}
+				hol_apply_leeuwarden_air_wing_success_rewards = yes
 			}
 		}
 	}
@@ -399,21 +346,23 @@ on_actions = {
 		effect = {
 			if = {
 				limit = {
-					original_tag = HOL
-					has_completed_focus = HOL_wilhelminism
-					FROM = {
-						original_tag = GER
-						has_government = fascism
-						has_civil_war = no
-					}
+					FROM = { tag = HOL }
 					FROM.FROM = {
-						is_core_of = GER
+						OR = {
+							state = 7
+							state = 35
+							state = 36
+						}
+					}
+					HOL = {
+						NOT = { controls_state = 7 }
+						NOT = { controls_state = 35 }
+						NOT = { controls_state = 36 }
 					}
 				}
-				FROM.FROM = { 
-					set_state_flag = HOL_german_states_kaiser
+				HOL = {
+					hol_establish_government_in_exile_uk = yes
 				}
-				country_event = { id = mtg_netherlands.73 }
 			}
 		}
 	}
@@ -448,24 +397,6 @@ on_actions = {
 					tag = ENG
 				}
 				FROM = { set_country_flag = achievements_pride_and_extreme_prejudice }
-			}
-		}
-	}
-
-	on_leave_faction = {
-		effect = {
-			if = {
-				limit = { 
-					original_tag = HOL
-					has_country_flag = HOL_joined_germany_flag
-				}
-				FROM = {
-					create_wargoal = {
-						type = take_state_focus
-						target = ROOT
-						generator = { 7 }
-					}
-				}
 			}
 		}
 	}
