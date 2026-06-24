@@ -274,6 +274,29 @@ GER_operation_barbarossa_category = {
 			country_event = germany.564
 		}
 	}
+	GER_battle_of_netherlands = {
+		visible = {
+			OR = {
+				NOT = {
+					has_war_with = HOL
+				}
+				AND = {
+					has_war_with = HOL
+					HOL = {
+						has_capitulated = no
+					}
+				}
+			}
+		}
+		icon = generic_civil_support
+
+		allowed = {
+			original_tag = GER
+		}
+		complete_effect = {
+			country_event = germany.567
+		}
+	}
 	GER_delete_einsatzgruppen = {
 		name = "Delete Einsatzgruppen"
 		visible = {
@@ -4707,6 +4730,57 @@ GER_case_anton_category = {
 }
 
 foreign_politics = {
+	GER_renege_on_dutch_arms_deals = {
+
+		icon = GFX_decision_generic_break_treaty
+
+		fire_only_once = yes
+
+		allowed = {
+			original_tag = GER
+		}
+
+		available = {
+			country_exists = HOL
+			NOT = { has_war_with = HOL }
+			NOT = { has_completed_focus = GER_danzig_or_war }
+			HOL = {
+				OR = {
+					has_country_flag = HOL_german_arms_shipments_active
+					has_active_mission = HOL_german_arms_shipment
+				}
+				NOT = { has_country_flag = HOL_german_shipments_halted }
+			}
+		}
+
+		visible = {
+			country_exists = HOL
+			NOT = { has_war_with = HOL }
+			NOT = { has_completed_focus = GER_danzig_or_war }
+			HOL = {
+				OR = {
+					has_country_flag = HOL_german_arms_shipments_active
+					has_active_mission = HOL_german_arms_shipment
+				}
+				NOT = { has_country_flag = HOL_german_shipments_halted }
+			}
+		}
+
+		complete_effect = {
+			add_cic = 10000
+			HOL = {
+				set_country_flag = HOL_german_shipments_halted
+				clr_country_flag = HOL_german_arms_shipments_active
+				remove_mission = HOL_german_arms_shipment
+				country_event = { id = mtg_netherlands.80 hours = 6 }
+			}
+		}
+
+		ai_will_do = {
+			factor = 0
+		}
+	}
+
 	GER_form_greater_german_reich = {
 
 		icon = generic_form_nation
@@ -5847,7 +5921,22 @@ foreign_politics = {
 					}
 				}
 				news_event = { hours = 1 id = news.204 }
-			}		
+			}
+			HOL = {
+				hol_revoke_ger_kalimantan_rubber_rights = yes
+				if = {
+					limit = {
+						OR = {
+							has_country_flag = HOL_german_arms_shipments_active
+							has_active_mission = HOL_german_arms_shipment
+						}
+						NOT = { has_country_flag = HOL_german_shipments_halted }
+					}
+					set_country_flag = HOL_german_shipments_halted
+					clr_country_flag = HOL_german_arms_shipments_active
+					remove_mission = HOL_german_arms_shipment
+				}
+			}
 			#add_named_threat = { threat = 15 name = GER_danzig_or_war }
 			GER = {
 				country_event = { id = germany.88 }
@@ -6433,7 +6522,6 @@ foreign_politics = {
 			}
 
 			BEL = { remove_ideas = neutrality_idea }
-			HOL = { remove_ideas = HOL_aloof_neutrality }
 			LUX = { remove_ideas = neutrality_idea }
 			if = { 
 				limit = { 
@@ -6441,13 +6529,6 @@ foreign_politics = {
 					is_ai = no
 				}
 				ENG = { add_to_faction = BEL }
-			}
-			if = {
-				limit = {
-					NOT = { HOL = { is_in_faction_with = GER } }
-					is_ai = no
-				}
-				ENG = { add_to_faction = HOL }
 			}
 			if = {
 				limit = {
@@ -6467,8 +6548,21 @@ foreign_politics = {
 					targeted_alliance = ENG
 					enemy = GER
 				}
+				hol_activate_defense_of_netherlands_missions = yes
 			}
-			LUX = { 
+			if = {
+				limit = {
+					country_exists = INS
+					INS = { is_subject_of = HOL }
+				}
+				INS = {
+					add_to_war = {
+						targeted_alliance = ENG
+						enemy = GER
+					}
+				}
+			}
+			LUX = {
 				add_to_war = { 
 					targeted_alliance = ENG
 					enemy = GER
