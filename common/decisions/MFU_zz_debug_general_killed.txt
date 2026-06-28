@@ -1,0 +1,31 @@
+# TEMPORARY DEBUG - remove after diagnosing the killer-side "enemy general killed" popup.
+#
+# Faithfully simulates the player-as-killer scenario in peacetime:
+#   - saves the player (ROOT) as the global killer target, exactly like mfu_kill_defeated_leader
+#   - fires the REAL mfu_general_death.1 event on a random enemy general (via unit_leader_event,
+#     same as the on_deployed_leader_defeated path)
+# If the "Enemy Commander Killed" popup appears -> the event killer branch works.
+# If it does NOT appear -> the event's killer branch (event_target:general_killer_country = {...})
+#   is the broken layer.
+# NOTE: this retires one random enemy general as a side effect (reload after testing).
+political_actions = {
+	MFU_DEBUG_test_enemy_general_killed = {
+		allowed = { always = yes }
+		available = { always = yes }
+		visible = { always = yes }
+		cost = 0
+		fire_only_once = no
+
+		complete_effect = {
+			save_global_event_target_as = general_killer_country
+			random_other_country = {
+				limit = { is_major = yes }
+				random_army_leader = {
+					unit_leader_event = { id = mfu_general_death.1 }
+				}
+			}
+		}
+
+		ai_will_do = { factor = 0 }
+	}
+}
