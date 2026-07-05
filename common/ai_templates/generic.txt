@@ -1,44 +1,14 @@
-motorized_generic = {
-
-	#blocked_for = {
-	#	GER
-	#	ENG
-	#	USA
-	#	JAP
-
-	#}
-
-	role = infantry
-
-
-	motorized_default = {
-	
-		
-	
-		
-		
-		target_template = {
-
-			regiments = {
-				mechanized = 2
-				motorized = 6
-				armored_car = 2
-				artillery_brigade_mot = 5
-			
-			}
-			support = {
-				mobile_engineer = 1
-				logistics_company = 1
-				maintenance_company = 1
-				field_hospital = 1
-				artillery = 1
-				field_gun_support = 1
-				artillery_heavy_support = 1 
-				recon_ac = 1 
-			}
-		}
-	}
-}
+# motorized_generic disabled: infantry role is now served solely by infantry_generic (see MFU AI rework).
+# Original motorized target template preserved here for reference / future re-enable.
+#motorized_generic = {
+#	role = infantry
+#	motorized_default = {
+#		target_template = {
+#			regiments = { mechanized = 2 motorized = 6 armored_car = 2 artillery_brigade_mot = 5 }
+#			support = { mobile_engineer = 1 logistics_company = 1 maintenance_company = 1 field_hospital = 1 artillery = 1 field_gun_support = 1 artillery_heavy_support = 1 recon_ac = 1 }
+#		}
+#	}
+#}
 armor_generic = {
 
 	#blocked_for = {
@@ -259,97 +229,116 @@ suppression_generic = {
 
 infantry_generic = {
 
-	#blocked_for = {
-	#	GER
-	#	JAP
-	#	ENG
-	#	USA
-	#	ITA
-		#SOV
-		#CHI
-		#PRC 
-	#	MAN
-	#}
-
 	role = infantry
 
+	upgrade_prio = {
+		factor = 1
+	}
 
-
-	
+	# Default fallback — always evaluated. Used when the game rule is OFF (no MFU_inf_* flag). Lowest prio so any rolled doctrine wins.
 	infantry_default = {
-		
-		
-	
-		
-	
-	
-		
+		upgrade_prio = { factor = 1 }
 		target_template = {
-		
 			support = {
 				engineer = 1
 				recon = 1
 				field_hospital = 1
 				artillery_heavy_support = 1
-				artillery = 1
-			}
-			
-			regiments = {
-				volkssturm_infantry = 11
-				artillery_brigade = 4
-			}
-		}
-		
-		
-	}
-}
-
-infantry_big_generic = {
-
-	#blocked_for = {
-		#GER
-	#	JAP
-		#ENG
-		#USA
-		#ITA
-		#SOV
-		#CHI
-		#PRC 
-	#	MAN
-	#}
-
-	role = infantry
-	
-
-
-	
-	infantry_default = {
-	
-		
-		
-	
-	
-		
-		target_template = {
-		
-			
-			support = {
-				engineer = 1
-				artillery_heavy_support = 1
-				recon = 1
 				signal_company = 1
-				logistics_company = 1
 			}
-			
 			regiments = {
 				infantry = 11
 				artillery_brigade = 4
 			}
 		}
-		
-		
+	}
+
+	# Artillery doctrine — arty-heavy line.
+	infantry_arty = {
+		enable = { has_country_flag = MFU_inf_arty }
+		upgrade_prio = { factor = 10 }
+		target_template = {
+			support = {
+				engineer = 1
+				recon = 1
+				field_hospital = 1
+				artillery_heavy_support = 1
+				signal_company = 1
+			}
+			regiments = {
+				infantry = 9
+				artillery_brigade = 6
+			}
+		}
+	}
+
+	# Anti-tank doctrine — AT delivered via regimental support.
+	infantry_at = {
+		enable = { has_country_flag = MFU_inf_at }
+		upgrade_prio = { factor = 10 }
+		target_template = {
+			support = {
+				engineer = 1
+				recon = 1
+				field_hospital = 1
+				artillery_heavy_support = 1
+			}
+			regimental_support = {
+				anti_tank_brigade = 1
+			}
+			regiments = {
+				infantry = 11
+				artillery_brigade = 4
+			}
+		}
+	}
+
+	# Anti-air doctrine — AA delivered via regimental support.
+	infantry_aa = {
+		enable = { has_country_flag = MFU_inf_aa }
+		upgrade_prio = { factor = 10 }
+		target_template = {
+			support = {
+				engineer = 1
+				recon = 1
+				field_hospital = 1
+				artillery_heavy_support = 1
+			}
+			regimental_support = {
+				anti_air = 1
+			}
+			regiments = {
+				infantry = 11
+				artillery_brigade = 4
+			}
+		}
+	}
+
+	# Combined-arms doctrine — infantry backed by a tank block.
+	infantry_combined = {
+		enable = { has_country_flag = MFU_inf_combined }
+		upgrade_prio = { factor = 10 }
+		target_template = {
+			support = {
+				mobile_engineer = 1
+				recon = 1
+				maintenance_company = 1
+				field_hospital = 1
+				artillery_heavy_support = 1
+			}
+			regimental_support = {
+				pack_artillery_brigade = 1
+			}
+			regiments = {
+				infantry = 9
+				medium_armor = 3
+				artillery_brigade = 3
+			}
+		}
 	}
 }
+
+# infantry_big_generic disabled: folded into infantry_generic (infantry_default is the 11-inf + 4-arty template).
 
 mountaineers_generic = {
 	
