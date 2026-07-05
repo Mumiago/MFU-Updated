@@ -11,108 +11,31 @@
 #}
 armor_generic = {
 
-	#blocked_for = {
-	#	GER
-	#	USA
-	#	SOV
+	role = armor
 
-	#}
+	upgrade_prio = {
+		factor = 2
 
-	role =armor
-
-
-	
-	light_armor_default = {
-
-
-		
-		upgrade_prio = {
-			factor = 1
-
-			modifier = {
-				factor = 1
+		modifier = {
+			factor = 3
+			OR = {
+				has_tech = basic_medium_tank
+				has_tech = basic_medium_tank_chassis
 			}
 		}
-		
-		
-		
-		target_template = {
-		
-			support = {
-				mobile_engineer = 1
-				logistics_company = 1
-				maintenance_company = 1
-				field_hospital = 1
-				artillery = 1
-				field_gun_support = 1
-				artillery_heavy_support = 1 
-				recon_ac = 1 
-
-
-			}
-			
-			regiments = {
-				light_armor = 3
-				motorized = 4
-				armored_car = 1
-				artillery_brigade_mot = 2
-			
-			}
-		}
-		
-		target_min_match = 0.5
 	}
 
-
-	heavy_armor_default = {
-
-		
-		
-		
-		
+	# Default fallback — always evaluated, lowest prio.
+	armor_default = {
+		upgrade_prio = { factor = 1 }
 		target_template = {
-		
 			support = {
 				mobile_engineer = 1
-				logistics_company = 1
 				maintenance_company = 1
-				field_hospital = 1
-				artillery = 1
-				field_gun_support = 1
-				artillery_heavy_support = 1 
-				recon_ac = 1 
-			}
-			
-			regiments = {
-				heavy_armor = 6
-				mechanized = 8
-				armored_car = 1
-			}
-		}
-		
-		target_min_match = 0.5
-	}
-
-	medium_armor_default = {
-
-		
-	
-	
-		
-		target_template = {
-			
-			
-			support = {
-				mobile_engineer = 1
 				logistics_company = 1
-				maintenance_company = 1
 				field_hospital = 1
-				artillery = 1
-				field_gun_support = 1
-				artillery_heavy_support = 1 
-				recon_ac = 1 
+				recon_ac = 1
 			}
-			
 			regiments = {
 				medium_armor = 7
 				motorized = 4
@@ -120,34 +43,102 @@ armor_generic = {
 				armored_car = 1
 			}
 		}
-		target_min_match = 0.5
 	}
-	heavy_armor_default = {
 
-		
-	
-		
-		
+	# Pure armor — mostly tanks + mobile line.
+	armor_pure = {
+		enable = { has_country_flag = MFU_tank_pure }
+		upgrade_prio = { factor = 10 }
 		target_template = {
-		
 			support = {
 				mobile_engineer = 1
-				logistics_company = 1
 				maintenance_company = 1
+				logistics_company = 1
 				field_hospital = 1
-				artillery = 1
-				field_gun_support = 1
-				artillery_heavy_support = 1 
-				recon_ac = 1 
+				recon_ac = 1
 			}
-			
+			regimental_support = {
+				anti_air = 1
+			}
 			regiments = {
-				heavy_armor = 6
-				mechanized = 8
-				armored_car = 1
+				medium_armor = 6
+				motorized = 5
+				mechanized = 4
 			}
 		}
-		target_min_match = 0.5
+	}
+
+	# Tank-destroyer emphasis — medium tanks + TD line.
+	armor_td = {
+		enable = { has_country_flag = MFU_tank_td }
+		upgrade_prio = { factor = 10 }
+		target_template = {
+			support = {
+				mobile_engineer = 1
+				maintenance_company = 1
+				logistics_company = 1
+				field_hospital = 1
+				recon_ac = 1
+			}
+			regimental_support = {
+				anti_air = 1
+			}
+			regiments = {
+				medium_armor = 5
+				medium_tank_destroyer_brigade = 2
+				motorized = 5
+				mechanized = 3
+			}
+		}
+	}
+
+	# Assault-gun emphasis — medium tanks + SP-artillery line.
+	armor_ag = {
+		enable = { has_country_flag = MFU_tank_ag }
+		upgrade_prio = { factor = 10 }
+		target_template = {
+			support = {
+				mobile_engineer = 1
+				maintenance_company = 1
+				logistics_company = 1
+				field_hospital = 1
+				recon_ac = 1
+			}
+			regimental_support = {
+				anti_air = 1
+			}
+			regiments = {
+				medium_armor = 5
+				light_sp_artillery_brigade = 2
+				motorized = 5
+				mechanized = 3
+			}
+		}
+	}
+
+	# Combined armor — tanks + TD + SP-artillery.
+	armor_combined = {
+		enable = { has_country_flag = MFU_tank_combined }
+		upgrade_prio = { factor = 10 }
+		target_template = {
+			support = {
+				mobile_engineer = 1
+				maintenance_company = 1
+				logistics_company = 1
+				field_hospital = 1
+				recon_ac = 1
+			}
+			regimental_support = {
+				anti_air = 1
+			}
+			regiments = {
+				medium_armor = 4
+				medium_tank_destroyer_brigade = 1
+				light_sp_artillery_brigade = 1
+				motorized = 5
+				mechanized = 4
+			}
+		}
 	}
 }
 
