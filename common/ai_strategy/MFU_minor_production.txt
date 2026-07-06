@@ -1,0 +1,21 @@
+# MFU: extend the tank/air production push to NON-major AI.
+# The per-nation 40/30/30 blocks and the majors-only AI_wants_tanks armor push only cover
+# GER/SOV/USA/ENG/JAP/ITA/FRA. Every other AI still ran generic infantry-favoring production.
+# This gives all non-major AI a tank/air mix so they build armor and aircraft too (capacity
+# now supplied by MFU_assembly_targets.txt). Values are moderate (minors are not major powers)
+# and are the tuning knob. Gated NOT is_major so it never stacks on the majors' tuned blocks.
+
+MFU_minor_production_mix = {
+	allowed = { always = yes }
+	enable = {
+		is_ai = yes
+		NOT = { is_major = yes }
+	}
+	# Want tank divisions (otherwise the AI never demands tank equipment).
+	ai_strategy = { type = role_ratio id = armor value = 40 }
+	# ~35% of military factories onto aircraft.
+	ai_strategy = { type = air_factory_balance value = 35 }
+	# Split the remaining land factories tank vs infantry.
+	ai_strategy = { type = equipment_production_factor id = armor value = 40 }
+	ai_strategy = { type = equipment_production_factor id = infantry value = 40 }
+}
