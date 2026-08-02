@@ -55,9 +55,9 @@ NDefines.NMilitary.CAPTAIN_EXPERIENCE_ON_SHIP_PER_MEDAL_MULT = 0.1 -- extra capt
 NDefines.NMilitary.MAX_REGIMENTAL_SUPPORT_WIDTH = 5 -- division designer: columns in the regimental-support slot grid
 NDefines.NMilitary.MAX_REGIMENTAL_SUPPORT_HEIGHT = 1 -- division designer: rows in the regimental-support slot grid
 NDefines.NMilitary.MAX_HQ_BATTALION_WIDTH = 4 -- Army HQ designer: columns in the HQ line-battalion grid
-NDefines.NMilitary.MAX_HQ_BATTALION_HEIGHT = 4 -- Army HQ designer: rows in the HQ line-battalion grid (so up to 1x4 line battalions)
+NDefines.NMilitary.MAX_HQ_BATTALION_HEIGHT = 5 -- Army HQ designer: rows in the HQ line-battalion grid (so up to 1x4 line battalions)
 NDefines.NMilitary.MAX_HQ_SUPPORT_WIDTH = 1 -- Army HQ designer: columns in the HQ support-company grid
-NDefines.NMilitary.MAX_HQ_SUPPORT_HEIGHT = 5 -- Army HQ designer: rows in the HQ support-company grid (so up to 1x4 support)
+NDefines.NMilitary.MAX_HQ_SUPPORT_HEIGHT = 4 -- Army HQ designer: rows in the HQ support-company grid 
 NDefines.NMilitary.MAX_HQ_REGIMENTAL_SUPPORT_WIDTH = 0 -- Army HQ designer: regimental-support columns (0 = HQs cannot take regimental support)
 NDefines.NMilitary.MAX_HQ_REGIMENTAL_SUPPORT_HEIGHT = 0 -- Army HQ designer: regimental-support rows (0 = disabled for HQs)
 NDefines.NMilitary.REGIMENTAL_SUPPORT_REQUIRED_BATTALIONS = { 3 } -- line battalions of a type required before its regimental-support slot unlocks
