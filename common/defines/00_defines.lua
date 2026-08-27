@@ -4926,7 +4926,7 @@ NIntel = {
 },
 NDoctrines = {
         DEFAULT_REWARD_MASTERY = 80.0,                         -- How much mastery is required for unlocking a doctrine reward, if no override is set
-        BASE_MASTERY_GAIN_TARGET_MANPOWER = 30000.0,           -- Beyond this amount of manpower contributing to mastery, mastery gain will start having diminishing returns (see doctrines documentation)
+        BASE_MASTERY_GAIN_TARGET_MANPOWER = 35000.0,           -- Beyond this amount of manpower contributing to mastery, mastery gain will start having diminishing returns (see doctrines documentation)
         TRAINING_MASTERY_GAIN_FACTOR = 0,                     -- How much training contributes to doctrine mastery relative to combat/missions
         MAX_MONTHLY_MASTERY_GAIN = 25.0,                        -- Monthly mastery gain will not exceed this value
         MIN_MASTERY_GAIN_PER_DAY = 0.0,                         -- If we have any mastery gain, it will be boosted to be at least this much per day (lower cap)
