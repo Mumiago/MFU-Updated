@@ -1861,7 +1861,7 @@ focus_tree = {
 		icon = GFX_goal_ammunitions
 		x = 2
 		y = 1
-		cost = 7.16
+		cost = 5
 		ai_will_do = {
 			factor = 200			
 		}
@@ -1884,37 +1884,7 @@ focus_tree = {
 	}
 
 
-	focus = {
-		id = ast_aircraft_corporation
-
-		prerequisite = { focus = ast_rebuild_armaments_industry }
-		relative_position_id = ast_rebuild_armaments_industry
-		icon = GFX_AST_boomerang
-		x = 0
-		y = 1
-		cost = 7.2
-		ai_will_do = {
-			factor = 200			
-		}
-		available = {
-
-		}
-		
-		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
-		completion_reward = {
-			custom_effect_tooltip = AST_cac_tt
-			517 = {
-					add_extra_state_shared_building_slots = 2
-					add_building_construction = {
-						type = arms_factory
-						level = 2
-						instant_build = yes
-					}
-			}
-			set_technology = { scout_plane1  = 1 }
-			add_equipment_to_stockpile = { type = medium_plane_scout_plane_airframe amount = 50 producer = AST }	
-		}
-	}
+	
 	focus = {
 		id = ast_commonwealth_ties
 
@@ -2800,7 +2770,7 @@ focus_tree = {
 		icon = GFX_goal_generic_army_doctrines
 		x = 1
 		y = 1
-		cost = 7.2
+		cost = 5
 		ai_will_do = {
 			factor = 200			
 		}
@@ -2850,7 +2820,7 @@ focus_tree = {
 		icon = GFX_focus_eng_special_air_service
 		x = 0
 		y = 2
-		cost = 7.2
+		cost = 5
 		ai_will_do = {
 			factor = 200			
 		}
@@ -3325,6 +3295,356 @@ focus_tree = {
 			unlock_decision_tooltip = { decision = AST_focus_labor_on_motor_production show_effect_tooltip = yes }	
 		}
 	}
+
+	############################
+	###### AIR SECTION ########
+	############################
+
+	focus = {
+		id = AST_air_command_of_the_ministry_of_the_army
+		icon = GFX_focus_generic_military_academy
+		
+		
+	
+		x = 37
+		y = 0
+		cost = 2.96
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		available_if_capitulated = no
+
+		completion_reward = {
+			air_experience = 100
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}
+	}
+		}
+		focus = {
+		id = ast_aircraft_corporation
+
+		prerequisite = { focus = AST_air_command_of_the_ministry_of_the_army }
+		relative_position_id = AST_air_command_of_the_ministry_of_the_army
+		icon = GFX_AST_boomerang
+		x = -1
+		y = 1
+		cost = 2.9
+		ai_will_do = {
+			factor = 200			
+		}
+		available = {
+
+		}
+		
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+			custom_effect_tooltip = AST_cac_tt
+			add_tech_bonus = {
+				category = air_equipment
+				uses = 1
+				bonus = 0.5
+				name = USA_expand_the_airforce
+			}
+			set_technology = { scout_plane1  = 1 }
+			add_equipment_to_stockpile = { type = medium_plane_scout_plane_airframe amount = 50 producer = AST }	
+		}
+	}
+
+	focus = {
+		id = AST_aluminium_plants
+		icon = GFX_ROM_light_metal_production
+		x = 1
+		y = 1
+
+		prerequisite = { focus = AST_air_command_of_the_ministry_of_the_army }
+		relative_position_id = AST_air_command_of_the_ministry_of_the_army
+		cost = 2.9
+
+
+		ai_will_do = {
+			factor = 3
+		}
+
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		completion_reward = {
+
+		    285 = {
+				add_resource = {
+					type = aluminium
+					amount = 30
+				}
+			}
+			517 = {
+				add_resource = {
+					type = aluminium
+					amount = 30
+				}
+			}
+		}
+	}
+
+	
+
+	focus = {
+		id = AST_Prioritise_Investment_in_the_CAC
+		icon = GFX_USA_aircraft_procurement
+		x = 0
+		y = 2
+
+		prerequisite = { focus = ast_aircraft_corporation   }
+		prerequisite = {   focus = AST_aluminium_plants }
+		relative_position_id = AST_air_command_of_the_ministry_of_the_army
+		cost = 5
+
+
+		ai_will_do = {
+			factor = 3
+		}
+
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		completion_reward = {
+			custom_effect_tooltip = available_research_team
+			show_ideas_tooltip = AST_commonwealth_aircraft_corporation_research
+                   285 = {
+				
+				add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = arms_factory
+						level = 2
+						instant_build = yes
+					}
+			}
+			random_core_state = {
+			
+				add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+					type = air_assembly
+					level = 1
+					instant_build = yes 
+			}
+			}
+			mio:AST_com_aircraft_corporation_organization = {
+				add_mio_funds_gain_factor = 0.2
+				add_mio_funds = 2400
+			}
+        
+		}
+	}
+
+	focus = {
+		id = AST_Project_Our_Airpower
+		prerequisite = { focus = AST_Prioritise_Investment_in_the_CAC }
+		icon = GFX_bomber
+		relative_position_id = AST_air_command_of_the_ministry_of_the_army
+		mutually_exclusive = {
+			focus = AST_Home_Defence
+		}
+		x = -1
+		y = 3
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = yes
+		
+		available = {
+					 
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			
+			add_tech_bonus = {
+				bonus = 0.75
+				uses = 1
+				category = cat_heavy_fighter
+			}
+			add_tech_bonus = {
+				bonus = 0.75
+				uses = 1
+				category = heavy_air
+			}
+			custom_effect_tooltip = AST_plane_1_tt	
+			if = {
+				limit = { 
+					has_tech = eng_tactical_bomber_1936
+					NOT = { has_tech = eng_tactical_bomber_1938	}
+				}
+				add_equipment_to_stockpile = { type = tac_bomber_equipment_1936 amount = 100 producer = AST }   
+			}	
+			if = {
+				limit = { 
+					has_tech = eng_tactical_bomber_1938
+					NOT = { has_tech = eng_tactical_bomber_1940	}
+				}
+				add_equipment_to_stockpile = { type = tac_bomber_equipment_1938 amount = 100 producer = AST }   
+			}
+			if = {
+				limit = { 
+					has_tech = eng_heavy_fighter_1936
+					NOT = { has_tech = eng_heavy_fighter_1938 }
+				}
+				add_equipment_to_stockpile = { type = heavy_fighter_equipment_1936 amount = 100 producer = AST }   
+			}
+			if = {
+				limit = { 
+					has_tech = eng_heavy_fighter_1938
+					NOT = { has_tech = eng_heavy_fighter_1940	}
+				}
+				add_equipment_to_stockpile = { type = heavy_fighter_equipment_1938 amount = 100 producer = AST }	
+			}
+		}
+	}
+		
+
+	focus = {
+		id = AST_Home_Defence
+		prerequisite = { focus = AST_Prioritise_Investment_in_the_CAC }
+		icon = GFX_ROM_air_superiority
+		relative_position_id = AST_air_command_of_the_ministry_of_the_army
+		mutually_exclusive = {
+			focus = AST_Project_Our_Airpower
+		}
+		x = 1
+		y = 3
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = yes
+		
+		available = {
+					 
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			
+			add_tech_bonus = {
+				category = light_fighter
+				uses = 1
+				bonus = 0.75
+				
+			}
+			add_tech_bonus = {
+				category = cas_bomber
+				uses = 1
+				bonus = 0.75
+				
+			}
+			custom_effect_tooltip = AST_plane_2_tt	
+			if = {
+				limit = { 
+					has_tech = eng_CAS_1937
+					
+				}
+				add_equipment_to_stockpile = { type = CAS_equipment_1937 amount = 130 producer = AST }   
+			}
+			if = {
+				limit = { 
+					has_tech = eng_fighter_1936
+					NOT = { has_tech = eng_fighter_1938	}
+				}
+				add_equipment_to_stockpile = { type = fighter_equipment_1936 amount = 130 producer = AST }   
+			}
+			if = {
+				limit = { 
+					has_tech = eng_fighter_1938
+					NOT = { has_tech = eng_fighter_1940	}
+				}
+				add_equipment_to_stockpile = { type = fighter_equipment_1938 amount = 130 producer = AST }   
+			}
+			
+		}
+	}
+
+	focus = {
+		id = AST_plane_factory_of_the_empire
+
+		prerequisite = { focus = AST_Home_Defence  focus = AST_Project_Our_Airpower}
+		relative_position_id = AST_air_command_of_the_ministry_of_the_army
+		icon = GFX_focus_generic_aircraft_production
+		x = 0
+		y = 4
+		cost = 5
+		ai_will_do = {
+			factor = 200			
+		}
+		available = {
+         has_war_with = GER
+		 has_deployed_air_force_size = {
+				size > 599
+	
+			}	
+					OR = {
+					has_tech = eng_fighter_1940 
+					has_tech = eng_heavy_fighter_1940}
+	
+		}
+		
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+			custom_effect_tooltip = AST_output_path_tt2
+
+
+				add_to_variable = {
+				AST2_industrial_capacity_factory_var = 0.05
+			}
+			
+			285 = {
+				
+				add_extra_state_shared_building_slots = 5
+					add_building_construction = {
+						type = arms_factory
+						level = 5
+						instant_build = yes
+					}
+			}
+		}
+			
+
+			
+	
+			
+		}
+	
+	
+
+	
+
+	
 	
 	############################
 	###### NAVY SECTION ########
