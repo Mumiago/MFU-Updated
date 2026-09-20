@@ -1178,7 +1178,7 @@ NMilitary = {
 	MAX_NUM_TRAITS = 7,					-- cant have more
 	ENEMY_AIR_SUPERIORITY_IMPACT = -0.4,           -- effect on defense due to enemy air superiorty
 	ENEMY_AIR_SUPERIORITY_DEFENSE = 0.45,	       -- more AA attack will approach this amount of help (diminishing returns)
-	ENEMY_AIR_SUPERIORITY_DEFENSE_STEEPNESS = 75, -- how quickly defense approaches the max impact diminishing returns curve
+	ENEMY_AIR_SUPERIORITY_DEFENSE_STEEPNESS = 125, -- how quickly defense approaches the max impact diminishing returns curve
 	ENEMY_AIR_SUPERIORITY_SPEED_IMPACT = -0.2,     -- effect on speed due to enemy air superiority
 
 	ANTI_AIR_TARGETTING_TO_CHANCE = 0.015,			-- Balancing value to determine the chance of ground AA hitting an attacking airplane, affecting both the effective average damage done by AA to airplanes, and the reduction of damage done by airplanes due to AA support
