@@ -798,15 +798,15 @@ NProduction = {
 	BASE_NAVAL_EQUIPMENT_CONVERSION_IC_COST_FACTOR = 0.3,       -- Fraction of the hull industry cost which is always included in the refitting cost.
 	BASE_LAND_EQUIPMENT_CONVERSION_IC_COST_FACTOR = 0.0,        -- Fraction of the chassis industry cost which is always included in the conversion cost.
 
-	FLOATING_HARBOR_MAX_NAV_FACTORIES_PER_LINE = 5,
+	FLOATING_HARBOR_MAX_NAV_FACTORIES_PER_LINE = 20,
 	RAILWAY_GUN_MAX_MIL_FACTORIES_PER_LINE = 15,
 	RAILWAY_GUN_REPAIR_SPEED = 8.0,			-- Railway gun strength repair speed per factory
 
 	MAX_EQUIPMENT_RESOURCES_NEED = 5, 	-- Max number of different strategic resources an equipment can be dependent on.
 	MAX_CIV_FACTORIES_PER_LINE = 15,	-- Max number of factories that can be assigned a single production line.
 	GENERATED_SHIP_NAMES_PER_LINE_MAX = 5, -- Above this naval lines will stop generating new names for the list																											 
-    DEFAULT_MAX_NAV_FACTORIES_PER_LINE = 20,
-	CONVOY_MAX_NAV_FACTORIES_PER_LINE = 20,
+    DEFAULT_MAX_NAV_FACTORIES_PER_LINE = 50,
+	CONVOY_MAX_NAV_FACTORIES_PER_LINE = 50,
 	CAPITAL_SHIP_MAX_NAV_FACTORIES_PER_LINE = 20,																				 
 	MAX_MIL_FACTORIES_PER_LINE = 300,
 	EFFICIENCY_LOSS_PER_UNUSED_DAY = 1,		-- Daily loss of efficiency for unused factory slots ( efficiency is tracked per factory slot in the production line )
