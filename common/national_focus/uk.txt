@@ -761,17 +761,8 @@ focus_tree = {
 		completion_reward = {
 			country_event = britain.22
 			add_political_power = 50
-			if = {
-				limit = {
-					282 = {
-						has_state_flag = no_china_war_state_flag
-						has_state_flag = no_partial_china_war_state_flag
-					}
-				}
-				add_war_support = 0.05
-			}
 		}
-	}	
+	}
 	focus = {
 		id = ENG_containment
 		icon = GFX_containment
@@ -3222,19 +3213,24 @@ focus_tree = {
 						volkssturm_infantry = { x = 2 y = 1 }
 						volkssturm_infantry = { x = 2 y = 2 }
 
-						pack_artillery_brigade = { x = 3 y = 0 }		
-						pack_artillery_brigade = { x = 3 y = 1 }
-						pack_artillery_brigade = { x = 3 y = 2 }
-						anti_tank_brigade = { x = 3 y = 3 }
+						field_gun_brigade = { x = 3 y = 0 }		
+						field_gun_brigade = { x = 3 y = 1 }
+						field_gun_brigade = { x = 3 y = 2 }
+						anti_air_heavy = { x = 3 y = 3 }
 						
+					}
+					regimental_support = {
+						anti_tank_brigade = { x = 0 y = 0 }
+						pack_artillery_brigade = { x = 0 y = 1 }
+						pack_artillery_brigade = { x = 0 y = 2 }
+						pack_artillery_brigade = { x = 0 y = 3 }
 					}
 
 					support = {
 						artillery = { x = 0 y = 0 }
-					   	engineer = { x = 0 y = 1 }
-					   	anti_air_company = { x = 0 y = 2 }
-						military_police = { x = 0 y = 3 }
-						logistics_company = { x = 0 y = 4 }
+						engineer = { x = 0 y = 1 }
+						military_police = { x = 1 y = 0 }
+						logistics_company = { x = 1 y = 1 }
 					}
 				}	
 
@@ -4143,4 +4139,173 @@ focus_tree = {
 		}
 		}
 	}
+
+	focus = {
+		id = UK_raj_cripps_mission
+		icon = GFX_focus_eng_motion_of_no_confidence
+		x = 10
+		y = 2
+		
+		cost = 10
+
+		ai_will_do = {
+			factor = 4
+		}
+
+		available = {
+			has_war_with = JAP
+			date > 1941.1.1
+			has_idea = RAJ_quit_india_movement
+			NOT = {
+				focus_progress = {
+					focus = UK_raj_cripps_mission
+					progress = 0.01
+				}
+			}
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+
+		completion_reward = {
+			swap_ideas = {
+				add_idea = RAJ_quit_india_movement_2
+				remove_idea = RAJ_quit_india_movement
+			}
+		}
+	}
+
+	# india joing full into the war, 70 days for raj itself and 35 days for uk
+
+	focus = {
+		id = UK_raj_cripps_mission
+		icon = GFX_focus_eng_motion_of_no_confidence
+		x = 17
+		y = 11
+		
+		cost = 5
+
+		ai_will_do = {
+			factor = 4
+		}
+		prerequisite = { focus = ENG_churchill_war_minsistry }
+		prerequisite = {  focus = ENG_arms_purchases_in_the_us }
+
+		available = {
+			has_war_with = JAP
+			date > 1941.1.1
+			has_idea = RAJ_quit_india_movement
+			NOT = {
+				focus_progress = {
+					focus = RAJ_cripps_mission
+					progress = 0.01
+				}
+			}
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+
+		completion_reward = {
+			swap_ideas = {
+				add_idea = RAJ_quit_india_movement_2
+				remove_idea = RAJ_quit_india_movement
+			}
+		}
+	}
+
+	focus = {
+		id = ENG_raj_make_use_of_the_muslim_league 
+		icon = GFX_focus_RAJ_two_nation_theory
+		relative_position_id = UK_raj_cripps_mission
+		
+		prerequisite = { 
+			focus = UK_raj_cripps_mission 
+		}
+		x = 0
+		y = 1
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		available = {
+			NOT = {
+				focus_progress = {
+					focus = RAJ_cripps_mission
+					progress = 0.01
+				}
+			}
+		}
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		completion_reward = {
+			swap_ideas = {
+				add_idea = RAJ_quit_india_movement_3
+				remove_idea = RAJ_quit_india_movement_2
+			}			
+		}
+	}
+	
+	focus = {
+		id = ENG_raj_quit_india_removed
+		icon = GFX_squash_movement
+		prerequisite = { focus = ENG_raj_make_use_of_the_muslim_league }
+		relative_position_id = UK_raj_cripps_mission
+		x = 0
+		y = 2
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 100
+		}
+		
+		available = {
+			NOT = {
+				focus_progress = {
+					focus = RAJ_quit_india_removed
+					progress = 0.01
+				}
+			}
+		}
+		bypass = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+
+		completion_reward = {
+			remove_ideas = RAJ_quit_india_movement_3		
+		}
+	}
+	
+	
 }

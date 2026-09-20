@@ -206,32 +206,6 @@ on_actions = {
 	on_startup = {
 		effect = {
 			every_country = {
-				limit = {
-					NOT = {
-						tag = GER 
-						tag = SOV 
-						tag = ITA 
-						tag = JAP 
-						tag = ENG
-					}
-					
-				
-				}
-				add_ideas = minor_starting_bonus
-			}
-			every_country = {
-				limit = {
-					OR = {
-						tag = ITA 
-						tag = JAP
-						tag = ENG  
-					}
-					
-				
-				}
-				add_ideas = semi_major_starting_bonus
-			}
-			every_country = {
 				limit = { has_government = democratic }
 				if = {
 					limit = {
@@ -2115,13 +2089,18 @@ on_actions = {
 							mountaineers = { x = 2 y = 1 }
 							mountaineers = { x = 2 y = 2 }
 										
-							mountain_gun_brigade = { x = 3 y = 0 }
-							mountain_gun_brigade = { x = 3 y = 1 }
-							mountain_gun_brigade = { x = 3 y = 2 }
-							mountain_gun_brigade = { x = 3 y = 3 }	
+							artillery_brigade = { x = 3 y = 0 }
+							artillery_brigade = { x = 3 y = 1 }
+							artillery_brigade = { x = 3 y = 2 }
+							artillery_brigade = { x = 3 y = 3 }	
 							
-							mountain_gun_brigade = { x = 4 y = 0 }
+							artillery_brigade = { x = 4 y = 0 }
 								
+						}
+						regimental_support = {
+							mountain_gun_brigade = { x = 0 y = 0 }
+							mountain_gun_brigade = { x = 0 y = 1 }
+							mountain_gun_brigade = { x = 0 y = 2 }
 						}
 		
 						support = {
@@ -2129,10 +2108,8 @@ on_actions = {
 							engineer = { x = 0 y = 1 }
 							recon = { x = 0 y = 2 }
 							anti_air_heavy_support = { x = 0 y = 3 }
-							maintenance_company = { x = 0 y = 4 }
-							logistics_company = { x = 0 y = 5 }
-							field_hospital = { x = 0 y = 6 }
-							signal_company = { x = 0 y = 7 }
+							maintenance_company = { x = 1 y = 0 }
+							logistics_company = { x = 1 y = 1 }
 						}
 
 					}
@@ -2159,13 +2136,18 @@ on_actions = {
 							mountaineers = { x = 2 y = 2 }
 							mountaineers = { x = 2 y = 3 }
 
-							mountain_gun_brigade = { x = 3 y = 0 }
-							mountain_gun_brigade = { x = 3 y = 1 }
-							mountain_gun_brigade = { x = 3 y = 2 }
-							mountain_gun_brigade = { x = 3 y = 3 }
+							artillery_brigade = { x = 3 y = 0 }
+							artillery_brigade = { x = 3 y = 1 }
+							artillery_brigade = { x = 3 y = 2 }
+							artillery_brigade = { x = 3 y = 3 }
 
-							mountain_gun_brigade = { x = 4 y = 0 }
-							mountain_gun_brigade = { x = 4 y = 1 }
+							artillery_brigade = { x = 4 y = 0 }
+							artillery_brigade = { x = 4 y = 1 }
+						}
+						regimental_support = {
+							mountain_gun_brigade = { x = 0 y = 0 }
+							mountain_gun_brigade = { x = 0 y = 1 }
+							mountain_gun_brigade = { x = 0 y = 2 }
 						}
 		
 						support = {
@@ -2173,10 +2155,8 @@ on_actions = {
 							engineer = { x = 0 y = 1 }
 							recon = { x = 0 y = 2 }
 							anti_air_heavy_support = { x = 0 y = 3 }
-							maintenance_company = { x = 0 y = 4 }
-							logistics_company = { x = 0 y = 5 }
-							field_hospital = { x = 0 y = 6 }
-							signal_company = { x = 0 y = 7 }
+							maintenance_company = { x = 1 y = 0 }
+							logistics_company = { x = 1 y = 1 }
 						}
 
 					}
@@ -2186,7 +2166,7 @@ on_actions = {
 					create_unit = {
 						division = "division_template = \"Gurkhas\" start_experience_factor = 0.5 start_equipment_factor = 1"
 						owner = RAJ
-						count = 6
+						count = 4
 					}
 				}
 				
@@ -2747,7 +2727,7 @@ on_actions = {
 				}
 				ITA = {
 			
-					add_to_variable = { ITA_land_mastery_gain_factor = 0.1 }
+					add_to_variable = { ITA_land_mastery_gain_factor = 0.3 }
 				}
 				if = {
 					limit = {
@@ -2993,7 +2973,7 @@ on_actions = {
 				}
 				ITA = {
 				
-					add_to_variable = { ITA_land_mastery_gain_factor = 0.1 }
+					add_to_variable = { ITA_land_mastery_gain_factor = 0.3 }
 				}
 				if = {
 					limit = {
@@ -3539,7 +3519,40 @@ on_actions = {
 				}
 			}	
 		} 
-		
+		if = {
+			limit = {
+				FROM = { 
+					OR = {
+						is_in_faction_with = GER
+						tag = GER 
+					}
+				}
+				ROOT = { tag = NOR }
+			}
+			if = {
+				limit = {
+					FRA = {
+						check_variable = {
+							var = FRA_initial_war_euthasium_army_core_attack_factor_modifier
+							value = 0
+							compare = greater_than
+						}
+					}
+				}
+				FRA = {
+					add_to_variable = { var = FRA_initial_war_euthasium_army_core_attack_factor_modifier value = -0.075 }
+					add_to_variable = { var = FRA_initial_war_euthasium_army_core_defence_factor_modifier value = -0.075 }
+				}
+				
+			}
+			
+			else = {
+				FRA = {
+					add_to_variable = { var = FRA_initial_war_euthasium_army_attack_factor_modifier value = -0.075 }
+					add_to_variable = { var = FRA_initial_war_euthasium_army_defence_factor_modifier value = -0.075 }
+				}
+			}
+		}
 		 if = {
 			limit = {
 				FROM = { 
@@ -3953,11 +3966,11 @@ on_actions = {
 					JAP = {
 						add_to_variable = {
 							var = JAP_resistance_target_modifier
-							value = 0.15
+							value = 0.1
 						}
 						add_to_variable = {
 							var = MAN_resistance_target_modifier
-							value = 0.15
+							value = 0.1
 						}
 						add_days_remove  = {
 							decision = JAP_strike_on_the_southern_resource_area
@@ -3974,7 +3987,7 @@ on_actions = {
 					MAN = {
 						add_to_variable = {
 							var = MAN_resistance_target_modifier
-							value = 0.15
+							value = 0.1
 						}
 					}
 				
@@ -4058,11 +4071,11 @@ on_actions = {
 				JAP = {
 					add_to_variable = {
 						var = JAP_resistance_target_modifier
-						value = 0.1
+						value = 0.05
 					}
 					add_to_variable = {
 							var = MAN_resistance_target_modifier
-							value = 0.1
+							value = 0.05
 						}
 					add_days_remove  = {
 						decision = JAP_strike_on_the_southern_resource_area
@@ -4080,7 +4093,7 @@ on_actions = {
 				MAN = {
 					add_to_variable = {
 						var = MAN_resistance_target_modifier
-						value = 0.1
+						value = 0.05
 					}
 				}
 			}
@@ -4886,17 +4899,17 @@ on_actions = {
 					JAP = {
 						add_to_variable = {
 							var = JAP_resistance_target_modifier
-							value = -0.15
+							value = -0.1
 						}
 						add_to_variable = {
 							var = MAN_resistance_target_modifier
-							value = -0.15
+							value = -0.1
 						}
 					}
 					MAN = {
 						add_to_variable = {
 							var = MAN_resistance_target_modifier
-							value = -0.15
+							value = -0.1
 						}
 					}
 				}
@@ -4966,18 +4979,18 @@ on_actions = {
 					JAP = {
 						add_to_variable = {
 							var = JAP_resistance_target_modifier
-							value = -0.1
+							value = -0.05
 						}
 						add_to_variable = {
 							var = MAN_resistance_target_modifier
-							value = -0.1
+							value = -0.05
 						}
 
 					}
 					MAN = {
 						add_to_variable = {
 							var = MAN_resistance_target_modifier
-							value = -0.1
+							value = -0.05
 						}
 					}
 				}
@@ -5345,40 +5358,8 @@ on_actions = {
 
 	#ROOT is new controller #FROM is old controller #FROM.FROM is state ID
 	on_state_control_changed = {
-
+		
 		effect = {
-			
-
-
-			# --- MFU: Pacific compliance reset on conquest / liberation ---
-			# Japan's faction (JAP/MAN/RCC) takes a Pacific Allied-held state -> compliance to 0
-			if = {
-				limit = {
-					ROOT = {
-						OR = {
-							tag = JAP
-							is_in_faction_with = JAP
-						}
-					}
-					FROM.FROM = { is_pacific_compliance_zone = yes }
-				}
-				FROM.FROM = { set_compliance = 0 }
-			}
-			# Allied faction (led by ENG) retakes such a state -> compliance back to 90
-			if = {
-				limit = {
-					ROOT = {
-						OR = {
-							tag = ENG
-							is_in_faction_with = ENG
-						}
-					}
-					FROM.FROM = { is_pacific_compliance_zone = yes }
-				}
-				FROM.FROM = { set_compliance = 90 }
-			}
-			# --- end MFU Pacific compliance ---
-
 			# New owner is PRC
 			IF = {
 				limit = {
@@ -5474,29 +5455,6 @@ on_actions = {
 				
 					set_country_flag = invasion_started_flag
 					
-				}
-				if = {
-					limit = {
-						FRA = {
-							check_variable = {
-								var = FRA_initial_war_euthasium_army_core_attack_factor_modifier
-								value = 0
-								compare = greater_than
-							}
-						}
-					}
-					FRA = {
-						add_to_variable = { var = FRA_initial_war_euthasium_army_core_attack_factor_modifier value = -0.075 }
-						add_to_variable = { var = FRA_initial_war_euthasium_army_core_defence_factor_modifier value = -0.075 }
-					}
-					
-				}
-				
-				else = {
-					FRA = {
-						add_to_variable = { var = FRA_initial_war_euthasium_army_attack_factor_modifier value = -0.075 }
-						add_to_variable = { var = FRA_initial_war_euthasium_army_defence_factor_modifier value = -0.075 }
-					}
 				}
 			}
 			if = {
@@ -6382,11 +6340,11 @@ on_actions = {
 				JAP = {
 					add_to_variable = {
 						var = JAP_resistance_target_modifier
-						value = 0.03
+						value = 0.02
 					}
 					add_to_variable = {
 						var = MAN_resistance_target_modifier
-						value = 0.03
+						value = 0.02
 					}
 					add_days_remove  = {
 						decision = JAP_strike_on_the_southern_resource_area
@@ -6402,7 +6360,7 @@ on_actions = {
 				MAN = {
 					add_to_variable = {
 						var = MAN_resistance_target_modifier
-						value = 0.03
+						value = 0.02
 					}
 				}
 			}
@@ -6443,18 +6401,18 @@ on_actions = {
 					JAP = {
 						add_to_variable = {
 							var = JAP_resistance_target_modifier
-							value = -0.03
+							value = -0.02
 						}
 						add_to_variable = {
 							var = MAN_resistance_target_modifier
-							value = -0.03
+							value = -0.02
 						}
 
 					}
 					MAN = {
 						add_to_variable = {
 							var = MAN_resistance_target_modifier
-							value = -0.03
+							value = -0.02
 						}
 					}
 				}
