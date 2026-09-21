@@ -2572,7 +2572,10 @@ on_actions = {
 						is_in_faction_with = GER 
 					} 
 				}
-				ROOT = { tag = HOL }
+				ROOT = {
+					tag = HOL
+					is_ai = no
+				}
 			}
 			ENG = {
 				set_autonomy = {
@@ -2584,6 +2587,86 @@ on_actions = {
 			INS = {
 				give_military_access = USA
 			}		
+		}
+		if = {
+			limit = {
+				ROOT = {
+					original_tag = HOL
+					is_ai = yes
+				}
+				NOT = { has_global_flag = HOL_ai_capitulation_colonial_transfer }
+			}
+			set_global_flag = HOL_ai_capitulation_colonial_transfer
+			if = {
+				limit = {
+					country_exists = ENG
+					ENG = { NOT = { has_capitulated = yes } }
+				}
+				every_state = {
+					limit = {
+						OR = {
+							state = 695 # Curacao
+							state = 309 # Suriname
+						}
+						OR = {
+							is_owned_by = HOL
+							is_owned_by = INS
+						}
+					}
+					ENG = { transfer_state = PREV }
+				}
+			}
+			if = {
+				limit = {
+					country_exists = AST
+					AST = { NOT = { has_capitulated = yes } }
+					country_exists = INS
+				}
+				AST = {
+					set_autonomy = {
+						target = INS
+						autonomous_state = autonomy_puppet
+						freedom_level = 0.4
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					country_exists = AST
+					AST = { NOT = { has_capitulated = yes } }
+				}
+				release = INS
+				AST = {
+					set_autonomy = {
+						target = INS
+						autonomous_state = autonomy_puppet
+						freedom_level = 0.4
+					}
+				}
+			}
+			if = {
+				limit = {
+					country_exists = GER
+				}
+				every_state = {
+					limit = {
+						is_core_of = HOL
+					}
+					GER = { transfer_state = PREV }
+				}
+			}
+			if = {
+				limit = {
+					country_exists = AST
+					AST = { NOT = { has_capitulated = yes } }
+				}
+				AST = {
+					annex_country = {
+						target = HOL
+						transfer_troops = yes
+					}
+				}
+			}
 		}
 		if = {
 			limit = {
