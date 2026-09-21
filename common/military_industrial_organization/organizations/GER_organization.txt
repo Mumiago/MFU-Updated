@@ -1237,6 +1237,18 @@ henschel = {
 		limit_to_equipment_type = { 
 			mio_cat_eq_all_heavy_tank
 		}
+		on_complete = {
+			FROM = {
+					random_core_state = {
+							add_extra_state_shared_building_slots = 1
+							add_building_construction = {
+								type = tank_assembly
+								level = 1
+								instant_build = yes 
+							}
+					}
+				}
+		}
 
 	}
 	trait = {
@@ -1316,6 +1328,42 @@ henschel = {
 		}
 		limit_to_equipment_type = { 
 			mio_cat_eq_all_heavy_tank
+		}
+
+		on_complete = {
+			FROM = {
+				custom_effect_tooltip = GER_henschel_factories_tt
+				if = {
+					limit = { 
+							mio:henschel = {			
+								has_mio_number_of_completed_traits > 2
+							}
+					}
+					random_core_state = {
+							add_extra_state_shared_building_slots = 1
+							add_building_construction = {
+								type = tank_assembly
+								level = 1
+								instant_build = yes 
+							}
+					}
+				}
+				if = {
+					limit = { 
+							mio:henschel = {
+								has_mio_number_of_completed_traits > 5
+							}
+					}
+					random_core_state = {
+							add_extra_state_shared_building_slots = 1
+							add_building_construction = {
+								type = tank_assembly
+								level = 1
+								instant_build = yes 
+							}
+					}
+				}
+			}
 		}
 	}
 	trait = {
@@ -1500,7 +1548,7 @@ Krupp = {
 		token = imp_eq
 		name = "Improved Standard Equipment"
 		icon = GFX_generic_mio_department_icon_support_production
-		position = { x=3 y=1 }
+		position = { x=2 y=1 }
 		relative_position_id = hardned_armor
 		any_parent = { hardned_armor }
 		equipment_bonus = {
@@ -1513,13 +1561,78 @@ Krupp = {
 		token = rugged_components
 		name = "Rugged Components"
 		icon = GFX_generic_mio_department_icon_tank_general_production
-		position = { x=0 y=1 }
-		relative_position_id = imp_eq
-		any_parent = { imp_eq }
+		position = { x=4 y=1 }
+		relative_position_id = hardned_armor
+		any_parent = { hardned_armor }
 		equipment_bonus = {
 			reliability = 0.05
 		}
 	}
+	trait = {
+		token = improve_production_capacity
+		name = "Extend Production to Other Companies"
+		icon = GFX_generic_mio_department_icon_tank_medium_tank_production
+		position = { x=-1 y=1 }
+		relative_position_id = rugged_components
+		all_parents = { imp_eq rugged_components }
+		production_bonus = {
+			production_capacity_factor = 0.05
+		}
+		on_complete = {
+			FROM = {
+				custom_effect_tooltip = GER_krupp_factories_tt
+				random_core_state = {
+							prioritize = { 51 48 41 26 }
+							add_extra_state_shared_building_slots = 1
+							add_building_construction = {
+								type = tank_assembly
+								level = 1
+								instant_build = yes 
+							}
+				}
+				if = {
+					limit = { 
+							original_TAG = GER
+							mio:Krupp = {
+								has_mio_size > 5
+							}
+					}
+					random_core_state = {
+							prioritize = { 51 48 41 26 }
+							add_extra_state_shared_building_slots = 1
+							add_building_construction = {
+								type = tank_assembly
+								level = 1
+								instant_build = yes 
+							}
+					}
+				}
+				else_if = {
+					limit = { 
+							OR = {
+								original_TAG = BUL
+								original_TAG = SPR
+								original_TAG = EFR
+								original_TAG = FIN
+							}
+							mio:BUL_Krupp = {
+								has_mio_size > 5
+							}
+					}
+					random_core_state = {
+							prioritize = { 51 48 41 26 }
+							add_extra_state_shared_building_slots = 1
+							add_building_construction = {
+								type = tank_assembly
+								level = 1
+								instant_build = yes 
+							}
+					}
+				}
+			}
+		}
+	}
+
 	#trait = {
 		#token = spare_parts
 		#name = "Improve Spare Part Availability"
@@ -1542,7 +1655,7 @@ Krupp = {
 		icon = GFX_generic_mio_trait_icon_efficiency_cap
         #mutually_exclusive = { spare_parts }
 		position = { x=0 y=3 }
-		all_parents = { rugged_components long_barrel }
+		all_parents = { improve_production_capacity long_barrel }
 		any_parent = { cast_components welding_methods }
 		relative_position_id = hardned_armor
 		equipment_bonus = {
@@ -1634,6 +1747,19 @@ BMM = {
 		equipment_bonus = {
 			build_cost_ic = -0.05
 			reliability = -0.05
+		}
+		on_complete = {
+			FROM = {
+				random_core_state = {
+							prioritize = { 46 43 48 809 65 }
+							add_extra_state_shared_building_slots = 1
+							add_building_construction = {
+								type = tank_assembly
+								level = 1
+								instant_build = yes 
+							}
+				}
+			}
 		}
 	}
 	trait = {
@@ -1760,6 +1886,19 @@ BMM = {
 		}
 		limit_to_equipment_type = { 
 			mio_cat_eq_all_light_tank
+		}
+		on_complete = {
+			FROM = {
+				random_core_state = {
+							prioritize = { 46 43 48 809 65 }
+							add_extra_state_shared_building_slots = 1
+							add_building_construction = {
+								type = tank_assembly
+								level = 1
+								instant_build = yes 
+							}
+				}
+			}
 		}
 	}
 }
