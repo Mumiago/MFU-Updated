@@ -9136,11 +9136,32 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		available = {
-			custom_trigger_tooltip = {
-				tooltip = GER_udet_dispute_settled_tt
-				OR = {
+			# Stage 3: Udet is dead (date is a fallback if the Udet events never fired)
+			if = {
+				limit = {
+					OR = {
+						has_country_flag = GER_udet_dispute_settled
+						date > 1942.6.1
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = GER_new_generalluftzeugmeister_tt
+					always = yes
+				}
+			}
+			# Stage 1: waiting on Udet's Report (germany.1334)
+			else_if = {
+				limit = { NOT = { has_country_flag = GER_udets_report_received } }
+				custom_trigger_tooltip = {
+					tooltip = GER_udet_report_pending_tt
+					has_country_flag = GER_udets_report_received
+				}
+			}
+			# Stage 2: waiting on Udet's death (germany.1335)
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = GER_udet_dispute_settled_tt
 					has_country_flag = GER_udet_dispute_settled
-					date > 1942.6.1 # Fallback if the Udet events never fired
 				}
 			}
 		}
