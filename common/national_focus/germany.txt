@@ -9193,6 +9193,70 @@ focus_tree = {
 				days = 90
 			}
 			custom_effect_tooltip = GER_bomber_line
+			hidden_effect = {
+				# Ural Bomber path: latest strategic bomber, capped at 1941
+				if = {
+					limit = {
+						has_completed_focus = GER_Ural_Bomber
+						OR = {
+							has_tech = ger_strategic_bomber_1939
+							has_tech = strategic_bomber_1939
+						}
+					}
+					if = {
+						limit = {
+							OR = {
+								has_tech = ger_strategic_bomber_1941
+								has_tech = strategic_bomber_1941
+							}
+						}
+						add_equipment_production = {
+							equipment = { type = strat_bomber_equipment_1941 creator = "GER" }
+							requested_factories = 50
+							efficiency = 60
+						}
+					}
+					else = {
+						add_equipment_production = {
+							equipment = { type = strat_bomber_equipment_1939 creator = "GER" }
+							requested_factories = 50
+							efficiency = 60
+						}
+					}
+				}
+				# Otherwise (Fast Bomber path): latest tactical bomber, capped at 1940
+				else_if = {
+					limit = { has_tech = ger_tactical_bomber_1940 }
+					add_equipment_production = {
+						equipment = { type = tac_bomber_equipment_1940 creator = "GER" }
+						requested_factories = 50
+						efficiency = 60
+					}
+				}
+				else_if = {
+					limit = { has_tech = ger_tactical_bomber_1938 }
+					add_equipment_production = {
+						equipment = { type = tac_bomber_equipment_1938 creator = "GER" }
+						requested_factories = 50
+						efficiency = 60
+					}
+				}
+				else_if = {
+					limit = { has_tech = ger_tactical_bomber_1936 }
+					add_equipment_production = {
+						equipment = { type = tac_bomber_equipment_1936 creator = "GER" }
+						requested_factories = 50
+						efficiency = 60
+					}
+				}
+				else = {
+					add_equipment_production = {
+						equipment = { type = tac_bomber_equipment_1934 creator = "GER" }
+						requested_factories = 50
+						efficiency = 60
+					}
+				}
+			}
 			custom_effect_tooltip = line_break_tt
 			custom_effect_tooltip = GER_blitz_expire_tt
 			
@@ -9428,12 +9492,20 @@ focus_tree = {
 		ai_will_do = {
 			factor = 1
 		}
-		available_if_capitulated = yes	
+		available_if_capitulated = yes
+
+		# Only checked when selecting the focus; it keeps going if the fighter count recovers
+		cancel_if_invalid = no
+		continue_if_invalid = yes
 
 		available = {
-			OR = {
-				date > 1942.11.1
-
+			custom_trigger_tooltip = {
+				tooltip = GER_luftwaffe_in_ruins_tt
+				# Fighters + heavy fighters, in stockpile and deployed in air wings
+				set_temp_variable = { GER_fighter_total = num_equipment@small_plane_airframe }
+				add_to_temp_variable = { GER_fighter_total = num_equipment@medium_plane_fighter_airframe }
+				add_to_temp_variable = { GER_fighter_total = num_deployed_planes_with_type@fighter }
+				check_variable = { GER_fighter_total < 4000 }
 			}
 		}
 
