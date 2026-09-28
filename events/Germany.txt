@@ -7510,3 +7510,84 @@ country_event = {
 		}
 	}
 }
+
+# 50 days after GER_battle_of_britain - Britain learns the Blitz is coming (global news)
+news_event = {
+	id = germany.1336
+	title = germany.1336.t
+	desc = germany.1336.d
+	picture = GFX_news_event_churchill_ruins
+
+	major = yes
+
+	is_triggered_only = yes # Fired from GER_battle_of_britain
+
+	trigger = {
+		country_exists = ENG
+	}
+
+	option = { # Britain
+		name = germany.1336.a
+		trigger = { tag = ENG }
+		ENG = { add_war_support = -0.05 }
+	}
+
+	option = { # Britain
+		name = germany.1336.b
+		trigger = { tag = ENG }
+		ENG = { add_war_support = -0.05 }
+	}
+
+	option = { # Britain's allies
+		name = germany.1336.c
+		trigger = {
+			NOT = { tag = ENG }
+			is_in_faction_with = ENG
+		}
+	}
+
+	option = { # Germany
+		name = germany.1336.e
+		trigger = {
+			tag = GER
+			NOT = { is_in_faction_with = ENG }
+		}
+	}
+
+	option = { # Everyone else
+		name = germany.1336.f
+		trigger = {
+			NOT = { tag = ENG }
+			NOT = { tag = GER }
+			NOT = { is_in_faction_with = ENG }
+		}
+	}
+}
+
+# Operation Feuerzauber auto-restart, fired one day after GER_spanish_airwings ends
+country_event = {
+	id = germany.1337
+	hidden = yes
+
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = {
+				has_country_flag = GER_feuerzauber_auto
+				NOT = { has_decision = GER_spanish_airwings }
+				tag = GER
+				OR = {
+					has_completed_focus = GER_break_the_reds
+					has_completed_focus = GER_mission_to_iberia
+				}
+				NOT = { has_global_flag = scw_over }
+			}
+			activate_decision = GER_spanish_airwings
+		}
+		else_if = {
+			limit = { has_global_flag = scw_over }
+			clr_country_flag = GER_feuerzauber_auto
+		}
+	}
+}
