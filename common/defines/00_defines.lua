@@ -679,10 +679,10 @@ NProject = {
 	NEEDED_SUPPLY_FOR_FULL_SPEED_PROJECT = 3.0,	-- Supply needed in province to get full research speed for special project
     MINIMUM_PROJECT_SPEED_FACTOR_FROM_RESOURCE_SHORTAGE = 0.2, -- Minimum special project research speed factor based on resource shortage^M
 	ITERATION_REWARD_DEFAULT_WEIGHT = 1.0,			-- If no weight is specified, set it to 1.0
-	DEFAULT_PROJECT_COMPLETION_SCIENTIST_EXPERIENCE_GAIN = 400.0,	-- Default experience gain for assigned scientist when a project is completed
+	DEFAULT_PROJECT_COMPLETION_SCIENTIST_EXPERIENCE_GAIN = 450.0,	-- Default experience gain for assigned scientist when a project is completed
 	SCIENTIST_INJURED_FACTOR = 0.0,                 -- A factor to reduce the amount of progress gained in a program with attached injured scientist. E.g. 0.5 reduces the progress by 50%
 	RECRUIT_SCIENTIST_ONE_TRAIT_CHANCE = 0.35,		-- Chance to get one trait when creating a scientist. E.g. 0.35 = 35% chance to get a trait
-	SCIENTIST_BASIC_RESEARCH_DAILY_XP_GAIN = 0.6,	-- Daily experience gain for doing basic research
+	SCIENTIST_BASIC_RESEARCH_DAILY_XP_GAIN = 0.65,	-- Daily experience gain for doing basic research
 	RECRUIT_SCIENTIST_COST = {						-- Amount of pp to hire a scientist based on available scientist
 		25,			-- pp cost if no available scientist
 		50,			-- pp cost if 1 available scientist
