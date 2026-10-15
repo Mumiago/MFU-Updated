@@ -1,0 +1,108 @@
+# Cost follows designer slot order.
+# Flat module costs are added, then engine and armor-type multipliers hit the running total.
+# Sloping, radio, and the special module are added after those multipliers.
+# Engine and armor upgrade levels are flat IC added at the end: 0.1 and 0.25 per level.
+
+SOV_ll_reset_tank_design = {
+	clr_country_flag = SOV_ll_class_light
+	clr_country_flag = SOV_ll_class_medium
+	clr_country_flag = SOV_ll_class_heavy
+	clr_country_flag = SOV_ll_chassis_lt40
+	clr_country_flag = SOV_ll_chassis_lt43
+	clr_country_flag = SOV_ll_chassis_mt41
+	clr_country_flag = SOV_ll_chassis_mt43
+	clr_country_flag = SOV_ll_chassis_hv41
+	clr_country_flag = SOV_ll_chassis_hv44
+
+	set_variable = { SOV_ll_chassis_cost = 0 }
+	set_variable = { SOV_ll_gun_id = 1 }
+	set_variable = { SOV_ll_gun_cost = 0 }
+	set_variable = { SOV_ll_gun_token = token:tank_small_cannon }
+	set_variable = { SOV_ll_turret_id = 1 }
+	set_variable = { SOV_ll_turret_cost = 0 }
+	set_variable = { SOV_ll_turret_token = token:tank_light_two_man_tank_turret }
+	set_variable = { SOV_ll_susp_id = 1 }
+	set_variable = { SOV_ll_susp_cost = 0 }
+	set_variable = { SOV_ll_susp_token = token:tank_bogie_suspension }
+	set_variable = { SOV_ll_engine_id = 1 }
+	set_variable = { SOV_ll_engine_cost = 0 }
+	set_variable = { SOV_ll_engine_mult = 0 }
+	set_variable = { SOV_ll_engine_token = token:tank_gasoline_engine }
+	set_variable = { SOV_ll_armor_id = 1 }
+	set_variable = { SOV_ll_armor_mult = 0 }
+	set_variable = { SOV_ll_armor_token = token:tank_riveted_armor }
+	set_variable = { SOV_ll_slope_id = 1 }
+	set_variable = { SOV_ll_slope_cost = 0 }
+	set_variable = { SOV_ll_slope_token = token:unsloped_armor }
+	set_variable = { SOV_ll_radio_id = 0 }
+	set_variable = { SOV_ll_radio_cost = 0 }
+	set_variable = { SOV_ll_radio_token = token:empty }
+	set_variable = { SOV_ll_special_id = 0 }
+	set_variable = { SOV_ll_special_cost = 0 }
+	set_variable = { SOV_ll_special_token = token:empty }
+	set_variable = { SOV_ll_chassis_token = token:light_tank_chassis_1940 }
+	set_variable = { SOV_ll_engine_level = 0 }
+	set_variable = { SOV_ll_armor_level = 0 }
+	clear_variable = SOV_ll_tank_cost
+}
+
+SOV_ll_calculate_tank_cost = {
+	set_variable = { SOV_ll_tank_cost = SOV_ll_chassis_cost }
+	add_to_variable = { SOV_ll_tank_cost = SOV_ll_gun_cost }
+	add_to_variable = { SOV_ll_tank_cost = SOV_ll_turret_cost }
+	add_to_variable = { SOV_ll_tank_cost = SOV_ll_susp_cost }
+	add_to_variable = { SOV_ll_tank_cost = SOV_ll_engine_cost }
+	set_temp_variable = { SOV_ll_mult = 1 }
+	add_to_temp_variable = { SOV_ll_mult = SOV_ll_engine_mult }
+	multiply_variable = { var = SOV_ll_tank_cost value = SOV_ll_mult }
+	set_temp_variable = { SOV_ll_mult = 1 }
+	add_to_temp_variable = { SOV_ll_mult = SOV_ll_armor_mult }
+	multiply_variable = { var = SOV_ll_tank_cost value = SOV_ll_mult }
+	add_to_variable = { SOV_ll_tank_cost = SOV_ll_slope_cost }
+	add_to_variable = { SOV_ll_tank_cost = SOV_ll_radio_cost }
+	add_to_variable = { SOV_ll_tank_cost = SOV_ll_special_cost }
+	set_temp_variable = { SOV_ll_upgrade_ic = SOV_ll_engine_level }
+	multiply_temp_variable = { var = SOV_ll_upgrade_ic value = 0.1 }
+	add_to_variable = { SOV_ll_tank_cost = SOV_ll_upgrade_ic }
+	set_temp_variable = { SOV_ll_upgrade_ic = SOV_ll_armor_level }
+	multiply_temp_variable = { var = SOV_ll_upgrade_ic value = 0.25 }
+	add_to_variable = { SOV_ll_tank_cost = SOV_ll_upgrade_ic }
+}
+
+SOV_ll_create_lend_lease_tank = {
+	meta_effect = {
+		text = {
+			create_equipment_variant = {
+				name = "Lend-Lease Tank"
+				type = [CHASSIS]
+				allow_without_tech = yes
+				mark_older_equipment_obsolete = no
+				upgrades = {
+					tank_nsb_engine_upgrade = [ENG]
+					tank_nsb_armor_upgrade = [ARM]
+				}
+				modules = {
+					main_armament_slot = [GUN]
+					turret_type_slot = [TURRET]
+					suspension_type_slot = [SUSP]
+					engine_type_slot = [ENGINE]
+					armor_type_slot = [ARMOR]
+					armor_sloping_slot = [SLOPE]
+					radio_slot = [RADIO]
+					special_type_slot_1 = [SPECIAL]
+				}
+			}
+		}
+		CHASSIS = "[?SOV_ll_chassis_token.GetTokenKey]"
+		GUN = "[?SOV_ll_gun_token.GetTokenKey]"
+		TURRET = "[?SOV_ll_turret_token.GetTokenKey]"
+		SUSP = "[?SOV_ll_susp_token.GetTokenKey]"
+		ENGINE = "[?SOV_ll_engine_token.GetTokenKey]"
+		ARMOR = "[?SOV_ll_armor_token.GetTokenKey]"
+		SLOPE = "[?SOV_ll_slope_token.GetTokenKey]"
+		RADIO = "[?SOV_ll_radio_token.GetTokenKey]"
+		SPECIAL = "[?SOV_ll_special_token.GetTokenKey]"
+		ENG = "[?SOV_ll_engine_level|.0]"
+		ARM = "[?SOV_ll_armor_level|.0]"
+	}
+}
