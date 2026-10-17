@@ -1,0 +1,633 @@
+# Captured Generals Expanded - all on_actions merged into one block (original file order kept).
+# Repeated on_action names (on_annex, on_peace, ...) are appended by the game, same as vanilla 00_on_actions.txt.
+on_actions = {
+    # ===== cge_custody_on_actions.txt =====
+    on_startup = {
+        effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                cge_custody_bootstrap = yes
+                every_country = {
+                    limit = {
+                        check_variable = { var = cge_captured_general_count value = 1 compare = greater_than }
+                    }
+                    cge_dedupe_duplicate_slots = yes
+                }
+            }
+        }
+    }
+    on_peaceconference_ended = {
+        effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                ROOT = {
+                    save_event_target_as = cge_settlement_victor
+                }
+                FROM = {
+                    cge_custody_drop_defeated_slots = yes
+                }
+                set_global_flag = cge_custody_settlement_pending
+                cge_custody_schedule_sync = yes
+            }
+        }
+    }
+    on_peace = {
+        effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                set_global_flag = cge_custody_settlement_pending
+                cge_custody_schedule_sync = yes
+            }
+        }
+    }
+    on_war_relation_added = {
+        effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                ROOT = {
+                    remove_from_array = {
+                        array = cge_custody_victors
+                        value = FROM
+                    }
+                }
+                FROM = {
+                    remove_from_array = {
+                        array = cge_custody_victors
+                        value = ROOT
+                    }
+                }
+                set_global_flag = cge_custody_settlement_pending
+                cge_custody_schedule_sync = yes
+            }
+        }
+    }
+    on_state_control_changed = {
+        effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                if = {
+                    limit = {
+                        check_variable = {
+                            var = cge_captured_general_count
+                            value = 0
+                            compare = greater_than
+                        }
+                        NOT = { has_country_flag = cge_state_rescue_refresh_pending }
+                    }
+                    set_country_flag = cge_state_rescue_refresh_pending
+                    country_event = {
+                        id = cge_state_rescue_refresh.1
+                        hours = 1
+                    }
+                }
+                FROM = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                var = cge_captured_general_count
+                                value = 0
+                                compare = greater_than
+                            }
+                            NOT = { has_country_flag = cge_state_rescue_refresh_pending }
+                        }
+                        set_country_flag = cge_state_rescue_refresh_pending
+                        country_event = {
+                            id = cge_state_rescue_refresh.1
+                            hours = 1
+                        }
+                    }
+                }
+                cge_custody_schedule_sync = yes
+            }
+        }
+    }
+    on_civil_war_end_before_annexation = {
+        effect = {
+            if = {
+                limit = { NOT = { has_global_flag = cge_logic_disabled } }
+                cge_custody_inherit_civil_war_prisoners = yes
+            }
+        }
+    }
+    on_civil_war_end = {
+        effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                set_global_flag = cge_custody_settlement_pending
+                cge_custody_schedule_sync = yes
+            }
+        }
+    }
+    on_annex = {
+        effect = {
+            ROOT = {
+                if = {
+                    limit = { check_variable = { var = cge_captured_general_count value = 0 compare = greater_than } }
+                    set_country_flag = { flag = cge_recent_annexation days = 2 }
+                    cge_recapture_annex_freed = yes
+                }
+            }
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                set_global_flag = cge_custody_settlement_pending
+                cge_custody_schedule_sync = yes
+            }
+        }
+    }
+    on_liberate = {
+        effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                cge_custody_schedule_sync = yes
+            }
+        }
+    }
+
+    # ===== cge_deferred_on_actions.txt =====
+    on_peaceconference_started = {
+        effect = {
+            if = {
+                limit = {
+                    cge_deferred_mode_active = yes
+                }
+                ROOT = {
+                    cge_deferred_snapshot_country = yes
+                }
+                FROM = {
+                    cge_deferred_snapshot_country = yes
+                }
+            }
+        }
+    }
+    on_civil_war_end_before_annexation = {
+        effect = {
+            if = {
+                limit = {
+                    cge_deferred_mode_active = yes
+                }
+                FROM = {
+                    cge_deferred_snapshot_country = yes
+                }
+            }
+        }
+    }
+    on_puppet = {
+        effect = {
+            cge_deferred_request_recheck = yes
+        }
+    }
+    on_release_as_puppet = {
+        effect = {
+            cge_deferred_request_recheck = yes
+        }
+    }
+    on_civil_war_end = {
+        effect = {
+            cge_deferred_request_recheck = yes
+        }
+    }
+    on_peaceconference_ended = {
+        effect = {
+            cge_deferred_request_recheck = yes
+        }
+    }
+    on_annex = {
+        effect = {
+            FROM = {
+                cge_deferred_snapshot_cores = yes
+            }
+            ROOT = {
+                cge_deferred_snapshot_cores = yes
+            }
+            cge_deferred_request_recheck = yes
+        }
+    }
+    on_ruling_party_change = {
+        effect = {
+            cge_deferred_request_recheck = yes
+        }
+    }
+    on_government_change = {
+        effect = {
+            cge_deferred_request_recheck = yes
+        }
+    }
+    on_war = {
+        effect = {
+            if = {
+                limit = { cge_deferred_mode_active = yes }
+                ROOT = { cge_deferred_snapshot_country = yes }
+                FROM = { cge_deferred_snapshot_country = yes }
+            }
+        }
+    }
+    on_war_relation_added = {
+        effect = {
+            if = {
+                limit = { cge_deferred_mode_active = yes }
+                ROOT = { cge_deferred_snapshot_country = yes }
+                FROM = { cge_deferred_snapshot_country = yes }
+            }
+        }
+    }
+
+    # ===== cge_gameplay_on_actions.txt =====
+    # MFU: on_deployed_leader_defeated removed - cge_register_capture is called from
+    # mfu_capture_defeated_leader (MFU_leader_capture_scripted_effects.txt) so killed generals are skipped.
+    on_daily = {
+        effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                every_country = {
+                    limit = {
+                        is_ai = no
+                        NOT = {
+                            has_country_flag = cge_numeric_registry_initialized
+                        }
+                    }
+                    set_country_flag = cge_numeric_registry_initialized
+                }
+                if = {
+                    limit = {
+                        OR = {
+                            check_variable = {
+                                var = cge_reparations_receipts_total
+                                value = 0
+                                compare = greater_than
+                            }
+                            check_variable = {
+                                var = cge_reparations_payments_total
+                                value = 0
+                                compare = greater_than
+                            }
+                        }
+                    }
+                    cge_reparations_display_daily_tick = yes
+                }
+                if = {
+                    limit = {
+                        is_ai = no
+                    }
+                    cge_daily_update_captured_generals = yes
+                    if = {
+                        limit = {
+                            check_variable = {
+                                var = cge_captured_general_count
+                                value = 0
+                                compare = greater_than
+                            }
+                        }
+                        clr_country_flag = cge_postwar_event_scan_scheduled
+                        cge_postwar_watch_tick = yes
+                    }
+                    if = {
+                        limit = {
+                            OR = {
+                                has_global_flag = cge_custody_sync_pending
+                                has_global_flag = cge_custody_settlement_pending
+                            }
+                        }
+                        cge_custody_sync_world = yes
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = cge_negotiation_event_scheduled
+                            NOT = { has_variable = cge_negotiation_active_group }
+                            check_variable = {
+                                var = cge_negotiation_queue^num
+                                value = 0
+                                compare = greater_than
+                            }
+                        }
+                        clr_country_flag = cge_negotiation_event_scheduled
+                        cge_negotiation_schedule_next = yes
+                    }
+                    if = {
+                        limit = {
+                            has_country_flag = cge_show_overview_window
+                        }
+                        cge_sync_patience_decay = yes
+                        cge_refresh_selected_cache = yes
+                        cge_update_timer_frames = yes
+                    }
+                }
+                if = {
+                    limit = {
+                        has_country_flag = cge_pow_compliance_active
+                    }
+                    cge_pow_compliance_daily_tick = yes
+                }
+                if = {
+                    limit = {
+                        is_ai = no
+                        check_variable = {
+                            var = cge_captured_general_count
+                            value = 0
+                            compare = greater_than
+                        }
+                    }
+                    add_to_variable = {
+                        var = cge_pow_weekly_tick_days
+                        value = 1
+                    }
+                    if = {
+                        limit = {
+                            check_variable = {
+                                var = cge_pow_weekly_tick_days
+                                value = 7
+                                compare = equals
+                            }
+                        }
+                        set_variable = {
+                            cge_pow_weekly_tick_days = 0
+                        }
+                        cge_pow_weekly_update = yes
+                        if = {
+                            limit = {
+                                has_country_flag = cge_show_overview_window
+                                has_variable = cge_overview_selected_slot
+                            }
+                            cge_pow_refresh_ui = yes
+                            cge_refresh_selected_cache = yes
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    # ===== cge_postwar_on_actions.txt =====
+    on_peaceconference_ended = {
+        effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                if = {
+                    limit = {
+                        ROOT = {
+                            is_ai = no
+                        }
+                    }
+                    FROM = {
+                        save_global_event_target_as = cge_postwar_detected_origin
+                    }
+                    ROOT = {
+                        cge_postwar_arm_exact_peace_origin = yes
+                        if = {
+                            limit = {
+                                has_country_flag = cge_postwar_exact_origin_matched
+                            }
+                            clr_country_flag = cge_postwar_exact_origin_matched
+                            cge_postwar_schedule_event_scan = yes
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        FROM = {
+                            is_ai = no
+                        }
+                    }
+                    ROOT = {
+                        save_global_event_target_as = cge_postwar_detected_origin
+                    }
+                    FROM = {
+                        cge_postwar_arm_exact_peace_origin = yes
+                        if = {
+                            limit = {
+                                has_country_flag = cge_postwar_exact_origin_matched
+                            }
+                            clr_country_flag = cge_postwar_exact_origin_matched
+                            cge_postwar_schedule_event_scan = yes
+                        }
+                    }
+                }
+            }
+        }
+    }
+    on_peace = {
+        effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                every_country = {
+                    limit = {
+                        is_ai = no
+                        has_country_flag = cge_postwar_watch_active
+                    }
+                    cge_postwar_schedule_event_scan = yes
+                }
+            }
+        }
+    }
+    on_civil_war_end = {
+        effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                every_country = {
+                    limit = {
+                        is_ai = no
+                        check_variable = {
+                            var = cge_captured_general_count
+                            value = 0
+                            compare = greater_than
+                        }
+                    }
+                    cge_postwar_schedule_event_scan = yes
+                }
+            }
+        }
+    }
+    on_annex = {
+        effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                every_country = {
+                    limit = {
+                        is_ai = no
+                        check_variable = {
+                            var = cge_captured_general_count
+                            value = 0
+                            compare = greater_than
+                        }
+                    }
+                    cge_postwar_schedule_event_scan = yes
+                }
+            }
+        }
+    }
+
+    # ===== cge_pow_compliance_on_actions.txt =====
+    on_peace = {
+        effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                every_country = {
+                    limit = {
+                        has_country_flag = cge_pow_compliance_active
+                    }
+                    cge_pow_compliance_refresh = yes
+                }
+            }
+        }
+    }
+    on_peaceconference_ended = {
+        effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                every_country = {
+                    limit = {
+                        has_country_flag = cge_pow_compliance_active
+                    }
+                    cge_pow_compliance_refresh = yes
+                }
+            }
+        }
+    }
+    on_state_control_changed = {
+        effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                FROM.FROM = {
+                    if = {
+                        limit = {
+                            has_state_flag = cge_pow_compliance_managed_state
+                        }
+                        cge_pow_compliance_clear_state = yes
+                    }
+                }
+                if = {
+                    limit = {
+                        has_country_flag = cge_pow_compliance_active
+                    }
+                    cge_pow_compliance_refresh = yes
+                }
+            }
+        }
+    }
+    on_civil_war_end = {
+        effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                every_country = {
+                    limit = {
+                        has_country_flag = cge_pow_compliance_active
+                    }
+                    cge_pow_compliance_refresh = yes
+                }
+            }
+        }
+    }
+    on_annex = {
+        effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                every_country = {
+                    limit = {
+                        has_country_flag = cge_pow_compliance_active
+                    }
+                    cge_pow_compliance_refresh = yes
+                }
+            }
+        }
+    }
+
+    # ===== cge_return_on_actions.txt =====
+    on_civil_war_end_before_annexation = {
+        effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                cge_return_record_civil_war_successor = yes
+                cge_return_transfer_returned_generals_to_winner = yes
+            }
+        }
+    }
+    on_civil_war_end = {
+        effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                cge_return_record_civil_war_successor = yes
+                cge_return_transfer_returned_generals_to_winner = yes
+                cge_custody_rebind_ended_civil_war = yes
+            }
+        }
+    }
+}

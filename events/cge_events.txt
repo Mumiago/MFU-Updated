@@ -1,0 +1,2556 @@
+# Captured Generals Expanded - merged into one file (original file order kept).
+add_namespace = cge_custody
+add_namespace = cge_exchange
+add_namespace = cge
+add_namespace = cge_execution
+add_namespace = cge_execution_news
+add_namespace = cge_recruitment
+add_namespace = cge_trial
+add_namespace = cge_state_rescue_refresh
+add_namespace = cge_negotiations
+add_namespace = cge_postwar
+add_namespace = cge_profile
+add_namespace = cge_recovery
+add_namespace = cge_risk
+
+# ===== cge_custody_events.txt =====
+country_event = {
+    id = cge_custody.1
+    hidden = yes
+    is_triggered_only = yes
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+            if = {
+                limit = {
+                    OR = {
+                        has_global_flag = cge_custody_sync_pending
+                        has_global_flag = cge_custody_settlement_pending
+                    }
+                }
+                cge_custody_sync_world = yes
+            }
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_custody_1
+        }
+    }
+}
+
+# ===== cge_exchange_events.txt =====
+country_event = {
+    id = cge_exchange.1
+    title = CGE_EXCHANGE_SELECT_TITLE
+    desc = {
+        trigger = {
+            check_variable = {
+                var = cge_exchange_page_count
+                value = 0
+                compare = greater_than
+            }
+        }
+        text = CGE_EXCHANGE_SELECT_DESC
+    }
+    desc = {
+        trigger = {
+            check_variable = {
+                var = cge_exchange_page_count
+                value = 0
+                compare = equals
+            }
+        }
+        text = CGE_EXCHANGE_EMPTY_DESC
+    }
+    picture = GFX_cge_negotiation_correspondence
+    is_triggered_only = yes
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+            hidden_effect = {
+                cge_exchange_build_page = yes
+            }
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_exchange_1
+        }
+    }
+    option = {
+        name = CGE_EXCHANGE_CANCEL
+        trigger = {
+            check_variable = {
+                var = cge_exchange_offset
+                value = 0
+                compare = equals
+            }
+            check_variable = {
+                var = cge_exchange_page_count
+                value = 0
+                compare = greater_than
+            }
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_exchange_clear_session = yes
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_EXCHANGE_CANDIDATE_1
+        trigger = {
+            check_variable = {
+                var = cge_exchange_candidate_1^num
+                value = 0
+                compare = greater_than
+            }
+        }
+        custom_effect_tooltip = CGE_EXCHANGE_PROPOSE_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    set_variable = {
+                        cge_exchange_choice = 1
+                    }
+                    cge_exchange_choose = yes
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_EXCHANGE_CANDIDATE_2
+        trigger = {
+            check_variable = {
+                var = cge_exchange_candidate_2^num
+                value = 0
+                compare = greater_than
+            }
+        }
+        custom_effect_tooltip = CGE_EXCHANGE_PROPOSE_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    set_variable = {
+                        cge_exchange_choice = 2
+                    }
+                    cge_exchange_choose = yes
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_EXCHANGE_CANDIDATE_3
+        trigger = {
+            check_variable = {
+                var = cge_exchange_candidate_3^num
+                value = 0
+                compare = greater_than
+            }
+        }
+        custom_effect_tooltip = CGE_EXCHANGE_PROPOSE_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    set_variable = {
+                        cge_exchange_choice = 3
+                    }
+                    cge_exchange_choose = yes
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_EXCHANGE_NAV
+        trigger = {
+            check_variable = {
+                var = cge_exchange_page_count
+                value = 0
+                compare = greater_than
+            }
+            OR = {
+                has_country_flag = cge_exchange_has_more
+                check_variable = {
+                    var = cge_exchange_offset
+                    value = 0
+                    compare = greater_than
+                }
+            }
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_exchange_next_page = yes
+                    country_event = {
+                        id = cge_exchange.2
+                    }
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_EXCHANGE_CLOSE
+        trigger = {
+            check_variable = {
+                var = cge_exchange_page_count
+                value = 0
+                compare = equals
+            }
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_exchange_clear_session = yes
+                }
+            }
+        }
+    }
+}
+country_event = {
+    id = cge_exchange.2
+    title = CGE_EXCHANGE_SELECT_TITLE
+    desc = {
+        trigger = {
+            check_variable = {
+                var = cge_exchange_page_count
+                value = 0
+                compare = greater_than
+            }
+        }
+        text = CGE_EXCHANGE_SELECT_DESC
+    }
+    desc = {
+        trigger = {
+            check_variable = {
+                var = cge_exchange_page_count
+                value = 0
+                compare = equals
+            }
+        }
+        text = CGE_EXCHANGE_EMPTY_DESC
+    }
+    picture = GFX_cge_negotiation_correspondence
+    is_triggered_only = yes
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+            hidden_effect = {
+                cge_exchange_build_page = yes
+            }
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_exchange_2
+        }
+    }
+    option = {
+        name = CGE_EXCHANGE_CANDIDATE_1
+        trigger = {
+            check_variable = {
+                var = cge_exchange_candidate_1^num
+                value = 0
+                compare = greater_than
+            }
+        }
+        custom_effect_tooltip = CGE_EXCHANGE_PROPOSE_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    set_variable = {
+                        cge_exchange_choice = 1
+                    }
+                    cge_exchange_choose = yes
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_EXCHANGE_CANDIDATE_2
+        trigger = {
+            check_variable = {
+                var = cge_exchange_candidate_2^num
+                value = 0
+                compare = greater_than
+            }
+        }
+        custom_effect_tooltip = CGE_EXCHANGE_PROPOSE_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    set_variable = {
+                        cge_exchange_choice = 2
+                    }
+                    cge_exchange_choose = yes
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_EXCHANGE_CANDIDATE_3
+        trigger = {
+            check_variable = {
+                var = cge_exchange_candidate_3^num
+                value = 0
+                compare = greater_than
+            }
+        }
+        custom_effect_tooltip = CGE_EXCHANGE_PROPOSE_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    set_variable = {
+                        cge_exchange_choice = 3
+                    }
+                    cge_exchange_choose = yes
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_EXCHANGE_NAV
+        trigger = {
+            check_variable = {
+                var = cge_exchange_page_count
+                value = 0
+                compare = greater_than
+            }
+            OR = {
+                has_country_flag = cge_exchange_has_more
+                check_variable = {
+                    var = cge_exchange_offset
+                    value = 0
+                    compare = greater_than
+                }
+            }
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_exchange_next_page = yes
+                    country_event = {
+                        id = cge_exchange.1
+                    }
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_EXCHANGE_CLOSE
+        trigger = {
+            check_variable = {
+                var = cge_exchange_page_count
+                value = 0
+                compare = equals
+            }
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_exchange_clear_session = yes
+                }
+            }
+        }
+    }
+}
+country_event = {
+    id = cge_exchange.3
+    title = CGE_EXCHANGE_ACCEPTED_TITLE
+    desc = CGE_EXCHANGE_ACCEPTED_DESC
+    picture = GFX_cge_negotiation_agreement
+    is_triggered_only = yes
+    option = {
+        name = CGE_EXCHANGE_ACCEPTED_OPTION
+        custom_effect_tooltip = CGE_EXCHANGE_ACCEPTED_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                var = cge_exchange_stage
+                                value = 2
+                                compare = equals
+                            }
+                        }
+                        add_political_power = 25
+                        cge_exchange_clear_session = yes
+                    }
+                }
+            }
+        }
+    }
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_exchange_3
+        }
+    }
+}
+country_event = {
+    id = cge_exchange.4
+    title = CGE_EXCHANGE_REFUSED_TITLE
+    desc = CGE_EXCHANGE_REFUSED_DESC
+    picture = GFX_cge_negotiation_ultimatum
+    is_triggered_only = yes
+    option = {
+        name = CGE_EXCHANGE_REFUSED_OPTION
+        custom_effect_tooltip = CGE_EXCHANGE_REFUSED_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                var = cge_exchange_stage
+                                value = 3
+                                compare = equals
+                            }
+                        }
+                        add_political_power = -25
+                        cge_exchange_clear_session = yes
+                    }
+                }
+            }
+        }
+    }
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_exchange_4
+        }
+    }
+}
+country_event = {
+    id = cge_exchange.5
+    title = CGE_EXCHANGE_LAPSED_TITLE
+    desc = CGE_EXCHANGE_LAPSED_DESC
+    picture = GFX_cge_negotiation_correspondence
+    is_triggered_only = yes
+    option = {
+        name = CGE_EXCHANGE_CLOSE
+        custom_effect_tooltip = CGE_EXCHANGE_LAPSED_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_exchange_clear_session = yes
+                }
+            }
+        }
+    }
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_exchange_5
+        }
+    }
+}
+country_event = {
+    id = cge_exchange.6
+    hidden = yes
+    is_triggered_only = yes
+    immediate = {
+        clr_country_flag = cge_exchange_cooldown
+    }
+}
+
+# ===== cge_gameplay_events.txt =====
+country_event = {
+    id = cge.1
+    hidden = yes
+    is_triggered_only = yes
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+            set_country_flag = cge_show_main_window
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_1
+        }
+    }
+}
+
+country_event = {
+    id = cge.2
+    hidden = yes
+    is_triggered_only = yes
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+            clr_country_flag = cge_show_main_window
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_2
+        }
+    }
+}
+country_event = {
+    id = cge_execution.1
+    title = CGE_EXECUTION_EVENT_TITLE
+    desc = CGE_EXECUTION_EVENT_DESC
+    picture = GFX_report_event_generic_soldiers_surrendering
+    is_triggered_only = yes
+    option = {
+        name = CGE_EXECUTION_EVENT_OPTION
+        custom_effect_tooltip = CGE_EXECUTION_EVENT_OPTION_TT
+        ai_chance = {
+            factor = 1
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+            }
+        }
+    }
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_execution_1
+        }
+    }
+}
+news_event = {
+    id = cge_execution_news.1
+    title = CGE_EXECUTION_NEWS_TITLE
+    desc = CGE_EXECUTION_NEWS_DESC
+    picture = GFX_news_event_ITA_mussolini_execution
+    major = yes
+    is_triggered_only = yes
+    option = {
+        trigger = {
+            has_country_flag = cge_execution_news_executor
+        }
+        name = CGE_EXECUTION_NEWS_OPTION_EXECUTOR
+        ai_chance = {
+            factor = 1
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                clr_country_flag = cge_execution_news_executor
+                clr_country_flag = cge_execution_news_origin
+            }
+        }
+    }
+    option = {
+        trigger = {
+            has_country_flag = cge_execution_news_origin
+            NOT = {
+                has_country_flag = cge_execution_news_executor
+            }
+        }
+        name = CGE_EXECUTION_NEWS_OPTION_ORIGIN
+        ai_chance = {
+            factor = 1
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                clr_country_flag = cge_execution_news_origin
+            }
+        }
+    }
+    option = {
+        trigger = {
+            NOT = {
+                has_country_flag = cge_execution_news_executor
+            }
+            NOT = {
+                has_country_flag = cge_execution_news_origin
+            }
+        }
+        name = CGE_EXECUTION_NEWS_OPTION_THIRD
+        ai_chance = {
+            factor = 1
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+            }
+        }
+    }
+}
+unit_leader_event = {
+    id = cge_recruitment.1
+    title = CGE_RECRUITMENT_EVENT_TITLE
+    desc = CGE_RECRUITMENT_EVENT_DESC
+    is_triggered_only = yes
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_variable = cge_cge_recruitment_date
+                }
+            }
+            set_variable = {
+                var = cge_cge_recruitment_date
+                value = global.date
+            }
+            set_character_flag = cge_recruitment_event_date_fallback
+        }
+    }
+    option = {
+        name = CGE_RECRUITMENT_EVENT_OPTION
+        ai_chance = {
+            factor = 1
+        }
+        custom_effect_tooltip = CGE_RECRUITMENT_EVENT_OPTION_TT
+        hidden_effect = {
+            FROM = {
+                add_war_support = 0.05
+                if = {
+                    limit = {
+                        has_government = democratic
+                    }
+                    add_popularity = {
+                        ideology = democratic
+                        popularity = 0.05
+                    }
+                }
+                else_if = {
+                    limit = {
+                        has_government = fascism
+                    }
+                    add_popularity = {
+                        ideology = fascism
+                        popularity = 0.05
+                    }
+                }
+                else_if = {
+                    limit = {
+                        has_government = communism
+                    }
+                    add_popularity = {
+                        ideology = communism
+                        popularity = 0.05
+                    }
+                }
+                else = {
+                    add_popularity = {
+                        ideology = neutrality
+                        popularity = 0.05
+                    }
+                }
+            }
+            if = {
+                limit = {
+                    has_character_flag = cge_recruitment_event_date_fallback
+                }
+                clear_variable = cge_cge_recruitment_date
+                clr_character_flag = cge_recruitment_event_date_fallback
+            }
+        }
+    }
+}
+country_event = {
+    id = cge_trial.1
+    title = CGE_TRIAL_STAGE1_TITLE
+    desc = CGE_TRIAL_STAGE1_DESC
+    picture = GFX_report_event_soviet_purge_trial
+    is_triggered_only = yes
+    option = {
+        name = CGE_TRIAL_STAGE1_PUBLIC
+        custom_effect_tooltip = CGE_TRIAL_STAGE1_PUBLIC_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_trial_stage1_public = yes
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_TRIAL_STAGE1_MILITARY
+        custom_effect_tooltip = CGE_TRIAL_STAGE1_MILITARY_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_trial_stage1_military = yes
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_TRIAL_STAGE1_PLEA
+        custom_effect_tooltip = CGE_TRIAL_STAGE1_PLEA_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_trial_stage1_plea = yes
+                }
+            }
+        }
+    }
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_trial_1
+        }
+    }
+}
+country_event = {
+    id = cge_trial.2
+    title = CGE_TRIAL_STAGE2_TITLE
+    desc = {
+        trigger = {
+            event_target:cge_trial_general = {
+                check_variable = {
+                    var = cge_cge_trial_reaction
+                    value = 1
+                    compare = equals
+                }
+            }
+        }
+        text = CGE_TRIAL_STAGE2_CONFESSION_DESC
+    }
+    desc = {
+        text = CGE_TRIAL_STAGE2_DEFIANCE_DESC
+    }
+    picture = GFX_report_event_soviet_purge_trial
+    is_triggered_only = yes
+    option = {
+        name = CGE_TRIAL_STAGE2_PRESS
+        custom_effect_tooltip = CGE_TRIAL_STAGE2_PRESS_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_trial_stage2_press = yes
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_TRIAL_STAGE2_CREDIBLE
+        custom_effect_tooltip = CGE_TRIAL_STAGE2_CREDIBLE_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_trial_stage2_credible = yes
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_TRIAL_STAGE2_LENIENCY
+        custom_effect_tooltip = CGE_TRIAL_STAGE2_LENIENCY_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_trial_stage2_leniency = yes
+                }
+            }
+        }
+    }
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_trial_2
+        }
+    }
+}
+country_event = {
+    id = cge_trial.3
+    title = CGE_TRIAL_STAGE3_TITLE
+    desc = {
+        trigger = {
+            event_target:cge_trial_general = {
+                check_variable = {
+                    var = cge_cge_trial_route
+                    value = 1
+                    compare = equals
+                }
+            }
+        }
+        text = CGE_TRIAL_STAGE3_PUBLIC_DESC
+    }
+    desc = {
+        trigger = {
+            event_target:cge_trial_general = {
+                check_variable = {
+                    var = cge_cge_trial_route
+                    value = 2
+                    compare = equals
+                }
+            }
+        }
+        text = CGE_TRIAL_STAGE3_MILITARY_DESC
+    }
+    desc = {
+        text = CGE_TRIAL_STAGE3_PLEA_DESC
+    }
+    picture = GFX_report_event_soviet_purge_trial
+    is_triggered_only = yes
+    option = {
+        name = CGE_TRIAL_STAGE3_PUBLIC_BROADCAST
+        trigger = {
+            event_target:cge_trial_general = {
+                check_variable = {
+                    var = cge_cge_trial_route
+                    value = 1
+                    compare = equals
+                }
+            }
+        }
+        custom_effect_tooltip = CGE_TRIAL_STAGE3_PUBLIC_BROADCAST_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_trial_stage3_public_broadcast = yes
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_TRIAL_STAGE3_PUBLIC_CONTROL
+        trigger = {
+            event_target:cge_trial_general = {
+                check_variable = {
+                    var = cge_cge_trial_route
+                    value = 1
+                    compare = equals
+                }
+            }
+        }
+        custom_effect_tooltip = CGE_TRIAL_STAGE3_PUBLIC_CONTROL_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_trial_stage3_public_control = yes
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_TRIAL_STAGE3_MILITARY_EXAMPLE
+        trigger = {
+            event_target:cge_trial_general = {
+                check_variable = {
+                    var = cge_cge_trial_route
+                    value = 2
+                    compare = equals
+                }
+            }
+        }
+        custom_effect_tooltip = CGE_TRIAL_STAGE3_MILITARY_EXAMPLE_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_trial_stage3_military_example = yes
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_TRIAL_STAGE3_MILITARY_LAW
+        trigger = {
+            event_target:cge_trial_general = {
+                check_variable = {
+                    var = cge_cge_trial_route
+                    value = 2
+                    compare = equals
+                }
+            }
+        }
+        custom_effect_tooltip = CGE_TRIAL_STAGE3_MILITARY_LAW_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_trial_stage3_military_law = yes
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_TRIAL_STAGE3_PLEA_FORMAL
+        trigger = {
+            event_target:cge_trial_general = {
+                check_variable = {
+                    var = cge_cge_trial_route
+                    value = 3
+                    compare = equals
+                }
+            }
+        }
+        custom_effect_tooltip = CGE_TRIAL_STAGE3_PLEA_FORMAL_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_trial_stage3_plea_formal = yes
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_TRIAL_STAGE3_PLEA_HOLD
+        trigger = {
+            event_target:cge_trial_general = {
+                check_variable = {
+                    var = cge_cge_trial_route
+                    value = 3
+                    compare = equals
+                }
+            }
+        }
+        custom_effect_tooltip = CGE_TRIAL_STAGE3_PLEA_HOLD_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_trial_stage3_plea_hold = yes
+                }
+            }
+        }
+    }
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_trial_3
+        }
+    }
+}
+country_event = {
+    id = cge_trial.4
+    title = CGE_TRIAL_STAGE4_TITLE
+    desc = CGE_TRIAL_STAGE4_DESC
+    picture = GFX_report_event_soviet_purge_trial
+    is_triggered_only = yes
+    option = {
+        name = CGE_TRIAL_STAGE4_CONDEMN
+        trigger = {
+            event_target:cge_trial_general = {
+                OR = {
+                    check_variable = {
+                        var = cge_cge_trial_severity
+                        value = 9.999
+                        compare = greater_than
+                    }
+                    check_variable = {
+                        var = cge_cge_trial_reaction
+                        value = 2
+                        compare = equals
+                    }
+                    check_variable = {
+                        var = cge_cge_trial_route
+                        value = 2
+                        compare = equals
+                    }
+                }
+            }
+        }
+        custom_effect_tooltip = CGE_TRIAL_STAGE4_CONDEMN_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_trial_stage4_condemn = yes
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_TRIAL_STAGE4_CONVICT
+        custom_effect_tooltip = CGE_TRIAL_STAGE4_CONVICT_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_trial_stage4_convict = yes
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_TRIAL_STAGE4_PLEA
+        trigger = {
+            event_target:cge_trial_general = {
+                OR = {
+                    check_variable = {
+                        var = cge_cge_trial_negotiation
+                        value = 9.999
+                        compare = greater_than
+                    }
+                    check_variable = {
+                        var = cge_cge_cooperation
+                        value = 59.999
+                        compare = greater_than
+                    }
+                    check_variable = {
+                        var = cge_cge_trial_route
+                        value = 3
+                        compare = equals
+                    }
+                }
+            }
+        }
+        custom_effect_tooltip = CGE_TRIAL_STAGE4_PLEA_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_trial_stage4_plea = yes
+                }
+            }
+        }
+    }
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_trial_4
+        }
+    }
+}
+country_event = {
+    id = cge_state_rescue_refresh.1
+    hidden = yes
+    is_triggered_only = yes
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+            clr_country_flag = cge_state_rescue_refresh_pending
+            if = {
+                limit = {
+                    check_variable = {
+                        var = cge_captured_general_count
+                        value = 0
+                        compare = greater_than
+                    }
+                }
+                set_temp_variable = {
+                    var = cge_rescue_refresh_count_before
+                    value = cge_captured_general_count
+                }
+                cge_remove_released_generals = yes
+            }
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_state_rescue_refresh_1
+        }
+    }
+}
+
+# ===== cge_negotiation_events.txt =====
+country_event = {
+    id = cge_negotiations.1
+    title = CGE_NEGOTIATION_REQUEST_TITLE
+    desc = CGE_NEGOTIATION_REQUEST_DESC
+    picture = GFX_cge_negotiation_correspondence
+    is_triggered_only = yes
+    option = {
+        name = CGE_NEGOTIATION_RETURN
+        custom_effect_tooltip = CGE_NEGOTIATION_RETURN_TT
+        ai_chance = {
+            factor = 50
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                var = cge_negotiation_stage
+                                value = 1
+                                compare = equals
+                            }
+                        }
+                        cge_negotiation_return_unconditionally = yes
+                    }
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_NEGOTIATION_DEMAND
+        custom_effect_tooltip = CGE_NEGOTIATION_DEMAND_TT
+        ai_chance = {
+            factor = 40
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                var = cge_negotiation_stage
+                                value = 1
+                                compare = equals
+                            }
+                        }
+                        cge_negotiation_demand_reparations = yes
+                    }
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_NEGOTIATION_KEEP
+        custom_effect_tooltip = CGE_NEGOTIATION_REFUSE_TT
+        ai_chance = {
+            factor = 10
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                var = cge_negotiation_stage
+                                value = 1
+                                compare = equals
+                            }
+                        }
+                        cge_negotiation_refuse_return = yes
+                    }
+                }
+            }
+        }
+    }
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_negotiations_1
+        }
+    }
+}
+country_event = {
+    id = cge_negotiations.2
+    title = CGE_NEGOTIATION_ACCEPTED_TITLE
+    desc = CGE_NEGOTIATION_ACCEPTED_DESC
+    picture = GFX_cge_negotiation_agreement
+    is_triggered_only = yes
+    option = {
+        name = CGE_NEGOTIATION_SIGN
+        custom_effect_tooltip = CGE_NEGOTIATION_SIGN_TT
+        ai_chance = {
+            factor = 1
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                var = cge_negotiation_stage
+                                value = 4
+                                compare = equals
+                            }
+                        }
+                        cge_negotiation_sign_agreement = yes
+                    }
+                }
+            }
+        }
+    }
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_negotiations_2
+        }
+    }
+}
+country_event = {
+    id = cge_negotiations.3
+    title = CGE_NEGOTIATION_REFUSED_TITLE
+    desc = CGE_NEGOTIATION_REFUSED_DESC
+    picture = GFX_cge_negotiation_ultimatum
+    is_triggered_only = yes
+    option = {
+        name = CGE_NEGOTIATION_RETURN_AFTER_REFUSAL
+        custom_effect_tooltip = CGE_NEGOTIATION_RETURN_TT
+        ai_chance = {
+            factor = 75
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                var = cge_negotiation_stage
+                                value = 3
+                                compare = equals
+                            }
+                        }
+                        cge_negotiation_return_unconditionally = yes
+                    }
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_NEGOTIATION_KEEP_AFTER_REFUSAL
+        custom_effect_tooltip = CGE_NEGOTIATION_REFUSE_TT
+        ai_chance = {
+            factor = 25
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    if = {
+                        limit = {
+                            check_variable = {
+                                var = cge_negotiation_stage
+                                value = 3
+                                compare = equals
+                            }
+                        }
+                        cge_negotiation_refuse_return = yes
+                    }
+                }
+            }
+        }
+    }
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_negotiations_3
+        }
+    }
+}
+country_event = {
+    id = cge_negotiations.10
+    hidden = yes
+    is_triggered_only = yes
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+            cge_negotiation_begin_next = yes
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_negotiations_10
+        }
+    }
+}
+country_event = {
+    id = cge_negotiations.12
+    hidden = yes
+    is_triggered_only = yes
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+            cge_negotiation_resume_after_recovery = yes
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_negotiations_12
+        }
+    }
+}
+country_event = {
+    id = cge_negotiations.11
+    hidden = yes
+    is_triggered_only = yes
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+            cge_negotiation_receive_response = yes
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_negotiations_11
+        }
+    }
+}
+country_event = {
+    id = cge_negotiations.20
+    hidden = yes
+    is_triggered_only = yes
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+            cge_reparations_expire_receipt = yes
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_negotiations_20
+            add_to_variable = { cge_profile_receipts_deferred = 1 }
+        }
+    }
+}
+country_event = {
+    id = cge_negotiations.21
+    hidden = yes
+    is_triggered_only = yes
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+            cge_reparations_expire_payment = yes
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_negotiations_21
+            add_to_variable = { cge_profile_payments_deferred = 1 }
+        }
+    }
+}
+
+# ===== cge_postwar_events.txt =====
+country_event = {
+    id = cge_postwar.1
+    hidden = yes
+    is_triggered_only = yes
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+            if = {
+                limit = {
+                    check_variable = {
+                        var = cge_postwar_origin_queue^num
+                        value = 0
+                        compare = greater_than
+                    }
+                }
+                var:cge_postwar_origin_queue^0 = {
+                    save_global_event_target_as = cge_postwar_origin
+                }
+                remove_from_array = {
+                    array = cge_postwar_origin_queue
+                    index = 0
+                }
+                cge_postwar_begin_origin = yes
+            }
+            else = {
+                clear_array = cge_postwar_origin_queue
+                clr_country_flag = cge_postwar_queue_active
+            }
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_postwar_1
+        }
+    }
+}
+country_event = {
+    id = cge_postwar.2
+    title = CGE_POSTWAR_REPATRIATION_TITLE
+    desc = CGE_POSTWAR_REPATRIATION_DESC
+    picture = GFX_report_event_generic_soldiers_surrendering
+    is_triggered_only = yes
+    option = {
+        name = CGE_POSTWAR_REPATRIATION_OK
+        ai_chance = {
+            factor = 1
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+            }
+        }
+    }
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_postwar_2
+        }
+    }
+}
+country_event = {
+    id = cge_postwar.3
+    title = CGE_POSTWAR_FATE_TITLE
+    desc = CGE_POSTWAR_FATE_RETURN_DESC
+    picture = GFX_report_event_generic_soldiers_surrendering
+    is_triggered_only = yes
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+            cge_postwar_prepare_event = yes
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_postwar_3
+        }
+    }
+    option = {
+        name = CGE_POSTWAR_FATE_RETURN_OVERRULE
+        custom_effect_tooltip = CGE_POSTWAR_FATE_RETURN_OVERRULE_TT
+        ai_chance = {
+            factor = 0
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    add_political_power = -100
+                    cge_postwar_halve_stats = yes
+                    cge_postwar_reimprison = yes
+                    cge_postwar_scan_collaborators = yes
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_POSTWAR_FATE_RESPECT_WISH
+        custom_effect_tooltip = CGE_POSTWAR_FATE_RETURN_RESPECT_TT
+        ai_chance = {
+            factor = 1
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_postwar_send_home = yes
+                }
+            }
+        }
+    }
+}
+country_event = {
+    id = cge_postwar.4
+    title = CGE_POSTWAR_AUTONOMY_TITLE
+    desc = CGE_POSTWAR_AUTONOMY_DESC
+    picture = GFX_report_event_generic_soldiers_surrendering
+    is_triggered_only = yes
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+            cge_postwar_prepare_event = yes
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_postwar_4
+        }
+    }
+    option = {
+        trigger = {
+            any_owned_state = {
+                is_core_of = event_target:cge_postwar_origin
+                NOT = {
+                    is_core_of = ROOT
+                }
+                NOT = {
+                    is_claimed_by = ROOT
+                }
+            }
+        }
+        name = CGE_POSTWAR_AUTONOMY_ACCEPT
+        custom_effect_tooltip = CGE_POSTWAR_AUTONOMY_ACCEPT_TT
+        ai_chance = {
+            factor = 1
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_postwar_restore_origin_as_puppet = yes
+                }
+            }
+        }
+    }
+    option = {
+        trigger = {
+            has_political_power > 99.999
+            any_owned_state = {
+                is_core_of = event_target:cge_postwar_origin
+                NOT = {
+                    is_core_of = ROOT
+                }
+                NOT = {
+                    is_claimed_by = ROOT
+                }
+            }
+        }
+        name = CGE_POSTWAR_AUTONOMY_DENY
+        custom_effect_tooltip = CGE_POSTWAR_AUTONOMY_DENY_TT
+        ai_chance = {
+            factor = 0
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    add_political_power = -100
+                    cge_postwar_reimprison = yes
+                    cge_postwar_finish_origin = yes
+                }
+            }
+        }
+    }
+    option = {
+        trigger = {
+            NOT = {
+                any_owned_state = {
+                    is_core_of = event_target:cge_postwar_origin
+                    NOT = {
+                        is_core_of = ROOT
+                    }
+                    NOT = {
+                        is_claimed_by = ROOT
+                    }
+                }
+            }
+        }
+        name = CGE_POSTWAR_AUTONOMY_IMPOSSIBLE
+        custom_effect_tooltip = CGE_POSTWAR_AUTONOMY_IMPOSSIBLE_TT
+        ai_chance = {
+            factor = 1
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_postwar_reimprison = yes
+                    cge_postwar_finish_origin = yes
+                }
+            }
+        }
+    }
+}
+country_event = {
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+            cge_postwar_prepare_event = yes
+            clr_country_flag = cge_postwar_waiting_for_governor
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_postwar_5
+        }
+    }
+    id = cge_postwar.5
+    title = CGE_POSTWAR_GOVERNOR_PROPOSAL_TITLE
+    desc = CGE_POSTWAR_GOVERNOR_PROPOSAL_DESC
+    picture = GFX_report_event_generic_soldiers_surrendering
+    is_triggered_only = yes
+    option = {
+        name = CGE_POSTWAR_GOVERNOR_PROPOSAL_YES
+        ai_chance = {
+            factor = 1
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    set_variable = {
+                        cge_postwar_governor_cursor = 0
+                    }
+                    clr_country_flag = cge_postwar_governor_not_first_page
+                    cge_postwar_build_governor_page = yes
+                    country_event = {
+                        id = cge_postwar.6
+                    }
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_POSTWAR_GOVERNOR_PROPOSAL_NO
+        ai_chance = {
+            factor = 0
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_postwar_scan_collaborators = yes
+                }
+            }
+        }
+    }
+}
+country_event = {
+    id = cge_postwar.6
+    title = CGE_POSTWAR_GOVERNOR_SELECT_TITLE
+    desc = CGE_POSTWAR_GOVERNOR_SELECT_DESC
+    picture = GFX_report_event_generic_soldiers_surrendering
+    is_triggered_only = yes
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+            cge_postwar_prepare_event = yes
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_postwar_6
+        }
+    }
+    option = {
+        trigger = {
+            check_variable = {
+                var = cge_postwar_candidate_slot_1
+                value = 0
+                compare = greater_than
+            }
+        }
+        name = CGE_POSTWAR_GOVERNOR_CANDIDATE_1
+        custom_effect_tooltip = CGE_POSTWAR_GOVERNOR_CANDIDATE_1_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    set_variable = {
+                        var = cge_postwar_selected_slot
+                        value = cge_postwar_candidate_slot_1
+                    }
+                    var:cge_postwar_candidate_1_display^0 = {
+                        save_global_event_target_as = cge_postwar_general
+                    }
+                    cge_postwar_appoint_selected_governor = yes
+                    cge_postwar_scan_collaborators = yes
+                }
+            }
+        }
+    }
+    option = {
+        trigger = {
+            check_variable = {
+                var = cge_postwar_candidate_slot_2
+                value = 0
+                compare = greater_than
+            }
+        }
+        name = CGE_POSTWAR_GOVERNOR_CANDIDATE_2
+        custom_effect_tooltip = CGE_POSTWAR_GOVERNOR_CANDIDATE_2_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    set_variable = {
+                        var = cge_postwar_selected_slot
+                        value = cge_postwar_candidate_slot_2
+                    }
+                    var:cge_postwar_candidate_2_display^0 = {
+                        save_global_event_target_as = cge_postwar_general
+                    }
+                    cge_postwar_appoint_selected_governor = yes
+                    cge_postwar_scan_collaborators = yes
+                }
+            }
+        }
+    }
+    option = {
+        trigger = {
+            check_variable = {
+                var = cge_postwar_candidate_slot_3
+                value = 0
+                compare = greater_than
+            }
+        }
+        name = CGE_POSTWAR_GOVERNOR_CANDIDATE_3
+        custom_effect_tooltip = CGE_POSTWAR_GOVERNOR_CANDIDATE_3_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    set_variable = {
+                        var = cge_postwar_selected_slot
+                        value = cge_postwar_candidate_slot_3
+                    }
+                    var:cge_postwar_candidate_3_display^0 = {
+                        save_global_event_target_as = cge_postwar_general
+                    }
+                    cge_postwar_appoint_selected_governor = yes
+                    cge_postwar_scan_collaborators = yes
+                }
+            }
+        }
+    }
+    option = {
+        trigger = {
+            OR = {
+                has_country_flag = cge_postwar_governor_has_more
+                has_country_flag = cge_postwar_governor_not_first_page
+            }
+        }
+        name = CGE_POSTWAR_GOVERNOR_NAV
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    if = {
+                        limit = {
+                            has_country_flag = cge_postwar_governor_has_more
+                        }
+                        set_country_flag = cge_postwar_governor_not_first_page
+                        cge_postwar_build_governor_page = yes
+                        country_event = {
+                            id = cge_postwar.7
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            cge_postwar_governor_cursor = 0
+                        }
+                        clr_country_flag = cge_postwar_governor_not_first_page
+                        cge_postwar_build_governor_page = yes
+                        country_event = {
+                            id = cge_postwar.7
+                        }
+                    }
+                }
+            }
+        }
+    }
+    option = {
+        trigger = {
+            NOT = {
+                OR = {
+                    has_country_flag = cge_postwar_governor_has_more
+                    has_country_flag = cge_postwar_governor_not_first_page
+                }
+            }
+        }
+        name = CGE_POSTWAR_GOVERNOR_CANCEL
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_postwar_scan_collaborators = yes
+                }
+            }
+        }
+    }
+}
+country_event = {
+    id = cge_postwar.99
+    hidden = yes
+    is_triggered_only = yes
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+            clr_country_flag = cge_postwar_event_scan_scheduled
+            cge_postwar_watch_tick = yes
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_postwar_99
+        }
+    }
+}
+country_event = {
+    id = cge_postwar.7
+    title = CGE_POSTWAR_GOVERNOR_SELECT_TITLE
+    desc = CGE_POSTWAR_GOVERNOR_SELECT_DESC
+    picture = GFX_report_event_generic_soldiers_surrendering
+    is_triggered_only = yes
+    option = {
+        trigger = {
+            check_variable = {
+                var = cge_postwar_candidate_slot_1
+                value = 0
+                compare = greater_than
+            }
+        }
+        name = CGE_POSTWAR_GOVERNOR_CANDIDATE_1
+        custom_effect_tooltip = CGE_POSTWAR_GOVERNOR_CANDIDATE_1_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    set_variable = {
+                        var = cge_postwar_selected_slot
+                        value = cge_postwar_candidate_slot_1
+                    }
+                    var:cge_postwar_candidate_1_display^0 = {
+                        save_global_event_target_as = cge_postwar_general
+                    }
+                    cge_postwar_appoint_selected_governor = yes
+                    cge_postwar_scan_collaborators = yes
+                }
+            }
+        }
+    }
+    option = {
+        trigger = {
+            check_variable = {
+                var = cge_postwar_candidate_slot_2
+                value = 0
+                compare = greater_than
+            }
+        }
+        name = CGE_POSTWAR_GOVERNOR_CANDIDATE_2
+        custom_effect_tooltip = CGE_POSTWAR_GOVERNOR_CANDIDATE_2_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    set_variable = {
+                        var = cge_postwar_selected_slot
+                        value = cge_postwar_candidate_slot_2
+                    }
+                    var:cge_postwar_candidate_2_display^0 = {
+                        save_global_event_target_as = cge_postwar_general
+                    }
+                    cge_postwar_appoint_selected_governor = yes
+                    cge_postwar_scan_collaborators = yes
+                }
+            }
+        }
+    }
+    option = {
+        trigger = {
+            check_variable = {
+                var = cge_postwar_candidate_slot_3
+                value = 0
+                compare = greater_than
+            }
+        }
+        name = CGE_POSTWAR_GOVERNOR_CANDIDATE_3
+        custom_effect_tooltip = CGE_POSTWAR_GOVERNOR_CANDIDATE_3_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    set_variable = {
+                        var = cge_postwar_selected_slot
+                        value = cge_postwar_candidate_slot_3
+                    }
+                    var:cge_postwar_candidate_3_display^0 = {
+                        save_global_event_target_as = cge_postwar_general
+                    }
+                    cge_postwar_appoint_selected_governor = yes
+                    cge_postwar_scan_collaborators = yes
+                }
+            }
+        }
+    }
+    option = {
+        trigger = {
+            OR = {
+                has_country_flag = cge_postwar_governor_has_more
+                has_country_flag = cge_postwar_governor_not_first_page
+            }
+        }
+        name = CGE_POSTWAR_GOVERNOR_NAV
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    if = {
+                        limit = {
+                            has_country_flag = cge_postwar_governor_has_more
+                        }
+                        set_country_flag = cge_postwar_governor_not_first_page
+                        cge_postwar_build_governor_page = yes
+                        country_event = {
+                            id = cge_postwar.6
+                        }
+                    }
+                    else = {
+                        set_variable = {
+                            cge_postwar_governor_cursor = 0
+                        }
+                        clr_country_flag = cge_postwar_governor_not_first_page
+                        cge_postwar_build_governor_page = yes
+                        country_event = {
+                            id = cge_postwar.6
+                        }
+                    }
+                }
+            }
+        }
+    }
+    option = {
+        trigger = {
+            NOT = {
+                OR = {
+                    has_country_flag = cge_postwar_governor_has_more
+                    has_country_flag = cge_postwar_governor_not_first_page
+                }
+            }
+        }
+        name = CGE_POSTWAR_GOVERNOR_CANCEL
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_postwar_scan_collaborators = yes
+                }
+            }
+        }
+    }
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_postwar_7
+        }
+    }
+}
+country_event = {
+    id = cge_postwar.8
+    title = CGE_POSTWAR_FATE_TITLE
+    desc = CGE_POSTWAR_FATE_STAY_DESC
+    picture = GFX_report_event_generic_soldiers_surrendering
+    is_triggered_only = yes
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+            cge_postwar_prepare_event = yes
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_postwar_8
+        }
+    }
+    option = {
+        name = CGE_POSTWAR_FATE_STAY_OVERRULE
+        custom_effect_tooltip = CGE_POSTWAR_FATE_STAY_OVERRULE_TT
+        ai_chance = {
+            factor = 0
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    add_political_power = -100
+                    cge_postwar_send_home = yes
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_POSTWAR_FATE_RESPECT_WISH
+        custom_effect_tooltip = CGE_POSTWAR_FATE_STAY_RESPECT_TT
+        ai_chance = {
+            factor = 1
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_postwar_keep_selected_general = yes
+                }
+            }
+        }
+    }
+}
+
+country_event = {
+    id = cge_postwar.20
+    title = CGE_DEFERRED_AWAITING_TITLE
+    desc = CGE_DEFERRED_AWAITING_DESC
+    picture = GFX_cge_negotiation_correspondence
+    is_triggered_only = yes
+    option = {
+        name = CGE_DEFERRED_AWAITING_OK
+        custom_effect_tooltip = CGE_DEFERRED_AWAITING_OK_TT
+        ai_chance = {
+            factor = 1
+        }
+    }
+}
+
+# ===== cge_profile_events.txt =====
+country_event = {
+    id = cge_profile.1
+    hidden = yes
+    is_triggered_only = yes
+    immediate = { cge_profile_disable = yes }
+}
+
+country_event = {
+    id = cge_profile.2
+    hidden = yes
+    is_triggered_only = yes
+    immediate = { cge_profile_enable = yes }
+}
+
+# ===== cge_recovery_events.txt =====
+country_event = {
+    id = cge_recovery.10
+    hidden = yes
+    is_triggered_only = yes
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+            cge_recovery_begin_next = yes
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_recovery_10
+        }
+    }
+}
+country_event = {
+    id = cge_recovery.1
+    title = CGE_RECOVERY_TITLE
+    desc = CGE_RECOVERY_DESC
+    picture = GFX_cge_negotiation_correspondence
+    is_triggered_only = yes
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+            hidden_effect = {
+                cge_recovery_refresh_terms = yes
+            }
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_recovery_1
+        }
+    }
+    option = {
+        name = CGE_RECOVERY_PAY
+        trigger = {
+            cge_recovery_terms_valid = yes
+        }
+        ai_chance = {
+            factor = 75
+        }
+        custom_effect_tooltip = CGE_RECOVERY_PAY_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_recovery_pay = yes
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_RECOVERY_EXCHANGE
+        trigger = {
+            cge_recovery_terms_valid = yes
+            check_variable = {
+                var = cge_recovery_exchange_count
+                value = 0
+                compare = greater_than
+            }
+        }
+        ai_chance = {
+            factor = 500
+        }
+        custom_effect_tooltip = CGE_RECOVERY_EXCHANGE_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_recovery_exchange = yes
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_RECOVERY_REFUSE
+        trigger = {
+            cge_recovery_terms_valid = yes
+        }
+        ai_chance = {
+            factor = 5
+        }
+        custom_effect_tooltip = CGE_RECOVERY_REFUSE_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_recovery_refuse = yes
+                }
+            }
+        }
+    }
+    option = {
+        name = CGE_RECOVERY_LAPSED
+        trigger = {
+            NOT = {
+                cge_recovery_terms_valid = yes
+            }
+        }
+        ai_chance = {
+            factor = 1
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    cge_recovery_finish = yes
+                }
+            }
+        }
+    }
+}
+
+# ===== cge_risk_events.txt =====
+country_event = {
+    id = cge_risk.1
+    title = CGE_RISK_SUICIDE_TITLE
+    desc = CGE_RISK_SUICIDE_DESC
+    picture = GFX_cge_risk_death
+    is_triggered_only = yes
+    option = {
+        name = CGE_RISK_SUICIDE_ACK
+        custom_effect_tooltip = CGE_RISK_LOSS_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    clr_country_flag = cge_risk_notice_pending
+                }
+            }
+        }
+    }
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_risk_1
+        }
+    }
+}
+country_event = {
+    id = cge_risk.2
+    title = CGE_RISK_ESCAPE_TITLE
+    desc = CGE_RISK_ESCAPE_DESC
+    picture = GFX_cge_risk_escape
+    is_triggered_only = yes
+    option = {
+        name = CGE_RISK_ESCAPE_ACK
+        custom_effect_tooltip = CGE_RISK_ESCAPE_LOSS_TT
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_global_flag = cge_logic_disabled
+                    }
+                }
+                hidden_effect = {
+                    clr_country_flag = cge_risk_notice_pending
+                }
+            }
+        }
+    }
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    has_global_flag = cge_logic_disabled
+                }
+            }
+        }
+        else = {
+            set_country_flag = cge_profile_deferred_cge_risk_2
+        }
+    }
+}

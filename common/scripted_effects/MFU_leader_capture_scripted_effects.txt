@@ -15,6 +15,8 @@ mfu_capture_defeated_leader = {
 		}
 	}
 
+	# Captured Generals Expanded: record where the general fell (needs the leader still deployed)
+	if = { limit = { NOT = { has_global_flag = cge_logic_disabled } } cge_record_capture_site = yes }
 	capture_by = FROM
 	FROM = {
 		if = {
@@ -40,6 +42,15 @@ mfu_capture_defeated_leader = {
 			limit = { is_character = GER_erwin_rommel }
 			FROM = { set_country_flag = achievement_captured_rommel }
 		}
+	}
+	# Captured Generals Expanded: register the prisoner. Done here instead of CGE's own
+	# on_deployed_leader_defeated so generals killed by mfu_kill_defeated_leader are never registered.
+	if = {
+		limit = {
+			NOT = { has_global_flag = cge_logic_disabled }
+			can_be_captured = yes
+		}
+		cge_register_capture = yes
 	}
 }
 
