@@ -49,6 +49,55 @@ ROM_acex_category = {
 		}
 	}
 
+	ROM_acex_oltenia_oil = {
+
+		icon = oil
+
+		allowed = {
+			original_tag = ROM
+		}
+
+		highlight_states = {
+			highlight_state_targets = { state = 81 }
+		}
+
+		visible = {
+			owns_state = 81
+		}
+
+		available = {
+			controls_state = 81
+			num_of_civilian_factories_available_for_projects > 9
+			custom_trigger_tooltip = {
+				tooltip = ROM_acex_max_uses_tt
+				check_variable = { ROM_acex_oltenia_oil_uses < 3 }
+			}
+		}
+
+		fire_only_once = no
+
+		cost = 25
+		days_remove = 60
+
+		modifier = {
+			civilian_factory_use = 10
+		}
+
+		ai_will_do = {
+			factor = 5
+		}
+
+		remove_effect = {
+			81 = {
+				add_resource = {
+					type = oil
+					amount = 12
+				}
+			}
+			add_to_variable = { ROM_acex_oltenia_oil_uses = 1 }
+		}
+	}
+
 	ROM_acex_hunedoara_steel = {
 
 		icon = steel
@@ -262,15 +311,15 @@ ROM_legion_work_corps_category = {
 
 		target_trigger = {
 			FROM = {
+				OR = { state = 46 state = 79 state = 81 state = 82 }
 				is_core_of = ROOT
 				is_owned_and_controlled_by = ROOT
-				infrastructure < 5
+				NOT = { has_state_flag = ROM_legion_roads_built }
 			}
 		}
 
 		available = {
 			has_manpower > 2000
-			FROM = { infrastructure < 5 }
 		}
 
 		fire_only_once = no
@@ -319,19 +368,15 @@ ROM_legion_work_corps_category = {
 			FROM = {
 				is_core_of = ROOT
 				is_owned_and_controlled_by = ROOT
+				NOT = { has_state_flag = ROM_legion_civ_built }
+				OR = {
+					NOT = { OR = { state = 46 state = 79 state = 81 state = 82 } }
+					has_state_flag = ROM_legion_roads_built
+				}
 			}
 		}
 
 		available = {
-			FROM = {
-				custom_trigger_tooltip = {
-					tooltip = ROM_legion_roads_first_tt
-					OR = {
-						has_state_flag = ROM_legion_roads_built
-						infrastructure > 4
-					}
-				}
-			}
 			has_manpower > 5000
 			custom_trigger_tooltip = {
 				tooltip = ROM_legion_factory_cap_tt
@@ -357,6 +402,7 @@ ROM_legion_work_corps_category = {
 		}
 
 		remove_effect = {
+			FROM = { set_state_flag = ROM_legion_civ_built }
 			custom_effect_tooltip = ROM_modify_legionary_economy_tt
 			add_to_variable = { var = ROM_le_consumer_goods value = -0.002 tooltip = ROM_le_consumer_goods_m0_2_tt }
 			FROM = {
@@ -386,6 +432,8 @@ ROM_legion_work_corps_category = {
 			FROM = {
 				is_core_of = ROOT
 				is_owned_and_controlled_by = ROOT
+				has_state_flag = ROM_legion_civ_built
+				NOT = { has_state_flag = ROM_legion_mil_built }
 			}
 		}
 
@@ -394,15 +442,6 @@ ROM_legion_work_corps_category = {
 		}
 
 		available = {
-			FROM = {
-				custom_trigger_tooltip = {
-					tooltip = ROM_legion_roads_first_tt
-					OR = {
-						has_state_flag = ROM_legion_roads_built
-						infrastructure > 4
-					}
-				}
-			}
 			has_manpower > 5000
 			custom_trigger_tooltip = {
 				tooltip = ROM_legion_workshop_cap_tt
@@ -428,6 +467,7 @@ ROM_legion_work_corps_category = {
 		}
 
 		remove_effect = {
+			FROM = { set_state_flag = ROM_legion_mil_built }
 			custom_effect_tooltip = ROM_modify_legionary_economy_tt
 			add_to_variable = { var = ROM_le_consumer_goods value = -0.002 tooltip = ROM_le_consumer_goods_m0_2_tt }
 			FROM = {
@@ -485,6 +525,644 @@ ROM_soia_category = {
 					level = 3
 					instant_build = yes
 				}
+			}
+		}
+	}
+}
+
+ROM_balance_of_power_category = {
+
+	ROM_arrest_legionary_leaders = {
+
+		icon = generic_police_action
+
+		allowed = {
+			original_tag = ROM
+		}
+
+		visible = {
+			has_power_balance = { id = ROM_power_balance }
+		}
+
+		available = {
+			is_in_faction = no
+			NOT = { has_completed_focus = ROM_cave_to_the_legion }
+		}
+
+		fire_only_once = no
+		days_re_enable = 60
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 5
+		}
+
+		complete_effect = {
+			add_power_balance_value = {
+				id = ROM_power_balance
+				value = -0.1
+				tooltip_side = ROM_crown_side
+			}
+		}
+	}
+
+	ROM_shot_while_trying_to_escape = {
+
+		icon = generic_arrest
+
+		allowed = {
+			original_tag = ROM
+		}
+
+		visible = {
+			has_power_balance = { id = ROM_power_balance }
+		}
+
+		available = {
+			is_in_faction = no
+			NOT = { has_completed_focus = ROM_cave_to_the_legion }
+			has_completed_focus = ROM_the_crowns_secret_police
+		}
+
+		fire_only_once = yes
+
+		cost = 100
+
+		ai_will_do = {
+			factor = 5
+		}
+
+		complete_effect = {
+			add_power_balance_value = {
+				id = ROM_power_balance
+				value = -0.25
+				tooltip_side = ROM_crown_side
+			}
+			add_stability = -0.05
+		}
+	}
+
+	ROM_legionary_rallies = {
+
+		icon = generic_political_rally
+
+		allowed = {
+			original_tag = ROM
+		}
+
+		visible = {
+			has_power_balance = { id = ROM_power_balance }
+		}
+
+		available = {
+			is_in_faction = no
+			has_completed_focus = ROM_cave_to_the_legion
+		}
+
+		fire_only_once = no
+		days_re_enable = 30
+
+		cost = 25
+
+		ai_will_do = {
+			factor = 5
+		}
+
+		complete_effect = {
+			add_power_balance_value = {
+				id = ROM_power_balance
+				value = 0.1
+				tooltip_side = ROM_legion_side
+			}
+		}
+	}
+
+	ROM_echipa_mortii = {
+
+		icon = generic_civil_support
+
+		allowed = {
+			original_tag = ROM
+		}
+
+		visible = {
+			has_power_balance = { id = ROM_power_balance }
+		}
+
+		available = {
+			is_in_faction = no
+			has_completed_focus = ROM_cave_to_the_legion
+			has_completed_focus = ROM_the_funerals_of_ion_mota_and_vasile_marin
+		}
+
+		fire_only_once = yes
+
+		cost = 75
+
+		ai_will_do = {
+			factor = 5
+		}
+
+		complete_effect = {
+			add_power_balance_value = {
+				id = ROM_power_balance
+				value = 0.25
+				tooltip_side = ROM_legion_side
+			}
+			add_stability = -0.05
+		}
+	}
+}
+
+ROM_axis_category = {
+
+	ROM_forward_base_for_marita = {
+
+		icon = ger_military_buildup
+
+		allowed = {
+			original_tag = ROM
+		}
+
+		visible = {
+			NOT = { has_completed_focus = ROM_cave_to_the_legion }
+			NOT = { has_completed_focus = ROM_national_resurrection_pact }
+			is_in_faction = no
+		}
+
+		available = {
+			country_exists = GRE
+			GRE = {
+				OR = {
+					has_war_with = GER
+					has_war_with = ITA
+				}
+			}
+		}
+
+		fire_only_once = yes
+
+		cost = 25
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		complete_effect = {
+			if = {
+				limit = { has_power_balance = { id = ROM_power_balance } }
+				remove_power_balance_modifier = { id = ROM_power_balance modifier = ROM_legion_agitation_drift }
+			}
+			set_rule = { can_join_factions = yes }
+			if = { limit = { has_idea = neutrality_idea } remove_ideas = neutrality_idea }
+			custom_effect_tooltip = ROM_can_join_axis_tt
+			if = {
+				limit = { country_exists = GER }
+				give_military_access = GER
+			}
+		}
+	}
+}
+
+ROM_industry_balance_category = {
+
+	ROM_exploit_the_baita_mines_mission = {
+		icon = generic_industry
+
+		allowed = {
+			original_tag = ROM
+		}
+
+		is_good = yes
+
+		activation = {
+			always = no
+		}
+
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+
+		days_mission_timeout = 35
+
+		timeout_effect = {
+			clr_country_flag = ROM_exploit_the_baita_mines_in_progress_flag
+			deactivate_shine_on_focus = ROM_exploit_the_baita_mines
+			complete_national_focus = {
+				focus = ROM_exploit_the_baita_mines
+				use_side_message = yes
+				originator_name = ROM_mircea_cancicov
+			}
+			hidden_effect = {
+				country_event = { id = rom_rework.1 days = 1 }
+			}
+		}
+	}
+
+	ROM_the_petroleum_law_of_1941_mission = {
+		icon = generic_industry
+
+		allowed = {
+			original_tag = ROM
+		}
+
+		is_good = yes
+
+		activation = {
+			always = no
+		}
+
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+
+		days_mission_timeout = 35
+
+		timeout_effect = {
+			clr_country_flag = ROM_the_petroleum_law_of_1941_in_progress_flag
+			deactivate_shine_on_focus = ROM_the_petroleum_law_of_1941
+			complete_national_focus = {
+				focus = ROM_the_petroleum_law_of_1941
+				use_side_message = yes
+				originator_name = ROM_mircea_cancicov
+			}
+			hidden_effect = {
+				country_event = { id = rom_rework.1 days = 1 }
+			}
+		}
+	}
+
+	ROM_militarisation_of_all_the_enterprises_mission = {
+		icon = generic_industry
+
+		allowed = {
+			original_tag = ROM
+		}
+
+		is_good = yes
+
+		activation = {
+			always = no
+		}
+
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+
+		days_mission_timeout = 35
+
+		timeout_effect = {
+			clr_country_flag = ROM_militarisation_of_all_the_enterprises_in_progress_flag
+			deactivate_shine_on_focus = ROM_militarisation_of_all_the_enterprises
+			complete_national_focus = {
+				focus = ROM_militarisation_of_all_the_enterprises
+				use_side_message = yes
+				originator_name = ROM_mircea_cancicov
+			}
+			hidden_effect = {
+				country_event = { id = rom_rework.1 days = 1 }
+			}
+		}
+	}
+
+	ROM_outlaw_strikes_mission = {
+		icon = generic_industry
+
+		allowed = {
+			original_tag = ROM
+		}
+
+		is_good = yes
+
+		activation = {
+			always = no
+		}
+
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+
+		days_mission_timeout = 35
+
+		timeout_effect = {
+			clr_country_flag = ROM_outlaw_strikes_in_progress_flag
+			deactivate_shine_on_focus = ROM_outlaw_strikes
+			complete_national_focus = {
+				focus = ROM_outlaw_strikes
+				use_side_message = yes
+				originator_name = ROM_mircea_cancicov
+			}
+			hidden_effect = {
+				country_event = { id = rom_rework.1 days = 1 }
+			}
+		}
+	}
+
+	ROM_politica_de_integrare_sincera_mission = {
+		icon = generic_industry
+
+		allowed = {
+			original_tag = ROM
+		}
+
+		is_good = yes
+
+		activation = {
+			always = no
+		}
+
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+
+		days_mission_timeout = 35
+
+		timeout_effect = {
+			clr_country_flag = ROM_politica_de_integrare_sincera_in_progress_flag
+			deactivate_shine_on_focus = ROM_politica_de_integrare_sincera
+			complete_national_focus = {
+				focus = ROM_politica_de_integrare_sincera
+				use_side_message = yes
+				originator_name = ROM_mircea_cancicov
+			}
+			hidden_effect = {
+				country_event = { id = rom_rework.1 days = 1 }
+			}
+		}
+	}
+
+	ROM_commisariatul_general_al_petrolului_mission = {
+		icon = generic_industry
+
+		allowed = {
+			original_tag = ROM
+		}
+
+		is_good = yes
+
+		activation = {
+			always = no
+		}
+
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+
+		days_mission_timeout = 35
+
+		timeout_effect = {
+			clr_country_flag = ROM_commisariatul_general_al_petrolului_in_progress_flag
+			deactivate_shine_on_focus = ROM_commisariatul_general_al_petrolului
+			complete_national_focus = {
+				focus = ROM_commisariatul_general_al_petrolului
+				use_side_message = yes
+				originator_name = ROM_mircea_cancicov
+			}
+			hidden_effect = {
+				country_event = { id = rom_rework.1 days = 1 }
+			}
+		}
+	}
+
+	ROM_reorganise_the_economy_under_german_auspices_mission = {
+		icon = generic_industry
+
+		allowed = {
+			original_tag = ROM
+		}
+
+		is_good = yes
+
+		activation = {
+			always = no
+		}
+
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+
+		days_mission_timeout = 35
+
+		timeout_effect = {
+			clr_country_flag = ROM_reorganise_the_economy_under_german_auspices_in_progress_flag
+			deactivate_shine_on_focus = ROM_reorganise_the_economy_under_german_auspices
+			complete_national_focus = {
+				focus = ROM_reorganise_the_economy_under_german_auspices
+				use_side_message = yes
+				originator_name = ROM_mircea_cancicov
+			}
+			hidden_effect = {
+				country_event = { id = rom_rework.1 days = 1 }
+			}
+		}
+	}
+
+	ROM_reichswerke_hermann_goering_mission = {
+		icon = generic_industry
+
+		allowed = {
+			original_tag = ROM
+		}
+
+		is_good = yes
+
+		activation = {
+			always = no
+		}
+
+		available = {
+			hidden_trigger = {
+				always = no
+			}
+		}
+
+		days_mission_timeout = 35
+
+		timeout_effect = {
+			clr_country_flag = ROM_reichswerke_hermann_goering_in_progress_flag
+			deactivate_shine_on_focus = ROM_reichswerke_hermann_goering
+			complete_national_focus = {
+				focus = ROM_reichswerke_hermann_goering
+				use_side_message = yes
+				originator_name = ROM_mircea_cancicov
+			}
+			hidden_effect = {
+				country_event = { id = rom_rework.1 days = 1 }
+			}
+		}
+	}
+
+	ROM_appoint_romanian_commissars = {
+
+		icon = generic_industry
+
+		allowed = {
+			original_tag = ROM
+		}
+
+		visible = {
+			has_power_balance = { id = ROM_industry_balance }
+		}
+
+		fire_only_once = no
+		days_re_enable = 60
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 5
+		}
+
+		complete_effect = {
+			add_power_balance_value = {
+				id = ROM_industry_balance
+				value = -0.1
+				tooltip_side = ROM_romanian_industry_side
+			}
+		}
+	}
+
+	ROM_invite_german_capital = {
+
+		icon = generic_construction
+
+		allowed = {
+			original_tag = ROM
+		}
+
+		visible = {
+			has_power_balance = { id = ROM_industry_balance }
+		}
+
+		fire_only_once = no
+		days_re_enable = 60
+
+		cost = 25
+
+		ai_will_do = {
+			factor = 5
+		}
+
+		complete_effect = {
+			add_power_balance_value = {
+				id = ROM_industry_balance
+				value = 0.1
+				tooltip_side = ROM_german_industry_side
+			}
+			if = {
+				limit = { country_exists = GER }
+				GER = { add_political_power = 25 }
+			}
+		}
+	}
+}
+
+ROM_camarilla_category = {
+
+	ROM_purge_a_courtier = {
+
+		icon = generic_arrest
+
+		allowed = {
+			original_tag = ROM
+		}
+
+		visible = {
+			has_dynamic_modifier = { modifier = ROM_camarilla_dm }
+		}
+
+		fire_only_once = no
+		days_re_enable = 90
+
+		cost = 50
+
+		ai_will_do = {
+			factor = 3
+		}
+
+		complete_effect = {
+			add_stability = -0.03
+			custom_effect_tooltip = ROM_camarilla_down_15_tt
+			hidden_effect = {
+				add_to_variable = { ROM_camarilla = -15 }
+				ROM_camarilla_update = yes
+			}
+		}
+	}
+
+	ROM_royal_gala = {
+
+		icon = generic_political_discourse
+
+		allowed = {
+			original_tag = ROM
+		}
+
+		visible = {
+			has_dynamic_modifier = { modifier = ROM_camarilla_dm }
+		}
+
+		fire_only_once = no
+		days_re_enable = 60
+
+		cost = 0
+
+		ai_will_do = {
+			factor = 3
+		}
+
+		complete_effect = {
+			add_political_power = 60
+			custom_effect_tooltip = ROM_camarilla_up_10_tt
+			hidden_effect = {
+				add_to_variable = { ROM_camarilla = 10 }
+				ROM_camarilla_update = yes
+			}
+		}
+	}
+
+	ROM_buy_loyalties = {
+
+		icon = generic_civil_support
+
+		allowed = {
+			original_tag = ROM
+		}
+
+		visible = {
+			has_dynamic_modifier = { modifier = ROM_camarilla_dm }
+		}
+
+		fire_only_once = no
+		days_re_enable = 90
+
+		cost = 0
+
+		ai_will_do = {
+			factor = 3
+		}
+
+		complete_effect = {
+			add_stability = 0.05
+			custom_effect_tooltip = ROM_camarilla_up_10_tt
+			hidden_effect = {
+				add_to_variable = { ROM_camarilla = 10 }
+				ROM_camarilla_update = yes
 			}
 		}
 	}

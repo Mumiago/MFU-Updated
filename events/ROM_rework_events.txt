@@ -1,0 +1,255 @@
+add_namespace = rom_rework
+
+# Antonescu's economy runs itself (inner-circle style, like vanilla Germany):
+# after the Decree Law, the commissar starts one random eligible focus below it
+# as a mission with a 35-day timer; when the timer runs out the focus completes
+# and the next one starts.
+
+# Start work on a focus
+country_event = {
+	id = rom_rework.1
+	hidden = yes
+	is_triggered_only = yes
+
+	trigger = {
+		original_tag = ROM
+		has_completed_focus = ROM_decree_law_for_the_protection_of_the_national_economy
+		OR = {
+				NOT = { has_completed_focus = ROM_the_petroleum_law_of_1941 }
+				NOT = { has_completed_focus = ROM_militarisation_of_all_the_enterprises }
+				NOT = { has_completed_focus = ROM_outlaw_strikes }
+				NOT = { has_completed_focus = ROM_politica_de_integrare_sincera }
+				NOT = { has_completed_focus = ROM_commisariatul_general_al_petrolului }
+				NOT = { has_completed_focus = ROM_reorganise_the_economy_under_german_auspices }
+				NOT = { has_completed_focus = ROM_reichswerke_hermann_goering }
+				AND = {
+					NOT = { has_completed_focus = ROM_exploit_the_baita_mines }
+					owns_state = 76
+					owns_state = 83
+					owns_state = 84
+				}
+		}
+	}
+
+	immediate = {
+		random_list = {
+			10 = {
+				modifier = {
+					factor = 0
+					OR = {
+						has_completed_focus = ROM_exploit_the_baita_mines
+						NOT = { has_completed_focus = ROM_the_petroleum_law_of_1941 }
+						NOT = { owns_state = 76 }
+						NOT = { owns_state = 83 }
+						NOT = { owns_state = 84 }
+					}
+				}
+				activate_shine_on_focus = ROM_exploit_the_baita_mines
+				set_country_flag = { flag = ROM_exploit_the_baita_mines_in_progress_flag days = 40 value = 1 }
+				activate_mission = ROM_exploit_the_baita_mines_mission
+			}
+			10 = {
+				modifier = {
+					factor = 0
+					OR = {
+						has_completed_focus = ROM_the_petroleum_law_of_1941
+					}
+				}
+				activate_shine_on_focus = ROM_the_petroleum_law_of_1941
+				set_country_flag = { flag = ROM_the_petroleum_law_of_1941_in_progress_flag days = 40 value = 1 }
+				activate_mission = ROM_the_petroleum_law_of_1941_mission
+			}
+			10 = {
+				modifier = {
+					factor = 0
+					OR = {
+						has_completed_focus = ROM_militarisation_of_all_the_enterprises
+					}
+				}
+				activate_shine_on_focus = ROM_militarisation_of_all_the_enterprises
+				set_country_flag = { flag = ROM_militarisation_of_all_the_enterprises_in_progress_flag days = 40 value = 1 }
+				activate_mission = ROM_militarisation_of_all_the_enterprises_mission
+			}
+			10 = {
+				modifier = {
+					factor = 0
+					OR = {
+						has_completed_focus = ROM_outlaw_strikes
+					}
+				}
+				activate_shine_on_focus = ROM_outlaw_strikes
+				set_country_flag = { flag = ROM_outlaw_strikes_in_progress_flag days = 40 value = 1 }
+				activate_mission = ROM_outlaw_strikes_mission
+			}
+			10 = {
+				modifier = {
+					factor = 0
+					OR = {
+						has_completed_focus = ROM_politica_de_integrare_sincera
+						NOT = { has_completed_focus = ROM_the_petroleum_law_of_1941 }
+					}
+				}
+				activate_shine_on_focus = ROM_politica_de_integrare_sincera
+				set_country_flag = { flag = ROM_politica_de_integrare_sincera_in_progress_flag days = 40 value = 1 }
+				activate_mission = ROM_politica_de_integrare_sincera_mission
+			}
+			10 = {
+				modifier = {
+					factor = 0
+					OR = {
+						has_completed_focus = ROM_commisariatul_general_al_petrolului
+						NOT = { has_completed_focus = ROM_the_petroleum_law_of_1941 }
+					}
+				}
+				activate_shine_on_focus = ROM_commisariatul_general_al_petrolului
+				set_country_flag = { flag = ROM_commisariatul_general_al_petrolului_in_progress_flag days = 40 value = 1 }
+				activate_mission = ROM_commisariatul_general_al_petrolului_mission
+			}
+			10 = {
+				modifier = {
+					factor = 0
+					OR = {
+						has_completed_focus = ROM_reorganise_the_economy_under_german_auspices
+						NOT = { OR = { has_completed_focus = ROM_politica_de_integrare_sincera has_completed_focus = ROM_commisariatul_general_al_petrolului } }
+					}
+				}
+				activate_shine_on_focus = ROM_reorganise_the_economy_under_german_auspices
+				set_country_flag = { flag = ROM_reorganise_the_economy_under_german_auspices_in_progress_flag days = 40 value = 1 }
+				activate_mission = ROM_reorganise_the_economy_under_german_auspices_mission
+			}
+			10 = {
+				modifier = {
+					factor = 0
+					OR = {
+						has_completed_focus = ROM_reichswerke_hermann_goering
+						NOT = { has_completed_focus = ROM_reorganise_the_economy_under_german_auspices }
+					}
+				}
+				activate_shine_on_focus = ROM_reichswerke_hermann_goering
+				set_country_flag = { flag = ROM_reichswerke_hermann_goering_in_progress_flag days = 40 value = 1 }
+				activate_mission = ROM_reichswerke_hermann_goering_mission
+			}
+		}
+	}
+}
+
+# ---------------------------------------------------------------------------
+# The Camarilla: weekly corruption tick
+country_event = {
+	id = rom_rework.20
+	hidden = yes
+	is_triggered_only = yes
+
+	trigger = {
+		original_tag = ROM
+		NOT = { has_country_flag = ROM_camarilla_over }
+	}
+
+	immediate = {
+		if = {
+			limit = { NOT = { has_country_flag = ROM_camarilla_capped } }
+			add_to_variable = { ROM_camarilla = 1 }
+		}
+		if = {
+			limit = { any_character = { is_character = ROM_elena_lupescu is_hired_as_advisor = yes } }
+			add_to_variable = { ROM_camarilla = 1 }
+		}
+		if = {
+			limit = { any_character = { is_character = ROM_ernest_urdareanu is_hired_as_advisor = yes } }
+			add_to_variable = { ROM_camarilla = 1 }
+		}
+		ROM_camarilla_update = yes
+		if = {
+			limit = { check_variable = { ROM_camarilla > 99 } }
+			country_event = { id = rom_rework.22 }
+		}
+		else_if = {
+			limit = {
+				check_variable = { ROM_camarilla > 74 }
+				NOT = { has_country_flag = ROM_camarilla_scandal }
+			}
+			country_event = { id = rom_rework.21 }
+		}
+		if = {
+			limit = { check_variable = { ROM_camarilla < 50 } }
+			clr_country_flag = ROM_camarilla_scandal
+		}
+		country_event = { id = rom_rework.20 days = 7 }
+	}
+}
+
+# The Camarilla: scandal at 75 corruption
+country_event = {
+	id = rom_rework.21
+	title = rom_rework.21.t
+	desc = rom_rework.21.desc
+	picture = GFX_report_event_ROM_mistress
+
+	is_triggered_only = yes
+
+	immediate = {
+		set_country_flag = ROM_camarilla_scandal
+	}
+
+	option = {
+		name = rom_rework.21.a
+		add_stability = -0.05
+		if = {
+			limit = { has_power_balance = { id = ROM_power_balance } }
+			add_power_balance_value = {
+				id = ROM_power_balance
+				value = 0.10
+				tooltip_side = ROM_legion_side
+			}
+		}
+	}
+}
+
+# The Camarilla: crisis at 100 corruption
+country_event = {
+	id = rom_rework.22
+	title = rom_rework.22.t
+	desc = rom_rework.22.desc
+	picture = GFX_report_event_ROM_mistress
+
+	is_triggered_only = yes
+
+	option = {
+		name = rom_rework.22.a
+		add_stability = -0.15
+		if = {
+			limit = { has_power_balance = { id = ROM_power_balance } }
+			add_power_balance_value = {
+				id = ROM_power_balance
+				value = 0.20
+				tooltip_side = ROM_legion_side
+			}
+		}
+		custom_effect_tooltip = ROM_camarilla_crisis_reset_tt
+		hidden_effect = {
+			set_variable = { ROM_camarilla = 70 }
+			ROM_camarilla_update = yes
+		}
+	}
+}
+
+# The Camarilla: the King's favourites take office 90 days after the Royal Dictatorship is chosen
+country_event = {
+	id = rom_rework.23
+	hidden = yes
+	is_triggered_only = yes
+
+	trigger = {
+		original_tag = ROM
+		NOT = { has_completed_focus = ROM_force_the_king_to_abdicate }
+		OR = {
+			has_completed_focus = ROM_institute_a_royal_dictatorship
+			focus_progress = { focus = ROM_institute_a_royal_dictatorship progress > 0 }
+		}
+	}
+
+	immediate = {
+		activate_advisor = ROM_elena_lupescu
+		activate_advisor = ROM_ernest_urdareanu
+	}
+}
