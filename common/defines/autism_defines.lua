@@ -69,11 +69,11 @@ NDefines.NMilitary.AI_BATTALION_BUILD_ORDER = { 	1,  6,  11, 16, 21,
 												5,  10, 15, 20, 25 }
 NDefines.NMilitary.REGIMENTAL_SUPPORT_SLOT_COST_MULTIPLIER = 1 -- production/equipment cost multiplier applied to units in regimental-support slots
 NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_ON_DEPLOY = 3 -- days an Army HQ's leader modifiers are on cooldown after first deploying
-NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_ON_DEPLOY_MIN = 7 -- minimum deploy cooldown in days regardless of manpower scaling
+NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_ON_DEPLOY_MIN = 7 -- flat 7 days to deploy an Army HQ of any size (scaling disabled by REFERENCE_MANPOWER below)
 NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_ON_REDEPLOY = 15 -- cooldown in days when an already-deployed HQ is moved/redeployed
 NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_ON_WITHDRAW = 14 -- cooldown in days applied when an HQ is withdrawn
-NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_ON_WITHDRAW_MIN = 14 -- minimum withdraw cooldown in days
-NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_REFERENCE_MANPOWER = 9600 -- reference HQ manpower used to scale the cooldown durations above
+NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_ON_WITHDRAW_MIN = 7 -- flat 7 days to withdraw/recall an Army HQ of any size
+NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_REFERENCE_MANPOWER = 100000000 -- huge reference makes the manpower-scaled part ~0, so the _MIN values are the fixed times (BFFU method)
 NDefines.NMilitary.UNIT_LEADER_MODIFIER_COOLDOWN_MANPOWER_EXPONENT = 1.5 -- exponent scaling cooldown length by HQ manpower relative to the reference
 NDefines.NMilitary.FIGHTING_STRENGTH_DEATH_THRESHOLD = 0.001 -- fighting-strength fraction below which an HQ/unit is treated as destroyed
 NDefines.NMilitary.FIGHTING_STRENGTH_HQ_ALERT_THRESHOLD = 0.2 -- HQ fighting-strength fraction below which the UI shows a low-strength alert
