@@ -8395,3 +8395,76 @@ country_event = {
 		ai_chance = { base = 1 }
 	}
 }
+
+# Weserubung: Denmark falls and is annexed by Germany 1 day after the war starts
+country_event = {
+	id = germany.2293
+	title = germany.2293.t
+	desc = germany.2293.d
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+	trigger = {
+		GER = { has_war_with = DEN }
+	}
+
+	immediate = {
+		# same consequences as DEN capitulating to Germany (on_capitulation)
+		DEN = {
+			transfer_navy = {
+				target = ENG
+			}
+		}
+		ENG = {
+			transfer_state = 100
+			transfer_state = 101
+			country_event = usa.48
+		}
+		USA = {
+			add_to_variable = { USA_crisis_level = 5 }
+			USA_update_ui_effect = yes
+		}
+		if = {
+			limit = {
+				FRA = {
+					check_variable = {
+						var = FRA_initial_war_euthasium_army_core_attack_factor_modifier
+						value = 0
+						compare = greater_than
+					}
+				}
+			}
+			FRA = {
+				add_to_variable = { var = FRA_initial_war_euthasium_army_core_attack_factor_modifier value = -0.05 }
+				add_to_variable = { var = FRA_initial_war_euthasium_army_core_defence_factor_modifier value = -0.05 }
+			}
+		}
+		else = {
+			FRA = {
+				add_to_variable = { var = FRA_initial_war_euthasium_army_attack_factor_modifier value = -0.05 }
+				add_to_variable = { var = FRA_initial_war_euthasium_army_defence_factor_modifier value = -0.05 }
+			}
+		}
+		if = {
+			limit = {
+				GER = { is_ai = yes }
+			}
+			GER = { load_oob = "GER_invade_Norway" }
+			NOR = {
+				add_timed_idea = {
+					idea = French_Malaise
+					days = 365
+				}
+			}
+		}
+		GER = {
+			annex_country = {
+				target = DEN
+			}
+		}
+	}
+
+	option = {
+		name = germany.2293.a
+	}
+}
