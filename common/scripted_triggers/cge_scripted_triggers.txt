@@ -214,9 +214,23 @@ cge_is_selected_bribed = {
 }
 
 
+# MFU: the selected prisoner must still be in our custody (not freed by a rescue raid)
+cge_is_selected_held = {
+	meta_trigger = {
+		text = {
+			OR = {
+				NOT = { has_variable = cge_slot_[CGE_SLOT]_runtime_leader }
+				var:cge_slot_[CGE_SLOT]_runtime_leader = { is_general_captured = yes }
+			}
+		}
+		CGE_SLOT = "[?cge_overview_selected_slot|.0]"
+	}
+}
+
 cge_is_selected_actionable = {
 	cge_is_selected_alive = yes
 	NOT = { cge_is_selected_recruited = yes }
+	cge_is_selected_held = yes
 }
 
 cge_can_eased_confinement = {

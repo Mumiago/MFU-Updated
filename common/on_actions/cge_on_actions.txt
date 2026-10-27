@@ -304,6 +304,20 @@ on_actions = {
                     limit = {
                         is_ai = no
                     }
+                    # MFU: re-check custody every day so generals freed by a rescue raid leave the list
+                    # even on a quiet front (otherwise only state-control changes trigger the cleanup)
+                    if = {
+                        limit = {
+                            check_variable = {
+                                var = cge_captured_general_count
+                                value = 0
+                                compare = greater_than
+                            }
+                            NOT = { has_country_flag = cge_state_rescue_refresh_pending }
+                        }
+                        set_country_flag = cge_state_rescue_refresh_pending
+                        country_event = { id = cge_state_rescue_refresh.1 hours = 1 }
+                    }
                     cge_daily_update_captured_generals = yes
                     if = {
                         limit = {

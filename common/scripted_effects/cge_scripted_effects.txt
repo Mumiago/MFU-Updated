@@ -12639,6 +12639,25 @@ cge_remove_released_generals = {
                         compare = equals
                     }
                 }
+                # MFU: a prisoner who left custody (e.g. freed by a rescue raid) mid-operation refunds the up-front cost
+                meta_effect = {
+                    text = {
+                        if = {
+                            limit = { check_variable = { var = cge_slot_[CGE_SLOT]_patience_timer_running value = 0 compare = greater_than } }
+                            if = { limit = { check_variable = { var = cge_slot_[CGE_SLOT]_patience_selected_action value = 1 compare = equals } } add_political_power = 50 }
+                            if = { limit = { check_variable = { var = cge_slot_[CGE_SLOT]_patience_selected_action value = 2 compare = equals } } add_command_power = 10 }
+                            if = { limit = { check_variable = { var = cge_slot_[CGE_SLOT]_patience_selected_action value = 3 compare = equals } } add_political_power = 100 }
+                            if = { limit = { check_variable = { var = cge_slot_[CGE_SLOT]_patience_selected_action value = 5 compare = equals } } add_political_power = 100 }
+                            if = { limit = { check_variable = { var = cge_slot_[CGE_SLOT]_patience_selected_action value = 6 compare = equals } } add_political_power = 200 add_manpower = 1 }
+                        }
+                        if = {
+                            limit = { check_variable = { var = cge_slot_[CGE_SLOT]_cooperation_timer_running value = 0 compare = greater_than } }
+                            if = { limit = { check_variable = { var = cge_slot_[CGE_SLOT]_cooperation_selected_action value = 1 compare = equals } } add_political_power = 50 }
+                            if = { limit = { check_variable = { var = cge_slot_[CGE_SLOT]_cooperation_selected_action value = 4 compare = equals } } add_command_power = 10 }
+                        }
+                    }
+                    CGE_SLOT = "[?cge_cleanup_slot|.0]"
+                }
                 set_variable = {
                     var = cge_release_slot_to_remove
                     value = cge_cleanup_slot
@@ -14832,6 +14851,10 @@ cge_slot_finish_execution = {
             text = {
                 if = {
                     limit = {
+                        OR = {
+                            NOT = { has_variable = cge_slot_[CGE_SLOT]_runtime_leader }
+                            var:cge_slot_[CGE_SLOT]_runtime_leader = { is_general_captured = yes } # MFU: skip generals freed by a rescue raid
+                        }
                         check_variable = {
                             var = cge_slot_[CGE_SLOT]_patience_operation_pending
                             value = 0
@@ -15004,6 +15027,10 @@ cge_slot_finish_patience_op = {
             text = {
                 if = {
                     limit = {
+                        OR = {
+                            NOT = { has_variable = cge_slot_[CGE_SLOT]_runtime_leader }
+                            var:cge_slot_[CGE_SLOT]_runtime_leader = { is_general_captured = yes } # MFU: skip generals freed by a rescue raid
+                        }
                         NOT = {
                             check_variable = {
                                 var = cge_slot_[CGE_SLOT]_patience_selected_action
@@ -15432,6 +15459,10 @@ cge_slot_finish_cooperation_op = {
             text = {
                 if = {
                     limit = {
+                        OR = {
+                            NOT = { has_variable = cge_slot_[CGE_SLOT]_runtime_leader }
+                            var:cge_slot_[CGE_SLOT]_runtime_leader = { is_general_captured = yes } # MFU: skip generals freed by a rescue raid
+                        }
                         has_country_flag = cge_has_candidate_[CGE_SLOT]
                         check_variable = {
                             var = cge_slot_[CGE_SLOT]_cooperation_operation_pending
