@@ -575,6 +575,7 @@ ENG_budget_decisions = {
 		icon = generic_independence
 
 		available = {
+			NOT = { has_country_flag = ENG_decrease_length_of_shifts_cd }
 			has_completed_focus = ENG_adjust_budget
 		}
 
@@ -592,8 +593,12 @@ ENG_budget_decisions = {
 		}
 
 		days_remove = 90
-		days_re_enable = 90
-
+		remove_effect = {
+			set_country_flag = { flag = ENG_decrease_length_of_shifts_cd value = 1 days = 90 }
+			hidden_effect = {
+				activate_mission = ENG_decrease_length_of_shifts_cooldown
+			}
+		}
 		custom_cost_trigger = {
 			always = yes
 		}
@@ -615,7 +620,28 @@ ENG_budget_decisions = {
 				has_stability > 0.9
 			}			
 		}
-	}	
+	}
+	ENG_decrease_length_of_shifts_cooldown = {
+		icon = generic_industry
+		available = {
+			hidden_trigger = { always = no }
+		}
+		visible = {
+		}
+		is_good = no
+		fire_only_once = no
+		days_mission_timeout = 91
+		days_remove = 91
+		activation = {
+			has_country_flag = ENG_decrease_length_of_shifts_cd
+		}
+		cancel_trigger = {
+			hidden_trigger = {
+				NOT = { has_country_flag = ENG_decrease_length_of_shifts_cd }
+			}
+		}
+	}
+	
 
 	ENG_expand_shadow_scheme = {
 		icon = generic_political_discourse
@@ -680,10 +706,17 @@ ENG_budget_decisions = {
 		icon = hol_draw_up_staff_plans
 
 		available = {
+			NOT = { has_country_flag = ENG_invest_in_home_defence_cd }
 			tag = ENG
 		}
 
 		days_remove = 365
+		remove_effect = {
+			set_country_flag = { flag = ENG_invest_in_home_defence_cd value = 1 days = 180 }
+			hidden_effect = {
+				activate_mission = ENG_invest_in_home_defence_cooldown
+			}
+		}
 
 		visible = {
 		}
@@ -699,8 +732,6 @@ ENG_budget_decisions = {
 
 
 		custom_cost_text = ENG_600_british_money 
-
-		days_re_enable = 180 
 
 		fire_only_once = no
 		
@@ -728,6 +759,27 @@ ENG_budget_decisions = {
 			}
 		}
 	}
+	ENG_invest_in_home_defence_cooldown = {
+		icon = generic_industry
+		available = {
+			hidden_trigger = { always = no }
+		}
+		visible = {
+		}
+		is_good = no
+		fire_only_once = no
+		days_mission_timeout = 181
+		days_remove = 181
+		activation = {
+			has_country_flag = ENG_invest_in_home_defence_cd
+		}
+		cancel_trigger = {
+			hidden_trigger = {
+				NOT = { has_country_flag = ENG_invest_in_home_defence_cd }
+			}
+		}
+	}
+
 
 	ENG_GHQ_line = {
 		icon = generic_construction
