@@ -292,6 +292,11 @@ NDiplomacy = {
 	FACTION_LEADERSHIP_CHANGE_COOLDOWN_WEIGHT = 1,			-- Importance of leadership change cooldown when determining how close a faction member is to being able to assume leadership.
 	FACTION_LEADERSHIP_CHANGE_MANPOWER_WEIGHT = 2,			-- Importance of manpower in field when determining how close a faction member is to being able to assume leadership.
 	FACTION_LEADERSHIP_CHANGE_FACTORY_WEIGHT = 2,			-- Importance of factory count when determining how close a faction member is to being able to assume leadership.
+
+	-- 1.19.4: added from vanilla
+	VOLUNTEERS_RECALL_DAYS_PER_UNIT = 2,			-- days to recall a unit, scales linearly for each army unit in the recall order
+	SEND_VOLUNTEERS_AGAIN_COOLDOWN = 180,			-- How long after recalling volunteers can you send volunteers to the same country (Days)
+	RECALL_VOLUNTEERS_AFTER_ARRIVAL_COOLDOWN = 180, -- How long after arriving can the volunteers be recalled (Days)
 },
 
 NCountry = {
@@ -1471,7 +1476,10 @@ NMilitary = {
 	OUT_OF_FUEL_EQUIPMENT_MULT = 0.5,				-- ratio of the stats that you get from equipments that uses fuel and you lack it
 	OUT_OF_FUEL_SPEED_MULT = 0.8,					-- speed mult that armies get when out of fuel
 	OUT_OF_FUEL_TRAINING_XP_GAIN_MULT = 0.0,		-- xp gain mult from training when a unit is out of fuel
-	FUEL_CAPACITY_DEFAULT_HOURS = 264              -- default capacity if not specified
+	FUEL_CAPACITY_DEFAULT_HOURS = 264,             -- default capacity if not specified
+
+	-- 1.19.4: added from vanilla
+	MAX_CASUALTY_TRICKLEBACK = 0.95,								--Upper cap on casualty trickleback so it can't create more troops than die
 },
 
 
@@ -2884,6 +2892,15 @@ NTrade = {
 	ANTI_MONOPOLY_TRADE_FACTOR_THRESHOLD = 0.7,		-- What percentage of resources has to be sold to the buyer for the anti-monopoly factor to take effect
 	ANTI_MONOPOLY_TRADE_FACTOR = -50,		-- This is added to the factor value when anti-monopoly threshold is exceeded
 	NAVAL_ROUTE_ACCESS_AVOID_COST_MULT = 1,	-- Naval pathfinding should avoid certain regions that you mark. High "cost multiplier" will make it less willingly go through a specific region.																																												  
+
+	-- 1.19.4: added from vanilla
+	AUTO_IMPORT_DEFICIT_TOLERANCE = 0,			-- Player auto-import tolerates a resource balance down to minus this before importing (set higher to ignore small shortfalls)
+	AUTO_IMPORT_TARGET_MARGIN = 0,				-- Player auto-import aims for a balance of at least plus this, and only shrinks/cancels its trades once the surplus exceeds it (hysteresis to avoid churn)
+	AUTO_IMPORT_DEFAULT_BUDGET_FRACTION = 0.25,	-- Fraction of usable civilian factories the auto-import budget is seeded to when first enabled
+	AUTO_IMPORT_MIN_CONVOY_EFFICIENCY = 0.4,	-- Don't start a sea trade whose convoy efficiency is below this
+	AUTO_IMPORT_FUEL_TOPPING_START_RATIO = 0.5,	-- Spend leftover budget on extra oil once the fuel stockpile falls below this fraction
+	AUTO_IMPORT_FUEL_TOPPING_STOP_RATIO = 0.9,	-- Stop spending leftover budget on extra oil once the fuel stockpile reaches this fraction
+	AUTO_IMPORT_MAX_ACCEPTED_SHORTAGE = 99,		-- Highest shortage a player can accept per resource in the auto-import priority window
 },
 NCharacter = {
 	--NEW SHIT
@@ -4285,6 +4302,10 @@ AI_SHIP_SWAP_DAMAGE_THRESHOLD = 0.33,						-- per-ship strength threshold below 
 	CRYPTO_ACTIVATION_SCORE_ENEMY_CAPITAL_BONUS = 0.2, 			-- fronts of enemy capital get a bonus by this ratio
 	CRYPTO_AFTER_SCORE_INVASION_FRONT_BONUS = 1.0, 				-- a front that is naval invading will increase the score by this ratio
 	-- ~crypto ai		  
+
+	-- 1.19.4: added from vanilla
+	MOBILIZATION_RATIO_REQUIRED_TO_RAISE_MOBILIZATION_LAW = 0.95,		-- ratio of its target conscription an AI must already have mobilized before a higher conscription law is treated as urgent. raising the law does not speed up mobilization, so escalating below this only pays the industrial penalty
+	LENDLEASE_TO_CAPITULATED_DESIRE_PENALTY = 500, -- Flat lend lease desire penalty towards a capitulated country we don't host
 },
 
 NFocus = {
