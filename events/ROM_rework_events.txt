@@ -1,4 +1,4 @@
-add_namespace = rom_rework
+﻿add_namespace = rom_rework
 
 # Antonescu's economy runs itself (inner-circle style, like vanilla Germany):
 # after the Decree Law, the commissar starts one random eligible focus below it
@@ -174,6 +174,17 @@ country_event = {
 			limit = { check_variable = { ROM_camarilla < 50 } }
 			clr_country_flag = ROM_camarilla_scandal
 		}
+		if = {
+			limit = {
+				NOT = { has_country_flag = ROM_camarilla_event_cooldown }
+				check_variable = { ROM_camarilla > 49 }
+			}
+			random = { chance = 12 ROM_camarilla_random_event = yes }
+		}
+		else_if = {
+			limit = { NOT = { has_country_flag = ROM_camarilla_event_cooldown } }
+			random = { chance = 7 ROM_camarilla_random_event = yes }
+		}
 		country_event = { id = rom_rework.20 days = 7 }
 	}
 }
@@ -291,8 +302,8 @@ country_event = {
 	immediate = {
 		if = {
 			limit = { has_dynamic_modifier = { modifier = ROM_grain_economy } }
-			add_to_variable = { ROM_ge_cg = 0.01 }
-			clamp_variable = { var = ROM_ge_cg max = 0.10 }
+			add_to_variable = { ROM_ge_cg = 0.015 }
+			clamp_variable = { var = ROM_ge_cg max = 0.15 }
 		}
 		if = {
 			limit = { has_dynamic_modifier = { modifier = ROM_peasant_policy } }
@@ -301,5 +312,531 @@ country_event = {
 		}
 		force_update_dynamic_modifier = yes
 		country_event = { id = rom_rework.30 days = 91 }
+	}
+}
+
+# Romanian Industry and the Reich: one decision's consumer goods cost runs out after 90 days
+country_event = {
+	id = rom_rework.31
+	hidden = yes
+	is_triggered_only = yes
+
+	immediate = {
+		add_to_variable = { ROM_ib_cg = -0.02 }
+		if = {
+			limit = { check_variable = { ROM_ib_cg < 0.001 } }
+			set_variable = { ROM_ib_cg = 0 }
+			remove_dynamic_modifier = { modifier = ROM_industry_bargaining }
+		}
+		force_update_dynamic_modifier = yes
+	}
+}
+
+# The Camarilla: random court intrigues, rolled from the weekly tick (rom_rework.20)
+country_event = {
+	id = rom_rework.40
+	title = rom_rework.40.t
+	desc = rom_rework.40.desc
+	picture = GFX_report_event_ROM_mistress
+
+	is_triggered_only = yes
+
+	option = {
+		name = rom_rework.40.a
+		ai_chance = { factor = 70 }
+		custom_effect_tooltip = ROM_camarilla_up_10_tt
+		hidden_effect = {
+			add_to_variable = { ROM_camarilla = 10 }
+			ROM_camarilla_update = yes
+		}
+		add_political_power = 40
+	}
+
+	option = {
+		name = rom_rework.40.b
+		ai_chance = { factor = 30 }
+		custom_effect_tooltip = ROM_camarilla_down_5_tt
+		hidden_effect = {
+			add_to_variable = { ROM_camarilla = -5 }
+			ROM_camarilla_update = yes
+		}
+		add_political_power = -30
+		add_stability = -0.02
+	}
+}
+
+country_event = {
+	id = rom_rework.41
+	title = rom_rework.41.t
+	desc = rom_rework.41.desc
+	picture = GFX_report_event_generic_factory
+
+	is_triggered_only = yes
+
+	option = {
+		name = rom_rework.41.a
+		ai_chance = { factor = 70 }
+		custom_effect_tooltip = ROM_camarilla_up_10_tt
+		hidden_effect = {
+			add_to_variable = { ROM_camarilla = 10 }
+			ROM_camarilla_update = yes
+		}
+		add_tech_bonus = {
+			name = ROM_malaxa_kickbacks
+			bonus = 0.5
+			uses = 1
+			category = industry
+		}
+	}
+
+	option = {
+		name = rom_rework.41.b
+		ai_chance = { factor = 30 }
+		custom_effect_tooltip = ROM_camarilla_down_5_tt
+		hidden_effect = {
+			add_to_variable = { ROM_camarilla = -5 }
+			ROM_camarilla_update = yes
+		}
+		add_political_power = -25
+	}
+}
+
+country_event = {
+	id = rom_rework.42
+	title = rom_rework.42.t
+	desc = rom_rework.42.desc
+	picture = GFX_report_event_soldiers_marching
+
+	is_triggered_only = yes
+
+	trigger = {
+		any_character = { is_character = ROM_ernest_urdareanu is_hired_as_advisor = yes }
+	}
+
+	option = {
+		name = rom_rework.42.a
+		ai_chance = { factor = 70 }
+		custom_effect_tooltip = ROM_camarilla_up_5_tt
+		hidden_effect = {
+			add_to_variable = { ROM_camarilla = 5 }
+			ROM_camarilla_update = yes
+		}
+		add_stability = 0.03
+		army_experience = -25
+		if = {
+			limit = { has_power_balance = { id = ROM_power_balance } }
+			add_power_balance_value = {
+				id = ROM_power_balance
+				value = -0.05
+				tooltip_side = ROM_crown_side
+			}
+		}
+	}
+
+	option = {
+		name = rom_rework.42.b
+		ai_chance = { factor = 30 }
+		add_political_power = -25
+		army_experience = 15
+		if = {
+			limit = { has_power_balance = { id = ROM_power_balance } }
+			add_power_balance_value = {
+				id = ROM_power_balance
+				value = 0.05
+				tooltip_side = ROM_legion_side
+			}
+		}
+	}
+}
+
+country_event = {
+	id = rom_rework.43
+	title = rom_rework.43.t
+	desc = rom_rework.43.desc
+	picture = GFX_report_event_journalists_speech
+
+	is_triggered_only = yes
+
+	option = {
+		name = rom_rework.43.a
+		ai_chance = { factor = 60 }
+		custom_effect_tooltip = ROM_camarilla_up_5_tt
+		hidden_effect = {
+			add_to_variable = { ROM_camarilla = 5 }
+			ROM_camarilla_update = yes
+		}
+		add_war_support = -0.02
+		add_political_power = -15
+	}
+
+	option = {
+		name = rom_rework.43.b
+		ai_chance = { factor = 40 }
+		custom_effect_tooltip = ROM_camarilla_down_15_tt
+		hidden_effect = {
+			add_to_variable = { ROM_camarilla = -15 }
+			ROM_camarilla_update = yes
+		}
+		add_stability = -0.05
+		if = {
+			limit = { has_power_balance = { id = ROM_power_balance } }
+			add_power_balance_value = {
+				id = ROM_power_balance
+				value = 0.05
+				tooltip_side = ROM_legion_side
+			}
+		}
+	}
+}
+
+country_event = {
+	id = rom_rework.44
+	title = rom_rework.44.t
+	desc = rom_rework.44.desc
+	picture = GFX_report_event_carol_party
+
+	is_triggered_only = yes
+
+	option = {
+		name = rom_rework.44.a
+		ai_chance = { factor = 60 }
+		custom_effect_tooltip = ROM_camarilla_up_5_tt
+		hidden_effect = {
+			add_to_variable = { ROM_camarilla = 5 }
+			ROM_camarilla_update = yes
+		}
+		army_experience = 25
+		add_political_power = -25
+	}
+
+	option = {
+		name = rom_rework.44.b
+		ai_chance = { factor = 40 }
+		add_political_power = 25
+		add_stability = -0.02
+	}
+}
+
+country_event = {
+	id = rom_rework.45
+	title = rom_rework.45.t
+	desc = rom_rework.45.desc
+	picture = GFX_report_event_generic_sign_treaty1
+
+	is_triggered_only = yes
+
+	option = {
+		name = rom_rework.45.a
+		ai_chance = { factor = 70 }
+		custom_effect_tooltip = ROM_camarilla_up_10_tt
+		hidden_effect = {
+			add_to_variable = { ROM_camarilla = 10 }
+			ROM_camarilla_update = yes
+		}
+		add_political_power = 75
+		add_stability = -0.02
+	}
+
+	option = {
+		name = rom_rework.45.b
+		ai_chance = { factor = 30 }
+		custom_effect_tooltip = ROM_camarilla_down_5_tt
+		hidden_effect = {
+			add_to_variable = { ROM_camarilla = -5 }
+			ROM_camarilla_update = yes
+		}
+		add_stability = -0.03
+	}
+}
+
+country_event = {
+	id = rom_rework.46
+	title = rom_rework.46.t
+	desc = rom_rework.46.desc
+	picture = GFX_report_event_gathering_protest
+
+	is_triggered_only = yes
+
+	trigger = {
+		check_variable = { ROM_camarilla > 59 }
+		has_power_balance = { id = ROM_power_balance }
+	}
+
+	option = {
+		name = rom_rework.46.a
+		ai_chance = { factor = 60 }
+		add_political_power = -40
+		add_stability = -0.02
+		if = {
+			limit = { has_power_balance = { id = ROM_power_balance } }
+			add_power_balance_value = {
+				id = ROM_power_balance
+				value = -0.05
+				tooltip_side = ROM_crown_side
+			}
+		}
+	}
+
+	option = {
+		name = rom_rework.46.b
+		ai_chance = { factor = 40 }
+		add_stability = -0.05
+		if = {
+			limit = { has_power_balance = { id = ROM_power_balance } }
+			add_power_balance_value = {
+				id = ROM_power_balance
+				value = 0.1
+				tooltip_side = ROM_legion_side
+			}
+		}
+	}
+}
+
+# The Camarilla: good fortune and gambles, rolled with the intrigues above
+country_event = {
+	id = rom_rework.47
+	title = rom_rework.47.t
+	desc = rom_rework.47.desc
+	picture = GFX_report_event_generic_sign_treaty1
+
+	is_triggered_only = yes
+
+	option = {
+		name = rom_rework.47.a
+		ai_chance = { factor = 60 }
+		custom_effect_tooltip = ROM_camarilla_up_5_tt
+		hidden_effect = {
+			add_to_variable = { ROM_camarilla = 5 }
+			ROM_camarilla_update = yes
+		}
+		random_owned_controlled_state = {
+			limit = { is_core_of = ROOT }
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+	}
+
+	option = {
+		name = rom_rework.47.b
+		ai_chance = { factor = 40 }
+		custom_effect_tooltip = ROM_camarilla_up_5_tt
+		hidden_effect = {
+			add_to_variable = { ROM_camarilla = 5 }
+			ROM_camarilla_update = yes
+		}
+		army_experience = 50
+	}
+}
+
+country_event = {
+	id = rom_rework.48
+	title = rom_rework.48.t
+	desc = rom_rework.48.desc
+	picture = GFX_report_event_carol_party
+
+	is_triggered_only = yes
+
+	option = {
+		name = rom_rework.48.a
+		ai_chance = { factor = 100 }
+		custom_effect_tooltip = ROM_camarilla_up_5_tt
+		hidden_effect = {
+			add_to_variable = { ROM_camarilla = 5 }
+			ROM_camarilla_update = yes
+		}
+		add_stability = 0.05
+		add_political_power = 50
+	}
+}
+
+country_event = {
+	id = rom_rework.49
+	title = rom_rework.49.t
+	desc = rom_rework.49.desc
+	picture = GFX_report_event_gathering_protest
+
+	is_triggered_only = yes
+
+	option = {
+		name = rom_rework.49.a
+		ai_chance = { factor = 100 }
+		add_stability = 0.05
+		add_war_support = 0.05
+	}
+}
+
+country_event = {
+	id = rom_rework.50
+	title = rom_rework.50.t
+	desc = rom_rework.50.desc
+	picture = GFX_report_event_soldiers_marching
+
+	is_triggered_only = yes
+
+	trigger = {
+		has_power_balance = { id = ROM_power_balance }
+	}
+
+	option = {
+		name = rom_rework.50.a
+		ai_chance = { factor = 100 }
+		custom_effect_tooltip = ROM_camarilla_up_5_tt
+		hidden_effect = {
+			add_to_variable = { ROM_camarilla = 5 }
+			ROM_camarilla_update = yes
+		}
+		if = {
+			limit = { has_power_balance = { id = ROM_power_balance } }
+			add_power_balance_value = {
+				id = ROM_power_balance
+				value = -0.1
+				tooltip_side = ROM_crown_side
+			}
+		}
+		add_stability = 0.03
+	}
+}
+
+country_event = {
+	id = rom_rework.51
+	title = rom_rework.51.t
+	desc = rom_rework.51.desc
+	picture = GFX_report_event_generic_factory
+
+	is_triggered_only = yes
+
+	option = {
+		name = rom_rework.51.a
+		ai_chance = { factor = 100 }
+		custom_effect_tooltip = ROM_camarilla_up_5_tt
+		hidden_effect = {
+			add_to_variable = { ROM_camarilla = 5 }
+			ROM_camarilla_update = yes
+		}
+		random_owned_controlled_state = {
+			limit = { is_core_of = ROOT }
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+	}
+}
+
+country_event = {
+	id = rom_rework.52
+	title = rom_rework.52.t
+	desc = rom_rework.52.desc
+	picture = GFX_report_event_carol_party
+
+	is_triggered_only = yes
+
+	option = {
+		name = rom_rework.52.a
+		ai_chance = { factor = 60 }
+		random_list = {
+			50 = {
+				add_political_power = 150
+				add_stability = 0.03
+			}
+			50 = {
+				add_political_power = -75
+				add_stability = -0.03
+			}
+		}
+		custom_effect_tooltip = ROM_camarilla_up_15_tt
+		hidden_effect = {
+			add_to_variable = { ROM_camarilla = 15 }
+			ROM_camarilla_update = yes
+		}
+	}
+
+	option = {
+		name = rom_rework.52.b
+		ai_chance = { factor = 40 }
+		add_political_power = 30
+	}
+}
+
+country_event = {
+	id = rom_rework.53
+	title = rom_rework.53.t
+	desc = rom_rework.53.desc
+	picture = GFX_report_event_generic_read_write
+
+	is_triggered_only = yes
+
+	option = {
+		name = rom_rework.53.a
+		ai_chance = { factor = 60 }
+		random_list = {
+			60 = {
+				add_political_power = 200
+			}
+			40 = {
+				add_stability = -0.05
+				custom_effect_tooltip = ROM_camarilla_up_15_tt
+				hidden_effect = {
+					add_to_variable = { ROM_camarilla = 15 }
+					ROM_camarilla_update = yes
+				}
+			}
+		}
+	}
+
+	option = {
+		name = rom_rework.53.b
+		ai_chance = { factor = 40 }
+		add_political_power = 50
+		add_stability = 0.02
+	}
+}
+
+country_event = {
+	id = rom_rework.54
+	title = rom_rework.54.t
+	desc = rom_rework.54.desc
+	picture = GFX_report_event_generic_factory
+
+	is_triggered_only = yes
+
+	option = {
+		name = rom_rework.54.a
+		ai_chance = { factor = 60 }
+		random_list = {
+			50 = {
+				random_owned_controlled_state = {
+					limit = { is_core_of = ROOT }
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+				add_political_power = 50
+			}
+			50 = {
+				add_political_power = -100
+				add_stability = -0.03
+			}
+		}
+		custom_effect_tooltip = ROM_camarilla_up_15_tt
+		hidden_effect = {
+			add_to_variable = { ROM_camarilla = 15 }
+			ROM_camarilla_update = yes
+		}
+	}
+
+	option = {
+		name = rom_rework.54.b
+		ai_chance = { factor = 40 }
+		add_political_power = 25
 	}
 }

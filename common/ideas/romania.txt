@@ -1970,6 +1970,7 @@ ideas = {
 
 			modifier = {
 				consumer_goods_expected_value = -0.10
+				stability_weekly = -0.0015
 			}
 		}
 
@@ -2082,7 +2083,12 @@ ideas = {
 			allowed = {
 				original_tag = ROM
 			}
-			
+			available = {
+				OR = {
+					has_completed_focus = ROM_favour_romanian_entrepreneurs
+					has_completed_focus = ROM_nationalization_of_the_credit_sector
+				}
+			}
 			traits = { war_industrialist }
 		}
 		
@@ -2095,7 +2101,10 @@ ideas = {
 			}
 			picture = generic_political_advisor_europe_2	
 			available = {
-				
+				OR = {
+					has_completed_focus = ROM_favour_romanian_entrepreneurs
+					has_completed_focus = ROM_nationalization_of_the_credit_sector
+				}
 			}
 			traits = { armaments_organizer }
 		}
@@ -2343,6 +2352,9 @@ ideas = {
 			available = {
 				NOT = { has_completed_focus = ROM_subsidise_resita }
 			}
+			visible = {
+				NOT = { has_completed_focus = ROM_subsidise_resita }
+			}
 			traits = { OAK_trait_production_concern }
 		}
 		ucr_resita = {
@@ -2353,10 +2365,10 @@ ideas = {
 			available = {
 				has_completed_focus = ROM_subsidise_resita
 			}
-			traits = { OAK_trait_production_concern }
-			modifier = {
-				industrial_capacity_factory = 0.05
+			visible = {
+				has_completed_focus = ROM_subsidise_resita
 			}
+			traits = { ROM_trait_production_concern_resita }
 		}
 	
 		concordia = {
@@ -2391,9 +2403,23 @@ ideas = {
 				NOT = { has_completed_focus = ROM_subsidise_resita }
 			}
 
+			on_add = {
+				if = {
+					limit = { has_power_balance = { id = ROM_industry_balance } }
+					add_power_balance_modifier = { id = ROM_industry_balance modifier = ROM_reichswerke_drift }
+				}
+			}
+
+			on_remove = {
+				if = {
+					limit = { has_power_balance = { id = ROM_industry_balance } }
+					remove_power_balance_modifier = { id = ROM_industry_balance modifier = ROM_reichswerke_drift }
+				}
+			}
+
 			modifier = {	
 				industrial_capacity_factory = 0.15
-				production_factory_max_efficiency_factor = 0.05
+				production_factory_max_efficiency_factor = 0.075
 				local_resources_factor = 0.15
 				political_power_cost = 0.1
 				stability_factor = -0.05
