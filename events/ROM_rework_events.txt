@@ -193,7 +193,7 @@ country_event = {
 
 	option = {
 		name = rom_rework.21.a
-		add_stability = -0.05
+		add_stability = -0.10
 		if = {
 			limit = { has_power_balance = { id = ROM_power_balance } }
 			add_power_balance_value = {
@@ -216,7 +216,11 @@ country_event = {
 
 	option = {
 		name = rom_rework.22.a
-		add_stability = -0.15
+		add_stability = -0.20
+		add_timed_idea = {
+			idea = ROM_political_crisis
+			days = 60
+		}
 		if = {
 			limit = { has_power_balance = { id = ROM_power_balance } }
 			add_power_balance_value = {
@@ -270,5 +274,32 @@ country_event = {
 			idea = ROM_political_crisis
 			days = 60
 		}
+	}
+}
+
+# Farm paths: every 3 months the Grain Economy's consumer goods worsen,
+# and Support for the Peasantry's consumer goods improve
+country_event = {
+	id = rom_rework.30
+	hidden = yes
+	is_triggered_only = yes
+
+	trigger = {
+		original_tag = ROM
+	}
+
+	immediate = {
+		if = {
+			limit = { has_dynamic_modifier = { modifier = ROM_grain_economy } }
+			add_to_variable = { ROM_ge_cg = 0.01 }
+			clamp_variable = { var = ROM_ge_cg max = 0.10 }
+		}
+		if = {
+			limit = { has_dynamic_modifier = { modifier = ROM_peasant_policy } }
+			add_to_variable = { ROM_pp_consumer_goods = -0.01 }
+			clamp_variable = { var = ROM_pp_consumer_goods min = -0.08 }
+		}
+		force_update_dynamic_modifier = yes
+		country_event = { id = rom_rework.30 days = 91 }
 	}
 }
