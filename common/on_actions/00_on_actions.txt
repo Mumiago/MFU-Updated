@@ -1,5 +1,33 @@
 on_actions = {
-	
+
+	# Date-fired Udet events (germany.1334 / germany.1335), checked daily so they land on the
+	# historical day without mean_time_to_happen polling. Flags stop each from queueing twice.
+	on_daily_GER = {
+		effect = {
+			if = {
+				limit = {
+					date > 1941.4.30
+					has_government = fascism
+					NOT = { has_country_flag = GER_udets_report_received }
+					date < 1941.11.1
+				}
+				set_country_flag = GER_udets_report_received
+				country_event = { id = germany.1334 }
+			}
+			else_if = {
+				limit = {
+					date > 1941.11.16
+					has_government = fascism
+					has_country_flag = GER_udets_report_received
+					NOT = { has_country_flag = GER_udet_dispute_settled }
+					date < 1942.6.1
+				}
+				set_country_flag = GER_udet_dispute_settled
+				country_event = { id = germany.1335 }
+			}
+		}
+	}
+
 	on_daily_SOV = {
 		effect = {
 			if = {
