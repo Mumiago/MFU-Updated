@@ -661,7 +661,7 @@ focus_tree = {
 		relative_position_id = GER_ig_faben_focus
 		x = -1
 		y = 1
-		cost = 5
+		cost = 7.20 
 		available = { has_tech = oil_processing }
 		ai_will_do = { 
 			factor = 5 
@@ -723,7 +723,7 @@ focus_tree = {
 		relative_position_id = GER_ig_faben_focus
 		x = 1
 		y = 1
-		cost = 5
+		cost = 7.20 
 
 		available = { has_tech = rubber_processing }
 
@@ -5811,7 +5811,7 @@ focus_tree = {
 		relative_position_id = GER_achtung_panzer
 		x = -1
 		y = 2
-		cost = 2.9
+		cost = 5
 		ai_will_do = {
 			factor = 0
 		}
@@ -6057,7 +6057,7 @@ focus_tree = {
 		relative_position_id = GER_infanterie_greift_an
 		x = -1
 		y = 2
-		cost = 2.9
+		cost = 5
 		ai_will_do = {
 			factor = 0
 		}
@@ -6435,7 +6435,7 @@ focus_tree = {
 		relative_position_id = GER_a_storm_of_steel
 		x = -1
 		y = 2
-		cost = 2.9
+		cost = 5
 		ai_will_do = {
 			factor = 0
 			modifier = {
@@ -7648,9 +7648,9 @@ focus_tree = {
 		id = GER_air_innovation	 ## Luftwaffe
 		text = GER_air_innovation
 		icon = GFX_goal_ger_luftwaffe
-		x = 26
+		x = 24
 		y = 0
-		cost = 2.9
+		cost = 5
 		ai_will_do = {
 			factor = 5
 		}
@@ -7682,30 +7682,20 @@ focus_tree = {
 		icon = GFX_GER_udets_strike_force
 		prerequisite = { focus = GER_air_innovation }
 		relative_position_id = GER_air_innovation 
-		x = -5
+		mutually_exclusive = { focus = GER_victory_through_airpower } 
+		x = -2
 		y = 1
-		cost = 4.4
+		cost = 5
 		ai_will_do = {
 			factor = 0.1
 		}	
 				
 		completion_reward = {
 			#air_experience = 50
-			if = {
-				limit = {
-					has_completed_focus = GER_victory_through_airpower
-				}
-				swap_ideas = {
-				remove_idea = GER_udets_strike_force_idea_4
-				add_idea = GER_udets_strike_force_idea_5
-				}
-			}
-			else_if = {
-				swap_ideas = {
-					remove_idea = GER_air_innovations_1_idea
-					add_idea = GER_udets_strike_force_idea
-				}
-			}
+			swap_ideas = {
+				remove_idea = GER_air_innovations_1_idea
+				add_idea = GER_udets_strike_force_idea
+			}	
 
 			add_doctrine_cost_reduction = {
 				name = land_doc_bonus
@@ -7713,32 +7703,80 @@ focus_tree = {
 				uses = 1
 				category = air_doctrine
 			}
+			
+			add_tech_bonus = {
+				bonus = 0.5
+				uses = 1
+				ahead_reduction = 1
+				category = tactical_bomber
+			}
 
 			custom_effect_tooltip = available_research_team
 			show_ideas_tooltip = ernst_udet
 
+			add_ace = {
+				name = "Adolf"
+				surname = "Galland"
+				callsign = "Dolfo"
+				type = fighter_unique
+			}
+			add_ace = {
+				name = "Hans-Joachim"
+				surname = "Marseille"
+				callsign = "Jochen"
+				type = fighter_unique
+			}
+			add_ace = {
+				name = "Walter"
+				surname = "Nowotny"
+				callsign = "Nowi"
+				type = fighter_unique
+			}
+			add_ace = {
+				name = "Heinz"
+				surname = "Bär"
+				callsign = "Pritzl"
+				type = fighter_unique
+			}
+			add_ace = {
+				name = "Hans-Ulrich"
+				surname = "Rudel"
+				callsign = "Panzerknacker"
+				type = support_unique
+			}
+			add_ace = {
+				name = "Helmut"
+				surname = "Mahlke"
+				callsign = "Helm"
+				type = support_unique
+			}
+			add_ace = {
+				name = "Paul-Werner"
+				surname = "Hozzel"
+				callsign = "Werner"
+				type = support_unique
+			}
 		}
 	}
 
 	focus = {
 		id = GER_Fast_Bomber
 		icon = GFX_GER_Fast_Bomber
-		prerequisite = { focus = GER_air_innovation  }
+		prerequisite = { focus = GER_udets_strike_force }
 		relative_position_id = GER_air_innovation 
-		mutually_exclusive = { focus = GER_Ural_Bomber }
-
-		x = -1
-		y = 1
-		cost = 4.4
+		x = -2
+		y = 2
+		cost = 5
 		ai_will_do = {
 			factor = 0.1
 		}	
 				
 		completion_reward = {
+			air_experience = 25
 			add_political_power = 100
 			add_tech_bonus = {
-				bonus = 0.75
-				uses = 3
+				bonus = 0.5
+				uses = 2
 				ahead_reduction = 1
 				category = tactical_bomber
 			}
@@ -7747,90 +7785,11 @@ focus_tree = {
 			
 		}
 	}	
-	focus = {
-		id = GER_bomber_force
-		icon = GFX_GER_Fast_Bomber
-		prerequisite = { focus = GER_Fast_Bomber  }
-		relative_position_id = GER_Fast_Bomber
-
-
-		x = -1
-		y = 1
-		cost = 5
-		ai_will_do = {
-			factor = 0.1
-		}	
-				
-		completion_reward = {
-
-			custom_effect_tooltip = GER_plane_tt
-			if = {
-				limit = { 
-					has_tech = ger_tactical_bomber_1936
-					NOT = { has_tech = ger_tactical_bomber_1938	}
-				}
-				add_equipment_to_stockpile = { type = tac_bomber_equipment_1936 amount = 250 producer = GER }	
-			}
-			if = {
-				limit = { 
-					has_tech = ger_tactical_bomber_1938
-					NOT = { has_tech = ger_tactical_bomber_1940	}
-				}
-				add_equipment_to_stockpile = { type = tac_bomber_equipment_1938 amount = 250 producer = GER }	 
-			}
-			if = {
-				limit = {
-					has_tech = ger_tactical_bomber_1940
-				}
-				add_equipment_to_stockpile = { type = tac_bomber_equipment_1940 amount = 250 producer = GER }   
-			}
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = air_doctrine
-			}
-			air_experience = 50
-		}
-	}	
 
 	focus = {
 		id = GER_junkers_CAS
 		icon = GFX_GER_junker
-		cost = 2.9
-		prerequisite = {
-			focus = GER_udets_strike_force
-		}
-		mutually_exclusive = { focus = GER_henschel_cas }
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 1.5
-				has_war = yes
-			}
-		}
-		x = -1
-		y = 1
-		relative_position_id = GER_udets_strike_force
-		completion_reward = {
-			air_experience = 25
-			add_tech_bonus = {
-				bonus = 0.5
-				uses = 2
-				category = cas_bomber
-			}			
-			mio:GER_junkers_organization = {
-				add_mio_funds_gain_factor = .15
-			}
-			custom_effect_tooltip = available_mio_tt
-			show_mio_tooltip = GER_junkers_organization
-		}
-	}
-	focus = {
-		id = GER_henschel_cas
-		icon = GFX_GER_junker
-		mutually_exclusive = { focus = GER_junkers_CAS }
-		cost = 2.9
+		cost = 5.00
 		prerequisite = {
 			focus = GER_udets_strike_force
 		}
@@ -7842,34 +7801,31 @@ focus_tree = {
 				has_war = yes
 			}
 		}
-		x = 1
-		y = 1
-		relative_position_id = GER_udets_strike_force
+		x = -4
+		y = 2
+		relative_position_id = GER_air_innovation
 		completion_reward = {
-			air_experience = 25	
+			air_experience = 50	
 			add_tech_bonus = {
 				bonus = 0.5
 				uses = 2
 				category = cas_bomber
-			}	
-			mio:GER_henschel_organization = {
-				add_mio_funds_gain_factor = .15
-			}		
+			}			
 			custom_effect_tooltip = available_mio_tt
-			show_mio_tooltip = GER_henschel_organization
+			show_mio_tooltip = GER_junkers_organization
 		}
 	}
 
 	focus = {
 		id = GER_CAS_doctrine
 		icon = GFX_GER_CAS_doctrine
-		cost = 5f
+		cost = 5.00
 		prerequisite = {
-			focus = GER_junkers_CAS focus = GER_henschel_cas
+			focus = GER_junkers_CAS focus = GER_Fast_Bomber
 		}
 
-		x = 0
-		y = 2
+		x = -3
+		y = 3
 		ai_will_do = {
 			factor = 1
 			modifier = {
@@ -7877,54 +7833,34 @@ focus_tree = {
 				has_war = yes
 			}
 		}
-		relative_position_id = GER_udets_strike_force
+		relative_position_id = GER_air_innovation
 		completion_reward = {
-			custom_effect_tooltip = GER_spawn_stg_veterans_tt
-			hidden_effect = {
-				# Latest CAS Germany has researched, capped at 1941
-				if = {
-					limit = { 64 = { is_controlled_by = ROOT } }
-					if = {
-						limit = { OR = { has_tech = ger_CAS_1941 has_tech = CAS_1941 } }
-						load_oob = "GER_StG_veterans_1941"
-					}
-					else_if = {
-						limit = { OR = { has_tech = ger_CAS_1939 has_tech = CAS_1939 } }
-						load_oob = "GER_StG_veterans_1939"
-					}
-					else_if = {
-						limit = { OR = { has_tech = ger_CAS_1937 has_tech = CAS_1937 } }
-						load_oob = "GER_StG_veterans_1937"
-					}
-					else = {
-						load_oob = "GER_StG_veterans_1935"
-					}
+			air_experience = 50
+		custom_effect_tooltip = GER_plane_tt
+			if = {
+				limit = { 
+					has_tech = ger_CAS_1935
+					NOT = { has_tech = ger_CAS_1937	}
 				}
-				else = {
-					if = {
-						limit = { OR = { has_tech = ger_CAS_1941 has_tech = CAS_1941 } }
-						add_equipment_to_stockpile = { type = CAS_equipment_1941 amount = 370 producer = GER }
-					}
-					else_if = {
-						limit = { OR = { has_tech = ger_CAS_1939 has_tech = CAS_1939 } }
-						add_equipment_to_stockpile = { type = CAS_equipment_1939 amount = 370 producer = GER }
-					}
-					else_if = {
-						limit = { OR = { has_tech = ger_CAS_1937 has_tech = CAS_1937 } }
-						add_equipment_to_stockpile = { type = CAS_equipment_1937 amount = 370 producer = GER }
-					}
-					else = {
-						add_equipment_to_stockpile = { type = CAS_equipment_1935 amount = 370 producer = GER }
-					}
-					add_ace = { name = "Hans-Ulrich" surname = "Rudel" callsign = "Panzerknacker" type = support_unique }
-					add_ace = { name = "Helmut" surname = "Mahlke" callsign = "Helm" type = support_unique }
-					add_ace = { name = "Paul-Werner" surname = "Hozzel" callsign = "Werner" type = support_unique }
-				}
+				add_equipment_to_stockpile = { type = CAS_equipment_1935 amount = 300 producer = GER }   
 			}
+			if = {
+				limit = { 
+					has_tech = ger_CAS_1937
+					NOT = { has_tech = ger_CAS_1939	}
+				}
+				add_equipment_to_stockpile = { type = CAS_equipment_1937 amount = 300 producer = GER }   
+			}
+			if = {
+				limit = { 
+					has_tech = ger_CAS_1939
+				}
+				add_equipment_to_stockpile = { type = CAS_equipment_1939 amount = 300 producer = GER }   
+			}		
 			add_doctrine_cost_reduction = {
 				name = land_doc_bonus
 				cost_reduction = 0.5
-				uses = 1
+				uses = 2
 				category = air_doctrine
 			}
 		}
@@ -7935,102 +7871,8 @@ focus_tree = {
 		icon = GFX_GER_victory_through_airpower
 		prerequisite = { focus = GER_air_innovation }
 		relative_position_id = GER_air_innovation 
-		x = 5
-		y = 1
-		cost = 4.4
-		ai_will_do = {
-			factor = 0.2
-		}	
-		
-		completion_reward = {
-			#air_experience = 50
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = air_doctrine
-			}
-			#swap_ideas = {
-				#remove_idea = GER_air_innovations_1_idea
-				#add_idea = GER_victory_through_air_power_idea 
-			#}
-			#custom_effect_tooltip = available_research_team
-			#show_ideas_tooltip = erhard_milch_t
-			if = {
-				limit = {
-					has_completed_focus = GER_udets_strike_force
-				}
-				swap_ideas = {
-					remove_idea = GER_udets_strike_force_idea
-					add_idea = GER_udets_strike_force_idea_5
-				}
-			}
-			else_if = {
-				swap_ideas = {
-					remove_idea = GER_air_innovations_1_idea
-					add_idea = GER_udets_strike_force_idea_4
-				}
-			}
-		}
-	}	
-	focus = {
-		id = GER_prioritize_messer
-		icon = GFX_GER_victory_through_airpower
-		prerequisite = { focus = GER_victory_through_airpower }
-		relative_position_id = GER_victory_through_airpower 
-		mutually_exclusive = { focus = GER_prioritize_focke }
-		x = 1
-		y = 1
-		cost = 2.9
-		ai_will_do = {
-			factor = 0.2
-		}	
-		
-		completion_reward = {
-			air_experience = 25
-			add_tech_bonus = {
-				category = light_fighter
-				uses = 1
-				bonus = 0.75
-				name = GER_fuck_names 
-			}
-			mio:GER_messerschmitt_organization_new_one = {
-				add_mio_funds_gain_factor = .10
-			}
-		}
-	}	
-	focus = {
-		id = GER_prioritize_focke
-		icon = GFX_GER_victory_through_airpower
-		prerequisite = { focus = GER_victory_through_airpower }
-		relative_position_id = GER_victory_through_airpower 
-		mutually_exclusive = { focus = GER_prioritize_messer }
-		x = -1
-		y = 1
-		cost = 2.9
-		ai_will_do = {
-			factor = 0.2
-		}	
-		
-		completion_reward = {
-			air_experience = 25
-			add_tech_bonus = {
-				category = light_fighter
-				uses = 1
-				bonus = 0.75
-				name = GER_fuck_names 
-			}
-			mio:GER_focke_wulf_organization = {
-				add_mio_funds_gain_factor = .10
-			}
-		}
-	}	
-	focus = {
-		id = GER_aerial_supremacy
-		icon = GFX_GER_victory_through_airpower
-		prerequisite = { focus = GER_prioritize_focke focus = GER_prioritize_messer }
-		relative_position_id = GER_prioritize_focke 
-		x = 1
+		mutually_exclusive = { focus = GER_udets_strike_force }
+		x = 2
 		y = 1
 		cost = 5
 		ai_will_do = {
@@ -8038,92 +7880,9 @@ focus_tree = {
 		}	
 		
 		completion_reward = {
-			custom_effect_tooltip = GER_spawn_njg1_veterans_tt
-			hidden_effect = {
-				# Latest fighter Germany has researched
-				if = {
-					limit = { 64 = { is_controlled_by = ROOT } }
-					if = {
-						limit = { OR = { has_tech = ger_fighter_1944 has_tech = fighter_1944 } }
-						load_oob = "GER_NJG1_veterans_1944"
-					}
-					else_if = {
-						limit = { has_tech = ger_fighter_1943 }
-						load_oob = "GER_NJG1_veterans_1943"
-					}
-					else_if = {
-						limit = { OR = { has_tech = ger_fighter_1942 has_tech = fighter_1942 } }
-						load_oob = "GER_NJG1_veterans_1942"
-					}
-					else_if = {
-						limit = { has_tech = ger_fighter_1941 }
-						load_oob = "GER_NJG1_veterans_1941"
-					}
-					else_if = {
-						limit = { OR = { has_tech = ger_fighter_1940 has_tech = fighter_1940 } }
-						load_oob = "GER_NJG1_veterans_1940"
-					}
-					else_if = {
-						limit = { OR = { has_tech = ger_fighter_1938 has_tech = fighter_1938 } }
-						load_oob = "GER_NJG1_veterans_1938"
-					}
-					else_if = {
-						limit = { OR = { has_tech = ger_fighter_1936 has_tech = fighter_1936 } }
-						load_oob = "GER_NJG1_veterans_1936"
-					}
-					else = {
-						load_oob = "GER_NJG1_veterans_1934"
-					}
-				}
-				else = {
-					if = {
-						limit = { OR = { has_tech = ger_fighter_1944 has_tech = fighter_1944 } }
-						add_equipment_to_stockpile = { type = fighter_equipment_1944 amount = 300 producer = GER }
-					}
-					else_if = {
-						limit = { has_tech = ger_fighter_1943 }
-						add_equipment_to_stockpile = { type = fighter_equipment_1943 amount = 300 producer = GER }
-					}
-					else_if = {
-						limit = { OR = { has_tech = ger_fighter_1942 has_tech = fighter_1942 } }
-						add_equipment_to_stockpile = { type = fighter_equipment_1942 amount = 300 producer = GER }
-					}
-					else_if = {
-						limit = { has_tech = ger_fighter_1941 }
-						add_equipment_to_stockpile = { type = fighter_equipment_1941 amount = 300 producer = GER }
-					}
-					else_if = {
-						limit = { OR = { has_tech = ger_fighter_1940 has_tech = fighter_1940 } }
-						add_equipment_to_stockpile = { type = fighter_equipment_1940 amount = 300 producer = GER }
-					}
-					else_if = {
-						limit = { OR = { has_tech = ger_fighter_1938 has_tech = fighter_1938 } }
-						add_equipment_to_stockpile = { type = fighter_equipment_1938 amount = 300 producer = GER }
-					}
-					else_if = {
-						limit = { OR = { has_tech = ger_fighter_1936 has_tech = fighter_1936 } }
-						add_equipment_to_stockpile = { type = fighter_equipment_1936 amount = 300 producer = GER }
-					}
-					else = {
-						add_equipment_to_stockpile = { type = fighter_equipment_1934 amount = 300 producer = GER }
-					}
-					add_ace = { name = "Adolf" surname = "Galland" callsign = "Dolfo" type = fighter_unique }
-					add_ace = { name = "Hans-Joachim" surname = "Marseille" callsign = "Jochen" type = fighter_unique }
-					add_ace = { name = "Walter" surname = "Nowotny" callsign = "Nowi" type = fighter_unique }
-				}
-			}
-			add_tech_bonus = {
-				technology = night_fighters1
-				bonus = 99.99
-				uses = 1
-				name = GER_fuck_names
-			}
-			add_tech_bonus = {
-				technology = night_fighters2
-				bonus = 1
-				ahead_reduction = 1
-				uses = 1
-				name = GER_fuck_names
+			#air_experience = 50
+			mio:GER_focke_wulf_organization = {
+				add_mio_funds = 2000
 			}
 			add_doctrine_cost_reduction = {
 				name = land_doc_bonus
@@ -8131,36 +7890,42 @@ focus_tree = {
 				uses = 1
 				category = air_doctrine
 			}
+			swap_ideas = {
+				remove_idea = GER_air_innovations_1_idea
+				add_idea = GER_victory_through_air_power_idea 
+			}
+			custom_effect_tooltip = available_research_team
+			show_ideas_tooltip = erhard_milch_t
 		}
-	}
+	}	
 
 	focus = {
 		id = GER_Ural_Bomber
 		icon = GFX_GER_Ural_Bomber
-		prerequisite = { focus = GER_air_innovation }
+		prerequisite = { focus = GER_victory_through_airpower }
 		relative_position_id = GER_air_innovation 
-		mutually_exclusive = { focus = GER_Fast_Bomber }
 		
-		x = 1
-		y = 1
-		cost = 4.4
+		x = 2
+		y = 2
+		cost = 5
 		ai_will_do = {
 			factor = 0.2
 		}	
 		
 		completion_reward = {
+			air_experience = 25
 			add_political_power = 100
-			add_tech_bonus = {
-				name = bomber_bonus
-				bonus = 0.75
-				uses = 2
-				category = heavy_air
-				ahead_reduction = 1 	
-			}
 			custom_effect_tooltip = available_military_high_command
 			show_ideas_tooltip = GER_walther_wever
 			sp:sp_air_intercontinental_bomber = {
 				add_project_progress_ratio = 0.25
+			}
+			add_tech_bonus = {
+				name = bomber_bonus
+				bonus = 0.5
+				uses = 1
+				category = heavy_air
+				ahead_reduction = 1 	
 			}
 		}
 	}	
@@ -8168,12 +7933,12 @@ focus_tree = {
 	focus = {
 		id = GER_long_range_escorts
 		icon = GFX_GER_long_range_escorts
-		prerequisite = { focus = GER_air_innovation }		
-		cost = 4.4
+		prerequisite = { focus = GER_victory_through_airpower }		
+		cost = 5.00
 		prerequisite = {
 		}
-		x = 3
-		y = 1
+		x = 4
+		y = 2
 		ai_will_do = {
 			factor = 1
 			modifier = {
@@ -8183,24 +7948,24 @@ focus_tree = {
 		}
 		relative_position_id = GER_air_innovation
 		completion_reward = {
+			air_experience = 50
 			add_tech_bonus = {
 				category = cat_heavy_fighter
 				uses = 2
 				bonus = 1
 			}
-			air_experience = 25
 		}
 	}
 
 	focus = {
 		id = GER_strategic_bombing_doctrine
 		icon = GFX_GER_strategic_bombing_doctrine
-		cost = 5
+		cost = 5.00
 		prerequisite = {
-			 focus = GER_Ural_Bomber 
+			 focus = GER_Ural_Bomber focus = GER_long_range_escorts
 		}
-		x = 1
-		y = 1
+		x = 3
+		y = 3
 		ai_will_do = {
 			factor = 1
 			modifier = {
@@ -8208,54 +7973,54 @@ focus_tree = {
 				has_war = yes
 			}
 		}
-		relative_position_id = GER_Ural_Bomber 
+		relative_position_id = GER_air_innovation
 		completion_reward = {
+			air_experience = 50
 			custom_effect_tooltip = GER_strategic_bomber_tt
 			add_doctrine_cost_reduction = {
 				name = land_doc_bonus
 				cost_reduction = 0.5
-				uses = 1
+				uses = 2
 				category = air_doctrine
 			}
-			air_experience = 50
 			hidden_effect = {
 				add_equipment_to_stockpile = { type = strat_bomber_equipment_1939 amount = 170 producer = GER }   				
 			}
 		}
 	}	
 
-	#focus = {
-		#id = GER_scrap_lufthansa
-		#prerequisite = { focus = GER_air_innovation }
-		#icon = GFX_goal_continuous_air_production
-		#relative_position_id = GER_air_innovation
-		#x = 7
-		#y = 1
-		#cost = 5
+	focus = {
+		id = GER_scrap_lufthansa
+		prerequisite = { focus = GER_air_innovation }
+		icon = GFX_goal_continuous_air_production
+		relative_position_id = GER_air_innovation
+		x = 5
+		y = 1
+		cost = 5
 		
-		#ai_will_do = { 
-			#factor = 5 
-		#}
+		ai_will_do = { 
+			factor = 5 
+		}
 
-		#available = {
-			#has_tech = ger_tactical_bomber_1936
-		#}
+		available = {
+			has_tech = ger_tactical_bomber_1936
+		}
 	
-		#completion_reward = {
-			#custom_effect_tooltip = GER_seize_luft_tt
-			#country_event = { id = germany.325 days = 5 }
-		#}
-	#}
+		completion_reward = {
+			custom_effect_tooltip = GER_seize_luft_tt
+			country_event = { id = germany.325 days = 5 }
+		}
+	}
 
 	focus = {
 		id = GER_paratroopers
 		text = GER_paratroopers
 		icon = GFX_GER_paratroopers
-		prerequisite = { focus = GER_air_innovation }
-		relative_position_id = GER_air_innovation 
-		x = -3
-		y = 1
-		cost = 4.4
+		prerequisite = { focus = GER_scrap_lufthansa }
+		relative_position_id = GER_scrap_lufthansa 
+		x = 0
+		y = 2
+		cost = 5
 		ai_will_do = {
 			factor = 0
 		}
@@ -8263,30 +8028,35 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = available_military_high_command
 			show_ideas_tooltip = GER_kurt_student
-			set_technology = {
-				enable_commando = 1
+			add_tech_bonus = {
+				category = para_tech
+				uses = 3
+				bonus = 1 
 			}
-			custom_effect_tooltip = GER_Fallschirmjaeger
+			custom_effect_tooltip = GER_Fallschirmjaeger		
 			hidden_effect = {
 				load_oob = "GER_Fallschirmjaeger"
 			}
-			GER_kurt_student = {
-				add_attack = 1
-				add_defense = 1
+			if = {
+				limit = {
+					has_global_flag = scw_over
+				}
+				army_experience = 40
 			}
-				army_experience = 25
-			
+			else = {
+				army_experience = 50
+			}
 		}
 	}
 
 	focus = {
 		id = GER_invest_aircraft
-		prerequisite = { focus = GER_Fast_Bomber focus = GER_Ural_Bomber }
+		prerequisite = { focus = GER_udets_strike_force focus = GER_victory_through_airpower }
 		icon = GFX_GER_invest_aircraft
 		relative_position_id = GER_air_innovation
 		x = 0
 		y = 2
-		cost = 4.4
+		cost = 5
 		
 		ai_will_do = { 
 			factor = 5 
@@ -8309,7 +8079,8 @@ focus_tree = {
 		#air_experience = 50
 			add_tech_bonus = {
 				category = light_fighter
-				uses = 1
+				category = cat_heavy_fighter
+				uses = 2
 				bonus = 0.75
 				name = GER_fuck_names 
 			}
@@ -8364,27 +8135,42 @@ focus_tree = {
 					has_tech = ger_tactical_bomber_1936
 					NOT = { has_tech = ger_tactical_bomber_1938	}
 				}
-				add_equipment_to_stockpile = { type = tac_bomber_equipment_1936 amount = 120 producer = GER }	
+				add_equipment_to_stockpile = { type = tac_bomber_equipment_1936 amount = 70 producer = GER }	
 			}
 			if = {
 				limit = { 
 					has_tech = ger_tactical_bomber_1938
 					NOT = { has_tech = ger_tactical_bomber_1940	}
 				}
-				add_equipment_to_stockpile = { type = tac_bomber_equipment_1938 amount = 120 producer = GER }	 
+				add_equipment_to_stockpile = { type = tac_bomber_equipment_1938 amount = 70 producer = GER }	 
 			}
 			if = {
 				limit = {
 					has_tech = ger_tactical_bomber_1940
 				}
-				add_equipment_to_stockpile = { type = tac_bomber_equipment_1940 amount = 120 producer = GER }   
-			}
-			add_equipment_to_stockpile = {
-			type = transport_plane_equipment_1
-			amount = 150
-			producer = GER
+				add_equipment_to_stockpile = { type = tac_bomber_equipment_1940 amount = 70 producer = GER }   
 			}
 			
+			if = {
+				limit = { 
+					has_tech = ger_CAS_1935
+					NOT = { has_tech = ger_CAS_1937	}
+				}
+				add_equipment_to_stockpile = { type = CAS_equipment_1935 amount = 70 producer = GER }   
+			}
+			if = {
+				limit = { 
+					has_tech = ger_CAS_1937
+					NOT = { has_tech = ger_CAS_1939	}
+				}
+				add_equipment_to_stockpile = { type = CAS_equipment_1937 amount = 70 producer = GER }   
+			}
+			if = {
+				limit = { 
+					has_tech = ger_CAS_1939
+				}
+				add_equipment_to_stockpile = { type = CAS_equipment_1939 amount = 70 producer = GER }   
+			}
 			effect_tooltip = {
 				GER_mefo_bills_level_up = yes
 			}
@@ -8401,13 +8187,11 @@ focus_tree = {
 		relative_position_id = GER_invest_aircraft
 		x = 0
 		y = 2
-		cost = 4.4
+		cost = 5
 		ai_will_do = {
 			factor = 5
 		}
 		available = {
-			has_completed_focus = GER_udets_strike_force
-			has_completed_focus = GER_victory_through_airpower
 		}
 		available_if_capitulated = yes
 		completion_reward = { 
@@ -8424,19 +8208,23 @@ focus_tree = {
 				#	days = 180 
 				#}		
 			#}
-			hidden_effect = {
-				if = {
-					limit = {
-						has_idea = GER_udets_strike_force_idea_5
-					}
-					swap_ideas = {
-						remove_idea = GER_udets_strike_force_idea_5
-						add_idea = GER_udets_strike_force_idea_2
-					}
+			if = {
+				limit = {
+					has_idea = GER_udets_strike_force_idea 
+				}
+				swap_ideas = {
+					remove_idea = GER_udets_strike_force_idea 
+					add_idea = GER_udets_strike_force_idea_2
 				}
 			}
-
-			air_experience = 80
+			else_if = {
+				swap_ideas = {
+					remove_idea = GER_victory_through_air_power_idea
+					add_idea = GER_victory_through_air_power_idea_2
+				}
+			}
+			
+			air_experience = 50
 			
 			add_ace = {
 			name = "Erich"
@@ -8466,7 +8254,6 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
-			air_experience = 80
 		}
 	}
 
@@ -8476,8 +8263,8 @@ focus_tree = {
 		prerequisite = { focus = GER_air_innovation }
 		prerequisite = { focus = GER_prepare_the_kriegsmarine }
 		relative_position_id = GER_air_innovation 
-		x = 7
-		y = 1
+		x = 6
+		y = 2
 		cost = 2.89
 		ai_will_do = {
 			factor = 0.2
@@ -8509,8 +8296,8 @@ focus_tree = {
 		available = {
 			has_tech = centimetric_radarr
 		}
-		x = 1
-		y = 1
+		x = 0
+		y = 2
 		cost = 5
 		ai_will_do = {
 			factor = 0.2
@@ -8525,6 +8312,7 @@ focus_tree = {
 		id = GER_modern_cas
 		icon = GFX_GER_junkers_CAS
 		prerequisite = { focus = GER_invest_aircraft }
+		mutually_exclusive = { focus = GER_modern_fighter }
 		relative_position_id = GER_invest_aircraft
 		x = -1
 		y = 1
@@ -8535,71 +8323,20 @@ focus_tree = {
 		available_if_capitulated = yes		
 		
 		available = { 
-			OR = {
-			has_completed_focus = GER_junkers_CAS
-			has_completed_focus = GER_henschel_cas
-			}
 		}
 
 		bypass = {
 		}
 		
 		completion_reward = {
-			if = {
-				limit = {
-					NOT = {
-						has_completed_focus = GER_henschel_cas
-						has_completed_focus = GER_junkers_CAS
-					}
-				}
-				custom_effect_tooltip = GER_modern_cas_choice_tt
+			air_experience = 50	
+			add_tech_bonus = {
+				category = cas_bomber
+				uses = 2
+				bonus = 1
+				ahead_reduction = 0.5
+				name = GER_fuck_names 
 			}
-			if = {
-				limit = {
-					has_completed_focus = GER_henschel_cas
-				}
-				custom_effect_tooltip = GER_modern_cas_henschel_tt
-				add_tech_bonus = {
-					technology = ger_CAS_1939
-					uses = 1
-					ahead_reduction = 0.3
-					name = GER_fuck_names 
-				}
-				add_tech_bonus = {
-					technology = ger_CAS_1941
-					uses = 1
-					bonus = 1.50
-					ahead_reduction = 1
-					name = GER_fuck_names 
-				}
-				MIO:GER_henschel_organization = {
-					complete_mio_trait = GER_mio_anti_tank_cannons
-				}
-			}
-			if = {
-				limit = {
-					has_completed_focus = GER_junkers_CAS
-				}
-				custom_effect_tooltip = GER_modern_cas_junkers_tt
-				MIO:GER_junkers_organization = {
-					complete_mio_trait = GER_mio_trait_dive_brakes
-				}
-				add_tech_bonus = {
-					category = CAS_bomber
-					uses = 1
-					bonus = 1
-					ahead_reduction = 0.5
-					name = GER_fuck_names 
-				}
-				add_tech_bonus = {
-					technology = ger_cas_1943
-					uses = 1
-					bonus = 1.25
-					ahead_reduction = 0.7
-					name = GER_fuck_names 
-				}
-			}
-			air_experience = 25
 		}
 	}
 
@@ -8607,6 +8344,7 @@ focus_tree = {
 		id = GER_modern_fighter
 		icon = GFX_goal_messerschmitt
 		prerequisite = { focus = GER_invest_aircraft }
+		mutually_exclusive = { focus = GER_modern_cas }
 		relative_position_id = GER_invest_aircraft
 		x = 1
 		y = 1
@@ -8617,55 +8355,20 @@ focus_tree = {
 		available_if_capitulated = yes		
 		
 		available = { 
-			OR = {
-			has_completed_focus = GER_prioritize_messer
-			has_completed_focus = GER_prioritize_focke
-			}
 		}
 
 		bypass = {
 		}
 		
 		completion_reward = {
-			if = {
-				limit = {
-					NOT = {
-						has_completed_focus = GER_prioritize_focke
-						has_completed_focus = GER_prioritize_messer
-					}
-				}
-				custom_effect_tooltip = GER_modern_fighter_choice_tt
-			}
-			if = {
-				limit = {
-					has_completed_focus = GER_prioritize_focke
-					}
-					custom_effect_tooltip = GER_modern_fighter_focke_tt
-					add_tech_bonus = {
-						technology = ger_fighter_1941
-						uses = 1
-						bonus = 3
-						name = GER_fuck_names 
-					}
-			}
-			if = {
-				limit = {
-					has_completed_focus = GER_prioritize_messer
-				}
-					add_tech_bonus = {
-						technology = ger_fighter_1942
-						uses = 1
-						bonus = 1.10
-						name = GER_fuck_names 
-					}
-					MIO:GER_messerschmitt_organization_new_one= {
-					add_mio_research_bonus = 0.20
-					add_mio_funds_gain_factor = .15
-					add_mio_funds = 2500
-					}
-			}
-			air_experience = 25
-					
+			air_experience = 50
+		
+			add_tech_bonus = {
+				technology = ger_fighter_1941
+				uses = 1
+				bonus = 3
+				name = GER_fuck_names 
+			}			
 		}
 	}
 
@@ -8674,9 +8377,9 @@ focus_tree = {
 		icon = GFX_focus_rocketry
 		prerequisite = { focus = GER_air_innovation_2 }
 		relative_position_id = GER_air_innovation_2
-		x = -4
+		x = 0
 		y = 1
-		cost = 4.4
+		cost = 5
 		ai_will_do = {
 			factor = 1
 		}
@@ -8722,7 +8425,7 @@ focus_tree = {
 		relative_position_id = GER_expand_peenemuende_research_center
 		x = 0
 		y = 1
-		cost = 4.4
+		cost = 5
 		ai_will_do = {
 			factor = 1
 		}
@@ -8743,6 +8446,12 @@ focus_tree = {
 					add_idea = GER_udets_strike_force_idea_3
 				}
 			}
+			else_if = {
+				swap_ideas = {
+					remove_idea = GER_victory_through_air_power_idea_2
+					add_idea = GER_victory_through_air_power_idea_3
+				}
+			}
 			sp:sp_air_jet_engine = {
 				add_project_progress_ratio = 0.2
 			}
@@ -8761,7 +8470,7 @@ focus_tree = {
 		relative_position_id = GER_expand_peenemuende_research_center
 		x = 0
 		y = 2
-		cost = 4.4
+		cost = 5
 		ai_will_do = {
 			factor = 1
 		}
@@ -8788,13 +8497,7 @@ focus_tree = {
 				technology = ger_jet_tactical_bomber_1945
 				uses = 1
 				bonus = 3
-				name = GER_fuck_names
-			}
-			add_tech_bonus = {
-				technology = ger_jet_CAS_1945
-				uses = 1
-				bonus = 3
-				name = GER_fuck_names
+				name = GER_fuck_names 
 			}
 		}
 	}
@@ -8804,8 +8507,8 @@ focus_tree = {
 		icon = GFX_focus_rocketry
 		prerequisite = { focus = GER_expand_peenemuende_research_center }
 		relative_position_id = GER_expand_peenemuende_research_center
-		x = -2
-		y = 1
+		x = -1
+		y = 3
 		cost = 5
 		ai_will_do = {
 			factor = 1
@@ -8861,8 +8564,8 @@ focus_tree = {
 		icon = GFX_focus_wonderweapons
 		prerequisite = { focus = GER_expand_peenemuende_research_center }
 		relative_position_id = GER_expand_peenemuende_research_center
-		x = 2
-		y = 1
+		x = 1
+		y = 3
 		cost = 5
 		ai_will_do = {
 			factor = 1
@@ -8906,474 +8609,15 @@ focus_tree = {
 			hidden_effect = { news_event = { id = news.174 } }						
 		}
 	}
-	focus = {
-		id = GER_paratrooper_expansion
-		icon = GFX_GER_paratroopers
-		prerequisite = { focus = GER_air_innovation_2 }
-		relative_position_id = GER_air_innovation_2
-		x = -1
-		y = 1
-		cost = 4.4
-		ai_will_do = {
-			factor = 1
-		}
-		available_if_capitulated = yes	
-
-		available = {
-				has_completed_focus = GER_paratroopers
-		}
-
-		completion_reward = {
-			GER_kurt_student = {
-				add_unit_leader_trait = infantry_expert
-				add_unit_leader_trait = trait_engineer
-				add_unit_leader_trait = fortress_buster
-				add_unit_leader_trait = urban_assault_specialist 
-				add_unit_leader_trait = hill_fighter
-			}
-			GER_albert_kesselring = {
-				promote_leader = yes
-				add_attack = 1
-				add_defense = 1
-				add_unit_leader_trait = infantry_expert
-				add_unit_leader_trait = organizer
-				add_unit_leader_trait = logistics_wizard
-				add_unit_leader_trait = hill_fighter
-			}
-			set_technology = {
-                   enable_light_armor_para = 1
-			}
-			custom_effect_tooltip = GER_Fallschirmjaeger_expansion_tt
-			hidden_effect = {
-				load_oob = "GER_Fallschirmjaeger_expansion"
-			}
-			add_equipment_to_stockpile = {
-				type = transport_plane_equipment_1
-				amount = 100
-				producer = GER
-			}
-		}
-	}
-	focus = {
-		id = GER_battle_of_britain
-		icon = GFX_focus_rocketry
-		prerequisite = { focus = GER_air_innovation_2 }
-		relative_position_id = GER_air_innovation_2
-		x = 1
-		y = 1
-		cost = 4.4
-		ai_will_do = {
-			factor = 1
-		}
-		available_if_capitulated = yes	
-
-		available = {
-			OR = {
-				has_completed_focus = GER_private_military_industrial_complex
-				has_completed_focus = GER_the_states_military_industrial_complex
-			}
-			NOT = {
-				has_war_with = SOV
-			}
-		}
-
-		completion_reward = {
-			custom_effect_tooltip = GER_blitz_time_tt
-			custom_effect_tooltip = line_break_tt	
-			activate_mission_tooltip = GER_build_bombing_force
-			add_timed_idea = {
-				idea = GER_prepare_blitz
-				days = 90
-			}
-			custom_effect_tooltip = GER_bomber_line
-			hidden_effect = {
-				# Britain gets an early warning 40 days into GER_build_bombing_force (Der Blitz starts at 90)
-				ENG = { country_event = { id = germany.1338 days = 40 } }
-				# Ural Bomber path: latest strategic bomber, capped at 1941
-				if = {
-					limit = {
-						has_completed_focus = GER_Ural_Bomber
-						OR = {
-							has_tech = ger_strategic_bomber_1939
-							has_tech = strategic_bomber_1939
-						}
-					}
-					if = {
-						limit = {
-							OR = {
-								has_tech = ger_strategic_bomber_1941
-								has_tech = strategic_bomber_1941
-							}
-						}
-						add_equipment_production = {
-							equipment = { type = strat_bomber_equipment_1941 creator = "GER" }
-							requested_factories = 50
-							efficiency = 60
-						}
-					}
-					else = {
-						add_equipment_production = {
-							equipment = { type = strat_bomber_equipment_1939 creator = "GER" }
-							requested_factories = 50
-							efficiency = 60
-						}
-					}
-				}
-				# Otherwise (Fast Bomber path): latest tactical bomber, capped at 1940
-				else_if = {
-					limit = { has_tech = ger_tactical_bomber_1940 }
-					add_equipment_production = {
-						equipment = { type = tac_bomber_equipment_1940 creator = "GER" }
-						requested_factories = 50
-						efficiency = 60
-					}
-				}
-				else_if = {
-					limit = { has_tech = ger_tactical_bomber_1938 }
-					add_equipment_production = {
-						equipment = { type = tac_bomber_equipment_1938 creator = "GER" }
-						requested_factories = 50
-						efficiency = 60
-					}
-				}
-				else_if = {
-					limit = { has_tech = ger_tactical_bomber_1936 }
-					add_equipment_production = {
-						equipment = { type = tac_bomber_equipment_1936 creator = "GER" }
-						requested_factories = 50
-						efficiency = 60
-					}
-				}
-				else = {
-					add_equipment_production = {
-						equipment = { type = tac_bomber_equipment_1934 creator = "GER" }
-						requested_factories = 50
-						efficiency = 60
-					}
-				}
-			}
-			custom_effect_tooltip = line_break_tt
-			custom_effect_tooltip = GER_blitz_expire_tt
-			
-		}
-	}
-	focus = {
-		id = GER_the_fall_of_an_eagle
-		icon = GFX_focus_rocketry
-		prerequisite = { focus = GER_air_innovation_2 }
-		relative_position_id = GER_air_innovation_2
-		x = 4
-		y = 1
-		cost = 5
-		ai_will_do = {
-			factor = 1
-		}
-		available_if_capitulated = yes
-
-		available = {
-			# Stage 3: Udet is dead (date is a fallback if the Udet events never fired)
-			if = {
-				limit = {
-					OR = {
-						has_country_flag = GER_udet_dispute_settled
-						date > 1942.6.1
-					}
-				}
-				custom_trigger_tooltip = {
-					tooltip = GER_new_generalluftzeugmeister_tt
-					always = yes
-				}
-			}
-			# Stage 1: waiting on Udet's Report (germany.1334)
-			else_if = {
-				limit = { NOT = { has_country_flag = GER_udets_report_received } }
-				custom_trigger_tooltip = {
-					tooltip = GER_udet_report_pending_tt
-					has_country_flag = GER_udets_report_received
-				}
-			}
-			# Stage 2: waiting on Udet's death (germany.1335)
-			else = {
-				custom_trigger_tooltip = {
-					tooltip = GER_udet_dispute_settled_tt
-					has_country_flag = GER_udet_dispute_settled
-				}
-			}
-		}
-
-		completion_reward = {
-			add_ideas = erhard_milch_t
-			add_timed_idea = {
-				idea = GER_milch_production_drive
-				days = 100
-			}
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.99
-				uses = 4
-				category = air_doctrine
-			}
-			custom_effect_tooltip = line_break_tt	
-			custom_effect_tooltip = GER_get_6000_workersz_tt 
-			custom_effect_tooltip = GER_arbeitseinsatz_volunteer_workers_luftwaffe_1_tt
-			add_to_variable = { GER_arbeitseinsatz_resistance_damage_to_garrison = 0.05 }
-			add_to_variable = { GER_arbeitseinsatz_conscription = 0.05 }
-			add_to_variable = {
-				var = GER_num_arbeitseinsatz
-				value = 6000
-			}
-		}
-	}
-	focus = {
-		id = GER_forced_labor_air
-		icon = GFX_focus_rocketry
-		prerequisite = { focus = GER_the_fall_of_an_eagle }
-		relative_position_id = GER_the_fall_of_an_eagle
-		x = -2
-		y = 1
-		cost = 5
-		ai_will_do = {
-			factor = 1
-		}
-		available_if_capitulated = yes	
-
-		available = {
-				has_idea = GER_speer
-		}
-
-		completion_reward = {
-			swap_ideas = {
-				remove_idea = GER_demoralized_luftwaffe
-				add_idea = GER_overburdened_luftwaffe
-			}
-			custom_effect_tooltip = GER_get_12000_workers_tt
-			custom_effect_tooltip = GER_arbeitseinsatz_volunteer_workers_luftwaffe_1_tt
-			add_to_variable = { GER_arbeitseinsatz_resistance_damage_to_garrison = 0.05 }
-			add_to_variable = { GER_arbeitseinsatz_conscription = 0.05 }
-			add_to_variable = {
-				var = GER_num_arbeitseinsatz
-				value = 12000
-			}
-		}
-	}
-	focus = {
-		id = GER_expand_aa_capacity
-		icon = GFX_focus_rocketry
-		prerequisite = { focus = GER_the_fall_of_an_eagle }
-		relative_position_id = GER_the_fall_of_an_eagle
-		x = -1
-		y = 2
-		cost = 5
-		ai_will_do = {
-			factor = 1
-		}
-		available_if_capitulated = yes	
-
-		available = {
-
-		}
-
-		cancelable = no
-
-		completion_reward = {
-			add_timed_idea = {
-				idea = GER_kammhuber_line_construction
-				days = 120
-			}
-			add_tech_bonus = {
-				technology = sp_shock_hardening_techniques
-				bonus = 0.75
-				uses = 1
-				name = GER_expand_aa_capacity
-			}
-			add_tech_bonus = {
-				technology = antiair5
-				technology = antiairfc
-				technology = heavy_antiair_5
-				bonus = 0.75
-				uses = 3
-				name = GER_expand_aa_capacity
-			}
-			sp:sp_naval_proximity_fuze = {
-				add_project_progress_ratio = 0.3
-			}
-			add_breakthrough_progress = {
-				specialization = specialization_nuclear
-				value = 1
-			}
-			custom_effect_tooltip = GER_kammhuber_line_tt
-			hidden_effect = {
-				every_state = {
-					limit = {
-						is_controlled_by = ROOT
-						is_coastal = yes
-						OR = {
-							state = 37	# Denmark
-							state = 99	# Jutland
-							state = 58	# Schleswig-Holstein
-							state = 59	# Ost-Hannover
-							state = 56	# Weser-Ems
-							state = 36	# Friesland
-							state = 7	# Holland
-							state = 6	# Belgium
-							state = 29	# Pas de Calais
-							state = 785	# Picardy
-							state = 15	# Normandy
-						}
-					}
-					add_building_construction = {
-						type = anti_air_building
-						level = 2
-						instant_build = yes
-					}
-					# Bring radar up to level 2
-					if = {
-						limit = { radar_station < 1 }
-						add_building_construction = {
-							type = radar_station
-							level = 2
-							instant_build = yes
-						}
-					}
-					else_if = {
-						limit = { radar_station < 2 }
-						add_building_construction = {
-							type = radar_station
-							level = 1
-							instant_build = yes
-						}
-					}
-				}
-			}
-		}
-	}
-	focus = {
-		id = GER_defend_the_reich
-		icon = GFX_focus_rocketry
-		prerequisite = { focus = GER_the_fall_of_an_eagle }
-		relative_position_id = GER_the_fall_of_an_eagle
-		x = 0
-		y = 1
-		cost = 5
-		ai_will_do = {
-			factor = 1
-		}
-		available_if_capitulated = yes	
-
-		available = {
-				OR = {
-					SOV = {
-						surrender_progress < 0.05
-					}
-					GER = {
-						NOT = {
-							has_full_control_of_state = 16
-						}
-					}
-					casualties >1500000
-			}
-		}
-
-		completion_reward = {
-			add_stability = -0.10
-			if = {
-				limit = {
-					has_completed_focus = GER_systemize_training
-				}
-				swap_ideas = {
-					remove_idea = GER_udets_strike_force_idea_7
-					add_idea = GER_udets_strike_force_idea_8
-				}
-			}
-			else_if = {
-				swap_ideas = {
-					remove_idea = GER_udets_strike_force_idea_3
-					add_idea = GER_udets_strike_force_idea_6
-				}
-			}
-		}
-	}
-	focus = {
-		id = GER_jagernot_programm
-		icon = GFX_focus_rocketry
-		prerequisite = { focus = GER_the_fall_of_an_eagle }
-		relative_position_id = GER_the_fall_of_an_eagle
-		x = 2
-		y = 1
-		cost = 5
-		ai_will_do = {
-			factor = 1
-		}
-		available_if_capitulated = yes
-
-		# Only checked when selecting the focus; it keeps going if the fighter count recovers
-		cancel_if_invalid = no
-		continue_if_invalid = yes
-
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = GER_luftwaffe_in_ruins_tt
-				# Fighters + heavy fighters, in stockpile and deployed in air wings
-				set_temp_variable = { GER_fighter_total = num_equipment@small_plane_airframe }
-				add_to_temp_variable = { GER_fighter_total = num_equipment@medium_plane_fighter_airframe }
-				add_to_temp_variable = { GER_fighter_total = num_deployed_planes_with_type@fighter }
-				check_variable = { GER_fighter_total < 4000 }
-			}
-		}
-
-		completion_reward = {
-			add_timed_idea = {
-				idea = GER_jagernot_programm_idea
-				days = 120
-			}
-		}
-	}
-	focus = {
-		id = GER_systemize_training
-		icon = GFX_focus_rocketry
-		prerequisite = { focus = GER_the_fall_of_an_eagle }
-		relative_position_id = GER_the_fall_of_an_eagle
-		x = 1
-		y = 2
-		cost = 5
-		ai_will_do = {
-			factor = 1
-		}
-		available_if_capitulated = yes	
-
-
-		completion_reward = {
-			add_mastery = {
-				amount = 240
-				folder = air
-			}	
-			add_stability = -0.1
-			if = {
-				limit = {
-					has_completed_focus = GER_defend_the_reich
-				}
-				swap_ideas = {
-					remove_idea = GER_udets_strike_force_idea_6
-					add_idea = GER_udets_strike_force_idea_8
-				}
-			}
-			else_if = {
-				swap_ideas = {
-					remove_idea = GER_udets_strike_force_idea_3
-					add_idea = GER_udets_strike_force_idea_7
-				}
-			}
-		}
-	}
 
 	### Kriegsmarine ##
 
 	focus = {
 		id = GER_prepare_the_kriegsmarine
 		icon = GFX_GER_finance_kriegsmarine
-		x = 37
+		x = 33
 		y = 0
-		cost = 2.9
+		cost = 5
 		ai_will_do = {
 			factor = 1
 		}
