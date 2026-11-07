@@ -40,13 +40,13 @@ ENG_vickers_armstrong_eng_organization = {
 		}
 	}
 
-	# --- the Valentine Marks (centre): three columns, read left to right, each Mark needs the one before ---
+	# --- the Valentine Marks (centre): 3x3 grid read by rows (II III IV / V VI VIIA / VIII IX X), each column runs straight down; Mk XI joins them ---
 	trait = {
 		token = ENG_vickers_mk1
 		name = "Valentine Mk I: Private Venture"
 		icon = GFX_generic_mio_department_icon_tank_medium_tank
 		special_trait_background = yes
-		position = { x=3 y=0 }
+		position = { x=5 y=0 }
 
 		limit_to_equipment_type = { mio_cat_eq_vickers_tanks }
 		equipment_bonus = {
@@ -59,7 +59,7 @@ ENG_vickers_armstrong_eng_organization = {
 		token = ENG_vickers_mk2_aec
 		name = "Valentine Mk II: AEC Diesel"
 		icon = GFX_generic_mio_trait_icon_fuel_consumption
-		position = { x=4 y=0 }
+		position = { x=4 y=1 }
 		all_parents = { ENG_vickers_mk1 }
 
 		limit_to_equipment_type = { mio_cat_eq_vickers }
@@ -76,9 +76,9 @@ ENG_vickers_armstrong_eng_organization = {
 	trait = {
 		token = ENG_vickers_mk3
 		name = "Valentine Mk III: Three-Man Turret"
-		icon = GFX_generic_mio_department_icon_tank_medium_tank_quality
-		position = { x=5 y=0 }
-		all_parents = { ENG_vickers_mk2_aec }
+		icon = GFX_oak_mio_trait_icon_medium_turret
+		position = { x=5 y=1 }
+		all_parents = { ENG_vickers_mk1 }
 
 		limit_to_equipment_type = { mio_cat_eq_vickers_tanks }
 		equipment_bonus = {
@@ -95,14 +95,17 @@ ENG_vickers_armstrong_eng_organization = {
 		token = ENG_vickers_mk4_gmc
 		name = "Valentine Mk IV: GMC Diesel"
 		icon = GFX_generic_mio_department_icon_tank_medium_tank_engine
-		position = { x=3 y=1 }
-		all_parents = { ENG_vickers_mk3 }
+		position = { x=6 y=1 }
+		all_parents = { ENG_vickers_mk1 }
 
 		available = {
 			FROM = {
-				OR = {
-					has_tech = eng_1939_medium_tank_chassis
-					has_tech = can_1939_medium_tank_chassis
+				custom_trigger_tooltip = {
+					tooltip = ENG_vickers_tt_1939_medium_tank_chassis
+					OR = {
+						has_tech = eng_1939_medium_tank_chassis
+						has_tech = can_1939_medium_tank_chassis
+					}
 				}
 			}
 		}
@@ -117,28 +120,23 @@ ENG_vickers_armstrong_eng_organization = {
 	}
 	trait = {
 		token = ENG_vickers_mk5
-		name = "Valentine Mk V: GMC Three-Man Turret"
-		icon = GFX_generic_mio_department_icon_tank_medium_tank_quality
-		position = { x=4 y=1 }
-		all_parents = { ENG_vickers_mk4_gmc }
+		name = "Valentine Mk V: Wireless Set No. 19"
+		icon = GFX_generic_mio_department_icon_radio_equipment
+		position = { x=4 y=2 }
+		all_parents = { ENG_vickers_mk2_aec }
 
 		limit_to_equipment_type = { mio_cat_eq_vickers_tanks }
 		equipment_bonus = {
-			soft_attack = 0.06
-			build_cost_ic = 0.02
-		}
-		on_complete = {
-			FROM = {
-				set_technology = { oak_vickers_valentine_turret_tech = 1 popup = no }
-			}
+			breakthrough = 0.05
+			defense = 0.03
 		}
 	}
 	trait = {
 		token = ENG_vickers_mk6
 		name = "Valentine Mk VI/VII: Canadian Cast Nose"
 		icon = GFX_generic_mio_department_icon_tank_medium_tank_armor
-		position = { x=5 y=1 }
-		all_parents = { ENG_vickers_mk5 }
+		position = { x=5 y=2 }
+		all_parents = { ENG_vickers_mk3 }
 
 		limit_to_equipment_type = { mio_cat_eq_vickers_tanks }
 		equipment_bonus = {
@@ -150,32 +148,33 @@ ENG_vickers_armstrong_eng_organization = {
 		token = ENG_vickers_mk7a
 		name = "Valentine Mk VIIA: Studded Tracks"
 		icon = GFX_generic_mio_trait_icon_maximum_speed
-		position = { x=3 y=2 }
-		all_parents = { ENG_vickers_mk6 }
+		position = { x=6 y=2 }
+		all_parents = { ENG_vickers_mk4_gmc }
 
+		available = {
+			FROM = { has_tech = eng_large_tracks }
+		}
 		limit_to_equipment_type = { mio_cat_eq_vickers_tanks }
 		equipment_bonus = {
 			maximum_speed = 0.03
 			reliability = 0.03
 		}
-		on_complete = {
-			FROM = {
-				set_technology = { oak_vickers_valentine_dd_tech = 1 popup = no }
-			}
-		}
 	}
 	trait = {
 		token = ENG_vickers_mk8
-		name = "Valentine Mk VIII: 6-pdr Turret"
+		name = "Valentine Mk VIII: 6-pdr Gun"
 		icon = GFX_generic_mio_department_icon_tank_medium_tank_at
-		position = { x=4 y=2 }
-		all_parents = { ENG_vickers_mk7a }
+		position = { x=4 y=3 }
+		all_parents = { ENG_vickers_mk5 }
 
 		available = {
 			FROM = {
-				OR = {
-					has_tech = eng_1940_medium_tank_chassis
-					has_tech = can_1940_medium_tank_chassis
+				custom_trigger_tooltip = {
+					tooltip = ENG_vickers_tt_1940_medium_tank_chassis
+					OR = {
+						has_tech = eng_1940_medium_tank_chassis
+						has_tech = can_1940_medium_tank_chassis
+					}
 				}
 			}
 		}
@@ -184,6 +183,7 @@ ENG_vickers_armstrong_eng_organization = {
 			hard_attack = 0.1
 			ap_attack = 0.1
 			soft_attack = -0.05
+			build_cost_ic = 0.02
 		}
 		on_complete = {
 			FROM = {
@@ -195,41 +195,62 @@ ENG_vickers_armstrong_eng_organization = {
 		token = ENG_vickers_mk9
 		name = "Valentine Mk IX: 6-pdr, Uprated GMC"
 		icon = GFX_generic_mio_department_icon_tank_medium_tank_weapons
-		position = { x=5 y=2 }
-		all_parents = { ENG_vickers_mk8 }
+		position = { x=5 y=3 }
+		all_parents = { ENG_vickers_mk6 }
 
+		available = {
+			FROM = {
+				custom_trigger_tooltip = {
+					tooltip = ENG_vickers_tt_1940_medium_tank_chassis
+					OR = {
+						has_tech = eng_1940_medium_tank_chassis
+						has_tech = can_1940_medium_tank_chassis
+					}
+				}
+			}
+		}
 		limit_to_equipment_type = { mio_cat_eq_vickers_tanks }
 		equipment_bonus = {
 			hard_attack = 0.12
 			ap_attack = 0.08
 			soft_attack = -0.05
 			reliability = -0.03
+			build_cost_ic = 0.02
 		}
 	}
 	trait = {
 		token = ENG_vickers_mk10
 		name = "Valentine Mk X: Coaxial Besa"
 		icon = GFX_generic_mio_trait_icon_soft_attack
-		position = { x=3 y=3 }
-		all_parents = { ENG_vickers_mk9 }
+		position = { x=6 y=3 }
+		all_parents = { ENG_vickers_mk7a }
 
+		available = {
+			FROM = {
+				has_tech = support_weapons3
+			}
+		}
 		limit_to_equipment_type = { mio_cat_eq_vickers_tanks }
 		equipment_bonus = {
 			soft_attack = 0.06
+			build_cost_ic = 0.02
 		}
 	}
 	trait = {
 		token = ENG_vickers_mk11_75mm
 		name = "Valentine Mk XI: 75 mm Dual-Purpose"
 		icon = GFX_generic_mio_department_icon_tank_general_weapons
-		position = { x=4 y=3 }
-		all_parents = { ENG_vickers_mk10 }
+		position = { x=5 y=4 }
+		all_parents = { ENG_vickers_mk8 ENG_vickers_mk9 ENG_vickers_mk10 }
 
 		available = {
 			FROM = {
-				OR = {
-					has_tech = eng_1942_medium_tank_chassis
-					has_tech = can_1942_medium_tank_chassis
+				custom_trigger_tooltip = {
+					tooltip = ENG_vickers_tt_1942_medium_tank_chassis
+					OR = {
+						has_tech = eng_1942_medium_tank_chassis
+						has_tech = can_1942_medium_tank_chassis
+					}
 				}
 			}
 		}
@@ -237,6 +258,7 @@ ENG_vickers_armstrong_eng_organization = {
 		equipment_bonus = {
 			soft_attack = 0.12
 			hard_attack = 0.03
+			build_cost_ic = 0.02
 		}
 		on_complete = {
 			FROM = {
@@ -250,8 +272,8 @@ ENG_vickers_armstrong_eng_organization = {
 		token = ENG_vickers_railway_works
 		name = "Railway Carriage Subcontractors"
 		icon = GFX_generic_mio_department_icon_tank_medium_tank_line_efficiency
-		position = { x=1 y=1 }
-		all_parents = { ENG_vickers_mk3 }
+		position = { x=2.5 y=1 }
+		all_parents = { ENG_vickers_mk2_aec }
 
 		limit_to_equipment_type = { mio_cat_eq_vickers }
 		organization_modifier = {
@@ -265,7 +287,7 @@ ENG_vickers_armstrong_eng_organization = {
 		token = ENG_vickers_reliability
 		name = "Valentine Reliability"
 		icon = GFX_generic_mio_trait_icon_reliability
-		position = { x=1 y=2 }
+		position = { x=2.5 y=2 }
 		all_parents = { ENG_vickers_railway_works }
 
 		limit_to_equipment_type = { mio_cat_eq_vickers }
@@ -277,16 +299,19 @@ ENG_vickers_armstrong_eng_organization = {
 	trait = {
 		token = ENG_vickers_for_russia
 		name = "Valentines for Russia"
-		icon = GFX_generic_mio_department_icon_tank_medium_tank_production
-		position = { x=0 y=3 }
+		icon = GFX_oak_mio_trait_icon_lend_lease_soviet
+		position = { x=1.5 y=3 }
 		all_parents = { ENG_vickers_reliability }
 		mutually_exclusive = { ENG_vickers_home_army }
 
 		available = {	# the Valentine design must exist, and the Soviets must be fighting Germany
 			FROM = {
-				OR = {
-					has_tech = eng_1939_medium_tank_chassis
-					has_tech = can_1939_medium_tank_chassis
+				custom_trigger_tooltip = {
+					tooltip = ENG_vickers_tt_1939_medium_tank_chassis
+					OR = {
+						has_tech = eng_1939_medium_tank_chassis
+						has_tech = can_1939_medium_tank_chassis
+					}
 				}
 				country_exists = SOV
 				SOV = { has_war_with = GER }
@@ -313,8 +338,8 @@ ENG_vickers_armstrong_eng_organization = {
 	trait = {
 		token = ENG_vickers_home_army
 		name = "Home Army Priority"
-		icon = GFX_generic_mio_trait_icon_armor_value
-		position = { x=1 y=3 }
+		icon = GFX_oak_mio_trait_icon_british_army
+		position = { x=3.5 y=3 }
 		all_parents = { ENG_vickers_reliability }
 		mutually_exclusive = { ENG_vickers_for_russia }
 
@@ -330,8 +355,8 @@ ENG_vickers_armstrong_eng_organization = {
 		token = ENG_vickers_chassis_commonality
 		name = "Valentine Chassis Commonality"
 		icon = GFX_generic_mio_department_icon_tank_medium_tank_conversion
-		position = { x=7 y=1 }
-		all_parents = { ENG_vickers_mk1 }
+		position = { x=8.5 y=1 }
+		all_parents = { ENG_vickers_mk4_gmc }
 
 		limit_to_equipment_type = { mio_cat_eq_medium_tank_destroyers }
 		equipment_bonus = {
@@ -343,7 +368,7 @@ ENG_vickers_armstrong_eng_organization = {
 		token = ENG_vickers_archer
 		name = "Archer: Rear-Facing 17-pdr"
 		icon = GFX_generic_mio_department_icon_anti_tank
-		position = { x=7 y=2 }
+		position = { x=8.5 y=2 }
 		all_parents = { ENG_vickers_chassis_commonality }
 
 		available = {
@@ -370,8 +395,8 @@ ENG_vickers_armstrong_eng_organization = {
 		token = ENG_vickers_bishop
 		name = "Bishop and Beyond"
 		icon = GFX_generic_mio_department_icon_tank_medium_tank_spg
-		position = { x=6 y=2 }
-		any_parent = { ENG_vickers_archer ENG_vickers_mk11_75mm }
+		position = { x=7.5 y=3 }
+		all_parents = { ENG_vickers_chassis_commonality }
 
 		limit_to_equipment_type = { mio_cat_eq_vickers }
 		equipment_bonus = {
@@ -386,6 +411,25 @@ ENG_vickers_armstrong_eng_organization = {
 					uses = 1
 					category = armor
 				}
+			}
+		}
+	}
+
+	# --- Valentine DD: the swimming tank ---
+	trait = {
+		token = ENG_vickers_dd
+		name = "Valentine DD: Duplex Drive"
+		icon = GFX_generic_mio_department_icon_tank_general_conversion
+		position = { x=9.5 y=3 }
+		all_parents = { ENG_vickers_chassis_commonality }
+
+		limit_to_equipment_type = { mio_cat_eq_vickers_tanks }
+		equipment_bonus = {
+			breakthrough = 0.03
+		}
+		on_complete = {
+			FROM = {
+				set_technology = { oak_vickers_valentine_dd_tech = 1 popup = no }
 			}
 		}
 	}
