@@ -495,7 +495,7 @@ Ger_alkett = {
 
 		position = { x=5 y=0 }
 		
-		limit_to_equipment_type = { mio_cat_eq_alkett }
+		limit_to_equipment_type = { mio_cat_eq_alkett_light }
 		equipment_bonus = {
 			hardness = 0.05
 		}
@@ -509,7 +509,7 @@ Ger_alkett = {
 		relative_position_id = generic_mio_trait_armor_steel_working
 
 		all_parents = { generic_mio_trait_armor_steel_working }
-		limit_to_equipment_type = { mio_cat_eq_medium_ag_td }	
+		limit_to_equipment_type = { mio_cat_eq_alkett_ag_td_light }	
 		equipment_bonus = {
 			soft_attack = 0.075
 			hard_attack = 0.05
@@ -577,6 +577,7 @@ Ger_alkett = {
 		limit_to_equipment_type = { mio_cat_eq_alkett }
 		equipment_bonus = {
 			defense = 0.1
+			build_cost_ic = 0.02
 		}
 	}
 	trait = {
@@ -628,9 +629,9 @@ Ger_alkett = {
 				}
 			}
 		}
-		limit_to_equipment_type = { mio_cat_eq_medium_assault_guns }
+		limit_to_equipment_type = { mio_cat_eq_alkett_ag }
 		equipment_bonus = {
-			soft_attack = 0.1
+			soft_attack = 0.05
 			hard_attack = 0.05
 			hardness = 0.05
 		}
@@ -654,7 +655,7 @@ Ger_alkett = {
 				}
 			}
 		}
-		limit_to_equipment_type = { mio_cat_eq_medium_tank_destroyers }
+		limit_to_equipment_type = { mio_cat_eq_alkett_td }
 
 		equipment_bonus = {
 			hard_attack = 0.1
@@ -676,6 +677,7 @@ Ger_alkett = {
 		equipment_bonus = {
 			soft_attack = 0.035
 			hard_attack = 0.035
+			build_cost_ic = 0.02
 		}
 	}
 	trait = {
@@ -707,18 +709,18 @@ Ger_alkett = {
 		relative_position_id = refurbishment
 		all_parents = { refurbishment }
 
-		available = {	# Panzer III was co-developed with Daimler-Benz: its MIO must be size 3+ with "Focus on Medium Panzers"
+		available = {	# Panzer III was co-developed with Daimler-Benz: its MIO must be size 2+ with "Focus on Medium Panzers"
 			FROM = {
 				if = {
 					limit = { original_tag = GER }
 					mio:daimler_benz = {
-						has_mio_size > 2
+						has_mio_size > 1
 						is_mio_trait_completed = medium
 					}
 				}
 				else = {
 					mio:BUL_daimler_benz = {
-						has_mio_size > 2
+						has_mio_size > 1
 						is_mio_trait_completed = medium
 					}
 				}
@@ -743,7 +745,7 @@ Ger_alkett = {
 		relative_position_id = improved_fightingcompartment
 		all_parents = { improved_fightingcompartment }
 
-		limit_to_equipment_type = { mio_cat_eq_medium_ag_td }
+		limit_to_equipment_type = { mio_cat_eq_alkett_ag_td }
 		equipment_bonus = {
 			defense = 0.08
 			build_cost_ic = -0.03
@@ -763,7 +765,7 @@ Ger_alkett = {
 		available = {
 			FROM = { has_tech = ger_1940_medium_tank_chassis }
 		}
-		limit_to_equipment_type = { mio_cat_eq_medium_ag_td }
+		limit_to_equipment_type = { mio_cat_eq_alkett_ag_td }
 		production_bonus = {
 			production_capacity_factor = 0.1
 		}
@@ -782,7 +784,15 @@ Ger_alkett = {
 
 		limit_to_equipment_type = { mio_cat_eq_alkett }
 		available = {
-			FROM = { has_tech = ger_armour_skirts }
+			FROM = {
+				custom_trigger_tooltip = {	# No Step Back: armored_skirts_tech (tank upgrades); without it: ger_armour_skirts
+					tooltip = GER_alkett_tt_armored_skirts
+					OR = {
+						has_tech = armored_skirts_tech
+						has_tech = ger_armour_skirts
+					}
+				}
+			}
 		}
 		equipment_bonus = {
 			armor_value = 0.15
@@ -802,11 +812,11 @@ Ger_alkett = {
 		available = {
 			FROM = { has_tech = ger_spaced_armor }
 		}
-		limit_to_equipment_type = { mio_cat_eq_medium_ag_td }
+		limit_to_equipment_type = { mio_cat_eq_alkett_ag_td }
 		equipment_bonus = {
 			armor_value = 0.9
 			reliability = -0.05
-			maximum_speed = -0.05
+			maximum_speed = -0.1
 		}
 	}
 	trait = {
@@ -822,10 +832,11 @@ Ger_alkett = {
 				is_mio_trait_completed = GER_alkett_concrete
 			}
 		}
-		limit_to_equipment_type = { mio_cat_eq_medium_ag_td }
+		limit_to_equipment_type = { mio_cat_eq_alkett_ag_td }
 		equipment_bonus = {
-			defense = 0.05
 			hardness = 0.03
+			soft_attack = 0.02
+			hard_attack = 0.02
 		}
 	}
 
@@ -843,7 +854,7 @@ Ger_alkett = {
 		available = {
 			FROM = { has_tech = ger_advanced_turret }
 		}
-		limit_to_equipment_type = { mio_cat_eq_medium_tank_destroyers }
+		limit_to_equipment_type = { mio_cat_eq_alkett_td }
 		equipment_bonus = {
 			hard_attack = 0.05
 			soft_attack = 0.05
@@ -860,10 +871,21 @@ Ger_alkett = {
 		all_parents = { generic_mio_gunner_sight_improvements }
 		mutually_exclusive = { GER_alkett_lang }
 
-		limit_to_equipment_type = { mio_cat_eq_medium_assault_guns }
+		available = {
+			FROM = { has_tech = ger_advanced_turret }
+		}
+		limit_to_equipment_type = { mio_cat_eq_alkett_ag }
 		equipment_bonus = {
 			soft_attack = 0.12
 			hard_attack = -0.05
+		}
+		on_complete = {
+			custom_effect_tooltip = oak_alkett_stuh42_tech_mio_tt
+			hidden_effect = {
+				FROM = {
+					set_technology = { oak_alkett_stuh42_tech = 1 popup = no }
+				}
+			}
 		}
 	}
 	trait = {
@@ -879,7 +901,7 @@ Ger_alkett = {
 				is_mio_trait_completed = GER_alkett_stuh42
 			}
 		}
-		limit_to_equipment_type = { mio_cat_eq_medium_ag_td }
+		limit_to_equipment_type = { mio_cat_eq_alkett_ag_td }
 		organization_modifier = {
 			military_industrial_organization_research_bonus = 0.15
 		}
