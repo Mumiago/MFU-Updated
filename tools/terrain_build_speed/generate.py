@@ -13,22 +13,20 @@ MOD = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 OUT = os.path.join(MOD, "common", "on_actions", "MFU_terrain_construction_on_actions.txt")
 
 TERRAIN_SPEED = {
-    "plains": 0.3,
-    "urban": 0.8,
-    "forest": 0.1,
-    "hills": 0.0,
-    "marsh": -0.2,
-    "desert_hills": -0.2,
-    "desert": -0.4,
-    "jungle": -0.6,
-    "mountain": -0.9,
-    "deep_desert": -1.2,
+    "plains": 0.0,
+    "urban": 0.5,
+    "forest": -0.2,
+    "hills": -0.3,
+    "marsh": -0.5,
+    "desert": -0.7,
+    "jungle": -0.9,
+    "mountain": -1.2,
 }
 BUILDING_TABLES = {
     "rail_way": TERRAIN_SPEED,
     "infrastructure": TERRAIN_SPEED,
 }
-ALIASES = {"plain": "plains", "unknown": "plains"}
+ALIASES = {"plain": "plains", "unknown": "plains", "desert_hills": "hills"}
 
 MODIFIER = "MFU_terrain_construction"
 
