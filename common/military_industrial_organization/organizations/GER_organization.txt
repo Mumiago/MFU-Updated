@@ -477,6 +477,7 @@ Ger_alkett = {
 		name = support_tank_designer
 		limit_to_equipment_type = { mio_cat_eq_alkett }
 		organization_modifier = {
+			military_industrial_organization_funds_gain = 0.20
 			military_industrial_organization_design_team_change_cost = -1.0
 		}
 		
@@ -487,45 +488,34 @@ Ger_alkett = {
 		}
 	}
 
-
+	# --- root ---
 	trait = {
 		token = generic_mio_trait_armor_steel_working
-		name = generic_mio_trait_armor_steel_working
-		icon = GFX_generic_mio_department_icon_tank_general_armor
+		name = "Alkett Borsigwalde Works"
+		icon = GFX_generic_mio_department_icon_facilities
+		position = { x=4.5 y=0 }
 
-		position = { x=5 y=0 }
-		
 		limit_to_equipment_type = { mio_cat_eq_alkett_light }
 		equipment_bonus = {
 			hardness = 0.05
 		}
-	}
-	trait = {
-		token = improved_fightingcompartment
-		name = "Improved Fighting Compartment"
-		icon = GFX_generic_mio_trait_icon_max_strength
-
-		position = { x=0 y=1 }
-		relative_position_id = generic_mio_trait_armor_steel_working
-
-		all_parents = { generic_mio_trait_armor_steel_working }
-		limit_to_equipment_type = { mio_cat_eq_alkett_ag_td_light }	
-		equipment_bonus = {
-			soft_attack = 0.075
-			hard_attack = 0.05
+		production_bonus = {
+			production_efficiency_cap_factor = 0.03
 		}
 	}
+
+	# --- production (left) ---
 	trait = {
 		token = flexible_line
-		name = "Flexible Production line"
+		name = "Flexible Production Line"
 		icon = GFX_generic_mio_trait_icon_efficiency_gain
-
-		position = { x=-2 y=1 }
-		relative_position_id = generic_mio_trait_armor_steel_working
-
+		position = { x=2 y=1 }
 		all_parents = { generic_mio_trait_armor_steel_working }
-		
+
 		limit_to_equipment_type = { mio_cat_eq_alkett }
+		equipment_bonus = {
+			reliability = 0.05
+		}
 		production_bonus = {
 			production_efficiency_gain_factor = 0.25
 		}
@@ -534,11 +524,10 @@ Ger_alkett = {
 		token = stug_mass
 		name = "Standardise on Current Models"
 		icon = GFX_generic_mio_department_icon_tank_general_quality
-
-		position = { x=-1 y=1 }
-		relative_position_id = flexible_line
+		position = { x=1 y=2 }
 		all_parents = { flexible_line }
-          mutually_exclusive = { evolution }
+		mutually_exclusive = { evolution }
+
 		limit_to_equipment_type = { mio_cat_eq_alkett }
 		production_bonus = {
 			production_capacity_factor = 0.05
@@ -546,168 +535,11 @@ Ger_alkett = {
 		}
 	}
 	trait = {
-		token = evolution
-		name = "Constant Design Evolution"
-		icon = GFX_generic_mio_department_icon_tank_medium_tank_quality
-
-		position = { x=1 y=1 }
-		relative_position_id = flexible_line
-		all_parents = { flexible_line }
-       mutually_exclusive = { stug_mass }
-		limit_to_equipment_type = { mio_cat_eq_alkett }
-		organization_modifier = {
-			military_industrial_organization_research_bonus = 0.15
-		}
-		production_bonus = {
-			production_efficiency_gain_factor = 0.25
-		}
-	}
-	trait = {
-		token = generic_mio_trait_improved_wheel_protection
-		name = generic_mio_trait_improved_wheel_protection
-		icon = GFX_generic_mio_department_icon_tank_general_engine
-		
-		position = { x=-1 y=1 }
-		relative_position_id = evolution
-		
-		any_parent = { evolution  stug_mass}
-		all_parents = { GER_alkett_low_silhouette }
-
-
-		limit_to_equipment_type = { mio_cat_eq_alkett }
-		equipment_bonus = {
-			defense = 0.1
-			build_cost_ic = 0.02
-		}
-	}
-	trait = {
-		token = refurbishment
-		name = "Expand Tank Refurbishment Workshops"
-		icon = GFX_generic_mio_department_icon_tank_general_technology		
-
-		position = { x=-2 y=0 }
-		relative_position_id = flexible_line
-		all_parents = { flexible_line }
-		
-
-		limit_to_equipment_type = { mio_cat_eq_alkett }
-		equipment_bonus = {
-			reliability = 0.1
-		}
-	}
-	trait = {
-		token = generic_mio_trait_heavy_duty_machine_tools
-		name = generic_mio_trait_heavy_duty_machine_tools
-		icon = GFX_generic_mio_department_icon_facilities
-
-		position = { x=2 y=1 }
-		relative_position_id = generic_mio_trait_armor_steel_working
-
-		all_parents = { generic_mio_trait_armor_steel_working }
-
-
-		limit_to_equipment_type = { mio_cat_eq_alkett }
-		production_bonus = {
-			production_efficiency_cap_factor = 0.03
-		}
-	}
-	trait = {
-		token = spanzer
-		name = "Sturmpanzer"
-		icon = GFX_generic_mio_department_icon_tank_general_spg	
-
-		position = { x=1 y=1 }
-		relative_position_id = generic_mio_trait_heavy_duty_machine_tools
-
-		all_parents = { generic_mio_trait_heavy_duty_machine_tools  }
-		mutually_exclusive = { waffentrager }
-		available = {
-			FROM = {
-				if = {
-					limit = { original_tag = GER }
-					has_completed_focus = GER_support_tanks
-				}
-			}
-		}
-		limit_to_equipment_type = { mio_cat_eq_alkett_ag }
-		equipment_bonus = {
-			soft_attack = 0.05
-			hard_attack = 0.05
-			hardness = 0.05
-		}
-	}
-
-	trait = {
-		token = waffentrager
-		name = "Waffenträger"
-		icon = GFX_generic_mio_department_icon_tank_general_at	
-
-		position = { x=-1 y=1 }
-		relative_position_id = generic_mio_trait_heavy_duty_machine_tools
-
-		all_parents = { generic_mio_trait_heavy_duty_machine_tools  }
-        mutually_exclusive = { spanzer }
-		available = {
-			FROM = {
-				if = {
-					limit = { original_tag = GER }
-					has_completed_focus = GER_support_tanks
-				}
-			}
-		}
-		limit_to_equipment_type = { mio_cat_eq_alkett_td }
-
-		equipment_bonus = {
-			hard_attack = 0.1
-			soft_attack = 0.05
-		}
-	}
-	trait = {
-		token = generic_mio_gunner_sight_improvements
-		name = generic_mio_gunner_sight_improvements
-		icon = GFX_generic_mio_trait_icon_hard_attack
-
-		position = { x=-1 y=1 }
-		relative_position_id = spanzer
-
-		any_parent = { spanzer waffentrager}
-		all_parents = { GER_alkett_low_silhouette }
-		
-		limit_to_equipment_type = { mio_cat_eq_alkett }
-		equipment_bonus = {
-			soft_attack = 0.035
-			hard_attack = 0.035
-			build_cost_ic = 0.02
-		}
-	}
-	trait = {
-		token = generic_mio_trait_advanced_shells
-		name = generic_mio_trait_advanced_shells
-		icon = GFX_generic_mio_trait_icon_ap_attack
-
-		position = { x=-2 y=0 }
-		relative_position_id = generic_mio_gunner_sight_improvements
-
-		any_parent = { waffentrager evolution}
-		
-		available = {
-			FROM = { has_tech = ger_advanced_turret }
-		}
-		limit_to_equipment_type = { mio_cat_eq_alkett }
-		equipment_bonus = {
-			ap_attack = 0.15
-		}
-	}
-
-	# Panzer III line (Medium 36 / 40) only
-	trait = {
 		token = GER_alkett_panzer3_assembly
 		name = "Panzerkampfwagen III Endmontage"
 		icon = GFX_generic_mio_department_icon_tank_medium_tank_production
-
-		position = { x=0 y=1 }
-		relative_position_id = refurbishment
-		all_parents = { refurbishment }
+		position = { x=2 y=2 }
+		all_parents = { flexible_line }
 
 		available = {	# Panzer III was co-developed with Daimler-Benz: its MIO must be size 2+ with "Focus on Medium Panzers"
 			FROM = {
@@ -734,32 +566,27 @@ Ger_alkett = {
 			reliability = 0.05
 		}
 	}
-
-	# StuG casemate: no turret, low profile
 	trait = {
-		token = GER_alkett_low_silhouette
-		name = "Low Silhouette Casemate"
-		icon = GFX_generic_mio_trait_icon_max_strength
+		token = evolution
+		name = "Constant Design Evolution"
+		icon = GFX_generic_mio_department_icon_tank_medium_tank_quality
+		position = { x=3 y=2 }
+		all_parents = { flexible_line }
+		mutually_exclusive = { stug_mass }
 
-		position = { x=0 y=1 }
-		relative_position_id = improved_fightingcompartment
-		all_parents = { improved_fightingcompartment }
-
-		limit_to_equipment_type = { mio_cat_eq_alkett_ag_td }
-		equipment_bonus = {
-			defense = 0.08
-			build_cost_ic = -0.03
+		limit_to_equipment_type = { mio_cat_eq_alkett }
+		organization_modifier = {
+			military_industrial_organization_research_bonus = 0.15
+		}
+		production_bonus = {
+			production_efficiency_gain_factor = 0.25
 		}
 	}
-
-	# second StuG source after the Borsigwalde works were bombed
 	trait = {
 		token = GER_alkett_miag
 		name = "MIAG Second Source"
 		icon = GFX_generic_mio_department_icon_tank_general_production
-
-		position = { x=0 y=1 }
-		relative_position_id = stug_mass
+		position = { x=1 y=3 }
 		all_parents = { stug_mass }
 
 		available = {
@@ -771,18 +598,29 @@ Ger_alkett = {
 		}
 	}
 
-	# extra armour: skirts or crew-poured concrete, pick one
+	# --- the casemate (middle) ---
+	trait = {
+		token = GER_alkett_low_silhouette
+		name = "Low Silhouette Casemate"
+		icon = GFX_generic_mio_trait_icon_max_strength
+		position = { x=4.5 y=1 }
+		all_parents = { generic_mio_trait_armor_steel_working }
+
+		limit_to_equipment_type = { mio_cat_eq_alkett_ag_td_light }
+		equipment_bonus = {
+			soft_attack = 0.05
+			hard_attack = 0.04
+			defense = 0.12
+		}
+	}
 	trait = {
 		token = GER_alkett_schuerzen
 		name = "Schürzen"
 		icon = GFX_generic_mio_department_icon_tank_medium_tank_armor
-
-		position = { x=-1 y=1 }
-		relative_position_id = generic_mio_trait_improved_wheel_protection
-		all_parents = { generic_mio_trait_improved_wheel_protection }
+		position = { x=4 y=2 }
+		all_parents = { GER_alkett_low_silhouette }
 		mutually_exclusive = { GER_alkett_concrete }
 
-		limit_to_equipment_type = { mio_cat_eq_alkett }
 		available = {
 			FROM = {
 				custom_trigger_tooltip = {	# No Step Back: armored_skirts_tech (tank upgrades); without it: ger_armour_skirts
@@ -794,60 +632,114 @@ Ger_alkett = {
 				}
 			}
 		}
+		limit_to_equipment_type = { mio_cat_eq_alkett }
 		equipment_bonus = {
 			armor_value = 0.15
-			hardness = 0.05
+			hardness = 0.07
+			soft_attack = 0.02
+			hard_attack = 0.02
 		}
 	}
 	trait = {
 		token = GER_alkett_concrete
 		name = "Field-Poured Concrete"
 		icon = GFX_generic_mio_trait_icon_armor_value
-
-		position = { x=1 y=1 }
-		relative_position_id = generic_mio_trait_improved_wheel_protection
-		all_parents = { generic_mio_trait_improved_wheel_protection }
+		position = { x=5 y=2 }
+		all_parents = { GER_alkett_low_silhouette }
 		mutually_exclusive = { GER_alkett_schuerzen }
 
 		available = {
+			custom_trigger_tooltip = {
+				tooltip = GER_alkett_tt_not_turret_path
+				NOT = { is_mio_trait_completed = generic_mio_gunner_sight_improvements }
+			}
 			FROM = { has_tech = ger_spaced_armor }
 		}
-		limit_to_equipment_type = { mio_cat_eq_alkett_ag_td }
+		limit_to_equipment_type = { mio_cat_eq_alkett }
 		equipment_bonus = {
 			armor_value = 0.9
+			hardness = 0.02
+			soft_attack = 0.02
+			hard_attack = 0.02
 			reliability = -0.05
 			maximum_speed = -0.1
 		}
 	}
+
+	# --- guns (right) ---
 	trait = {
-		token = GER_alkett_saukopf
-		name = "Saukopf Mantlet"
-		icon = GFX_generic_mio_trait_icon_max_strength
+		token = spanzer
+		name = "Sturmpanzer"
+		icon = GFX_generic_mio_department_icon_tank_general_spg
+		position = { x=6.5 y=1 }
+		all_parents = { generic_mio_trait_armor_steel_working }
+		mutually_exclusive = { waffentrager }
 
-		position = { x=1 y=4 }
-
-		available = {	# no line in the tree: needs either trait
-			OR = {
-				is_mio_trait_completed = GER_alkett_schuerzen
-				is_mio_trait_completed = GER_alkett_concrete
+		available = {
+			FROM = {
+				if = {
+					limit = { original_tag = GER }
+					has_completed_focus = GER_support_tanks
+				}
 			}
 		}
-		limit_to_equipment_type = { mio_cat_eq_alkett_ag_td }
+		limit_to_equipment_type = { mio_cat_eq_alkett_ag }
 		equipment_bonus = {
-			hardness = 0.03
-			soft_attack = 0.02
-			hard_attack = 0.02
+			soft_attack = 0.05
+			hard_attack = 0.05
+			hardness = 0.05
 		}
 	}
+	trait = {
+		token = waffentrager
+		name = "Waffenträger"
+		icon = GFX_generic_mio_department_icon_tank_general_at
+		position = { x=7.5 y=1 }
+		all_parents = { generic_mio_trait_armor_steel_working }
+		mutually_exclusive = { spanzer }
 
-	# main gun: long 7.5 cm or the StuH 42 howitzer, pick one
+		available = {
+			FROM = {
+				if = {
+					limit = { original_tag = GER }
+					has_completed_focus = GER_support_tanks
+				}
+			}
+		}
+		limit_to_equipment_type = { mio_cat_eq_alkett_td }
+		equipment_bonus = {
+			hard_attack = 0.1
+			soft_attack = 0.05
+		}
+	}
+	trait = {
+		token = generic_mio_gunner_sight_improvements
+		name = "Gunner Sights and Tungsten Shot"
+		icon = GFX_generic_mio_trait_icon_hard_attack
+		position = { x=7 y=2 }
+		all_parents = { GER_alkett_low_silhouette }
+		any_parent = { spanzer waffentrager }
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = GER_alkett_tt_not_spaced_path
+				NOT = { is_mio_trait_completed = GER_alkett_concrete }
+			}
+			FROM = { has_tech = ger_advanced_turret }
+		}
+		limit_to_equipment_type = { mio_cat_eq_alkett }
+		equipment_bonus = {
+			soft_attack = 0.035
+			hard_attack = 0.035
+			ap_attack = 0.1
+			build_cost_ic = 0.02
+		}
+	}
 	trait = {
 		token = GER_alkett_lang
 		name = "Long 7.5 cm Refit"
 		icon = GFX_generic_mio_department_icon_tank_medium_tank_at
-
-		position = { x=-1 y=1 }
-		relative_position_id = generic_mio_gunner_sight_improvements
+		position = { x=6.5 y=3 }
 		all_parents = { generic_mio_gunner_sight_improvements }
 		mutually_exclusive = { GER_alkett_stuh42 }
 
@@ -865,9 +757,7 @@ Ger_alkett = {
 		token = GER_alkett_stuh42
 		name = "StuH 42 Howitzer"
 		icon = GFX_generic_mio_department_icon_tank_medium_tank_spg
-
-		position = { x=1 y=1 }
-		relative_position_id = generic_mio_gunner_sight_improvements
+		position = { x=7.5 y=3 }
 		all_parents = { generic_mio_gunner_sight_improvements }
 		mutually_exclusive = { GER_alkett_lang }
 
@@ -883,24 +773,21 @@ Ger_alkett = {
 			custom_effect_tooltip = oak_alkett_stuh42_tech_mio_tt
 			hidden_effect = {
 				FROM = {
+					set_country_flag = GER_alkett_stuh42_taken
 					set_technology = { oak_alkett_stuh42_tech = 1 popup = no }
 				}
 			}
 		}
 	}
+
+	# --- capstone: under the gun traits, needs either ---
 	trait = {
 		token = GER_alkett_sturmartillerie
 		name = "Sturmartillerie Liaison"
 		icon = GFX_generic_mio_trait_icon_breakthrough
+		position = { x=7 y=4 }
+		any_parent = { GER_alkett_lang GER_alkett_stuh42 }
 
-		position = { x=9 y=4 }
-
-		available = {	# no line in the tree: needs either trait
-			OR = {
-				is_mio_trait_completed = GER_alkett_lang
-				is_mio_trait_completed = GER_alkett_stuh42
-			}
-		}
 		limit_to_equipment_type = { mio_cat_eq_alkett_ag_td }
 		organization_modifier = {
 			military_industrial_organization_research_bonus = 0.15
