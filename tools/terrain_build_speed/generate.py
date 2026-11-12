@@ -1,6 +1,9 @@
-"""Regenerate common/on_actions/MFU_terrain_construction_on_actions.txt.
+r"""Regenerate common/on_actions/MFU_terrain_construction_on_actions.txt.
 
-Run from anywhere after editing map/definition.csv or history/states:
+Run after editing TERRAIN_SPEED below, map/definition.csv or history/states.
+From any folder:
+    python "C:\Users\adamg\Documents\Paradox Interactive\Hearts of Iron IV\mod\MFU-Updated\tools\terrain_build_speed\generate.py"
+From the mod root:
     python tools/terrain_build_speed/generate.py
 """
 import collections
@@ -13,15 +16,15 @@ MOD = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 OUT = os.path.join(MOD, "common", "on_actions", "MFU_terrain_construction_on_actions.txt")
 
 TERRAIN_SPEED = {
-    "plains": 0.3,
-    "urban": 0.8,
-    "forest": 0.1,
-    "hills": 0.0,
-    "marsh": -0.2,
+    "plains": 0.2,
+    "urban": 1.0,
+    "forest": 0.0,
+    "hills": -0.1,
+    "marsh": -0.5,
     "desert_hills": -0.2,
     "desert": -0.4,
-    "jungle": -0.6,
-    "mountain": -0.9,
+    "jungle": -0.7,
+    "mountain": -1.0,
     "deep_desert": -1.2,
 }
 BUILDING_TABLES = {
@@ -29,8 +32,10 @@ BUILDING_TABLES = {
     "infrastructure": TERRAIN_SPEED,
 }
 ALIASES = {"plain": "plains", "unknown": "plains"}
+LOCAL_SUPPLIES = {462: 4.0, 513: 4.0, 661: 4.0, 662: 4.0, 663: 4.0, 825: 4.0}  # local_supplies_for_controller
 
 MODIFIER = "MFU_terrain_construction"
+SUPPLIES_VAR = "MFU_terrain_local_supplies"
 
 
 def var_name(building):
@@ -66,6 +71,9 @@ def read_states():
 def main():
     terrain = read_terrain()
     states = read_states()
+    missing_states = sorted(set(LOCAL_SUPPLIES) - set(states))
+    if missing_states:
+        sys.exit(f"LOCAL_SUPPLIES lists unknown states: {missing_states}")
     rows = []
     for sid in sorted(states):
         land = [terrain[p][1] for p in states[sid] if p in terrain and terrain[p][0] == "land"]
@@ -87,7 +95,9 @@ def main():
         "\t\teffect = {",
     ]
     for sid, values in rows:
-        sets = " ".join(f"set_variable = {{ {var_name(b)} = {v:g} }}" for b, v in values.items())
+        sets = [f"set_variable = {{ {var_name(b)} = {v:g} }}" for b, v in values.items()]
+        sets.append(f"set_variable = {{ {SUPPLIES_VAR} = {LOCAL_SUPPLIES.get(sid, 0):g} }}")
+        sets = " ".join(sets)
         lines.append(f"\t\t\t{sid} = {{ {sets} add_dynamic_modifier = {{ modifier = {MODIFIER} }} }}")
     lines += [
         "\t\t}",
