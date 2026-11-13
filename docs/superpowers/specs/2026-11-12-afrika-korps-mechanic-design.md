@@ -22,8 +22,8 @@ the Axis against the Soviet Union, cancelling out the existing "North African Ca
    Germany has neither the 1939 nor the 1940 medium tank tech), in the highest-priority held city (Tunis > Tripoli >
    Benghazi > Tobruk).
 3. A replacement spirit, "Afrikakorps", grants **+10% attack in desert and deep_desert** and **-N% attack and
-   defence vs the Soviet Union**, where N cancels the Africa swing (below), then, once Barbarossa has begun and it is past 1.1.1942,
-   both decay 1 point per month (first tick 1.2.1942) until 0, at which point the spirit is removed.
+   defence vs the Soviet Union**, where N cancels the Africa swing (below), then, once Barbarossa has begun and it is past 1.7.1941,
+   both decay 1 point per month (first tick 1.8.1941) until 0, at which point the spirit is removed.
 
 ## Non-goals
 
@@ -125,11 +125,11 @@ the Axis against the Soviet Union, cancelling out the existing "North African Ca
   polling is explicitly not wanted (performance).
 - **From Barbarossa on:** Barbarossa = the decision `GER_ussr_war_goal` (earliest 1941-06-22; marker
   `GER = { has_completed_focus = GER_ussr_war_goal }`). The Africa swing stops tracking (N is frozen at launch).
-  Both numbers then stay fixed until 1.1.1942 (user request, 2026-11-13) and drop 1 point per month after that (first tick
-  1.2.1942; guard `date > 1942.1.2`) until 0. Spirit removed when both are 0. Until Barbarossa the desert bonus is
+  Both numbers then stay fixed until 1.7.1941 (user request 2026-11-13, moved from 1.1.1942 the same day) and drop 1 point per month after that (first tick
+  1.8.1941, or the first month after a later launch; guard `date > 1941.7.2`) until 0. Spirit removed when both are 0. Until Barbarossa the desert bonus is
   flat and the Soviet penalty follows Africa (weekly); if Barbarossa never happens the spirit stays (accepted).
 - The Africa swing is only guaranteed to net out for the Barbarossa buff. The 1942 summer-offensive decisions re-read W live;
-  from 1.2.1942 N decays 1 point a month (about 4-5 points by the summer offensive), so the "constant net" ends around then (accepted).
+  from 1.8.1941 N decays 1 point a month (about 10-11 points by the summer 1942 offensive, so mostly gone; it also erodes the -10% net during the 150-day Barbarossa buff), so the "constant net" ends around then (accepted).
 - The real Africa swing is baked once into a 150-day timed buff (`GER_barb_offensive_buff_N`) at launch by
   `get_barb_offensive` (`XEN_touch_and_perish_scripted_effects.txt` ~8208-8381) and re-read live by the 1942 summer offensive
   decisions; this design does not change either.
@@ -154,7 +154,7 @@ Facts: a targeted modifier cannot take a variable and no country-level desert-at
   the grant; (3) from the `GER_ussr_war_goal` decision's `complete_effect` (`common/decisions/GER.txt` ~558-975), before
   `get_barb_offensive`, followed by the freeze. Rejected alternative: appending a call to the tails of
   `ENG_africa_hopping_level_up` / `_down` (`ENG_scripted_effects.txt`) - zero polling cost but touches two ~2,000-line effects.
-- Decay: `on_monthly` pulse on GER once the Barbarossa marker is true and `date > 1942.1.2`.
+- Decay: `on_monthly` pulse on GER once the Barbarossa marker is true and `date > 1941.7.2`.
 - Generate the ideas, techs and localisation with a new Python generator under `tools/` (pattern:
   `tools/terrain_build_speed/generate.py`); there is no existing generator for idea families.
 - Replace/remove `GER_afrika_campaign` and the dead `GER_afrika_campaign2` (its `on_remove` re-adds the first); update the
@@ -181,7 +181,7 @@ Facts: a targeted modifier cannot take a variable and no country-level desert-at
 - Visible conditions keep "at war with ENG, ITA at war with ENG"; the control requirement lives in `available`.
 - Cost stays 25 (political power) on the new instant decision; experience 0.5; template names; variant choices.
 - Desert bonus flat, Soviet penalty follows Africa (weekly + recompute on press + recompute at Barbarossa); decay starts after
-  Barbarossa AND after 1.1.1942 (first tick 1.2.1942) for both.
+  Barbarossa AND after 1.7.1941 (first tick 1.8.1941) for both.
 - Weekly pulse, not an event hook on the ENG hopping effects.
 - Template with width tech = 9 tanks + 8 motorized (30.35).
 - Late joiners to the faction get nothing.

@@ -33,7 +33,7 @@ BUILDING_TABLES = {
     "naval_base": TERRAIN_SPEED,
 }
 ALIASES = {"plain": "plains", "unknown": "plains"}
-LOCAL_SUPPLIES = {462: 4.0, 513: 4.0, 661: 4.0, 662: 4.0, 663: 4.0, 825: 4.0}  # local_supplies_for_controller
+LOCAL_SUPPLIES = {462: 3.0, 513: 3.0, 661: 3.0, 662: 3.0, 663: 3.0, 825: 3.0}  # local_supplies_for_controller
 
 MODIFIER = "MFU_terrain_construction"
 SUPPLIES_VAR = "MFU_terrain_local_supplies"

@@ -29,7 +29,7 @@ OUT_ON_ACTIONS = os.path.join(MOD, "common", "on_actions", "MFU_port_damage_on_a
 OUT_EFFECTS = os.path.join(MOD, "common", "scripted_effects", "MFU_port_damage_scripted_effects.txt")
 BUILDINGS = os.path.join(MOD, "common", "buildings", "00_buildings.txt")
 
-DAMAGE_FRACTION = 0.40
+DAMAGE_FRACTION = 0.50
 MIN_LEVEL = 6
 DECAY = 0.65
 DECAY_WINDOW_DAYS = 90

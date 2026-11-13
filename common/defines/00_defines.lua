@@ -737,8 +737,8 @@ NRaids = {
 	BASE_NAVAL_COMMANDO_RAID_DISTANCE = 1500,         -- Max distance in kilometers
 
     RAID_LOW_RISK_SETTING_SUCCESS_MODIFIER = 0.0,       -- How much the success chance is modified when the dial is set to "low"
-    RAID_MEDIUM_RISK_SETTING_SUCCESS_MODIFIER = 0.1,    -- How much the success chance is modified when the dial is set to "low"
-    RAID_HIGH_RISK_SETTING_SUCCESS_MODIFIER = 0.15,     -- How much the success chance is modified when the dial is set to "low"
+    RAID_MEDIUM_RISK_SETTING_SUCCESS_MODIFIER = 0.05,   -- How much the success chance is modified when the dial is set to "low"
+    RAID_HIGH_RISK_SETTING_SUCCESS_MODIFIER = 0.10,   -- How much the success chance is modified when the dial is set to "low"
 
 	TARGET_DETECTION_INTEL_TRESHOLD = 20.0,             -- How much intel is needed for a target to be detected?
 

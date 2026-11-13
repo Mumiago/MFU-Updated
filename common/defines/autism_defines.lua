@@ -106,3 +106,14 @@ NDefines.NNavy.NAVAL_COMBAT_MEDAL_CHANCE = 24 -- base chance/weight for a ship c
 NDefines.NNavy.NAVAL_COMBAT_MEDAL_MIN_DURATION = 48 -- minimum naval-combat duration (hours) required to be eligible for a medal
 NDefines.NNavy.NAVAL_COMBAT_MEDAL_LAST_MEDAL_LIMIT = 30 -- minimum days since the captain's last medal before another can be awarded
 NDefines.NNavy.NAVAL_COMBAT_MEDAL_ALLOW_CONVOY = false -- whether combat involving only convoys can award captain medals
+
+--- Arrays resized to vanilla 1.19.5 slot counts (mod values kept)
+NDefines.NAir.MISSION_COMMAND_POWER_COSTS = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.2, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 0, 0, 0 } -- ..ATTACK_LOGISTICS, AIR_SUPPLY(0.2), TRAINING, MINES_PLANTING, MINES_SWEEPING, RECON, NAVAL_PATROL, BARRAGE x2, SAM x2
+NDefines.NAir.MISSION_FUEL_COSTS = { 1.0, 1.0, 0.2, 1.0, 1.0, 1.0, 1.0, 0.75, 1.2, 1.2, 1.5, 0.6, 1.0, 1.0, 1.0, 1.0, 0.0, 0, 0, 0, 0 } -- ..AIR_SUPPLY(1.5), TRAINING, MINES_PLANTING, MINES_SWEEPING, RECON, NAVAL_PATROL, BARRAGE, NUCLEAR x2, SAM x2
+NDefines.NIntel.AIR_MAPICON_MISSION_COUNT_INTEL_MIN = { 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3 }
+NDefines.NIntel.AIR_MAPICON_MISSION_COUNT_INTEL_MAX = { 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6 }
+NDefines.NIntel.AIR_MAPICON_MISSION_COUNT_INTEL_RANGE_AT_LOWEST_INTEL = { 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5 }
+NDefines.NNavy.AIR_MISSION_SPOTTING_FACTORS = { 0.50, 0, 0.25, 0, 0.50, 0, 0, 0.25, 0, 0, 0, 0, 0.25, 0.50, 1.00, 1.50, 0, 0 } -- ..RECON, NAVAL_PATROL, BARRAGE, SAM
+NDefines.NNavy.TASK_FORCE_ROLE_TO_INSIGNIA = { 6, 15, 22, 26, 16, 17, 29, 1, 5 } -- last = dominance patrol force
+NDefines.NNavy.MIN_REPAIR_FOR_JOINING_COMBATS = { 0.0, 0.6, 0.8, 0.95, 0.0 } -- last = on order
+NDefines.NCountry.FEMALE_UNIT_LEADER_BASE_CHANCE = { 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 } -- country, army, navy, air, operatives, scientists

@@ -309,10 +309,11 @@ def test_loc():
     want = {f"MFU_ak_spirit_{n}{s}" for n in range(15) for s in ("", "_desc")}
     want |= {f"MFU_ak_desert_{k}" for k in range(1, 11)}
     want |= {"MFU_ak_desert_tt", "MFU_ak_decay_tt", "MFU_ak_effect_tt", "MFU_ak_spawn_tt"}
+    want |= {"MFU_ak_avail_city_tt", "MFU_ak_avail_france_tt", "MFU_ak_avail_barb_tt"}
     need(not (want - set(keys)), f"missing loc keys: {sorted(want - set(keys))}")
     need("[?MFU_ak_desert|" in keys["MFU_ak_desert_tt"], "MFU_ak_desert_tt must show the live MFU_ak_desert variable")
     for rel in GENERATED[:4] + ["common/decisions/GER.txt"]:
-        for m in re.finditer(r"(?:custom_modifier_tooltip|custom_effect_tooltip)\s*=\s*(MFU_ak_\w+)", strip(read(rel))):
+        for m in re.finditer(r"(?:custom_modifier_tooltip|custom_effect_tooltip|tooltip)\s*=\s*(MFU_ak_\w+)", strip(read(rel))):
             need(m.group(1) in keys, f"{rel}: tooltip key {m.group(1)} has no loc")
 
 
@@ -360,6 +361,8 @@ def test_compute_sov_guarded():
         m = re.search(r"ENG\s*=\s*\{\s*has_idea\s*=\s*GER_aatlantic_wall_(\d)\s*\}", block(b, "limit"))
         s = re.search(r"set_variable\s*=\s*\{\s*MFU_ak_sov\s*=\s*(\d+)\s*\}", b)
         need(m is not None and s is not None, "each branch must test ENG's wall idea and set MFU_ak_sov")
+        a = re.search(r"set_variable\s*=\s*\{\s*MFU_ak_africa\s*=\s*(-?\d+)\s*\}", b)
+        need(a is not None and int(a.group(1)) == int(s.group(1)) - 10, f"wall {m.group(1)}: MFU_ak_africa must be MFU_ak_sov - 10")
         seen[int(m.group(1))] = int(s.group(1))
     need(seen == {w: 14 - w for w in range(9)}, f"Africa level -> penalty mapping wrong: {seen}")
 
@@ -427,7 +430,7 @@ def test_monthly_end_condition():
     need(len(top) == 1 and top[0][0] == "if", "monthly must be one guarded if")
     lim = flat(block(top[0][1], "limit"))
     need("has_country_flag = MFU_ak_active" in lim and "has_country_flag = MFU_ak_frozen" in lim, "monthly guard wrong")
-    need("date > 1942.1.2" in lim, "monthly decay must wait for 1942 (date > 1942.1.2 so the first tick is 1942.2.1)")
+    need("date > 1941.7.2" in lim, "monthly decay must wait for August 1941 (date > 1941.7.2 so the first tick is 1941.8.1)")
     inner = children(top[0][1])
     for var in ("MFU_ak_sov", "MFU_ak_desert"):
         d = [b for k, b in inner if k == "if" and ("add_to_variable = { %s = -1 }" % var) in flat(b)]
@@ -497,6 +500,11 @@ def test_decision_shape():
     for cond in ("has_war_with = ENG", "ITA = { has_war_with = ENG }", "NOT = { has_completed_focus = GER_ussr_war_goal }"):
         need(cond in vis, f"visible lacks {cond}")
     need("has_full_control_of_state" not in avail + vis, "old Tripoli control gate must be gone")
+    for tt, cond in (("MFU_ak_avail_france_tt", "country_exists = EFR"),
+                     ("MFU_ak_avail_barb_tt", "NOT = { has_completed_focus = GER_ussr_war_goal }"),
+                     ("MFU_ak_avail_city_tt", "MFU_ak_any_city = yes")):
+        need(re.search(r"custom_trigger_tooltip = \{ tooltip = %s %s \}" % (tt, re.escape(cond)), avail),
+             f"available: {cond} must be wrapped in custom_trigger_tooltip {tt}")
 
 
 @test
@@ -549,20 +557,21 @@ def loc_value(rel, key):
 
 @test
 def test_loc_wording_is_honest():
-    # The penalty is 10 + the Africa swing, so the net against Barbarossa is a flat -10%; the text must say that, not
-    # "offsets the bonus, currently N%" (the Africa bonus is +0% at the neutral level).
-    eff = loc_value(LOC, "MFU_ak_effect_tt")
-    need("flat" in eff and "-10%" in eff, "MFU_ak_effect_tt must explain the flat -10% net")
-    need("currently" not in eff and "offsets" not in eff, "MFU_ak_effect_tt must not say the penalty 'offsets' or 'currently' equals the bonus")
+    # The penalty is 10 + the Africa bonus, so at Barbarossa launch the two net to -10%. The decision effect and the
+    # spirit both carry that rule and the Aug 1941 decay; the descriptions are flavour only and must not restate it.
+    eff, dec = loc_value(LOC, "MFU_ak_effect_tt"), loc_value(LOC, "MFU_ak_decay_tt")
+    for key, t in (("MFU_ak_effect_tt", eff), ("MFU_ak_decay_tt", dec)):
+        need("10%" in t and "-10%" in t and "launch" in t, f"{key} must state the 10% + bonus rule and the -10% net at launch")
+        need("Aug 1941" in t and "1942" not in t, f"{key} must say the decay starts in Aug 1941")
+        need("offsets" not in t and "flat" not in t and "swing" not in t, f"{key}: old wording")
+    for row in ("§G+4%§!", "§R-14%§!", "§R-4%§!", "§R-6%§!"):
+        need(row in eff, f"MFU_ak_effect_tt must show the bonus -> penalty row {row}")
+    need("[?MFU_ak_sov|" in eff and "[?MFU_ak_africa|" in eff, "MFU_ak_effect_tt must show the live penalty and Africa bonus")
     for n in range(15):
         d = loc_value(LOC, f"MFU_ak_spirit_{n}_desc")
-        need("flat" in d and "offsets" not in d, f"MFU_ak_spirit_{n}_desc wording")
+        need("-10%" not in d and "1941" not in d, f"MFU_ak_spirit_{n}_desc must stay flavour only")
     fd = loc_value("localisation/english/focus_l_english.yml", "GER_africa_korps_desc")
-    need("flat" in fd and "offsets" not in fd, "decision description wording")
-    # Decay starts in 1942, after Barbarossa freezes the numbers; the text must say so.
-    for key in ["MFU_ak_decay_tt", "MFU_ak_effect_tt"] + [f"MFU_ak_spirit_{n}_desc" for n in range(15)]:
-        need("1942" in loc_value(LOC, key), f"{key} must say the decay starts in 1942")
-    need("1942" in fd, "decision description must say the decay starts in 1942")
+    need("-10%" not in fd and "flat" not in fd and "offsets" not in fd, "decision description must stay flavour only")
 
 
 @test

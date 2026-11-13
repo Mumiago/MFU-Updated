@@ -49,14 +49,14 @@ GER's variables. Useful effects: `effect MFU_ak_compute_sov = yes`, `effect MFU_
 - [ ] Declaring Barbarossa (decision available after 1941-06-22, or `effect complete_national_focus = GER_ussr_war_goal`
       then `effect MFU_ak_freeze = yes` for a quick test) freezes the penalty; later Africa changes no longer move it.
 - [ ] If the Afrikakorps decision was never pressed, nothing appears at Barbarossa and the decision is gone.
-- [ ] After Barbarossa both numbers stay fixed until 1.1.1942; a monthly tick before that changes nothing.
-- [ ] From 1.2.1942 both numbers drop by 1 each month. `effect MFU_ak_monthly = yes` only steps them once the date is
-      past 1942.1.2 (before that it is a no-op by design; to test early, temporarily lower the date in `MFU_ak_monthly`).
+- [ ] After Barbarossa both numbers stay fixed until 1.7.1941; a monthly tick before that changes nothing.
+- [ ] From 1.8.1941 both numbers drop by 1 each month. `effect MFU_ak_monthly = yes` only steps them once the date is
+      past 1941.7.2 (before that it is a no-op by design; to test early, temporarily lower the date in `MFU_ak_monthly`).
       The spirit disappears when BOTH are 0 (the penalty can reach 0 first; the spirit stays until the desert bonus is also 0).
 - [ ] After removal: `var MFU_ak_sov` / `MFU_ak_desert` are cleared and no `MFU_ak_desert_*` technology remains.
 
 ## 5. Known limits (accepted in the design)
 - Countries that join the Germany faction after the press do not get the spirit.
 - Finland, Italy and Vichy take the Soviet penalty without the matching Barbarossa buff (design decision).
-- The 1942 summer-offensive decisions still read the live Africa level; by then the penalty has decayed about 4-5 points.
+- The 1942 summer-offensive decisions still read the live Africa level; by then the penalty has decayed about 10-11 points.
 - A later doctrine switch resets `width_tech`; already-created divisions keep their 17-battalion layout.
