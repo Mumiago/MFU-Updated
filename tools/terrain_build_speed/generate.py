@@ -29,7 +29,8 @@ TERRAIN_SPEED = {
 }
 BUILDING_TABLES = {
     "rail_way": TERRAIN_SPEED,
-    "infrastructure": TERRAIN_SPEED,
+    "supply_node": TERRAIN_SPEED,
+    "naval_base": TERRAIN_SPEED,
 }
 ALIASES = {"plain": "plains", "unknown": "plains"}
 LOCAL_SUPPLIES = {462: 4.0, 513: 4.0, 661: 4.0, 662: 4.0, 663: 4.0, 825: 4.0}  # local_supplies_for_controller

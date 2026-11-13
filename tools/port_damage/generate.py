@@ -7,11 +7,12 @@ Outputs:
 The engine has no province-control on_action, so once per day the first country to run
 on_daily polls every port province's controller (global.MFU_pc_<province>). When a port
 province changed hands between countries at war, that port loses DAMAGE_FRACTION of its
-total level. Repeat captures of the same port, each within DECAY_WINDOW_DAYS of the
+total level, but only if the port is at least MIN_LEVEL. Repeat captures of the same port, each within DECAY_WINDOW_DAYS of the
 previous one, hit progressively less (DECAY per step), a stand-in for "fraction of healthy
 levels" because script cannot read a province building's healthy level. Captures caused by
 capitulation flips or ownership transfers (treaties, annexation, civil-war splits, releases)
-are skipped through short-lived flags. Scripted controller flips wrap the flip in
+are skipped through short-lived flags: a capitulated country's ports are exempt both as old
+controller and as state owner. Scripted controller flips wrap the flip in
 MFU_port_poll_state / MFU_port_record_state (state scope), as in 00_on_actions.txt.
 
 Run after changing the constants below, history/states or the naval_base province_max.
@@ -29,6 +30,7 @@ OUT_EFFECTS = os.path.join(MOD, "common", "scripted_effects", "MFU_port_damage_s
 BUILDINGS = os.path.join(MOD, "common", "buildings", "00_buildings.txt")
 
 DAMAGE_FRACTION = 0.40
+MIN_LEVEL = 6
 DECAY = 0.65
 DECAY_WINDOW_DAYS = 90
 DECAY_STEPS = 3
@@ -83,7 +85,7 @@ def num(x):
 
 def level_ladder(top, trigger):
     lines = []
-    for i, level in enumerate(range(top, 0, -1)):
+    for i, level in enumerate(range(top, MIN_LEVEL - 1, -1)):
         keyword = "if" if i == 0 else "else_if"
         lines.append(
             f"{keyword} = {{ limit = {{ {trigger(level - 1)} }} "
@@ -112,49 +114,60 @@ def build_effects(top):
 
 def port_block(prov, top):
     L = [f"set_variable = {{ MFU_pd_prov = {prov} }}"]
+    L += level_block(prov, top)
     rules = SPECIAL_PORTS.get(prov, [])
     if not rules:
-        return L + normal_block(prov, top) + ["clear_variable = MFU_pd_prov"]
+        return L + normal_block(prov) + ["clear_variable = MFU_pd_prov"]
     for i, (old, new, action) in enumerate(rules):
         keyword = "if" if i == 0 else "else_if"
         body = []
         if action == "full":
-            body.append(f"damage_building = {{ type = naval_base province = var:MFU_pd_prov damage = {top} }}")
+            body.append(
+                "if = { limit = { check_variable = { MFU_pd_level > 0 } } "
+                f"damage_building = {{ type = naval_base province = var:MFU_pd_prov damage = {top} }} }}"
+            )
         if DEBUG_LOG:
-            body.append(f'log = "MFU port damage: port {prov} in [THIS.GetName], special rule {action}"')
+            body.append(f'log = "MFU port damage: port {prov} in [THIS.GetName], special rule {action}, level [?MFU_pd_level]"')
         L.append(
             f"{keyword} = {{ limit = {{ var:global.MFU_pd_old = {{ {old} }} var:global.MFU_pc_{prov} = {{ {new} }} }} "
             f"{' '.join(body)} }}"
         )
     L.append("else = {")
-    L += ["\t" + line for line in normal_block(prov, top)]
+    L += ["\t" + line for line in normal_block(prov)]
     L += ["}", "clear_variable = MFU_pd_prov"]
     return L
 
 
-def normal_block(prov, top):
+def level_block(prov, top):
     L = ["set_temp_variable = { MFU_pd_level = 0 }"]
     L += level_ladder(
         top,
         lambda k: f"any_province_building_level = {{ province = {{ id = {prov} }} building = naval_base level > {k} }}",
     )
-    L.append("set_temp_variable = { MFU_pd_mult = 1 }")
+    return L
+
+
+def normal_block(prov):
+    L = ["set_temp_variable = { MFU_pd_mult = 1 }"]
     for n in range(DECAY_STEPS, 0, -1):
         keyword = "if" if n == DECAY_STEPS else "else_if"
         L.append(
             f"{keyword} = {{ limit = {{ has_state_flag = MFU_port_hit_{prov}_{n} }} "
             f"set_temp_variable = {{ MFU_pd_mult = {DECAY ** n:.4f} }} }}"
         )
-    L.append("if = { limit = { check_variable = { MFU_pd_level > 0 } } MFU_port_damage_apply = yes }")
-    if DEBUG_LOG:
-        L.append(f'log = "MFU port damage: port {prov} in [THIS.GetName], level [?MFU_pd_level], factor [?MFU_pd_mult]"')
     window = f"days = {DECAY_WINDOW_DAYS} value = 1"
+    L += ["if = {", "\tlimit = { check_variable = { MFU_pd_level > 0 } }", "\tMFU_port_damage_apply = yes"]
     for n in range(DECAY_STEPS, 0, -1):
         keyword = "if" if n == DECAY_STEPS else "else_if"
         target = n if n == DECAY_STEPS else n + 1
         sets = " ".join(f"set_state_flag = {{ flag = MFU_port_hit_{prov}_{k} {window} }}" for k in range(1, target + 1))
-        L.append(f"{keyword} = {{ limit = {{ has_state_flag = MFU_port_hit_{prov}_{n} }} {sets} }}")
-    L.append(f"else = {{ set_state_flag = {{ flag = MFU_port_hit_{prov}_1 {window} }} }}")
+        L.append(f"\t{keyword} = {{ limit = {{ has_state_flag = MFU_port_hit_{prov}_{n} }} {sets} }}")
+    L += [f"\telse = {{ set_state_flag = {{ flag = MFU_port_hit_{prov}_1 {window} }} }}", "}"]
+    if DEBUG_LOG:
+        L.append(
+            f'log = "MFU port damage: port {prov} in [THIS.GetName], level [?MFU_pd_level] '
+            f'(0 = below {MIN_LEVEL}), factor [?MFU_pd_mult]"'
+        )
     return L
 
 
@@ -181,7 +194,7 @@ def build_state_polls(top, ports):
                 "\t\tif = {",
                 "\t\t\tlimit = {",
                 f"\t\t\t\tvar:global.MFU_pd_old = {{ has_war_with = var:{var} NOT = {{ has_country_flag = MFU_port_damage_skip }} }}",
-                f"\t\t\t\t{sid} = {{ NOT = {{ has_state_flag = MFU_port_damage_skip }} }}",
+                f"\t\t\t\t{sid} = {{ NOT = {{ has_state_flag = MFU_port_damage_skip }} NOT = {{ owner = {{ has_country_flag = MFU_port_damage_skip }} }} }}",
                 "\t\t\t}",
                 f"\t\t\t{sid} = {{",
             ]
@@ -257,7 +270,7 @@ def main():
     multi = sum(len(p) for p in ports.values() if len(p) > 1)
     print(
         f"{sum(len(p) for p in ports.values())} ports in {len(ports)} states ({multi} in multi-port states); "
-        f"{DAMAGE_FRACTION:.0%} of total level, decay x{DECAY} within {DECAY_WINDOW_DAYS} days (max {DECAY_STEPS} steps)"
+        f"{DAMAGE_FRACTION:.0%} of total level for ports of level {MIN_LEVEL}+, decay x{DECAY} within {DECAY_WINDOW_DAYS} days (max {DECAY_STEPS} steps)"
     )
     for path in (OUT_ON_ACTIONS, OUT_EFFECTS):
         print(f"wrote {os.path.relpath(path, MOD)} ({os.path.getsize(path) // 1024} KB)")

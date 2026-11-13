@@ -1,0 +1,98 @@
+ITA_africa_bop_apply_loss = {
+	if = {
+		limit = {
+			NOT = { has_country_flag = ITA_africa_bop_off }
+		}
+		if = {
+			limit = { has_country_flag = ITA_africa_bop_tier_2 }
+			add_power_balance_value = {
+				id = ITA_power_balance
+				value = -0.1
+			}
+		}
+		else_if = {
+			limit = { has_country_flag = ITA_africa_bop_tier_1 }
+			add_power_balance_value = {
+				id = ITA_power_balance
+				value = -0.15
+			}
+		}
+		else = {
+			add_power_balance_value = {
+				id = ITA_power_balance
+				value = -0.2
+			}
+		}
+	}
+}
+
+ITA_africa_bop_apply_refund = {
+	if = {
+		limit = {
+			NOT = { has_country_flag = ITA_africa_bop_off }
+		}
+		if = {
+			limit = { has_country_flag = ITA_africa_bop_tier_2 }
+			add_power_balance_value = {
+				id = ITA_power_balance
+				value = 0.1
+			}
+		}
+		else_if = {
+			limit = { has_country_flag = ITA_africa_bop_tier_1 }
+			add_power_balance_value = {
+				id = ITA_power_balance
+				value = 0.15
+			}
+		}
+		else = {
+			add_power_balance_value = {
+				id = ITA_power_balance
+				value = 0.2
+			}
+		}
+	}
+}
+
+ITA_africa_bop_step_down = {
+	hidden_effect = {
+		if = {
+			limit = {
+				NOT = { has_country_flag = ITA_africa_bop_off }
+				NOT = { has_country_flag = ITA_africa_bop_tier_2 }
+			}
+			if = {
+				limit = { has_country_flag = ITA_africa_bop_tier_1 }
+				set_country_flag = ITA_africa_bop_tier_2
+			}
+			else = {
+				set_country_flag = ITA_africa_bop_tier_1
+			}
+			every_state = {
+				limit = { has_state_flag = ITA_africa_bop_lost }
+				ITA = {
+					add_power_balance_value = {
+						id = ITA_power_balance
+						value = 0.05
+					}
+				}
+			}
+		}
+	}
+}
+
+ITA_africa_bop_end = {
+	hidden_effect = {
+		if = {
+			limit = {
+				NOT = { has_country_flag = ITA_africa_bop_off }
+			}
+			every_state = {
+				limit = { has_state_flag = ITA_africa_bop_lost }
+				ITA = { ITA_africa_bop_apply_refund = yes }
+				clr_state_flag = ITA_africa_bop_lost
+			}
+			set_country_flag = ITA_africa_bop_off
+		}
+	}
+}
