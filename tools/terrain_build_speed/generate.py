@@ -27,11 +27,14 @@ TERRAIN_SPEED = {
     "mountain": -1.0,
     "deep_desert": -1.2,
 }
+NAVAL_BASE_OFFSET = -0.5
+NAVAL_BASE_SPEED = {t: round(v + NAVAL_BASE_OFFSET, 3) for t, v in TERRAIN_SPEED.items()}
 BUILDING_TABLES = {
     "rail_way": TERRAIN_SPEED,
     "supply_node": TERRAIN_SPEED,
-    "naval_base": TERRAIN_SPEED,
+    "naval_base": NAVAL_BASE_SPEED,
 }
+REPAIR_MATCHES = ("naval_base",)
 ALIASES = {"plain": "plains", "unknown": "plains"}
 LOCAL_SUPPLIES = {462: 3.0, 513: 3.0, 661: 3.0, 662: 3.0, 663: 3.0, 825: 3.0}  # local_supplies_for_controller
 
@@ -41,6 +44,14 @@ SUPPLIES_VAR = "MFU_terrain_local_supplies"
 
 def var_name(building):
     return f"MFU_terrain_{building}_speed"
+
+
+def repair_var_name(building):
+    return f"MFU_terrain_{building}_repair_speed"
+
+
+def negate(value):
+    return 0.0 if value == 0 else -value
 
 
 def read_terrain():
@@ -97,6 +108,7 @@ def main():
     ]
     for sid, values in rows:
         sets = [f"set_variable = {{ {var_name(b)} = {v:g} }}" for b, v in values.items()]
+        sets += [f"set_variable = {{ {repair_var_name(b)} = {negate(values[b]):g} }}" for b in REPAIR_MATCHES]
         sets.append(f"set_variable = {{ {SUPPLIES_VAR} = {LOCAL_SUPPLIES.get(sid, 0):g} }}")
         sets = " ".join(sets)
         lines.append(f"\t\t\t{sid} = {{ {sets} add_dynamic_modifier = {{ modifier = {MODIFIER} }} }}")

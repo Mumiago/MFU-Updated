@@ -11,8 +11,9 @@ Japan builds compliance early, before its Asian conquests pile up. In the user's
 
 ## Non-goals
 - Conquering China does not feed the counter. China already has its own per-state resistance tiers. (My call: you picked option A, which is anchored to the existing counter.)
-- The three known bugs stay as they are: Manchukuo never gets the country-wide compliance part; rollbacks can push the counter below 0; un-capitulation rollbacks have no winner check. The new derived values are clamped at ≤ 0, so a negative counter can't turn them into a bonus.
-  - As a consequence of the first bug, Manchukuo- and RCC-held states get only the state part (inland −0.25·K, middle −0.125·K), not the country-wide −0.20·K.
+- Two known bugs stay as they are: rollbacks can push the counter below 0; un-capitulation rollbacks have no winner check. The new derived values are clamped at ≤ 0, so a negative counter can't turn them into a bonus.
+  - Fixed on 2026-11-14 by your call: Manchukuo now gets the country-wide part too (see "Manchukuo copy" below).
+  - RCC-held states still get only the state part (inland −0.25·K, middle −0.125·K), not the country-wide −0.20·K.
 - The resistance-target side is unchanged.
 
 ## Constraints (engine, decoded from hoi4.exe 1.19.5)
@@ -40,6 +41,9 @@ Let K = `JAP_resistance_target_modifier` (Japan's conquest counter).
   - Its `enable` requires the state's controller to be JAP, in Japan's faction, or a Japanese puppet, so Manchukuo- and RCC-held states count too. (RCC is a puppet from game start but is never added to the faction.)
   - It is not `scope = JAP`: per the vanilla docs that would apply it only while JAP itself is the controller.
 - **One recompute effect** (scripted effect) sets the three derived Japan variables from K and copies the state values. The 10 trigger sites call it after changing K, in place of their hand-written compliance `add_to_variable` lines: 8 in `00_on_actions.txt`, 2 in `08_hopping_on_actions.txt`. Tuning means editing one place.
+- **Manchukuo copy:** the recompute effect copies Japan's `JAP_compliance_gain_modifier` into Manchukuo's own variable of that name.
+  - Manchukuo's spirit (`JAP_china_war_bonus`) reads that variable, so Manchukuo-held China gets the same country-wide penalty.
+  - That spirit also has −20% compliance growth, so Manchukuo-held states end a few points lower than Japan-held ones.
 - The same effect attaches the state modifier where it is missing. It also runs on_startup (new games) and monthly through `on_monthly_JAP`, so a running save picks the feature up within a month without waiting for K to change.
 - Localisation: a name and a flavour-only description for the modifier (plain style, numbers come from the modifier lines).
 

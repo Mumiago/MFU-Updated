@@ -137,15 +137,14 @@ def history_tier_ids(tiers):
 
 
 def derived(var):
-    """(source variable, multiplier, clamp) of `var` in the effect, requiring set -> multiply -> clamp in that order."""
+    """(source variable, multiplier, clamp) of `var` from the effect's top-level ops, requiring set -> multiply -> clamp in that order."""
     ops = []
-    for m in re.finditer(r"\b(set_variable|multiply_variable|clamp_variable)\s*=\s*\{([^{}]*)\}", effect_body()):
-        kind, args = m.group(1), m.group(2)
+    for kind, args in children(effect_body()):
         if kind == "clamp_variable":
             c = re.fullmatch(r"\s*var\s*=\s*(\w+)\s+max\s*=\s*(-?[0-9.]+)\s*", args)
             if c and c.group(1) == var:
                 ops.append((kind, c.group(2)))
-        else:
+        elif kind in ("set_variable", "multiply_variable"):
             c = re.fullmatch(r"\s*(\w+)\s*=\s*(\S+)\s*", args)
             if c and c.group(1) == var:
                 ops.append((kind, c.group(2)))
@@ -223,6 +222,22 @@ def test_effect_copies_state_values():
                 need(len(adds) == 1, f"{trig}: expected one add_dynamic_modifier, found {len(adds)}")
                 need(norm(adds[0]) == f"modifier={MODIFIER}", f"{trig}: add_dynamic_modifier must be {{ modifier = {MODIFIER} }} with no scope key, found {{ {norm(adds[0])} }}")
     need(set(seen) == {"JAP_is_inland_china_state", "JAP_is_middle_china_state"}, f"every_state limits found: {sorted(seen)}")
+
+
+@test
+def test_man_mirror():
+    tops = children(effect_body())
+    man = [i for i, (key, _) in enumerate(tops) if key == "MAN"]
+    need(len(man) == 1, f"expected one top-level MAN = {{ }} block in {EFFECT}, found {len(man)}")
+    need(norm(tops[man[0]][1]) == "set_variable={JAP_compliance_gain_modifier=JAP.JAP_compliance_gain_modifier}",
+         f"MAN block must be exactly set_variable = {{ JAP_compliance_gain_modifier = JAP.JAP_compliance_gain_modifier }}, found {norm(tops[man[0]][1])}")
+    clamp = [i for i, (key, inner) in enumerate(tops)
+             if key == "clamp_variable" and re.search(r"\bvar\s*=\s*JAP_compliance_gain_modifier\b", inner)]
+    need(len(clamp) == 1 and man[0] > clamp[0], "the MAN copy must come after Japan's country-wide value is clamped")
+    reader = block(strip(read("common/dynamic_modifiers/jap_danymic_modifier.txt")), "JAP_china_war_bonus") or ""
+    need(re.search(r"\bcompliance_gain\s*=\s*JAP_compliance_gain_modifier\b", reader), "JAP_china_war_bonus must read compliance_gain = JAP_compliance_gain_modifier")
+    holder = [norm(b) for b in all_blocks(strip(read("history/countries/MAN - Manchukou.txt")), "add_dynamic_modifier")]
+    need("modifier=JAP_china_war_bonus" in holder, "MAN history must add JAP_china_war_bonus")
 
 
 @test
@@ -366,7 +381,9 @@ def test_variable_ownership():
         return [(rel, op) for rel, op, v in writes if v == var]
 
     triple = [(EFFECTS, "set_variable"), (EFFECTS, "multiply_variable"), (EFFECTS, "clamp_variable")]
-    for var in ("JAP_compliance_gain_modifier", "JAP_inland_overreach_compliance", "JAP_middle_overreach_compliance"):
+    need(by("JAP_compliance_gain_modifier") == triple + [(EFFECTS, "set_variable")],
+         f"JAP_compliance_gain_modifier: only the set/multiply/clamp and the MAN copy in {EFFECTS} may write it, found {by('JAP_compliance_gain_modifier')}")
+    for var in ("JAP_inland_overreach_compliance", "JAP_middle_overreach_compliance"):
         need(by(var) == triple, f"{var}: only the set/multiply/clamp in {EFFECTS} may write it, found {by(var)}")
     need(by(STATE_VAR) == [(EFFECTS, "set_variable")] * 2, f"{STATE_VAR}: only the 2 state copies in {EFFECTS} may write it, found {by(STATE_VAR)}")
     want = ([("common/on_actions/00_on_actions.txt", "add_to_variable")] * 8
