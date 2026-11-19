@@ -3761,6 +3761,13 @@ focus_tree = {
 				category = radar_tech
 			}
 			add_war_support = 0.1
+			add_ace = {
+			name = "Erich"
+			surname = "Hartmann"
+			callsign = "Bubi"
+			type = fighter_genius
+			is_female = no
+		}
 			
 			custom_effect_tooltip = GER_spawn_njg1_veterans_tt
 			hidden_effect = {
@@ -7680,6 +7687,26 @@ focus_tree = {
 			
 			custom_effect_tooltip = available_chief_of_airforce
 			show_ideas_tooltip = GER_ritter_von_greim
+			64 = {
+				strategic_state_location = {
+					favorable_approach4 = 9496 # Province ID
+				}
+				set_building_level = {
+					type = air_base
+					level = 12
+					instant_build = yes
+				}
+			}	
+			60 = {
+				strategic_state_location = {
+					favorable_approach = 6524 # Province ID
+				}
+				set_building_level = {
+					type = air_base
+					level = 10
+					instant_build = yes
+				}
+			}
 		}
 	}
 	focus = {
@@ -8115,7 +8142,7 @@ focus_tree = {
     focus = {
 		id = GER_scrap_lufthansa
 		prerequisite = { focus = GER_racehorse focus = GER_warhorse focus = GER_sturzbomber focus = GER_kanonenvogel  }
-		icon = GFX_goal_continuous_air_production
+		icon = GFX_GER_lufthansa
 		relative_position_id = GER_long_range_escorts
 		x = -2
 		y = 1
@@ -8135,12 +8162,156 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = GER_paratroopers
+		text = GER_paratroopers
+		icon = GFX_GER_fallschirmjaeger
+		prerequisite = { focus = GER_racehorse focus = GER_warhorse focus = GER_sturzbomber focus = GER_kanonenvogel  }
+		relative_position_id = GER_long_range_escorts 
+		x = 2
+		y = 1
+		cost = 4.4
+		ai_will_do = {
+			factor = 0
+		}
+		available_if_capitulated = yes
+		completion_reward = {
+			custom_effect_tooltip = available_military_high_command
+			show_ideas_tooltip = GER_kurt_student
+			set_technology = {
+				enable_commando = 1
+			}
+			custom_effect_tooltip = GER_Fallschirmjaeger
+			hidden_effect = {
+				load_oob = "GER_Fallschirmjaeger"
+			}
+			GER_kurt_student = {
+				add_attack = 1
+				add_defense = 1
+			}
+				army_experience = 25
+			
+		}
+	}
+	focus = {
+		id = GER_air_innovation_2
+		icon = GFX_GER_air_innovation_2
+		prerequisite = { focus = GER_long_range_escorts  }
+		relative_position_id = GER_long_range_escorts
+		x = 0
+		y = 1
+		cost = 4.4
+		ai_will_do = {
+			factor = 5
+		}
+		available = {
+			has_completed_focus = GER_long_range_escorts
+		}
+		available_if_capitulated = yes
+		completion_reward = { 
+		
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = GER_sturzbomber
+						has_completed_focus = GER_kanonenvogel
+					}
+				}
+				custom_effect_tooltip = GER_modern_cas_choice_tt
+			}
+			if = {
+				limit = {
+					has_completed_focus = GER_kanonenvogel
+				}
+				custom_effect_tooltip = GER_modern_cas_henschel_tt
+				add_tech_bonus = {
+					technology = ger_CAS_1939
+					uses = 1
+					ahead_reduction = 0.3
+					name = GER_fuck_names 
+				}
+				add_tech_bonus = {
+					technology = ger_CAS_1941
+					uses = 1
+					bonus = 1.50
+					ahead_reduction = 1
+					name = GER_fuck_names 
+				}
+				MIO:GER_henschel_organization = {
+					complete_mio_trait = GER_mio_anti_tank_cannons
+				}
+			}
+			if = {
+				limit = {
+					has_completed_focus = GER_sturzbomber
+				}
+				custom_effect_tooltip = GER_modern_cas_junkers_tt
+				MIO:GER_junkers_organization = {
+					complete_mio_trait = GER_mio_trait_dive_brakes
+				}
+				add_tech_bonus = {
+					category = CAS_bomber
+					uses = 1
+					bonus = 1
+					ahead_reduction = 0.5
+					name = GER_fuck_names 
+				}
+				add_tech_bonus = {
+					technology = ger_cas_1943
+					uses = 1
+					bonus = 1.25
+					ahead_reduction = 0.7
+					name = GER_fuck_names 
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = GER_racehorse
+						has_completed_focus = GER_warhorse
+					}
+				}
+				custom_effect_tooltip = GER_modern_fighter_choice_tt
+			}
+			if = {
+				limit = {
+					has_completed_focus = GER_warhorse
+					}
+					custom_effect_tooltip = GER_modern_fighter_focke_tt
+					add_tech_bonus = {
+						technology = ger_fighter_1941
+						uses = 1
+						bonus = 3
+						name = GER_fuck_names 
+					}
+			}
+			if = {
+				limit = {
+					has_completed_focus = GER_racehorse
+				}
+					add_tech_bonus = {
+						technology = ger_fighter_1942
+						uses = 1
+						bonus = 1.10
+						name = GER_fuck_names 
+					}
+					MIO:GER_messerschmitt_organization_new_one= {
+					add_mio_research_bonus = 0.20
+					add_mio_funds_gain_factor = .15
+					add_mio_funds = 2500
+					}
+			}
+			add_ideas = GER_luftwaffe_investments_idea
+
+			air_experience = 80
+
+		}
+	}
+	focus = {
 		id = GER_paratrooper_expansion
 		icon = GFX_GER_paratroopers
-		prerequisite = { focus = GER_racehorse focus = GER_warhorse focus = GER_sturzbomber focus = GER_kanonenvogel  }
-		icon = GFX_goal_continuous_air_production
-		relative_position_id = GER_long_range_escorts
-		x = 2
+		prerequisite = { focus = GER_air_innovation_2 }
+		relative_position_id = GER_air_innovation_2
+		x = 0
 		y = 1
 		cost = 4.4
 		ai_will_do = {
@@ -8183,82 +8354,6 @@ focus_tree = {
 			}
 		}
 	}
-	focus = {
-		id = GER_air_innovation_2
-		icon = GFX_GER_air_innovation_2
-		prerequisite = { focus = GER_long_range_escorts  }
-		relative_position_id = GER_long_range_escorts
-		x = 0
-		y = 1
-		cost = 4.4
-		ai_will_do = {
-			factor = 5
-		}
-		available = {
-			has_completed_focus = GER_udets_strike_force
-			has_completed_focus = GER_victory_through_airpower
-		}
-		available_if_capitulated = yes
-		completion_reward = { 
-			
-			#custom_effect_tooltip = GER_luft_expansion_tt
-			add_ideas = GER_luftwaffe_investments_idea
-			#if = {
-				#limit = {
-				#	NOT = { has_war_with = ENG }
-				#	is_ai = no
-				#}
-				#add_timed_idea = {
-				#	idea = GER_rushed_luft_expansion_idea
-				#	days = 180 
-				#}		
-			#}
-			hidden_effect = {
-				if = {
-					limit = {
-						has_idea = GER_udets_strike_force_idea_5
-					}
-					swap_ideas = {
-						remove_idea = GER_udets_strike_force_idea_5
-						add_idea = GER_udets_strike_force_idea_2
-					}
-				}
-			}
-
-			air_experience = 80
-			
-			add_ace = {
-			name = "Erich"
-			surname = "Hartmann"
-			callsign = "Bubi"
-			type = fighter_genius
-			is_female = no
-		}
-
-			64 = {
-				strategic_state_location = {
-					favorable_approach4 = 9496 # Province ID
-				}
-				set_building_level = {
-					type = air_base
-					level = 12
-					instant_build = yes
-				}
-			}	
-			60 = {
-				strategic_state_location = {
-					favorable_approach = 6524 # Province ID
-				}
-				set_building_level = {
-					type = air_base
-					level = 10
-					instant_build = yes
-				}
-			}
-			air_experience = 80
-		}
-	}
-
 
 	focus = {
 		id = GER_expand_peenemuende_research_center
@@ -8566,7 +8661,7 @@ focus_tree = {
 	}
 	focus = {
 		id = GER_luftwaffe_field_divisions
-		icon = GFX_focus_rocketry
+		icon = GFX_GER_luftwaffe_field
 		prerequisite = { focus = GER_fall_of_the_eagle }
 		relative_position_id = GER_fall_of_the_eagle
 		x = 0
@@ -8578,7 +8673,14 @@ focus_tree = {
 		available_if_capitulated = yes	
 
 		available = {
-				has_idea = GER_speer
+			custom_trigger_tooltip = {
+				tooltip = GER_luftwaffe_in_ruins_tt
+				# Fighters + heavy fighters, in stockpile and deployed in air wings
+				set_temp_variable = { GER_fighter_total = num_equipment@small_plane_airframe }
+				add_to_temp_variable = { GER_fighter_total = num_equipment@medium_plane_fighter_airframe }
+				add_to_temp_variable = { GER_fighter_total = num_deployed_planes_with_type@fighter }
+				check_variable = { GER_fighter_total < 4000 }
+			}
 		}
 
 		completion_reward = {
@@ -8691,7 +8793,7 @@ focus_tree = {
 		id = GER_defend_the_reich
 		icon = GFX_GER_def_reich
 		prerequisite = { focus = GER_expand_aa_capacity }
-		prerequisite = { focus = GER_jagernot_programm }
+		prerequisite = { focus = GER_forced_labor_air }
 		relative_position_id = GER_fall_of_the_eagle
 		x = 0
 		y = 2
@@ -8735,8 +8837,8 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = GER_jagernot_programm
-		icon = GFX_focus_rocketry
+		id = GER_forced_labor_air
+		icon = GFX_GER_volunteer_workers_air
 		prerequisite = { focus = GER_fall_of_the_eagle }
 		relative_position_id = GER_fall_of_the_eagle
 		x = 2
@@ -8752,14 +8854,7 @@ focus_tree = {
 		continue_if_invalid = yes
 
 		available = {
-			custom_trigger_tooltip = {
-				tooltip = GER_luftwaffe_in_ruins_tt
-				# Fighters + heavy fighters, in stockpile and deployed in air wings
-				set_temp_variable = { GER_fighter_total = num_equipment@small_plane_airframe }
-				add_to_temp_variable = { GER_fighter_total = num_equipment@medium_plane_fighter_airframe }
-				add_to_temp_variable = { GER_fighter_total = num_deployed_planes_with_type@fighter }
-				check_variable = { GER_fighter_total < 4000 }
-			}
+				has_idea = GER_speer
 		}
 
 		completion_reward = {
