@@ -98,7 +98,7 @@ def test_spirit_ideas():
     country = block(text, "country")
     need(country is not None, "no `country = {` category")
     ideas = dict(children(country))
-    for n in range(0, 15):
+    for n in range(0, 10):
         b = ideas.get(f"MFU_ak_spirit_{n}")
         need(b is not None, f"MFU_ak_spirit_{n} missing")
         need(re.search(r"allowed\s*=\s*\{\s*always\s*=\s*no\s*\}", b), f"level {n}: allowed = {{ always = no }} missing")
@@ -120,7 +120,7 @@ def test_spirit_ideas():
             need(m is not None, f"level {n}: {key} missing")
             need(abs(float(m.group(1)) + n / 100.0) < 1e-9, f"level {n}: {key} = {m.group(1)}, expected {-n / 100.0}")
         need(len(re.findall(r"=", tm)) == 3, f"level {n}: targeted_modifier has extra entries")
-    need(set(ideas) == {f"MFU_ak_spirit_{n}" for n in range(15)}, "unexpected extra ideas in the file")
+    need(set(ideas) == {f"MFU_ak_spirit_{n}" for n in range(10)}, "unexpected extra ideas in the file")
 
 
 @test
@@ -129,7 +129,7 @@ def test_spirit_picture_resolves():
     # GFX_idea_GFX_idea_... and shows the question-mark fallback. The old Afrikakorps icon is GFX_idea_GER_afrika_campaign.
     text = strip(read(IDEAS))
     pics = re.findall(r"\bpicture\s*=\s*(\S+)", text)
-    need(len(pics) == 15, f"expected 15 picture lines, found {len(pics)}")
+    need(len(pics) == 10, f"expected 10 picture lines, found {len(pics)}")
     for pic in pics:
         need(not pic.startswith("GFX_"), f"picture = {pic}: drop the GFX_idea_ prefix, the engine adds it")
         need(pic == "GER_afrika_campaign", f"picture = {pic}: must reuse the old Afrikakorps icon GER_afrika_campaign")
@@ -179,15 +179,15 @@ def test_front_line_covers_line_battalions():
 def test_level_effects():
     text = strip(read(LEVEL_FX))
     fx = dict(children(text))
-    ids = [f"MFU_ak_spirit_{n}" for n in range(15)]
+    ids = [f"MFU_ak_spirit_{n}" for n in range(10)]
     techs = [f"MFU_ak_desert_{k}" for k in range(1, 11)]
     for name in ("MFU_ak_set_sov_idea", "MFU_ak_set_desert_tech", "MFU_ak_clear_spirit"):
         need(name in fx, f"effect {name} missing")
     body = fx["MFU_ak_set_sov_idea"]
     rem = block(body, "remove_ideas")
-    need(rem is not None and rem.split() == ids, "set_sov_idea must remove all 15 spirits in one remove_ideas list")
+    need(rem is not None and rem.split() == ids, "set_sov_idea must remove all 10 spirits in one remove_ideas list")
     need(body.index("remove_ideas") < body.index("add_ideas"), "set_sov_idea must remove before it adds")
-    for n in range(15):
+    for n in range(10):
         branch = re.search(r"check_variable\s*=\s*\{\s*MFU_ak_sov\s*=\s*%d\s*\}" % n, body)
         need(branch is not None, f"set_sov_idea: no branch for MFU_ak_sov = {n}")
         need(re.search(r"add_ideas\s*=\s*MFU_ak_spirit_%d\b" % n, body), f"set_sov_idea: no add_ideas for level {n}")
@@ -201,7 +201,7 @@ def test_level_effects():
         need(re.search(r"check_variable\s*=\s*\{\s*MFU_ak_desert\s*=\s*%d\s*\}" % k, d), f"set_desert_tech: no branch for {k}")
     c = fx["MFU_ak_clear_spirit"]
     rem = block(c, "remove_ideas")
-    need(rem is not None and rem.split() == ids, "clear_spirit must remove all 15 spirits")
+    need(rem is not None and rem.split() == ids, "clear_spirit must remove all 10 spirits")
     for t in techs:
         need(re.search(t + r"\s*=\s*0", c), f"clear_spirit: {t} not zeroed")
     need("= 1" not in c.replace("= 10", ""), "clear_spirit must not switch anything on")
@@ -244,9 +244,8 @@ def test_spawn_effects():
         need(re.search(r"priority\s*=\s*2\b", body), f"{name}: priority = 2")
     need(seen == {(False, False), (False, True), (True, False), (True, True)}, f"template variants covered: {sorted(seen)}")
     units = all_blocks(text, "create_unit")
-    need(len(units) == 16, f"expected 16 create_unit blocks, found {len(units)}")
-    per_city = {k: 0 for k in CITIES}
-    variants = set()
+    need(len(units) == 8, f"expected 8 create_unit blocks (medium + light in each of 4 cities), found {len(units)}")
+    per_city = {k: [] for k in CITIES}
     for u in units:
         need(re.search(r"start_equipment_factor\s*=\s*1\b", u), "create_unit: start_equipment_factor = 1 missing")
         need(re.search(r"start_experience_factor\s*=\s*0\.5\b", u), "create_unit: start_experience_factor = 0.5 missing")
@@ -254,20 +253,20 @@ def test_spawn_effects():
         prov = int(re.search(r"prioritize_location\s*=\s*(\d+)", u).group(1))
         city = [k for k, (_, p) in CITIES.items() if p == prov]
         need(len(city) == 1, f"create_unit: prioritize_location {prov} not a spawn province")
-        per_city[city[0]] += 1
-        light = "light_tank_chassis" in u
+        light = "leichte" in u
+        per_city[city[0]].append(light)
         need(re.search(r"\bcount\s*=\s*%d\b" % (4 if light else 3), u), "create_unit: wrong count")
-        need("light_tank_chassis" in u or "medium_tank_chassis" in u, "create_unit: no tank variant")
-        need(re.search(r'owner\s*=\s*\\"GER\\"', u), "create_unit: variant owner missing")
-        variants.add(re.search(r'version_name\s*=\s*\\"([^"\\]+)\\"', u).group(1))
-    need(per_city == {k: 4 for k in CITIES}, f"create_unit per city: {per_city}")
-    need(variants == {"Panzer III Ausf.H", "Panzer IV", "Panzer 38(t)", "Panzer II Ausf.a"}, f"variants: {sorted(variants)}")
-    for chassis, vname in (("medium_tank_chassis_1940", "Panzer III Ausf.H"), ("medium_tank_chassis_1946", "Panzer IV"),
-                           ("light_tank_chassis_1940", "Panzer 38(t)"), ("light_tank_chassis_1936", "Panzer II Ausf.a")):
-        need(re.search(chassis + r"\s*=\s*\{\s*owner\s*=\s*\\\"GER\\\"\s*version_name\s*=\s*\\\"" + re.escape(vname), text),
-             f"{chassis} -> {vname} pairing missing")
+    need(all(sorted(v) == [False, True] for v in per_city.values()), f"each city needs one medium and one light spawn: {per_city}")
+    # No new tank design: the spawn must not force or name any equipment variant, so the divisions take the designs
+    # Germany already has.
+    for bad in ("force_equipment_variants", "version_name", "_chassis_", "_tank_equipment"):
+        need(bad not in text, f"spawn effects must not contain {bad}: the spawn may not create or force a tank design")
     for city, (state, _) in CITIES.items():
-        need(len(re.findall(r"\b%d\s*=\s*\{\s*create_unit" % state, text)) == 4, f"state {state} scope missing 4 times")
+        need(len(re.findall(r"\b%d\s*=\s*\{\s*create_unit" % state, text)) == 2, f"state {state} scope missing 2 times")
+    # medium vs light is decided only by the 1939 / 1940 medium chassis tech, never by the 1940 variants
+    need(text.count("MFU_ak_has_medium_tech = yes") >= 4 + 2, "each city must test MFU_ak_has_medium_tech once for the spawn")
+    for gone in ("MFU_ak_has_medium_1940", "MFU_ak_has_light_1940"):
+        need(gone not in text, f"{gone} must no longer steer the spawn")
     # first usable city wins: the four city triggers appear in priority order
     order = [text.index("MFU_ak_city_" + c) for c in ("tunis", "tripoli", "benghazi", "tobruk")]
     need(order == sorted(order), "city triggers not in priority order")
@@ -306,7 +305,7 @@ def test_loc():
         m = re.match(r'^ ([A-Za-z0-9_.\-]+):\d*\s+"(.*)"\s*$', ln)
         if m:
             keys[m.group(1)] = m.group(2)
-    want = {f"MFU_ak_spirit_{n}{s}" for n in range(15) for s in ("", "_desc")}
+    want = {f"MFU_ak_spirit_{n}{s}" for n in range(10) for s in ("", "_desc")}
     want |= {f"MFU_ak_desert_{k}" for k in range(1, 11)}
     want |= {"MFU_ak_desert_tt", "MFU_ak_decay_tt", "MFU_ak_effect_tt", "MFU_ak_spawn_tt"}
     want |= {"MFU_ak_avail_city_tt", "MFU_ak_avail_france_tt", "MFU_ak_avail_barb_tt"}
@@ -362,9 +361,9 @@ def test_compute_sov_guarded():
         s = re.search(r"set_variable\s*=\s*\{\s*MFU_ak_sov\s*=\s*(\d+)\s*\}", b)
         need(m is not None and s is not None, "each branch must test ENG's wall idea and set MFU_ak_sov")
         a = re.search(r"set_variable\s*=\s*\{\s*MFU_ak_africa\s*=\s*(-?\d+)\s*\}", b)
-        need(a is not None and int(a.group(1)) == int(s.group(1)) - 10, f"wall {m.group(1)}: MFU_ak_africa must be MFU_ak_sov - 10")
+        need(a is not None and int(a.group(1)) == int(s.group(1)) - 5, f"wall {m.group(1)}: MFU_ak_africa must be MFU_ak_sov - 5")
         seen[int(m.group(1))] = int(s.group(1))
-    need(seen == {w: 14 - w for w in range(9)}, f"Africa level -> penalty mapping wrong: {seen}")
+    need(seen == {w: 9 - w for w in range(9)}, f"Africa level -> penalty mapping wrong: {seen}")
 
 
 @test
@@ -391,6 +390,7 @@ def test_grant_effect():
     rest = body.replace(loop, "")
     need("set_country_flag = MFU_ak_active" in rest, "grant must set MFU_ak_active")
     need(re.search(r"MFU_ak_desert\s*=\s*10\b", rest), "grant must set MFU_ak_desert = 10")
+    need(re.search(r"MFU_ak_sov\s*=\s*5\b", rest), "grant's first-press default must be MFU_ak_sov = 5 (net -5%)")
     need(rest.index("MFU_ak_compute_sov = yes") < rest.index("MFU_ak_sync = yes"), "grant: compute before sync")
 
 
@@ -523,7 +523,7 @@ def test_decision_effect():
 def test_triggers():
     trig = dict(children(strip(read(TRIGGERS))))
     names = ["MFU_ak_city_tunis", "MFU_ak_city_tripoli", "MFU_ak_city_benghazi", "MFU_ak_city_tobruk", "MFU_ak_any_city",
-             "MFU_ak_has_medium_tech", "MFU_ak_has_medium_1940", "MFU_ak_has_light_1940", "MFU_ak_has_width_tech"]
+             "MFU_ak_has_medium_tech", "MFU_ak_has_width_tech"]
     need(set(trig) == set(names), f"trigger set wrong: {sorted(trig)}")
     for key, state in (("tunis", 458), ("tripoli", 448), ("benghazi", 450), ("tobruk", 451)):
         b = flat(trig["MFU_ak_city_" + key])
@@ -535,8 +535,6 @@ def test_triggers():
     any_city = flat(trig["MFU_ak_any_city"])
     need(all(("MFU_ak_city_%s = yes" % c) in any_city for c in ("tunis", "tripoli", "benghazi", "tobruk")) and "OR" in any_city, "any_city must OR the four")
     need("ger_1939_medium_tank_chassis" in trig["MFU_ak_has_medium_tech"] and "ger_1940_medium_tank_chassis" in trig["MFU_ak_has_medium_tech"], "medium tech OR")
-    need(flat(trig["MFU_ak_has_medium_1940"]).strip() == "has_tech = ger_1940_medium_tank_chassis", "medium_1940")
-    need(flat(trig["MFU_ak_has_light_1940"]).strip() == "has_tech = ger_1940_light_tank_chassis", "light_1940")
     need(flat(trig["MFU_ak_has_width_tech"]).strip() == "has_tech = width_tech", "width tech")
 
 
@@ -557,21 +555,25 @@ def loc_value(rel, key):
 
 @test
 def test_loc_wording_is_honest():
-    # The penalty is 10 + the Africa bonus, so at Barbarossa launch the two net to -10%. The decision effect and the
+    # The penalty is 5 + the Africa bonus, so at Barbarossa launch the two net to -5%. The decision effect and the
     # spirit both carry that rule and the Aug 1941 decay; the descriptions are flavour only and must not restate it.
     eff, dec = loc_value(LOC, "MFU_ak_effect_tt"), loc_value(LOC, "MFU_ak_decay_tt")
     for key, t in (("MFU_ak_effect_tt", eff), ("MFU_ak_decay_tt", dec)):
-        need("10%" in t and "-10%" in t and "launch" in t, f"{key} must state the 10% + bonus rule and the -10% net at launch")
+        need("-5%" in t and "launch" in t, f"{key} must state the -5% net at launch")
+        need("-10%" not in t and "-14%" not in t, f"{key}: still carries the old -10% rule")
         need("Aug 1941" in t and "1942" not in t, f"{key} must say the decay starts in Aug 1941")
         need("offsets" not in t and "flat" not in t and "swing" not in t, f"{key}: old wording")
-    for row in ("§G+4%§!", "§R-14%§!", "§R-4%§!", "§R-6%§!"):
+    for row in ("§G+4%§!", "§R-9%§!", "§R-4%§!", "§R-1%§!"):
         need(row in eff, f"MFU_ak_effect_tt must show the bonus -> penalty row {row}")
     need("[?MFU_ak_sov|" in eff and "[?MFU_ak_africa|" in eff, "MFU_ak_effect_tt must show the live penalty and Africa bonus")
-    for n in range(15):
+    spawn = loc_value(LOC, "MFU_ak_spawn_tt")
+    need("No new design" in spawn and "newest designs" in spawn, "MFU_ak_spawn_tt must say the tanks use existing designs")
+    need("1939" in spawn and "1940" in spawn, "MFU_ak_spawn_tt must name the 1939/1940 medium chassis test")
+    for n in range(10):
         d = loc_value(LOC, f"MFU_ak_spirit_{n}_desc")
-        need("-10%" not in d and "1941" not in d, f"MFU_ak_spirit_{n}_desc must stay flavour only")
+        need("-5%" not in d and "1941" not in d, f"MFU_ak_spirit_{n}_desc must stay flavour only")
     fd = loc_value("localisation/english/focus_l_english.yml", "GER_africa_korps_desc")
-    need("-10%" not in fd and "flat" not in fd and "offsets" not in fd, "decision description must stay flavour only")
+    need("-5%" not in fd and "flat" not in fd and "offsets" not in fd, "decision description must stay flavour only")
 
 
 @test

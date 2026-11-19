@@ -1,0 +1,33 @@
+JAP_update_overreach_compliance = {
+	set_variable = { JAP_compliance_gain_modifier = JAP_resistance_target_modifier }
+	multiply_variable = { JAP_compliance_gain_modifier = -0.20 }
+	clamp_variable = { var = JAP_compliance_gain_modifier max = 0 }
+
+	set_variable = { JAP_inland_overreach_compliance = JAP_resistance_target_modifier }
+	multiply_variable = { JAP_inland_overreach_compliance = -0.25 }
+	clamp_variable = { var = JAP_inland_overreach_compliance max = 0 }
+
+	set_variable = { JAP_middle_overreach_compliance = JAP_resistance_target_modifier }
+	multiply_variable = { JAP_middle_overreach_compliance = -0.125 }
+	clamp_variable = { var = JAP_middle_overreach_compliance max = 0 }
+
+	MAN = { set_variable = { JAP_compliance_gain_modifier = JAP.JAP_compliance_gain_modifier } }
+
+	every_state = {
+		limit = { JAP_is_inland_china_state = yes }
+		set_variable = { JAP_overreach_compliance_gain = JAP.JAP_inland_overreach_compliance }
+		if = {
+			limit = { NOT = { has_dynamic_modifier = { modifier = JAP_overstretched_occupation } } }
+			add_dynamic_modifier = { modifier = JAP_overstretched_occupation }
+		}
+	}
+
+	every_state = {
+		limit = { JAP_is_middle_china_state = yes }
+		set_variable = { JAP_overreach_compliance_gain = JAP.JAP_middle_overreach_compliance }
+		if = {
+			limit = { NOT = { has_dynamic_modifier = { modifier = JAP_overstretched_occupation } } }
+			add_dynamic_modifier = { modifier = JAP_overstretched_occupation }
+		}
+	}
+}

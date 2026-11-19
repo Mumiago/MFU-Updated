@@ -2951,6 +2951,7 @@ NAITheatre = {
 NAI = {
 
 		AI_NAVAL_GOALS_UPDATE_FREQUENCY_DAYS = 30;           -- Regenerate naval AI objectives this often in days (affects performance)
+		AI_CONVOY_COUNT_CACHE_REBUILD_INTERVAL_HOURS = 20;  -- Recount the convoys per strategic region the naval AI raids this often (affects performance)
 
 	INVASION_UNITS_READY_AT_MIN_PLAN = 0.75,                -- units ready ratio required when plan value is at minimum threshold
 	INVASION_UNITS_READY_AT_MAX_PLAN = 0.25,                -- units ready ratio required when plan value is very high (1.0+)

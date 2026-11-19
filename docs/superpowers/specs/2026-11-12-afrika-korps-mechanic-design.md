@@ -100,11 +100,11 @@ the Axis against the Soviet Union, cancelling out the existing "North African Ca
   read exactly; this is my call.
 - Names (my call): "Afrikakorps Panzer-Division" / "Afrikakorps leichte Panzer-Division"; `division_names_group = GER_Arm_01`;
   `start_experience_factor = 0.5` (precedent).
-- Equipment variants (`force_equipment_variants`, owner "GER"): medium -> if `ger_1940_medium_tank_chassis`:
-  `medium_tank_chassis_1940` "Panzer III Ausf.H", else `medium_tank_chassis_1946` "Panzer IV" (1939 tech); light -> if
-  `ger_1940_light_tank_chassis`: `light_tank_chassis_1940` "Panzer 38(t)", else `light_tank_chassis_1936`
-  "Panzer II Ausf.a". These variant names exist only after the tech is researched (or, for the start-of-game ones, with the
-  No Step Back DLC) - verify.
+- No equipment variant is forced (no `force_equipment_variants`, no `version_name`), so the spawn creates no new tank
+  design (user request 2026-11-16). The spawn tests only `MFU_ak_has_medium_tech` (`ger_1939_medium_tank_chassis` OR
+  `ger_1940_medium_tank_chassis`): yes -> 3 medium Panzer divisions, no -> 4 light Panzer divisions. The divisions are
+  meant to take the newest tank designs Germany already has; that engine behaviour is assumed (nobody checked) until the
+  in-game check.
 
 ### Spirit values and timeline
 - Recipients (decided by the user, including Finland, Italy and Vichy): same set as today - every country in GER's faction,
@@ -112,12 +112,13 @@ the Axis against the Soviet Union, cancelling out the existing "North African Ca
   Barbarossa buff goes only to GER, BUL, ROM, HUN, SLO, SPR, so FIN/ITA/EFR take the Soviet penalty without a swing to cancel.
 - Africa level W (0..8) = the `GER_aatlantic_wall_W` idea held by ENG (starts at 4; 0 = Axis holds all 8 checkpoints,
   +4% swing; 8 = Axis lost all, -4% swing). Africa swing = 4 - W points.
-- **Before Barbarossa:** Soviet penalty N = 14 - W points, applied to both `attack_bonus_against` and
-  `defense_bonus_against` vs SOV: W=0 -> -14%, W=4 -> -10%, W=8 -> -6%. Net with the Africa swing is constant (-10%). The
+- **Before Barbarossa:** Soviet penalty N = 9 - W points (14 - W until 2026-11-16), applied to both `attack_bonus_against` and
+  `defense_bonus_against` vs SOV: W=0 -> -9%, W=4 -> -5%, W=8 -> -1%. Net with the Africa swing (4 - W) is constant (-5%);
+  before the first pulse or press `MFU_ak_sov` defaults to 5 (the neutral level). The
   repo's Barbarossa buff sums 13 - W with the German Atlantic Wall index, so one wall step = exactly 1 point.
   Desert bonus stays at +10% (desert and deep_desert attack). The Soviet penalty is NOT flat: it follows the Africa
   level the whole time until Barbarossa is declared.
-- **Keeping N current (user requirements):** (a) the value N = 14 - W is maintained by a cheap **weekly** pulse on GER
+- **Keeping N current (user requirements):** (a) the value N = 9 - W is maintained by a cheap **weekly** pulse on GER
   even while the decision has never been pressed, so the number a player would get is already current (and can be shown
   in the decision's tooltip); once the spirit exists the same pulse swaps it to the new level only when the level
   changed; (b) N is recomputed once more immediately on pressing, so a player pressing the day before Barbarossa never
@@ -129,7 +130,7 @@ the Axis against the Soviet Union, cancelling out the existing "North African Ca
   1.8.1941, or the first month after a later launch; guard `date > 1941.7.2`) until 0. Spirit removed when both are 0. Until Barbarossa the desert bonus is
   flat and the Soviet penalty follows Africa (weekly); if Barbarossa never happens the spirit stays (accepted).
 - The Africa swing is only guaranteed to net out for the Barbarossa buff. The 1942 summer-offensive decisions re-read W live;
-  from 1.8.1941 N decays 1 point a month (about 10-11 points by the summer 1942 offensive, so mostly gone; it also erodes the -10% net during the 150-day Barbarossa buff), so the "constant net" ends around then (accepted).
+  from 1.8.1941 N decays 1 point a month (N is at most 9, so it is gone after 9 ticks - 1.4.1942 for a June 1941 launch, before the summer 1942 offensive; it also erodes the -5% net during the 150-day Barbarossa buff), so the "constant net" ends around then (accepted).
 - The real Africa swing is baked once into a 150-day timed buff (`GER_barb_offensive_buff_N`) at launch by
   `get_barb_offensive` (`XEN_touch_and_perish_scripted_effects.txt` ~8208-8381) and re-read live by the 1942 summer offensive
   decisions; this design does not change either.
@@ -137,7 +138,7 @@ the Axis against the Soviet Union, cancelling out the existing "North African Ca
 ## Implementation shape (my calls - builder may improve)
 
 Facts: a targeted modifier cannot take a variable and no country-level desert-attack key exists, so:
-- **Soviet penalty:** 15 stepped national spirits `..._0` to `..._14` (the `_0` shell has no targeted modifier)
+- **Soviet penalty:** 10 stepped national spirits `..._0` to `..._9` (the `_0` shell has no targeted modifier)
   each with `targeted_modifier = { tag = SOV attack_bonus_against = -0.0N defense_bonus_against = -0.0N }`, all with the same
   display name "Afrikakorps". Swap with `swap_ideas` / remove-all-then-add. Precedent: `GER_barb_offensive_buff_1..32` in
   `common/ideas/germany.txt`, `ENG_afrika_campaign..4`.
@@ -148,7 +149,7 @@ Facts: a targeted modifier cannot take a variable and no country-level desert-at
 - One visible spirit in the UI: each idea level prints the live desert % via a `custom_modifier_tooltip` using a variable.
 - State on GER: variables for the Soviet level and desert level, flag for "decaying".
 - Pre-Barbarossa tracking (user's choice for performance): one scripted effect computes W from
-  `ENG = { has_idea = GER_aatlantic_wall_W }` and stores N = 14 - W on GER. It is called (1) by a weekly pulse limited to
+  `ENG = { has_idea = GER_aatlantic_wall_W }` and stores N = 9 - W on GER. It is called (1) by a weekly pulse limited to
   GER (`on_weekly_GER` if that on_action exists, else `on_weekly` with `limit = { tag = GER }`), which stops once Barbarossa
   is declared and only swaps ideas when the level actually changed; (2) from the decision's `complete_effect` right before
   the grant; (3) from the `GER_ussr_war_goal` decision's `complete_effect` (`common/decisions/GER.txt` ~558-975), before
@@ -169,7 +170,7 @@ Facts: a targeted modifier cannot take a variable and no country-level desert-at
    behaviour of `create_unit` in a demilitarised state (avoided for Tunis by the gate).
 3. Desert bonus reaches the new divisions and is not diluted by support battalions.
 4. `swap_ideas` when the old idea is absent; initial add path.
-5. Variant names exist at the time of the spawn; light/medium chassis equipment under the non-No-Step-Back tech tree.
+5. The spawned divisions carry the newest tank designs Germany already has, and no new design appears in the designer.
 6. Exact weekly on_action form, and that the weekly pulse costs nothing measurable (it should do a handful of variable
    operations and swap ideas only on a level change).
 7. Whether the AI should be steered (currently `ai_will_do factor = 10`; keep).
@@ -179,7 +180,7 @@ Facts: a targeted modifier cannot take a variable and no country-level desert-at
 - "Axis" for control = GER, GER ally (allied Vichy included), ITA; a non-allied Vichy-held Tunis does not count.
 - Keep `country_exists = EFR` as the fall-of-France proxy.
 - Visible conditions keep "at war with ENG, ITA at war with ENG"; the control requirement lives in `available`.
-- Cost stays 25 (political power) on the new instant decision; experience 0.5; template names; variant choices.
+- Cost stays 25 (political power) on the new instant decision; experience 0.5; template names.
 - Desert bonus flat, Soviet penalty follows Africa (weekly + recompute on press + recompute at Barbarossa); decay starts after
   Barbarossa AND after 1.7.1941 (first tick 1.8.1941) for both.
 - Weekly pulse, not an event hook on the ENG hopping effects.

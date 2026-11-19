@@ -1,6 +1,6 @@
 # Afrika Korps - in-game checklist
 
-Everything below needs the game; the static suite (`python -I tools/afrika_korps/check.py`, 24 tests) already passes.
+Everything below needs the game; the static suite (`python -I tools/afrika_korps/check.py`, 25 tests) already passes.
 Restart the game so the new ideas, technologies, scripted effects and on_actions load. A new game is recommended: in a save where the old Afrikakorps decision was already taken, the old spirit is gone and the
 new decision cannot be pressed again. In any other existing save it works (the weekly
 pulse starts on its own); a new game is the cleanest.
@@ -32,13 +32,19 @@ GER's variables. Useful effects: `effect MFU_ak_compute_sov = yes`, `effect MFU_
 - [ ] A German-owned division can appear in a province controlled by Italy or Vichy (if not, note where they landed and tell me).
 - [ ] Template looks like the reference screenshot: 3x3 tanks + 2x3 motorized = 30.00 width; with the Mass Assault width tech
       (activate sub-doctrine `large_front_operations`) it is 3x3 tanks + 2x4 motorized = 30.35. Eight support companies.
-- [ ] Variant names resolve (Panzer III Ausf.H / Panzer IV / Panzer 38(t) / Panzer II Ausf.a); divisions are not "obsolete" shells.
+- [ ] The tanks in the new divisions are the newest designs Germany already has (open a division and read each
+      regiment's equipment). Nothing is forced, so this is the key unproven point.
+- [ ] No new tank design appears in the tank designer after the press (compare the design list before and after).
+- [ ] Both branches: with `ger_1939_medium_tank_chassis` or `ger_1940_medium_tank_chassis` you get 3 medium divisions;
+      with neither you get 4 light divisions, and their light tanks are a sensible design, not an obsolete shell.
+- [ ] With only the 1939 tech set by script and no design made, the medium divisions still have tanks.
 
 ## 3. The spirit before Barbarossa
 - [ ] A national spirit "Afrikakorps" shows for Germany and every faction member, Vichy and Spain (Finland and Italy included).
 - [ ] The spirit icon is the old Africa-campaign art, NOT the question mark (`picture = GER_afrika_campaign`, no `GFX_idea_` prefix).
-- [ ] It shows "+10%" desert/deep-desert attack and a Soviet attack/defence penalty of `14 - W` points: -10% at the neutral
-      Africa level, -14% if the Axis hold every checkpoint, -6% if the Axis lost them all.
+- [ ] It shows "+10%" desert/deep-desert attack and a Soviet attack/defence penalty of `9 - W` points: -5% at the neutral
+      Africa level, -9% if the Axis hold every checkpoint, -1% if the Axis lost them all. With Britain's Africa bonus
+      (`4 - W`) the two always net -5%.
 - [ ] Run `effect ENG_africa_hopping_level_down = yes`, wait up to a week: the spirit's Soviet penalty goes up by one point
       (the swap is weekly, so a short delay is expected). Check `var MFU_ak_sov`.
 - [ ] Press the decision right after changing the level: the penalty is already correct (the press recomputes it).
@@ -58,5 +64,5 @@ GER's variables. Useful effects: `effect MFU_ak_compute_sov = yes`, `effect MFU_
 ## 5. Known limits (accepted in the design)
 - Countries that join the Germany faction after the press do not get the spirit.
 - Finland, Italy and Vichy take the Soviet penalty without the matching Barbarossa buff (design decision).
-- The 1942 summer-offensive decisions still read the live Africa level; by then the penalty has decayed about 10-11 points.
+- The 1942 summer-offensive decisions still read the live Africa level; by then the penalty (at most 9 points) has decayed to 0 and the desert bonus is gone or nearly gone.
 - A later doctrine switch resets `width_tech`; already-created divisions keep their 17-battalion layout.
