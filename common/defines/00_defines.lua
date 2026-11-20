@@ -2087,7 +2087,7 @@ NNavy = {
 	NAVAL_MISSION_AI_RANGE_THRESHOLD_EPSILON = 0.25,				-- Epsilon tolerance for AI naval range threshold checks.
 	NAVAL_MISSION_AI_CONVOY_NORMALIZATION_TARGET = 150,			-- Number of convoys to normalize against when scoring convoy raiding missions.
 	SUBMARINE_BASE_STEALTH_VALUE = 100,		-- Used in the reworked formula, sub_visiblity is subtracted from SUBMARINE_BASE_STEALTH_VALUE for the divider. The higher the define, the lower the chance for detection to happen
-	SUBMARINE_REVEAL_DETECTION_MULTIPLIER							= 0.075,		-- Used in the reworked formula, multiplies the average submarine detection. The higher the define, the higher chance for detection to happen
+	SUBMARINE_REVEAL_DETECTION_MULTIPLIER							= 0.9,		-- Used in the reworked formula, multiplies the average submarine detection. The higher the define, the higher chance for detection to happen
 	SUBMARINE_REVEAL_TORPEDO_FIRING_DETECTION_MULTIPLIER			= 1,		-- used in the reworked formula when firing the torpedos to see whether it has been detected. This define is applied as multiplier to the numerator (avg. sub detection * SUBMARINE_REVEAL_DETECTION_MULTIPLIER * SUBMARINE_REVEAL_TORPEDO_FIRING_DETECTION_MULTIPLIER). define = 1, no difference, define < 0, no chance of detecting, 0 < define < 1, lowers chance of detecting comparing to passive reveal, 1 < define, increases chance to be revealed.
 
 	MIN_MINE_CAPABLE_RATIO_FOR_ROLE_ASSIGNMENT = 0.6,					-- minimum ratio of mine laying/sweeping capable ships needed for a taskforce to get that icon assigned
@@ -2682,7 +2682,7 @@ NNavy = {
 	SPEED_TO_ESCAPE_SPEED = 0.5,									-- ratio to converstion from ship speed to escape speed (divided by hundred)
 	ESCAPE_SPEED_PER_COMBAT_DAY = 0.01,								-- daily increase in escape speed during combat duration
 	MAX_ESCAPE_SPEED_FROM_COMBAT_DURATION = 0.1,					-- max escape speed that will be gained from combat duration
-	ESCAPE_SPEED_SUB_BASE = -0.2,									-- subs get faster escape speed. gets replaced by hidden version below if hidden
+	ESCAPE_SPEED_SUB_BASE = 0.1,									-- subs get faster escape speed. gets replaced by hidden version below if hidden
 	ESCAPE_SPEED_HIDDEN_SUB = 0.2,									-- hidden subs get faster escape speed
 
 	SUB_DETECTION_CHANCE_BASE = 5,									-- to start spotting a submarine, a dice is rolled and checked if it succeeds this percentage. if not, that enemy sub force won't be spotted on this tick
@@ -2780,7 +2780,7 @@ NNavy = {
 	},
 	
 	DEPTH_CHARGES_HIT_CHANCE_MULT 									= 1.5, 		-- multiplies hit chance of small guns
-	DEPTH_CHARGES_DAMAGE_MULT 										= 0.7, 		-- multiplies damage of depth charges
+	DEPTH_CHARGES_DAMAGE_MULT 										= 0.5, 		-- multiplies damage of depth charges
 	DEPTH_CHARGES_HIT_PROFILE 										= 40.0,	-- hit profile for depth charges	
 	
 	CONVOY_HIT_PROFILE												= 160.0,  	-- convoys has this contant hit profile
@@ -2810,7 +2810,7 @@ NNavy = {
 	MISSION_EFFICIENCY_POW_FACTOR									= 1.7,		-- mission efficiencies will be powered up by this to further penalize low efficiencies
 	
 	NAVAL_COMBAT_SUB_DETECTION_FACTOR                               = 2,      -- balance value for sub detection in combat by ships
-	SUBMARINE_HIDE_TIMEOUT 											= 16,		-- Amount of in-game-hours that takes the submarine (with position unrevealed), to hide.
+	SUBMARINE_HIDE_TIMEOUT 											= 48,		-- Amount of in-game-hours that takes the submarine (with position unrevealed), to hide.
 	SUBMARINE_REVEALED_TIMEOUT 										= 16,		-- Amount of in-game-hours that makes the submarine visible if it is on the defender side.
 	SUBMARINE_REVEAL_BASE_CHANCE 									= 11,		-- Base factor for submarine detection. It's modified by the difference of a spotter's submarines detection vs submarine visibility. Use this variable for game balancing. setting this too low will cause bad spotting issues.
 	SUBMARINE_REVEAL_POW 											= 7.5,		-- A scaling factor that is applied to the reveal chance in order to make large differences in detection vs visibility more pronounced
@@ -2854,18 +2854,18 @@ NNavy = {
 	WARSCORE_GAIN_FOR_SUNK_SHIP_PRODUCTION_COST_FACTOR = 0.0004,				-- sunk ships will give enemy war score relative to cost of a ship that has been sunk
 
 	-- those two work together in the formula f(x) = Y(x/(x+X)) where Y is MAX and X is SLOPE
-	NAVAL_COMBAT_AIR_SUB_DETECTION_MAX = 10.0,
-	NAVAL_COMBAT_AIR_SUB_DETECTION_SLOPE = 10.0,						-- lower means sharper curve (ramps up very fast, then flatten out very fast). Must be >0
+	NAVAL_COMBAT_AIR_SUB_DETECTION_MAX = 30.0,
+	NAVAL_COMBAT_AIR_SUB_DETECTION_SLOPE = 100.0,						-- lower means sharper curve (ramps up very fast, then flatten out very fast). Must be >0
 
-	NAVAL_COMBAT_AIR_SUB_DETECTION_EXTERNAL_FACTOR = 100.0,					-- Factor applied to the stats of external air planes
-	NAVAL_COMBAT_AIR_SUB_DETECTION_INTERNAL_EFFICIENCY_FACTOR = 1,			-- Factor of Carrier's sortie efficiency on the stats bellow
-	NAVAL_COMBAT_AIR_AGILITY_TO_SUB_DETECTION = 0.2,					-- Factor to apply to the agility of air planes active in a naval combat to deduce their contibution to sub detection
+	NAVAL_COMBAT_AIR_SUB_DETECTION_EXTERNAL_FACTOR = 0.0,					-- Factor applied to the stats of external air planes
+	NAVAL_COMBAT_AIR_SUB_DETECTION_INTERNAL_EFFICIENCY_FACTOR = 10,			-- Factor of Carrier's sortie efficiency on the stats bellow
+	NAVAL_COMBAT_AIR_AGILITY_TO_SUB_DETECTION = 0,					-- Factor to apply to the agility of air planes active in a naval combat to deduce their contibution to sub detection
 	NAVAL_COMBAT_AIR_STRIKE_ATTACK_TO_SUB_DETECTION = 0,					-- Same, but for strike attack (aka naval attack)
 	NAVAL_COMBAT_AIR_STRIKE_TARGETING_TO_SUB_DETECTION = 0,				-- Same, but for strike targeting (aka naval targeting)
-	NAVAL_COMBAT_AIR_MAX_SPEED_TO_SUB_DETECTION = 0.1,					-- Same, but for Max Speed
-	NAVAL_COMBAT_AIR_PLANE_COUNT_TO_SUB_DETECTION = 0.15,					-- Factor applied to the number of active plane in a naval combat to deduce their contribution to sub detection
-	NAVAL_COMBAT_AIR_SUB_DETECTION_DECAY_RATE = 0,					-- Factor to decay the value of sub detection contributed by planes on the last hour. Note: the maximum value between the decayed value and the newly computed one is taken into account. A decay rate of 1 means that nothing is carried over, the previous value is zerod out. A decay rate of 0 means that the previous value is carried over as is.
-	NAVAL_COMBAT_AIR_SUB_DETECTION_FACTOR = 0.035,				--# 0.035		-- A global factor that applies after all others, right before the sub detection contributed by plane is added to the global sub detection of a combatant
+	NAVAL_COMBAT_AIR_MAX_SPEED_TO_SUB_DETECTION = 0,					-- Same, but for Max Speed
+	NAVAL_COMBAT_AIR_PLANE_COUNT_TO_SUB_DETECTION = 1,					-- Factor applied to the number of active plane in a naval combat to deduce their contribution to sub detection
+	NAVAL_COMBAT_AIR_SUB_DETECTION_DECAY_RATE = 1,					-- Factor to decay the value of sub detection contributed by planes on the last hour. Note: the maximum value between the decayed value and the newly computed one is taken into account. A decay rate of 1 means that nothing is carried over, the previous value is zerod out. A decay rate of 0 means that the previous value is carried over as is.
+	NAVAL_COMBAT_AIR_SUB_DETECTION_FACTOR = 1,				--# 0.035		-- A global factor that applies after all others, right before the sub detection contributed by plane is added to the global sub detection of a combatant
 
 	NAVAL_COMBAT_AIR_SUB_TARGET_SCORE = 10,                             -- scoring for target picking for planes inside naval combat, one define per ship typ
 	NAVAL_COMBAT_AIR_CAPITAL_TARGET_SCORE = 200,
