@@ -1,0 +1,737 @@
+### Skoda Bloc joint branch, shared by Slovakia, Hungary, Romania and Bulgaria.
+# Hooked into each tree via:  shared_focus = SKODA_the_skoda_bloc
+# Generated; the source script lives outside the mod. Edit carefully, it is plain script.
+#
+# A race for Skoda's order book. Any bloc country can take a focus; like the Commonwealth joint branch it then
+# completes for the bloc members in the taker's faction, so each focus (and the other half of an either/or pick)
+# can only be taken once.
+# - Race focuses: only the taker gets the reward.
+# - Bloc-wide focuses: everyone gets the reward.
+# - Sacrifice focuses: the taker pays a price, the partners benefit.
+# Every taker earns Skoda shares (country variable SKODA_shares). When Arsenal of the Danube completes,
+# every member gets the efficiency cap and the biggest shareholder becomes Chairman of the Skoda Board.
+#
+# Layout (relative to the root):
+#                              The Skoda Bloc (0,0)
+#   LT vz.35 (-5,1) | T-21 (-3,1)    Field guns (-1,1) | AT/AA (1,1)    Danube (3,1) | Dubnica (5,1)
+#        Common Chassis (-4,2)           Gun Works (0,2)              Pool the Order Book (4,2)
+#                          Seat on the Board (0,3)
+#                        Arsenal of the Danube (0,4)
+
+joint_focus = {
+	id = SKODA_the_skoda_bloc
+	icon = GFX_goal_czech_deal
+
+
+	x = 0
+	y = 0
+
+	# Each tree: placed in the empty space right of the existing tree.
+	offset = {
+		x = 18
+		y = 0
+		trigger = { tag = SLO has_focus_tree = slovakian_focus }
+	}
+	offset = {
+		x = 31
+		y = 0
+		trigger = { tag = SLO NOT = { has_focus_tree = slovakian_focus } }
+	}
+	offset = {
+		x = 74
+		y = 0
+		trigger = { tag = HUN }
+	}
+	offset = {
+		x = 52
+		y = 0
+		trigger = { tag = ROM }
+	}
+	offset = {
+		x = 53
+		y = 0
+		trigger = { tag = BUL }
+	}
+
+	cost = 5
+
+	allow_branch = { SKODA_bloc_country = yes }
+
+	# Only checked when starting: whoever started first keeps going.
+	cancel_if_invalid = no
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	# Locked for the whole bloc once any other bloc country is working on it or has finished it (no tooltip).
+	available = {
+		hidden_trigger = {
+			NOT = {
+				any_other_country = {
+					SKODA_bloc_country = yes
+					OR = {
+						has_completed_focus = SKODA_the_skoda_bloc
+						focus_progress = { focus = SKODA_the_skoda_bloc progress > 0 }
+					}
+				}
+			}
+		}
+	}
+
+	completion_reward_joint_originator = {
+		custom_effect_tooltip = SKODA_gain_shares_1_tt
+		add_to_variable = { SKODA_shares = 1 }
+		add_political_power = 50
+	}
+
+	completion_reward_joint_member = {
+		add_political_power = 25
+	}
+}
+
+joint_focus = {
+	id = SKODA_lt35_licences
+	icon = GFX_focus_PER_czech_tanks
+
+	prerequisite = { focus = SKODA_the_skoda_bloc }
+	mutually_exclusive = { focus = SKODA_t21_licences }
+
+	relative_position_id = SKODA_the_skoda_bloc
+	x = -5
+	y = 1
+
+	cost = 5
+
+	allow_branch = { SKODA_bloc_country = yes }
+
+	# Only checked when starting: whoever started first keeps going.
+	cancel_if_invalid = no
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	# Locked for the whole bloc once any other bloc country is working on it or has finished it (no tooltip).
+	available = {
+		hidden_trigger = {
+			NOT = {
+				any_other_country = {
+					SKODA_bloc_country = yes
+					OR = {
+						has_completed_focus = SKODA_lt35_licences
+						focus_progress = { focus = SKODA_lt35_licences progress > 0 }
+					}
+				}
+			}
+		}
+	}
+
+	completion_reward_joint_originator = {
+		custom_effect_tooltip = SKODA_gain_shares_1_tt
+		add_to_variable = { SKODA_shares = 1 }
+		add_ideas = SKODA_light_tank_licences
+		add_tech_bonus = {
+			name = SKODA_lt35_licences
+			bonus = 0.5
+			uses = 1
+			category = cat_light_armor
+		}
+	}
+
+	completion_reward_joint_member = { }
+}
+
+joint_focus = {
+	id = SKODA_t21_licences
+	icon = GFX_goal_HUN_tanks
+
+	prerequisite = { focus = SKODA_the_skoda_bloc }
+	mutually_exclusive = { focus = SKODA_lt35_licences }
+
+	relative_position_id = SKODA_the_skoda_bloc
+	x = -3
+	y = 1
+
+	cost = 5
+
+	allow_branch = { SKODA_bloc_country = yes }
+
+	# Only checked when starting: whoever started first keeps going.
+	cancel_if_invalid = no
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	# Locked for the whole bloc once any other bloc country is working on it or has finished it (no tooltip).
+	available = {
+		hidden_trigger = {
+			NOT = {
+				any_other_country = {
+					SKODA_bloc_country = yes
+					OR = {
+						has_completed_focus = SKODA_t21_licences
+						focus_progress = { focus = SKODA_t21_licences progress > 0 }
+					}
+				}
+			}
+		}
+	}
+
+	completion_reward_joint_originator = {
+		custom_effect_tooltip = SKODA_gain_shares_1_tt
+		add_to_variable = { SKODA_shares = 1 }
+		add_ideas = SKODA_medium_tank_licences
+		add_tech_bonus = {
+			name = SKODA_t21_licences
+			bonus = 0.5
+			uses = 1
+			category = cat_medium_armor
+		}
+	}
+
+	completion_reward_joint_member = { }
+}
+
+joint_focus = {
+	id = SKODA_common_chassis_standard
+	icon = GFX_focus_ROM_domestic_tank_designs
+
+	prerequisite = { focus = SKODA_lt35_licences focus = SKODA_t21_licences }
+
+	relative_position_id = SKODA_the_skoda_bloc
+	x = -4
+	y = 2
+
+	cost = 5
+
+	allow_branch = { SKODA_bloc_country = yes }
+
+	# Only checked when starting: whoever started first keeps going.
+	cancel_if_invalid = no
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	# Locked for the whole bloc once any other bloc country is working on it or has finished it (no tooltip).
+	available = {
+		hidden_trigger = {
+			NOT = {
+				any_other_country = {
+					SKODA_bloc_country = yes
+					OR = {
+						has_completed_focus = SKODA_common_chassis_standard
+						focus_progress = { focus = SKODA_common_chassis_standard progress > 0 }
+					}
+				}
+			}
+		}
+	}
+
+	completion_reward_joint_originator = {
+		custom_effect_tooltip = SKODA_gain_shares_1_tt
+		add_to_variable = { SKODA_shares = 1 }
+		add_tech_bonus = {
+			name = SKODA_common_chassis_standard
+			bonus = 0.75
+			uses = 1
+			category = cat_light_armor
+			category = cat_medium_armor
+		}
+	}
+
+	completion_reward_joint_member = {
+		add_tech_bonus = {
+			name = SKODA_common_chassis_standard
+			bonus = 0.75
+			uses = 1
+			category = cat_light_armor
+			category = cat_medium_armor
+		}
+	}
+}
+
+joint_focus = {
+	id = SKODA_field_gun_contracts
+	icon = GFX_focus_RAJ_mountain_guns
+
+	prerequisite = { focus = SKODA_the_skoda_bloc }
+	mutually_exclusive = { focus = SKODA_at_aa_contracts }
+
+	relative_position_id = SKODA_the_skoda_bloc
+	x = -1
+	y = 1
+
+	cost = 5
+
+	allow_branch = { SKODA_bloc_country = yes }
+
+	# Only checked when starting: whoever started first keeps going.
+	cancel_if_invalid = no
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	# Locked for the whole bloc once any other bloc country is working on it or has finished it (no tooltip).
+	available = {
+		hidden_trigger = {
+			NOT = {
+				any_other_country = {
+					SKODA_bloc_country = yes
+					OR = {
+						has_completed_focus = SKODA_field_gun_contracts
+						focus_progress = { focus = SKODA_field_gun_contracts progress > 0 }
+					}
+				}
+			}
+		}
+	}
+
+	completion_reward_joint_originator = {
+		custom_effect_tooltip = SKODA_gain_shares_1_tt
+		add_to_variable = { SKODA_shares = 1 }
+		add_ideas = SKODA_field_gun_contracts_idea
+		add_tech_bonus = {
+			name = SKODA_field_gun_contracts
+			bonus = 0.5
+			uses = 1
+			category = cat_artillery
+		}
+	}
+
+	completion_reward_joint_member = { }
+}
+
+joint_focus = {
+	id = SKODA_at_aa_contracts
+	icon = GFX_goal_aa_and_at
+
+	prerequisite = { focus = SKODA_the_skoda_bloc }
+	mutually_exclusive = { focus = SKODA_field_gun_contracts }
+
+	relative_position_id = SKODA_the_skoda_bloc
+	x = 1
+	y = 1
+
+	cost = 5
+
+	allow_branch = { SKODA_bloc_country = yes }
+
+	# Only checked when starting: whoever started first keeps going.
+	cancel_if_invalid = no
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	# Locked for the whole bloc once any other bloc country is working on it or has finished it (no tooltip).
+	available = {
+		hidden_trigger = {
+			NOT = {
+				any_other_country = {
+					SKODA_bloc_country = yes
+					OR = {
+						has_completed_focus = SKODA_at_aa_contracts
+						focus_progress = { focus = SKODA_at_aa_contracts progress > 0 }
+					}
+				}
+			}
+		}
+	}
+
+	completion_reward_joint_originator = {
+		custom_effect_tooltip = SKODA_gain_shares_1_tt
+		add_to_variable = { SKODA_shares = 1 }
+		add_ideas = SKODA_at_aa_contracts_idea
+		add_tech_bonus = {
+			name = SKODA_at_aa_contracts
+			bonus = 0.75
+			uses = 1
+			category = cat_anti_tank
+		}
+	}
+
+	completion_reward_joint_member = { }
+}
+
+joint_focus = {
+	id = SKODA_pilsen_heavy_artillery
+	icon = GFX_focus_CZE_skoda_menace
+
+	prerequisite = { focus = SKODA_field_gun_contracts focus = SKODA_at_aa_contracts }
+
+	relative_position_id = SKODA_the_skoda_bloc
+	x = 0
+	y = 2
+
+	cost = 5
+
+	allow_branch = { SKODA_bloc_country = yes }
+
+	# Only checked when starting: whoever started first keeps going.
+	cancel_if_invalid = no
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	# Locked for the whole bloc once any other bloc country is working on it or has finished it (no tooltip).
+	available = {
+		hidden_trigger = {
+			NOT = {
+				any_other_country = {
+					SKODA_bloc_country = yes
+					OR = {
+						has_completed_focus = SKODA_pilsen_heavy_artillery
+						focus_progress = { focus = SKODA_pilsen_heavy_artillery progress > 0 }
+					}
+				}
+			}
+		}
+	}
+
+	completion_reward_joint_originator = {
+		custom_effect_tooltip = SKODA_gain_shares_1_tt
+		add_to_variable = { SKODA_shares = 1 }
+		random_owned_controlled_state = {
+			limit = { is_core_of = ROOT }
+			prioritize = { 9 }
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+		}
+	}
+
+	completion_reward_joint_member = { }
+}
+
+joint_focus = {
+	id = SKODA_danube_arms_contracts
+	icon = GFX_focus_INS_military_equipment_contracts
+
+	prerequisite = { focus = SKODA_the_skoda_bloc }
+	mutually_exclusive = { focus = SKODA_dubnica_relocation }
+
+	relative_position_id = SKODA_the_skoda_bloc
+	x = 3
+	y = 1
+
+	cost = 5
+
+	allow_branch = { SKODA_bloc_country = yes }
+
+	# Only checked when starting: whoever started first keeps going.
+	cancel_if_invalid = no
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	# Locked for the whole bloc once any other bloc country is working on it or has finished it (no tooltip).
+	available = {
+		hidden_trigger = {
+			NOT = {
+				any_other_country = {
+					SKODA_bloc_country = yes
+					OR = {
+						has_completed_focus = SKODA_danube_arms_contracts
+						focus_progress = { focus = SKODA_danube_arms_contracts progress > 0 }
+					}
+				}
+			}
+		}
+	}
+
+	completion_reward_joint_originator = {
+		custom_effect_tooltip = SKODA_gain_shares_1_tt
+		add_to_variable = { SKODA_shares = 1 }
+		add_offsite_building = { type = industrial_complex level = 2 }
+	}
+
+	completion_reward_joint_member = { }
+}
+
+joint_focus = {
+	id = SKODA_dubnica_relocation
+	icon = GFX_focus_CZE_continue_industrial_relocation_schemes
+
+	prerequisite = { focus = SKODA_the_skoda_bloc }
+	mutually_exclusive = { focus = SKODA_danube_arms_contracts }
+
+	relative_position_id = SKODA_the_skoda_bloc
+	x = 5
+	y = 1
+
+	cost = 5
+
+	allow_branch = { SKODA_bloc_country = yes }
+
+	# Only checked when starting: whoever started first keeps going.
+	cancel_if_invalid = no
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	# Locked for the whole bloc once any other bloc country is working on it or has finished it (no tooltip).
+	available = {
+		hidden_trigger = {
+			NOT = {
+				any_other_country = {
+					SKODA_bloc_country = yes
+					OR = {
+						has_completed_focus = SKODA_dubnica_relocation
+						focus_progress = { focus = SKODA_dubnica_relocation progress > 0 }
+					}
+				}
+			}
+		}
+	}
+
+	completion_reward_joint_originator = {
+		custom_effect_tooltip = SKODA_gain_shares_1_tt
+		add_to_variable = { SKODA_shares = 1 }
+		random_owned_controlled_state = {
+			limit = { is_core_of = ROOT }
+			prioritize = { 809 70 }
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = arms_factory
+				level = 2
+				instant_build = yes
+			}
+		}
+		add_stability = -0.03
+	}
+
+	completion_reward_joint_member = { }
+}
+
+joint_focus = {
+	id = SKODA_pool_the_order_book
+	icon = GFX_focus_ROM_strengthen_oil_exploitation_cooperation
+
+	prerequisite = { focus = SKODA_danube_arms_contracts focus = SKODA_dubnica_relocation }
+
+	relative_position_id = SKODA_the_skoda_bloc
+	x = 4
+	y = 2
+
+	cost = 5
+
+	allow_branch = { SKODA_bloc_country = yes }
+
+	# Only checked when starting: whoever started first keeps going.
+	cancel_if_invalid = no
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	# Locked for the whole bloc once any other bloc country is working on it or has finished it (no tooltip).
+	available = {
+		hidden_trigger = {
+			NOT = {
+				any_other_country = {
+					SKODA_bloc_country = yes
+					OR = {
+						has_completed_focus = SKODA_pool_the_order_book
+						focus_progress = { focus = SKODA_pool_the_order_book progress > 0 }
+					}
+				}
+			}
+		}
+	}
+
+	completion_reward_joint_originator = {
+		custom_effect_tooltip = SKODA_gain_shares_2_tt
+		add_to_variable = { SKODA_shares = 2 }
+		# the taker hands two of its own factories' output to the partners
+		random_owned_controlled_state = {
+			limit = { is_core_of = ROOT industrial_complex > 0 }
+			save_event_target_as = SKODA_pool_state_1
+			remove_building = { type = industrial_complex level = 1 }
+		}
+		random_owned_controlled_state = {
+			limit = { is_core_of = ROOT industrial_complex > 0 NOT = { state = event_target:SKODA_pool_state_1 } }
+			remove_building = { type = industrial_complex level = 1 }
+		}
+	}
+
+	completion_reward_joint_member = {
+		add_offsite_building = { type = industrial_complex level = 1 }
+	}
+}
+
+joint_focus = {
+	id = SKODA_seat_on_the_board
+	icon = GFX_focus_RAJ_issue_bonds_on_the_stock_market
+
+	prerequisite = { focus = SKODA_common_chassis_standard }
+	prerequisite = { focus = SKODA_pilsen_heavy_artillery }
+	prerequisite = { focus = SKODA_pool_the_order_book }
+
+	relative_position_id = SKODA_the_skoda_bloc
+	x = 0
+	y = 3
+
+	cost = 5
+
+	allow_branch = { SKODA_bloc_country = yes }
+
+	# Only checked when starting: whoever started first keeps going.
+	cancel_if_invalid = no
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	# Locked for the whole bloc once any other bloc country is working on it or has finished it (no tooltip).
+	available = {
+		hidden_trigger = {
+			NOT = {
+				any_other_country = {
+					SKODA_bloc_country = yes
+					OR = {
+						has_completed_focus = SKODA_seat_on_the_board
+						focus_progress = { focus = SKODA_seat_on_the_board progress > 0 }
+					}
+				}
+			}
+		}
+	}
+
+	completion_reward_joint_originator = {
+		custom_effect_tooltip = SKODA_gain_shares_2_tt
+		add_to_variable = { SKODA_shares = 2 }
+		add_political_power = -100
+	}
+
+	completion_reward_joint_member = { }
+}
+
+shared_focus = {
+	id = SKODA_arsenal_of_the_danube
+	icon = GFX_focus_generic_military_industry
+
+	prerequisite = { focus = SKODA_seat_on_the_board }
+
+	relative_position_id = SKODA_the_skoda_bloc
+	x = 0
+	y = 4
+
+	cost = 5
+
+	allow_branch = { SKODA_bloc_country = yes }
+
+	# Only checked when starting: whoever started first keeps going.
+	cancel_if_invalid = no
+	continue_if_invalid = no
+	available_if_capitulated = yes
+
+	ai_will_do = { factor = 1 }
+	# Locked for the whole bloc once any other bloc country is working on it or has finished it (no tooltip).
+	available = {
+		hidden_trigger = {
+			NOT = {
+				any_other_country = {
+					SKODA_bloc_country = yes
+					OR = {
+						has_completed_focus = SKODA_arsenal_of_the_danube
+						focus_progress = { focus = SKODA_arsenal_of_the_danube progress > 0 }
+					}
+				}
+			}
+		}
+	}
+
+	completion_reward = {
+		custom_effect_tooltip = SKODA_chairman_tt
+		custom_effect_tooltip = SKODA_arsenal_others_tt
+		hidden_effect = {
+		# completion_reward may run once per participant: only the first run hands out the ideas
+		if = {
+			limit = { NOT = { has_global_flag = SKODA_arsenal_done } }
+			set_global_flag = SKODA_arsenal_done
+			# Find the biggest shareholder (ties go to the earlier country in SLO, HUN, ROM, BUL).
+			set_variable = { global.SKODA_shares_SLO = -1 }
+			if = {
+				limit = { country_exists = SLO }
+				SLO = { set_variable = { global.SKODA_shares_SLO = SKODA_shares } }
+			}
+			set_variable = { global.SKODA_shares_HUN = -1 }
+			if = {
+				limit = { country_exists = HUN }
+				HUN = { set_variable = { global.SKODA_shares_HUN = SKODA_shares } }
+			}
+			set_variable = { global.SKODA_shares_ROM = -1 }
+			if = {
+				limit = { country_exists = ROM }
+				ROM = { set_variable = { global.SKODA_shares_ROM = SKODA_shares } }
+			}
+			set_variable = { global.SKODA_shares_BUL = -1 }
+			if = {
+				limit = { country_exists = BUL }
+				BUL = { set_variable = { global.SKODA_shares_BUL = SKODA_shares } }
+			}
+			if = {
+				limit = {
+					check_variable = { global.SKODA_shares_SLO > -1 }
+					NOT = { check_variable = { global.SKODA_shares_HUN > global.SKODA_shares_SLO } }
+					NOT = { check_variable = { global.SKODA_shares_ROM > global.SKODA_shares_SLO } }
+					NOT = { check_variable = { global.SKODA_shares_BUL > global.SKODA_shares_SLO } }
+				}
+				SLO = {
+					add_ideas = SKODA_chairman_of_the_board
+					set_country_flag = SKODA_chairman
+				}
+				set_global_flag = SKODA_chairman_SLO
+			}
+			else_if = {
+				limit = {
+					check_variable = { global.SKODA_shares_HUN > -1 }
+					NOT = { check_variable = { global.SKODA_shares_ROM > global.SKODA_shares_HUN } }
+					NOT = { check_variable = { global.SKODA_shares_BUL > global.SKODA_shares_HUN } }
+					check_variable = { global.SKODA_shares_HUN > global.SKODA_shares_SLO }
+				}
+				HUN = {
+					add_ideas = SKODA_chairman_of_the_board
+					set_country_flag = SKODA_chairman
+				}
+				set_global_flag = SKODA_chairman_HUN
+			}
+			else_if = {
+				limit = {
+					check_variable = { global.SKODA_shares_ROM > -1 }
+					NOT = { check_variable = { global.SKODA_shares_BUL > global.SKODA_shares_ROM } }
+					check_variable = { global.SKODA_shares_ROM > global.SKODA_shares_SLO }
+					check_variable = { global.SKODA_shares_ROM > global.SKODA_shares_HUN }
+				}
+				ROM = {
+					add_ideas = SKODA_chairman_of_the_board
+					set_country_flag = SKODA_chairman
+				}
+				set_global_flag = SKODA_chairman_ROM
+			}
+			else_if = {
+				limit = {
+					check_variable = { global.SKODA_shares_BUL > -1 }
+					check_variable = { global.SKODA_shares_BUL > global.SKODA_shares_SLO }
+					check_variable = { global.SKODA_shares_BUL > global.SKODA_shares_HUN }
+					check_variable = { global.SKODA_shares_BUL > global.SKODA_shares_ROM }
+				}
+				BUL = {
+					add_ideas = SKODA_chairman_of_the_board
+					set_country_flag = SKODA_chairman
+				}
+				set_global_flag = SKODA_chairman_BUL
+			}
+			# every other bloc country holding at least one share gets Arsenal, whatever faction it is in
+			every_country = {
+				limit = {
+					SKODA_bloc_country = yes
+					check_variable = { SKODA_shares > 0 }
+					NOT = { has_country_flag = SKODA_chairman }
+				}
+				add_ideas = SKODA_arsenal_of_the_danube_idea
+			}
+		}
+		}
+	}
+}
+
