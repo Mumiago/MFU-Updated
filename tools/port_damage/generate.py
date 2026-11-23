@@ -11,7 +11,8 @@ total level, but only if the port is at least MIN_LEVEL. Script cannot read a pr
 building's healthy level, so each port keeps a note of the capture damage it carries
 (global.MFU_pd_note_<province>, set on day global.MFU_pd_noteday_<province>), assumed to
 repair 1 level per REPAIR_DAYS_PER_LEVEL. A capture never takes the carried damage above
-MAX_DAMAGE_FRACTION of the total level. Captures caused by
+MAX_DAMAGE_FRACTION of the total level. SPECIAL_PORTS overrides this rule for single ports by
+capturing side (Port Sudan, Alexandria, Port Said, 9957, 4068). Captures caused by
 capitulation flips or ownership transfers (treaties, annexation, civil-war splits, releases)
 are skipped through short-lived flags: a capitulated country's ports are exempt both as old
 controller and as state owner. Scripted controller flips wrap the flip in
@@ -43,9 +44,23 @@ CHUNKS = [8, 4, 2, 1, 0.5, 0.25, 0.1, 0.1, 0.05, 0.02, 0.02, 0.01]
 AXIS = "OR = { tag = GER tag = ITA tag = JAP is_in_faction_with = GER is_in_faction_with = ITA is_in_faction_with = JAP }"
 ALLIES = "OR = { tag = ENG tag = USA is_in_faction_with = ENG is_in_faction_with = USA }"
 
-# province: [(old controller trigger, new controller trigger, "full" | "none"), ...]; other captures use the normal rule
+AXIS_HOLDS_CAIRO_OR_ASWAN = (
+    f"any_country = {{ {AXIS} OR = {{ controls_province = 7011 controls_province = 11999 }} }}"
+)
+
+# province: [(old controller trigger or None for any, new controller trigger, "full" | "none" | fraction | ("levels", n)
+#             [, extra trigger in state scope]), ...]
+# A fraction (0.6) is the normal rule with that fraction as both the hit and the cap. ("levels", 3) is the same with
+# a flat number of levels, read at any port level (the normal rule only reads ports of MIN_LEVEL or more).
+# The first matching rule wins, so list a "none" rule first when it must beat an overlapping side test.
+# Other captures use the normal rule, except for ports in NO_NORMAL_RULE, which take no other damage.
+NO_NORMAL_RULE = {12725}
 SPECIAL_PORTS = {
-    12725: [(ALLIES, AXIS, "full"), (AXIS, ALLIES, "none")],
+    12725: [(ALLIES, AXIS, "full", AXIS_HOLDS_CAIRO_OR_ASWAN)],  # Port Sudan
+    4076: [(None, ALLIES, "none"), (None, AXIS, 0.6)],  # Alexandria
+    10869: [(None, ALLIES, "none"), (None, AXIS, 0.6)],  # Port Said
+    9957: [(None, ALLIES, "none"), (None, AXIS, ("levels", 3))],  # state 824, level 4
+    4068: [(None, ALLIES, "none"), (None, AXIS, ("levels", 3))],  # state 457, level 4
 }
 
 
@@ -84,9 +99,9 @@ def num(x):
     return f"{x:g}"
 
 
-def level_ladder(top, trigger):
+def level_ladder(top, trigger, low=None):
     lines = []
-    for i, level in enumerate(range(top, MIN_LEVEL - 1, -1)):
+    for i, level in enumerate(range(top, (low or MIN_LEVEL) - 1, -1)):
         keyword = "if" if i == 0 else "else_if"
         lines.append(
             f"{keyword} = {{ limit = {{ {trigger(level - 1)} }} "
@@ -114,8 +129,17 @@ def port_block(prov, top):
     rules = SPECIAL_PORTS.get(prov, [])
     if not rules:
         return L + normal_block(prov) + ["clear_variable = MFU_pd_prov"]
-    for i, (old, new, action) in enumerate(rules):
+    for i, (old, new, action, *extra) in enumerate(rules):
         keyword = "if" if i == 0 else "else_if"
+        clauses = [f"var:global.MFU_pd_old = {{ {old} }}"] if old else []
+        clauses.append(f"var:global.MFU_pc_{prov} = {{ {new} }}")
+        clauses += extra
+        limit = " ".join(clauses)
+        if isinstance(action, (float, tuple)):
+            L += [f"{keyword} = {{", f"\tlimit = {{ {limit} }}"]
+            L += ["\t" + line for line in rule_block(prov, action)]
+            L.append("}")
+            continue
         body = []
         if action == "full":
             note, day = note_vars(prov)
@@ -126,30 +150,39 @@ def port_block(prov, top):
             )
         if DEBUG_LOG:
             body.append(f'log = "MFU port damage: port {prov} in [THIS.GetName], special rule {action}, level [?MFU_pd_level]"')
-        L.append(
-            f"{keyword} = {{ limit = {{ var:global.MFU_pd_old = {{ {old} }} var:global.MFU_pc_{prov} = {{ {new} }} }} "
-            f"{' '.join(body)} }}"
-        )
-    L.append("else = {")
-    L += ["\t" + line for line in normal_block(prov)]
-    L += ["}", "clear_variable = MFU_pd_prov"]
+        L.append(f"{keyword} = {{ limit = {{ {limit} }} {' '.join(body)} }}")
+    if prov not in NO_NORMAL_RULE:
+        L.append("else = {")
+        L += ["\t" + line for line in normal_block(prov)]
+        L.append("}")
+    L.append("clear_variable = MFU_pd_prov")
     return L
 
 
-def level_block(prov, top):
+def level_block(prov, top, low=None):
     L = ["set_temp_variable = { MFU_pd_level = 0 }"]
     L += level_ladder(
         top,
         lambda k: f"any_province_building_level = {{ province = {{ id = {prov} }} building = naval_base level > {k} }}",
+        low,
     )
     return L
+
+
+def rule_block(prov, action):
+    if isinstance(action, float):
+        return normal_block(prov, action)
+    levels = action[1]
+    return level_block(prov, levels, 1) + normal_block(prov, 1.0)
 
 
 def note_vars(prov):
     return f"global.MFU_pd_note_{prov}", f"global.MFU_pd_noteday_{prov}"
 
 
-def normal_block(prov):
+def normal_block(prov, fraction=None):
+    hit = fraction or DAMAGE_FRACTION
+    cap = fraction or MAX_DAMAGE_FRACTION
     note, day = note_vars(prov)
     L = [
         "set_temp_variable = { MFU_pd_carry = 0 }",
@@ -173,9 +206,9 @@ def normal_block(prov):
         "if = {",
         "\tlimit = { check_variable = { MFU_pd_level > 0 } }",
         "\tset_temp_variable = { MFU_pd_max = MFU_pd_level }",
-        f"\tmultiply_temp_variable = {{ MFU_pd_max = {num(DAMAGE_FRACTION)} }}",
+        f"\tmultiply_temp_variable = {{ MFU_pd_max = {num(hit)} }}",
         "\tset_temp_variable = { MFU_pd_amount = MFU_pd_level }",
-        f"\tmultiply_temp_variable = {{ MFU_pd_amount = {num(MAX_DAMAGE_FRACTION)} }}",
+        f"\tmultiply_temp_variable = {{ MFU_pd_amount = {num(cap)} }}",
         "\tsubtract_from_temp_variable = { MFU_pd_amount = MFU_pd_carry }",
         "\tclamp_temp_variable = { var = MFU_pd_amount min = 0 max = MFU_pd_max }",
         "}",

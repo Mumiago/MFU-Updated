@@ -15183,40 +15183,81 @@ MFU_port_poll_446 = {
 				else_if = { limit = { any_province_building_level = { province = { id = 10869 } building = naval_base level > 7 } } set_temp_variable = { MFU_pd_level = 8 } }
 				else_if = { limit = { any_province_building_level = { province = { id = 10869 } building = naval_base level > 6 } } set_temp_variable = { MFU_pd_level = 7 } }
 				else_if = { limit = { any_province_building_level = { province = { id = 10869 } building = naval_base level > 5 } } set_temp_variable = { MFU_pd_level = 6 } }
-				set_temp_variable = { MFU_pd_carry = 0 }
-				if = {
-					limit = { has_variable = global.MFU_pd_note_10869 }
-					set_temp_variable = { MFU_pd_age = global.num_days }
-					subtract_from_temp_variable = { MFU_pd_age = global.MFU_pd_noteday_10869 }
-					divide_temp_variable = { MFU_pd_age = 90 }
-					set_temp_variable = { MFU_pd_carry = global.MFU_pd_note_10869 }
-					subtract_from_temp_variable = { MFU_pd_carry = MFU_pd_age }
-					clamp_temp_variable = { var = MFU_pd_carry min = 0 max = MFU_pd_level }
-				}
+				if = { limit = { var:global.MFU_pc_10869 = { OR = { tag = ENG tag = USA is_in_faction_with = ENG is_in_faction_with = USA } } }  }
 				else_if = {
-					limit = { has_state_flag = MFU_port_hit_10869_1 }
-					set_temp_variable = { MFU_pd_carry = MFU_pd_level }
-					multiply_temp_variable = { MFU_pd_carry = 0.5 }
-					set_variable = { global.MFU_pd_note_10869 = MFU_pd_carry }
-					set_variable = { global.MFU_pd_noteday_10869 = global.num_days }
+					limit = { var:global.MFU_pc_10869 = { OR = { tag = GER tag = ITA tag = JAP is_in_faction_with = GER is_in_faction_with = ITA is_in_faction_with = JAP } } }
+					set_temp_variable = { MFU_pd_carry = 0 }
+					if = {
+						limit = { has_variable = global.MFU_pd_note_10869 }
+						set_temp_variable = { MFU_pd_age = global.num_days }
+						subtract_from_temp_variable = { MFU_pd_age = global.MFU_pd_noteday_10869 }
+						divide_temp_variable = { MFU_pd_age = 90 }
+						set_temp_variable = { MFU_pd_carry = global.MFU_pd_note_10869 }
+						subtract_from_temp_variable = { MFU_pd_carry = MFU_pd_age }
+						clamp_temp_variable = { var = MFU_pd_carry min = 0 max = MFU_pd_level }
+					}
+					else_if = {
+						limit = { has_state_flag = MFU_port_hit_10869_1 }
+						set_temp_variable = { MFU_pd_carry = MFU_pd_level }
+						multiply_temp_variable = { MFU_pd_carry = 0.5 }
+						set_variable = { global.MFU_pd_note_10869 = MFU_pd_carry }
+						set_variable = { global.MFU_pd_noteday_10869 = global.num_days }
+					}
+					set_temp_variable = { MFU_pd_amount = 0 }
+					if = {
+						limit = { check_variable = { MFU_pd_level > 0 } }
+						set_temp_variable = { MFU_pd_max = MFU_pd_level }
+						multiply_temp_variable = { MFU_pd_max = 0.6 }
+						set_temp_variable = { MFU_pd_amount = MFU_pd_level }
+						multiply_temp_variable = { MFU_pd_amount = 0.6 }
+						subtract_from_temp_variable = { MFU_pd_amount = MFU_pd_carry }
+						clamp_temp_variable = { var = MFU_pd_amount min = 0 max = MFU_pd_max }
+					}
+					if = {
+						limit = { check_variable = { MFU_pd_amount > 0.009 } }
+						add_to_temp_variable = { MFU_pd_carry = MFU_pd_amount }
+						set_variable = { global.MFU_pd_note_10869 = MFU_pd_carry }
+						set_variable = { global.MFU_pd_noteday_10869 = global.num_days }
+						MFU_port_damage_apply = yes
+						subtract_from_variable = { global.MFU_pd_note_10869 = MFU_pd_amount }
+					}
 				}
-				set_temp_variable = { MFU_pd_amount = 0 }
-				if = {
-					limit = { check_variable = { MFU_pd_level > 0 } }
-					set_temp_variable = { MFU_pd_max = MFU_pd_level }
-					multiply_temp_variable = { MFU_pd_max = 0.5 }
-					set_temp_variable = { MFU_pd_amount = MFU_pd_level }
-					multiply_temp_variable = { MFU_pd_amount = 0.5 }
-					subtract_from_temp_variable = { MFU_pd_amount = MFU_pd_carry }
-					clamp_temp_variable = { var = MFU_pd_amount min = 0 max = MFU_pd_max }
-				}
-				if = {
-					limit = { check_variable = { MFU_pd_amount > 0.009 } }
-					add_to_temp_variable = { MFU_pd_carry = MFU_pd_amount }
-					set_variable = { global.MFU_pd_note_10869 = MFU_pd_carry }
-					set_variable = { global.MFU_pd_noteday_10869 = global.num_days }
-					MFU_port_damage_apply = yes
-					subtract_from_variable = { global.MFU_pd_note_10869 = MFU_pd_amount }
+				else = {
+					set_temp_variable = { MFU_pd_carry = 0 }
+					if = {
+						limit = { has_variable = global.MFU_pd_note_10869 }
+						set_temp_variable = { MFU_pd_age = global.num_days }
+						subtract_from_temp_variable = { MFU_pd_age = global.MFU_pd_noteday_10869 }
+						divide_temp_variable = { MFU_pd_age = 90 }
+						set_temp_variable = { MFU_pd_carry = global.MFU_pd_note_10869 }
+						subtract_from_temp_variable = { MFU_pd_carry = MFU_pd_age }
+						clamp_temp_variable = { var = MFU_pd_carry min = 0 max = MFU_pd_level }
+					}
+					else_if = {
+						limit = { has_state_flag = MFU_port_hit_10869_1 }
+						set_temp_variable = { MFU_pd_carry = MFU_pd_level }
+						multiply_temp_variable = { MFU_pd_carry = 0.5 }
+						set_variable = { global.MFU_pd_note_10869 = MFU_pd_carry }
+						set_variable = { global.MFU_pd_noteday_10869 = global.num_days }
+					}
+					set_temp_variable = { MFU_pd_amount = 0 }
+					if = {
+						limit = { check_variable = { MFU_pd_level > 0 } }
+						set_temp_variable = { MFU_pd_max = MFU_pd_level }
+						multiply_temp_variable = { MFU_pd_max = 0.5 }
+						set_temp_variable = { MFU_pd_amount = MFU_pd_level }
+						multiply_temp_variable = { MFU_pd_amount = 0.5 }
+						subtract_from_temp_variable = { MFU_pd_amount = MFU_pd_carry }
+						clamp_temp_variable = { var = MFU_pd_amount min = 0 max = MFU_pd_max }
+					}
+					if = {
+						limit = { check_variable = { MFU_pd_amount > 0.009 } }
+						add_to_temp_variable = { MFU_pd_carry = MFU_pd_amount }
+						set_variable = { global.MFU_pd_note_10869 = MFU_pd_carry }
+						set_variable = { global.MFU_pd_noteday_10869 = global.num_days }
+						MFU_port_damage_apply = yes
+						subtract_from_variable = { global.MFU_pd_note_10869 = MFU_pd_amount }
+					}
 				}
 				clear_variable = MFU_pd_prov
 			}
@@ -15310,40 +15351,81 @@ MFU_port_poll_447 = {
 				else_if = { limit = { any_province_building_level = { province = { id = 4076 } building = naval_base level > 7 } } set_temp_variable = { MFU_pd_level = 8 } }
 				else_if = { limit = { any_province_building_level = { province = { id = 4076 } building = naval_base level > 6 } } set_temp_variable = { MFU_pd_level = 7 } }
 				else_if = { limit = { any_province_building_level = { province = { id = 4076 } building = naval_base level > 5 } } set_temp_variable = { MFU_pd_level = 6 } }
-				set_temp_variable = { MFU_pd_carry = 0 }
-				if = {
-					limit = { has_variable = global.MFU_pd_note_4076 }
-					set_temp_variable = { MFU_pd_age = global.num_days }
-					subtract_from_temp_variable = { MFU_pd_age = global.MFU_pd_noteday_4076 }
-					divide_temp_variable = { MFU_pd_age = 90 }
-					set_temp_variable = { MFU_pd_carry = global.MFU_pd_note_4076 }
-					subtract_from_temp_variable = { MFU_pd_carry = MFU_pd_age }
-					clamp_temp_variable = { var = MFU_pd_carry min = 0 max = MFU_pd_level }
-				}
+				if = { limit = { var:global.MFU_pc_4076 = { OR = { tag = ENG tag = USA is_in_faction_with = ENG is_in_faction_with = USA } } }  }
 				else_if = {
-					limit = { has_state_flag = MFU_port_hit_4076_1 }
-					set_temp_variable = { MFU_pd_carry = MFU_pd_level }
-					multiply_temp_variable = { MFU_pd_carry = 0.5 }
-					set_variable = { global.MFU_pd_note_4076 = MFU_pd_carry }
-					set_variable = { global.MFU_pd_noteday_4076 = global.num_days }
+					limit = { var:global.MFU_pc_4076 = { OR = { tag = GER tag = ITA tag = JAP is_in_faction_with = GER is_in_faction_with = ITA is_in_faction_with = JAP } } }
+					set_temp_variable = { MFU_pd_carry = 0 }
+					if = {
+						limit = { has_variable = global.MFU_pd_note_4076 }
+						set_temp_variable = { MFU_pd_age = global.num_days }
+						subtract_from_temp_variable = { MFU_pd_age = global.MFU_pd_noteday_4076 }
+						divide_temp_variable = { MFU_pd_age = 90 }
+						set_temp_variable = { MFU_pd_carry = global.MFU_pd_note_4076 }
+						subtract_from_temp_variable = { MFU_pd_carry = MFU_pd_age }
+						clamp_temp_variable = { var = MFU_pd_carry min = 0 max = MFU_pd_level }
+					}
+					else_if = {
+						limit = { has_state_flag = MFU_port_hit_4076_1 }
+						set_temp_variable = { MFU_pd_carry = MFU_pd_level }
+						multiply_temp_variable = { MFU_pd_carry = 0.5 }
+						set_variable = { global.MFU_pd_note_4076 = MFU_pd_carry }
+						set_variable = { global.MFU_pd_noteday_4076 = global.num_days }
+					}
+					set_temp_variable = { MFU_pd_amount = 0 }
+					if = {
+						limit = { check_variable = { MFU_pd_level > 0 } }
+						set_temp_variable = { MFU_pd_max = MFU_pd_level }
+						multiply_temp_variable = { MFU_pd_max = 0.6 }
+						set_temp_variable = { MFU_pd_amount = MFU_pd_level }
+						multiply_temp_variable = { MFU_pd_amount = 0.6 }
+						subtract_from_temp_variable = { MFU_pd_amount = MFU_pd_carry }
+						clamp_temp_variable = { var = MFU_pd_amount min = 0 max = MFU_pd_max }
+					}
+					if = {
+						limit = { check_variable = { MFU_pd_amount > 0.009 } }
+						add_to_temp_variable = { MFU_pd_carry = MFU_pd_amount }
+						set_variable = { global.MFU_pd_note_4076 = MFU_pd_carry }
+						set_variable = { global.MFU_pd_noteday_4076 = global.num_days }
+						MFU_port_damage_apply = yes
+						subtract_from_variable = { global.MFU_pd_note_4076 = MFU_pd_amount }
+					}
 				}
-				set_temp_variable = { MFU_pd_amount = 0 }
-				if = {
-					limit = { check_variable = { MFU_pd_level > 0 } }
-					set_temp_variable = { MFU_pd_max = MFU_pd_level }
-					multiply_temp_variable = { MFU_pd_max = 0.5 }
-					set_temp_variable = { MFU_pd_amount = MFU_pd_level }
-					multiply_temp_variable = { MFU_pd_amount = 0.5 }
-					subtract_from_temp_variable = { MFU_pd_amount = MFU_pd_carry }
-					clamp_temp_variable = { var = MFU_pd_amount min = 0 max = MFU_pd_max }
-				}
-				if = {
-					limit = { check_variable = { MFU_pd_amount > 0.009 } }
-					add_to_temp_variable = { MFU_pd_carry = MFU_pd_amount }
-					set_variable = { global.MFU_pd_note_4076 = MFU_pd_carry }
-					set_variable = { global.MFU_pd_noteday_4076 = global.num_days }
-					MFU_port_damage_apply = yes
-					subtract_from_variable = { global.MFU_pd_note_4076 = MFU_pd_amount }
+				else = {
+					set_temp_variable = { MFU_pd_carry = 0 }
+					if = {
+						limit = { has_variable = global.MFU_pd_note_4076 }
+						set_temp_variable = { MFU_pd_age = global.num_days }
+						subtract_from_temp_variable = { MFU_pd_age = global.MFU_pd_noteday_4076 }
+						divide_temp_variable = { MFU_pd_age = 90 }
+						set_temp_variable = { MFU_pd_carry = global.MFU_pd_note_4076 }
+						subtract_from_temp_variable = { MFU_pd_carry = MFU_pd_age }
+						clamp_temp_variable = { var = MFU_pd_carry min = 0 max = MFU_pd_level }
+					}
+					else_if = {
+						limit = { has_state_flag = MFU_port_hit_4076_1 }
+						set_temp_variable = { MFU_pd_carry = MFU_pd_level }
+						multiply_temp_variable = { MFU_pd_carry = 0.5 }
+						set_variable = { global.MFU_pd_note_4076 = MFU_pd_carry }
+						set_variable = { global.MFU_pd_noteday_4076 = global.num_days }
+					}
+					set_temp_variable = { MFU_pd_amount = 0 }
+					if = {
+						limit = { check_variable = { MFU_pd_level > 0 } }
+						set_temp_variable = { MFU_pd_max = MFU_pd_level }
+						multiply_temp_variable = { MFU_pd_max = 0.5 }
+						set_temp_variable = { MFU_pd_amount = MFU_pd_level }
+						multiply_temp_variable = { MFU_pd_amount = 0.5 }
+						subtract_from_temp_variable = { MFU_pd_amount = MFU_pd_carry }
+						clamp_temp_variable = { var = MFU_pd_amount min = 0 max = MFU_pd_max }
+					}
+					if = {
+						limit = { check_variable = { MFU_pd_amount > 0.009 } }
+						add_to_temp_variable = { MFU_pd_carry = MFU_pd_amount }
+						set_variable = { global.MFU_pd_note_4076 = MFU_pd_carry }
+						set_variable = { global.MFU_pd_noteday_4076 = global.num_days }
+						MFU_port_damage_apply = yes
+						subtract_from_variable = { global.MFU_pd_note_4076 = MFU_pd_amount }
+					}
 				}
 				clear_variable = MFU_pd_prov
 			}
@@ -15611,71 +15693,6 @@ MFU_port_poll_451 = {
 	}
 }
 
-MFU_port_poll_452 = {
-	if = { limit = { NOT = { has_variable = global.MFU_pc_7079 } } if = { limit = { check_variable = { global.province_controllers^7079 > 0 } } var:global.province_controllers^7079 = { set_variable = { global.MFU_pc_7079 = THIS } } } }
-	else_if = {
-		limit = { var:global.MFU_pc_7079 = { NOT = { controls_province = 7079 } } }
-		set_variable = { global.MFU_pd_old = global.MFU_pc_7079 }
-		var:global.province_controllers^7079 = { set_variable = { global.MFU_pc_7079 = THIS } }
-		if = {
-			limit = {
-				var:global.MFU_pd_old = { has_war_with = var:global.MFU_pc_7079 NOT = { has_country_flag = MFU_port_damage_skip } }
-				452 = { NOT = { has_state_flag = MFU_port_damage_skip } NOT = { owner = { has_country_flag = MFU_port_damage_skip } } }
-			}
-			452 = {
-				set_variable = { MFU_pd_prov = 7079 }
-				set_temp_variable = { MFU_pd_level = 0 }
-				if = { limit = { any_province_building_level = { province = { id = 7079 } building = naval_base level > 14 } } set_temp_variable = { MFU_pd_level = 15 } }
-				else_if = { limit = { any_province_building_level = { province = { id = 7079 } building = naval_base level > 13 } } set_temp_variable = { MFU_pd_level = 14 } }
-				else_if = { limit = { any_province_building_level = { province = { id = 7079 } building = naval_base level > 12 } } set_temp_variable = { MFU_pd_level = 13 } }
-				else_if = { limit = { any_province_building_level = { province = { id = 7079 } building = naval_base level > 11 } } set_temp_variable = { MFU_pd_level = 12 } }
-				else_if = { limit = { any_province_building_level = { province = { id = 7079 } building = naval_base level > 10 } } set_temp_variable = { MFU_pd_level = 11 } }
-				else_if = { limit = { any_province_building_level = { province = { id = 7079 } building = naval_base level > 9 } } set_temp_variable = { MFU_pd_level = 10 } }
-				else_if = { limit = { any_province_building_level = { province = { id = 7079 } building = naval_base level > 8 } } set_temp_variable = { MFU_pd_level = 9 } }
-				else_if = { limit = { any_province_building_level = { province = { id = 7079 } building = naval_base level > 7 } } set_temp_variable = { MFU_pd_level = 8 } }
-				else_if = { limit = { any_province_building_level = { province = { id = 7079 } building = naval_base level > 6 } } set_temp_variable = { MFU_pd_level = 7 } }
-				else_if = { limit = { any_province_building_level = { province = { id = 7079 } building = naval_base level > 5 } } set_temp_variable = { MFU_pd_level = 6 } }
-				set_temp_variable = { MFU_pd_carry = 0 }
-				if = {
-					limit = { has_variable = global.MFU_pd_note_7079 }
-					set_temp_variable = { MFU_pd_age = global.num_days }
-					subtract_from_temp_variable = { MFU_pd_age = global.MFU_pd_noteday_7079 }
-					divide_temp_variable = { MFU_pd_age = 90 }
-					set_temp_variable = { MFU_pd_carry = global.MFU_pd_note_7079 }
-					subtract_from_temp_variable = { MFU_pd_carry = MFU_pd_age }
-					clamp_temp_variable = { var = MFU_pd_carry min = 0 max = MFU_pd_level }
-				}
-				else_if = {
-					limit = { has_state_flag = MFU_port_hit_7079_1 }
-					set_temp_variable = { MFU_pd_carry = MFU_pd_level }
-					multiply_temp_variable = { MFU_pd_carry = 0.5 }
-					set_variable = { global.MFU_pd_note_7079 = MFU_pd_carry }
-					set_variable = { global.MFU_pd_noteday_7079 = global.num_days }
-				}
-				set_temp_variable = { MFU_pd_amount = 0 }
-				if = {
-					limit = { check_variable = { MFU_pd_level > 0 } }
-					set_temp_variable = { MFU_pd_max = MFU_pd_level }
-					multiply_temp_variable = { MFU_pd_max = 0.5 }
-					set_temp_variable = { MFU_pd_amount = MFU_pd_level }
-					multiply_temp_variable = { MFU_pd_amount = 0.5 }
-					subtract_from_temp_variable = { MFU_pd_amount = MFU_pd_carry }
-					clamp_temp_variable = { var = MFU_pd_amount min = 0 max = MFU_pd_max }
-				}
-				if = {
-					limit = { check_variable = { MFU_pd_amount > 0.009 } }
-					add_to_temp_variable = { MFU_pd_carry = MFU_pd_amount }
-					set_variable = { global.MFU_pd_note_7079 = MFU_pd_carry }
-					set_variable = { global.MFU_pd_noteday_7079 = global.num_days }
-					MFU_port_damage_apply = yes
-					subtract_from_variable = { global.MFU_pd_note_7079 = MFU_pd_amount }
-				}
-				clear_variable = MFU_pd_prov
-			}
-		}
-	}
-}
-
 MFU_port_poll_453 = {
 	if = { limit = { NOT = { has_variable = global.MFU_pc_10099 } } if = { limit = { check_variable = { global.province_controllers^10099 > 0 } } var:global.province_controllers^10099 = { set_variable = { global.MFU_pc_10099 = THIS } } } }
 	else_if = {
@@ -15830,40 +15847,85 @@ MFU_port_poll_457 = {
 				else_if = { limit = { any_province_building_level = { province = { id = 4068 } building = naval_base level > 7 } } set_temp_variable = { MFU_pd_level = 8 } }
 				else_if = { limit = { any_province_building_level = { province = { id = 4068 } building = naval_base level > 6 } } set_temp_variable = { MFU_pd_level = 7 } }
 				else_if = { limit = { any_province_building_level = { province = { id = 4068 } building = naval_base level > 5 } } set_temp_variable = { MFU_pd_level = 6 } }
-				set_temp_variable = { MFU_pd_carry = 0 }
-				if = {
-					limit = { has_variable = global.MFU_pd_note_4068 }
-					set_temp_variable = { MFU_pd_age = global.num_days }
-					subtract_from_temp_variable = { MFU_pd_age = global.MFU_pd_noteday_4068 }
-					divide_temp_variable = { MFU_pd_age = 90 }
-					set_temp_variable = { MFU_pd_carry = global.MFU_pd_note_4068 }
-					subtract_from_temp_variable = { MFU_pd_carry = MFU_pd_age }
-					clamp_temp_variable = { var = MFU_pd_carry min = 0 max = MFU_pd_level }
-				}
+				if = { limit = { var:global.MFU_pc_4068 = { OR = { tag = ENG tag = USA is_in_faction_with = ENG is_in_faction_with = USA } } }  }
 				else_if = {
-					limit = { has_state_flag = MFU_port_hit_4068_1 }
-					set_temp_variable = { MFU_pd_carry = MFU_pd_level }
-					multiply_temp_variable = { MFU_pd_carry = 0.5 }
-					set_variable = { global.MFU_pd_note_4068 = MFU_pd_carry }
-					set_variable = { global.MFU_pd_noteday_4068 = global.num_days }
+					limit = { var:global.MFU_pc_4068 = { OR = { tag = GER tag = ITA tag = JAP is_in_faction_with = GER is_in_faction_with = ITA is_in_faction_with = JAP } } }
+					set_temp_variable = { MFU_pd_level = 0 }
+					if = { limit = { any_province_building_level = { province = { id = 4068 } building = naval_base level > 2 } } set_temp_variable = { MFU_pd_level = 3 } }
+					else_if = { limit = { any_province_building_level = { province = { id = 4068 } building = naval_base level > 1 } } set_temp_variable = { MFU_pd_level = 2 } }
+					else_if = { limit = { any_province_building_level = { province = { id = 4068 } building = naval_base level > 0 } } set_temp_variable = { MFU_pd_level = 1 } }
+					set_temp_variable = { MFU_pd_carry = 0 }
+					if = {
+						limit = { has_variable = global.MFU_pd_note_4068 }
+						set_temp_variable = { MFU_pd_age = global.num_days }
+						subtract_from_temp_variable = { MFU_pd_age = global.MFU_pd_noteday_4068 }
+						divide_temp_variable = { MFU_pd_age = 90 }
+						set_temp_variable = { MFU_pd_carry = global.MFU_pd_note_4068 }
+						subtract_from_temp_variable = { MFU_pd_carry = MFU_pd_age }
+						clamp_temp_variable = { var = MFU_pd_carry min = 0 max = MFU_pd_level }
+					}
+					else_if = {
+						limit = { has_state_flag = MFU_port_hit_4068_1 }
+						set_temp_variable = { MFU_pd_carry = MFU_pd_level }
+						multiply_temp_variable = { MFU_pd_carry = 0.5 }
+						set_variable = { global.MFU_pd_note_4068 = MFU_pd_carry }
+						set_variable = { global.MFU_pd_noteday_4068 = global.num_days }
+					}
+					set_temp_variable = { MFU_pd_amount = 0 }
+					if = {
+						limit = { check_variable = { MFU_pd_level > 0 } }
+						set_temp_variable = { MFU_pd_max = MFU_pd_level }
+						multiply_temp_variable = { MFU_pd_max = 1 }
+						set_temp_variable = { MFU_pd_amount = MFU_pd_level }
+						multiply_temp_variable = { MFU_pd_amount = 1 }
+						subtract_from_temp_variable = { MFU_pd_amount = MFU_pd_carry }
+						clamp_temp_variable = { var = MFU_pd_amount min = 0 max = MFU_pd_max }
+					}
+					if = {
+						limit = { check_variable = { MFU_pd_amount > 0.009 } }
+						add_to_temp_variable = { MFU_pd_carry = MFU_pd_amount }
+						set_variable = { global.MFU_pd_note_4068 = MFU_pd_carry }
+						set_variable = { global.MFU_pd_noteday_4068 = global.num_days }
+						MFU_port_damage_apply = yes
+						subtract_from_variable = { global.MFU_pd_note_4068 = MFU_pd_amount }
+					}
 				}
-				set_temp_variable = { MFU_pd_amount = 0 }
-				if = {
-					limit = { check_variable = { MFU_pd_level > 0 } }
-					set_temp_variable = { MFU_pd_max = MFU_pd_level }
-					multiply_temp_variable = { MFU_pd_max = 0.5 }
-					set_temp_variable = { MFU_pd_amount = MFU_pd_level }
-					multiply_temp_variable = { MFU_pd_amount = 0.5 }
-					subtract_from_temp_variable = { MFU_pd_amount = MFU_pd_carry }
-					clamp_temp_variable = { var = MFU_pd_amount min = 0 max = MFU_pd_max }
-				}
-				if = {
-					limit = { check_variable = { MFU_pd_amount > 0.009 } }
-					add_to_temp_variable = { MFU_pd_carry = MFU_pd_amount }
-					set_variable = { global.MFU_pd_note_4068 = MFU_pd_carry }
-					set_variable = { global.MFU_pd_noteday_4068 = global.num_days }
-					MFU_port_damage_apply = yes
-					subtract_from_variable = { global.MFU_pd_note_4068 = MFU_pd_amount }
+				else = {
+					set_temp_variable = { MFU_pd_carry = 0 }
+					if = {
+						limit = { has_variable = global.MFU_pd_note_4068 }
+						set_temp_variable = { MFU_pd_age = global.num_days }
+						subtract_from_temp_variable = { MFU_pd_age = global.MFU_pd_noteday_4068 }
+						divide_temp_variable = { MFU_pd_age = 90 }
+						set_temp_variable = { MFU_pd_carry = global.MFU_pd_note_4068 }
+						subtract_from_temp_variable = { MFU_pd_carry = MFU_pd_age }
+						clamp_temp_variable = { var = MFU_pd_carry min = 0 max = MFU_pd_level }
+					}
+					else_if = {
+						limit = { has_state_flag = MFU_port_hit_4068_1 }
+						set_temp_variable = { MFU_pd_carry = MFU_pd_level }
+						multiply_temp_variable = { MFU_pd_carry = 0.5 }
+						set_variable = { global.MFU_pd_note_4068 = MFU_pd_carry }
+						set_variable = { global.MFU_pd_noteday_4068 = global.num_days }
+					}
+					set_temp_variable = { MFU_pd_amount = 0 }
+					if = {
+						limit = { check_variable = { MFU_pd_level > 0 } }
+						set_temp_variable = { MFU_pd_max = MFU_pd_level }
+						multiply_temp_variable = { MFU_pd_max = 0.5 }
+						set_temp_variable = { MFU_pd_amount = MFU_pd_level }
+						multiply_temp_variable = { MFU_pd_amount = 0.5 }
+						subtract_from_temp_variable = { MFU_pd_amount = MFU_pd_carry }
+						clamp_temp_variable = { var = MFU_pd_amount min = 0 max = MFU_pd_max }
+					}
+					if = {
+						limit = { check_variable = { MFU_pd_amount > 0.009 } }
+						add_to_temp_variable = { MFU_pd_carry = MFU_pd_amount }
+						set_variable = { global.MFU_pd_note_4068 = MFU_pd_carry }
+						set_variable = { global.MFU_pd_noteday_4068 = global.num_days }
+						MFU_port_damage_apply = yes
+						subtract_from_variable = { global.MFU_pd_note_4068 = MFU_pd_amount }
+					}
 				}
 				clear_variable = MFU_pd_prov
 			}
@@ -28627,45 +28689,7 @@ MFU_port_poll_812 = {
 				else_if = { limit = { any_province_building_level = { province = { id = 12725 } building = naval_base level > 7 } } set_temp_variable = { MFU_pd_level = 8 } }
 				else_if = { limit = { any_province_building_level = { province = { id = 12725 } building = naval_base level > 6 } } set_temp_variable = { MFU_pd_level = 7 } }
 				else_if = { limit = { any_province_building_level = { province = { id = 12725 } building = naval_base level > 5 } } set_temp_variable = { MFU_pd_level = 6 } }
-				if = { limit = { var:global.MFU_pd_old = { OR = { tag = ENG tag = USA is_in_faction_with = ENG is_in_faction_with = USA } } var:global.MFU_pc_12725 = { OR = { tag = GER tag = ITA tag = JAP is_in_faction_with = GER is_in_faction_with = ITA is_in_faction_with = JAP } } } if = { limit = { check_variable = { MFU_pd_level > 0 } } damage_building = { type = naval_base province = var:MFU_pd_prov damage = 15 } set_variable = { global.MFU_pd_note_12725 = MFU_pd_level } set_variable = { global.MFU_pd_noteday_12725 = global.num_days } } }
-				else_if = { limit = { var:global.MFU_pd_old = { OR = { tag = GER tag = ITA tag = JAP is_in_faction_with = GER is_in_faction_with = ITA is_in_faction_with = JAP } } var:global.MFU_pc_12725 = { OR = { tag = ENG tag = USA is_in_faction_with = ENG is_in_faction_with = USA } } }  }
-				else = {
-					set_temp_variable = { MFU_pd_carry = 0 }
-					if = {
-						limit = { has_variable = global.MFU_pd_note_12725 }
-						set_temp_variable = { MFU_pd_age = global.num_days }
-						subtract_from_temp_variable = { MFU_pd_age = global.MFU_pd_noteday_12725 }
-						divide_temp_variable = { MFU_pd_age = 90 }
-						set_temp_variable = { MFU_pd_carry = global.MFU_pd_note_12725 }
-						subtract_from_temp_variable = { MFU_pd_carry = MFU_pd_age }
-						clamp_temp_variable = { var = MFU_pd_carry min = 0 max = MFU_pd_level }
-					}
-					else_if = {
-						limit = { has_state_flag = MFU_port_hit_12725_1 }
-						set_temp_variable = { MFU_pd_carry = MFU_pd_level }
-						multiply_temp_variable = { MFU_pd_carry = 0.5 }
-						set_variable = { global.MFU_pd_note_12725 = MFU_pd_carry }
-						set_variable = { global.MFU_pd_noteday_12725 = global.num_days }
-					}
-					set_temp_variable = { MFU_pd_amount = 0 }
-					if = {
-						limit = { check_variable = { MFU_pd_level > 0 } }
-						set_temp_variable = { MFU_pd_max = MFU_pd_level }
-						multiply_temp_variable = { MFU_pd_max = 0.5 }
-						set_temp_variable = { MFU_pd_amount = MFU_pd_level }
-						multiply_temp_variable = { MFU_pd_amount = 0.5 }
-						subtract_from_temp_variable = { MFU_pd_amount = MFU_pd_carry }
-						clamp_temp_variable = { var = MFU_pd_amount min = 0 max = MFU_pd_max }
-					}
-					if = {
-						limit = { check_variable = { MFU_pd_amount > 0.009 } }
-						add_to_temp_variable = { MFU_pd_carry = MFU_pd_amount }
-						set_variable = { global.MFU_pd_note_12725 = MFU_pd_carry }
-						set_variable = { global.MFU_pd_noteday_12725 = global.num_days }
-						MFU_port_damage_apply = yes
-						subtract_from_variable = { global.MFU_pd_note_12725 = MFU_pd_amount }
-					}
-				}
+				if = { limit = { var:global.MFU_pd_old = { OR = { tag = ENG tag = USA is_in_faction_with = ENG is_in_faction_with = USA } } var:global.MFU_pc_12725 = { OR = { tag = GER tag = ITA tag = JAP is_in_faction_with = GER is_in_faction_with = ITA is_in_faction_with = JAP } } any_country = { OR = { tag = GER tag = ITA tag = JAP is_in_faction_with = GER is_in_faction_with = ITA is_in_faction_with = JAP } OR = { controls_province = 7011 controls_province = 11999 } } } if = { limit = { check_variable = { MFU_pd_level > 0 } } damage_building = { type = naval_base province = var:MFU_pd_prov damage = 15 } set_variable = { global.MFU_pd_note_12725 = MFU_pd_level } set_variable = { global.MFU_pd_noteday_12725 = global.num_days } } }
 				clear_variable = MFU_pd_prov
 			}
 		}
@@ -29086,40 +29110,85 @@ MFU_port_poll_824 = {
 				else_if = { limit = { any_province_building_level = { province = { id = 9957 } building = naval_base level > 7 } } set_temp_variable = { MFU_pd_level = 8 } }
 				else_if = { limit = { any_province_building_level = { province = { id = 9957 } building = naval_base level > 6 } } set_temp_variable = { MFU_pd_level = 7 } }
 				else_if = { limit = { any_province_building_level = { province = { id = 9957 } building = naval_base level > 5 } } set_temp_variable = { MFU_pd_level = 6 } }
-				set_temp_variable = { MFU_pd_carry = 0 }
-				if = {
-					limit = { has_variable = global.MFU_pd_note_9957 }
-					set_temp_variable = { MFU_pd_age = global.num_days }
-					subtract_from_temp_variable = { MFU_pd_age = global.MFU_pd_noteday_9957 }
-					divide_temp_variable = { MFU_pd_age = 90 }
-					set_temp_variable = { MFU_pd_carry = global.MFU_pd_note_9957 }
-					subtract_from_temp_variable = { MFU_pd_carry = MFU_pd_age }
-					clamp_temp_variable = { var = MFU_pd_carry min = 0 max = MFU_pd_level }
-				}
+				if = { limit = { var:global.MFU_pc_9957 = { OR = { tag = ENG tag = USA is_in_faction_with = ENG is_in_faction_with = USA } } }  }
 				else_if = {
-					limit = { has_state_flag = MFU_port_hit_9957_1 }
-					set_temp_variable = { MFU_pd_carry = MFU_pd_level }
-					multiply_temp_variable = { MFU_pd_carry = 0.5 }
-					set_variable = { global.MFU_pd_note_9957 = MFU_pd_carry }
-					set_variable = { global.MFU_pd_noteday_9957 = global.num_days }
+					limit = { var:global.MFU_pc_9957 = { OR = { tag = GER tag = ITA tag = JAP is_in_faction_with = GER is_in_faction_with = ITA is_in_faction_with = JAP } } }
+					set_temp_variable = { MFU_pd_level = 0 }
+					if = { limit = { any_province_building_level = { province = { id = 9957 } building = naval_base level > 2 } } set_temp_variable = { MFU_pd_level = 3 } }
+					else_if = { limit = { any_province_building_level = { province = { id = 9957 } building = naval_base level > 1 } } set_temp_variable = { MFU_pd_level = 2 } }
+					else_if = { limit = { any_province_building_level = { province = { id = 9957 } building = naval_base level > 0 } } set_temp_variable = { MFU_pd_level = 1 } }
+					set_temp_variable = { MFU_pd_carry = 0 }
+					if = {
+						limit = { has_variable = global.MFU_pd_note_9957 }
+						set_temp_variable = { MFU_pd_age = global.num_days }
+						subtract_from_temp_variable = { MFU_pd_age = global.MFU_pd_noteday_9957 }
+						divide_temp_variable = { MFU_pd_age = 90 }
+						set_temp_variable = { MFU_pd_carry = global.MFU_pd_note_9957 }
+						subtract_from_temp_variable = { MFU_pd_carry = MFU_pd_age }
+						clamp_temp_variable = { var = MFU_pd_carry min = 0 max = MFU_pd_level }
+					}
+					else_if = {
+						limit = { has_state_flag = MFU_port_hit_9957_1 }
+						set_temp_variable = { MFU_pd_carry = MFU_pd_level }
+						multiply_temp_variable = { MFU_pd_carry = 0.5 }
+						set_variable = { global.MFU_pd_note_9957 = MFU_pd_carry }
+						set_variable = { global.MFU_pd_noteday_9957 = global.num_days }
+					}
+					set_temp_variable = { MFU_pd_amount = 0 }
+					if = {
+						limit = { check_variable = { MFU_pd_level > 0 } }
+						set_temp_variable = { MFU_pd_max = MFU_pd_level }
+						multiply_temp_variable = { MFU_pd_max = 1 }
+						set_temp_variable = { MFU_pd_amount = MFU_pd_level }
+						multiply_temp_variable = { MFU_pd_amount = 1 }
+						subtract_from_temp_variable = { MFU_pd_amount = MFU_pd_carry }
+						clamp_temp_variable = { var = MFU_pd_amount min = 0 max = MFU_pd_max }
+					}
+					if = {
+						limit = { check_variable = { MFU_pd_amount > 0.009 } }
+						add_to_temp_variable = { MFU_pd_carry = MFU_pd_amount }
+						set_variable = { global.MFU_pd_note_9957 = MFU_pd_carry }
+						set_variable = { global.MFU_pd_noteday_9957 = global.num_days }
+						MFU_port_damage_apply = yes
+						subtract_from_variable = { global.MFU_pd_note_9957 = MFU_pd_amount }
+					}
 				}
-				set_temp_variable = { MFU_pd_amount = 0 }
-				if = {
-					limit = { check_variable = { MFU_pd_level > 0 } }
-					set_temp_variable = { MFU_pd_max = MFU_pd_level }
-					multiply_temp_variable = { MFU_pd_max = 0.5 }
-					set_temp_variable = { MFU_pd_amount = MFU_pd_level }
-					multiply_temp_variable = { MFU_pd_amount = 0.5 }
-					subtract_from_temp_variable = { MFU_pd_amount = MFU_pd_carry }
-					clamp_temp_variable = { var = MFU_pd_amount min = 0 max = MFU_pd_max }
-				}
-				if = {
-					limit = { check_variable = { MFU_pd_amount > 0.009 } }
-					add_to_temp_variable = { MFU_pd_carry = MFU_pd_amount }
-					set_variable = { global.MFU_pd_note_9957 = MFU_pd_carry }
-					set_variable = { global.MFU_pd_noteday_9957 = global.num_days }
-					MFU_port_damage_apply = yes
-					subtract_from_variable = { global.MFU_pd_note_9957 = MFU_pd_amount }
+				else = {
+					set_temp_variable = { MFU_pd_carry = 0 }
+					if = {
+						limit = { has_variable = global.MFU_pd_note_9957 }
+						set_temp_variable = { MFU_pd_age = global.num_days }
+						subtract_from_temp_variable = { MFU_pd_age = global.MFU_pd_noteday_9957 }
+						divide_temp_variable = { MFU_pd_age = 90 }
+						set_temp_variable = { MFU_pd_carry = global.MFU_pd_note_9957 }
+						subtract_from_temp_variable = { MFU_pd_carry = MFU_pd_age }
+						clamp_temp_variable = { var = MFU_pd_carry min = 0 max = MFU_pd_level }
+					}
+					else_if = {
+						limit = { has_state_flag = MFU_port_hit_9957_1 }
+						set_temp_variable = { MFU_pd_carry = MFU_pd_level }
+						multiply_temp_variable = { MFU_pd_carry = 0.5 }
+						set_variable = { global.MFU_pd_note_9957 = MFU_pd_carry }
+						set_variable = { global.MFU_pd_noteday_9957 = global.num_days }
+					}
+					set_temp_variable = { MFU_pd_amount = 0 }
+					if = {
+						limit = { check_variable = { MFU_pd_level > 0 } }
+						set_temp_variable = { MFU_pd_max = MFU_pd_level }
+						multiply_temp_variable = { MFU_pd_max = 0.5 }
+						set_temp_variable = { MFU_pd_amount = MFU_pd_level }
+						multiply_temp_variable = { MFU_pd_amount = 0.5 }
+						subtract_from_temp_variable = { MFU_pd_amount = MFU_pd_carry }
+						clamp_temp_variable = { var = MFU_pd_amount min = 0 max = MFU_pd_max }
+					}
+					if = {
+						limit = { check_variable = { MFU_pd_amount > 0.009 } }
+						add_to_temp_variable = { MFU_pd_carry = MFU_pd_amount }
+						set_variable = { global.MFU_pd_note_9957 = MFU_pd_carry }
+						set_variable = { global.MFU_pd_noteday_9957 = global.num_days }
+						MFU_port_damage_apply = yes
+						subtract_from_variable = { global.MFU_pd_note_9957 = MFU_pd_amount }
+					}
 				}
 				clear_variable = MFU_pd_prov
 			}
@@ -30398,7 +30467,6 @@ MFU_port_poll = {
 	MFU_port_poll_449 = yes
 	MFU_port_poll_450 = yes
 	MFU_port_poll_451 = yes
-	MFU_port_poll_452 = yes
 	MFU_port_poll_453 = yes
 	MFU_port_poll_454 = yes
 	MFU_port_poll_457 = yes
@@ -30755,7 +30823,6 @@ MFU_port_poll_state = {
 	else_if = { limit = { state = 449 } MFU_port_poll_449 = yes }
 	else_if = { limit = { state = 450 } MFU_port_poll_450 = yes }
 	else_if = { limit = { state = 451 } MFU_port_poll_451 = yes }
-	else_if = { limit = { state = 452 } MFU_port_poll_452 = yes }
 	else_if = { limit = { state = 453 } MFU_port_poll_453 = yes }
 	else_if = { limit = { state = 454 } MFU_port_poll_454 = yes }
 	else_if = { limit = { state = 457 } MFU_port_poll_457 = yes }
@@ -31112,7 +31179,6 @@ MFU_port_record_state = {
 	else_if = { limit = { state = 449 } if = { limit = { check_variable = { global.province_controllers^4057 > 0 } } var:global.province_controllers^4057 = { set_variable = { global.MFU_pc_4057 = THIS } } } }
 	else_if = { limit = { state = 450 } if = { limit = { check_variable = { global.province_controllers^11954 > 0 } } var:global.province_controllers^11954 = { set_variable = { global.MFU_pc_11954 = THIS } } } }
 	else_if = { limit = { state = 451 } if = { limit = { check_variable = { global.province_controllers^13741 > 0 } } var:global.province_controllers^13741 = { set_variable = { global.MFU_pc_13741 = THIS } } } }
-	else_if = { limit = { state = 452 } if = { limit = { check_variable = { global.province_controllers^7079 > 0 } } var:global.province_controllers^7079 = { set_variable = { global.MFU_pc_7079 = THIS } } } }
 	else_if = { limit = { state = 453 } if = { limit = { check_variable = { global.province_controllers^10099 > 0 } } var:global.province_controllers^10099 = { set_variable = { global.MFU_pc_10099 = THIS } } } }
 	else_if = { limit = { state = 454 } if = { limit = { check_variable = { global.province_controllers^4206 > 0 } } var:global.province_controllers^4206 = { set_variable = { global.MFU_pc_4206 = THIS } } } }
 	else_if = { limit = { state = 457 } if = { limit = { check_variable = { global.province_controllers^4068 > 0 } } var:global.province_controllers^4068 = { set_variable = { global.MFU_pc_4068 = THIS } } } }
