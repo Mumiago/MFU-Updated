@@ -6,11 +6,24 @@ GER_air_command_ensure_active = {
 		}
 		set_variable = { GER_aircmd_cas_org = 0 }
 		set_variable = { GER_aircmd_ground_attack = 0 }
+		set_variable = { GER_aircmd_xp = 0 }
+		set_variable = { GER_aircmd_xp_factor = 0 }
+		set_variable = { GER_aircmd_mission_xp = 0 }
+		set_variable = { GER_aircmd_training_xp = 0 }
+		set_variable = { GER_aircmd_ace_chance = 0 }
+		set_variable = { GER_aircmd_mission_eff = 0 }
+		set_variable = { GER_aircmd_power_projection = 0 }
+		set_variable = { GER_aircmd_home_defence = 0 }
 		add_dynamic_modifier = { modifier = GER_air_command_dm }
 	}
 	if = {
 		limit = {
-			NOT = { has_idea = GER_luftwaffe_command_idea }
+			NOT = {
+				OR = {
+					has_idea = GER_luftwaffe_command_idea
+					has_idea = GER_luftwaffe_command_2_idea
+				}
+			}
 		}
 		add_ideas = GER_luftwaffe_command_idea
 	}
@@ -18,6 +31,18 @@ GER_air_command_ensure_active = {
 
 GER_air_command_refresh = {
 	force_update_dynamic_modifier = yes
+}
+
+# Air innovation 2: swaps the spirit for the version with the plane cost bonus. Safe to call twice.
+GER_air_command_upgrade = {
+	GER_air_command_ensure_active = yes
+	if = {
+		limit = { has_idea = GER_luftwaffe_command_idea }
+		swap_ideas = {
+			remove_idea = GER_luftwaffe_command_idea
+			add_idea = GER_luftwaffe_command_2_idea
+		}
+	}
 }
 
 GER_4yp_give_light_fighters = {
@@ -163,5 +188,400 @@ GER_4yp_give_strategic_bombers = {
 	}
 	else = {
 		add_equipment_to_stockpile = { type = strat_bomber_equipment_1937 amount = 200 producer = GER }
+	}
+}
+
+# Schacht plan: 40 percent of the Goering amounts.
+GER_4yp_schacht_give_cas = {
+	if = {
+		limit = { OR = { has_tech = ger_CAS_1943 has_tech = CAS_1943 } }
+		add_equipment_to_stockpile = { type = CAS_equipment_1943 amount = 200 producer = GER }
+	}
+	else_if = {
+		limit = { OR = { has_tech = ger_CAS_1941 has_tech = CAS_1941 } }
+		add_equipment_to_stockpile = { type = CAS_equipment_1941 amount = 200 producer = GER }
+	}
+	else_if = {
+		limit = { OR = { has_tech = ger_CAS_1939 has_tech = CAS_1939 } }
+		add_equipment_to_stockpile = { type = CAS_equipment_1939 amount = 200 producer = GER }
+	}
+	else_if = {
+		limit = { OR = { has_tech = ger_CAS_1937 has_tech = CAS_1937 } }
+		add_equipment_to_stockpile = { type = CAS_equipment_1937 amount = 200 producer = GER }
+	}
+	else = {
+		add_equipment_to_stockpile = { type = CAS_equipment_1935 amount = 200 producer = GER }
+	}
+}
+
+GER_4yp_schacht_give_light_fighters = {
+	if = {
+		limit = { OR = { has_tech = ger_jet_fighter_1945 has_tech = jet_fighter_1946 } }
+		add_equipment_to_stockpile = { type = jet_fighter_equipment_1945 amount = 200 producer = GER }
+	}
+	else_if = {
+		limit = { OR = { has_tech = ger_fighter_1944 has_tech = fighter_1944 } }
+		add_equipment_to_stockpile = { type = fighter_equipment_1944 amount = 200 producer = GER }
+	}
+	else_if = {
+		limit = { has_tech = ger_fighter_1943 }
+		add_equipment_to_stockpile = { type = fighter_equipment_1943 amount = 200 producer = GER }
+	}
+	else_if = {
+		limit = { OR = { has_tech = ger_fighter_1942 has_tech = fighter_1942 } }
+		add_equipment_to_stockpile = { type = fighter_equipment_1942 amount = 200 producer = GER }
+	}
+	else_if = {
+		limit = { has_tech = ger_fighter_1941 }
+		add_equipment_to_stockpile = { type = fighter_equipment_1941 amount = 200 producer = GER }
+	}
+	else_if = {
+		limit = { OR = { has_tech = ger_fighter_1940 has_tech = fighter_1940 } }
+		add_equipment_to_stockpile = { type = fighter_equipment_1940 amount = 200 producer = GER }
+	}
+	else_if = {
+		limit = { OR = { has_tech = ger_fighter_1938 has_tech = fighter_1938 } }
+		add_equipment_to_stockpile = { type = fighter_equipment_1938 amount = 200 producer = GER }
+	}
+	else_if = {
+		limit = { OR = { has_tech = ger_fighter_1936 has_tech = fighter_1936 } }
+		add_equipment_to_stockpile = { type = fighter_equipment_1936 amount = 200 producer = GER }
+	}
+	else = {
+		add_equipment_to_stockpile = { type = fighter_equipment_1934 amount = 200 producer = GER }
+	}
+}
+
+GER_4yp_schacht_give_strategic_bombers = {
+	if = {
+		limit = { OR = { has_tech = ger_strategic_bomber_1943 has_tech = strategic_bomber_1943 } }
+		add_equipment_to_stockpile = { type = strat_bomber_equipment_1943 amount = 80 producer = GER }
+	}
+	else_if = {
+		limit = { OR = { has_tech = ger_strategic_bomber_1941 has_tech = strategic_bomber_1941 } }
+		add_equipment_to_stockpile = { type = strat_bomber_equipment_1941 amount = 80 producer = GER }
+	}
+	else_if = {
+		limit = { OR = { has_tech = ger_strategic_bomber_1939 has_tech = strategic_bomber_1939 } }
+		add_equipment_to_stockpile = { type = strat_bomber_equipment_1939 amount = 80 producer = GER }
+	}
+	else = {
+		add_equipment_to_stockpile = { type = strat_bomber_equipment_1937 amount = 80 producer = GER }
+	}
+}
+
+GER_4yp_schacht_give_tactical_bombers = {
+	if = {
+		limit = { has_tech = ger_jet_tactical_bomber_1945 }
+		add_equipment_to_stockpile = { type = jet_tac_bomber_equipment_1945 amount = 160 producer = GER }
+	}
+	else_if = {
+		limit = { has_tech = ger_tactical_bomber_1944 }
+		add_equipment_to_stockpile = { type = tac_bomber_equipment_1944 amount = 160 producer = GER }
+	}
+	else_if = {
+		limit = { has_tech = tactical_bomber_1943 }
+		add_equipment_to_stockpile = { type = tac_bomber_equipment_1943 amount = 160 producer = GER }
+	}
+	else_if = {
+		limit = { has_tech = ger_tactical_bomber_1942 }
+		add_equipment_to_stockpile = { type = tac_bomber_equipment_1942 amount = 160 producer = GER }
+	}
+	else_if = {
+		limit = { has_tech = tactical_bomber_1941 }
+		add_equipment_to_stockpile = { type = tac_bomber_equipment_1941 amount = 160 producer = GER }
+	}
+	else_if = {
+		limit = { has_tech = ger_tactical_bomber_1940 }
+		add_equipment_to_stockpile = { type = tac_bomber_equipment_1940 amount = 160 producer = GER }
+	}
+	else_if = {
+		limit = { has_tech = tactical_bomber_1939 }
+		add_equipment_to_stockpile = { type = tac_bomber_equipment_1939 amount = 160 producer = GER }
+	}
+	else_if = {
+		limit = { has_tech = ger_tactical_bomber_1938 }
+		add_equipment_to_stockpile = { type = tac_bomber_equipment_1938 amount = 160 producer = GER }
+	}
+	else_if = {
+		limit = { has_tech = tactical_bomber_1937 }
+		add_equipment_to_stockpile = { type = tac_bomber_equipment_1937 amount = 160 producer = GER }
+	}
+	else_if = {
+		limit = { has_tech = ger_tactical_bomber_1936 }
+		add_equipment_to_stockpile = { type = tac_bomber_equipment_1936 amount = 160 producer = GER }
+	}
+	else = {
+		add_equipment_to_stockpile = { type = tac_bomber_equipment_1934 amount = 160 producer = GER }
+	}
+}
+
+# Luftwaffe workers mission (focus GER_forced_labor_air). Demand starts at 30000, rises 2000 per cycle, no cap.
+# Each cycle the Air Ministry takes ALL workers (GER_num_arbeitseinsatz). Step = round(10 * (demand - workers) / demand), clamped -20..+10.
+# The step is the change of plane production cost in percent: + = dearer (cancels the cut of the spirit), - = cheaper.
+GER_air_workers_start = {
+	set_variable = { GER_air_quota = 30000 }
+	set_variable = { GER_air_cost_step = 0 }
+	set_variable = { GER_air_last_eaten = 0 }
+	set_variable = { GER_air_last_quota = 0 }
+	set_country_flag = GER_air_workers_on
+	activate_mission = GER_air_workers_mission
+}
+
+GER_air_workers_apply_ladder = {
+	if = {
+		limit = { has_idea = GER_air_cost_up_1 }
+		remove_ideas = GER_air_cost_up_1
+	}
+	if = {
+		limit = { has_idea = GER_air_cost_up_2 }
+		remove_ideas = GER_air_cost_up_2
+	}
+	if = {
+		limit = { has_idea = GER_air_cost_up_4 }
+		remove_ideas = GER_air_cost_up_4
+	}
+	if = {
+		limit = { has_idea = GER_air_cost_up_8 }
+		remove_ideas = GER_air_cost_up_8
+	}
+	if = {
+		limit = { has_idea = GER_air_cost_up_16 }
+		remove_ideas = GER_air_cost_up_16
+	}
+	if = {
+		limit = { has_idea = GER_air_cost_down_1 }
+		remove_ideas = GER_air_cost_down_1
+	}
+	if = {
+		limit = { has_idea = GER_air_cost_down_2 }
+		remove_ideas = GER_air_cost_down_2
+	}
+	if = {
+		limit = { has_idea = GER_air_cost_down_4 }
+		remove_ideas = GER_air_cost_down_4
+	}
+	if = {
+		limit = { has_idea = GER_air_cost_down_8 }
+		remove_ideas = GER_air_cost_down_8
+	}
+	if = {
+		limit = { has_idea = GER_air_cost_down_16 }
+		remove_ideas = GER_air_cost_down_16
+	}
+	set_temp_variable = { rest = GER_air_cost_step }
+	if = {
+		limit = { check_variable = { rest > 0 } }
+		if = {
+			limit = { check_variable = { rest > 15 } }
+			add_ideas = GER_air_cost_up_16
+			add_to_temp_variable = { rest = -16 }
+		}
+		if = {
+			limit = { check_variable = { rest > 7 } }
+			add_ideas = GER_air_cost_up_8
+			add_to_temp_variable = { rest = -8 }
+		}
+		if = {
+			limit = { check_variable = { rest > 3 } }
+			add_ideas = GER_air_cost_up_4
+			add_to_temp_variable = { rest = -4 }
+		}
+		if = {
+			limit = { check_variable = { rest > 1 } }
+			add_ideas = GER_air_cost_up_2
+			add_to_temp_variable = { rest = -2 }
+		}
+		if = {
+			limit = { check_variable = { rest > 0 } }
+			add_ideas = GER_air_cost_up_1
+			add_to_temp_variable = { rest = -1 }
+		}
+	}
+	else_if = {
+		limit = { check_variable = { rest < 0 } }
+		multiply_temp_variable = { rest = -1 }
+		if = {
+			limit = { check_variable = { rest > 15 } }
+			add_ideas = GER_air_cost_down_16
+			add_to_temp_variable = { rest = -16 }
+		}
+		if = {
+			limit = { check_variable = { rest > 7 } }
+			add_ideas = GER_air_cost_down_8
+			add_to_temp_variable = { rest = -8 }
+		}
+		if = {
+			limit = { check_variable = { rest > 3 } }
+			add_ideas = GER_air_cost_down_4
+			add_to_temp_variable = { rest = -4 }
+		}
+		if = {
+			limit = { check_variable = { rest > 1 } }
+			add_ideas = GER_air_cost_down_2
+			add_to_temp_variable = { rest = -2 }
+		}
+		if = {
+			limit = { check_variable = { rest > 0 } }
+			add_ideas = GER_air_cost_down_1
+			add_to_temp_variable = { rest = -1 }
+		}
+	}
+}
+
+GER_air_workers_cycle_end = {
+	set_variable = { GER_air_last_eaten = GER_num_arbeitseinsatz }
+	set_variable = { GER_air_last_quota = GER_air_quota }
+	set_temp_variable = { gap = GER_air_quota }
+	subtract_from_temp_variable = { gap = GER_num_arbeitseinsatz }
+	divide_temp_variable = { gap = GER_air_quota }
+	multiply_temp_variable = { gap = 10 }
+	round_temp_variable = gap
+	clamp_temp_variable = { var = gap min = -20 max = 10 }
+	set_variable = { GER_air_cost_step = gap }
+	set_variable = { GER_num_arbeitseinsatz = 0 }
+	GER_air_workers_apply_ladder = yes
+	add_to_variable = { GER_air_quota = 2000 }
+	country_event = { id = ger_air_workers.1 }
+}
+
+# Luftwaffe field divisions: each template is made once, 17 battalions with width tech, else 15. Call inside hidden_effect.
+GER_luftwaffe_panzer_template = {
+	if = {
+		limit = { NOT = { has_template = "Luftwaffe Panzer-Division" } }
+		if = {
+			limit = { has_tech = width_tech }
+			division_template = {
+				name = "Luftwaffe Panzer-Division"
+				priority = 2
+				regiments = {
+					heavy_armor = { x = 0 y = 0 }
+					heavy_armor = { x = 0 y = 1 }
+					medium_armor = { x = 0 y = 2 }
+					medium_armor = { x = 1 y = 0 }
+					medium_armor = { x = 1 y = 1 }
+					medium_armor = { x = 1 y = 2 }
+					medium_armor = { x = 2 y = 0 }
+					mechanized = { x = 2 y = 1 }
+					mechanized = { x = 2 y = 2 }
+					mechanized = { x = 3 y = 0 }
+					mechanized = { x = 3 y = 1 }
+					mechanized = { x = 3 y = 2 }
+					mechanized = { x = 4 y = 0 }
+					anti_air_heavy_mot = { x = 4 y = 1 }
+					anti_air_heavy_mot = { x = 4 y = 2 }
+					medium_armor = { x = 3 y = 3 }
+					medium_armor = { x = 4 y = 3 }
+				}
+				support = {
+					artillery = { x = 0 y = 0 }
+					recon_ac = { x = 0 y = 1 }
+					mobile_engineer = { x = 0 y = 2 }
+					anti_tank = { x = 0 y = 3 }
+					maintenance_company = { x = 0 y = 4 }
+					logistics_company_mot = { x = 0 y = 5 }
+					anti_air_heavy_support = { x = 0 y = 6 }
+					signal_company = { x = 0 y = 7 }
+				}
+			}
+		}
+		else = {
+			division_template = {
+				name = "Luftwaffe Panzer-Division"
+				priority = 2
+				regiments = {
+					heavy_armor = { x = 0 y = 0 }
+					heavy_armor = { x = 0 y = 1 }
+					medium_armor = { x = 0 y = 2 }
+					medium_armor = { x = 1 y = 0 }
+					medium_armor = { x = 1 y = 1 }
+					medium_armor = { x = 1 y = 2 }
+					medium_armor = { x = 2 y = 0 }
+					mechanized = { x = 2 y = 1 }
+					mechanized = { x = 2 y = 2 }
+					mechanized = { x = 3 y = 0 }
+					mechanized = { x = 3 y = 1 }
+					mechanized = { x = 3 y = 2 }
+					mechanized = { x = 4 y = 0 }
+					anti_air_heavy_mot = { x = 4 y = 1 }
+					anti_air_heavy_mot = { x = 4 y = 2 }
+				}
+				support = {
+					artillery = { x = 0 y = 0 }
+					recon_ac = { x = 0 y = 1 }
+					mobile_engineer = { x = 0 y = 2 }
+					anti_tank = { x = 0 y = 3 }
+					maintenance_company = { x = 0 y = 4 }
+					logistics_company_mot = { x = 0 y = 5 }
+					anti_air_heavy_support = { x = 0 y = 6 }
+					signal_company = { x = 0 y = 7 }
+				}
+			}
+		}
+	}
+}
+
+GER_luftwaffe_field_template = {
+	if = {
+		limit = { NOT = { has_template = "Luftwaffen-Feld-Division" } }
+		if = {
+			limit = { has_tech = width_tech }
+			division_template = {
+				name = "Luftwaffen-Feld-Division"
+				regiments = {
+					infantry = { x = 0 y = 0 }
+					infantry = { x = 0 y = 1 }
+					infantry = { x = 0 y = 2 }
+					infantry = { x = 1 y = 0 }
+					infantry = { x = 1 y = 1 }
+					infantry = { x = 1 y = 2 }
+					infantry = { x = 2 y = 0 }
+					infantry = { x = 2 y = 1 }
+					infantry = { x = 2 y = 2 }
+					infantry = { x = 3 y = 0 }
+					anti_air = { x = 3 y = 1 }
+					anti_air = { x = 3 y = 2 }
+					anti_air_heavy = { x = 4 y = 0 }
+					anti_air_heavy = { x = 4 y = 1 }
+					anti_air_heavy = { x = 4 y = 2 }
+					anti_air = { x = 3 y = 3 }
+					anti_air_heavy = { x = 4 y = 3 }
+				}
+				support = {
+					anti_air_heavy_support = { x = 0 y = 0 }
+					anti_air_company = { x = 0 y = 1 }
+					pack_artillery = { x = 0 y = 2 }
+					engineer = { x = 0 y = 3 }
+				}
+			}
+		}
+		else = {
+			division_template = {
+				name = "Luftwaffen-Feld-Division"
+				regiments = {
+					infantry = { x = 0 y = 0 }
+					infantry = { x = 0 y = 1 }
+					infantry = { x = 0 y = 2 }
+					infantry = { x = 1 y = 0 }
+					infantry = { x = 1 y = 1 }
+					infantry = { x = 1 y = 2 }
+					infantry = { x = 2 y = 0 }
+					infantry = { x = 2 y = 1 }
+					infantry = { x = 2 y = 2 }
+					infantry = { x = 3 y = 0 }
+					anti_air = { x = 3 y = 1 }
+					anti_air = { x = 3 y = 2 }
+					anti_air_heavy = { x = 4 y = 0 }
+					anti_air_heavy = { x = 4 y = 1 }
+					anti_air_heavy = { x = 4 y = 2 }
+				}
+				support = {
+					anti_air_heavy_support = { x = 0 y = 0 }
+					anti_air_company = { x = 0 y = 1 }
+					pack_artillery = { x = 0 y = 2 }
+					engineer = { x = 0 y = 3 }
+				}
+			}
+		}
 	}
 }

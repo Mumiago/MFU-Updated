@@ -598,6 +598,7 @@ focus_tree = {
 		
 		completion_reward = {
 			activate_mission_tooltip = GER_four_year_plan
+			custom_effect_tooltip = GER_goring_attack
 			custom_effect_tooltip = available_political_advisor
 			show_ideas_tooltip = GER_goering_e
 
@@ -919,7 +920,7 @@ focus_tree = {
 		y = 1
 		cost = 5
 		available = {
-			
+			has_idea = GER_goering_e
 		}
 
 		ai_will_do = {
@@ -3761,13 +3762,6 @@ focus_tree = {
 				category = radar_tech
 			}
 			add_war_support = 0.1
-			add_ace = {
-			name = "Erich"
-			surname = "Hartmann"
-			callsign = "Bubi"
-			type = fighter_genius
-			is_female = no
-		}
 			
 			custom_effect_tooltip = GER_spawn_njg1_veterans_tt
 			hidden_effect = {
@@ -7683,7 +7677,38 @@ focus_tree = {
 
 			#air_experience = 150 
 			hidden_effect = { GER_air_command_ensure_active = yes }
-			show_ideas_tooltip = GER_luftwaffe_command_idea
+			custom_effect_tooltip = GER_air_command_modify_intro
+			add_to_variable = {
+				var = GER_aircmd_xp
+				value = 0.05
+				tooltip = experience_gain_air_tt
+			}
+			add_to_variable = {
+				var = GER_aircmd_xp_factor
+				value = 0.1
+				tooltip = experience_gain_air_factor_tt
+			}
+			add_to_variable = {
+				var = GER_aircmd_mission_xp
+				value = 0.1
+				tooltip = air_mission_xp_gain_factor_tt
+			}
+			add_to_variable = {
+				var = GER_aircmd_training_xp
+				value = 0.2
+				tooltip = air_training_xp_gain_factor_tt
+			}
+			add_to_variable = {
+				var = GER_aircmd_ace_chance
+				value = 0.1
+				tooltip = air_ace_generation_chance_factor_tt
+			}
+			add_to_variable = {
+				var = GER_aircmd_mission_eff
+				value = 0.08
+				tooltip = air_mission_efficiency_tt
+			}
+			hidden_effect = { GER_air_command_refresh = yes }
 
 			add_doctrine_cost_reduction = {
 				name = GER_air_innovation
@@ -7692,8 +7717,6 @@ focus_tree = {
 				category = air_doctrine
 			}	
 			
-			custom_effect_tooltip = available_chief_of_airforce
-			show_ideas_tooltip = GER_ritter_von_greim
 			64 = {
 				strategic_state_location = {
 					favorable_approach4 = 9496 # Province ID
@@ -7779,13 +7802,16 @@ focus_tree = {
 			custom_effect_tooltip = available_mio_tt
 			show_mio_tooltip = GER_junkers_organization
 			hidden_effect = { GER_air_command_ensure_active = yes }
-			custom_effect_tooltip = GER_air_command_modify_intro
-			add_to_variable = {
-				var = GER_aircmd_cas_org
-				value = 0.15
-				tooltip = air_close_air_support_org_damage_factor_tt
+			if = {
+				limit = { NOT = { has_completed_focus = GER_fall_of_the_eagle } }
+				custom_effect_tooltip = GER_air_command_modify_intro
+				add_to_variable = {
+					var = GER_aircmd_cas_org
+					value = 0.15
+					tooltip = air_close_air_support_org_damage_factor_tt
+				}
+				hidden_effect = { GER_air_command_refresh = yes }
 			}
-			hidden_effect = { GER_air_command_refresh = yes }
 		}
 	}
 	focus = {
@@ -7813,18 +7839,21 @@ focus_tree = {
 			custom_effect_tooltip = available_mio_tt
 			show_mio_tooltip = GER_junkers_organization
 			hidden_effect = { GER_air_command_ensure_active = yes }
-			custom_effect_tooltip = GER_air_command_modify_intro
-			add_to_variable = {
-				var = GER_aircmd_ground_attack
-				value = 0.15
-				tooltip = ground_attack_factor_tt
+			if = {
+				limit = { NOT = { has_completed_focus = GER_fall_of_the_eagle } }
+				custom_effect_tooltip = GER_air_command_modify_intro
+				add_to_variable = {
+					var = GER_aircmd_ground_attack
+					value = 0.15
+					tooltip = ground_attack_factor_tt
+				}
+				add_to_variable = {
+					var = GER_aircmd_cas_org
+					value = -0.15
+					tooltip = air_close_air_support_org_damage_factor_tt
+				}
+				hidden_effect = { GER_air_command_refresh = yes }
 			}
-			add_to_variable = {
-				var = GER_aircmd_cas_org
-				value = -0.15
-				tooltip = air_close_air_support_org_damage_factor_tt
-			}
-			hidden_effect = { GER_air_command_refresh = yes }
 		}
 	}
 
@@ -8020,8 +8049,9 @@ focus_tree = {
 			air_experience = 25
 			add_tech_bonus = {
 				technology = ger_fighter_1940
-				uses = 1
-				bonus = 1
+				technology = ger_fighter_1942
+				uses = 2
+				bonus = 0.75
 				name = GER_fuck_names
 			}
 			mio:GER_messerschmitt_organization_new_one = {
@@ -8047,7 +8077,7 @@ focus_tree = {
 			add_tech_bonus = {
 				technology = ger_fighter_1941
 				uses = 1
-				bonus = 1
+				bonus = 3
 				name = GER_fuck_names
 			}
 			mio:GER_focke_wulf_organization = {
@@ -8062,7 +8092,7 @@ focus_tree = {
 		relative_position_id = GER_long_range_escorts
 		x = -2
 		y = 1
-		cost = 5
+		cost = 4.285
 		
 		ai_will_do = { 
 			factor = 5 
@@ -8093,19 +8123,16 @@ focus_tree = {
 		completion_reward = {
 			custom_effect_tooltip = available_military_high_command
 			show_ideas_tooltip = GER_kurt_student
-			set_technology = {
-				enable_commando = 1
-			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+
+			army_experience = 50
+			air_experience = 50
+
+			custom_effect_tooltip = generic_skip_one_line_tt
 			custom_effect_tooltip = GER_Fallschirmjaeger
 			hidden_effect = {
 				load_oob = "GER_Fallschirmjaeger"
 			}
-			GER_kurt_student = {
-				add_attack = 1
-				add_defense = 1
-			}
-				army_experience = 25
-			
 		}
 	}
 	focus = {
@@ -8127,6 +8154,17 @@ focus_tree = {
 			air_experience = 80
 			
 			add_ideas = GER_luftwaffe_investments_idea
+			add_ace = {
+				name = "Erich"
+				surname = "Hartmann"
+				callsign = "Bubi"
+				type = fighter_genius
+				is_female = no
+			}
+			add_ace = { name = "Heinz" surname = "Bär" callsign = "Pritzl" type = fighter_unique }
+			add_ace = { name = "Hans-Ulrich" surname = "Rudel" callsign = "Panzerknacker" type = support_unique }
+			add_ace = { name = "Helmut" surname = "Mahlke" callsign = "Helm" type = support_unique }
+			add_ace = { name = "Paul-Werner" surname = "Hozzel" callsign = "Werner" type = support_unique }
 
 		
 
@@ -8166,13 +8204,18 @@ focus_tree = {
 				add_unit_leader_trait = logistics_wizard
 				add_unit_leader_trait = hill_fighter
 			}
-			set_technology = {
+			if = {
+				limit = {
+					NOT = {
+						has_tech = enable_light_armor_para
+					}
+				}
+				set_technology = {
                    enable_light_armor_para = 1
 			}
-			custom_effect_tooltip = GER_Fallschirmjaeger_expansion_tt
-			hidden_effect = {
-				load_oob = "GER_Fallschirmjaeger_expansion"
+			
 			}
+			
 			add_equipment_to_stockpile = {
 				type = transport_plane_equipment_1
 				amount = 100
@@ -8411,62 +8454,68 @@ focus_tree = {
 		y = 1
 		cost = 5
 		ai_will_do = {
-			factor = 1
+			factor = 0
 		}
 		available_if_capitulated = yes
 
 		available = {
-			# Stage 3: Udet is dead (date is a fallback if the Udet events never fired)
-			if = {
-				limit = {
-					OR = {
-						has_country_flag = GER_udet_dispute_settled
-						date > 1942.6.1
-					}
-				}
-				custom_trigger_tooltip = {
-					tooltip = GER_new_generalluftzeugmeister_tt
-					always = yes
-				}
-			}
-			# Stage 1: waiting on Udet's Report (germany.1334)
-			else_if = {
-				limit = { NOT = { has_country_flag = GER_udets_report_received } }
-				custom_trigger_tooltip = {
-					tooltip = GER_udet_report_pending_tt
-					has_country_flag = GER_udets_report_received
-				}
-			}
-			# Stage 2: waiting on Udet's death (germany.1335)
-			else = {
-				custom_trigger_tooltip = {
-					tooltip = GER_udet_dispute_settled_tt
-					has_country_flag = GER_udet_dispute_settled
-				}
+			custom_trigger_tooltip = {
+				tooltip = GER_fall_of_the_eagle_autocomplete_tt
+				always = no
 			}
 		}
 
 		completion_reward = {
+			custom_effect_tooltip = GER_fall_of_the_eagle_retire_tt
+			custom_effect_tooltip = generic_skip_one_line_tt
+			if = {
+				limit = { has_completed_focus = GER_sturzbomber }
+				custom_effect_tooltip = GER_air_command_modify_intro
+				add_to_variable = {
+					var = GER_aircmd_cas_org
+					value = -0.15
+					tooltip = air_close_air_support_org_damage_factor_tt
+				}
+				hidden_effect = { GER_air_command_refresh = yes }
+			}
+			else_if = {
+				limit = { has_completed_focus = GER_kanonenvogel }
+				custom_effect_tooltip = GER_air_command_modify_intro
+				add_to_variable = {
+					var = GER_aircmd_ground_attack
+					value = -0.15
+					tooltip = ground_attack_factor_tt
+				}
+				add_to_variable = {
+					var = GER_aircmd_cas_org
+					value = 0.15
+					tooltip = air_close_air_support_org_damage_factor_tt
+				}
+				hidden_effect = { GER_air_command_refresh = yes }
+			}
+			else = {
+				custom_effect_tooltip = GER_fall_of_the_eagle_command_tt
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+			custom_effect_tooltip = GER_fall_of_the_eagle_messerschmitt_tt
+			custom_effect_tooltip = generic_skip_one_line_tt
+			custom_effect_tooltip = GER_fall_of_the_eagle_focke_wulf_tt
+			custom_effect_tooltip = generic_skip_one_line_tt
+			
+			hidden_effect = {
+				remove_ideas = ernst_udet
+				remove_ideas = GER_walther_wever
+				retire_character = GER_walther_wever
+				mio:GER_messerschmitt_organization_new_one = {
+					complete_mio_trait = { trait = GER_mio_trait_eagle_messerschmitt show_modifiers = no }
+				}
+				mio:GER_focke_wulf_organization = {
+					complete_mio_trait = { trait = GER_mio_trait_eagle_focke_wulf show_modifiers = no }
+				}
+			}
+			
 			add_ideas = erhard_milch_t
-			add_timed_idea = {
-				idea = GER_milch_production_drive
-				days = 100
-			}
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.99
-				uses = 4
-				category = air_doctrine
-			}
-			custom_effect_tooltip = line_break_tt	
-			custom_effect_tooltip = GER_get_6000_workersz_tt 
-			custom_effect_tooltip = GER_arbeitseinsatz_volunteer_workers_luftwaffe_1_tt
-			add_to_variable = { GER_arbeitseinsatz_resistance_damage_to_garrison = 0.05 }
-			add_to_variable = { GER_arbeitseinsatz_conscription = 0.05 }
-			add_to_variable = {
-				var = GER_num_arbeitseinsatz
-				value = 6000
-			}
+			
 		}
 	}
 	focus = {
@@ -8482,29 +8531,71 @@ focus_tree = {
 		}
 		available_if_capitulated = yes	
 
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = GER_luftwaffe_in_ruins_tt
-				# Fighters + heavy fighters, in stockpile and deployed in air wings
-				set_temp_variable = { GER_fighter_total = num_equipment@small_plane_airframe }
-				add_to_temp_variable = { GER_fighter_total = num_equipment@medium_plane_fighter_airframe }
-				add_to_temp_variable = { GER_fighter_total = num_deployed_planes_with_type@fighter }
-				check_variable = { GER_fighter_total < 4000 }
-			}
-		}
-
 		completion_reward = {
-			swap_ideas = {
-				remove_idea = GER_demoralized_luftwaffe
-				add_idea = GER_overburdened_luftwaffe
-			}
-			custom_effect_tooltip = GER_get_12000_workers_tt
-			custom_effect_tooltip = GER_arbeitseinsatz_volunteer_workers_luftwaffe_1_tt
-			add_to_variable = { GER_arbeitseinsatz_resistance_damage_to_garrison = 0.05 }
-			add_to_variable = { GER_arbeitseinsatz_conscription = 0.05 }
+			custom_effect_tooltip = GER_luftwaffe_field_divisions_tt
+			custom_effect_tooltip = generic_skip_one_line_tt
+			hidden_effect = { GER_air_command_ensure_active = yes }
+			custom_effect_tooltip = GER_air_command_modify_intro
 			add_to_variable = {
-				var = GER_num_arbeitseinsatz
-				value = 12000
+				var = GER_aircmd_power_projection
+				value = -0.10
+				tooltip = air_power_projection_factor_tt
+			}
+			hidden_effect = {
+				GER_air_command_refresh = yes
+				GER_luftwaffe_panzer_template = yes
+				GER_luftwaffe_field_template = yes
+				random_owned_controlled_state = {
+					prioritize = { 64 }
+					create_unit = {
+						division = "name = \"Fallschirm-Panzer-Division Hermann Göring\" division_template = \"Luftwaffe Panzer-Division\" start_experience_factor = 0.5 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Fallschirm-Panzergrenadier-Division Hermann Göring\" division_template = \"Luftwaffe Panzer-Division\" start_experience_factor = 0.5 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 1\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 2\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 3\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 4\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 5\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 6\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 7\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 8\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 9\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 10\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+				}
 			}
 		}
 	}
@@ -8528,28 +8619,11 @@ focus_tree = {
 		cancelable = no
 
 		completion_reward = {
-			add_timed_idea = {
-				idea = GER_kammhuber_line_construction
-				days = 120
-			}
-			add_tech_bonus = {
-				technology = sp_shock_hardening_techniques
-				bonus = 0.75
-				uses = 1
-				name = GER_expand_aa_capacity
-			}
-			add_tech_bonus = {
-				technology = antiair5
-				technology = antiairfc
-				technology = heavy_antiair_5
-				bonus = 0.75
-				uses = 3
-				name = GER_expand_aa_capacity
-			}
+			
 			sp:sp_naval_proximity_fuze = {
 				add_project_progress_ratio = 0.3
 			}
-			add_breakthrough_progress = {
+			add_breakthrough_points = {
 				specialization = specialization_nuclear
 				value = 1
 			}
@@ -8628,7 +8702,82 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_stability = -0.10
+			custom_effect_tooltip = GER_defend_the_reich_divisions_tt
+			custom_effect_tooltip = generic_skip_one_line_tt
+			hidden_effect = { GER_air_command_ensure_active = yes }
+			custom_effect_tooltip = GER_air_command_modify_intro
+			add_to_variable = {
+				var = GER_aircmd_home_defence
+				value = 0.15
+				tooltip = air_home_defence_factor_tt
+			}
+			hidden_effect = {
+				GER_air_command_refresh = yes
+				GER_luftwaffe_field_template = yes
+				random_owned_controlled_state = {
+					prioritize = { 64 }
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 11\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 12\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 13\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 14\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 15\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 16\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 17\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 18\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 19\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 20\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 21\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 22\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 23\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 24\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+					create_unit = {
+						division = "name = \"Luftwaffen-Feld-Division 25\" division_template = \"Luftwaffen-Feld-Division\" start_experience_factor = 0.1 start_equipment_factor = 1"
+						owner = GER
+					}
+				}
+			}
 		}
 	}
 	focus = {
@@ -8653,10 +8802,13 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_timed_idea = {
-				idea = GER_jagernot_programm_idea
-				days = 120
-			}
+		
+			custom_effect_tooltip = GER_air_command_modify_intro
+			custom_effect_tooltip = GER_air_command_plane_cost_tt
+			custom_effect_tooltip = generic_skip_one_line_tt
+			hidden_effect = { GER_air_command_upgrade = yes }
+			custom_effect_tooltip = GER_air_workers_start_tt
+			hidden_effect = { GER_air_workers_start = yes }
 		}
 	}
 	focus = {

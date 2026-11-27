@@ -1,0 +1,58 @@
+# Country scope. Leaves one country's planes (in air wings plus in stock) in temp variable GER_eagle_air_total.
+GER_eagle_count_air = {
+	set_temp_variable = { GER_eagle_air_total = num_deployed_planes }
+	add_to_temp_variable = { GER_eagle_air_total = num_equipment@small_plane_airframe }
+	add_to_temp_variable = { GER_eagle_air_total = num_equipment@cv_small_plane_airframe }
+	add_to_temp_variable = { GER_eagle_air_total = num_equipment@small_plane_cas_airframe }
+	add_to_temp_variable = { GER_eagle_air_total = num_equipment@cv_small_plane_cas_airframe }
+	add_to_temp_variable = { GER_eagle_air_total = num_equipment@small_plane_naval_bomber_airframe }
+	add_to_temp_variable = { GER_eagle_air_total = num_equipment@cv_small_plane_naval_bomber_airframe }
+	add_to_temp_variable = { GER_eagle_air_total = num_equipment@medium_plane_fighter_airframe }
+	add_to_temp_variable = { GER_eagle_air_total = num_equipment@medium_plane_airframe }
+	add_to_temp_variable = { GER_eagle_air_total = num_equipment@medium_plane_scout_plane_airframe }
+	add_to_temp_variable = { GER_eagle_air_total = num_equipment@large_plane_airframe }
+	add_to_temp_variable = { GER_eagle_air_total = num_equipment@jet_tac_bomber_equipment }
+	add_to_temp_variable = { GER_eagle_air_total = num_equipment@jet_strat_bomber_equipment }
+	add_to_temp_variable = { GER_eagle_air_total = num_equipment@rocket_interceptor_equipment }
+	add_to_temp_variable = { GER_eagle_air_total = num_equipment@transport_plane_equipment }
+	add_to_temp_variable = { GER_eagle_air_total = num_equipment@strat_bomber_intercontinental_equipment }
+}
+
+# GER scope, weekly. Completes Fall of the Eagle once Directive 21 has ended and the Allies and the Soviet Union have more than 2.5 times the Axis planes.
+GER_eagle_weekly = {
+	if = {
+		limit = {
+			NOT = { has_completed_focus = GER_fall_of_the_eagle }
+		}
+		if = {
+			limit = {
+				NOT = { has_country_flag = GER_directive_21_ended }
+				has_completed_focus = GER_ussr_war_goal
+				NOT = { has_active_mission = GER_barbarossa_mission }
+			}
+			set_country_flag = GER_directive_21_ended
+		}
+		set_variable = { global.GER_eagle_axis_air = 0 }
+		set_variable = { global.GER_eagle_allied_air = 0 }
+		every_country = {
+			limit = { GER_eagle_german_side = yes }
+			GER_eagle_count_air = yes
+			add_to_variable = { global.GER_eagle_axis_air = GER_eagle_air_total }
+		}
+		every_country = {
+			limit = { GER_eagle_allied_side = yes }
+			GER_eagle_count_air = yes
+			add_to_variable = { global.GER_eagle_allied_air = GER_eagle_air_total }
+		}
+		set_variable = { global.GER_eagle_need_air = global.GER_eagle_axis_air }
+		multiply_variable = { global.GER_eagle_need_air = 2.5 }
+		if = {
+			limit = {
+				has_completed_focus = GER_air_innovation_2
+				has_country_flag = GER_directive_21_ended
+				check_variable = { global.GER_eagle_allied_air > global.GER_eagle_need_air }
+			}
+			complete_national_focus = GER_fall_of_the_eagle
+		}
+	}
+}
