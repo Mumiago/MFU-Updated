@@ -17,14 +17,7 @@ GER_air_command_ensure_active = {
 		add_dynamic_modifier = { modifier = GER_air_command_dm }
 	}
 	if = {
-		limit = {
-			NOT = {
-				OR = {
-					has_idea = GER_luftwaffe_command_idea
-					has_idea = GER_luftwaffe_command_2_idea
-				}
-			}
-		}
+		limit = { NOT = { has_idea = GER_luftwaffe_command_idea } }
 		add_ideas = GER_luftwaffe_command_idea
 	}
 }
@@ -33,16 +26,11 @@ GER_air_command_refresh = {
 	force_update_dynamic_modifier = yes
 }
 
-# Air innovation 2: swaps the spirit for the version with the plane cost bonus. Safe to call twice.
+# Ministry of Armaments (focus GER_forced_labor_air): plane production cost -10 percent. Safe to call twice.
 GER_air_command_upgrade = {
 	GER_air_command_ensure_active = yes
-	if = {
-		limit = { has_idea = GER_luftwaffe_command_idea }
-		swap_ideas = {
-			remove_idea = GER_luftwaffe_command_idea
-			add_idea = GER_luftwaffe_command_2_idea
-		}
-	}
+	set_variable = { GER_air_cost_base = -10 }
+	GER_air_cost_apply = yes
 }
 
 GER_4yp_give_light_fighters = {
@@ -175,19 +163,19 @@ GER_4yp_give_tactical_bombers = {
 
 GER_4yp_give_strategic_bombers = {
 	if = {
-		limit = { OR = { has_tech = ger_strategic_bomber_1943 has_tech = strategic_bomber_1943 } }
-		add_equipment_to_stockpile = { type = strat_bomber_equipment_1943 amount = 200 producer = GER }
+		limit = { has_tech = strategic_bomber_1943 }
+		add_equipment_to_stockpile = { type = strat_bomber_equipment_1943 amount = 250 producer = GER }
 	}
 	else_if = {
-		limit = { OR = { has_tech = ger_strategic_bomber_1941 has_tech = strategic_bomber_1941 } }
-		add_equipment_to_stockpile = { type = strat_bomber_equipment_1941 amount = 200 producer = GER }
+		limit = { OR = { has_tech = ger_strategic_bomber_1943 has_tech = strategic_bomber_1941 } }
+		add_equipment_to_stockpile = { type = strat_bomber_equipment_1941 amount = 250 producer = GER }
 	}
 	else_if = {
-		limit = { OR = { has_tech = ger_strategic_bomber_1939 has_tech = strategic_bomber_1939 } }
-		add_equipment_to_stockpile = { type = strat_bomber_equipment_1939 amount = 200 producer = GER }
+		limit = { OR = { has_tech = ger_strategic_bomber_1941 has_tech = strategic_bomber_1939 } }
+		add_equipment_to_stockpile = { type = strat_bomber_equipment_1939 amount = 250 producer = GER }
 	}
 	else = {
-		add_equipment_to_stockpile = { type = strat_bomber_equipment_1937 amount = 200 producer = GER }
+		add_equipment_to_stockpile = { type = strat_bomber_equipment_1937 amount = 250 producer = GER }
 	}
 }
 
@@ -254,19 +242,19 @@ GER_4yp_schacht_give_light_fighters = {
 
 GER_4yp_schacht_give_strategic_bombers = {
 	if = {
-		limit = { OR = { has_tech = ger_strategic_bomber_1943 has_tech = strategic_bomber_1943 } }
-		add_equipment_to_stockpile = { type = strat_bomber_equipment_1943 amount = 80 producer = GER }
+		limit = { has_tech = strategic_bomber_1943 }
+		add_equipment_to_stockpile = { type = strat_bomber_equipment_1943 amount = 100 producer = GER }
 	}
 	else_if = {
-		limit = { OR = { has_tech = ger_strategic_bomber_1941 has_tech = strategic_bomber_1941 } }
-		add_equipment_to_stockpile = { type = strat_bomber_equipment_1941 amount = 80 producer = GER }
+		limit = { OR = { has_tech = ger_strategic_bomber_1943 has_tech = strategic_bomber_1941 } }
+		add_equipment_to_stockpile = { type = strat_bomber_equipment_1941 amount = 100 producer = GER }
 	}
 	else_if = {
-		limit = { OR = { has_tech = ger_strategic_bomber_1939 has_tech = strategic_bomber_1939 } }
-		add_equipment_to_stockpile = { type = strat_bomber_equipment_1939 amount = 80 producer = GER }
+		limit = { OR = { has_tech = ger_strategic_bomber_1941 has_tech = strategic_bomber_1939 } }
+		add_equipment_to_stockpile = { type = strat_bomber_equipment_1939 amount = 100 producer = GER }
 	}
 	else = {
-		add_equipment_to_stockpile = { type = strat_bomber_equipment_1937 amount = 80 producer = GER }
+		add_equipment_to_stockpile = { type = strat_bomber_equipment_1937 amount = 100 producer = GER }
 	}
 }
 
@@ -317,18 +305,26 @@ GER_4yp_schacht_give_tactical_bombers = {
 }
 
 # Luftwaffe workers mission (focus GER_forced_labor_air). Demand starts at 30000, rises 2000 per cycle, no cap.
-# Each cycle the Air Ministry takes ALL workers (GER_num_arbeitseinsatz). Step = round(10 * (demand - workers) / demand), clamped -20..+10.
-# The step is the change of plane production cost in percent: + = dearer (cancels the cut of the spirit), - = cheaper.
+# Each cycle the Air Ministry takes ALL workers (GER_num_arbeitseinsatz). Step = round(10 * (demand - workers) / demand), clamped -50..+10.
+# The steps add up in GER_air_cost_drift: + = planes dearer, - = cheaper.
 GER_air_workers_start = {
 	set_variable = { GER_air_quota = 30000 }
 	set_variable = { GER_air_cost_step = 0 }
+	set_variable = { GER_air_cost_drift = 0 }
+	set_variable = { GER_air_last_gap = 0 }
 	set_variable = { GER_air_last_eaten = 0 }
 	set_variable = { GER_air_last_quota = 0 }
+	GER_air_cost_apply = yes
 	set_country_flag = GER_air_workers_on
 	activate_mission = GER_air_workers_mission
 }
 
-GER_air_workers_apply_ladder = {
+# Total plane production cost = Ministry cut (GER_air_cost_base) + all worker rounds (GER_air_cost_drift), kept inside -20..+30.
+# Applied by the hidden spirits GER_air_cost_up/down_{1,2,4,8,16}.
+GER_air_cost_apply = {
+	set_variable = { GER_air_cost_net = GER_air_cost_base }
+	add_to_variable = { GER_air_cost_net = GER_air_cost_drift }
+	clamp_variable = { var = GER_air_cost_net min = -20 max = 30 }
 	if = {
 		limit = { has_idea = GER_air_cost_up_1 }
 		remove_ideas = GER_air_cost_up_1
@@ -369,7 +365,7 @@ GER_air_workers_apply_ladder = {
 		limit = { has_idea = GER_air_cost_down_16 }
 		remove_ideas = GER_air_cost_down_16
 	}
-	set_temp_variable = { rest = GER_air_cost_step }
+	set_temp_variable = { rest = GER_air_cost_net }
 	if = {
 		limit = { check_variable = { rest > 0 } }
 		if = {
@@ -437,10 +433,18 @@ GER_air_workers_cycle_end = {
 	divide_temp_variable = { gap = GER_air_quota }
 	multiply_temp_variable = { gap = 10 }
 	round_temp_variable = gap
-	clamp_temp_variable = { var = gap min = -20 max = 10 }
-	set_variable = { GER_air_cost_step = gap }
+	clamp_temp_variable = { var = gap min = -50 max = 10 }
+	set_variable = { GER_air_last_gap = gap }
+	set_temp_variable = { total_before = GER_air_cost_net }
+	add_to_variable = { GER_air_cost_drift = gap }
 	set_variable = { GER_num_arbeitseinsatz = 0 }
-	GER_air_workers_apply_ladder = yes
+	GER_air_cost_apply = yes
+	# forget what fell outside the limits
+	set_variable = { GER_air_cost_drift = GER_air_cost_net }
+	subtract_from_variable = { GER_air_cost_drift = GER_air_cost_base }
+	# what the round really changed, for the report
+	set_variable = { GER_air_cost_step = GER_air_cost_net }
+	subtract_from_variable = { GER_air_cost_step = total_before }
 	add_to_variable = { GER_air_quota = 2000 }
 	country_event = { id = ger_air_workers.1 }
 }

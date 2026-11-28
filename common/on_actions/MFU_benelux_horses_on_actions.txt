@@ -1,0 +1,45 @@
+# Benelux horse top-up (AI only): each day the stock is raised to what the divisions lack plus a one-division reserve for the training queue. Stays under the 1500 stock at which the AI lists horses on the market.
+on_actions = {
+	on_daily_BEL = {
+		effect = {
+			if = {
+				limit = {
+					is_ai = yes
+					has_capitulated = no
+					NOT = { has_equipment = { horse_equipment > 1199 } }
+				}
+				set_temp_variable = { MFU_horse_gift = num_target_equipment_in_armies@horse_equipment }
+				subtract_from_temp_variable = { MFU_horse_gift = num_equipment_in_armies@horse_equipment }
+				add_to_temp_variable = { MFU_horse_gift = 120 }
+				subtract_from_temp_variable = { MFU_horse_gift = num_equipment@horse_equipment }
+				clamp_temp_variable = { var = MFU_horse_gift min = 0 max = 300 }
+				if = {
+					limit = { check_variable = { MFU_horse_gift > 0 } }
+					log = "MFU_HORSE BEL target=[?num_target_equipment_in_armies@horse_equipment] armies=[?num_equipment_in_armies@horse_equipment] stock=[?num_equipment@horse_equipment] gift=[?MFU_horse_gift]"
+					add_equipment_to_stockpile = { type = horse_equipment_0 amount = MFU_horse_gift producer = BEL }
+				}
+			}
+		}
+	}
+	on_daily_HOL = {
+		effect = {
+			if = {
+				limit = {
+					is_ai = yes
+					has_capitulated = no
+					NOT = { has_equipment = { horse_equipment > 1199 } }
+				}
+				set_temp_variable = { MFU_horse_gift = num_target_equipment_in_armies@horse_equipment }
+				subtract_from_temp_variable = { MFU_horse_gift = num_equipment_in_armies@horse_equipment }
+				add_to_temp_variable = { MFU_horse_gift = 300 }
+				subtract_from_temp_variable = { MFU_horse_gift = num_equipment@horse_equipment }
+				clamp_temp_variable = { var = MFU_horse_gift min = 0 max = 300 }
+				if = {
+					limit = { check_variable = { MFU_horse_gift > 0 } }
+					log = "MFU_HORSE HOL target=[?num_target_equipment_in_armies@horse_equipment] armies=[?num_equipment_in_armies@horse_equipment] stock=[?num_equipment@horse_equipment] gift=[?MFU_horse_gift]"
+					add_equipment_to_stockpile = { type = horse_equipment_0 amount = MFU_horse_gift producer = HOL }
+				}
+			}
+		}
+	}
+}
